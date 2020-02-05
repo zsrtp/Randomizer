@@ -1,1 +1,5 @@
-.vscode
+**/.vscode
+**/*.rel
+**/*.elf
+**/*.gci
+**/build.*

@@ -1,0 +1,4 @@
+namespace mod
+{
+    void main();
+}
