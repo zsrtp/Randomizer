@@ -1,0 +1,18 @@
+﻿---
+BasedOnStyle: Chromium
+BreakBeforeBraces: Allman
+BreakBeforeTernaryOperators: 'true'
+ColumnLimit: '128'
+CompactNamespaces: 'false'
+Cpp11BracedListStyle: 'true'
+FixNamespaceComments: 'true'
+IncludeBlocks: Regroup
+IndentWidth: '4'
+IndentWrappedFunctionNames: 'true'
+Language: Cpp
+NamespaceIndentation: All
+SpacesInContainerLiterals: 'false'
+SpacesInParentheses: 'false'
+UseTab: Never
+
+...
