@@ -11,7 +11,7 @@ include $(DEVKITPPC)/gamecube_rules
 
 LIBTP := Externals/libtp
 ELF2REL := ../$(LIBTP)/bin/elf2rel.exe	# or: ../$(LIBTP)/bin/elf2rel
-GCIPACK := python ../$(LIBTP)/bin/gcipack.py # has to start with ".." since when we call it, we're in the build/ dir
+GCIPACK := python ../$(LIBTP)/bin/gcipack.py # has to start with ".." since when we call it, we're in the build.*/ dir
 
 
 ifeq ($(VERSION),)
