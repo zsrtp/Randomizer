@@ -42,5 +42,3 @@ SpacesInContainerLiterals: 'true'
 SpacesInParentheses: 'true'
 TabWidth: '4'
 UseTab: Never
-
-...
