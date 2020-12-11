@@ -1,0 +1,149 @@
+// memory
+80003458:memset
+80003540:memcpy
+
+// m_Do_ext.o
+// text
+8000EDF4:getArchiveHeapPtr
+
+// d_stage
+800266A4:roomTresureInit
+80027D04:setTresure
+
+// data
+8044AD74:archiveHeap
+
+// d_save.o
+80032AA8:getRupeeMax
+800350BC:getSave
+800350F0:putSave
+
+// d_event.o
+80042778:defaultSkipStb
+800429D4:skipper
+
+// f_op_scene_req.o
+// data
+8044A754:freezeActors
+8044AE20:isLoading
+
+// f_ap_game.o
+80018A6C:fapGm_Execute
+
+// f_op_actor_mng.o
+8001BBE8:createItemForPresentDemo
+8001BC74:createItemForTrBoxDemo
+8001C0D4:createItemForBoss
+8001C174:createItemForMidBoss
+8001C1B8:createItemForDirectGet
+
+// d_map_path_dmap.o
+8003EE5C:getMapPlayerPos
+
+// d_item.o
+80097F20:checkItemGet
+
+// d_a_alink.h
+800B2754:setStickData
+800BB4F0:checkHeavyStateOn
+8011A734:checkTreasureRupeeReturn
+8011EA30:procGanonFinishInit
+8011EAB0:procGanonFinish
+
+// data
+80388C0C:ladderVars
+
+// d_menu_collect.o
+801B3300:setWalletMaxNum
+
+// JKRExpHeap.o
+802D15C4:do_alloc_JKRExpHeap
+802D1C48:do_free_JKRExpHeap
+
+// OSCache.o
+// 8033DA08:DCEnable
+// 8033DA1C:DCInvalidateRange
+8033DA48:DCFlushRange
+// 8033DA78:DCStoreRange
+// 8033DAA8:DCFlushRangeNoSync
+// 8033DAD4:DCStoreRangeNoSync
+// 8033DB00:DCZeroRange
+8033DB2C:ICInvalidateRange
+// 8033DB60:ICFlashInvalidate
+// 8033DB70:ICEnable
+// 8033DB84:__LCEnable
+// 8033DC50:LCEnable
+// 8033DC88:LCDisable
+// 8033DCB0:LCStoreBlocks
+// 8033DCD4:LCStoreData
+// 8033DD80:LCQueueWait
+// 8033DD94:L2GlobalInvalidate
+// 8033DE2C:DMAErrorHandler
+// 8033DF8C:__OSCacheInit
+
+// runtime.o
+803645A4:_savefpr_14
+803645A8:_savefpr_15
+803645AC:_savefpr_16
+803645B0:_savefpr_17
+803645B4:_savefpr_18
+803645B8:_savefpr_19
+803645BC:_savefpr_20
+803645C0:_savefpr_21
+803645C4:_savefpr_22
+803645C8:_savefpr_23
+803645CC:_savefpr_24
+803645D0:_savefpr_25
+803645D4:_savefpr_26
+803645D8:_savefpr_27
+803645DC:_savefpr_28
+803645E0:_savefpr_29
+803645E4:_savefpr_30
+803645E8:_savefpr_31
+8036463C:_savegpr_14
+80364640:_savegpr_15
+80364644:_savegpr_16
+80364648:_savegpr_17
+8036464C:_savegpr_18
+80364650:_savegpr_19
+80364654:_savegpr_20
+80364658:_savegpr_21
+8036465C:_savegpr_22
+80364660:_savegpr_23
+80364664:_savegpr_24
+80364668:_savegpr_25
+8036466C:_savegpr_26
+80364670:_savegpr_27
+80364674:_savegpr_28
+80364678:_savegpr_29
+8036467C:_savegpr_30
+80364680:_savegpr_31
+803648F8:__umoddi3
+
+// mem.o
+80368528:memcmp
+
+// printf.o
+80368978:sprintf
+80368A58:snprintf
+
+// string.o
+8036AE30:strcmp
+8036AF84:strncpy
+8036AFC8:strcpy
+
+// m_Do_controller_pad.o
+// data
+803D7428:cpadInfo
+
+// d_com_inf_game.o
+// data
+80400300:dComIfG_gameInfo
+
+// d_kankyo.o
+// data
+80426B94:env_light
+
+// JFWSystem.o
+// data
+8044B2F8:systemConsole
