@@ -9,6 +9,8 @@
 // d_stage
 800266A4:roomTresureInit
 80027D04:setTresure
+80025a38:actorInit
+80025b24:actorInit_always
 
 // data
 80450C34:archiveHeap
@@ -129,6 +131,7 @@
 
 // string.o
 80368994:strcmp
+80368954:strncmp
 80368AE8:strncpy
 80368B2C:strcpy
 
