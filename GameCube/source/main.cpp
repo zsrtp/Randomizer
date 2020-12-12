@@ -5,6 +5,7 @@
 #include <tp/JFWSystem.h>
 #include <tp/d_stage.h>
 #include <tp/f_ap_game.h>
+#include <tp/m_do_controller_pad.h>
 
 #include <cstdint>
 #include <cstdio>
@@ -79,6 +80,15 @@ namespace mod
     void run()
     {
         // Do stuff
+        uint32_t buttonCombo = libtp::tp::m_do_controller_pad::Button_Z | libtp::tp::m_do_controller_pad::Button_R;
+
+        if ( lastInput != libtp::tp::m_do_controller_pad::cpadInfo.buttonInput &&
+             buttonCombo == ( libtp::tp::m_do_controller_pad::cpadInfo.buttonInput & buttonCombo ) )
+        {
+            state = !state;
+            libtp::display::setConsole( state, 0 );
+        }
+
         if ( hashCounter > 0 && delayCounter == 0xFF )
         {
             // Assume the load has ended and reset
@@ -86,6 +96,8 @@ namespace mod
         }
 
         delayCounter++;
+
+        lastInput = libtp::tp::m_do_controller_pad::cpadInfo.buttonInput;
         // Call original game function
         return fapGm_Execute_return();
     }

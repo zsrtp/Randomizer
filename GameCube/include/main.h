@@ -13,6 +13,9 @@ union typeTransform
 
 namespace mod
 {
+    // Console state
+    uint32_t lastInput;
+    bool state = true;
     uint8_t delayCounter;
 
     uint8_t hashCounter;
