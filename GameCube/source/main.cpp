@@ -17,6 +17,15 @@ namespace mod
     {     // Hook function that runs each frame
         fapGm_Execute_return = libtp::patch::hookFunction( libtp::tp::f_ap_game::fapGm_Execute, run );
 
+        actorCommonLayerInit_return = libtp::patch::hookFunction(
+            libtp::tp::d_stage::actorCommonLayerInit,
+            []( void* mStatus_roomControl, libtp::tp::d_stage::dzxChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 ) {
+                // pass relevant information to our custom event
+                onActorInit( chunkTypeInfo );
+                // Call original function
+                return actorCommonLayerInit_return( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
+            } );
+
         actorInit_return = libtp::patch::hookFunction(
             libtp::tp::d_stage::actorInit,
             []( void* mStatus_roomControl, libtp::tp::d_stage::dzxChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 ) {
@@ -57,7 +66,8 @@ namespace mod
 
         for ( uint8_t i = 0; i < numACTR; i++ )
         {
-            if ( strncmp( actor[i].objectName, "tboxXX", 4 ) == 0 || strcmp( actor[i].objectName, "htpiece" ) == 0 )
+            if ( strncmp( actor[i].objectName, "tboxXX", 4 ) == 0 || strncmp( actor[i].objectName, "htPiece", 7 ) == 0 ||
+                 strncmp( actor[i].objectName, "htCase", 6 ) == 0 )
             {
                 // This actor is relevant to rando and thus should be hashed
                 uint16_t hash = fletcher16( reinterpret_cast<uint8_t*>( &actor[i] ), 0x20 );

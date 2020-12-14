@@ -7,6 +7,7 @@
 8000EDF4:getArchiveHeapPtr
 
 // d_stage
+8002586c:actorCommonLayerInit
 800266A4:roomTresureInit
 80027D04:setTresure
 80025a38:actorInit
