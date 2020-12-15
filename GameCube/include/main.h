@@ -29,15 +29,15 @@ namespace mod
     uint16_t fletcher16( uint8_t* data, int32_t count );
 
     void ( *fapGm_Execute_return )() = nullptr;
-    void ( *actorCommonLayerInit_return )( void* mStatus_roomControl,
+    bool ( *actorCommonLayerInit_return )( void* mStatus_roomControl,
                                            libtp::tp::d_stage::dzxChunkTypeInfo* chunkTypeInfo,
                                            int32_t unk3,
                                            void* unk4 ) = nullptr;
-    void ( *actorInit_return )( void* mStatus_roomControl,
+    bool ( *actorInit_return )( void* mStatus_roomControl,
                                 libtp::tp::d_stage::dzxChunkTypeInfo* chunkTypeInfo,
                                 int32_t unk3,
                                 void* unk4 ) = nullptr;
-    void ( *actorInit_always_return )( void* mStatus_roomControl,
+    bool ( *actorInit_always_return )( void* mStatus_roomControl,
                                        libtp::tp::d_stage::dzxChunkTypeInfo* chunkTypeInfo,
                                        int32_t unk3,
                                        void* unk4 ) = nullptr;
