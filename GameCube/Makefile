@@ -9,6 +9,8 @@ endif
 
 include $(DEVKITPPC)/gamecube_rules
 
+# Format: YYYYMMDDHHmm + 2 char Game Region
+BUILDID:='"$(shell date +'%Y%m%d%H%M')"'
 
 # This shows up in the memory card (manager) and can contain spaces
 PROJECT_NAME := My REL Mod
@@ -68,16 +70,19 @@ LDFLAGS		= -r -e _prolog -u _prolog -u _epilog -u _unresolved -Wl,--gc-sections 
 # Platform options
 ifeq ($(VERSION),us)
 	CFLAGS += -DTP_US
+	CFLAGS += -D_BUILDID='"$(BUILDID)US"'
 	ASFLAGS += -DTP_US
 	GAMECODE = "GZ2E"
 	PRINTVER = "US"
 else ifeq ($(VERSION),eu)
 	CFLAGS += -DTP_EU
+	CFLAGS += -D_BUILDID='"$(BUILDID)EU"'
 	ASFLAGS += -DTP_EU
 	GAMECODE = "GZ2P"
 	PRINTVER = "EU"
 else ifeq ($(VERSION),jp)
 	CFLAGS += -DTP_JP
+	CFLAGS += -D_BUILDID='"$(BUILDID)JP"'
 	ASFLAGS += -DTP_JP
 	GAMECODE = "GZ2J"
 	PRINTVER = "JP"
