@@ -9,10 +9,21 @@ endif
 
 include $(DEVKITPPC)/gamecube_rules
 
-LIBTP := Externals/libtp
-ELF2REL := ../$(LIBTP)/bin/elf2rel.exe	# or: ../$(LIBTP)/bin/elf2rel
-GCIPACK := python ../$(LIBTP)/bin/gcipack.py # has to start with ".." since when we call it, we're in the build.*/ dir
 
+# This shows up in the memory card (manager) and can contain spaces
+PROJECT_NAME := My REL Mod
+# This will be the resulting .gci file - No spaces
+OUTPUT_FILENAME := REL_File
+
+
+# DON'T TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
+LIBTP_REL := externals/libtp_rel
+
+GCIPACK := python ../bin/gcipack.py
+# Windows
+ELF2REL := ../bin/elf2rel.exe
+# Linux
+# ELF2REL := ../bin/elf2rel
 
 ifeq ($(VERSION),)
 all: us jp eu
@@ -37,11 +48,11 @@ else
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	Rando.$(VERSION)
+TARGET		:=	$(OUTPUT_FILENAME).$(VERSION)
 BUILD		:=	build.$(VERSION)
-SOURCES		:=	source $(wildcard source/*) $(LIBTP)/source $(wildcard $(LIBTP)/source/*)
+SOURCES		:=	source $(wildcard source/*) $(LIBTP_REL)/source $(wildcard $(LIBTP_REL)/source/*)
 DATA		:=	data
-INCLUDES	:=	include $(LIBTP)/include
+INCLUDES	:=	include $(LIBTP_REL)/include
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -124,9 +135,9 @@ export HFILES := $(addsuffix .h,$(subst .,_,$(BINFILES)))
 
 # For REL linking
 export LDFILES		:= $(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.ld)))
-export MAPFILE		:= $(realpath $(LIBTP)/assets/$(VERSION).lst)
-export BANNERFILE	:= $(realpath $(LIBTP)/assets/banner.raw)
-export ICONFILE		:= $(realpath $(LIBTP)/assets/icon.raw)
+export MAPFILE		:= $(realpath assets/$(VERSION).lst)
+export BANNERFILE	:= $(realpath assets/banner.raw)
+export ICONFILE		:= $(realpath assets/icon.raw)
 
 #---------------------------------------------------------------------------------
 # build a list of include paths
@@ -176,7 +187,7 @@ $(OFILES_SOURCES) : $(HFILES)
 
 %.gci: %.rel
 	@echo packing ... $(notdir $@)
-	@$(GCIPACK) $< "Custom REL File" "Twilight Princess" "($(PRINTVER)) Rando" $(BANNERFILE) $(ICONFILE) $(GAMECODE)
+	@$(GCIPACK) $< "Custom REL File" "Twilight Princess" "($(PRINTVER)) $(PROJECT_NAME)" $(BANNERFILE) $(ICONFILE) $(GAMECODE)
 
 #---------------------------------------------------------------------------------
 # This rule links in binary data with the .jpg extension

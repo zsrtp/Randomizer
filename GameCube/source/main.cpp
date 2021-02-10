@@ -11,7 +11,7 @@ namespace mod
     {
         libtp::tp::jfw_system::systemConsole->consoleEnabled = true;
         libtp::tp::jfw_system::systemConsole->consoleLine[0].showLine = true;
-        strcpy(libtp::tp::jfw_system::systemConsole->consoleLine[0].line, "Hello World");
+        strcpy( libtp::tp::jfw_system::systemConsole->consoleLine[0].line, "Hello World" );
         return;
     }
-}  // namespace mod
+}     // namespace mod
