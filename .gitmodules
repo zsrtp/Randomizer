@@ -1,3 +1,4 @@
-[submodule "libtp"]
-	path = GameCube/Externals/libtp
-	url = https://github.com/zsrtp/libtp.git
+
+[submodule "GameCube/externals/libtp_rel"]
+	path = GameCube/externals/libtp_rel
+	url = https://github.com/zsrtp/libtp_rel.git
