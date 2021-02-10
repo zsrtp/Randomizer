@@ -1,15 +1,15 @@
 #include "main.h"
 
-#include <display/console.h>
-#include <patch.h>
-#include <tp/JFWSystem.h>
-#include <tp/d_stage.h>
-#include <tp/f_ap_game.h>
-#include <tp/m_do_controller_pad.h>
-
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
+
+#include "display/console.h"
+#include "patch.h"
+#include "tp/JFWSystem.h"
+#include "tp/d_stage.h"
+#include "tp/f_ap_game.h"
+#include "tp/m_do_controller_pad.h"
 
 namespace mod
 {

@@ -1,7 +1,7 @@
 #pragma once
-#include <tp/d_stage.h>
-
 #include <cstdint>
+
+#include "tp/d_stage.h"
 
 // Allows to transform data as bytes 1:1 from A<-->B and vice versa
 template<typename A, typename B>
