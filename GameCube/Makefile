@@ -12,6 +12,11 @@ include $(DEVKITPPC)/gamecube_rules
 # Format: YYYYMMDDHHmm + 2 char Game Region
 BUILDID:='"$(shell date +'%Y%m%d%H%M')"'
 
+# Version
+_VERSION:=1.0.0
+# Variant: i.e. Public, NoLogic, Race, etc.
+_VARIANT:=indev
+
 # This shows up in the memory card (manager) and can contain spaces
 PROJECT_NAME := RandoResearch
 # This will be the resulting .gci file - No spaces
@@ -62,7 +67,7 @@ INCLUDES	:=	include $(LIBTP_REL)/include
 
 MACHDEP		= -mno-sdata -mgcn -DGEKKO -mcpu=750 -meabi -mhard-float
 
-CFLAGS		= -nostdlib -ffreestanding -ffunction-sections -fdata-sections -g -Os -Wall -Werror -Wno-address-of-packed-member $(MACHDEP) $(INCLUDE) -D_PROJECT_NAME='"$(PROJECT_NAME)"'
+CFLAGS		= -nostdlib -ffreestanding -ffunction-sections -fdata-sections -g -Os -Wall -Werror -Wno-address-of-packed-member $(MACHDEP) $(INCLUDE) -D_PROJECT_NAME='"$(PROJECT_NAME)"' -D_VERSION='"$(_VERSION)"' -D_VARIANT='"$(_VARIANT)"'
 CXXFLAGS	= -fno-exceptions -fno-rtti -std=gnu++17 $(CFLAGS)
 
 LDFLAGS		= -r -e _prolog -u _prolog -u _epilog -u _unresolved -Wl,--gc-sections -nostdlib -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
