@@ -13,9 +13,9 @@ include $(DEVKITPPC)/gamecube_rules
 BUILDID:='"$(shell date +'%Y%m%d%H%M')"'
 
 # This shows up in the memory card (manager) and can contain spaces
-PROJECT_NAME := My REL Mod
+PROJECT_NAME := RandoResearch
 # This will be the resulting .gci file - No spaces
-OUTPUT_FILENAME := REL_File
+OUTPUT_FILENAME := ResearchREL
 
 
 # DON'T TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
@@ -62,7 +62,7 @@ INCLUDES	:=	include $(LIBTP_REL)/include
 
 MACHDEP		= -mno-sdata -mgcn -DGEKKO -mcpu=750 -meabi -mhard-float
 
-CFLAGS		= -nostdlib -ffreestanding -ffunction-sections -fdata-sections -g -Os -Wall -Werror -Wno-address-of-packed-member $(MACHDEP) $(INCLUDE)
+CFLAGS		= -nostdlib -ffreestanding -ffunction-sections -fdata-sections -g -Os -Wall -Werror -Wno-address-of-packed-member $(MACHDEP) $(INCLUDE) -D_PROJECT_NAME='"$(PROJECT_NAME)"'
 CXXFLAGS	= -fno-exceptions -fno-rtti -std=gnu++17 $(CFLAGS)
 
 LDFLAGS		= -r -e _prolog -u _prolog -u _epilog -u _unresolved -Wl,--gc-sections -nostdlib -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
