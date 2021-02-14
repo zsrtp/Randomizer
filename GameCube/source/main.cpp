@@ -1,19 +1,20 @@
 #include "main.h"
 
 #include <cstdint>
-#include <cstdio>
 #include <cstring>
 
 #include "display/console.h"
+#include "patch.h"
+#include "patches/changeFieldModels.h"
+
 namespace mod
 {
     void main()
     {
-        // New custom console
-        libtp::display::Console c = libtp::display::Console();
-        c << "Hello World!\n"
-          << "How do you like " _PROJECT_NAME "?";
+        libtp::display::Console cout {};
 
-        return;
+        libtp::patches::changeFieldModels();
+
+        cout << "Field models have been patched!\n";
     }
 }     // namespace mod
