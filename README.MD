@@ -7,7 +7,7 @@ Like other Randomizers, the **Twilight Princess Randomizer** (TPR) shuffles the 
 |Name|Role|
 |----------------|-------------------------------|
 |[AECX](//github.com/AECX)|Project Leadership, coordination and head of development|
-|[Zephiles](//github.com/Zephiles)|Developer|
+|[Zephiles](//github.com/Zephiles)|Reverse engineering and various code additions|
 |[lunarsoap5](//github.com/lunarsoap5)|Developer and Community Manager|
 |[vbn598](//github.com/vbn598)|Developer|
 
