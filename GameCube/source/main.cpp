@@ -5,7 +5,6 @@
 
 #include "display/console.h"
 #include "patch.h"
-#include "patches/changeFieldModels.h"
 
 namespace mod
 {
@@ -13,8 +12,6 @@ namespace mod
     {
         libtp::display::Console cout {};
 
-        libtp::patches::changeFieldModels();
-
-        cout << "Field models have been patched!\n";
+        cout << "Hello world";
     }
 }     // namespace mod
