@@ -9,6 +9,7 @@
 // d_stage
 800266A4:roomTresureInit
 80027D04:setTresure
+80024EFC:ActorCreate
 
 // data
 8044AD74:archiveHeap
@@ -36,6 +37,7 @@
 8001C0D4:createItemForBoss
 8001C174:createItemForMidBoss
 8001C1B8:createItemForDirectGet
+80019AA8:CreateAppend
 
 // d_map_path_dmap.o
 8003EE5C:getMapPlayerPos
