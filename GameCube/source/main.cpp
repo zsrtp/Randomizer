@@ -27,7 +27,7 @@ namespace mod
         t = new IntervalTimer( 120, []( Timer* timer ) {
             libtp::tp::jfw_system::systemConsole->consoleLine[timer->m_ExecCount].showLine = true;
             sprintf( libtp::tp::jfw_system::systemConsole->consoleLine[timer->m_ExecCount].line,
-                     "Timer Handler #" PRId32,
+                     "Timer Handler: #%" PRId32,
                      timer->m_ExecCount );
         } );
 
