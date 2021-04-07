@@ -11,6 +11,15 @@ Like other Randomizers, the **Twilight Princess Randomizer** (TPR) shuffles the 
 |[lunarsoap5](//github.com/lunarsoap5)|Developer and Community Manager|
 |[vbn598](//github.com/vbn598)|Developer|
 
+# Features & Changes
+|Name            |Status|
+|----------------|-------------------------------|
+|Freestanding Items|✔️Implemented|
+|Fast climbing|✔️Implemented|
+|Treasure Chest Randomizer|🔧Planned|
+|Shop Randomizer|🔧Planned|
+|Custom Models|❌Not going to be implemented|
+
 # Honorable Mentions
 * [dragonbane0](//github.com/dragonbane0)
     * Inventor of TP modding. Seriously.
@@ -21,15 +30,6 @@ Like other Randomizers, the **Twilight Princess Randomizer** (TPR) shuffles the 
 * [Pheenoh](//github.com/Pheenoh)
     * [tpgz](//github.com/zsrtp/tpgz)
     * [decomp](//github.com/zsrtp/decomp)
-
-Note: *As of now this table is just an example/template for later use*
-# Features
-|Name            |Status|
-|----------------|-------------------------------|
-|Freestanding Items|✔️Implemented|
-|Treasure Chest Randomizer|🔧Planned|
-|Shop Randomizer|🔧Planned|
-|Custom Models|❌Not going to be implemented|
 
 # Supporters
 * [TheBruce](https://twitter.com/The_Bruce1)
