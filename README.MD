@@ -18,7 +18,7 @@ Like other Randomizers, the **Twilight Princess Randomizer** (TPR) shuffles the 
 |Fast climbing|✔️Implemented|
 |Treasure Chest Randomizer|🔧Planned|
 |Shop Randomizer|🔧Planned|
-|Custom Models|❌Not going to be implemented|
+|[Custom Models](# "e.g. Toon Link from ww, different clothing, etc.")|❌Not going to be implemented|
 
 # Honorable Mentions
 * [dragonbane0](//github.com/dragonbane0)
