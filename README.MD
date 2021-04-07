@@ -12,13 +12,13 @@ Like other Randomizers, the **Twilight Princess Randomizer** (TPR) shuffles the 
 |[vbn598](//github.com/vbn598)|Developer|
 
 # Features & Changes
-|Name            |Status|
-|----------------|-------------------------------|
-|Freestanding Items|✔️Implemented|
-|Fast climbing|✔️Implemented|
-|Treasure Chest Randomizer|🔧Planned|
-|Shop Randomizer|🔧Planned|
-|[Custom Models](# "e.g. Toon Link from ww, different clothing, etc.")|❌Not going to be implemented|
+|Name            |Description|Status|
+|----------------|--------------|-------------------------------|
+|Freestanding Items|Items render as what they are after pickup even outside chests|✔️Implemented|
+|Fast climbing|TP Climbing is slooooooooooow|✔️Implemented|
+|Treasure Chest Randomizer|Typical treasure chests can be entirely random|🔧Planned|
+|Shop Randomizer|Most shop items can be randomized and displayed appropiately|🔧Planned|
+|Custom Models|e.g. Toon Link from ww, different clothing, etc.|❌Not going to be implemented|
 
 # Honorable Mentions
 * [dragonbane0](//github.com/dragonbane0)
