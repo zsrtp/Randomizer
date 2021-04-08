@@ -29,11 +29,16 @@ OUTPUT_FILENAME := Randomizer
 # DON'T TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
 LIBTP_REL := externals/libtp_rel
 
-GCIPACK := python ../bin/gcipack.py
-# Windows
-ELF2REL := ../bin/elf2rel.exe
-# Linux
-# ELF2REL := ../bin/elf2rel
+GCIPACK := python3 ../bin/gcipack.py
+
+UNAME := $(shell uname)
+
+ifeq ($(UNAME), Linux)
+	ELF2REL := ../bin/elf2rel
+else
+	ELF2REL := ../bin/elf2rel.exe
+endif
+
 
 ifeq ($(VERSION),)
 all: us jp eu
