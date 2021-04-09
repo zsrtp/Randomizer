@@ -28,7 +28,10 @@ namespace mod::gci_data
         entryInfo patchInfo;     //< bitArray where each bit represents a patch/modification to be applied for this playthrough
         entryInfo eventFlagsInfo;      //< eventFlags that need to be set for this seed
         entryInfo regionFlagsInfo;     //< regionFlags that need to be set, alternating
-        entryInfo dzxCheckInfo;        //< dzxChecks are applied at stage load
+
+        entryInfo dzxCheckInfo;
+        entryInfo relCheckInfo;
+        entryInfo shopCheckInfo;
     } __attribute__( ( __packed__ ) );
 
     struct regionFlag
@@ -48,7 +51,23 @@ namespace mod::gci_data
     struct dzxCheck
     {
         uint16_t hash;
-        char stage[8];
+        uint16_t stageID;
         uint8_t data[0x20];
+    } __attribute__( ( __packed__ ) );
+
+    struct shopCheck
+    {
+        uint16_t stageID;
+        uint16_t hash;
+        uint16_t actor;      //< New actor for the dzx
+        uint8_t target;      //< target item id
+        uint8_t replace;     //< replacement item id
+    } __attribute__( ( __packed__ ) );
+
+    struct RELCheck
+    {
+        uint32_t moduleID;
+        uint32_t offset;
+        uint32_t replacement;
     } __attribute__( ( __packed__ ) );
 }     // namespace mod::gci_data
