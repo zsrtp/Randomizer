@@ -18,6 +18,8 @@
 80032B50:getRupeeMax
 800351EC:getSave
 80035220:putSave
+80034ABC:onEventBit
+80034AD4:offEventBit
 
 // d_event.o
 800428A8:defaultSkipStb
