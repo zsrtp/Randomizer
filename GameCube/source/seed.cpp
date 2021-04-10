@@ -39,8 +39,7 @@ namespace mod::rando
         m_SeedStatus |= SEED_STATUS_INITIALIZED;
 
         // this->applyPatches();
-        // this->applyEventFlags();
-
+        this->applyEventFlags();
         this->applyRegionFlags();
     }
 
@@ -109,6 +108,8 @@ namespace mod::rando
 
         if ( num_eventFlags > 0 )
         {
+            // Load game-info
+            tp::d_com_inf_game::GameInfo* gameInfo = &tp::d_com_inf_game::dComIfG_gameInfo;
             eventFlag* eventFlags = new eventFlag[num_eventFlags];
 
             m_CARDResult = tools::ReadGCI( m_CardSlot, m_FileName, num_eventFlags * 2, gci_offset, eventFlags );
@@ -117,10 +118,14 @@ namespace mod::rando
 
             for ( uint32_t i = 0; i < num_eventFlags; i++ )
             {
-                // TODO: Fix onEventBit stuff
-                tp::d_save::onEventBit( eventFlags[i] );
+                uint8_t offset = eventFlags[i].offset;
+                uint8_t flag = eventFlags[i].flag;
+
+                gameInfo->scratchPad.eventBits[offset] |= flag;
                 m_EventFlagsModified++;
             }
+
+            delete[] eventFlags;
         }
     }
 
@@ -173,9 +178,11 @@ namespace mod::rando
                     }
                 }
 
-                // Save the modifications
+                // Save the modifications if
                 tp::d_save::putSave( gameInfo, regionID );
             }
+
+            delete[] regionFlags;
 
             // Reset to previous region ID
             uint8_t i = 0;
