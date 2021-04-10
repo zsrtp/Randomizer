@@ -39,7 +39,11 @@ namespace mod::gci_data
         uint8_t bit_id;
     } __attribute__( ( __packed__ ) );
 
-    typedef uint16_t eventFlag;
+    struct eventFlag
+    {
+        uint8_t offset;
+        uint8_t flag;
+    } __attribute__( ( __packed__ ) );
 
     /**
      *  @brief Check that can be replaced at stage+room load by replacing an Actor identified by hash
