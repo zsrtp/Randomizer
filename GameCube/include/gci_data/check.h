@@ -20,7 +20,6 @@ namespace mod::gci_data
 
     struct Header
     {
-        uint32_t fileSize;       //< Total gci data size including this header
         uint64_t seed;           //< Current seed
         uint16_t minVersion;     //< minimal required REL version, u8 Major and u8 Minor
         uint16_t maxVersion;     //< maximum supported REL version, u8 Major and u8 Minor
@@ -40,10 +39,7 @@ namespace mod::gci_data
         uint8_t bit_id;
     } __attribute__( ( __packed__ ) );
 
-    struct eventFlag
-    {
-        uint16_t flag;
-    } __attribute__( ( __packed__ ) );
+    typedef uint16_t eventFlag;
 
     /**
      *  @brief Check that can be replaced at stage+room load by replacing an Actor identified by hash
