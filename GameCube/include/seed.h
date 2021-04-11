@@ -34,10 +34,16 @@ namespace mod::rando
         uint32_t m_AreaFlagsModified = 0;
 
         gci::data::Header* m_Header = nullptr;
+        uint32_t m_StageIDX = 0xFF;     //< StageIDX from last Checkload
 
-        gci::data::dzxCheck* m_DZXChecks = nullptr;       //< DZX replacement checks for current stage
-        gci::data::RELCheck* m_RELChecks = nullptr;       //< REL Modifications for current stage
+        gci::data::dzxCheck* m_DZXChecks = nullptr;     //< DZX replacement checks for current stage
+        uint32_t m_numDZXChecks = 0;                    //< Number of currently loaded DZXCheck
+
+        gci::data::RELCheck* m_RELChecks = nullptr;     //< REL Modifications for current stage
+        uint32_t m_numRELChecks = 0;                    //< Number of currently loaded RELCheck
+
         gci::data::shopCheck* m_ShopChecks = nullptr;     //< Shop replacements for current stage
+        uint32_t m_numSHOPChecks = 0;                     //< Number of currently loaded ShopChecks
 
         // Member functions
        public:
@@ -72,13 +78,13 @@ namespace mod::rando
          *
          *  @param set If true it will set the patches, otherwise restore the original
          */
-        void applyPatches( bool set = true );
+        void applyPatches( bool set );
         void applyEventFlags( void );
         void applyRegionFlags( void );
 
-        void LoadDZX( void );
-        void LoadREL( void );
-        void LoadSHOP( void );
+        void LoadDZX( uint8_t stageIDX );
+        void LoadREL( uint8_t stageIDX );
+        void LoadSHOP( uint8_t stageIDX );
     };
 }     // namespace mod::rando
 #endif

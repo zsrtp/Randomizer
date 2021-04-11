@@ -40,24 +40,49 @@ namespace mod::rando
 
     void Seed::InitSeed( void )
     {
+        // Reset counters & status
+        m_SeedStatus = 0;
+        m_AreaFlagsModified = 0;
+        m_EventFlagsModified = 0;
+        m_PatchesApplied = 0;
+
         m_SeedStatus |= SEED_STATUS_INITIALIZED;
 
-        // this->applyPatches();
+        this->applyPatches( true );
         this->applyEventFlags();
         this->applyRegionFlags();
     }
 
     void Seed::LoadChecks( const char* stage )
     {
+        using namespace libtp;
+
         this->ClearChecks();
 
-        this->LoadDZX();
-        this->LoadREL();
-        this->LoadSHOP();
+        uint8_t stageIDX;
+        for ( stageIDX = 0; stageIDX < sizeof( data::stage::allStages ) / sizeof( data::stage::allStages[0] ); stageIDX++ )
+        {
+            if ( !strcmp( stage, data::stage::allStages[stageIDX] ) )
+            {
+                break;
+            }
+        }
+
+        // Don't run if this isn't actually a new stage
+        if ( stageIDX != m_StageIDX )
+        {
+            this->LoadDZX( stageIDX );
+            this->LoadREL( stageIDX );
+            this->LoadSHOP( stageIDX );
+        }
     }
 
     void Seed::ClearChecks()
     {
+        m_numDZXChecks = 0;
+        m_numRELChecks = 0;
+        m_numSHOPChecks = 0;
+
         delete[] m_DZXChecks;
         delete[] m_RELChecks;
         delete[] m_ShopChecks;
@@ -88,10 +113,10 @@ namespace mod::rando
 
                 for ( uint32_t b = 0; b < 8; b++ )
                 {
-                    if ( ( byte << b ) & 0x80 )
+                    if ( ( byte >> b ) & 0x80 )
                     {
                         // run the patch function for this bit index
-                        uint32_t index = byte * 8 + b;
+                        uint32_t index = i * 8 + b;
 
                         using namespace game_patch;
                         if ( index < sizeof( patches ) / sizeof( patches[0] ) )
@@ -207,20 +232,142 @@ namespace mod::rando
         }
     }
 
-    void Seed::LoadDZX()
+    void Seed::LoadDZX( uint8_t stageIDX )
     {
+        using namespace libtp;
+        using namespace mod::gci::data;
+
         m_SeedStatus |= SEED_STATUS_DZXLOAD;
-        //
+
+        uint32_t num_dzxchecks = m_Header->dzxCheckInfo.numEntries;
+        uint32_t gci_offset = m_Header->dzxCheckInfo.dataOffset;
+
+        // Allocate memory for all DZX checks, then load stage specific dzx into m_dzxChecks
+        dzxCheck* allDZX = new dzxCheck[num_dzxchecks];
+
+        m_CARDResult = tools::ReadGCI( m_CardSlot, m_FileName, sizeof( dzxCheck ) * num_dzxchecks, gci_offset, allDZX );
+
+        if ( m_CARDResult == CARD_RESULT_READY )
+        {
+            for ( uint32_t i = 0; i < num_dzxchecks; i++ )
+            {
+                if ( allDZX[i].stageIDX == stageIDX )
+                {
+                    m_numDZXChecks++;
+                }
+            }
+
+            // Allocate memory the actual RELChecks
+            m_DZXChecks = new dzxCheck[m_numDZXChecks];
+
+            // offset into m_DZXChecks
+            uint32_t j = 0;
+
+            for ( uint32_t i = 0; i < num_dzxchecks; i++ )
+            {
+                if ( allDZX[i].stageIDX == stageIDX )
+                {
+                    // Store the i'th DZX check into the j'th Loaded DZX check that's relevant to our current stage
+                    memcpy( &m_DZXChecks[j], &allDZX[i], sizeof( dzxCheck ) );
+                    j++;
+                }
+            }
+        }
+
+        // Free
+        delete[] allDZX;
     }
-    void Seed::LoadREL()
+
+    void Seed::LoadREL( uint8_t stageIDX )
     {
+        using namespace libtp;
+        using namespace mod::gci::data;
+
         m_SeedStatus |= SEED_STATUS_RELLOAD;
-        //
+
+        uint32_t num_relchecks = m_Header->relCheckInfo.numEntries;
+        uint32_t gci_offset = m_Header->relCheckInfo.dataOffset;
+
+        // Allocate memory for DZX checks
+        RELCheck* allREL = new RELCheck[num_relchecks];
+
+        m_CARDResult = tools::ReadGCI( m_CardSlot, m_FileName, sizeof( RELCheck ) * num_relchecks, gci_offset, allREL );
+
+        if ( m_CARDResult == CARD_RESULT_READY )
+        {
+            for ( uint32_t i = 0; i < num_relchecks; i++ )
+            {
+                if ( allREL[i].stageIDX == stageIDX )
+                {
+                    m_numRELChecks++;
+                }
+            }
+
+            // Allocate memory the actual RELChecks
+            m_RELChecks = new RELCheck[m_numRELChecks];
+
+            // offset into m_RELChecks
+            uint32_t j = 0;
+
+            for ( uint32_t i = 0; i < num_relchecks; i++ )
+            {
+                if ( allREL[i].stageIDX == stageIDX )
+                {
+                    // Store the i'th DZX check into the j'th Loaded DZX check that's relevant to our current stage
+                    memcpy( &m_RELChecks[j], &allREL[i], sizeof( RELCheck ) );
+                    j++;
+                }
+            }
+        }
+
+        // Free
+        delete[] allREL;
     }
-    void Seed::LoadSHOP()
+
+    void Seed::LoadSHOP( uint8_t stageIDX )
     {
+        using namespace libtp;
+        using namespace mod::gci::data;
+
         m_SeedStatus |= SEED_STATUS_SHOPLOAD;
-        //
+
+        uint32_t num_shopchecks = m_Header->shopCheckInfo.numEntries;
+        uint32_t gci_offset = m_Header->shopCheckInfo.dataOffset;
+
+        // Allocate memory for DZX checks
+        shopCheck* allSHOP = new shopCheck[num_shopchecks];
+
+        m_CARDResult = tools::ReadGCI( m_CardSlot, m_FileName, sizeof( shopCheck ) * num_shopchecks, gci_offset, allSHOP );
+
+        if ( m_CARDResult == CARD_RESULT_READY )
+        {
+            for ( uint32_t i = 0; i < num_shopchecks; i++ )
+            {
+                if ( allSHOP[i].stageIDX == stageIDX )
+                {
+                    m_numSHOPChecks++;
+                }
+            }
+
+            // Allocate memory the actual RELChecks
+            m_ShopChecks = new shopCheck[m_numSHOPChecks];
+
+            // offset into m_RELChecks
+            uint32_t j = 0;
+
+            for ( uint32_t i = 0; i < num_shopchecks; i++ )
+            {
+                if ( allSHOP[i].stageIDX == stageIDX )
+                {
+                    // Store the i'th DZX check into the j'th Loaded DZX check that's relevant to our current stage
+                    memcpy( &m_ShopChecks[j], &allSHOP[i], sizeof( shopCheck ) );
+                    j++;
+                }
+            }
+        }
+
+        // Free
+        delete[] allSHOP;
     }
 
 }     // namespace mod::rando
