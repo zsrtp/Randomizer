@@ -45,6 +45,9 @@ namespace mod::game_patch
 
         // Update the cache
         gc::os_cache::DCFlushRange( reinterpret_cast<void*>( getRupeeMaxPtr ), 0x41 );
+        gc::os_cache::ICInvalidateRange( reinterpret_cast<void*>( getRupeeMaxPtr ), 0x41 );
+
         gc::os_cache::DCFlushRange( reinterpret_cast<void*>( setWalletMaxNumPtr ), 0x31 );
+        gc::os_cache::ICInvalidateRange( reinterpret_cast<void*>( setWalletMaxNumPtr ), 0x31 );
     }
 }     // namespace mod::game_patch
