@@ -51,13 +51,13 @@ namespace mod::gci::data
     struct dzxCheck
     {
         uint16_t hash;
-        uint16_t stageID;
+        uint16_t stageIDX;
         uint8_t data[0x20];
     } __attribute__( ( __packed__ ) );
 
     struct shopCheck
     {
-        uint16_t stageID;
+        uint16_t stageIDX;
         uint16_t hash;
         uint16_t actor;      //< New actor for the dzx
         uint8_t target;      //< target item id
@@ -66,6 +66,7 @@ namespace mod::gci::data
 
     struct RELCheck
     {
+        uint32_t stageIDX;
         uint32_t moduleID;
         uint32_t offset;
         uint32_t replacement;
