@@ -4,6 +4,7 @@
  *	@author AECX
  *	@bug No known bugs.
  */
+
 #include "seed.h"
 
 #include <string.h>
@@ -14,7 +15,7 @@
 #include "data/stages.h"
 #include "game_patch/game_patch.h"
 #include "gc/card.h"
-#include "gci_data/check.h"
+#include "gci/data.h"
 #include "main.h"
 #include "tools.h"
 #include "tp/d_com_inf_game.h"
@@ -24,9 +25,9 @@ namespace mod::rando
 {
     Seed::Seed( int32_t chan, const char* fileName ): m_FileName( fileName ), m_CardSlot( chan )
     {
-        m_Header = new gci_data::Header();
+        m_Header = new gci::data::Header();
 
-        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, m_FileName, sizeof( gci_data::Header ), 0, m_Header );
+        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, m_FileName, sizeof( gci::data::Header ), 0, m_Header );
     }
 
     Seed::~Seed()
@@ -109,7 +110,7 @@ namespace mod::rando
     void Seed::applyEventFlags()
     {
         using namespace libtp;
-        using namespace mod::gci_data;
+        using namespace mod::gci::data;
 
         m_SeedStatus |= SEED_STATUS_EVENTFLG;
 
@@ -142,7 +143,7 @@ namespace mod::rando
     void Seed::applyRegionFlags()
     {
         using namespace libtp;
-        using namespace mod::gci_data;
+        using namespace mod::gci::data;
 
         m_SeedStatus |= SEED_STATUS_REGIONFLG;
 

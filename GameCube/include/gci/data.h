@@ -7,7 +7,7 @@
 #pragma once
 #include <cstdint>
 
-namespace mod::gci_data
+namespace mod::gci::data
 {
     /**
      *  @brief Optional functions that have to be executed once and patch/modify the game code
@@ -70,4 +70,4 @@ namespace mod::gci_data
         uint32_t offset;
         uint32_t replacement;
     } __attribute__( ( __packed__ ) );
-}     // namespace mod::gci_data
+}     // namespace mod::gci::data

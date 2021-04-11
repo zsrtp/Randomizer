@@ -9,7 +9,7 @@
 
 #include <cstdint>
 
-#include "gci_data/check.h"
+#include "gci/data.h"
 #include "tools.h"
 
 #define SEED_STATUS_INITIALIZED 1
@@ -33,11 +33,11 @@ namespace mod::rando
         uint32_t m_EventFlagsModified = 0;
         uint32_t m_AreaFlagsModified = 0;
 
-        gci_data::Header* m_Header = nullptr;
+        gci::data::Header* m_Header = nullptr;
 
-        gci_data::dzxCheck* m_DZXChecks = nullptr;       //< DZX replacement checks for current stage
-        gci_data::RELCheck* m_RELChecks = nullptr;       //< REL Modifications for current stage
-        gci_data::shopCheck* m_ShopChecks = nullptr;     //< Shop replacements for current stage
+        gci::data::dzxCheck* m_DZXChecks = nullptr;       //< DZX replacement checks for current stage
+        gci::data::RELCheck* m_RELChecks = nullptr;       //< REL Modifications for current stage
+        gci::data::shopCheck* m_ShopChecks = nullptr;     //< Shop replacements for current stage
 
         // Member functions
        public:
