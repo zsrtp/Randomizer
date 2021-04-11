@@ -72,7 +72,7 @@ namespace mod::rando
         if ( num_patches > 0 )
         {
             uint32_t num_bytes = num_patches / 8 + 1;
-            uint8_t patch_config[num_bytes];
+            uint8_t* patch_config = new uint8_t[num_bytes];
 
             m_CARDResult = tools::ReadGCI( m_CardSlot, m_FileName, num_bytes, gci_offset, patch_config );
 
@@ -93,6 +93,8 @@ namespace mod::rando
                     }
                 }
             }
+
+            delete[] patch_config;
         }
     }
 
