@@ -4,7 +4,9 @@
  *	@author AECX
  *	@bug No known bugs.
  */
-#pragma once
+#ifndef RANDO_SEED_H
+#define RANDO_SEED_H
+
 #include <cstdint>
 
 #include "gci_data/check.h"
@@ -45,6 +47,9 @@ namespace mod::rando
          *  @param fileName gci filename (rando-data0, rando-data1, ...)
          */
         Seed( int32_t chan, const char* fileName );
+        /**
+         *  @brief Deletes all allocated members and unpatches all the previously applied patches
+         */
         ~Seed();
 
         /**
@@ -62,7 +67,12 @@ namespace mod::rando
         int32_t m_CardSlot = 0;     //< Selected Card slot
         void ClearChecks( void );
 
-        void applyPatches( void );
+        /**
+         *  @brief Manages game_patches from the seed
+         *
+         *  @param set If true it will set the patches, otherwise restore the original
+         */
+        void applyPatches( bool set = true );
         void applyEventFlags( void );
         void applyRegionFlags( void );
 
@@ -71,3 +81,4 @@ namespace mod::rando
         void LoadSHOP( void );
     };
 }     // namespace mod::rando
+#endif
