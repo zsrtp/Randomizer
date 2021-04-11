@@ -12,6 +12,7 @@
 #include <cstdio>
 
 #include "data/stages.h"
+#include "game_patch/game_patch.h"
 #include "gc/card.h"
 #include "gci_data/check.h"
 #include "main.h"
@@ -30,6 +31,8 @@ namespace mod::rando
 
     Seed::~Seed()
     {
+        // Unpatch
+        this->applyPatches( false );
         this->ClearChecks();
         delete[] m_Header;
     }
@@ -59,7 +62,7 @@ namespace mod::rando
         delete[] m_ShopChecks;
     }
 
-    void Seed::applyPatches()
+    void Seed::applyPatches( bool set )
     {
         using namespace libtp;
 
@@ -87,9 +90,14 @@ namespace mod::rando
                     if ( ( byte << b ) & 0x80 )
                     {
                         // run the patch function for this bit index
-                        // TODO: Function pointer to patch functions (enum?)
-                        m_PatchesApplied++;
-                        // uint32_t index = byte * 8 + b;
+                        uint32_t index = byte * 8 + b;
+
+                        using namespace game_patch;
+                        if ( index < sizeof( patches ) / sizeof( patches[0] ) )
+                        {
+                            patches[index]( set );
+                            m_PatchesApplied++;
+                        }
                     }
                 }
             }
