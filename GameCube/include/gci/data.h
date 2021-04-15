@@ -4,7 +4,9 @@
  *	@author AECX
  *	@bug No known bugs.
  */
-#pragma once
+#ifndef RANDO_GCI_DATA_H
+#define RANDO_GCI_DATA_H
+
 #include <cstdint>
 
 namespace mod::gci::data
@@ -72,3 +74,4 @@ namespace mod::gci::data
         uint32_t replacement;
     } __attribute__( ( __packed__ ) );
 }     // namespace mod::gci::data
+#endif
