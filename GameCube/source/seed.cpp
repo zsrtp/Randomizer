@@ -74,6 +74,9 @@ namespace mod::rando
             this->LoadDZX( stageIDX );
             this->LoadREL( stageIDX );
             this->LoadSHOP( stageIDX );
+            
+            // Save current stageIDX for next time
+            m_StageIDX = stageIDX;
         }
     }
 
