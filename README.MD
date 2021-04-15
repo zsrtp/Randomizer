@@ -31,6 +31,9 @@ Like other Randomizers, the **Twilight Princess Randomizer** (TPR) shuffles the 
     * [tpgz](//github.com/zsrtp/tpgz)
     * [decomp](//github.com/zsrtp/decomp)
 
+* [PistonMiner](//github.com/PistonMiner)
+    * For creating [ttyd-tools](//github.com/PistonMiner/ttyd-tools) which parts of this project are based on
+
 # Supporters
 * [TheBruce](https://twitter.com/The_Bruce1)
 * Takirito
