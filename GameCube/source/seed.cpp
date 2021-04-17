@@ -57,8 +57,7 @@ namespace mod::rando
     {
         using namespace libtp;
 
-        this->ClearChecks();
-
+        // Find the index of this stage
         uint8_t stageIDX;
         for ( stageIDX = 0; stageIDX < sizeof( data::stage::allStages ) / sizeof( data::stage::allStages[0] ); stageIDX++ )
         {
@@ -71,10 +70,12 @@ namespace mod::rando
         // Don't run if this isn't actually a new stage
         if ( stageIDX != m_StageIDX )
         {
+            this->ClearChecks();
+
             this->LoadDZX( stageIDX );
             this->LoadREL( stageIDX );
             this->LoadSHOP( stageIDX );
-            
+
             // Save current stageIDX for next time
             m_StageIDX = stageIDX;
         }
