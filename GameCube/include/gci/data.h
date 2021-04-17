@@ -1,6 +1,8 @@
 /**	@file check.h
  *  @brief Contains structs for different types of checks.
  *
+ *  StageIDX are different size on purpose for alignment/padding, they should never exceed 0xFF.
+ *
  *	@author AECX
  *	@bug No known bugs.
  */
@@ -47,9 +49,6 @@ namespace mod::gci::data
         uint8_t flag;
     } __attribute__( ( __packed__ ) );
 
-    /**
-     *  @brief Check that can be replaced at stage+room load by replacing an Actor identified by hash
-     */
     struct dzxCheck
     {
         uint16_t hash;
