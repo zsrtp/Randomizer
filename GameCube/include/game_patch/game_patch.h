@@ -10,8 +10,8 @@
 #include <cstdint>
 
 // Instruction templates
-#define asm_li 0x38600000
-#define asm_cmpwi 0x2c000000
+#define ASM_LOAD_IMMEDIATE( register, value ) ( 0x38000000 + ( register * 0x200000 ) ) | static_cast<int16_t>( value )
+#define ASM_COMPARE_WORD_IMMEDIATE( register, value ) ( 0x2C000000 + ( register * 0x10000 ) ) | static_cast<int16_t>( value )
 
 namespace mod::game_patch
 {
