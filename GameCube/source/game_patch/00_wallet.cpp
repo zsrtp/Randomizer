@@ -20,7 +20,7 @@ namespace mod::game_patch
         uint32_t getRupeeMaxPtr = reinterpret_cast<uint32_t>( &tp::d_save::getRupeeMax );
         uint32_t setWalletMaxNumPtr = reinterpret_cast<uint32_t>( &tp::d_menu_collect::setWalletMaxNum );
 
-        uint32_t values[3] = { 1000, 5000, 9999 };
+        uint16_t values[3] = { 1000, 5000, 9999 };
 
         if ( !set )
         {
