@@ -37,13 +37,13 @@ namespace mod::rando
         uint32_t m_StageIDX = 0xFF;     //< StageIDX from last Checkload
 
         gci::data::dzxCheck* m_DZXChecks = nullptr;     //< DZX replacement checks for current stage
-        uint32_t m_numDZXChecks = 0;                    //< Number of currently loaded DZXCheck
+        uint32_t m_numLoadedDZXChecks = 0;              //< Number of currently loaded DZXCheck
 
         gci::data::RELCheck* m_RELChecks = nullptr;     //< REL Modifications for current stage
-        uint32_t m_numRELChecks = 0;                    //< Number of currently loaded RELCheck
+        uint32_t m_numLoadedRELChecks = 0;              //< Number of currently loaded RELCheck
 
         gci::data::shopCheck* m_ShopChecks = nullptr;     //< Shop replacements for current stage
-        uint32_t m_numSHOPChecks = 0;                     //< Number of currently loaded ShopChecks
+        uint32_t m_numLoadedSHOPChecks = 0;               //< Number of currently loaded ShopChecks
 
         // Member functions
        public:

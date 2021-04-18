@@ -83,9 +83,9 @@ namespace mod::rando
 
     void Seed::ClearChecks()
     {
-        m_numDZXChecks = 0;
-        m_numRELChecks = 0;
-        m_numSHOPChecks = 0;
+        m_numLoadedDZXChecks = 0;
+        m_numLoadedRELChecks = 0;
+        m_numLoadedSHOPChecks = 0;
 
         delete[] m_DZXChecks;
         delete[] m_RELChecks;
@@ -257,12 +257,12 @@ namespace mod::rando
             {
                 if ( allDZX[i].stageIDX == stageIDX )
                 {
-                    m_numDZXChecks++;
+                    m_numLoadedDZXChecks++;
                 }
             }
 
             // Allocate memory the actual RELChecks
-            m_DZXChecks = new dzxCheck[m_numDZXChecks];
+            m_DZXChecks = new dzxCheck[m_numLoadedDZXChecks];
 
             // offset into m_DZXChecks
             uint32_t j = 0;
@@ -303,12 +303,12 @@ namespace mod::rando
             {
                 if ( allREL[i].stageIDX == stageIDX )
                 {
-                    m_numRELChecks++;
+                    m_numLoadedRELChecks++;
                 }
             }
 
             // Allocate memory the actual RELChecks
-            m_RELChecks = new RELCheck[m_numRELChecks];
+            m_RELChecks = new RELCheck[m_numLoadedRELChecks];
 
             // offset into m_RELChecks
             uint32_t j = 0;
@@ -349,12 +349,12 @@ namespace mod::rando
             {
                 if ( allSHOP[i].stageIDX == stageIDX )
                 {
-                    m_numSHOPChecks++;
+                    m_numLoadedSHOPChecks++;
                 }
             }
 
             // Allocate memory the actual RELChecks
-            m_ShopChecks = new shopCheck[m_numSHOPChecks];
+            m_ShopChecks = new shopCheck[m_numLoadedSHOPChecks];
 
             // offset into m_RELChecks
             uint32_t j = 0;
