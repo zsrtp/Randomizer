@@ -218,7 +218,7 @@ namespace mod::rando
                     }
                 }
 
-                // Save the modifications if
+                // Save the modifications
                 tp::d_save::putSave( gameInfo, regionID );
             }
 
