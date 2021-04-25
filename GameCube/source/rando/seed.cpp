@@ -5,7 +5,7 @@
  *	@bug No known bugs.
  */
 
-#include "seed.h"
+#include "rando/seed.h"
 
 #include <string.h>
 
@@ -109,24 +109,25 @@ namespace mod::rando
 
             m_CARDResult = tools::ReadGCI( m_CardSlot, m_FileName, num_bytes, gci_offset, patch_config );
 
-            // TODO: Handle other CARDResults
-
-            for ( uint32_t i = 0; i < num_bytes; i++ )
+            if ( m_CARDResult == CARD_RESULT_READY )
             {
-                uint8_t byte = patch_config[i];
-
-                for ( uint32_t b = 0; b < 8; b++ )
+                for ( uint32_t i = 0; i < num_bytes; i++ )
                 {
-                    if ( ( byte >> b ) & 0x80 )
-                    {
-                        // run the patch function for this bit index
-                        uint32_t index = i * 8 + b;
+                    uint8_t byte = patch_config[i];
 
-                        using namespace game_patch;
-                        if ( index < sizeof( patches ) / sizeof( patches[0] ) )
+                    for ( uint32_t b = 0; b < 8; b++ )
+                    {
+                        if ( ( byte >> b ) & 0x80 )
                         {
-                            patches[index]( set );
-                            m_PatchesApplied++;
+                            // run the patch function for this bit index
+                            uint32_t index = i * 8 + b;
+
+                            using namespace game_patch;
+                            if ( index < sizeof( patches ) / sizeof( patches[0] ) )
+                            {
+                                patches[index]( set );
+                                m_PatchesApplied++;
+                            }
                         }
                     }
                 }
@@ -154,15 +155,16 @@ namespace mod::rando
 
             m_CARDResult = tools::ReadGCI( m_CardSlot, m_FileName, num_eventFlags * 2, gci_offset, eventFlags );
 
-            // TODO: Handle other CARDResults
-
-            for ( uint32_t i = 0; i < num_eventFlags; i++ )
+            if ( m_CARDResult == CARD_RESULT_READY )
             {
-                uint8_t offset = eventFlags[i].offset;
-                uint8_t flag = eventFlags[i].flag;
+                for ( uint32_t i = 0; i < num_eventFlags; i++ )
+                {
+                    uint8_t offset = eventFlags[i].offset;
+                    uint8_t flag = eventFlags[i].flag;
 
-                gameInfo->scratchPad.eventBits[offset] |= flag;
-                m_EventFlagsModified++;
+                    gameInfo->scratchPad.eventBits[offset] |= flag;
+                    m_EventFlagsModified++;
+                }
             }
 
             delete[] eventFlags;
@@ -189,39 +191,39 @@ namespace mod::rando
             // Load region-flags from GCI (seed-data)
             m_CARDResult = tools::ReadGCI( m_CardSlot, m_FileName, sizeof( regionFlags ), gci_offset, regionFlags );
 
-            // TODO: Handle other CARDResults
-
-            uint8_t regionID = data::stage::regions[0];
-            // Loop through all regions
-            for ( uint32_t i = 0; i < sizeof( data::stage::regions ); i++ )
+            if ( m_CARDResult == CARD_RESULT_READY )
             {
-                regionID = data::stage::regions[i];
-
-                tp::d_save::getSave( gameInfo, regionID );
-
-                // Loop through region-flags from gci
-                for ( uint32_t j = 0; j < num_regionFlags; j++ )
+                uint8_t regionID = data::stage::regions[0];
+                // Loop through all regions
+                for ( uint32_t i = 0; i < sizeof( data::stage::regions ); i++ )
                 {
-                    if ( regionFlags[j].region_id == regionID )
+                    regionID = data::stage::regions[i];
+
+                    tp::d_save::getSave( gameInfo, regionID );
+
+                    // Loop through region-flags from gci
+                    for ( uint32_t j = 0; j < num_regionFlags; j++ )
                     {
-                        // The n'th bit that we want to set TRUE
-                        int32_t bit = regionFlags[j].bit_id;
-
-                        int32_t offset = bit / 8;
-                        int32_t shift = bit % 8;
-
-                        if ( offset < 0x20 )
+                        if ( regionFlags[j].region_id == regionID )
                         {
-                            gameInfo->localAreaNodes[offset] |= ( 0x80 >> shift );
-                            m_AreaFlagsModified++;
+                            // The n'th bit that we want to set TRUE
+                            int32_t bit = regionFlags[j].bit_id;
+
+                            int32_t offset = bit / 8;
+                            int32_t shift = bit % 8;
+
+                            if ( offset < 0x20 )
+                            {
+                                gameInfo->localAreaNodes[offset] |= ( 0x80 >> shift );
+                                m_AreaFlagsModified++;
+                            }
                         }
                     }
+
+                    // Save the modifications
+                    tp::d_save::putSave( gameInfo, regionID );
                 }
-
-                // Save the modifications
-                tp::d_save::putSave( gameInfo, regionID );
             }
-
             delete[] regionFlags;
 
             // Reset to previous region ID
