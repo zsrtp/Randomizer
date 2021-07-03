@@ -35,13 +35,15 @@ Like other Randomizers, the **Twilight Princess Randomizer** (TPR) shuffles the 
     * For creating [ttyd-tools](//github.com/PistonMiner/ttyd-tools) which parts of this project are based on
 
 # Supporters
-* [TheBruce](https://twitter.com/The_Bruce1)
+* [TheBruce](//twitter.com/The_Bruce1)
 * Takirito
 * [Syloh](https://twitter.com/Syloh11)
 * SumTr011
 * Raziel_Stratton
-* [NesmaN88](https://twitter.com/NesmaN88j)
+* [NesmaN88](//twitter.com/NesmaN88j)
 * Linkman124
 * JustRyland
 * CHL_IceStorm
 * [Asxce](//twitter.com/dAsxce2)
+* Sushi
+* XModxGodX
