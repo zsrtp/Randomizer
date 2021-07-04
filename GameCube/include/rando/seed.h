@@ -9,7 +9,7 @@
 
 #include <cstdint>
 
-#include "gci/data.h"
+#include "rando/data.h"
 #include "tools.h"
 
 #define SEED_STATUS_INITIALIZED 1
@@ -26,24 +26,24 @@ namespace mod::rando
     {
         // Member vars
        public:
-        int32_t m_CARDResult;     //< Most recent status from the CARDApi functions
+        int32_t m_CARDResult;     // Most recent status from the CARDApi functions
         uint32_t m_SeedStatus = 0;
 
         uint32_t m_PatchesApplied = 0;
         uint32_t m_EventFlagsModified = 0;
         uint32_t m_AreaFlagsModified = 0;
 
-        gci::data::Header* m_Header = nullptr;
-        uint32_t m_StageIDX = 0xFF;     //< StageIDX from last Checkload
+        Header* m_Header = nullptr;
+        uint32_t m_StageIDX = 0xFF;     // StageIDX from last Checkload
 
-        gci::data::dzxCheck* m_DZXChecks = nullptr;     //< DZX replacement checks for current stage
-        uint32_t m_numLoadedDZXChecks = 0;              //< Number of currently loaded DZXCheck
+        dzxCheck* m_DZXChecks = nullptr;       // DZX replacement checks for current stage
+        uint32_t m_numLoadedDZXChecks = 0;     // Number of currently loaded DZXCheck
 
-        gci::data::RELCheck* m_RELChecks = nullptr;     //< REL Modifications for current stage
-        uint32_t m_numLoadedRELChecks = 0;              //< Number of currently loaded RELCheck
+        RELCheck* m_RELChecks = nullptr;       // REL Modifications for current stage
+        uint32_t m_numLoadedRELChecks = 0;     // Number of currently loaded RELCheck
 
-        gci::data::shopCheck* m_ShopChecks = nullptr;     //< Shop replacements for current stage
-        uint32_t m_numLoadedSHOPChecks = 0;               //< Number of currently loaded ShopChecks
+        shopCheck* m_ShopChecks = nullptr;      // Shop replacements for current stage
+        uint32_t m_numLoadedSHOPChecks = 0;     // Number of currently loaded ShopChecks
 
         // Member functions
        public:
@@ -64,7 +64,7 @@ namespace mod::rando
         void InitSeed( void );
 
         /**
-         *  @brief Load check data for a given stage
+         *  @brief Load check data for a given stage & stores them in a temp. (smaller) buffer
          */
         void LoadChecks( const char* stage );
 

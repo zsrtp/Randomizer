@@ -15,8 +15,8 @@
 #include "data/stages.h"
 #include "game_patch/game_patch.h"
 #include "gc/card.h"
-#include "gci/data.h"
 #include "main.h"
+#include "rando/data.h"
 #include "tools.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_save.h"
@@ -25,9 +25,9 @@ namespace mod::rando
 {
     Seed::Seed( int32_t chan, const char* fileName ): m_FileName( fileName ), m_CardSlot( chan )
     {
-        m_Header = new gci::data::Header();
+        m_Header = new Header();
 
-        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, m_FileName, sizeof( gci::data::Header ), 0, m_Header );
+        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, m_FileName, sizeof( Header ), 0, m_Header );
     }
 
     Seed::~Seed()
@@ -40,6 +40,8 @@ namespace mod::rando
 
     void Seed::InitSeed( void )
     {
+        // TODO: Load Seed data into local buffer (only header was loaded before)
+
         // Reset counters & status
         m_SeedStatus = 0;
         m_AreaFlagsModified = 0;
@@ -104,6 +106,7 @@ namespace mod::rando
         // Don't bother to patch anything if there's nothing to patch
         if ( num_patches > 0 )
         {
+            // TODO: patch_config should be a pointer into the local GCI buffer
             uint32_t num_bytes = num_patches / 8 + 1;
             uint8_t* patch_config = new uint8_t[num_bytes];
 
@@ -140,7 +143,6 @@ namespace mod::rando
     void Seed::applyEventFlags()
     {
         using namespace libtp;
-        using namespace mod::gci::data;
 
         m_SeedStatus |= SEED_STATUS_EVENTFLG;
 
@@ -149,7 +151,7 @@ namespace mod::rando
 
         if ( num_eventFlags > 0 )
         {
-            // Load game-info
+            // TODO: eventFlags should point to the local GCI Buffer
             tp::d_com_inf_game::GameInfo* gameInfo = &tp::d_com_inf_game::dComIfG_gameInfo;
             eventFlag* eventFlags = new eventFlag[num_eventFlags];
 
@@ -174,7 +176,6 @@ namespace mod::rando
     void Seed::applyRegionFlags()
     {
         using namespace libtp;
-        using namespace mod::gci::data;
 
         m_SeedStatus |= SEED_STATUS_REGIONFLG;
 
@@ -183,7 +184,7 @@ namespace mod::rando
 
         if ( num_regionFlags > 0 )
         {
-            // Load game-info
+            // TODO: regionFlags should point into the local GCI buffer
             tp::d_com_inf_game::GameInfo* gameInfo = &tp::d_com_inf_game::dComIfG_gameInfo;
 
             regionFlag* regionFlags = new regionFlag[num_regionFlags];
@@ -241,13 +242,13 @@ namespace mod::rando
     void Seed::LoadDZX( uint8_t stageIDX )
     {
         using namespace libtp;
-        using namespace mod::gci::data;
 
         m_SeedStatus |= SEED_STATUS_DZXLOAD;
 
         uint32_t num_dzxchecks = m_Header->dzxCheckInfo.numEntries;
         uint32_t gci_offset = m_Header->dzxCheckInfo.dataOffset;
 
+        // TODO: DZX should be an offset into local GCI data
         // Allocate memory for all DZX checks, then load stage specific dzx into m_dzxChecks
         dzxCheck* allDZX = new dzxCheck[num_dzxchecks];
 
@@ -287,12 +288,13 @@ namespace mod::rando
     void Seed::LoadREL( uint8_t stageIDX )
     {
         using namespace libtp;
-        using namespace mod::gci::data;
 
         m_SeedStatus |= SEED_STATUS_RELLOAD;
 
         uint32_t num_relchecks = m_Header->relCheckInfo.numEntries;
         uint32_t gci_offset = m_Header->relCheckInfo.dataOffset;
+
+        // allREL should be a pointer into the local GCI buffer
 
         // Allocate memory for DZX checks
         RELCheck* allREL = new RELCheck[num_relchecks];
@@ -333,13 +335,13 @@ namespace mod::rando
     void Seed::LoadSHOP( uint8_t stageIDX )
     {
         using namespace libtp;
-        using namespace mod::gci::data;
 
         m_SeedStatus |= SEED_STATUS_SHOPLOAD;
 
         uint32_t num_shopchecks = m_Header->shopCheckInfo.numEntries;
         uint32_t gci_offset = m_Header->shopCheckInfo.dataOffset;
 
+        // TODO: allShop should be pointing into the local GCI buffer
         // Allocate memory for DZX checks
         shopCheck* allSHOP = new shopCheck[num_shopchecks];
 
