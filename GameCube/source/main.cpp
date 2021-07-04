@@ -6,8 +6,10 @@
 #include <cstring>
 
 #include "patch.h"
+#include "rando/seedlist.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/f_ap_game.h"
+#include "tp/f_pc_node_req.h"
 #include "tp/m_do_controller_pad.h"
 
 namespace mod
@@ -15,6 +17,7 @@ namespace mod
     // Bind extern global variables
     libtp::display::Console console;
     rando::Randomizer* randomizer = nullptr;
+    rando::SeedList seedList;
 
     // Variables
     uint32_t lastButtonInput = 0;
@@ -37,12 +40,20 @@ namespace mod
         console << "Functions have been hooked\n";
     }
 
-    void handleInput( uint32_t input )
+    void setScreen( bool state )
     {
-        // Cycle through available seeds
-        if ( gameState == GAME_TITLE )
+        consoleState = state;
+        libtp::display::setConsole( state, 0 );
+    }
+
+    void doInput( uint32_t input )
+    {
+        using namespace libtp::tp::m_do_controller_pad;
+        auto checkBtn = [&input]( uint32_t combo ) { return ( input & combo ) == combo; };
+
+        if ( input )
         {
-            // TODO: Printing the currently selected seed
+            // TODO: Handle inputs for seed selection if required
         }
     }
 
@@ -57,21 +68,53 @@ namespace mod
         GameInfo* gameInfo = &dComIfG_gameInfo;
 
         // Handle game state updates
-        if ( 0 == strcmp( "F_SP102", gameInfo->currentStage ) || 0 == strcmp( "S_MV000", gameInfo->currentStage ) )
+        using namespace libtp::tp::f_pc_node_req;
+
+        if ( l_fpcNdRq_Queue )
         {
-            if ( gameState != GAME_TITLE )
+            uint8_t state = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( l_fpcNdRq_Queue ) + 0x59 );
+
+            // Normal/Loading into game
+            if ( gameState != GAME_ACTIVE && state == 11 )
             {
-                // Title screen or demo
+                // check whether we're in title screen CS
+                if ( 0 != strcmp( "S_MV000", gameInfo->nextStageVars.nextStage ) )
+                {
+                    gameState = GAME_ACTIVE;
+                }
+            }
+            else if ( gameState != GAME_TITLE && ( state == 12 || state == 13 ) )
+            {
+                // Handle console differently when the user first loads it
+                if ( gameState == GAME_BOOT )
+                {
+                    switch ( seedList.m_numSeeds )
+                    {
+                        case 0:
+                            // Err, no seeds
+                            console << "No seeds available! Please check your memory card and region!\n";
+                            setScreen( true );
+                            break;
+
+                        case 1:
+                            // Only one seed present, auto-select it and disable console for convenience
+                            console << "First and only seed automatically applied...\n";
+                            setScreen( false );
+                            break;
+
+                        default:
+                            // User has to select one of the seeds
+
+                            console << seedList.m_numSeeds << " Seeds available, please select one.\n";
+                            setScreen( true );
+                            break;
+                    }
+                }
+
                 gameState = GAME_TITLE;
-                console << "State switched to TITLE\n";
             }
         }
-        else if ( gameState != GAME_ACTIVE && gameState != GAME_BOOT )
-        {
-            // We can't possibly be ingame if state was GAME_BOOT
-            gameState = GAME_ACTIVE;
-            console << "State switched to GAMEPLAY\n";
-        }
+        // End of handling gameStates
 
         // handle button inputs only if buttons are being held that weren't held last time
         if ( padInfo->buttonInput != lastButtonInput )
@@ -83,13 +126,14 @@ namespace mod
             if ( ( padInfo->buttonInput & ( PadInputs::Button_R | PadInputs::Button_Z ) ) ==
                  ( PadInputs::Button_R | PadInputs::Button_Z ) )
             {
-                consoleState = !consoleState;
-                display::setConsole( consoleState, 0 );
+                // Disallow during boot as we print copyright info etc.
+                // Will automatically disappear if there is no seeds to select from
+                setScreen( !consoleState || gameState == GAME_BOOT );
             }
             // Handle Inputs if console is already active
             else if ( consoleState )
             {
-                handleInput( padInfo->buttonInput );
+                doInput( padInfo->buttonInput );
 
                 // Disable input so game doesn't notice
                 padInfo->buttonInput = 0;

@@ -12,6 +12,7 @@
 
 #include "display/console.h"
 #include "rando/randomizer.h"
+#include "rando/seedlist.h"
 
 // Game States
 #define GAME_BOOT 0       // Default; At startup (should only ever be active once)
@@ -23,6 +24,7 @@ namespace mod
     // General public objects
     extern libtp::display::Console console;
     extern rando::Randomizer* randomizer;
+    extern rando::SeedList seedList;
 
     // Variables
     extern uint32_t lastButtonInput;
@@ -31,6 +33,7 @@ namespace mod
 
     void main();
     void hookFunctions();
+    void setScreen( bool state );     // Sets visibility of console
 
     void handleInput( uint32_t inputs );
 
