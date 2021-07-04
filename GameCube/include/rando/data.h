@@ -6,12 +6,12 @@
  *	@author AECX
  *	@bug No known bugs.
  */
-#ifndef RANDO_GCI_DATA_H
-#define RANDO_GCI_DATA_H
+#ifndef RANDO_DATA_H
+#define RANDO_DATA_H
 
 #include <cstdint>
 
-namespace mod::gci::data
+namespace mod::rando
 {
     /**
      *  @brief Optional functions that have to be executed once and patch/modify the game code
@@ -24,13 +24,13 @@ namespace mod::gci::data
 
     struct Header
     {
-        uint64_t seed;           //< Current seed
-        uint16_t minVersion;     //< minimal required REL version, u8 Major and u8 Minor
-        uint16_t maxVersion;     //< maximum supported REL version, u8 Major and u8 Minor
+        uint64_t seed;           // Current seed
+        uint16_t minVersion;     // minimal required REL version, u8 Major and u8 Minor
+        uint16_t maxVersion;     // maximum supported REL version, u8 Major and u8 Minor
 
-        entryInfo patchInfo;     //< bitArray where each bit represents a patch/modification to be applied for this playthrough
-        entryInfo eventFlagsInfo;      //< eventFlags that need to be set for this seed
-        entryInfo regionFlagsInfo;     //< regionFlags that need to be set, alternating
+        entryInfo patchInfo;     // bitArray where each bit represents a patch/modification to be applied for this playthrough
+        entryInfo eventFlagsInfo;      // eventFlags that need to be set for this seed
+        entryInfo regionFlagsInfo;     // regionFlags that need to be set, alternating
 
         entryInfo dzxCheckInfo;
         entryInfo relCheckInfo;
@@ -60,9 +60,9 @@ namespace mod::gci::data
     {
         uint16_t stageIDX;
         uint16_t hash;
-        uint16_t actor;      //< New actor for the dzx
-        uint8_t target;      //< target item id
-        uint8_t replace;     //< replacement item id
+        uint16_t actor;      // New actor for the dzx
+        uint8_t target;      // target item id
+        uint8_t replace;     // replacement item id
     } __attribute__( ( __packed__ ) );
 
     struct RELCheck
@@ -72,5 +72,5 @@ namespace mod::gci::data
         uint32_t offset;
         uint32_t replacement;
     } __attribute__( ( __packed__ ) );
-}     // namespace mod::gci::data
+}     // namespace mod::rando
 #endif
