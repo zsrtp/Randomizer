@@ -15,7 +15,7 @@
 namespace mod
 {
     // Bind extern global variables
-    libtp::display::Console console;
+    libtp::display::Console console( 9 );
     rando::Randomizer* randomizer = nullptr;
     rando::SeedList seedList;
 
@@ -51,10 +51,34 @@ namespace mod
         using namespace libtp::tp::m_do_controller_pad;
         auto checkBtn = [&input]( uint32_t combo ) { return ( input & combo ) == combo; };
 
-        if ( input )
+        if ( input && gameState == GAME_TITLE )
         {
-            // TODO: Handle inputs for seed selection if required
+            // Handle seed selection if necessary
+            if ( seedList.m_numSeeds > 1 )
+            {
+                if ( checkBtn( Button_X ) )
+                {
+                    seedList.m_selectedSeed++;
+
+                    if ( seedList.m_selectedSeed >= seedList.m_numSeeds )
+                        seedList.m_selectedSeed = 0;
+                }
+                else if ( checkBtn( Button_Y ) )
+                {
+                    if ( seedList.m_selectedSeed == 0 )
+                        seedList.m_selectedSeed = seedList.m_numSeeds;
+
+                    seedList.m_selectedSeed--;
+                }
+
+                // 8 is the line it typically appears
+                console.setLine( 8 );
+                console << "\r"
+                        << "[" << seedList.m_selectedSeed + 1 << "/" << seedList.m_numSeeds
+                        << "] Seed: " << seedList[seedList.m_selectedSeed].seed;
+            }
         }
+        // End of handling title screen inputs
     }
 
     void handle_fapGm_Execute()
@@ -72,10 +96,12 @@ namespace mod
 
         if ( l_fpcNdRq_Queue )
         {
+            // Previous state
+            uint8_t prevState = gameState;
             uint8_t state = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( l_fpcNdRq_Queue ) + 0x59 );
 
             // Normal/Loading into game
-            if ( gameState != GAME_ACTIVE && state == 11 )
+            if ( prevState != GAME_ACTIVE && state == 11 )
             {
                 // check whether we're in title screen CS
                 if ( 0 != strcmp( "S_MV000", gameInfo->nextStageVars.nextStage ) )
@@ -83,10 +109,12 @@ namespace mod
                     gameState = GAME_ACTIVE;
                 }
             }
-            else if ( gameState != GAME_TITLE && ( state == 12 || state == 13 ) )
+            else if ( prevState != GAME_TITLE && ( state == 12 || state == 13 ) )
             {
+                gameState = GAME_TITLE;
+
                 // Handle console differently when the user first loads it
-                if ( gameState == GAME_BOOT )
+                if ( prevState == GAME_BOOT )
                 {
                     switch ( seedList.m_numSeeds )
                     {
@@ -105,13 +133,14 @@ namespace mod
                         default:
                             // User has to select one of the seeds
 
-                            console << seedList.m_numSeeds << " Seeds available, please select one.\n";
+                            console << "Please select a seed <X/Y>\n";
+                            // trigger a dummy input to print the current selection
+                            doInput( Button_Start );
+
                             setScreen( true );
                             break;
                     }
                 }
-
-                gameState = GAME_TITLE;
             }
         }
         // End of handling gameStates
