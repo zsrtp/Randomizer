@@ -35,8 +35,9 @@ namespace mod::rando
             // Returning with mod guarantees for read access within numSeeds
             return static_cast<SeedInfo>( m_seedInfo[n % m_numSeeds] );
         }
-        int m_numSeeds;
-        int m_selectedSeed;
+
+        uint8_t m_numSeeds;
+        uint8_t m_selectedSeed;
 
        private:
         SeedInfo* m_seedInfo = nullptr;
