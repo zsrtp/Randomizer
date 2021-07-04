@@ -41,6 +41,9 @@
 8001C260:createItemForDirectGet
 80019B50:CreateAppend
 
+// f_pc_node_req
+803A5718:l_fpcNdRq_Queue
+
 // d_map_path_dmap.o
 8003EF8C:getMapPlayerPos
 
