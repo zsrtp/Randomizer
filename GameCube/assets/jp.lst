@@ -25,6 +25,9 @@
 80042778:defaultSkipStb
 800429D4:skipper
 
+// DynamicLink.o
+8026508C:do_link
+
 // f_op_scene_req.o
 // data
 8044A754:freezeActors
