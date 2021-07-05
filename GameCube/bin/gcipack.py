@@ -15,12 +15,18 @@ bannerFile = open(sys.argv[5], "rb")
 bannerBuffer = ctypes.create_string_buffer(bannerFile.read())[:-1]
 if len(bannerBuffer) != 0x1800:
 	print("Warning: banner size mismatch (should be 96x32 RGB5A3)")
+	bannerData = bannerBuffer[0x20:0x1820]
+
+	bannerBuffer = bannerData
 bannerFile.close()
 
 iconFile = open(sys.argv[6], "rb")
 iconBuffer = ctypes.create_string_buffer(iconFile.read())[:-1]
 if len(iconBuffer) != 0x800:
 	print("Warning: icon size mismatch %d (should be 32x32 RGB5A3)" % len(iconBuffer))
+	iconData = iconBuffer[0x20:0x820]
+
+	iconBuffer = iconData
 iconFile.close()
 
 # Comment
