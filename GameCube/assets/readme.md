@@ -12,6 +12,7 @@ To use a custom banner and icon in the resulting gci you want to look at the fol
 
 1. Edit the template files in [gimp](https://www.gimp.org/)
 2. Export as `TGA` with the following settings:
+
 ![](https://share.aecx.cc/E1B13M)
 (No compression; Origin: Bottom Left)
 3. Execute `Tga2bti.exe -4A3 <file.tga> <file.raw>` for both files (`icon` and `banner`)
