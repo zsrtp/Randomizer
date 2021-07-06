@@ -24,6 +24,7 @@ namespace mod::rando
 
     struct Header
     {
+        uint32_t fileSize;       // Total number of bytes including the header
         uint64_t seed;           // Current seed
         uint16_t minVersion;     // minimal required REL version, u8 Major and u8 Minor
         uint16_t maxVersion;     // maximum supported REL version, u8 Major and u8 Minor
@@ -34,8 +35,14 @@ namespace mod::rando
 
         entryInfo dzxCheckInfo;
         entryInfo relCheckInfo;
-        entryInfo shopCheckInfo;
     } __attribute__( ( __packed__ ) );
+
+    // Seed with index
+    struct SeedInfo
+    {
+        Header header;
+        uint8_t fileIndex;     // (0-9) rando-dataX
+    };
 
     struct regionFlag
     {
@@ -70,7 +77,7 @@ namespace mod::rando
         uint32_t stageIDX;
         uint32_t moduleID;
         uint32_t offset;
-        uint32_t replacement;
+        uint32_t data[2];
     } __attribute__( ( __packed__ ) );
 }     // namespace mod::rando
 #endif

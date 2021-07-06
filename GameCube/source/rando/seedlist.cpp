@@ -31,6 +31,10 @@ namespace mod::rando
 
         // Bitwise representation of the seeds available
         uint16_t seedIDX = 0;
+
+        // Store header data so we don't have to open the files again later
+        Header* headerBuffer = new Header[SEED_MAX_ENTRIES];
+
         m_numSeeds = 0;
 
         for ( uint8_t i = 0; i < SEED_MAX_ENTRIES; i++ )
@@ -39,48 +43,55 @@ namespace mod::rando
             // rando-data0, rando-data1, ...
             filename[10] = static_cast<char>( '0' + i );
 
-            Seed tempSeed = Seed( CARD_SLOT_A, filename );
+            Header header;
 
-            if ( CARD_RESULT_READY == tempSeed.m_CARDResult )
+            if ( CARD_RESULT_READY == libtp::tools::ReadGCI( CARD_SLOT_A, filename, sizeof( header ), 0, &header ) )
             {
+                uint16_t minVersion = header.minVersion;
+                uint16_t maxVersion = header.maxVersion;
+
                 uint16_t version = static_cast<uint16_t>( _VERSION_MAJOR << 8 | _VERSION_MINOR );
-                if ( tempSeed.m_Header->minVersion >= version )
+                if ( minVersion <= version )
                 {
-                    if ( tempSeed.m_Header->maxVersion <= version )
+                    if ( maxVersion >= version )
                     {
                         seedIDX = seedIDX | ( 1 << i );
+                        memcpy( &headerBuffer[i], &header, sizeof( Header ) );
+
                         m_numSeeds++;
                     }
                 }
             }
         }
 
-        m_seedInfo = new SeedInfo[m_numSeeds];
-
-        uint8_t j = 0;     // seedInfo index
-
-        // Loop through all possible seeds and load them into our seedInfo
-        for ( uint8_t i = 0; i < SEED_MAX_ENTRIES; i++ )
+        if ( m_numSeeds > 0 )
         {
-            if ( ( ( seedIDX >> i ) & 1 ) == 1 )
+            m_seedInfo = new SeedInfo[m_numSeeds];
+
+            uint8_t j = 0;     // seedInfo index
+
+            // Loop through all possible seeds and load them into our seedInfo
+            for ( uint8_t i = 0; i < SEED_MAX_ENTRIES; i++ )
             {
-                // Index exists, load seed
-                filename[10] = static_cast<char>( '0' + i );
-
-                Seed tempSeed = Seed( CARD_SLOT_A, filename );
-
-                m_seedInfo[j].seed = tempSeed.m_Header->seed;
-                m_seedInfo[j].fileIndex = i;
-                j++;
+                if ( ( ( seedIDX >> i ) & 1 ) == 1 )
+                {
+                    memcpy( &m_seedInfo[j].header, &headerBuffer[i], sizeof( Header ) );
+                    m_seedInfo[j].fileIndex = i;
+                    j++;
+                }
             }
         }
+
+        mod::console << m_numSeeds << " seed(s) available.\n";
+
+        delete[] headerBuffer;
     }
 
     SeedInfo SeedList::FindSeed( uint64_t seed )
     {
         for ( uint8_t i = 0; i < SEED_MAX_ENTRIES && i < m_numSeeds; i++ )
         {
-            if ( m_seedInfo[i].seed == seed )
+            if ( m_seedInfo[i].header.seed == seed )
             {
                 return static_cast<SeedInfo>( m_seedInfo[i] );
             }

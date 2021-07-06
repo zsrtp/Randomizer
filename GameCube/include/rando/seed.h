@@ -42,17 +42,15 @@ namespace mod::rando
         RELCheck* m_RELChecks = nullptr;       // REL Modifications for current stage
         uint32_t m_numLoadedRELChecks = 0;     // Number of currently loaded RELCheck
 
-        shopCheck* m_ShopChecks = nullptr;      // Shop replacements for current stage
-        uint32_t m_numLoadedSHOPChecks = 0;     // Number of currently loaded ShopChecks
-
         // Member functions
        public:
         /**
          *  @brief Class to dynamically load required data from a given seed
          *
-         *  @param fileName gci filename (rando-data0, rando-data1, ...)
+         *  @param seedInfo Pointer to the seedinfo that we intend to load
          */
-        Seed( int32_t chan, const char* fileName );
+        Seed( int32_t chan, SeedInfo* seedInfo );
+
         /**
          *  @brief Deletes all allocated members and unpatches all the previously applied patches
          */
@@ -69,8 +67,9 @@ namespace mod::rando
         void LoadChecks( const char* stage );
 
        private:
-        const char* m_FileName = nullptr;
-        int32_t m_CardSlot = 0;     //< Selected Card slot
+        uint8_t* m_GCIData = nullptr;     // GCI Data including header
+        uint8_t m_fileIndex = 0xFF;       // GCI Fileindex
+        int32_t m_CardSlot = 0;           // Selected Card slot
         void ClearChecks( void );
 
         /**
@@ -84,7 +83,6 @@ namespace mod::rando
 
         void LoadDZX( uint8_t stageIDX );
         void LoadREL( uint8_t stageIDX );
-        void LoadSHOP( uint8_t stageIDX );
     };
 }     // namespace mod::rando
 #endif

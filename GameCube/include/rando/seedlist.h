@@ -8,6 +8,7 @@
 #define RANDO_SEEDLIST_H
 #include <cinttypes>
 
+#include "rando/data.h"
 #include "rando/seed.h"
 #include "rando/seedlist.h"
 
@@ -15,13 +16,6 @@
 
 namespace mod::rando
 {
-    // Seed with index
-    struct SeedInfo
-    {
-        uint64_t seed;
-        uint8_t fileIndex;     // (0-9) rando-dataX
-    };
-
     class SeedList
     {
        public:
@@ -30,16 +24,9 @@ namespace mod::rando
 
         SeedInfo FindSeed( uint64_t seed );
 
-        SeedInfo operator[]( int n )
-        {
-            // Returning with mod guarantees for read access within numSeeds
-            return static_cast<SeedInfo>( m_seedInfo[n % m_numSeeds] );
-        }
-
         uint8_t m_numSeeds;
         uint8_t m_selectedSeed;
 
-       private:
         SeedInfo* m_seedInfo = nullptr;
     };
 }     // namespace mod::rando

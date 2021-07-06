@@ -6,9 +6,13 @@
 #include <cstring>
 
 #include "patch.h"
-#include "rando/seedlist.h"
+#include "rando/data.h"
+#include "rando/randomizer.h"
+#include "rando/seedList.h"
+#include "tools.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/f_ap_game.h"
+#include "tp/f_op_scene_req.h"
 #include "tp/f_pc_node_req.h"
 #include "tp/m_do_controller_pad.h"
 
@@ -17,7 +21,7 @@ namespace mod
     // Bind extern global variables
     libtp::display::Console console( 9 );
     rando::Randomizer* randomizer = nullptr;
-    rando::SeedList seedList;
+    rando::SeedList* seedList = nullptr;
 
     // Variables
     uint32_t lastButtonInput = 0;
@@ -26,18 +30,30 @@ namespace mod
 
     // Function hook return trampolines
     void ( *return_fapGm_Execute )( void ) = nullptr;
+    bool ( *return_do_Link )( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) = nullptr;
 
     void main()
     {
+        // Display some info
+        console << "Welcome to TPR!\n"
+                << "(C) AECX, Lunar Soap, Zephiles\n\n"
+                << "Note:\n"
+                << "Please avoid [re]starting rando unnecessarily\n"
+                << "on ORIGINAL HARDWARE as it wears down your\n"
+                << "Memory Card!\n\n";
+
         // Just hook functions for now
         hookFunctions();
+
+        // Generate our seedList
+        seedList = new rando::SeedList();
     }
 
     void hookFunctions()
     {
         // Hook functions
         return_fapGm_Execute = libtp::patch::hookFunction( libtp::tp::f_ap_game::fapGm_Execute, mod::handle_fapGm_Execute );
-        console << "Functions have been hooked\n";
+        return_do_Link = libtp::patch::hookFunction( libtp::tp::dynamic_link::do_link, handle_do_Link );
     }
 
     void setScreen( bool state )
@@ -54,28 +70,28 @@ namespace mod
         if ( input && gameState == GAME_TITLE )
         {
             // Handle seed selection if necessary
-            if ( seedList.m_numSeeds > 1 )
+            if ( seedList->m_numSeeds > 1 )
             {
                 if ( checkBtn( Button_X ) )
                 {
-                    seedList.m_selectedSeed++;
+                    seedList->m_selectedSeed++;
 
-                    if ( seedList.m_selectedSeed >= seedList.m_numSeeds )
-                        seedList.m_selectedSeed = 0;
+                    if ( seedList->m_selectedSeed >= seedList->m_numSeeds )
+                        seedList->m_selectedSeed = 0;
                 }
                 else if ( checkBtn( Button_Y ) )
                 {
-                    if ( seedList.m_selectedSeed == 0 )
-                        seedList.m_selectedSeed = seedList.m_numSeeds;
+                    if ( seedList->m_selectedSeed == 0 )
+                        seedList->m_selectedSeed = seedList->m_numSeeds;
 
-                    seedList.m_selectedSeed--;
+                    seedList->m_selectedSeed--;
                 }
 
                 // 8 is the line it typically appears
                 console.setLine( 8 );
                 console << "\r"
-                        << "[" << seedList.m_selectedSeed + 1 << "/" << seedList.m_numSeeds
-                        << "] Seed: " << seedList[seedList.m_selectedSeed].seed;
+                        << "[" << seedList->m_selectedSeed + 1 << "/" << seedList->m_numSeeds
+                        << "] Seed: " << seedList->m_seedInfo[seedList->m_selectedSeed].header.seed << "\n";
             }
         }
         // End of handling title screen inputs
@@ -116,7 +132,7 @@ namespace mod
                 // Handle console differently when the user first loads it
                 if ( prevState == GAME_BOOT )
                 {
-                    switch ( seedList.m_numSeeds )
+                    switch ( seedList->m_numSeeds )
                     {
                         case 0:
                             // Err, no seeds
@@ -170,6 +186,30 @@ namespace mod
             }
         }
 
+        // Handle rando state
+        if ( gameState == GAME_ACTIVE )
+        {
+            if ( seedList->m_numSeeds > 0 && !randomizer && !tp::f_op_scene_req::isLoading )
+            {
+                randomizer = new rando::Randomizer( &seedList->m_seedInfo[seedList->m_selectedSeed] );
+            }
+        }
+        else if ( randomizer )
+        {
+            delete randomizer;
+            randomizer = nullptr;
+        }
+
         return return_fapGm_Execute();
+    }
+
+    bool handle_do_Link( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
+    {
+        // Call the original function immediately, as the REL file needs to be linked before applying patches
+        const bool result = return_do_Link( dmc );
+
+        // TODO: Implementation of dynamic module overrides
+
+        return result;
     }
 }     // namespace mod
