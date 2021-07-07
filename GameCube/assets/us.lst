@@ -10,6 +10,9 @@
 800266A4:roomTresureInit
 80027D04:setTresure
 80024EFC:ActorCreate
+80025A38:actorInit
+80025B24:actorInit_always
+8002586C:actorCommonLayerInit
 
 // data
 80450C34:archiveHeap
