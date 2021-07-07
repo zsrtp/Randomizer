@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['randomizer_1218',['randomizer',['../d4/d00/namespacemod.html#a338f078d5ed1bb8a805d5d30508e5b62',1,'mod']]],
+  ['region_5fid_1219',['region_id',['../de/d23/structmod_1_1rando_1_1regionFlag.html#a0d7bb45bcb31f68e7b4b2acb9029a349',1,'mod::rando::regionFlag::region_id()'],['../d2/dbd/data_8h.html#ad8e9e77a1bf1674d812447a18e734bdd',1,'region_id():&#160;data.h']]],
+  ['regionflagsinfo_1220',['regionFlagsInfo',['../de/d1d/structmod_1_1rando_1_1Header.html#afb2f2c3270954d75fe9784b3375bf021',1,'mod::rando::Header::regionFlagsInfo()'],['../d2/dbd/data_8h.html#addd58ddc2ad8c7cf36cde18670894289',1,'regionFlagsInfo():&#160;data.h']]],
+  ['regionid_1221',['regionID',['../d5/d4e/namespacelibtp_1_1data_1_1stage.html#abfcbc45a509fac3d3373d037f8283ec7',1,'libtp::data::stage']]],
+  ['regions_1222',['regions',['../d5/d4e/namespacelibtp_1_1data_1_1stage.html#a74e68c84ea8ec3a7c0af73a93df27d82',1,'libtp::data::stage']]],
+  ['relcheckinfo_1223',['relCheckInfo',['../de/d1d/structmod_1_1rando_1_1Header.html#a41703586fa736c722046ef8e4a42e713',1,'mod::rando::Header::relCheckInfo()'],['../d2/dbd/data_8h.html#aead8f0a8500a0e44356094f7b5ff3b72',1,'relCheckInfo():&#160;data.h']]],
+  ['replace_1224',['replace',['../d6/d76/structmod_1_1rando_1_1shopCheck.html#a03aef705c3a12b9cfc1a41541f8349d6',1,'mod::rando::shopCheck::replace()'],['../d2/dbd/data_8h.html#ac6cd5ead2301fe8076b0dfa476660c5e',1,'replace():&#160;data.h']]],
+  ['respawnanimation_1225',['respawnAnimation',['../d8/d22/structlibtp_1_1tp_1_1d__com__inf__game_1_1GameInfo.html#a6acaf9a53b50d429067b2ed3e63e7ae8',1,'libtp::tp::d_com_inf_game::GameInfo::respawnAnimation()'],['../dd/de1/d__com__inf__game_8h.html#ab17829602b3e7d7d7200654772643ad1',1,'respawnAnimation():&#160;d_com_inf_game.h']]],
+  ['respawncutscene_1226',['respawnCutscene',['../d8/d22/structlibtp_1_1tp_1_1d__com__inf__game_1_1GameInfo.html#a187ccee7176f37e9118cabbb8926cede',1,'libtp::tp::d_com_inf_game::GameInfo::respawnCutscene()'],['../dd/de1/d__com__inf__game_8h.html#ac5a5d289402e425bfd90d560c16eaaf2',1,'respawnCutscene():&#160;d_com_inf_game.h']]],
+  ['return_5factorcommonlayerinit_1227',['return_actorCommonLayerInit',['../d4/d00/namespacemod.html#aad94456ffc4caee9d47a761c061abecd',1,'mod']]],
+  ['return_5factorinit_1228',['return_actorInit',['../d4/d00/namespacemod.html#ace22dce496a623c783556a346252dce7',1,'mod']]],
+  ['return_5factorinit_5falways_1229',['return_actorInit_always',['../d4/d00/namespacemod.html#aa8781abcf78927b7e893215f560fc4ad',1,'mod']]],
+  ['return_5fdo_5flink_1230',['return_do_Link',['../d4/d00/namespacemod.html#a8b76e2c5cde289b4ec7bb310ef9729ce',1,'mod']]],
+  ['return_5ffapgm_5fexecute_1231',['return_fapGm_Execute',['../d4/d00/namespacemod.html#a120d677492e5ecc76e7ada1338f77365',1,'mod']]],
+  ['ringtexresidx_1232',['ringTexResIdx',['../d5/d8c/structlibtp_1_1tp_1_1d__item__data_1_1ItemResource.html#ab27ee7ad0184e82b5e15edbd7e79c3ba',1,'libtp::tp::d_item_data::ItemResource::ringTexResIdx()'],['../d2/db5/d__item__data_8h.html#a6d148b800dba8e20b951e986800a7e65',1,'ringTexResIdx():&#160;d_item_data.h']]],
+  ['room_5fid_1233',['room_id',['../d9/d0e/structlibtp_1_1tp_1_1dzx_1_1ActorPRMClass.html#a8c4fe5f0f3db5ad730ab352704cf05ad',1,'libtp::tp::dzx::ActorPRMClass::room_id()'],['../da/d8c/dzx_8h.html#abd9de5fcba0e3e76b3a639cee4b82671',1,'room_id():&#160;dzx.h']]],
+  ['rot_1234',['rot',['../da/d84/structlibtp_1_1tp_1_1dzx_1_1ACTR.html#a046f500b73011fbac64e3b02d7435090',1,'libtp::tp::dzx::ACTR::rot()'],['../dc/d85/structlibtp_1_1tp_1_1dzx_1_1ITEM.html#a13a977b328523c3f9844ad15f5e29326',1,'libtp::tp::dzx::ITEM::rot()'],['../da/d8c/dzx_8h.html#a434ee651eae55dbddffb0ee7b89fc4d4',1,'rot():&#160;dzx.h']]]
+];

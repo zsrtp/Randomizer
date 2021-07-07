@@ -1,0 +1,8 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="libtp::tp::d_com_inf\l_game::NextStageVars",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d28/structlibtp_1_1tp_1_1d__com__inf__game_1_1NextStageVars.html",tooltip="Holds information about the next stage."];
+}

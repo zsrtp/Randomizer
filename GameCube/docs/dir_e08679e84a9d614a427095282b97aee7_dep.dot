@@ -1,0 +1,15 @@
+digraph "externals/libtp_rel" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_d2b6318187fb2206cad9b40a4e1245e4 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="externals" fontname="Helvetica", fontsize="10", URL="dir_d2b6318187fb2206cad9b40a4e1245e4.html"]
+  subgraph clusterdir_e08679e84a9d614a427095282b97aee7 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_e08679e84a9d614a427095282b97aee7.html"];
+    dir_e08679e84a9d614a427095282b97aee7 [shape=plaintext label="libtp_rel"];
+  dir_5c412ca36d72f0dbd19d87b31debe58c [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_5c412ca36d72f0dbd19d87b31debe58c.html"];
+  dir_cb06ac823aef0db82b7e328dbaafe807 [shape=box label="source" fillcolor="white" style="filled" color="red" URL="dir_cb06ac823aef0db82b7e328dbaafe807.html"];
+  }
+  }
+  dir_cb06ac823aef0db82b7e328dbaafe807->dir_5c412ca36d72f0dbd19d87b31debe58c [headlabel="19", labeldistance=1.5 headhref="dir_000008_000002.html"];
+}

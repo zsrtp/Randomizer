@@ -1,0 +1,17 @@
+digraph "mod::rando::Randomizer"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="mod::rando::Randomizer",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" m_Seed" ,fontname="Helvetica"];
+  Node2 [label="mod::rando::Seed",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d9d/classmod_1_1rando_1_1Seed.html",tooltip=" "];
+  Node3 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" m_Header" ,fontname="Helvetica"];
+  Node3 [label="mod::rando::Header",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d1d/structmod_1_1rando_1_1Header.html",tooltip=" "];
+  Node4 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" dzxCheckInfo\neventFlagsInfo\npatchInfo\nregionFlagsInfo\nrelCheckInfo" ,fontname="Helvetica"];
+  Node4 [label="mod::rando::entryInfo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d9e/structmod_1_1rando_1_1entryInfo.html",tooltip="Optional functions that have to be executed once and patch/modify the game code."];
+  Node5 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" m_RELChecks" ,fontname="Helvetica"];
+  Node5 [label="mod::rando::RELCheck",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d87/structmod_1_1rando_1_1RELCheck.html",tooltip=" "];
+  Node6 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" m_DZXChecks" ,fontname="Helvetica"];
+  Node6 [label="mod::rando::dzxCheck",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/dec/structmod_1_1rando_1_1dzxCheck.html",tooltip=" "];
+}

@@ -1,0 +1,8 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="libtp::tp::d_a_alink\l::ClimbVars",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d6a/structlibtp_1_1tp_1_1d__a__alink_1_1ClimbVars.html",tooltip="These values define the speed of various climbing actions."];
+}

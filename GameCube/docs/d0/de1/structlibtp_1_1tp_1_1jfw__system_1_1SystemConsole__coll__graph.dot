@@ -1,0 +1,9 @@
+digraph "libtp::tp::jfw_system::SystemConsole"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="libtp::tp::jfw_system\l::SystemConsole",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="SystemConsole variables which is normally used for debugging."];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" consoleLine" ,fontname="Helvetica"];
+  Node2 [label="libtp::tp::jfw_system\l::ConsoleLine",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d51/structlibtp_1_1tp_1_1jfw__system_1_1ConsoleLine.html",tooltip=" "];
+}
