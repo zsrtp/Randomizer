@@ -12,6 +12,7 @@
 #include "rando/data.h"
 #include "rando/seed.h"
 #include "rando/seedlist.h"
+#include "tp/dzx.h"
 
 namespace mod::rando
 {
@@ -20,6 +21,9 @@ namespace mod::rando
        public:
         Randomizer( SeedInfo* seedInfo );
         ~Randomizer();
+
+        void onStageLoad( void );
+        void replaceDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo );
 
        private:
         Seed* m_Seed;

@@ -5,12 +5,15 @@
 #include <cstdio>
 #include <cstring>
 
+#include "events.h"
 #include "patch.h"
 #include "rando/data.h"
 #include "rando/randomizer.h"
 #include "rando/seedList.h"
 #include "tools.h"
 #include "tp/d_com_inf_game.h"
+#include "tp/d_stage.h"
+#include "tp/dzx.h"
 #include "tp/f_ap_game.h"
 #include "tp/f_op_scene_req.h"
 #include "tp/f_pc_node_req.h"
@@ -25,12 +28,29 @@ namespace mod
 
     // Variables
     uint32_t lastButtonInput = 0;
+    int32_t lastLoadingState = 0;
     bool consoleState = true;
     uint8_t gameState = GAME_BOOT;
 
     // Function hook return trampolines
     void ( *return_fapGm_Execute )( void ) = nullptr;
     bool ( *return_do_Link )( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) = nullptr;
+
+    // DZX trampolines
+    bool ( *return_actorInit )( void* mStatus_roomControl,
+                                libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
+                                int32_t unk3,
+                                void* unk4 ) = nullptr;
+
+    bool ( *return_actorInit_always )( void* mStatus_roomControl,
+                                       libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
+                                       int32_t unk3,
+                                       void* unk4 ) = nullptr;
+
+    bool ( *return_actorCommonLayerInit )( void* mStatus_roomControl,
+                                           libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
+                                           int32_t unk3,
+                                           void* unk4 ) = nullptr;
 
     void main()
     {
@@ -51,9 +71,37 @@ namespace mod
 
     void hookFunctions()
     {
+        using namespace libtp;
+        using namespace libtp::tp::d_stage;
+        using namespace libtp::tp::dzx;
         // Hook functions
-        return_fapGm_Execute = libtp::patch::hookFunction( libtp::tp::f_ap_game::fapGm_Execute, mod::handle_fapGm_Execute );
-        return_do_Link = libtp::patch::hookFunction( libtp::tp::dynamic_link::do_link, handle_do_Link );
+        return_fapGm_Execute = patch::hookFunction( libtp::tp::f_ap_game::fapGm_Execute, mod::handle_fapGm_Execute );
+        return_do_Link = patch::hookFunction( libtp::tp::dynamic_link::do_link, handle_do_Link );
+
+        // DZX
+        return_actorInit =
+            patch::hookFunction( actorInit,
+                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
+                                 {
+                                     events::onDZX( mod::randomizer, chunkTypeInfo );
+                                     return return_actorInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
+                                 } );
+
+        return_actorInit_always =
+            patch::hookFunction( actorInit_always,
+                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
+                                 {
+                                     events::onDZX( mod::randomizer, chunkTypeInfo );
+                                     return return_actorInit_always( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
+                                 } );
+
+        return_actorCommonLayerInit =
+            patch::hookFunction( actorCommonLayerInit,
+                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
+                                 {
+                                     events::onDZX( mod::randomizer, chunkTypeInfo );
+                                     return return_actorCommonLayerInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
+                                 } );
     }
 
     void setScreen( bool state )
@@ -199,6 +247,22 @@ namespace mod
             delete randomizer;
             randomizer = nullptr;
         }
+
+        // Custom events
+        if ( !lastLoadingState && tp::f_op_scene_req::isLoading )
+        {
+            // OnLoad
+            events::onLoad( randomizer );
+        }
+
+        if ( lastLoadingState && !tp::f_op_scene_req::isLoading )
+        {
+            // OffLoad
+            events::offLoad( randomizer );
+        }
+
+        lastLoadingState = tp::f_op_scene_req::isLoading;
+        // End of custom events
 
         return return_fapGm_Execute();
     }

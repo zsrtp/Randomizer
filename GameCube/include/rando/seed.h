@@ -63,8 +63,10 @@ namespace mod::rando
 
         /**
          *  @brief Load check data for a given stage & stores them in a temp. (smaller) buffer
+         *
+         *  @return True if checks have been updated (new stage) otherwise we are still on the same stage
          */
-        void LoadChecks( const char* stage );
+        bool LoadChecks( const char* stage );
 
        private:
         uint8_t* m_GCIData = nullptr;     // GCI Data including header

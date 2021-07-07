@@ -91,7 +91,7 @@ namespace mod::rando
         }
     }
 
-    void Seed::LoadChecks( const char* stage )
+    bool Seed::LoadChecks( const char* stage )
     {
         using namespace libtp;
 
@@ -106,7 +106,8 @@ namespace mod::rando
         }
 
         // Don't run if this isn't actually a new stage
-        if ( stageIDX != m_StageIDX )
+        bool result = stageIDX != m_StageIDX;
+        if ( result )
         {
             this->ClearChecks();
 
@@ -116,6 +117,8 @@ namespace mod::rando
             // Save current stageIDX for next time
             m_StageIDX = stageIDX;
         }
+
+        return result;
     }
 
     void Seed::ClearChecks()
