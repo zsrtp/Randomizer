@@ -4,3 +4,4 @@
 **/*.gci
 **/build.*
 **/autobuild.sh
+**/*.tga
