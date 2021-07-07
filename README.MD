@@ -1,5 +1,5 @@
 # Twilight Princess Randomizer
-[Homepage](https://rando.zeldatp.net) | [Dev Info](https://wiki.zeldatp.net/Dev) | [Mirror](https://git.aecx.cc) | [Discord](https://discord.zeldatp.net)
+[Homepage](https://rando.zeldatp.net) | [Dev Info](https://wiki.zeldatp.net/Dev) | [Mirror](https://git.aecx.cc) | [Discord](https://discord.zeldatp.net) | [Docs](https://zsrtp.github.io/Randomizer)
 
 Like other Randomizers, the **Twilight Princess Randomizer** (TPR) shuffles the contents of chests and other collectibles, thus bringing new life to a classic game. It also comes with a bunch of QoL changes and settings!
 
