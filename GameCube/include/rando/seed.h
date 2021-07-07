@@ -58,8 +58,10 @@ namespace mod::rando
 
         /**
          *  @brief Applies patches, event & region flags according to this seed to the current savefile
+         *
+         *  @return True if successful
          */
-        void InitSeed( void );
+        bool InitSeed( void );
 
         /**
          *  @brief Load check data for a given stage & stores them in a temp. (smaller) buffer

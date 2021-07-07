@@ -22,8 +22,13 @@ namespace mod::rando
         Randomizer( SeedInfo* seedInfo );
         ~Randomizer();
 
+        void initSave( void );
+
         void onStageLoad( void );
         void replaceDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo );
+
+       public:
+        bool m_SeedInit = false;     // True if seed-specific patches, flags, etc. have been applied to the save-file
 
        private:
         Seed* m_Seed;

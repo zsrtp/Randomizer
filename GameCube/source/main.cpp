@@ -237,7 +237,7 @@ namespace mod
         // Handle rando state
         if ( gameState == GAME_ACTIVE )
         {
-            if ( seedList->m_numSeeds > 0 && !randomizer && !tp::f_op_scene_req::isLoading )
+            if ( seedList->m_numSeeds > 0 && !randomizer )
             {
                 randomizer = new rando::Randomizer( &seedList->m_seedInfo[seedList->m_selectedSeed] );
             }

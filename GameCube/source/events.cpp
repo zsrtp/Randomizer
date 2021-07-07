@@ -16,7 +16,18 @@ namespace mod::events
         }
     }
 
-    void offLoad( rando::Randomizer* randomizer ) { return; }
+    void offLoad( rando::Randomizer* randomizer )
+    {
+        if ( randomizer )
+        {
+            // Check if the seed is already applied to the save-file (flags etc.)
+            // Try to do it otherwise
+            if ( !randomizer->m_SeedInit )
+            {
+                randomizer->initSave();
+            }
+        }
+    }
 
     void onDZX( rando::Randomizer* randomizer, libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo )
     {

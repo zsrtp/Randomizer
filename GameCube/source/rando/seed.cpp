@@ -29,12 +29,20 @@ namespace mod::rando
 
         // Loading seed rando-dataX '<seed>'...
 
-        // Set our filename
+        // Store our filename index
         m_fileIndex = seedInfo->fileIndex;
 
         mod::console << "Loading seed " << m_fileIndex << ": '" << m_Header->seed << "'...\n";
 
-        InitSeed();
+        // Load the whole gci locally to reduce number of reads (memcard)
+        uint32_t length = m_Header->fileSize;
+        char fileName[12] = "rando-data\0";
+
+        fileName[10] = static_cast<char>( '0' + m_fileIndex );
+
+        m_GCIData = new uint8_t[length];
+
+        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, fileName, length, 0x00, m_GCIData );
     }
 
     Seed::~Seed()
@@ -52,7 +60,7 @@ namespace mod::rando
         }
     }
 
-    void Seed::InitSeed( void )
+    bool Seed::InitSeed( void )
     {
         // (Re)set counters & status
         m_SeedStatus = 0;
@@ -61,16 +69,6 @@ namespace mod::rando
         m_PatchesApplied = 0;
 
         m_SeedStatus |= SEED_STATUS_INITIALIZED;
-
-        // Load the whole gci locally to reduce number of reads (memcard)
-        uint32_t length = m_Header->fileSize;
-
-        char fileName[12] = "rando-data\0";
-        fileName[10] = static_cast<char>( '0' + m_fileIndex );
-
-        m_GCIData = new uint8_t[length];
-
-        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, fileName, length, 0x00, m_GCIData );
 
         if ( m_CARDResult == CARD_RESULT_READY )
         {
@@ -83,11 +81,13 @@ namespace mod::rando
 
             mod::console << "Region Flags: \n";
             this->applyRegionFlags();
+            return true;
         }
         else
         {
             mod::console << "FATAL: Couldn't read Seed #" << m_fileIndex << "\n";
             mod::console << "ERROR: " << m_CARDResult << "\n";
+            return false;
         }
     }
 

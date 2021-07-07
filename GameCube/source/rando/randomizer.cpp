@@ -30,16 +30,11 @@ namespace mod::rando
         {
             mod::console << "Seed: " << seedInfo->header.seed << "\n";
 
+            // Load the seed
             m_Seed = new Seed( CARD_SLOT_A, seedInfo );
 
-            /**
-             * TODO:
-             * Since this runs AFTER the initial load (because questlog etc. has to be avialable
-             * for the seed to manipulate it; event flags, region flags, etc.) the initially
-             * loaded area/stage will NOT have modified DZX thus rando appears to be disabled
-             * workaround would be to simply leave and re-enter the area;
-             * Also for new files this doesn't matter because of the intro cutscene.
-             */
+            // Load checks for first load
+            onStageLoad();
         }
     }
 
@@ -49,6 +44,14 @@ namespace mod::rando
 
         // Clear Seed
         delete m_Seed;
+    }
+
+    void Randomizer::initSave( void )
+    {
+        if ( m_Seed )
+        {
+            m_SeedInit = m_Seed->InitSeed();
+        }
     }
 
     void Randomizer::onStageLoad( void )
