@@ -9,16 +9,17 @@
 #include "game_patch/game_patch.h"
 #include "gc/OSCache.h"
 #include "main.h"
+#include "rando/randomizer.h"
 #include "tp/d_menu_collect.h"
 #include "tp/d_save.h"
 
 namespace mod::game_patch
 {
-    void patchWallet( bool set )
+    void patchWallet( rando::Randomizer* randomizer, bool set )
     {
         using namespace libtp;
 
-        mod::console << "WalletPatch [" << ( set ? "x" : " " ) << "]\n";
+        mod::console << randomizer->m_SeedInfo->header.seed << "::WalletPatch [" << ( set ? "x" : " " ) << "]\n";
 
         uint32_t getRupeeMaxPtr = reinterpret_cast<uint32_t>( &tp::d_save::getRupeeMax );
         uint32_t setWalletMaxNumPtr = reinterpret_cast<uint32_t>( &tp::d_menu_collect::setWalletMaxNum );
