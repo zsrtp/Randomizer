@@ -8,12 +8,14 @@
 
 #include <cstring>
 
+#include "gc/OSModule.h"
 #include "gc/card.h"
 #include "main.h"
 #include "rando/data.h"
 #include "rando/seed.h"
 #include "rando/seedlist.h"
 #include "tp/d_com_inf_game.h"
+#include "tp/dynamic_link.h"
 #include "tp/dzx.h"
 
 namespace mod::rando
@@ -66,7 +68,39 @@ namespace mod::rando
         }
     }
 
-    void Randomizer::replaceDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo )
+    void Randomizer::overrideREL( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
+    {
+        // Local vars
+        uint32_t numReplacements = m_Seed->m_numLoadedDZXChecks;
+        RELCheck* relReplacements = m_Seed->m_RELChecks;
+
+        // Get the pointer to the current REL file
+        libtp::gc::os_module::OSModuleInfo* moduleInfo = dmc->moduleInfo;
+
+        // If we don't have replacements just leave
+        if ( !numReplacements )
+            return;
+
+        // Also make sure the REL is actually loaded
+        if ( !moduleInfo )
+            return;
+
+        // Get the REL pointer as a raw u32, to use for overwrites
+        uint32_t relPtrRaw = reinterpret_cast<uint32_t>( moduleInfo );
+
+        // Loop through RELChecks and apply if necessary
+        for ( uint32_t i = 0; i < numReplacements; i++ )
+        {
+            RELCheck* relCheck = &relReplacements[i];
+            if ( moduleInfo->id == relCheck->moduleID )
+            {
+                // Override as specified
+                *reinterpret_cast<uint32_t*>( relPtrRaw + relCheck->offset ) = relCheck->override;
+            }
+        }
+    }
+
+    void Randomizer::overrideDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo )
     {
         // Local vars
         uint32_t numReplacements = m_Seed->m_numLoadedDZXChecks;

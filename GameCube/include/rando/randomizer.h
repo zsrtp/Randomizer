@@ -12,6 +12,7 @@
 #include "rando/data.h"
 #include "rando/seed.h"
 #include "rando/seedlist.h"
+#include "tp/dynamic_link.h"
 #include "tp/dzx.h"
 
 namespace mod::rando
@@ -25,7 +26,9 @@ namespace mod::rando
         void initSave( void );
 
         void onStageLoad( void );
-        void replaceDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo );
+
+        void overrideREL( libtp::tp::dynamic_link::DynamicModuleControl* dmc );
+        void overrideDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo );
 
        public:
         bool m_SeedInit = false;     // True if seed-specific patches, flags, etc. have been applied to the save-file
