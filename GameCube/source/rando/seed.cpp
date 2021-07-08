@@ -156,7 +156,7 @@ namespace mod::rando
                         using namespace game_patch;
                         if ( index < sizeof( patches ) / sizeof( patches[0] ) )
                         {
-                            patches[index]( set );
+                            patches[index]( mod::randomizer, set );
                             m_PatchesApplied++;
                         }
                     }
