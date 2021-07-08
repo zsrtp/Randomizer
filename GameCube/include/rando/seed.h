@@ -12,14 +12,6 @@
 #include "rando/data.h"
 #include "tools.h"
 
-#define SEED_STATUS_INITIALIZED 1
-#define SEED_STATUS_PATCHED 2
-#define SEED_STATUS_EVENTFLG 4
-#define SEED_STATUS_REGIONFLG 8
-#define SEED_STATUS_DZXLOAD 16
-#define SEED_STATUS_RELLOAD 32
-#define SEED_STATUS_SHOPLOAD 64
-
 namespace mod::rando
 {
     class Seed
@@ -27,7 +19,6 @@ namespace mod::rando
         // Member vars
        public:
         int32_t m_CARDResult;     // Most recent status from the CARDApi functions
-        uint32_t m_SeedStatus = 0;
 
         uint32_t m_PatchesApplied = 0;
         uint32_t m_EventFlagsModified = 0;

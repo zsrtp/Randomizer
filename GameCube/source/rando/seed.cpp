@@ -63,12 +63,9 @@ namespace mod::rando
     bool Seed::InitSeed( void )
     {
         // (Re)set counters & status
-        m_SeedStatus = 0;
         m_AreaFlagsModified = 0;
         m_EventFlagsModified = 0;
         m_PatchesApplied = 0;
-
-        m_SeedStatus |= SEED_STATUS_INITIALIZED;
 
         if ( m_CARDResult == CARD_RESULT_READY )
         {
@@ -134,8 +131,6 @@ namespace mod::rando
     {
         using namespace libtp;
 
-        m_SeedStatus |= SEED_STATUS_PATCHED;
-
         uint32_t num_patches = m_Header->patchInfo.numEntries;
         uint32_t gci_offset = m_Header->patchInfo.dataOffset;
 
@@ -174,8 +169,6 @@ namespace mod::rando
     {
         using namespace libtp;
 
-        m_SeedStatus |= SEED_STATUS_EVENTFLG;
-
         uint32_t num_eventFlags = m_Header->eventFlagsInfo.numEntries;
         uint32_t gci_offset = m_Header->eventFlagsInfo.dataOffset;
 
@@ -200,8 +193,6 @@ namespace mod::rando
     void Seed::applyRegionFlags()
     {
         using namespace libtp;
-
-        m_SeedStatus |= SEED_STATUS_REGIONFLG;
 
         uint32_t num_regionFlags = m_Header->regionFlagsInfo.numEntries;
         uint32_t gci_offset = m_Header->regionFlagsInfo.dataOffset;
@@ -261,8 +252,6 @@ namespace mod::rando
     {
         using namespace libtp;
 
-        m_SeedStatus |= SEED_STATUS_DZXLOAD;
-
         uint32_t num_dzxchecks = m_Header->dzxCheckInfo.numEntries;
         uint32_t gci_offset = m_Header->dzxCheckInfo.dataOffset;
 
@@ -298,8 +287,6 @@ namespace mod::rando
     void Seed::LoadREL( uint8_t stageIDX )
     {
         using namespace libtp;
-
-        m_SeedStatus |= SEED_STATUS_RELLOAD;
 
         uint32_t num_relchecks = m_Header->relCheckInfo.numEntries;
         uint32_t gci_offset = m_Header->relCheckInfo.dataOffset;
