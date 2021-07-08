@@ -33,6 +33,7 @@ namespace mod::rando
             mod::console << "Seed: " << seedInfo->header.seed << "\n";
 
             // Load the seed
+            m_SeedInfo = seedInfo;
             m_Seed = new Seed( CARD_SLOT_A, seedInfo );
 
             // Load checks for first load

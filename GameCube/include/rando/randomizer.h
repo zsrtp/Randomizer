@@ -31,7 +31,8 @@ namespace mod::rando
         void overrideDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo );
 
        public:
-        bool m_SeedInit = false;     // True if seed-specific patches, flags, etc. have been applied to the save-file
+        SeedInfo* m_SeedInfo = nullptr;     // SeedInfo associated with this randomizer instance
+        bool m_SeedInit = false;            // True if seed-specific patches, flags, etc. have been applied to the save-file
 
        private:
         Seed* m_Seed;
