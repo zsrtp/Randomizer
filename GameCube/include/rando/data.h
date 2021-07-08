@@ -77,7 +77,7 @@ namespace mod::rando
         uint32_t stageIDX;
         uint32_t moduleID;
         uint32_t offset;
-        uint32_t data[2];
+        uint32_t override;
     } __attribute__( ( __packed__ ) );
 }     // namespace mod::rando
 #endif
