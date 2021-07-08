@@ -45,7 +45,7 @@ namespace mod
     void handle_fapGm_Execute( void );
     extern void ( *return_fapGm_Execute )( void );
 
-    bool handle_do_Link( libtp::tp::dynamic_link::DynamicModuleControl* dmc );
+    // DMC (REL) Hook
     extern bool ( *return_do_Link )( libtp::tp::dynamic_link::DynamicModuleControl* dmc );
 
     // DZX Functions; Handler is lambda -> randomizer::onDZX();

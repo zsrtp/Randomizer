@@ -76,7 +76,19 @@ namespace mod
         using namespace libtp::tp::dzx;
         // Hook functions
         return_fapGm_Execute = patch::hookFunction( libtp::tp::f_ap_game::fapGm_Execute, mod::handle_fapGm_Execute );
-        return_do_Link = patch::hookFunction( libtp::tp::dynamic_link::do_link, handle_do_Link );
+
+        // DMC
+        return_do_Link = patch::hookFunction( libtp::tp::dynamic_link::do_link,
+                                              []( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
+                                              {
+                                                  // Call the original function immediately, as the REL file needs to be linked
+                                                  // before applying patches
+                                                  const bool result = return_do_Link( dmc );
+
+                                                  events::onRELLink( randomizer, dmc );
+
+                                                  return result;
+                                              } );
 
         // DZX
         return_actorInit =
@@ -265,15 +277,5 @@ namespace mod
         // End of custom events
 
         return return_fapGm_Execute();
-    }
-
-    bool handle_do_Link( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
-    {
-        // Call the original function immediately, as the REL file needs to be linked before applying patches
-        const bool result = return_do_Link( dmc );
-
-        // TODO: Implementation of dynamic module overrides
-
-        return result;
     }
 }     // namespace mod

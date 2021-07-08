@@ -29,11 +29,19 @@ namespace mod::events
         }
     }
 
+    void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
+    {
+        if ( randomizer )
+        {
+            randomizer->overrideREL( dmc );
+        }
+    }
+
     void onDZX( rando::Randomizer* randomizer, libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo )
     {
         if ( randomizer )
         {
-            randomizer->replaceDZX( chunkTypeInfo );
+            randomizer->overrideDZX( chunkTypeInfo );
         }
     }
 }     // namespace mod::events

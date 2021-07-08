@@ -12,6 +12,7 @@
 #include <cinttypes>
 
 #include "rando/randomizer.h"
+#include "tp/dynamic_link.h"
 #include "tp/dzx.h"
 
 namespace mod::events
@@ -29,6 +30,14 @@ namespace mod::events
      * @param randomizer Pointer to mod::randomizer
      */
     void offLoad( rando::Randomizer* randomizer );
+
+    /**
+     * @brief Runs after a module has been linked
+     *
+     * @param randomizer Pointer to mod::randomizer
+     * @param dmc DynamicModuleControl
+     */
+    void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc );
 
     /**
      * @brief Runs when one of the DZX init functions run
