@@ -9,7 +9,7 @@
 #include "patch.h"
 #include "rando/data.h"
 #include "rando/randomizer.h"
-#include "rando/seedList.h"
+#include "rando/seedlist.h"
 #include "tools.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_stage.h"
