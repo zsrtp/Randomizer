@@ -148,7 +148,7 @@ namespace mod::game_patch
 
     }     // namespace bgm::bgmrando
 
-    void initRandomBgm( rando::Randomizer* randomizer, bool set )
+    void patchRandomBgm( rando::Randomizer* randomizer, bool set )
     {
         mod::console << "[1] RandomBgm [" << ( set ? "x" : " " ) << "]\n";
 

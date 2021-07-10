@@ -14,7 +14,7 @@ namespace mod::game_patch
     /**
      * @brief Enables Random Background Music
      */
-    void initRandomBgm( rando::Randomizer* randomizer, bool set );
+    void patchRandomBgm( rando::Randomizer* randomizer, bool set );
 
 }     // namespace mod::game_patch
 
