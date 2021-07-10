@@ -12,6 +12,7 @@
 #include "rando/data.h"
 #include "rando/seed.h"
 #include "rando/seedlist.h"
+#include "tools.h"
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
 
@@ -32,10 +33,10 @@ namespace mod::rando
 
         /**
          * @brief Gets a random number based off the seed and shifts the seed
-         * 
+         *
          * @param max The maximum number that the function can return
          */
-        uint32_t getRandom(uint32_t max);
+        inline uint32_t getRandom( uint32_t max ) { return libtp::tools::getRandom( &m_SeedInfo->header.seed, max ); }
 
        public:
         SeedInfo* m_SeedInfo = nullptr;     // SeedInfo associated with this randomizer instance
