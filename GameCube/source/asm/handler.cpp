@@ -13,6 +13,7 @@ namespace mod::assembly
         {
             // TODO: implementation
         }
-        return 0x5;
+        // Default
+        return 0xE0;
     }
 }
