@@ -19,7 +19,7 @@ namespace mod::game_patch
     {
         using namespace libtp;
 
-        mod::console << randomizer->m_SeedInfo->header.seed << "::WalletPatch [" << ( set ? "x" : " " ) << "]\n";
+        mod::console << "[0] WalletPatch [" << ( set ? "x" : " " ) << "]\n";
 
         uint32_t getRupeeMaxPtr = reinterpret_cast<uint32_t>( &tp::d_save::getRupeeMax );
         uint32_t setWalletMaxNumPtr = reinterpret_cast<uint32_t>( &tp::d_menu_collect::setWalletMaxNum );
