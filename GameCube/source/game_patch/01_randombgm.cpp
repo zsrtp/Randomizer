@@ -11,6 +11,7 @@
 
 #include "main.h"
 #include "patch.h"
+#include "tools.h"
 #include "tp/Z2SceneMgr.h"
 
 namespace mod::game_patch
@@ -152,6 +153,8 @@ namespace mod::game_patch
     {
         mod::console << "[1] RandomBgm [" << ( set ? "x" : " " ) << "]\n";
 
+        uint64_t seed = randomizer->getSeed();
+
         if ( !set )
         {
             if ( bgm::bgmrando::return_sceneChange != nullptr )
@@ -170,7 +173,7 @@ namespace mod::game_patch
             bool gotUnique = false;
             while ( !gotUnique )
             {     // Depends on randomness to shuffle the original array; needs a better method
-                uint8_t random = randomizer->getRandom( bgm::bgmrando::bgmSourceLength );
+                uint8_t random = libtp::tools::getRandom( &seed, bgm::bgmrando::bgmSourceLength );
                 uint8_t idGot = bgm::bgmrando::bgmSource[random].id;
                 bool valueExists = false;
                 for ( uint8_t j = 0; j < i; j++ )

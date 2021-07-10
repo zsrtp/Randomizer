@@ -32,11 +32,9 @@ namespace mod::rando
         void overrideDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo );
 
         /**
-         * @brief Gets a random number based off the seed and shifts the seed
-         *
-         * @param max The maximum number that the function can return
+         * @brief Returns the seed
          */
-        inline uint32_t getRandom( uint32_t max ) { return libtp::tools::getRandom( &m_SeedInfo->header.seed, max ); }
+        inline uint64_t getSeed() { return m_SeedInfo->header.seed; }
 
        public:
         SeedInfo* m_SeedInfo = nullptr;     // SeedInfo associated with this randomizer instance
