@@ -13,5 +13,5 @@
 
 namespace mod::game_patch
 {
-    GamePatch patches[3] = { patchWallet, bgm::bgmrando::initRandomBgm, bgm::enemybgm::patchBattleMusic };
+    GamePatch patches[3] = { patchWallet, initRandomBgm, patchBattleMusic };
 }

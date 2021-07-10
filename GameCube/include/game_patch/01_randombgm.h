@@ -1,5 +1,5 @@
 /**
- * @file 01_bgm.h
+ * @file 01_randombgm.h
  * @author jdflyer
  * @brief Handles randomizing the game's BGM
  *
@@ -9,13 +9,13 @@
 #define RANDO_RANDOM_BGM_PATCH_H
 #include "game_patch/game_patch.h"
 
-namespace mod::game_patch::bgm::bgmrando
+namespace mod::game_patch
 {
     /**
      * @brief Enables Random Background Music
      */
     void initRandomBgm( rando::Randomizer* randomizer, bool set );
 
-}     // namespace mod::game_patch::bgm::bgmrando
+}     // namespace mod::game_patch
 
 #endif
