@@ -131,14 +131,12 @@ namespace mod::rando
     {
         using namespace libtp;
 
-        uint32_t num_patches = m_Header->patchInfo.numEntries;
+        uint32_t num_bytes = m_Header->patchInfo.numEntries;
         uint32_t gci_offset = m_Header->patchInfo.dataOffset;
 
         // Don't bother to patch anything if there's nothing to patch
-        if ( num_patches > 0 )
+        if ( num_bytes > 0 )
         {
-            uint32_t num_bytes = num_patches / 8 + 1;
-
             // Set the pointer as offset into our buffer
             uint8_t* patch_config = &m_GCIData[gci_offset];
 
@@ -148,7 +146,7 @@ namespace mod::rando
 
                 for ( uint32_t b = 0; b < 8; b++ )
                 {
-                    if ( ( byte >> b ) & 0x80 )
+                    if ( ( byte << b ) & 0x80 )
                     {
                         // run the patch function for this bit index
                         uint32_t index = i * 8 + b;
