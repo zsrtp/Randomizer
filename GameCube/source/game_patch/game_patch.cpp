@@ -8,8 +8,10 @@
 #include "game_patch/game_patch.h"
 
 #include "game_patch/00_wallet.h"
+#include "game_patch/01_randombgm.h"
+#include "game_patch/02_enemybgm.h"
 
 namespace mod::game_patch
 {
-    GamePatch patches[1] = { patchWallet };
+    GamePatch patches[3] = { patchWallet, patchRandomBgm, patchBattleMusic };
 }

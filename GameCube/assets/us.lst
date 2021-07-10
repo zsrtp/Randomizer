@@ -171,3 +171,9 @@
 // JFWSystem.o
 // data
 804511B8:systemConsole
+
+// Z2SceneMgr.o
+802B9B68:sceneChange
+
+// Z2SeqMgr.o
+802B4EB0:startBattleBgm

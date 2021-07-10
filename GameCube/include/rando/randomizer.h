@@ -12,6 +12,7 @@
 #include "rando/data.h"
 #include "rando/seed.h"
 #include "rando/seedlist.h"
+#include "tools.h"
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
 
@@ -29,6 +30,11 @@ namespace mod::rando
 
         void overrideREL( libtp::tp::dynamic_link::DynamicModuleControl* dmc );
         void overrideDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo );
+
+        /**
+         * @brief Returns the seed
+         */
+        inline uint64_t getSeed() { return m_SeedInfo->header.seed; }
 
        public:
         SeedInfo* m_SeedInfo = nullptr;     // SeedInfo associated with this randomizer instance
