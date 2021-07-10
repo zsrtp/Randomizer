@@ -17,7 +17,7 @@ namespace mod::game_patch::bgm::enemybgm
 
     void patchBattleMusic( rando::Randomizer* randomizer, bool set )
     {
-        mod::console << randomizer->m_SeedInfo->header.seed << "::EnemyBgmDisabled [" << ( set ? "x" : " " ) << "]\n";
+        mod::console << "[2] EnemyBgmDisabled [" << ( set ? "x" : " " ) << "]\n";
         if ( set )
         {
             startBattleBgmTrampoline = libtp::patch::hookFunction(

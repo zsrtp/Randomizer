@@ -146,7 +146,7 @@ namespace mod::game_patch::bgm::bgmrando
 
     void initRandomBgm( rando::Randomizer* randomizer, bool set )
     {
-        mod::console << randomizer->m_SeedInfo->header.seed << "::RandomBgm [" << ( set ? "x" : " " ) << "]\n";
+        mod::console << "[1] RandomBgm [" << ( set ? "x" : " " ) << "]\n";
 
         if ( !set )
         {
