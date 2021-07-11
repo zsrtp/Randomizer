@@ -1,9 +1,11 @@
 #include "events.h"
 
 #include <cinttypes>
+#include <cstring>
 
 #include "main.h"
 #include "rando/randomizer.h"
+#include "tp/d_com_inf_game.h"
 #include "tp/dzx.h"
 
 namespace mod::events
@@ -22,7 +24,7 @@ namespace mod::events
         {
             // Check if the seed is already applied to the save-file (flags etc.)
             // Try to do it otherwise
-            if ( !randomizer->m_SeedInit )
+            if ( !randomizer->m_SeedInit && !strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.currentStage, "F_SP103" ) )
             {
                 randomizer->initSave();
             }
