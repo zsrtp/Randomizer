@@ -73,10 +73,10 @@ namespace mod::rando
 
             this->applyPatches( true );
 
-            mod::console << "Event Flags: \n";
+            mod::console << "Setting Event Flags... \n";
             this->applyEventFlags();
 
-            mod::console << "Region Flags: \n";
+            mod::console << "Setting Region Flags... \n";
             this->applyRegionFlags();
             return true;
         }
