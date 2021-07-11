@@ -7,7 +7,9 @@
 #ifndef RANDO_WALLET_PATCH_H
 #define RANDO_WALLET_PATCH_H
 
-namespace mod::game_patch
+#include "rando/randomizer.h"
+
+namespace mod::user_patch
 {
     /**
      *  @brief Sets new limits to your wallet
@@ -16,5 +18,5 @@ namespace mod::game_patch
      *  Unpatched: 300, 600, 1000
      */
     void patchWallet( rando::Randomizer* randomizer, bool set );
-}     // namespace mod::game_patch
+}     // namespace mod::user_patch
 #endif

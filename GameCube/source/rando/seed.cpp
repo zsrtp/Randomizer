@@ -13,13 +13,13 @@
 #include <cstdio>
 
 #include "data/stages.h"
-#include "game_patch/game_patch.h"
 #include "gc/card.h"
 #include "main.h"
 #include "rando/data.h"
 #include "tools.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_save.h"
+#include "user_patch/user_patch.h"
 
 namespace mod::rando
 {
@@ -151,10 +151,9 @@ namespace mod::rando
                         // run the patch function for this bit index
                         uint32_t index = i * 8 + b;
 
-                        using namespace game_patch;
-                        if ( index < sizeof( patches ) / sizeof( patches[0] ) )
+                        if ( index < sizeof( user_patch::patches ) / sizeof( user_patch::patches[0] ) )
                         {
-                            patches[index]( mod::randomizer, set );
+                            user_patch::patches[index]( mod::randomizer, set );
                             m_PatchesApplied++;
                         }
                     }

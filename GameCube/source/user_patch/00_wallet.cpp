@@ -6,14 +6,14 @@
  */
 #include <cinttypes>
 
-#include "game_patch/game_patch.h"
 #include "gc/OSCache.h"
 #include "main.h"
 #include "rando/randomizer.h"
 #include "tp/d_menu_collect.h"
 #include "tp/d_save.h"
+#include "user_patch/user_patch.h"
 
-namespace mod::game_patch
+namespace mod::user_patch
 {
     void patchWallet( rando::Randomizer* randomizer, bool set )
     {
@@ -54,4 +54,4 @@ namespace mod::game_patch
         gc::os_cache::DCFlushRange( reinterpret_cast<void*>( setWalletMaxNumPtr ), 0x31 );
         gc::os_cache::ICInvalidateRange( reinterpret_cast<void*>( setWalletMaxNumPtr ), 0x31 );
     }
-}     // namespace mod::game_patch
+}     // namespace mod::user_patch

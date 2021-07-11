@@ -1,4 +1,4 @@
-/** @file game_patch.h
+/** @file user_patch.h
  * @author AECX
  * @brief Game patches are functions that change game functions.
  *
@@ -15,7 +15,7 @@
 #define ASM_LOAD_IMMEDIATE( register, value ) ( 0x38000000 + ( register * 0x200000 ) ) | ( value & 0xFFFF )
 #define ASM_COMPARE_WORD_IMMEDIATE( register, value ) ( 0x2C000000 + ( register * 0x10000 ) ) | ( value & 0xFFFF )
 
-namespace mod::game_patch
+namespace mod::user_patch
 {
     /**
      *  @brief Defines a game_patch function
@@ -28,5 +28,5 @@ namespace mod::game_patch
     // Available Game patches accessible by index
     extern GamePatch patches[3];
 
-}     // namespace mod::game_patch
+}     // namespace mod::user_patch
 #endif

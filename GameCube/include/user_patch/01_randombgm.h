@@ -7,15 +7,16 @@
  */
 #ifndef RANDO_RANDOM_BGM_PATCH_H
 #define RANDO_RANDOM_BGM_PATCH_H
-#include "game_patch/game_patch.h"
 
-namespace mod::game_patch
+#include "rando/randomizer.h"
+
+namespace mod::user_patch
 {
     /**
      * @brief Enables Random Background Music
      */
     void patchRandomBgm( rando::Randomizer* randomizer, bool set );
 
-}     // namespace mod::game_patch
+}     // namespace mod::user_patch
 
 #endif

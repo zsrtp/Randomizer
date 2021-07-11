@@ -7,14 +7,14 @@
  * function is patched late. Either game_patches need to be called earlier
  * or this needs to be hooked earlier in a different place.
  */
-#include "game_patch/01_randombgm.h"
+#include "user_patch/01_randombgm.h"
 
 #include "main.h"
 #include "patch.h"
 #include "tools.h"
 #include "tp/Z2SceneMgr.h"
 
-namespace mod::game_patch
+namespace mod::user_patch
 {
     namespace bgm::bgmrando
     {
@@ -257,4 +257,4 @@ namespace mod::game_patch
                 }
             } );
     }
-}     // namespace mod::game_patch
+}     // namespace mod::user_patch

@@ -5,13 +5,13 @@
  *
  * @bug No known bugs
  */
-#include "game_patch/02_enemybgm.h"
+#include "user_patch/02_enemybgm.h"
 
 #include "main.h"
 #include "patch.h"
 #include "tp/Z2SeqMgr.h"
 
-namespace mod::game_patch
+namespace mod::user_patch
 {
     namespace bgm::enemybgm
     {
@@ -34,4 +34,4 @@ namespace mod::game_patch
             }
         }
     }
-}     // namespace mod::game_patch
+}     // namespace mod::user_patch
