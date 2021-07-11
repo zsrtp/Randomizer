@@ -60,13 +60,7 @@ namespace mod::rando
     void Randomizer::onStageLoad( void )
     {
         const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.nextStageVars.nextStage;
-
-        if ( m_Seed->LoadChecks( stage ) )
-        {
-            int32_t numDZX = m_Seed->m_numLoadedDZXChecks;
-
-            mod::console << numDZX << " Checks loaded for " << stage << "\n";
-        }
+        m_Seed->LoadChecks( stage );
     }
 
     void Randomizer::overrideREL( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
