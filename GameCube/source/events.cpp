@@ -3,7 +3,9 @@
 #include <cinttypes>
 #include <cstring>
 
+#include "asm.h"
 #include "main.h"
+#include "patch.h"
 #include "rando/randomizer.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/dzx.h"
@@ -36,6 +38,19 @@ namespace mod::events
         if ( randomizer )
         {
             randomizer->overrideREL( dmc );
+        }
+
+        // Static REL overrides and patches
+        uint32_t relPtrRaw = reinterpret_cast<uint32_t>( dmc->moduleInfo );
+
+        switch ( dmc->moduleInfo->id )
+        {
+            // d_a_e_hp.rel
+            case 0x00C8:
+                // generic poe item id replacement
+                libtp::patch::writeBranchLR( reinterpret_cast<void*>( relPtrRaw + e_hp_ExecDead_liOffset ),
+                                             reinterpret_cast<void*>( assembly::asmAdjustPoeItem ) );
+                break;
         }
     }
 

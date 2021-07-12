@@ -10,6 +10,10 @@
 
 #include <cstdint>
 
+// Original: li 0xE0
+// Normally loads the poesoul item id into r4
+#define e_hp_ExecDead_liOffset 0x247C
+
 namespace mod::assembly
 {
     extern "C"
