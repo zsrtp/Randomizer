@@ -1,11 +1,11 @@
 /** @file user_patch.h
  * @author AECX
- * @brief Game patches are functions that change game functions.
+ * @brief User patches are optional & modify how the game works.
  *
  * @bug No known bugs
  */
-#ifndef RANDO_GAME_PATCH_H
-#define RANDO_GAME_PATCH_H
+#ifndef RANDO_USER_PATCH_H
+#define RANDO_USER_PATCH_H
 
 #include <cstdint>
 
