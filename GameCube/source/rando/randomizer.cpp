@@ -8,6 +8,7 @@
 
 #include <cstring>
 
+#include "data/items.h"
 #include "gc/OSModule.h"
 #include "gc/card.h"
 #include "main.h"
@@ -149,7 +150,6 @@ namespace mod::rando
         }
 
         // Default
-        mod::console << "<Error> No poe replacement for flag: " << flag << "\n";
-        return 0xE0;
+        return libtp::data::items::Poe_Soul;
     }
 }     // namespace mod::rando

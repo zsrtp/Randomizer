@@ -11,6 +11,7 @@
 #define EVENTS_H
 #include <cinttypes>
 
+#include "data/items.h"
 #include "rando/randomizer.h"
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
@@ -46,5 +47,24 @@ namespace mod::events
      * @param chunkTypeInfo ChunkTypeInfo of DZX entries
      */
     void onDZX( rando::Randomizer* randomizer, libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo );
+
+    /**
+     * @brief Runs when a Poe (e_hp, e_po) is killed
+     *
+     * @param flag Save flag for e_hp (normal Poes) for AG poes its [probably] the event ID; Both are unique identifiers within
+     * their respective Area
+     */
+    int32_t onPoe( uint8_t flag )
+    {
+        if ( mod::randomizer )
+        {
+            return mod::randomizer->getPoeItem( flag );
+        }
+        else
+        {
+            // Default item
+            return static_cast<int32_t>( libtp::data::items::Poe_Soul );
+        }
+    }
 }     // namespace mod::events
 #endif
