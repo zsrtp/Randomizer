@@ -6,6 +6,7 @@
 #include <cstring>
 
 #include "events.h"
+#include "game_patch/game_patch.h"
 #include "patch.h"
 #include "rando/data.h"
 #include "rando/randomizer.h"
@@ -54,6 +55,9 @@ namespace mod
 
     void main()
     {
+        // Run game patches
+        game_patch::_00_poe();
+
         // Display some info
         console << "Welcome to TPR!\n"
                 << "(C) AECX, Lunar Soap, Zephiles\n\n"

@@ -50,12 +50,19 @@ namespace mod::events
             case 0x00C8:
                 libtp::patch::writeBranchLR( reinterpret_cast<void*>( relPtrRaw + e_hp_ExecDead_liOffset ),
                                              reinterpret_cast<void*>( assembly::asmAdjustPoeItem ) );
+
+                // Disable Poe increment (handled through item_get_func; see game_patches)
+                *reinterpret_cast<uint32_t*>( relPtrRaw + e_hp_ExecDead_incOffset ) = 0x60000000;
+
                 break;
             // d_a_e_po.rel
             // Arbiter's Poe
             case 0x00DD:
                 libtp::patch::writeBranchLR( reinterpret_cast<void*>( relPtrRaw + e_po_ExecDead_liOffset ),
                                              reinterpret_cast<void*>( assembly::asmAdjustAGPoeItem ) );
+
+                // Disable Poe increment (handled through item_get_func; see game_patches)
+                *reinterpret_cast<uint32_t*>( relPtrRaw + e_po_ExecDead_incOffset ) = 0x60000000;
                 break;
         }
     }

@@ -15,6 +15,12 @@
 #define e_hp_ExecDead_liOffset 0x247C
 #define e_po_ExecDead_liOffset 0x3C9C
 
+// Original:
+// stb r0, 0x10c( r4 ) = > numPoeSouls
+// Normally increments poe count
+#define e_hp_ExecDead_incOffset 0x2354
+#define e_po_ExecDead_incOffset 0x36A8
+
 namespace mod::assembly
 {
     extern "C"
