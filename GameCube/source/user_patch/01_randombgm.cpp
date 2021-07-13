@@ -169,13 +169,17 @@ namespace mod::user_patch
          * The current implementation of doing this is not optimized
          */
         for ( uint8_t i = 0; i < bgm::bgmrando::bgmSourceLength; i++ )
-        {     // Fills in the randomizedBGMs array with random ids
+        {
+            // Fills in the randomizedBGMs array with random ids
             bool gotUnique = false;
+
             while ( !gotUnique )
-            {     // Depends on randomness to shuffle the original array; needs a better method
+            {
+                // Depends on randomness to shuffle the original array; needs a better method
                 uint8_t random = libtp::tools::getRandom( &seed, bgm::bgmrando::bgmSourceLength );
                 uint8_t idGot = bgm::bgmrando::bgmSource[random].id;
                 bool valueExists = false;
+
                 for ( uint8_t j = 0; j < i; j++ )
                 {
                     if ( bgm::bgmrando::randomizedBgms[j] == idGot )
@@ -184,6 +188,7 @@ namespace mod::user_patch
                         break;
                     }
                 }
+
                 if ( valueExists == false )
                 {
                     bgm::bgmrando::randomizedBgms[i] = bgm::bgmrando::bgmSource[random].id;
@@ -192,6 +197,7 @@ namespace mod::user_patch
                 }
             }
         }
+
         bgm::bgmrando::return_sceneChange = libtp::patch::hookFunction(
             libtp::tp::z2audiolib::z2scenemgr::sceneChange,
             []( libtp::tp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
@@ -210,6 +216,7 @@ namespace mod::user_patch
                     id = id - 0x1000000;
                     uint8_t index_of_id = 0;
                     bool found = false;
+
                     for ( uint8_t i = 0; i < bgm::bgmrando::bgmSourceLength; i++ )
                     {
                         if ( bgm::bgmrando::randomizedBgms[i] == id )
@@ -219,6 +226,7 @@ namespace mod::user_patch
                             break;
                         }
                     }
+
                     if ( found )
                     {
                         libtp::tp::z2audiolib::z2scenemgr::JAISoundID new_id;
