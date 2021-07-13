@@ -1,13 +1,13 @@
-.global asmAdjustPoeItem
+.global asmAdjustAGPoeItem
 
-asmAdjustPoeItem:
+asmAdjustAGPoeItem:
 # Push stack
 stwu %sp,-0x10(%sp)
 mflr %r0
 stw %r0,0x14(%sp)
 
 mr %r3,%r31
-bl handleAdjustPoeItem
+bl handleAdjustAGPoeItem
 mr %r4,%r3
 
 # Restore value to r3

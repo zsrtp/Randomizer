@@ -110,6 +110,7 @@ namespace mod::rando
 
             this->LoadDZX( stageIDX );
             this->LoadREL( stageIDX );
+            this->LoadPOE( stageIDX );
 
             // Save current stageIDX for next time
             m_StageIDX = stageIDX;
@@ -122,9 +123,11 @@ namespace mod::rando
     {
         m_numLoadedDZXChecks = 0;
         m_numLoadedRELChecks = 0;
+        m_numLoadedPOEChecks = 0;
 
         delete[] m_DZXChecks;
         delete[] m_RELChecks;
+        delete[] m_POEChecks;
     }
 
     void Seed::applyPatches( bool set )
@@ -312,6 +315,42 @@ namespace mod::rando
             {
                 // Store the i'th DZX check into the j'th Loaded DZX check that's relevant to our current stage
                 memcpy( &m_RELChecks[j], &allREL[i], sizeof( RELCheck ) );
+                j++;
+            }
+        }
+    }
+
+    void Seed::LoadPOE( uint8_t stageIDX )
+    {
+        using namespace libtp;
+
+        uint32_t num_poechecks = m_Header->poeCheckInfo.numEntries;
+        uint32_t gci_offset = m_Header->poeCheckInfo.dataOffset;
+
+        // Set the pointer as offset into our buffer
+        POECheck* allPOE = reinterpret_cast<POECheck*>( &m_GCIData[gci_offset] );
+
+        for ( uint32_t i = 0; i < num_poechecks; i++ )
+        {
+            if ( allPOE[i].stageIDX == stageIDX )
+            {
+                m_numLoadedPOEChecks++;
+            }
+        }
+
+        // Allocate memory to the actual POEChecks
+        // Do NOT need to clear the previous buffer as that's taken care of by LoadChecks()
+        m_POEChecks = new POECheck[m_numLoadedPOEChecks];
+
+        // offset into m_POEChecks
+        uint32_t j = 0;
+
+        for ( uint32_t i = 0; i < num_poechecks; i++ )
+        {
+            if ( allPOE[i].stageIDX == stageIDX )
+            {
+                // Store the i'th POE check into the j'th Loaded POEcheck that's relevant to our current stage
+                memcpy( &m_POEChecks[j], &allPOE[i], sizeof( POECheck ) );
                 j++;
             }
         }

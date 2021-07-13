@@ -46,10 +46,16 @@ namespace mod::events
         switch ( dmc->moduleInfo->id )
         {
             // d_a_e_hp.rel
+            // Generic Poe
             case 0x00C8:
-                // generic poe item id replacement
                 libtp::patch::writeBranchLR( reinterpret_cast<void*>( relPtrRaw + e_hp_ExecDead_liOffset ),
                                              reinterpret_cast<void*>( assembly::asmAdjustPoeItem ) );
+                break;
+            // d_a_e_po.rel
+            // Arbiter's Poe
+            case 0x00DD:
+                libtp::patch::writeBranchLR( reinterpret_cast<void*>( relPtrRaw + e_po_ExecDead_liOffset ),
+                                             reinterpret_cast<void*>( assembly::asmAdjustAGPoeItem ) );
                 break;
         }
     }

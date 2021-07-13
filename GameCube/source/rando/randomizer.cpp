@@ -136,4 +136,20 @@ namespace mod::rando
             }
         }
     }
+
+    int32_t Randomizer::getPoeItem( uint8_t flag )
+    {
+        for ( uint32_t i = 0; i < m_Seed->m_numLoadedPOEChecks; i++ )
+        {
+            if ( flag == m_Seed->m_POEChecks[i].flag )
+            {
+                // Return new item
+                return static_cast<int32_t>( m_Seed->m_POEChecks[i].item );
+            }
+        }
+
+        // Default
+        mod::console << "<Error> No poe replacement for flag: " << flag << "\n";
+        return 0xE0;
+    }
 }     // namespace mod::rando
