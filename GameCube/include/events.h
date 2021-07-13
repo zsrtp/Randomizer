@@ -54,17 +54,6 @@ namespace mod::events
      * @param flag Save flag for e_hp (normal Poes) for AG poes its [probably] the event ID; Both are unique identifiers within
      * their respective Area
      */
-    int32_t onPoe( uint8_t flag )
-    {
-        if ( mod::randomizer )
-        {
-            return mod::randomizer->getPoeItem( flag );
-        }
-        else
-        {
-            // Default item
-            return static_cast<int32_t>( libtp::data::items::Poe_Soul );
-        }
-    }
+    int32_t onPoe( rando::Randomizer* randomizer, uint8_t flag );
 }     // namespace mod::events
 #endif

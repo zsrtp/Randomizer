@@ -11,12 +11,12 @@ namespace mod::assembly
     int32_t handleAdjustPoeItem( void* e_hp_class )
     {
         uint8_t flag = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( e_hp_class ) + 0x77B );
-        return events::onPoe( flag );
+        return events::onPoe( mod::randomizer, flag );
     }
 
     int32_t handleAdjustAGPoeItem( void* e_po_class )
     {
         uint8_t flag = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( e_po_class ) + 0x5BD );
-        return events::onPoe( flag );
+        return events::onPoe( mod::randomizer, flag );
     }
 }     // namespace mod::assembly

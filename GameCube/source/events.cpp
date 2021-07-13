@@ -67,4 +67,17 @@ namespace mod::events
             randomizer->overrideDZX( chunkTypeInfo );
         }
     }
+
+    int32_t onPoe( rando::Randomizer* randomizer, uint8_t flag )
+    {
+        if ( randomizer )
+        {
+            return randomizer->getPoeItem( flag );
+        }
+        else
+        {
+            // Default item
+            return static_cast<int32_t>( libtp::data::items::Poe_Soul );
+        }
+    }
 }     // namespace mod::events
