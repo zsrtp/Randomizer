@@ -31,6 +31,8 @@ namespace mod::rando
         void overrideREL( libtp::tp::dynamic_link::DynamicModuleControl* dmc );
         void overrideDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo );
 
+        int32_t getPoeItem( uint8_t flag );
+
         /**
          * @brief Returns the seed
          */

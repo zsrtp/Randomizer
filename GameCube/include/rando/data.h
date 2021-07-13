@@ -35,6 +35,7 @@ namespace mod::rando
 
         entryInfo dzxCheckInfo;
         entryInfo relCheckInfo;
+        entryInfo poeCheckInfo;
     } __attribute__( ( __packed__ ) );
 
     // Seed with index
@@ -78,6 +79,13 @@ namespace mod::rando
         uint32_t moduleID;
         uint32_t offset;
         uint32_t override;
+    } __attribute__( ( __packed__ ) );
+
+    struct POECheck
+    {
+        uint8_t stageIDX;
+        uint8_t flag;      // Flag used for identification
+        uint16_t item;     // New item id
     } __attribute__( ( __packed__ ) );
 }     // namespace mod::rando
 #endif

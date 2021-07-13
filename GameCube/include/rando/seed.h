@@ -33,6 +33,9 @@ namespace mod::rando
         RELCheck* m_RELChecks = nullptr;       // REL Modifications for current stage
         uint32_t m_numLoadedRELChecks = 0;     // Number of currently loaded RELCheck
 
+        POECheck* m_POEChecks = nullptr;       // POE Checks for current stage
+        uint32_t m_numLoadedPOEChecks = 0;     // Number of currently loaded POEChecks
+
         // Member functions
        public:
         /**
@@ -78,6 +81,7 @@ namespace mod::rando
 
         void LoadDZX( uint8_t stageIDX );
         void LoadREL( uint8_t stageIDX );
+        void LoadPOE( uint8_t stageIDX );
     };
 }     // namespace mod::rando
 #endif
