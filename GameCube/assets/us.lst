@@ -55,6 +55,8 @@
 
 // d_item.o
 80097EE0:checkItemGet
+803AF178:item_func_ptr
+803AF578:item_getcheck_func_ptr
 
 // d_a_alink.h
 800B271C:setStickData
