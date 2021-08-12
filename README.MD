@@ -11,14 +11,31 @@ Like other Randomizers, the **Twilight Princess Randomizer** (TPR) shuffles the 
 |[lunarsoap5](//github.com/lunarsoap5)|Developer and Community Manager|
 |[vbn598](//github.com/vbn598)|Developer|
 
-# Features & Changes
+# Roadmap
 |Name            |Description|Status|
 |----------------|--------------|-------------------------------|
-|Freestanding Items|Items render as what they are after pickup even outside chests|✔️Implemented|
 |Fast climbing|TP Climbing is slooooooooooow|✔️Implemented|
-|Treasure Chest Randomizer|Typical treasure chests can be entirely random|🔧Planned|
-|Shop Randomizer|Most shop items can be randomized and displayed appropiately|🔧Planned|
+|Random BGM|Randomized background music|✔️Implemented|
+|Treasure Chest Randomizer|Typical treasure chests can be entirely random|✔️Implemented|
+|Freestanding Items|Items render as what they are after pickup even outside chests|🔧Planned|
+|Texture/Color mods|Change things like tunic color|🔧In the works by isaac|
 |Custom Models|e.g. Toon Link from ww, different clothing, etc.|❌Not going to be implemented|
+
+# Features
+* Item Randomizer
+  * treasure chests
+  * poe souls
+  * shop items
+  * NPC gifts
+  * golden bugs
+  * dungeon rewards
+* Quality of Life (optional)
+  * Fast Iron boots
+  * Fast climbing
+  * Random Background Music
+  * Disable Enemy Background
+  * Bigger wallets
+  * More skippable cutscenes
 
 # Honorable Mentions
 * [dragonbane0](//github.com/dragonbane0)
