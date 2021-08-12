@@ -60,7 +60,8 @@ namespace mod::rando
     struct dzxCheck
     {
         uint16_t hash;
-        uint16_t stageIDX;
+        uint8_t stageIDX;
+        uint8_t magicByte;     // ignore this byte in data[]
         uint8_t data[0x20];
     } __attribute__( ( __packed__ ) );
 

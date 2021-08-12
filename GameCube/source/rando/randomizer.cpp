@@ -130,7 +130,7 @@ namespace mod::rando
                         // Fetch replacement byte
                         uint8_t newByte = dzxReplacements[j].data[b];
 
-                        if ( newByte != 0xFF )
+                        if ( newByte != dzxReplacements[j].magicByte )
                             target[b] = newByte;
                     }
                 }
