@@ -9,21 +9,36 @@ endif
 
 include $(DEVKITPPC)/gamecube_rules
 
+# Format: YYYYMMDDHHmm + 2 char Game Region
+BUILDID:='"$(shell date +'%Y%m%d%H%M')"'
+
+# Version
+_VERSION_MAJOR:=1
+_VERSION_MINOR:=0
+_VERSION_PATCH:=0
+_VERSION:='"$(_VERSION_MAJOR).$(_VERSION_MINOR).$(_VERSION_PATCH)"'
+# Variant: i.e. Public, NoLogic, Race, etc.
+_VARIANT:=public
 
 # This shows up in the memory card (manager) and can contain spaces
-PROJECT_NAME := My REL Mod
+PROJECT_NAME := Randomizer
 # This will be the resulting .gci file - No spaces
-OUTPUT_FILENAME := REL_File
+OUTPUT_FILENAME := Randomizer
 
 
 # DON'T TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
 LIBTP_REL := externals/libtp_rel
 
-GCIPACK := python ../bin/gcipack.py
-# Windows
-ELF2REL := ../bin/elf2rel.exe
-# Linux
-# ELF2REL := ../bin/elf2rel
+GCIPACK := python3 ../bin/gcipack.py
+
+UNAME := $(shell uname)
+
+ifeq ($(UNAME), Linux)
+	ELF2REL := ../bin/elf2rel
+else
+	ELF2REL := ../bin/elf2rel.exe
+endif
+
 
 ifeq ($(VERSION),)
 all: us jp eu
@@ -33,6 +48,35 @@ jp:
 	@$(MAKE) --no-print-directory VERSION=jp
 eu:
 	@$(MAKE) --no-print-directory VERSION=eu
+
+deploy:
+	@status=$$(git status --porcelain); \
+	if test "x$${status}" = x; then \
+		echo Ready for deployment!; \
+		echo Twilight Princess :: $(PROJECT_NAME) > build.log; \
+		echo ------------------------- >> build.log; \
+		echo Version: $(_VERSION) >> build.log; \
+		echo Variant: $(_VARIANT) >> build.log; \
+		echo Build ID: $(BUILDID) >> build.log; \
+		printf "Build Log:\n\n-----\n" >> build.log; \
+		make clean; \
+		make all >> build.log; \
+		echo ----- >> build.log; \
+		echo Done. >> build.log; \
+		echo Working directory is dirty; \		echo Ready for deployment!; \
+		echo Twilight Princess :: $(PROJECT_NAME) > build.log; \
+		echo ------------------------- >> build.log; \
+		echo Version: $(_VERSION) >> build.log; \
+		echo Variant: $(_VARIANT) >> build.log; \
+		echo Build ID: $(BUILDID) >> build.log; \
+		printf "Build Log:\n\n-----\n" >> build.log; \
+		make clean; \
+		make all >> build.log; \
+		echo ----- >> build.log; \
+		echo Done. >> build.log; \
+	else \
+		echo Working directory isn\'t clean, cannot release like this...; \
+	fi
 
 clean:
 	@$(MAKE) --no-print-directory clean_target VERSION=us
@@ -60,7 +104,7 @@ INCLUDES	:=	include $(LIBTP_REL)/include
 
 MACHDEP		= -mno-sdata -mgcn -DGEKKO -mcpu=750 -meabi -mhard-float
 
-CFLAGS		= -nostdlib -ffreestanding -ffunction-sections -fdata-sections -g -Os -Wall -Werror -Wno-address-of-packed-member $(MACHDEP) $(INCLUDE)
+CFLAGS		= -nostdlib -ffreestanding -ffunction-sections -fdata-sections -g -Os -Wall -Werror -Wno-address-of-packed-member $(MACHDEP) $(INCLUDE) -D_PROJECT_NAME='"$(PROJECT_NAME)"' -D_VERSION_MAJOR='$(_VERSION_MAJOR)' -D_VERSION_MINOR='$(_VERSION_MINOR)' -D_VERSION_PATCH='$(_VERSION_PATCH)'  -D_VERSION='"$(_VERSION)"' -D_VARIANT='"$(_VARIANT)"'
 CXXFLAGS	= -fno-exceptions -fno-rtti -std=gnu++17 $(CFLAGS)
 
 LDFLAGS		= -r -e _prolog -u _prolog -u _epilog -u _unresolved -Wl,--gc-sections -nostdlib -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
@@ -68,16 +112,19 @@ LDFLAGS		= -r -e _prolog -u _prolog -u _epilog -u _unresolved -Wl,--gc-sections 
 # Platform options
 ifeq ($(VERSION),us)
 	CFLAGS += -DTP_US
+	CFLAGS += -D_BUILDID='"$(BUILDID)US"'
 	ASFLAGS += -DTP_US
 	GAMECODE = "GZ2E"
 	PRINTVER = "US"
 else ifeq ($(VERSION),eu)
 	CFLAGS += -DTP_EU
+	CFLAGS += -D_BUILDID='"$(BUILDID)EU"'
 	ASFLAGS += -DTP_EU
 	GAMECODE = "GZ2P"
 	PRINTVER = "EU"
 else ifeq ($(VERSION),jp)
 	CFLAGS += -DTP_JP
+	CFLAGS += -D_BUILDID='"$(BUILDID)JP"'
 	ASFLAGS += -DTP_JP
 	GAMECODE = "GZ2J"
 	PRINTVER = "JP"

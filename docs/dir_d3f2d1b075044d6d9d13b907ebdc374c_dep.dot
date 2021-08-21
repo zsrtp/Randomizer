@@ -1,0 +1,14 @@
+digraph "source/game_patch" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_b2f33c71d4aa5e7af42a1ca61ff5af1b {
+    graph [ bgcolor="#ddddee", pencolor="black", label="source" fontname="Helvetica", fontsize="10", URL="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html"]
+  dir_d3f2d1b075044d6d9d13b907ebdc374c [shape=box, label="game_patch", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_d3f2d1b075044d6d9d13b907ebdc374c.html"];
+  }
+  dir_d2b6318187fb2206cad9b40a4e1245e4 [shape=box label="externals" fillcolor="white" style="filled" color="red" URL="dir_d2b6318187fb2206cad9b40a4e1245e4.html"];
+  dir_d44c64559bbebec7f509842c48db8b23 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_d44c64559bbebec7f509842c48db8b23.html"];
+  dir_d3f2d1b075044d6d9d13b907ebdc374c->dir_d2b6318187fb2206cad9b40a4e1245e4 [headlabel="3", labeldistance=1.5 headhref="dir_000016_000000.html"];
+  dir_d3f2d1b075044d6d9d13b907ebdc374c->dir_d44c64559bbebec7f509842c48db8b23 [headlabel="4", labeldistance=1.5 headhref="dir_000016_000012.html"];
+  dir_d44c64559bbebec7f509842c48db8b23->dir_d2b6318187fb2206cad9b40a4e1245e4 [headlabel="7", labeldistance=1.5 headhref="dir_000012_000000.html"];
+}

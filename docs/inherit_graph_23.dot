@@ -1,0 +1,8 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="libtp::tp::dzx::ActorPRMClass",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d0e/structlibtp_1_1tp_1_1dzx_1_1ActorPRMClass.html",tooltip="Used for spawning actors."];
+}

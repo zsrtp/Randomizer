@@ -9,6 +9,10 @@
 // d_stage
 800266A4:roomTresureInit
 80027D04:setTresure
+80024EFC:ActorCreate
+80025A38:actorInit
+80025B24:actorInit_always
+8002586C:actorCommonLayerInit
 
 // data
 80450C34:archiveHeap
@@ -17,10 +21,15 @@
 80032AA8:getRupeeMax
 800350BC:getSave
 800350F0:putSave
+8003498C:onEventBit
+800349A4:offEventBit
 
 // d_event.o
 80042778:defaultSkipStb
 800429D4:skipper
+
+// DynamicLink.o
+80262C5C:do_link
 
 // f_op_scene_req.o
 // data
@@ -36,12 +45,18 @@
 8001C0D4:createItemForBoss
 8001C174:createItemForMidBoss
 8001C1B8:createItemForDirectGet
+80019AA8:CreateAppend
+
+// f_pc_node_req
+803A3A38:l_fpcNdRq_Queue
 
 // d_map_path_dmap.o
 8003EE5C:getMapPlayerPos
 
 // d_item.o
 80097EE0:checkItemGet
+803AF178:item_func_ptr
+803AF578:item_getcheck_func_ptr
 
 // d_a_alink.h
 800B271C:setStickData
@@ -59,6 +74,17 @@
 // JKRExpHeap.o
 802CF128:do_alloc_JKRExpHeap
 802CF7AC:do_free_JKRExpHeap
+
+// Card 
+80353AC8:CARDInit
+803568F4:CARDCheck
+803572F4:CARDMount
+803573d8:CARDUnmount
+803588CC:CARDRead
+80358C48:CARDWrite
+803580B4:CARDClose
+80357F98:CARDOpen
+80356A4C:CARDProbeEx
 
 // OSCache.o
 // 8033B56C:DCEnable
@@ -132,7 +158,6 @@
 80368AE8:strncpy
 80368B2C:strcpy
 
-
 // m_Do_controller_pad.o
 // data
 803DD2E8:cpadInfo
@@ -148,3 +173,9 @@
 // JFWSystem.o
 // data
 804511B8:systemConsole
+
+// Z2SceneMgr.o
+802B9B68:sceneChange
+
+// Z2SeqMgr.o
+802B4EB0:startBattleBgm

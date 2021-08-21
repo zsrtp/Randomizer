@@ -3,3 +3,5 @@
 **/*.elf
 **/*.gci
 **/build.*
+**/autobuild.sh
+**/*.tga

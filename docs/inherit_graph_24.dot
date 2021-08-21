@@ -1,0 +1,8 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="libtp::tp::dzx::ACTR",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d84/structlibtp_1_1tp_1_1dzx_1_1ACTR.html",tooltip="Base class for most/all? Actors."];
+}

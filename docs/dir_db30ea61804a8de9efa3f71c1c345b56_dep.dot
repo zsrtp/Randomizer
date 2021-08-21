@@ -1,0 +1,11 @@
+digraph "externals/libtp_rel/source/chronos" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_cb06ac823aef0db82b7e328dbaafe807 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="source" fontname="Helvetica", fontsize="10", URL="dir_cb06ac823aef0db82b7e328dbaafe807.html"]
+  dir_db30ea61804a8de9efa3f71c1c345b56 [shape=box, label="chronos", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_db30ea61804a8de9efa3f71c1c345b56.html"];
+  }
+  dir_5c412ca36d72f0dbd19d87b31debe58c [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_5c412ca36d72f0dbd19d87b31debe58c.html"];
+  dir_db30ea61804a8de9efa3f71c1c345b56->dir_5c412ca36d72f0dbd19d87b31debe58c [headlabel="1", labeldistance=1.5 headhref="dir_000009_000002.html"];
+}

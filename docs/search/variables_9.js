@@ -1,0 +1,14 @@
+var searchData=
+[
+  ['iblock_1126',['iBlock',['../db/d7b/structlibtp_1_1gc_1_1card_1_1CARDFileInfo.html#abcaaa23fe807c157e2327257558f4aae',1,'libtp::gc::card::CARDFileInfo::iBlock()'],['../d5/da7/card_8h.html#a85537d9ecd1eb861c91c2b7e70d5f7aa',1,'iBlock():&#160;card.h']]],
+  ['iconaddr_1127',['iconAddr',['../d7/d4a/structlibtp_1_1gc_1_1card_1_1CARDStat.html#ab255c81de59b98befb6bb3bb36840d57',1,'libtp::gc::card::CARDStat::iconAddr()'],['../d5/da7/card_8h.html#ad1c56008a5485cbcaf9f803bd5bd9051',1,'iconAddr():&#160;card.h']]],
+  ['iconformat_1128',['iconFormat',['../d7/d4a/structlibtp_1_1gc_1_1card_1_1CARDStat.html#a08f4feef9d72ad9dcce075012e8caa61',1,'libtp::gc::card::CARDStat::iconFormat()'],['../d5/da7/card_8h.html#abe6a9301b236329b74a6a70f98e97329',1,'iconFormat():&#160;card.h']]],
+  ['iconspeed_1129',['iconSpeed',['../d7/d4a/structlibtp_1_1gc_1_1card_1_1CARDStat.html#aa1fcf69a841b21057797006f335977e4',1,'libtp::gc::card::CARDStat::iconSpeed()'],['../d5/da7/card_8h.html#a0798a9ae2dcf702490c07f00c3eef0a0',1,'iconSpeed():&#160;card.h']]],
+  ['id_1130',['id',['../dc/d88/structlibtp_1_1gc_1_1os__module_1_1OSModuleInfo.html#ad2bce9826b31de50e1116c834cc0d5e0',1,'libtp::gc::os_module::OSModuleInfo::id()'],['../d1/d45/OSModule_8h.html#abaabdc509cdaba7df9f56c6c76f3ae19',1,'id():&#160;OSModule.h']]],
+  ['immediatecontrol_1131',['immediateControl',['../d6/d75/structlibtp_1_1tp_1_1d__com__inf__game_1_1EventSystem.html#a77e58b9c1ee87bc8986a1a97dae2d71f',1,'libtp::tp::d_com_inf_game::EventSystem::immediateControl()'],['../dd/de1/d__com__inf__game_8h.html#a2367fcf9a86b7e31f3bdc5e58c6755e2',1,'immediateControl():&#160;d_com_inf_game.h']]],
+  ['isloading_1132',['isLoading',['../db/d6a/namespacelibtp_1_1tp_1_1f__op__scene__req.html#a40b957edb3435f25009209e0bb3dff6c',1,'libtp::tp::f_op_scene_req']]],
+  ['isvoidorwarp_1133',['isVoidorWarp',['../d4/d28/structlibtp_1_1tp_1_1d__com__inf__game_1_1NextStageVars.html#a2a3c89905a137d18be86690536d27423',1,'libtp::tp::d_com_inf_game::NextStageVars::isVoidorWarp()'],['../dd/de1/d__com__inf__game_8h.html#ae02e6f44d71e660acb69c2f0d6873c1e',1,'isVoidorWarp():&#160;d_com_inf_game.h']]],
+  ['item_1134',['item',['../da/dc7/structlibtp_1_1tp_1_1dzx_1_1TRES.html#adbc7b34a757bbddf4426e40310e661fc',1,'libtp::tp::dzx::TRES::item()'],['../dc/d85/structlibtp_1_1tp_1_1dzx_1_1ITEM.html#ad76e281b57c6e7bff8ad064d80e3def7',1,'libtp::tp::dzx::ITEM::item()'],['../da/d8c/dzx_8h.html#aabbc127ff9bd89511f63b91a44d1f161',1,'item():&#160;dzx.h']]],
+  ['item_5finfo_1135',['item_info',['../d1/dfc/namespacelibtp_1_1tp_1_1d__item__data.html#a24ed9040530f01d9a2c6ef33572b4fa1',1,'libtp::tp::d_item_data']]],
+  ['item_5fresource_1136',['item_resource',['../d1/dfc/namespacelibtp_1_1tp_1_1d__item__data.html#a392fd158b02a07572f508b4cb0e122f9',1,'libtp::tp::d_item_data']]]
+];
