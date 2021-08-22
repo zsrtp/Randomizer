@@ -60,7 +60,7 @@ namespace mod::rando
 
     void Randomizer::onStageLoad( void )
     {
-        const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.nextStageVars.nextStage;
+        const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.mStage;
         m_Seed->LoadChecks( stage );
     }
 

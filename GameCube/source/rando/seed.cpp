@@ -174,7 +174,7 @@ namespace mod::rando
 
         if ( num_eventFlags > 0 )
         {
-            tp::d_com_inf_game::GameInfo* gameInfo = &tp::d_com_inf_game::dComIfG_gameInfo;
+            tp::d_com_inf_game::dComIfG_inf_c* gameInfo = &tp::d_com_inf_game::dComIfG_gameInfo;
 
             // Set the pointer as offset into our buffer
             eventFlag* eventFlags = reinterpret_cast<eventFlag*>( &m_GCIData[gci_offset] );
@@ -184,7 +184,7 @@ namespace mod::rando
                 uint8_t offset = eventFlags[i].offset;
                 uint8_t flag = eventFlags[i].flag;
 
-                gameInfo->scratchPad.eventBits[offset] |= flag;
+                gameInfo->save.events.event_flags[offset] |= flag;
                 m_EventFlagsModified++;
             }
         }
@@ -199,7 +199,8 @@ namespace mod::rando
 
         if ( num_regionFlags > 0 )
         {
-            tp::d_com_inf_game::GameInfo* gameInfo = &tp::d_com_inf_game::dComIfG_gameInfo;
+            tp::d_save::dSv_info_c* SaveInfo = &tp::d_com_inf_game::dComIfG_gameInfo.save;
+            tp::d_com_inf_game::dComIfG_inf_c* gameInfo = &tp::d_com_inf_game::dComIfG_gameInfo;
 
             // Set the pointer as offset into our buffer
             regionFlag* regionFlags = reinterpret_cast<regionFlag*>( &m_GCIData[gci_offset] );
@@ -210,7 +211,7 @@ namespace mod::rando
             {
                 regionID = data::stage::regions[i];
 
-                tp::d_save::getSave( gameInfo, regionID );
+                tp::d_save::getSave( SaveInfo, regionID );
 
                 // Loop through region-flags from gci
                 for ( uint32_t j = 0; j < num_regionFlags; j++ )
@@ -226,25 +227,25 @@ namespace mod::rando
                         // Failsafe; localAreaNode size is 0x20
                         if ( offset < 0x20 )
                         {
-                            gameInfo->localAreaNodes[offset] |= ( 0x80 >> shift );
+                            SaveInfo->memory.temp_flags.area_flags_bitfields1[offset] |= ( 0x80 >> shift ); //This needs some work and will need to be transferred to the new structure.
                             m_AreaFlagsModified++;
                         }
                     }
                 }
 
                 // Save the modifications
-                tp::d_save::putSave( gameInfo, regionID );
+                tp::d_save::putSave( SaveInfo, regionID );
             }
 
             // Reset to previous region ID
             uint8_t i = 0;
 
-            while ( !strcmp( data::stage::allStages[i], gameInfo->currentStage ) )
+            while ( !strcmp( data::stage::allStages[i], gameInfo->play.mStartStage.mStage ) )
             {
                 i++;
             }
 
-            tp::d_save::getSave( gameInfo, data::stage::regions[i] );
+            tp::d_save::getSave( SaveInfo, data::stage::regions[i] );
         }
     }
 

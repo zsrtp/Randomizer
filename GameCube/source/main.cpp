@@ -169,7 +169,7 @@ namespace mod
 
         // Load relevant pointers locally for faster access
         CPadInfo* padInfo = &cpadInfo;
-        GameInfo* gameInfo = &dComIfG_gameInfo;
+        dComIfG_inf_c* gameInfo = &dComIfG_gameInfo;
 
         // Handle game state updates
         using namespace libtp::tp::f_pc_node_req;
@@ -184,7 +184,7 @@ namespace mod
             if ( prevState != GAME_ACTIVE && state == 11 )
             {
                 // check whether we're in title screen CS
-                if ( 0 != strcmp( "S_MV000", gameInfo->nextStageVars.nextStage ) )
+                if ( 0 != strcmp( "S_MV000", gameInfo->play.mNextStage.mStage ) )
                 {
                     gameState = GAME_ACTIVE;
                 }

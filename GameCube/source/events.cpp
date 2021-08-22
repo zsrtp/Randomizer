@@ -26,7 +26,7 @@ namespace mod::events
         {
             // Check if the seed is already applied to the save-file (flags etc.)
             // Try to do it otherwise
-            if ( !randomizer->m_SeedInit && !strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.currentStage, "F_SP103" ) )
+            if ( !randomizer->m_SeedInit && !strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage, "F_SP103" ) )
             {
                 randomizer->initSave();
             }
@@ -84,7 +84,7 @@ namespace mod::events
         else
         {
             // Default item
-            return static_cast<int32_t>( libtp::data::items::Poe_Soul );
+            return static_cast<int32_t>( libtp::tp::d_save::ItemTable::Poe_Soul );
         }
     }
 }     // namespace mod::events
