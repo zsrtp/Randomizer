@@ -63,6 +63,10 @@ namespace mod
                                                   libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
                                                   int32_t unk3,
                                                   void* unk4 );
+                
+    extern int ( *return_getLayerNo_common_common )(const char *stageName, 
+                                                    int roomId, 
+                                                    int layerOverride);
 
 }     // namespace mod
 #endif

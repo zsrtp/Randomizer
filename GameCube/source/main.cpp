@@ -52,6 +52,11 @@ namespace mod
                                            libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
                                            int32_t unk3,
                                            void* unk4 ) = nullptr;
+    
+    //GetLayerNo trampoline
+    int ( *return_getLayerNo_common_common )( const char *stageName, 
+                                                int roomId, 
+                                                int layerOverride) = nullptr;
 
     void main()
     {
@@ -78,6 +83,7 @@ namespace mod
         using namespace libtp;
         using namespace libtp::tp::d_stage;
         using namespace libtp::tp::dzx;
+        using namespace libtp::tp::d_com_inf_game;
         // Hook functions
         return_fapGm_Execute = patch::hookFunction( libtp::tp::f_ap_game::fapGm_Execute, mod::handle_fapGm_Execute );
 
@@ -118,7 +124,18 @@ namespace mod
                                      events::onDZX( mod::randomizer, chunkTypeInfo );
                                      return return_actorCommonLayerInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
                                  } );
+        
+        //Custom States
+        return_getLayerNo_common_common = 
+            patch::hookFunction(getLayerNo_common_common,
+			                [](const char *stageName, int roomId, int layerOverride)
+			                {
+				                return game_patch::_01_getLayerNo(stageName, roomId, layerOverride);
+			                }
+		);
     }
+
+    
 
     void setScreen( bool state )
     {

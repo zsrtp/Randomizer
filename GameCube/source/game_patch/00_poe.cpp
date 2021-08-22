@@ -14,6 +14,6 @@ namespace mod::game_patch
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect.poe_count++;
         };
 
-        libtp::tp::d_item::item_func_ptr[libtp::data::items::Poe_Soul] = onGetPoeSoul;
+        libtp::tp::d_item::item_func_ptr[libtp::tp::d_save::ItemTable::Poe_Soul] = onGetPoeSoul;
     }
 }     // namespace mod::game_patch

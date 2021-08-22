@@ -64,6 +64,13 @@ namespace mod::events
                 // Disable Poe increment (handled through item_get_func; see game_patches)
                 *reinterpret_cast<uint32_t*>( relPtrRaw + e_po_ExecDead_incOffset ) = 0x60000000;
                 break;
+            // d_a_obj_kshutter.rel 
+            // Lakebed Temple Boss Door
+            case 0x1FA: 
+                //Nop out the instruction that stores the new total small key value when the game attempts to 
+                //remove a small key from the inventory when opening the boss door
+                *reinterpret_cast<uint32_t*>(relPtrRaw + 0x1198) = 0x60000000; //Previous: 0x3803ffff
+                break;
         }
     }
 

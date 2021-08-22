@@ -12,5 +12,6 @@
 namespace mod::game_patch
 {
     void _00_poe( void );
+    int _01_getLayerNo(const char *stageName, int roomId, int layerOverride);
 }     // namespace mod::game_patch
 #endif

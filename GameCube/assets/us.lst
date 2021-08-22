@@ -23,6 +23,9 @@
 800350F0:putSave
 8003498C:onEventBit
 800349A4:offEventBit
+80032bb0:isDarkClearLV
+80032bec:isTransformLV
+803a7288:saveBitLabels
 
 // d_event.o
 80042778:defaultSkipStb
@@ -64,6 +67,7 @@
 8011A6FC:checkTreasureRupeeReturn
 8011E9F8:procGanonFinishInit
 8011EA78:procGanonFinish
+8014139c:dComIfGs_isEventBit
 
 // data
 8038EB8C:ladderVars
@@ -165,10 +169,13 @@
 // d_com_inf_game.o
 // data
 804061C0:dComIfG_gameInfo
+8002b3f4:dComIfG_get_timelayer
+8002b434:getLayerNo_common_common
 
 // d_kankyo.o
 // data
 8042CA54:env_light
+801ac70c:dKy_darkworld_stage_check
 
 // JFWSystem.o
 // data

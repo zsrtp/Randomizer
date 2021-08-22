@@ -13,6 +13,8 @@
 #include "rando/seedlist.h"
 
 #define SEED_MAX_ENTRIES 10
+#define _VERSION_MAJOR 1
+#define _VERSION_MINOR 0
 
 namespace mod::rando
 {
