@@ -13,7 +13,7 @@
 #include <cstdio>
 
 #include "data/stages.h"
-#include "gc/card.h"
+#include "gc_wii/card.h"
 #include "main.h"
 #include "rando/data.h"
 #include "tools.h"

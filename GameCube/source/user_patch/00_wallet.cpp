@@ -6,7 +6,7 @@
  */
 #include <cinttypes>
 
-#include "gc/OSCache.h"
+#include "gc_wii/OSCache.h"
 #include "main.h"
 #include "rando/randomizer.h"
 #include "tp/d_menu_collect.h"
@@ -48,10 +48,10 @@ namespace mod::user_patch
         *reinterpret_cast<uint32_t*>( setWalletMaxNumPtr + 0x30 ) = ASM_COMPARE_WORD_IMMEDIATE( 0, values[1] );
 
         // Update the cache
-        gc::os_cache::DCFlushRange( reinterpret_cast<void*>( getRupeeMaxPtr ), 0x41 );
-        gc::os_cache::ICInvalidateRange( reinterpret_cast<void*>( getRupeeMaxPtr ), 0x41 );
+        gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( getRupeeMaxPtr ), 0x41 );
+        gc_wii::os_cache::ICInvalidateRange( reinterpret_cast<void*>( getRupeeMaxPtr ), 0x41 );
 
-        gc::os_cache::DCFlushRange( reinterpret_cast<void*>( setWalletMaxNumPtr ), 0x31 );
-        gc::os_cache::ICInvalidateRange( reinterpret_cast<void*>( setWalletMaxNumPtr ), 0x31 );
+        gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( setWalletMaxNumPtr ), 0x31 );
+        gc_wii::os_cache::ICInvalidateRange( reinterpret_cast<void*>( setWalletMaxNumPtr ), 0x31 );
     }
 }     // namespace mod::user_patch

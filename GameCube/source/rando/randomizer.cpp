@@ -9,8 +9,8 @@
 #include <cstring>
 
 #include "data/items.h"
-#include "gc/OSModule.h"
-#include "gc/card.h"
+#include "gc_wii/OSModule.h"
+#include "gc_wii/card.h"
 #include "main.h"
 #include "rando/data.h"
 #include "rando/seed.h"
@@ -71,7 +71,7 @@ namespace mod::rando
         RELCheck* relReplacements = m_Seed->m_RELChecks;
 
         // Get the pointer to the current REL file
-        libtp::gc::os_module::OSModuleInfo* moduleInfo = dmc->moduleInfo;
+        libtp::gc_wii::os_module::OSModuleInfo* moduleInfo = dmc->moduleInfo;
 
         // If we don't have replacements just leave
         if ( !numReplacements )
