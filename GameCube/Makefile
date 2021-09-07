@@ -29,7 +29,7 @@ OUTPUT_FILENAME := Randomizer
 # DON'T TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
 LIBTP_REL := externals/libtp_rel
 
-GCIPACK := python ../bin/gcipack.py
+GCIPACK := python3 ../bin/gcipack.py
 
 UNAME := $(shell uname)
 
