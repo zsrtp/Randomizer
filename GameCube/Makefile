@@ -9,8 +9,8 @@ endif
 
 include $(DEVKITPPC)/gamecube_rules
 
-# Format: YYYYMMDDHHmm + 2 char Game Region
-BUILDID:='"$(shell date +'%Y%m%d%H%M')"'
+# Format: short commit Tag
+BUILDID:='"$(shell git rev-parse --short HEAD)"'
 
 # Version
 _VERSION_MAJOR:=1
