@@ -7,3 +7,4 @@
 **/*.tga
 bin
 obj
+.vs
