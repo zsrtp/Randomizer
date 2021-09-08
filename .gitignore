@@ -5,3 +5,5 @@
 **/build.*
 **/autobuild.sh
 **/*.tga
+bin
+obj
