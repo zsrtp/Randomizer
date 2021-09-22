@@ -1,10 +1,11 @@
 **/.vscode
+**/.vs
 **/*.rel
 **/*.elf
 **/*.gci
 **/build.*
 **/autobuild.sh
-**/*.tga
-bin
-obj
-.vs
+
+Generator/obj
+Generator/bin
+*.tga
