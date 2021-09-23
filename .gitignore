@@ -6,6 +6,6 @@
 **/build.*
 **/autobuild.sh
 
-Generator/obj
+Generator/src/obj
 Generator/bin
 *.tga
