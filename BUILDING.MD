@@ -55,13 +55,13 @@ If you would like to provide instructions for non-Windows environments, we would
 
 The command you should run to clone the Randomizer repository will vary depending on whether or not you plan to create pull requests.
 
-- If you would like to contribute commits to the Randomizer, fork the repository, then clone your fork:
+- If you think you might contribute commits to the Randomizer, fork the repository, then clone your fork:
 
   ```
   git clone https://github.com/<your-username>/Randomizer.git
   ```
 
-- If you are just tinkering, run the following:
+- If you are just tinkering, you can use the following:
 
   ```
   git clone https://github.com/zsrtp/Randomizer.git
