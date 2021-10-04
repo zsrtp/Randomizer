@@ -53,7 +53,7 @@ If you would like to provide instructions for non-Windows environments, we would
 
 ## Building
 
-The commands you should run to clone the Randomizer repository will vary depending on whether or not you plan to create pull requests.
+The command you should run to clone the Randomizer repository will vary depending on whether or not you plan to create pull requests.
 
 - If you would like to contribute commits to the Randomizer, fork the repository, then clone your fork:
 
