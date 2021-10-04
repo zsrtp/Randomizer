@@ -157,14 +157,15 @@ Repeating these steps every time you want to test a change is a little cumbersom
    Automatically loads the TP Randomizer REL when starting up the game.
    ```
 
-1. In `Code:`, copy and paste one of the following:
- - [US](https://pastebin.com/ES58EG3Z)
- - [EU](https://pastebin.com/MvaeFAyV)
- - [JP](https://pastebin.com/uRXqGGiq)
+1. In `Code:`, copy and paste one of the following depending on your TP version:
+
+   - [US](https://pastebin.com/ES58EG3Z)
+   - [EU](https://pastebin.com/MvaeFAyV)
+   - [JP](https://pastebin.com/uRXqGGiq)
 
 1. Click the `Save` button.
 1. Make sure the checkbox next to the new `Randomizer REL Loader` entry is checked, then close the popup.
 
 Now whenever you start up the game, the Randomizer code will automatically load.
 
-_(If you would like to play TP without loading the Randomizer, you can uncheck the box next to `REL Loader`.)_
+_(If you would like to play TP without loading the Randomizer, you can uncheck the box next to `Randomizer REL Loader`.)_
