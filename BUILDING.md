@@ -157,7 +157,7 @@ Repeating these steps every time you want to test a change is a little cumbersom
    Automatically loads the TP Randomizer REL when starting up the game.
    ```
 
-1. In `Code:`, copy and paste one of the following:
+1. In `Code:`, copy and paste one of the following depending on your TP version:
 
    - [US](https://pastebin.com/ES58EG3Z)
    - [EU](https://pastebin.com/MvaeFAyV)
