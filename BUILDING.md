@@ -150,79 +150,17 @@ Repeating these steps every time you want to test a change is a little cumbersom
 1. In the popup, change to the `Gecko Codes` tab.
 1. Click the `Add New Code...` button.
 1. In the new popup, set `Name:` to `Randomizer REL Loader`.
-1. Set `Creator:` to `TP Randomizer` or whatever you would like.
+1. Set `Creator:` to `Zephiles`
 1. In `Notes:`, you can put the following:
 
    ```
    Automatically loads the TP Randomizer REL when starting up the game.
    ```
 
-1. In `Code:`, copy and paste the following:
-
-   ```
-   06004218 0000000f
-   43757374 6f6d2052
-   454c2046 696c6500
-   c20063f8 0000003a
-   3fe08000 3fc0802c
-   3fa08033 3f808035
-   3b600000 3f40000f
-   635a4240 63836a4c
-   7c6803a6 38600000
-   38800000 38a00000
-   4e800021 2c03ffff
-   4082000c 375affff
-   4181ffdc 2c030000
-   4082017c 638372f4
-   7c6803a6 38600000
-   3c80803e 60840f40
-   38a00000 4e800021
-   2c030000 40820158
-   38800014 480000e5
-   7c7a1b78 63837f98
-   7c6803a6 38600000
-   63e44218 7f45d378
-   4e800021 2c030000
-   40820104 38800200
-   480000b9 7c781b78
-   638388cc 7c6803a6
-   7f43d378 7f04c378
-   38a00200 38c02000
-   4e800021 2c030000
-   408200bc 83380040
-   3b3901ff 5739002c
-   7f04c378 4800006d
-   7f24cb78 48000075
-   7c781b78 638388cc
-   7c6803a6 7f43d378
-   7f04c378 7f25cb78
-   38c02200 4e800021
-   2c030000 40820078
-   80980020 48000045
-   7c791b78 63a3e510
-   7c6803a6 7f03c378
-   7f24cb78 4e800021
-   2c030001 40820038
-   933f42dc 931f42e0
-   83780034 48000048
-   63c3f7ac 7c6903a6
-   806d86b4 4e800420
-   63c3f128 7c6903a6
-   806d86b4 38a00020
-   4e800420 63a3e7a8
-   7c6803a6 7f03c378
-   4e800021 7f24cb78
-   4bffffc9 7f04c378
-   4bffffc1 638380b4
-   7c6803a6 7f43d378
-   4e800021 7f44d378
-   4bffffa9 638373d8
-   7c6803a6 38600000
-   4e800021 2c1b0000
-   4182000c 7f6803a6
-   4e800021 3c60803f
-   60000000 00000000
-   ```
+1. In `Code:`, copy and paste one of the following:
+ - [US](https://pastebin.com/ES58EG3Z)
+ - [EU](https://pastebin.com/MvaeFAyV)
+ - [JP](https://pastebin.com/uRXqGGiq)
 
 1. Click the `Save` button.
 1. Make sure the checkbox next to the new `Randomizer REL Loader` entry is checked, then close the popup.
