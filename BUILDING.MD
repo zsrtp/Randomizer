@@ -16,7 +16,7 @@ For more information about developing for the Randomizer, please check the [wiki
 
 ### Windows
 
-Install [devkitPro](https://devkitpro.org/wiki/Getting_Started) which is used to compile the Randomizer code to PowerPC instructions which the GameCube and Wii understand.
+Install [devkitPro](https://devkitpro.org/wiki/Getting_Started) which is used to compile the Randomizer code to PowerPC instructions which the GameCube understands.
 
 1. Download the graphical installer by following the above link.
 
@@ -35,7 +35,7 @@ Install [devkitPro](https://devkitpro.org/wiki/Getting_Started) which is used to
 1. Once installation finishes, navigate to the devkitPro folder (likely `C:\devkitPro`).
 
 1. Change to the `msys2` folder, then run `msys2.exe` by double-clicking.<br>
-   _([MSYS2](#https://www.msys2.org) is a collection of tools and libraries providing you with an easy-to-use environment for building, installing and running native Windows software.)_
+   _([MSYS2](https://www.msys2.org) is a collection of tools and libraries providing you with an easy-to-use environment for building, installing and running native Windows software.)_
 
 1. Within the `msys2` shell, run the following to install `python3` and `git` for the msys2 environment:
 
@@ -53,13 +53,16 @@ If you would like to provide instructions for non-Windows environments, we would
 
 ## Building
 
-The commands you should run to clone the Randomizer repository will vary depending on whether or not you plan to create any pull requests:
+The commands you should run to clone the Randomizer repository will vary depending on whether or not you plan to create pull requests.
 
 - If you would like to contribute commits to the Randomizer, fork the repository, then clone your fork:
+
   ```
-  git clone https://github.com/your-username/Randomizer.git
+  git clone https://github.com/<your-username>/Randomizer.git
   ```
-- If you are just trying it out, run the following:
+
+- If you are just tinkering, run the following:
+
   ```
   git clone https://github.com/zsrtp/Randomizer.git
   ```
@@ -87,7 +90,7 @@ cd GameCube
 
 To build the Randomizer for all TP versions, you can run the `make` command.
 
-However! When developing a feature, you may find it quicker to initially build for a single version of the game.
+However! When developing a feature, you may find it quicker to initially develop for a single version of the game.
 Once your feature works for a single version, you can work to support all versions.
 
 Here is an example of how to build for the US GameCube version only:
@@ -99,8 +102,7 @@ make us
 _(See the Makefile for all available commands.)_
 
 Running `make us` will generate a `Randomizer.us.gci` file.
-
-The `gci` is a self-contained memory card file entry, and it contains our Randomizer code.
+This GCI is a self-contained memory card file entry, and it contains our Randomizer code.
 
 ## Testing in Dolphin
 
@@ -140,20 +142,23 @@ Normally the steps to load the Randomizer REL are as follows:
   - TP will load the hacked save file.
 - Select the REL Loader quest log.
   - This causes TP to execute some custom instructions which were in the hacked save file.
-- The game will load in the Randomizer code.
+- The game will load the Randomizer code.
 
 Repeating these steps every time you want to test a change is a little cumbersome, so we can do the following instead:
 
-1. Right-click on your TP game in Dolphin and select `Properties`.
+1. Right-click your TP game in Dolphin and select `Properties`.
 1. In the popup, change to the `Gecko Codes` tab.
 1. Click the `Add New Code...` button.
-1. In the new popup, set the `Name` to `Randomizer REL Loader`.
-1. Set the `Creator` to `TP Randomizer` or whatever you would like.
+1. In the new popup, set `Name:` to `Randomizer REL Loader`.
+1. Set `Creator:` to `TP Randomizer` or whatever you would like.
 1. In `Notes:`, you can put the following:
+
    ```
    Automatically loads the TP Randomizer REL when starting up the game.
    ```
+
 1. In `Code:`, copy and paste the following:
+
    ```
    06004218 0000000f
    43757374 6f6d2052
@@ -218,6 +223,7 @@ Repeating these steps every time you want to test a change is a little cumbersom
    4e800021 3c60803f
    60000000 00000000
    ```
+
 1. Click the `Save` button.
 1. Make sure the checkbox next to the new `Randomizer REL Loader` entry is checked, then close the popup.
 
