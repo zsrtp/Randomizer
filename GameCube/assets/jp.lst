@@ -151,7 +151,7 @@
 80364AE8:__ashldi3
 80364B0C:__lshrdi3
 80364B30:__ashrdi3
-80364B58:__floatdidf
+80364B58:__floatdisf
 80364C0C:__fixsfdi
 80364C0C:__fixdfdi
 80364C0C:__fixunssfdi
