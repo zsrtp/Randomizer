@@ -65,8 +65,8 @@ namespace mod
                                                   void* unk4 );
                 
     extern int ( *return_getLayerNo_common_common )(const char *stageName, 
-                                                    int roomId, 
-                                                    int layerOverride);
+                                                    int32_t roomId, 
+                                                    int32_t layerOverride);
 
 }     // namespace mod
 #endif

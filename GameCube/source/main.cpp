@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <cstring>
 
+#include "data/items.h"
 #include "events.h"
 #include "game_patch/game_patch.h"
 #include "patch.h"
@@ -12,7 +13,10 @@
 #include "rando/randomizer.h"
 #include "rando/seedlist.h"
 #include "tools.h"
+#include "tp/control.h"
 #include "tp/d_com_inf_game.h"
+#include "tp/d_meter2_info.h"
+#include "tp/d_msg_object.h"
 #include "tp/d_stage.h"
 #include "tp/dzx.h"
 #include "tp/f_ap_game.h"
@@ -52,16 +56,18 @@ namespace mod
                                            libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
                                            int32_t unk3,
                                            void* unk4 ) = nullptr;
-    
-    //GetLayerNo trampoline
-    int ( *return_getLayerNo_common_common )( const char *stageName, 
-                                                int roomId, 
-                                                int layerOverride) = nullptr;
+
+    // GetLayerNo trampoline
+    int32_t ( *return_getLayerNo_common_common )( const char* stageName, int32_t roomId, int32_t layerOverride ) = nullptr;
+
+    bool ( *return_render )( void* TControl ) = nullptr;
 
     void main()
     {
         // Run game patches
         game_patch::_00_poe();
+        game_patch::_02_modifyItemData();
+        game_patch::_03_increaseClimbSpeed();
 
         // Display some info
         console << "Welcome to TPR!\n"
@@ -88,54 +94,110 @@ namespace mod
         return_fapGm_Execute = patch::hookFunction( libtp::tp::f_ap_game::fapGm_Execute, mod::handle_fapGm_Execute );
 
         // DMC
-        return_do_Link = patch::hookFunction( libtp::tp::dynamic_link::do_link,
-                                              []( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
-                                              {
-                                                  // Call the original function immediately, as the REL file needs to be linked
-                                                  // before applying patches
-                                                  const bool result = return_do_Link( dmc );
+        return_do_Link =
+            patch::hookFunction( libtp::tp::dynamic_link::do_link, []( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) {
+                // Call the original function immediately, as the REL file needs to be linked
+                // before applying patches
+                const bool result = return_do_Link( dmc );
 
-                                                  events::onRELLink( randomizer, dmc );
+                events::onRELLink( randomizer, dmc );
 
-                                                  return result;
-                                              } );
+                return result;
+            } );
 
         // DZX
         return_actorInit =
             patch::hookFunction( actorInit,
-                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
-                                 {
+                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 ) {
                                      events::onDZX( mod::randomizer, chunkTypeInfo );
                                      return return_actorInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
                                  } );
 
         return_actorInit_always =
             patch::hookFunction( actorInit_always,
-                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
-                                 {
+                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 ) {
                                      events::onDZX( mod::randomizer, chunkTypeInfo );
                                      return return_actorInit_always( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
                                  } );
 
         return_actorCommonLayerInit =
             patch::hookFunction( actorCommonLayerInit,
-                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
-                                 {
+                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 ) {
                                      events::onDZX( mod::randomizer, chunkTypeInfo );
                                      return return_actorCommonLayerInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
                                  } );
-        
-        //Custom States
-        return_getLayerNo_common_common = 
-            patch::hookFunction(getLayerNo_common_common,
-			                [](const char *stageName, int roomId, int layerOverride)
-			                {
-				                return game_patch::_01_getLayerNo(stageName, roomId, layerOverride);
-			                }
-		);
+
+        // Custom States
+        return_getLayerNo_common_common =
+            patch::hookFunction( getLayerNo_common_common, []( const char* stageName, int32_t roomId, int32_t layerOverride ) {
+                return game_patch::_01_getLayerNo( stageName, roomId, layerOverride );
+            } );
+
+        // Custom GetItem Text
+        return_render = patch::hookFunction( tp::control::render, []( void* TControl ) {
+            // Get the address of the current text to draw
+            const char** currentTextPtr = reinterpret_cast<const char**>( reinterpret_cast<uint32_t>( TControl ) + 0x20 );
+
+            const char* currentText = *currentTextPtr;
+
+            // Make sure a pointer is set
+            if ( !currentText )
+            {
+                return return_render( TControl );
+            }
+            return return_render( TControl );
+        } );
     }
 
     
+
+    int32_t getMsgIndex( libtp::tp::d_msg_object::StringDataTable* stringDataTable, uint32_t itemId )
+    {
+        uint32_t totalEntries = stringDataTable->totalEntries;
+        libtp::tp::d_msg_object::StringDataTableEntry* entry = &stringDataTable->entry[0];
+
+        // Increment itemId to be at the start of the table entries for items
+        itemId += 0x65;
+
+        for ( uint32_t index = 0; index < totalEntries; index++ )
+        {
+            if ( entry->stringId == itemId )
+            {
+                return static_cast<int32_t>( index );
+            }
+            entry++;
+        }
+
+        // Didn't find a proper index
+        return -1;
+    }
+
+    const char* getItemMsgAddress( uint32_t itemId )
+    {
+        // Get the pointer to the string data table
+        libtp::tp::d_msg_object::StringDataTable* stringDataTable = libtp::tp::d_meter2_info::g_meter2_info.stringDataTable;
+
+        // Make sure the pointer is set
+        if ( !stringDataTable )
+        {
+            return nullptr;
+        }
+
+        // Get the index for the current item
+        int32_t itemIndex = getMsgIndex( stringDataTable, itemId );
+
+        // Make sure the index is valid
+        if ( itemIndex < 0 )
+        {
+            return nullptr;
+        }
+
+        // Get the string address
+        libtp::tp::d_msg_object::StringDataTableEntry* entry = &stringDataTable->entry[itemIndex];
+
+        return reinterpret_cast<const char*>( reinterpret_cast<uint32_t>( &stringDataTable->unk_20 ) + entry->offsetToString +
+                                              ( stringDataTable->stringsStartOffset + 0x8 ) );
+    }
 
     void setScreen( bool state )
     {

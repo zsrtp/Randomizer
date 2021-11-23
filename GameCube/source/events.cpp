@@ -4,6 +4,7 @@
 #include <cstring>
 
 #include "asm.h"
+#include "data/items.h"
 #include "main.h"
 #include "patch.h"
 #include "rando/randomizer.h"
@@ -26,7 +27,8 @@ namespace mod::events
         {
             // Check if the seed is already applied to the save-file (flags etc.)
             // Try to do it otherwise
-            if ( !randomizer->m_SeedInit && !strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage, "F_SP103" ) )
+            if ( !randomizer->m_SeedInit &&
+                 !strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage, "F_SP103" ) )
             {
                 randomizer->initSave();
             }
@@ -64,12 +66,12 @@ namespace mod::events
                 // Disable Poe increment (handled through item_get_func; see game_patches)
                 *reinterpret_cast<uint32_t*>( relPtrRaw + e_po_ExecDead_incOffset ) = 0x60000000;
                 break;
-            // d_a_obj_kshutter.rel 
+            // d_a_obj_kshutter.rel
             // Lakebed Temple Boss Door
-            case 0x1FA: 
-                //Nop out the instruction that stores the new total small key value when the game attempts to 
-                //remove a small key from the inventory when opening the boss door
-                *reinterpret_cast<uint32_t*>(relPtrRaw + 0x1198) = 0x60000000; //Previous: 0x3803ffff
+            case 0x1FA:
+                // Nop out the instruction that stores the new total small key value when the game attempts to
+                // remove a small key from the inventory when opening the boss door
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1198 ) = 0x60000000;     // Previous: 0x3803ffff
                 break;
         }
     }
@@ -91,7 +93,7 @@ namespace mod::events
         else
         {
             // Default item
-            return static_cast<int32_t>( libtp::tp::d_save::ItemTable::Poe_Soul );
+            return static_cast<int32_t>( libtp::data::items::Poe_Soul );
         }
     }
 }     // namespace mod::events

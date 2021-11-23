@@ -61,6 +61,11 @@
 803AF178:item_func_ptr
 803AF578:item_getcheck_func_ptr
 
+// d_item_data.o
+803AC5A0:item_resource
+803ADD88:field_item_res
+803AED78:item_info
+
 // d_a_alink.h
 800B271C:setStickData
 800BB4B8:checkHeavyStateOn
@@ -68,9 +73,12 @@
 8011E9F8:procGanonFinishInit
 8011EA78:procGanonFinish
 8014139c:dComIfGs_isEventBit
+80391A5C:getSeType
+8009DA60:checkStageName
 
 // data
-8038EB8C:ladderVars
+8038EB8C:climbVars
+8038E1E0:wallMoveVars
 
 // d_menu_collect.o
 801B3340:setWalletMaxNum
@@ -186,3 +194,6 @@
 
 // Z2SeqMgr.o
 802B4EB0:startBattleBgm
+
+//control.o 
+802a76bc:render
