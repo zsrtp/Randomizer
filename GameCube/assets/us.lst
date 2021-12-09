@@ -49,6 +49,7 @@
 8001C174:createItemForMidBoss
 8001C1B8:createItemForDirectGet
 80019AA8:CreateAppend
+80019D98:fopAcM_create
 
 // f_pc_node_req
 803A3A38:l_fpcNdRq_Queue
@@ -197,3 +198,9 @@
 
 //control.o 
 802a76bc:render
+
+//dvdfs.o
+80348528:DVDConvertPathToEntrynum
+
+//d_meter2_info.o
+80430188:g_meter2_info

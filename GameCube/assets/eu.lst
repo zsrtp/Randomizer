@@ -179,3 +179,7 @@
 
 // Z2SeqMgr
 802B5CB0:startBattleBgm
+
+// d_s_logo.h
+// data
+802591F8:getPalLanguage2

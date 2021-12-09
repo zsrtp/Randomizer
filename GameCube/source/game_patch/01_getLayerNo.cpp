@@ -47,8 +47,18 @@ namespace mod::game_patch
                 switch ( stageID )
                 {
                     case stage::stageIDs::Snowpeak_Ruins:
+                    {
+                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
+                            libtp::tp::d_save::saveBitLabels[0x10A] );     // Snowpeak Ruins Completed
+                        if ( condition)
+                        {
+                             chosenLayer = stage::snowpeakStateIDs::SPR_Dungeon_Completed;
+                        }
+                        break;
+                    }
                     case stage::stageIDs::Snowpeak:
                     {
+                        //TODO need to set a condition that checks for the portal before updating the state as this can lose the portal
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                             libtp::tp::d_save::saveBitLabels[0x10A] );     // Snowpeak Ruins Completed
                         if ( condition == false )
@@ -467,11 +477,19 @@ namespace mod::game_patch
                     {
                         if ( roomId == 1 )
                         {
+                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4902 ); //Bought slinghot from Sera
+                            if ( condition )
+                                {
+                                    chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
+                                }
+                            /* This is the original code, which updates the state of the shop once you've cleared Faron Twilight.
+                            * We modify this in rando to instead update once you've bought the Slingshot as to not lose the check and to 
+                            * help prevent logical linearity/softlocks in the early game.
                             uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
                             if ( uVar2 != 0 )
                             {
                                 chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
-                            }
+                            }*/
                         }
                         else
                         {

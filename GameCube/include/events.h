@@ -11,8 +11,8 @@
 #define EVENTS_H
 #include <cinttypes>
 
-#include "tp/d_save.h"
 #include "rando/randomizer.h"
+#include "tp/d_save.h"
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
 

@@ -36,6 +36,9 @@ namespace mod::rando
         POECheck* m_POEChecks = nullptr;       // POE Checks for current stage
         uint32_t m_numLoadedPOEChecks = 0;     // Number of currently loaded POEChecks
 
+        ArcCheck* m_ArcChecks = nullptr;       // Checks for the currently loaded .arc file
+        uint32_t m_numLoadedArcChecks = 0;     // Number of currently loaded ArcChecks
+
         // Member functions
        public:
         /**
@@ -82,6 +85,8 @@ namespace mod::rando
         void LoadDZX( uint8_t stageIDX );
         void LoadREL( uint8_t stageIDX );
         void LoadPOE( uint8_t stageIDX );
+
+        void LoadARC( uint8_t stageIDX );
     };
 }     // namespace mod::rando
 #endif

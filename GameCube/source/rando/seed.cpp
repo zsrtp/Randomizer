@@ -357,4 +357,20 @@ namespace mod::rando
         }
     }
 
+     void Seed::LoadARC( uint8_t stageIDX )
+    {
+        using namespace libtp;
+
+        uint32_t num_arcchecks = m_Header->arcCheckInfo.numEntries;
+        //uint32_t gci_offset = m_Header->arcCheckInfo.dataOffset;
+
+        // Set the pointer as offset into our buffer
+       //ArcCheck* allArc = reinterpret_cast<ArcCheck*>( &m_GCIData[gci_offset] );
+
+        for ( uint32_t i = 0; i < num_arcchecks; i++ )
+        {
+            m_numLoadedArcChecks++;
+        }
+    }
+
 }     // namespace mod::rando

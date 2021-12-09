@@ -20,6 +20,7 @@
 #include "tp/d_stage.h"
 #include "tp/dzx.h"
 #include "tp/f_ap_game.h"
+#include "tp/f_op_actor_mng.h"
 #include "tp/f_op_scene_req.h"
 #include "tp/f_pc_node_req.h"
 #include "tp/m_do_controller_pad.h"
@@ -59,6 +60,16 @@ namespace mod
 
     // GetLayerNo trampoline
     int32_t ( *return_getLayerNo_common_common )( const char* stageName, int32_t roomId, int32_t layerOverride ) = nullptr;
+
+    // Used in replacing Heart Containers
+    int32_t ( *return_createItemForBoss )( const float pos[3],
+                                           int32_t item,
+                                           int32_t roomNo,
+                                           const int16_t rot[3],
+                                           const float scale[3],
+                                           float unk6,
+                                           float unk7,
+                                           int32_t parameters ) = nullptr;
 
     bool ( *return_render )( void* TControl ) = nullptr;
 
@@ -147,9 +158,23 @@ namespace mod
             }
             return return_render( TControl );
         } );
-    }
 
-    
+        // Replace the Item that spawns when a boss is defeated
+        return_createItemForBoss =
+            patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForBoss,
+                                 []( const float pos[3],
+                                     int32_t item,
+                                     int32_t roomNo,
+                                     const int16_t rot[3],
+                                     const float scale[3],
+                                     float unk6,
+                                     float unk7,
+                                     int32_t parameters ) {
+                                     // Spawn the appropriate item with model
+                                     uint32_t params = randomizer->getBossItem() | 0xFFFF00;
+                                     return tp::f_op_actor_mng::fopAcM_create( 539, params, pos, roomNo, rot, scale, -1 );
+                                 } );
+    }
 
     int32_t getMsgIndex( libtp::tp::d_msg_object::StringDataTable* stringDataTable, uint32_t itemId )
     {

@@ -33,6 +33,9 @@ namespace mod::rando
 
         int32_t getPoeItem( uint8_t flag );
 
+        void getArcIndex();
+        uint8_t getBossItem();
+
         /**
          * @brief Returns the seed
          */

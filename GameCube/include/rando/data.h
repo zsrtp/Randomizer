@@ -36,6 +36,8 @@ namespace mod::rando
         entryInfo dzxCheckInfo;
         entryInfo relCheckInfo;
         entryInfo poeCheckInfo;
+        entryInfo arcCheckInfo;
+        entryInfo bossCheckInfo;
     } __attribute__( ( __packed__ ) );
 
     // Seed with index
@@ -88,5 +90,28 @@ namespace mod::rando
         uint8_t flag;      // Flag used for identification
         uint16_t item;     // New item id
     } __attribute__( ( __packed__ ) );
+
+    enum class FileDirectory : uint8_t
+    {
+        Stage = 0x0,
+        Message = 0x1
+    };
+
+    struct ArcCheck
+    {
+        int32_t offset; // Some of these can get pretty big, depending on the stage.
+        int32_t arcFileIndex; // The index of the file that contains the check.
+        uint8_t item; // The item being placed.
+        FileDirectory directory; //The type of directory where the check is stored.
+        const char fileName[18]; // The name of the file where the check is stored
+    } __attribute__(( __packed__ ));
+
+    struct BOSSCheck
+    {
+        uint8_t stageIDX; //The stage where the replacement is taking place.
+        uint8_t item;     // New item id
+        uint8_t padding[2];
+    } __attribute__( ( __packed__ ) );
+
 }     // namespace mod::rando
 #endif

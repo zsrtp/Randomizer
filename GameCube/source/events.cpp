@@ -10,6 +10,7 @@
 #include "rando/randomizer.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/dzx.h"
+#include "user_patch/03_customCosmetics.h"
 
 namespace mod::events
 {
@@ -33,6 +34,7 @@ namespace mod::events
                 randomizer->initSave();
             }
         }
+        user_patch::setHUDCosmetics();
     }
 
     void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )

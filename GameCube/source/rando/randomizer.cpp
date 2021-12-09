@@ -7,6 +7,7 @@
 #include "rando/randomizer.h"
 
 #include <cstring>
+#include <cstdio>
 
 #include "data/items.h"
 #include "gc/OSModule.h"
@@ -18,6 +19,8 @@
 #include "tp/d_com_inf_game.h"
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
+#include "gc/dvdfs.h"
+#include "data/stages.h"
 
 namespace mod::rando
 {
@@ -151,5 +154,66 @@ namespace mod::rando
 
         // Default
         return libtp::data::items::Poe_Soul;
+    }
+
+    uint8_t Randomizer::getBossItem()
+    {
+        // Essentially we just loop through the BOSS Checks and check to see if the stage index matches the check and return the item in the check if it matches.
+        // Default
+        return libtp::data::items::Poe_Soul;
+    }
+
+    void Randomizer::getArcIndex()
+    {
+        // Local vars
+        uint32_t numReplacements = m_Seed->m_numLoadedArcChecks;
+        char filePath[32];
+        int32_t len = 0;
+
+        // Loop through all ArcChecks and set their corresponding file index
+        for ( uint32_t i = 0; i < numReplacements; i++ )
+        {
+            switch (m_Seed->m_ArcChecks[i].directory)
+            {
+                case rando::FileDirectory::Stage:
+                {
+                    len = snprintf(filePath, sizeof(filePath), "res/Stage/%s", m_Seed->m_ArcChecks[i].fileName);
+                    break;
+                }
+                case rando::FileDirectory::Message:
+                {
+#ifdef TP_US
+                    len = snprintf(filePath, sizeof(filePath), "res/Msgus/%s", m_Seed->m_ArcChecks[i].fileName);
+#elif defined TP_JP
+                    len = snprintf(filePath, sizeof(filePath), "res/Msgjp/%s", m_Seed->m_ArcChecks[i].fileName);
+#elif defined TP_EU
+                    // PAL uses a different file for each language
+                    libtp::tp::d_s_logo::Languages lang = tp::d_s_logo::getPalLanguage2(nullptr);
+                    if ((lang < tp::d_s_logo::Languages::uk) || (lang > tp::d_s_logo::Languages::it))
+                    {
+                        // The language is invalid/unsupported, so the game defaults to English
+                        lang = tp::d_s_logo::Languages::uk;
+                    }
+                    
+                    static const char* langStrings[] = {"uk", "de", "fr", "sp", "it"};
+                    len = snprintf(filePath, sizeof(filePath), "res/Msg%s/%s", langStrings[static_cast<s32>(lang)], m_Seed->m_ArcChecks[i].fileName);
+#endif
+                    break;
+                }
+                default:
+                {
+                    len = snprintf(filePath, sizeof(filePath), "%s", m_Seed->m_ArcChecks[i].fileName);
+                } 
+            }
+
+            if ((len >= 0) && (len < static_cast<int32_t>(sizeof(filePath))))
+            {
+                m_Seed->m_ArcChecks[i].arcFileIndex = libtp::gc::dvdfs::DVDConvertPathToEntrynum(filePath);
+            }
+            else // Failsafe in case we did not get a valid result.
+            {
+                m_Seed->m_ArcChecks[i].arcFileIndex = -1;
+            }
+        }
     }
 }     // namespace mod::rando
