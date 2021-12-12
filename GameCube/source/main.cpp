@@ -12,6 +12,7 @@
 #include "rando/randomizer.h"
 #include "rando/seedlist.h"
 #include "tools.h"
+#include "tp/JKRDvdRipper.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_stage.h"
 #include "tp/dzx.h"
@@ -53,6 +54,16 @@ namespace mod
                                            int32_t unk3,
                                            void* unk4 ) = nullptr;
 
+    void* ( *return_loadToMainRAM2 )( int32_t fileIndex,
+                                      uint8_t* unk2,
+                                      uint32_t jkrExpandSwitch,
+                                      uint32_t unk4,
+                                      void* jkrHeap,
+                                      uint32_t eAllocDirection,
+                                      uint32_t unk7,
+                                      int32_t* unk8,
+                                      uint32_t* unk9 ) = nullptr;
+
     void main()
     {
         // Run game patches
@@ -82,42 +93,56 @@ namespace mod
         return_fapGm_Execute = patch::hookFunction( libtp::tp::f_ap_game::fapGm_Execute, mod::handle_fapGm_Execute );
 
         // DMC
-        return_do_Link = patch::hookFunction( libtp::tp::dynamic_link::do_link,
-                                              []( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
-                                              {
-                                                  // Call the original function immediately, as the REL file needs to be linked
-                                                  // before applying patches
-                                                  const bool result = return_do_Link( dmc );
+        return_do_Link =
+            patch::hookFunction( libtp::tp::dynamic_link::do_link, []( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) {
+                // Call the original function immediately, as the REL file needs to be linked
+                // before applying patches
+                const bool result = return_do_Link( dmc );
 
-                                                  events::onRELLink( randomizer, dmc );
+                events::onRELLink( randomizer, dmc );
 
-                                                  return result;
-                                              } );
+                return result;
+            } );
 
         // DZX
         return_actorInit =
             patch::hookFunction( actorInit,
-                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
-                                 {
+                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 ) {
                                      events::onDZX( mod::randomizer, chunkTypeInfo );
                                      return return_actorInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
                                  } );
 
         return_actorInit_always =
             patch::hookFunction( actorInit_always,
-                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
-                                 {
+                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 ) {
                                      events::onDZX( mod::randomizer, chunkTypeInfo );
                                      return return_actorInit_always( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
                                  } );
 
         return_actorCommonLayerInit =
             patch::hookFunction( actorCommonLayerInit,
-                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
-                                 {
+                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 ) {
                                      events::onDZX( mod::randomizer, chunkTypeInfo );
                                      return return_actorCommonLayerInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
                                  } );
+
+        return_loadToMainRAM2 = patch::hookFunction(
+            tp::JKRDvdRipper::loadToMainRAM2,
+            []( int32_t fileIndex,
+                uint8_t* unk2,
+                uint32_t jkrExpandSwitch,
+                uint32_t unk4,
+                void* jkrHeap,
+                uint32_t eAllocDirection,
+                uint32_t unk7,
+                int32_t* unk8,
+                uint32_t* unk9 ) {
+                // Call the original function immediately, as we need the pointer it returns
+                void* filePtr =
+                    return_loadToMainRAM2( fileIndex, unk2, jkrExpandSwitch, unk4, jkrHeap, eAllocDirection, unk7, unk8, unk9 );
+                events::onARC( mod::randomizer, filePtr, fileIndex );
+                return filePtr;
+            } );
     }
 
     void setScreen( bool state )

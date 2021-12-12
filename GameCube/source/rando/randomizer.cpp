@@ -152,4 +152,18 @@ namespace mod::rando
         // Default
         return libtp::data::items::Poe_Soul;
     }
+
+    void Randomizer::overrideARC( void* filePtr, int32_t fileIndex )
+    {
+        uint32_t numReplacements = m_Seed->m_numLoadedARCChecks;
+        // Loop through all ArcChecks and replace the item at an offset given the fileIndex.
+        for ( uint32_t i = 0; i < numReplacements; i++ )
+        {
+            if ( fileIndex == m_Seed->m_ArcChecks[i].arcFileIndex )
+            {
+                *reinterpret_cast<uint8_t*>( ( reinterpret_cast<uint32_t>( filePtr ) + m_Seed->m_ArcChecks[i].offset ) ) =
+                    m_Seed->m_ArcChecks[i].item;
+            }
+        }
+    }
 }     // namespace mod::rando

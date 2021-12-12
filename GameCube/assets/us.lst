@@ -190,3 +190,9 @@
 
 // Z2SeqMgr.o
 802B4EB0:startBattleBgm
+
+//JKRDvdRipper.o
+802d9c54:loadToMainRAM2
+
+//dvdfs.o
+80348528:DVDConvertPathToEntrynum

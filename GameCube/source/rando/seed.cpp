@@ -14,12 +14,14 @@
 
 #include "data/stages.h"
 #include "gc_wii/card.h"
+#include "gc_wii/dvdfs.h"
 #include "main.h"
 #include "rando/data.h"
 #include "tools.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_save.h"
 #include "user_patch/user_patch.h"
+#include "tp/d_s_logo.h"
 
 namespace mod::rando
 {
@@ -78,6 +80,9 @@ namespace mod::rando
 
             mod::console << "Setting Region Flags... \n";
             this->applyRegionFlags();
+
+            mod::console << "Setting Arc File Indexes... \n";
+            this->setArcFileIndexes();
             return true;
         }
         else
@@ -354,6 +359,71 @@ namespace mod::rando
                 j++;
             }
         }
+    }
+
+    void Seed::setArcFileIndexes()
+    {
+        using namespace libtp;
+        // Local vars
+        uint32_t numReplacements = m_Header->arcCheckInfo.numEntries;
+        char filePath[32];
+        int32_t len = 0;
+
+        // Loop through all ArcChecks and set their corresponding file index
+        for ( uint32_t i = 0; i < numReplacements; i++ )
+        {
+            switch ( m_ArcChecks[i].directory )
+            {
+                case rando::FileDirectory::Stage:
+                {
+                    len = snprintf( filePath, sizeof( filePath ), "res/Stage/%s", m_ArcChecks[i].fileName );
+                    break;
+                }
+                case rando::FileDirectory::Message:
+                {
+#ifdef TP_US
+                    len = snprintf( filePath, sizeof( filePath ), "res/Msgus/%s", m_ArcChecks[i].fileName );
+#elif defined TP_JP
+                    len = snprintf( filePath, sizeof( filePath ), "res/Msgjp/%s", m_ArcChecks[i].fileName );
+#elif defined TP_EU
+                    // PAL uses a different file for each language
+                    tp::d_s_logo::Languages lang = tp::d_s_logo::getPalLanguage2( nullptr );
+                    if ( ( lang < tp::d_s_logo::Languages::uk ) || ( lang > tp::d_s_logo::Languages::it ) )
+                    {
+                        // The language is invalid/unsupported, so the game defaults to English
+                        lang = libtp::tp::d_s_logo::Languages::uk;
+                    }
+
+                    static const char* langStrings[] = { "uk", "de", "fr", "sp", "it" };
+                    len = snprintf( filePath,
+                                    sizeof( filePath ),
+                                    "res/Msg%s/%s",
+                                    langStrings[static_cast<int32_t>( lang )],
+                                    m_ArcChecks[i].fileName );
+#endif
+                    break;
+                }
+                case rando::FileDirectory::Object:
+                {
+                    len = snprintf( filePath, sizeof( filePath ), "res/Object/%s", m_ArcChecks[i].fileName );
+                    break;
+                }
+                default:
+                {
+                    len = snprintf( filePath, sizeof( filePath ), "%s", m_ArcChecks[i].fileName );
+                }
+            }
+
+            if ( ( len >= 0 ) && ( len < static_cast<int32_t>( sizeof( filePath ) ) ) )
+            {
+                m_ArcChecks[i].arcFileIndex = libtp::gc_wii::dvdfs::DVDConvertPathToEntrynum( filePath );
+            }
+            else     // Failsafe in case we did not get a valid result.
+            {
+                m_ArcChecks[i].arcFileIndex = -1;
+            }
+        }
+        m_numLoadedARCChecks = m_Header->arcCheckInfo.numEntries;
     }
 
 }     // namespace mod::rando

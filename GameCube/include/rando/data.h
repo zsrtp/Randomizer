@@ -36,6 +36,7 @@ namespace mod::rando
         entryInfo dzxCheckInfo;
         entryInfo relCheckInfo;
         entryInfo poeCheckInfo;
+        entryInfo arcCheckInfo;
     } __attribute__( ( __packed__ ) );
 
     // Seed with index
@@ -56,6 +57,13 @@ namespace mod::rando
         uint8_t offset;
         uint8_t flag;
     } __attribute__( ( __packed__ ) );
+
+    enum class FileDirectory : uint8_t
+    {
+        Stage = 0x0,
+        Message = 0x1,
+        Object = 0x2
+    };
 
     struct dzxCheck
     {
@@ -87,6 +95,15 @@ namespace mod::rando
         uint8_t stageIDX;
         uint8_t flag;      // Flag used for identification
         uint16_t item;     // New item id
+    } __attribute__( ( __packed__ ) );
+
+    struct ArcCheck
+    {
+        int32_t offset;              // The offset of the byte where the item is stored from the start of the file.
+        int32_t arcFileIndex;        // The index of the file that contains the check.
+        uint8_t item;                // The item being placed.
+        FileDirectory directory;     // The type of directory where the check is stored.
+        const char fileName[18];     // The name of the file where the check is stored
     } __attribute__( ( __packed__ ) );
 }     // namespace mod::rando
 #endif

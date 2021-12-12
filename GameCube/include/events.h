@@ -55,5 +55,14 @@ namespace mod::events
      * their respective Area
      */
     int32_t onPoe( rando::Randomizer* randomizer, uint8_t flag );
+
+    /**
+     * @brief Runs when the game loads the ARC files from the game disc.
+     *
+     * @param randomizer Pointer to mod::randomizer.
+     * @param filePtr Pointer to the file being read.
+     * @param fileIndex Index of the file being read.
+     */
+    void onARC( rando::Randomizer* randomizer, void* filePtr, int32_t fileIndex );
 }     // namespace mod::events
 #endif

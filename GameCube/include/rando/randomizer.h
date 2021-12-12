@@ -30,6 +30,7 @@ namespace mod::rando
 
         void overrideREL( libtp::tp::dynamic_link::DynamicModuleControl* dmc );
         void overrideDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo );
+        void overrideARC( void* filePtr, int32_t fileIndex );
 
         int32_t getPoeItem( uint8_t flag );
 

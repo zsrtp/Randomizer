@@ -87,4 +87,12 @@ namespace mod::events
             return static_cast<int32_t>( libtp::data::items::Poe_Soul );
         }
     }
+
+    void onARC( rando::Randomizer* randomizer, void* filePtr, int32_t fileIndex )
+    {
+        if ( randomizer )
+        {
+            randomizer->overrideARC( filePtr, fileIndex );
+        }
+    }
 }     // namespace mod::events
