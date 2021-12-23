@@ -19,4 +19,15 @@ namespace mod::assembly
         uint8_t flag = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( e_po_class ) + 0x5BD );
         return events::onPoe( mod::randomizer, flag );
     }
+
+    void handleAdjustHiddenSkillItem( uint16_t eventIndex )
+    {
+        events::onHiddenSkill( mod::randomizer, eventIndex );
+        return;
+    }
+
+    void handleAdjustBugReward( uint32_t msgEventAddress, uint8_t bugID )
+    {
+        events::onBugReward( mod::randomizer, msgEventAddress, bugID );
+    }
 }     // namespace mod::assembly

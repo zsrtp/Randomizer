@@ -9,6 +9,7 @@
 #include "patch.h"
 #include "rando/randomizer.h"
 #include "tp/d_com_inf_game.h"
+#include "tp/d_item.h"
 #include "tp/dzx.h"
 #include "user_patch/03_customCosmetics.h"
 
@@ -75,6 +76,21 @@ namespace mod::events
                 // remove a small key from the inventory when opening the boss door
                 *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1198 ) = 0x60000000;     // Previous: 0x3803ffff
                 break;
+            // d_a_npc_kn.rel
+            // Hero's Shade
+            case 0x147:
+                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x34D0 ),
+                                             reinterpret_cast<void*>( assembly::asmAdjustHiddenSkillItem ) );
+                // Give a an item based on which Golden Wolf you learned a skill from.
+                break;
+            // d_a_npc_ins.rel
+            // Agitha
+            case 0x141:
+            {
+                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x21B8 ),
+                                             reinterpret_cast<void*>( assembly::asmAdjustBugReward ) );
+                break;
+            }
         }
     }
 
@@ -96,6 +112,34 @@ namespace mod::events
         {
             // Default item
             return static_cast<int32_t>( libtp::data::items::Poe_Soul );
+        }
+    }
+
+    void onARC( rando::Randomizer* randomizer, void* filePtr, int32_t fileIndex )
+    {
+        if ( randomizer )
+        {
+            randomizer->overrideARC( filePtr, fileIndex );
+        }
+    }
+
+    void onBugReward( rando::Randomizer* randomizer, uint32_t msgEventAddress, uint8_t bugID )
+    {
+        if ( randomizer )
+        {
+            uint8_t itemID = randomizer->overrideBugReward( bugID );
+            *reinterpret_cast<uint16_t*>( ( *reinterpret_cast<uint32_t*>( msgEventAddress + 0xA04 ) + 0x3580 ) + 0x6 ) =
+                itemID;     // Change Big Wallet Item
+            *reinterpret_cast<uint16_t*>( ( *reinterpret_cast<uint32_t*>( msgEventAddress + 0xA04 ) + 0x35c8 ) + 0x6 ) =
+                itemID;     // Change Purple Rupee Item
+        }
+    }
+
+    void onHiddenSkill( rando::Randomizer* randomizer, uint16_t eventIndex )
+    {
+        if ( randomizer )
+        {
+            libtp::tp::d_item::execItemGet( randomizer->getHiddenSkillItem( eventIndex ) );
         }
     }
 }     // namespace mod::events

@@ -3,6 +3,7 @@
  *
  *	@author AECX
  *  @author Zephiles
+ *  @author Lunar Soap
  *	@bug No known bugs.
  */
 #ifndef RANDO_ASM_H
@@ -32,6 +33,14 @@ namespace mod::assembly
         // d_e_po.rel
         void asmAdjustAGPoeItem( void );
         int32_t handleAdjustAGPoeItem( void* );
+
+        // d_a_npc_kn.rel
+        void asmAdjustHiddenSkillItem();
+        void handleAdjustHiddenSkillItem( uint16_t eventIndex );
+
+        // d_a_npc_ins.rel
+        void asmAdjustBugReward();
+        void handleAdjustBugReward( uint32_t msgEventAddress, uint8_t bugID );
     }
 }     // namespace mod::assembly
 

@@ -13,6 +13,7 @@
 #include "rando/randomizer.h"
 #include "rando/seedlist.h"
 #include "tools.h"
+#include "tp/JKRDvdRipper.h"
 #include "tp/control.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_meter2_info.h"
@@ -71,6 +72,16 @@ namespace mod
                                            float unk7,
                                            int32_t parameters ) = nullptr;
 
+    void* ( *return_loadToMainRAM2 )( int32_t fileIndex,
+                                      uint8_t* unk2,
+                                      uint32_t jkrExpandSwitch,
+                                      uint32_t unk4,
+                                      void* jkrHeap,
+                                      uint32_t eAllocDirection,
+                                      uint32_t unk7,
+                                      int32_t* unk8,
+                                      uint32_t* unk9 ) = nullptr;
+
     bool ( *return_render )( void* TControl ) = nullptr;
 
     void main()
@@ -105,59 +116,66 @@ namespace mod
         return_fapGm_Execute = patch::hookFunction( libtp::tp::f_ap_game::fapGm_Execute, mod::handle_fapGm_Execute );
 
         // DMC
-        return_do_Link =
-            patch::hookFunction( libtp::tp::dynamic_link::do_link, []( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) {
-                // Call the original function immediately, as the REL file needs to be linked
-                // before applying patches
-                const bool result = return_do_Link( dmc );
+        return_do_Link = patch::hookFunction( libtp::tp::dynamic_link::do_link,
+                                              []( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
+                                              {
+                                                  // Call the original function immediately, as the REL file needs to be linked
+                                                  // before applying patches
+                                                  const bool result = return_do_Link( dmc );
 
-                events::onRELLink( randomizer, dmc );
+                                                  events::onRELLink( randomizer, dmc );
 
-                return result;
-            } );
+                                                  return result;
+                                              } );
 
         // DZX
         return_actorInit =
             patch::hookFunction( actorInit,
-                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 ) {
+                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
+                                 {
                                      events::onDZX( mod::randomizer, chunkTypeInfo );
                                      return return_actorInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
                                  } );
 
         return_actorInit_always =
             patch::hookFunction( actorInit_always,
-                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 ) {
+                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
+                                 {
                                      events::onDZX( mod::randomizer, chunkTypeInfo );
                                      return return_actorInit_always( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
                                  } );
 
         return_actorCommonLayerInit =
             patch::hookFunction( actorCommonLayerInit,
-                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 ) {
+                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
+                                 {
                                      events::onDZX( mod::randomizer, chunkTypeInfo );
                                      return return_actorCommonLayerInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
                                  } );
 
         // Custom States
         return_getLayerNo_common_common =
-            patch::hookFunction( getLayerNo_common_common, []( const char* stageName, int32_t roomId, int32_t layerOverride ) {
-                return game_patch::_01_getLayerNo( stageName, roomId, layerOverride );
-            } );
+            patch::hookFunction( getLayerNo_common_common,
+                                 []( const char* stageName, int32_t roomId, int32_t layerOverride )
+                                 { return game_patch::_01_getLayerNo( stageName, roomId, layerOverride ); } );
 
         // Custom GetItem Text
-        return_render = patch::hookFunction( tp::control::render, []( void* TControl ) {
-            // Get the address of the current text to draw
-            const char** currentTextPtr = reinterpret_cast<const char**>( reinterpret_cast<uint32_t>( TControl ) + 0x20 );
-
-            const char* currentText = *currentTextPtr;
-
-            // Make sure a pointer is set
-            if ( !currentText )
+        return_render = patch::hookFunction(
+            tp::control::render,
+            []( void* TControl )
             {
+                // Get the address of the current text to draw
+                const char** currentTextPtr = reinterpret_cast<const char**>( reinterpret_cast<uint32_t>( TControl ) + 0x20 );
+
+                const char* currentText = *currentTextPtr;
+
+                // Make sure a pointer is set
+                if ( !currentText )
+                {
+                    return return_render( TControl );
+                }
                 return return_render( TControl );
-            }
-            return return_render( TControl );
-        } );
+            } );
 
         // Replace the Item that spawns when a boss is defeated
         return_createItemForBoss =
@@ -169,11 +187,31 @@ namespace mod
                                      const float scale[3],
                                      float unk6,
                                      float unk7,
-                                     int32_t parameters ) {
+                                     int32_t parameters )
+                                 {
                                      // Spawn the appropriate item with model
                                      uint32_t params = randomizer->getBossItem() | 0xFFFF00;
                                      return tp::f_op_actor_mng::fopAcM_create( 539, params, pos, roomNo, rot, scale, -1 );
                                  } );
+
+        return_loadToMainRAM2 = patch::hookFunction(
+            tp::JKRDvdRipper::loadToMainRAM2,
+            []( int32_t fileIndex,
+                uint8_t* unk2,
+                uint32_t jkrExpandSwitch,
+                uint32_t unk4,
+                void* jkrHeap,
+                uint32_t eAllocDirection,
+                uint32_t unk7,
+                int32_t* unk8,
+                uint32_t* unk9 )
+            {
+                // Call the original function immediately, as we need the pointer it returns
+                void* filePtr =
+                    return_loadToMainRAM2( fileIndex, unk2, jkrExpandSwitch, unk4, jkrHeap, eAllocDirection, unk7, unk8, unk9 );
+                events::onARC( mod::randomizer, filePtr, fileIndex );
+                return filePtr;
+            } );
     }
 
     int32_t getMsgIndex( libtp::tp::d_msg_object::StringDataTable* stringDataTable, uint32_t itemId )

@@ -180,6 +180,11 @@
 // Z2SeqMgr
 802B5CB0:startBattleBgm
 
-// d_s_logo.h
-// data
+//JKRDvdRipper.o
+802daa54:loadToMainRAM2
+
+//dvdfs.o
+80349394:DVDConvertPathToEntrynum
+
+//d_s_logo.o
 802591F8:getPalLanguage2

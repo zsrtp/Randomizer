@@ -55,5 +55,31 @@ namespace mod::events
      * their respective Area
      */
     int32_t onPoe( rando::Randomizer* randomizer, uint8_t flag );
+
+    /**
+     * @brief Runs when the randomizer is trying to set a flag related to learning a hidden skill.
+     *
+     * @param randomizer Pointer to mod::randomizer
+     * @param eventIndex The offset from saveBitLabels that contains the flag being set.
+     */
+    void onHiddenSkill( rando::Randomizer* randomizer, uint16_t eventIndex );
+
+    /**
+     * @brief Runs when the game loads the ARC files from the game disc.
+     *
+     * @param randomizer Pointer to mod::randomizer.
+     * @param filePtr Pointer to the file being read.
+     * @param fileIndex Index of the file being read.
+     */
+    void onARC( rando::Randomizer* randomizer, void* filePtr, int32_t fileIndex );
+
+    /**
+     * @brief Runs when the player selects a bug to give to Agitha
+     *
+     * @param randomizer Pointer to mod::randomizer.
+     * @param msgEventAddress The address for the message events for the specified actor.
+     * @param bugID The item ID of the bug being presented.
+     */
+    void onBugReward( rando::Randomizer* randomizer, uint32_t msgEventAddress, uint8_t bugID );
 }     // namespace mod::events
 #endif

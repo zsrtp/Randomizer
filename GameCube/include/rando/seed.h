@@ -36,8 +36,14 @@ namespace mod::rando
         POECheck* m_POEChecks = nullptr;       // POE Checks for current stage
         uint32_t m_numLoadedPOEChecks = 0;     // Number of currently loaded POEChecks
 
-        ArcCheck* m_ArcChecks = nullptr;       // Checks for the currently loaded .arc file
-        uint32_t m_numLoadedArcChecks = 0;     // Number of currently loaded ArcChecks
+        ARCReplacement* m_ArcReplacements = nullptr;     // Checks for the currently loaded .arc file
+        uint32_t m_numLoadedArcReplacements = 0;         // Number of currently loaded ArcChecks
+
+        HiddenSkillCheck* m_HiddenSkillChecks = nullptr;
+        uint32_t m_numHiddenSkillChecks = 0;
+
+        BugReward* m_BugRewardChecks = nullptr;
+        uint32_t m_numBugRewardChecks = 0;
 
         // Member functions
        public:
@@ -87,6 +93,9 @@ namespace mod::rando
         void LoadPOE( uint8_t stageIDX );
 
         void LoadARC( uint8_t stageIDX );
+        void LoadHiddenSkill();
+        void LoadBugReward();
+        void setArcIndex();
     };
 }     // namespace mod::rando
 #endif

@@ -61,6 +61,7 @@
 80097EE0:checkItemGet
 803AF178:item_func_ptr
 803AF578:item_getcheck_func_ptr
+80097e8c:execItemGet
 
 // d_item_data.o
 803AC5A0:item_resource
@@ -198,6 +199,9 @@
 
 //control.o 
 802a76bc:render
+
+//JKRDvdRipper.o
+802d9c54:loadToMainRAM2
 
 //dvdfs.o
 80348528:DVDConvertPathToEntrynum

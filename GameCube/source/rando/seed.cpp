@@ -14,6 +14,7 @@
 
 #include "data/stages.h"
 #include "gc/card.h"
+#include "gc/dvdfs.h"
 #include "main.h"
 #include "rando/data.h"
 #include "tools.h"
@@ -227,7 +228,9 @@ namespace mod::rando
                         // Failsafe; localAreaNode size is 0x20
                         if ( offset < 0x20 )
                         {
-                            SaveInfo->memory.temp_flags.area_flags_bitfields1[offset] |= ( 0x80 >> shift ); //This needs some work and will need to be transferred to the new structure.
+                            SaveInfo->memory.temp_flags.area_flags_bitfields1[offset] |=
+                                ( 0x80 >>
+                                  shift );     // This needs some work and will need to be transferred to the new structure.
                             m_AreaFlagsModified++;
                         }
                     }
@@ -357,19 +360,99 @@ namespace mod::rando
         }
     }
 
-     void Seed::LoadARC( uint8_t stageIDX )
+    void Seed::LoadARC( uint8_t stageIDX )
     {
         using namespace libtp;
 
         uint32_t num_arcchecks = m_Header->arcCheckInfo.numEntries;
-        //uint32_t gci_offset = m_Header->arcCheckInfo.dataOffset;
+        // uint32_t gci_offset = m_Header->arcCheckInfo.dataOffset;
 
         // Set the pointer as offset into our buffer
-       //ArcCheck* allArc = reinterpret_cast<ArcCheck*>( &m_GCIData[gci_offset] );
+        // ArcCheck* allArc = reinterpret_cast<ArcCheck*>( &m_GCIData[gci_offset] );
 
         for ( uint32_t i = 0; i < num_arcchecks; i++ )
         {
-            m_numLoadedArcChecks++;
+            m_numLoadedArcReplacements++;
+        }
+    }
+
+    void Seed::LoadHiddenSkill()
+    {
+        using namespace libtp;
+
+        uint32_t num_hiddenSkillChecks = m_Header->hiddenSkillCheckInfo.numEntries;
+        for ( uint32_t i = 0; i < num_hiddenSkillChecks; i++ )
+        {
+            m_numHiddenSkillChecks++;
+        }
+    }
+
+    void Seed::LoadBugReward()
+    {
+        using namespace libtp;
+
+        uint32_t num_bugRewardChecks = m_Header->bugRewardCheckInfo.numEntries;
+        for ( uint32_t i = 0; i < num_bugRewardChecks; i++ )
+        {
+            m_numBugRewardChecks++;
+        }
+    }
+
+    void Seed::setArcIndex()
+    {
+        // Local vars
+        uint32_t numReplacements = m_Header->arcCheckInfo.numEntries;
+        char filePath[32];
+        int32_t len = 0;
+
+        // Loop through all ArcChecks and set their corresponding file index
+        for ( uint32_t i = 0; i < numReplacements; i++ )
+        {
+            switch ( m_ArcReplacements[i].directory )
+            {
+                case rando::FileDirectory::Stage:
+                {
+                    len = snprintf( filePath, sizeof( filePath ), "res/Stage/%s", m_ArcReplacements[i].fileName );
+                    break;
+                }
+                case rando::FileDirectory::Message:
+                {
+#ifdef TP_US
+                    len = snprintf( filePath, sizeof( filePath ), "res/Msgus/%s", m_ArcReplacements[i].fileName );
+#elif defined TP_JP
+                    len = snprintf( filePath, sizeof( filePath ), "res/Msgjp/%s", m_ArcReplacements[i].fileName );
+#elif defined TP_EU
+                    // PAL uses a different file for each language
+                    libtp::tp::d_s_logo::Languages lang = tp::d_s_logo::getPalLanguage2( nullptr );
+                    if ( ( lang < tp::d_s_logo::Languages::uk ) || ( lang > tp::d_s_logo::Languages::it ) )
+                    {
+                        // The language is invalid/unsupported, so the game defaults to English
+                        lang = tp::d_s_logo::Languages::uk;
+                    }
+
+                    static const char* langStrings[] = { "uk", "de", "fr", "sp", "it" };
+                    len = snprintf( filePath,
+                                    sizeof( filePath ),
+                                    "res/Msg%s/%s",
+                                    langStrings[static_cast<s32>( lang )],
+                                    m_Seed->m_ArcReplacements[i].fileName );
+#endif
+                    break;
+                }
+                default:
+                {
+                    len = snprintf( filePath, sizeof( filePath ), "%s", m_ArcReplacements[i].fileName );
+                }
+            }
+
+            if ( ( len >= 0 ) && ( len < static_cast<int32_t>( sizeof( filePath ) ) ) )
+            {
+                m_ArcReplacements[i].arcFileIndex = libtp::gc::dvdfs::DVDConvertPathToEntrynum( filePath );
+            }
+            else     // Failsafe in case we did not get a valid result.
+            {
+                m_ArcReplacements[i].arcFileIndex = -1;
+            }
         }
     }
 

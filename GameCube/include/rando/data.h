@@ -38,6 +38,8 @@ namespace mod::rando
         entryInfo poeCheckInfo;
         entryInfo arcCheckInfo;
         entryInfo bossCheckInfo;
+        entryInfo hiddenSkillCheckInfo;
+        entryInfo bugRewardCheckInfo;
     } __attribute__( ( __packed__ ) );
 
     // Seed with index
@@ -97,19 +99,42 @@ namespace mod::rando
         Message = 0x1
     };
 
-    struct ArcCheck
+    enum class ArcReplacementType : uint8_t
     {
-        int32_t offset; // Some of these can get pretty big, depending on the stage.
-        int32_t arcFileIndex; // The index of the file that contains the check.
-        uint8_t item; // The item being placed.
-        FileDirectory directory; //The type of directory where the check is stored.
-        const char fileName[18]; // The name of the file where the check is stored
-    } __attribute__(( __packed__ ));
+        Item = 0x0,
+        HiddenSkill = 0x1
+    };
+
+    struct ARCReplacement
+    {
+        int32_t offset;                         // The offset of the byte where the item is stored from the start of the file.
+        int32_t arcFileIndex;                   // The index of the file that contains the check.
+        uint32_t replacementValue;              // Used to be item, but can be more now.
+        FileDirectory directory;                // The type of directory where the check is stored.
+        const char fileName[18];                // The name of the file where the check is stored
+        ArcReplacementType replacementType;     // The type of replacement that is taking place.
+    } __attribute__( ( __packed__ ) );
 
     struct BOSSCheck
     {
-        uint8_t stageIDX; //The stage where the replacement is taking place.
-        uint8_t item;     // New item id
+        uint8_t stageIDX;     // The stage where the replacement is taking place.
+        uint8_t item;         // New item id
+        uint8_t padding[2];
+    } __attribute__( ( __packed__ ) );
+
+    struct HiddenSkillCheck
+    {
+        uint16_t indexNumber;
+        uint8_t itemID;
+        uint8_t stageIDX;
+        uint8_t roomID;
+        uint8_t padding[3];
+    } __attribute__( ( __packed__ ) );
+
+    struct BugReward
+    {
+        uint8_t bugID;
+        uint8_t itemID;
         uint8_t padding[2];
     } __attribute__( ( __packed__ ) );
 

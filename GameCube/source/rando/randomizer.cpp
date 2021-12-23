@@ -6,21 +6,22 @@
  */
 #include "rando/randomizer.h"
 
-#include <cstring>
 #include <cstdio>
+#include <cstring>
 
 #include "data/items.h"
+#include "data/stages.h"
 #include "gc/OSModule.h"
 #include "gc/card.h"
 #include "main.h"
 #include "rando/data.h"
 #include "rando/seed.h"
 #include "rando/seedlist.h"
+#include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
+#include "tp/d_kankyo.h"
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
-#include "gc/dvdfs.h"
-#include "data/stages.h"
 
 namespace mod::rando
 {
@@ -158,62 +159,132 @@ namespace mod::rando
 
     uint8_t Randomizer::getBossItem()
     {
-        // Essentially we just loop through the BOSS Checks and check to see if the stage index matches the check and return the item in the check if it matches.
-        // Default
-        return libtp::data::items::Poe_Soul;
+        // Essentially we just loop through the BOSS Checks and check to see if the stage index matches the check and return the
+        // item in the check if it matches. Default
+        return libtp::data::items::Heart_Container;
     }
 
-    void Randomizer::getArcIndex()
+    void Randomizer::overrideARC( void* filePtr, int32_t fileIndex )
     {
-        // Local vars
-        uint32_t numReplacements = m_Seed->m_numLoadedArcChecks;
-        char filePath[32];
-        int32_t len = 0;
-
-        // Loop through all ArcChecks and set their corresponding file index
+        uint32_t numReplacements = m_Seed->m_numLoadedArcReplacements;
+        // Loop through all ArcChecks and replace the item at an offset given the fileIndex.
         for ( uint32_t i = 0; i < numReplacements; i++ )
         {
-            switch (m_Seed->m_ArcChecks[i].directory)
+            if ( fileIndex == m_Seed->m_ArcReplacements[i].arcFileIndex )
             {
-                case rando::FileDirectory::Stage:
+                switch ( m_Seed->m_ArcReplacements[i].replacementType )
                 {
-                    len = snprintf(filePath, sizeof(filePath), "res/Stage/%s", m_Seed->m_ArcChecks[i].fileName);
-                    break;
-                }
-                case rando::FileDirectory::Message:
-                {
-#ifdef TP_US
-                    len = snprintf(filePath, sizeof(filePath), "res/Msgus/%s", m_Seed->m_ArcChecks[i].fileName);
-#elif defined TP_JP
-                    len = snprintf(filePath, sizeof(filePath), "res/Msgjp/%s", m_Seed->m_ArcChecks[i].fileName);
-#elif defined TP_EU
-                    // PAL uses a different file for each language
-                    libtp::tp::d_s_logo::Languages lang = tp::d_s_logo::getPalLanguage2(nullptr);
-                    if ((lang < tp::d_s_logo::Languages::uk) || (lang > tp::d_s_logo::Languages::it))
+                    case rando::ArcReplacementType::Item:
                     {
-                        // The language is invalid/unsupported, so the game defaults to English
-                        lang = tp::d_s_logo::Languages::uk;
+                        *reinterpret_cast<uint8_t*>(
+                            ( reinterpret_cast<uint32_t>( filePtr ) + m_Seed->m_ArcReplacements[i].offset ) ) =
+                            m_Seed->m_ArcReplacements[i].replacementValue;
+                        break;
                     }
-                    
-                    static const char* langStrings[] = {"uk", "de", "fr", "sp", "it"};
-                    len = snprintf(filePath, sizeof(filePath), "res/Msg%s/%s", langStrings[static_cast<s32>(lang)], m_Seed->m_ArcChecks[i].fileName);
-#endif
-                    break;
+                    case rando::ArcReplacementType::HiddenSkill:
+                    {
+                        handleHiddenSkills( filePtr );
+                    }
                 }
-                default:
-                {
-                    len = snprintf(filePath, sizeof(filePath), "%s", m_Seed->m_ArcChecks[i].fileName);
-                } 
-            }
-
-            if ((len >= 0) && (len < static_cast<int32_t>(sizeof(filePath))))
-            {
-                m_Seed->m_ArcChecks[i].arcFileIndex = libtp::gc::dvdfs::DVDConvertPathToEntrynum(filePath);
-            }
-            else // Failsafe in case we did not get a valid result.
-            {
-                m_Seed->m_ArcChecks[i].arcFileIndex = -1;
             }
         }
+    }
+
+    void Randomizer::handleHiddenSkills( void* filePtr )
+    {
+        // Find the index of the previous stage
+        uint8_t stageIDX;
+        for ( stageIDX = 0; stageIDX < sizeof( libtp::data::stage::allStages ) / sizeof( libtp::data::stage::allStages[0] );
+              stageIDX++ )
+        {
+            if ( strcmp(
+                     libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info.player_last_stage,
+                     libtp::data::stage::allStages[stageIDX] ) )
+            {
+                break;
+            }
+        }
+        for ( uint i = 0; i < sizeof( m_Seed->m_numHiddenSkillChecks ); i++ )
+        {
+            if ( ( m_Seed->m_HiddenSkillChecks[i].stageIDX == stageIDX ) &&
+                 ( m_Seed->m_HiddenSkillChecks[i].roomID == libtp::tp::d_kankyo::env_light.currentRoom ) )
+            {
+                uint32_t messageIndexOffset;
+                if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2A40 ) )     // Jump Strike Unlocked
+                {
+                    if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2A80 ) )     // Mortal Draw Unlocked
+                    {
+                        if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2901 ) )     // Helm Splitter Unlocked
+                        {
+                            if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2902 ) )     // Back Slice Unlocked
+                            {
+                                if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2908 ) )     // Shield Attack
+                                                                                                // Unlocked
+                                {
+                                    if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2904 ) )     // Ending Blow Unlocked
+                                    {
+                                        messageIndexOffset = 0x0000;     // Offset for Ending Blow Message
+                                    }
+                                    else
+                                    {
+                                        messageIndexOffset = 0x0000;     // Offset for Shield Attack Message
+                                    }
+                                }
+                                else
+                                {
+                                    messageIndexOffset = 0x0000;     // Offset for Back Slice Message
+                                }
+                            }
+                            else
+                            {
+                                messageIndexOffset = 0x0000;     // Offset for Helm Splitter Message
+                            }
+                        }
+                        else
+                        {
+                            messageIndexOffset = 0x0000;     // Offset for Mortal Draw Message
+                        }
+                    }
+                    else
+                    {
+                        messageIndexOffset = 0x0000;     // Offset for Jump Strike Message
+                    }
+                }
+                else
+                {
+                    messageIndexOffset = 0x0000;     // Offset for Great Spin Message
+                }
+                *reinterpret_cast<uint16_t*>( ( reinterpret_cast<uint32_t>( filePtr ) + messageIndexOffset ) ) =
+                    m_Seed->m_HiddenSkillChecks[i].itemID + 0x65;
+            }
+        }
+    }
+
+    uint8_t Randomizer::overrideBugReward( uint8_t bugID )
+    {
+        for ( uint32_t i = 0; i < m_Seed->m_numBugRewardChecks; i++ )
+        {
+            if ( bugID == m_Seed->m_BugRewardChecks[i].bugID )
+            {
+                // Return new item
+                return m_Seed->m_BugRewardChecks[i].itemID;
+            }
+        }
+        // Default
+        return bugID;
+    }
+
+    uint8_t Randomizer::getHiddenSkillItem( uint16_t eventIndex )
+    {
+        for ( uint32_t i = 0; i < m_Seed->m_numHiddenSkillChecks; i++ )
+        {
+            if ( eventIndex == m_Seed->m_HiddenSkillChecks[i].indexNumber )
+            {
+                // Return new item
+                return m_Seed->m_HiddenSkillChecks[i].itemID;
+            }
+        }
+        // Default
+        return libtp::data::items::Recovery_Heart;
     }
 }     // namespace mod::rando
