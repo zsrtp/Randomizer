@@ -360,22 +360,6 @@ namespace mod::rando
         }
     }
 
-    void Seed::LoadARC( uint8_t stageIDX )
-    {
-        using namespace libtp;
-
-        uint32_t num_arcchecks = m_Header->arcCheckInfo.numEntries;
-        // uint32_t gci_offset = m_Header->arcCheckInfo.dataOffset;
-
-        // Set the pointer as offset into our buffer
-        // ArcCheck* allArc = reinterpret_cast<ArcCheck*>( &m_GCIData[gci_offset] );
-
-        for ( uint32_t i = 0; i < num_arcchecks; i++ )
-        {
-            m_numLoadedArcReplacements++;
-        }
-    }
-
     void Seed::LoadHiddenSkill()
     {
         using namespace libtp;
@@ -402,25 +386,30 @@ namespace mod::rando
     {
         // Local vars
         uint32_t numReplacements = m_Header->arcCheckInfo.numEntries;
+        uint32_t gci_offset = m_Header->arcCheckInfo.dataOffset;
         char filePath[32];
         int32_t len = 0;
+
+        // Set the pointer as offset into our buffer
+        ARCReplacement* allARC = reinterpret_cast<ARCReplacement*>( &m_GCIData[gci_offset] );
+        uint32_t j = 0;
 
         // Loop through all ArcChecks and set their corresponding file index
         for ( uint32_t i = 0; i < numReplacements; i++ )
         {
-            switch ( m_ArcReplacements[i].directory )
+            switch ( allARC[i].directory )
             {
                 case rando::FileDirectory::Stage:
                 {
-                    len = snprintf( filePath, sizeof( filePath ), "res/Stage/%s", m_ArcReplacements[i].fileName );
+                    len = snprintf( filePath, sizeof( filePath ), "res/Stage/%s", allARC[i].fileName );
                     break;
                 }
                 case rando::FileDirectory::Message:
                 {
 #ifdef TP_US
-                    len = snprintf( filePath, sizeof( filePath ), "res/Msgus/%s", m_ArcReplacements[i].fileName );
+                    len = snprintf( filePath, sizeof( filePath ), "res/Msgus/%s", allARC[i].fileName );
 #elif defined TP_JP
-                    len = snprintf( filePath, sizeof( filePath ), "res/Msgjp/%s", m_ArcReplacements[i].fileName );
+                    len = snprintf( filePath, sizeof( filePath ), "res/Msgjp/%s", allARC[i].fileName );
 #elif defined TP_EU
                     // PAL uses a different file for each language
                     libtp::tp::d_s_logo::Languages lang = tp::d_s_logo::getPalLanguage2( nullptr );
@@ -435,24 +424,26 @@ namespace mod::rando
                                     sizeof( filePath ),
                                     "res/Msg%s/%s",
                                     langStrings[static_cast<s32>( lang )],
-                                    m_Seed->m_ArcReplacements[i].fileName );
+                                    m_Seed->allARC[i].fileName );
 #endif
                     break;
                 }
                 default:
                 {
-                    len = snprintf( filePath, sizeof( filePath ), "%s", m_ArcReplacements[i].fileName );
+                    len = snprintf( filePath, sizeof( filePath ), "%s", allARC[i].fileName );
                 }
             }
 
             if ( ( len >= 0 ) && ( len < static_cast<int32_t>( sizeof( filePath ) ) ) )
             {
-                m_ArcReplacements[i].arcFileIndex = libtp::gc::dvdfs::DVDConvertPathToEntrynum( filePath );
+                allARC[i].arcFileIndex = libtp::gc::dvdfs::DVDConvertPathToEntrynum( filePath );
             }
             else     // Failsafe in case we did not get a valid result.
             {
-                m_ArcReplacements[i].arcFileIndex = -1;
+                allARC[i].arcFileIndex = -1;
             }
+            memcpy( &m_ArcReplacements[j], &allARC[i], sizeof( ARCReplacement ) );
+            j++;
         }
     }
 

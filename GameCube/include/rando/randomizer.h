@@ -34,7 +34,6 @@ namespace mod::rando
         int32_t getPoeItem( uint8_t flag );
         void overrideARC( void* filePtr, int32_t fileIndex );
         uint8_t getBossItem();
-        void handleHiddenSkills( void* filePtr );
         uint8_t getHiddenSkillItem( uint16_t eventIndex );
         uint8_t overrideBugReward( uint8_t bugID );
 

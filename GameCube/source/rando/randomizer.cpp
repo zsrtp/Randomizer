@@ -14,6 +14,7 @@
 #include "gc/OSModule.h"
 #include "gc/card.h"
 #include "main.h"
+#include "patch.h"
 #include "rando/data.h"
 #include "rando/seed.h"
 #include "rando/seedlist.h"
@@ -183,79 +184,37 @@ namespace mod::rando
                     }
                     case rando::ArcReplacementType::HiddenSkill:
                     {
-                        handleHiddenSkills( filePtr );
-                    }
-                }
-            }
-        }
-    }
-
-    void Randomizer::handleHiddenSkills( void* filePtr )
-    {
-        // Find the index of the previous stage
-        uint8_t stageIDX;
-        for ( stageIDX = 0; stageIDX < sizeof( libtp::data::stage::allStages ) / sizeof( libtp::data::stage::allStages[0] );
-              stageIDX++ )
-        {
-            if ( strcmp(
-                     libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info.player_last_stage,
-                     libtp::data::stage::allStages[stageIDX] ) )
-            {
-                break;
-            }
-        }
-        for ( uint i = 0; i < sizeof( m_Seed->m_numHiddenSkillChecks ); i++ )
-        {
-            if ( ( m_Seed->m_HiddenSkillChecks[i].stageIDX == stageIDX ) &&
-                 ( m_Seed->m_HiddenSkillChecks[i].roomID == libtp::tp::d_kankyo::env_light.currentRoom ) )
-            {
-                uint32_t messageIndexOffset;
-                if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2A40 ) )     // Jump Strike Unlocked
-                {
-                    if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2A80 ) )     // Mortal Draw Unlocked
-                    {
-                        if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2901 ) )     // Helm Splitter Unlocked
+                        uint8_t stageIDX;
+                        for ( stageIDX = 0;
+                              stageIDX < sizeof( libtp::data::stage::allStages ) / sizeof( libtp::data::stage::allStages[0] );
+                              stageIDX++ )
                         {
-                            if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2902 ) )     // Back Slice Unlocked
+                            if ( strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info
+                                             .player_last_stage,
+                                         libtp::data::stage::allStages[stageIDX] ) )
                             {
-                                if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2908 ) )     // Shield Attack
-                                                                                                // Unlocked
-                                {
-                                    if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2904 ) )     // Ending Blow Unlocked
-                                    {
-                                        messageIndexOffset = 0x0000;     // Offset for Ending Blow Message
-                                    }
-                                    else
-                                    {
-                                        messageIndexOffset = 0x0000;     // Offset for Shield Attack Message
-                                    }
-                                }
-                                else
-                                {
-                                    messageIndexOffset = 0x0000;     // Offset for Back Slice Message
-                                }
-                            }
-                            else
-                            {
-                                messageIndexOffset = 0x0000;     // Offset for Helm Splitter Message
+                                break;
                             }
                         }
-                        else
+                        for ( uint i = 0; i < sizeof( m_Seed->m_numHiddenSkillChecks ); i++ )
                         {
-                            messageIndexOffset = 0x0000;     // Offset for Mortal Draw Message
+                            if ( ( m_Seed->m_HiddenSkillChecks[i].stageIDX == stageIDX ) &&
+                                 ( m_Seed->m_HiddenSkillChecks[i].roomID == libtp::tp::d_kankyo::env_light.currentRoom ) )
+                            {
+                                *reinterpret_cast<uint16_t*>(
+                                    ( reinterpret_cast<uint32_t>( filePtr ) + m_Seed->m_ArcReplacements[i].offset ) ) =
+                                    m_Seed->m_HiddenSkillChecks[i].itemID + 0x65;
+                            }
                         }
+                        break;
                     }
-                    else
+                    case rando::ArcReplacementType::ItemMessage:
                     {
-                        messageIndexOffset = 0x0000;     // Offset for Jump Strike Message
+                        *reinterpret_cast<uint16_t*>(
+                            ( reinterpret_cast<uint32_t>( filePtr ) + m_Seed->m_ArcReplacements[i].offset ) ) =
+                            m_Seed->m_ArcReplacements[i].replacementValue + 0x65;
                     }
                 }
-                else
-                {
-                    messageIndexOffset = 0x0000;     // Offset for Great Spin Message
-                }
-                *reinterpret_cast<uint16_t*>( ( reinterpret_cast<uint32_t>( filePtr ) + messageIndexOffset ) ) =
-                    m_Seed->m_HiddenSkillChecks[i].itemID + 0x65;
             }
         }
     }

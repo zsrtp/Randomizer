@@ -102,7 +102,8 @@ namespace mod::rando
     enum class ArcReplacementType : uint8_t
     {
         Item = 0x0,
-        HiddenSkill = 0x1
+        HiddenSkill = 0x1,
+        ItemMessage = 0x2
     };
 
     struct ARCReplacement
@@ -117,25 +118,30 @@ namespace mod::rando
 
     struct BOSSCheck
     {
-        uint8_t stageIDX;     // The stage where the replacement is taking place.
-        uint8_t item;         // New item id
-        uint8_t padding[2];
+        uint16_t stageIDX;     // The stage where the replacement is taking place.
+        uint16_t item;         // New item id
     } __attribute__( ( __packed__ ) );
 
     struct HiddenSkillCheck
     {
-        uint16_t indexNumber;
-        uint8_t itemID;
-        uint8_t stageIDX;
-        uint8_t roomID;
-        uint8_t padding[3];
+        uint16_t indexNumber;     // The flag that is trying to be set for the specific Golden Wolf that the skill has been
+                                  // learned from.
+        uint16_t itemID;          // The item to be given when the above flag is set.
+        uint16_t stageIDX;        // The ID of the stage that Golden Wolf was located in
+        uint16_t roomID;          // The room of the stage that the Golden Wolf was located in.
     } __attribute__( ( __packed__ ) );
 
     struct BugReward
     {
-        uint8_t bugID;
-        uint8_t itemID;
-        uint8_t padding[2];
+        uint16_t bugID;      // The bug that link is showing to Agitha
+        uint16_t itemID;     // The item that Agitha will give Link.
+    } __attribute__( ( __packed__ ) );
+
+    struct SkyCharacter
+    {
+        uint8_t itemID;        // The item to be given.
+        uint16_t stageIDX;     // The stage that the Owl Statue is located.
+        uint8_t roomID;        // The room that the Owl Statue is located in.
     } __attribute__( ( __packed__ ) );
 
 }     // namespace mod::rando

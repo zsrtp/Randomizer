@@ -92,9 +92,9 @@ namespace mod::rando
         void LoadREL( uint8_t stageIDX );
         void LoadPOE( uint8_t stageIDX );
 
-        void LoadARC( uint8_t stageIDX );
         void LoadHiddenSkill();
         void LoadBugReward();
+        void LoadARCChecks();
         void setArcIndex();
     };
 }     // namespace mod::rando
