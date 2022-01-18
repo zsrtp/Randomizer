@@ -41,7 +41,7 @@ namespace mod::rando
             // Load the seed
             m_SeedInfo = seedInfo;
             m_Seed = new Seed( CARD_SLOT_A, seedInfo );
-
+            m_Seed->setArcIndex();
             // Load checks for first load
             onStageLoad();
         }
@@ -65,7 +65,7 @@ namespace mod::rando
 
     void Randomizer::onStageLoad( void )
     {
-        const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.mStage;
+        const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mStage;
         m_Seed->LoadChecks( stage );
     }
 
@@ -158,62 +158,58 @@ namespace mod::rando
         return libtp::data::items::Poe_Soul;
     }
 
-    uint8_t Randomizer::getBossItem()
-    {
-        // Essentially we just loop through the BOSS Checks and check to see if the stage index matches the check and return the
-        // item in the check if it matches. Default
-        return libtp::data::items::Heart_Container;
-    }
+    uint8_t Randomizer::getBossItem() { return m_Seed->m_BossChecks[0].item; }
 
     void Randomizer::overrideARC( void* filePtr, int32_t fileIndex )
     {
+        m_Seed->LoadARCChecks( fileIndex );
         uint32_t numReplacements = m_Seed->m_numLoadedArcReplacements;
         // Loop through all ArcChecks and replace the item at an offset given the fileIndex.
         for ( uint32_t i = 0; i < numReplacements; i++ )
         {
-            if ( fileIndex == m_Seed->m_ArcReplacements[i].arcFileIndex )
+            mod::console << "Arc: " << m_Seed->m_ArcReplacements[i].offset << " "
+                         << m_Seed->m_ArcReplacements[i].replacementValue << " "
+                         << m_Seed->m_ArcReplacements[i].replacementValue + 0x65 << "\n";
+            switch ( m_Seed->m_ArcReplacements[i].replacementType )
             {
-                switch ( m_Seed->m_ArcReplacements[i].replacementType )
+                case rando::ArcReplacementType::Item:
                 {
-                    case rando::ArcReplacementType::Item:
+                    *reinterpret_cast<uint8_t*>(
+                        ( reinterpret_cast<uint32_t>( filePtr ) + m_Seed->m_ArcReplacements[i].offset ) ) =
+                        m_Seed->m_ArcReplacements[i].replacementValue;
+                    break;
+                }
+                case rando::ArcReplacementType::HiddenSkill:
+                {
+                    uint8_t stageIDX;
+                    for ( stageIDX = 0;
+                          stageIDX < sizeof( libtp::data::stage::allStages ) / sizeof( libtp::data::stage::allStages[0] );
+                          stageIDX++ )
                     {
-                        *reinterpret_cast<uint8_t*>(
-                            ( reinterpret_cast<uint32_t>( filePtr ) + m_Seed->m_ArcReplacements[i].offset ) ) =
-                            m_Seed->m_ArcReplacements[i].replacementValue;
-                        break;
-                    }
-                    case rando::ArcReplacementType::HiddenSkill:
-                    {
-                        uint8_t stageIDX;
-                        for ( stageIDX = 0;
-                              stageIDX < sizeof( libtp::data::stage::allStages ) / sizeof( libtp::data::stage::allStages[0] );
-                              stageIDX++ )
+                        if ( strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info
+                                         .player_last_stage,
+                                     libtp::data::stage::allStages[stageIDX] ) )
                         {
-                            if ( strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info
-                                             .player_last_stage,
-                                         libtp::data::stage::allStages[stageIDX] ) )
-                            {
-                                break;
-                            }
+                            break;
                         }
-                        for ( uint i = 0; i < sizeof( m_Seed->m_numHiddenSkillChecks ); i++ )
-                        {
-                            if ( ( m_Seed->m_HiddenSkillChecks[i].stageIDX == stageIDX ) &&
-                                 ( m_Seed->m_HiddenSkillChecks[i].roomID == libtp::tp::d_kankyo::env_light.currentRoom ) )
-                            {
-                                *reinterpret_cast<uint16_t*>(
-                                    ( reinterpret_cast<uint32_t>( filePtr ) + m_Seed->m_ArcReplacements[i].offset ) ) =
-                                    m_Seed->m_HiddenSkillChecks[i].itemID + 0x65;
-                            }
-                        }
-                        break;
                     }
-                    case rando::ArcReplacementType::ItemMessage:
+                    for ( uint i = 0; i < sizeof( m_Seed->m_numHiddenSkillChecks ); i++ )
                     {
-                        *reinterpret_cast<uint16_t*>(
-                            ( reinterpret_cast<uint32_t>( filePtr ) + m_Seed->m_ArcReplacements[i].offset ) ) =
-                            m_Seed->m_ArcReplacements[i].replacementValue + 0x65;
+                        if ( ( m_Seed->m_HiddenSkillChecks[i].stageIDX == stageIDX ) &&
+                             ( m_Seed->m_HiddenSkillChecks[i].roomID == libtp::tp::d_kankyo::env_light.currentRoom ) )
+                        {
+                            *reinterpret_cast<uint16_t*>(
+                                ( reinterpret_cast<uint32_t>( filePtr ) + m_Seed->m_ArcReplacements[i].offset ) ) =
+                                m_Seed->m_HiddenSkillChecks[i].itemID + 0x65;
+                        }
                     }
+                    break;
+                }
+                case rando::ArcReplacementType::ItemMessage:
+                {
+                    *reinterpret_cast<uint16_t*>(
+                        ( reinterpret_cast<uint32_t>( filePtr ) + m_Seed->m_ArcReplacements[i].offset ) ) =
+                        m_Seed->m_ArcReplacements[i].replacementValue + 0x65;
                 }
             }
         }

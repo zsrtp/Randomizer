@@ -39,6 +39,9 @@ namespace mod::rando
         ARCReplacement* m_ArcReplacements = nullptr;     // Checks for the currently loaded .arc file
         uint32_t m_numLoadedArcReplacements = 0;         // Number of currently loaded ArcChecks
 
+        BOSSCheck* m_BossChecks = nullptr;
+        uint32_t m_numLoadedBossChecks = 0;
+
         HiddenSkillCheck* m_HiddenSkillChecks = nullptr;
         uint32_t m_numHiddenSkillChecks = 0;
 
@@ -72,6 +75,9 @@ namespace mod::rando
          *  @return True if checks have been updated (new stage) otherwise we are still on the same stage
          */
         bool LoadChecks( const char* stage );
+        void LoadARCChecks( int32_t fileIndex );
+
+        void setArcIndex();
 
        private:
         uint8_t* m_GCIData = nullptr;     // GCI Data including header
@@ -91,11 +97,10 @@ namespace mod::rando
         void LoadDZX( uint8_t stageIDX );
         void LoadREL( uint8_t stageIDX );
         void LoadPOE( uint8_t stageIDX );
+        void LoadBOSS( uint8_t stageIDX );
 
         void LoadHiddenSkill();
         void LoadBugReward();
-        void LoadARCChecks();
-        void setArcIndex();
     };
 }     // namespace mod::rando
 #endif

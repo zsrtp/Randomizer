@@ -112,6 +112,7 @@ namespace mod::rando
             this->LoadDZX( stageIDX );
             this->LoadREL( stageIDX );
             this->LoadPOE( stageIDX );
+            this->LoadBOSS( stageIDX );
 
             // Save current stageIDX for next time
             m_StageIDX = stageIDX;
@@ -228,7 +229,7 @@ namespace mod::rando
                         // Failsafe; localAreaNode size is 0x20
                         if ( offset < 0x20 )
                         {
-                            SaveInfo->memory.temp_flags.area_flags_bitfields1[offset] |=
+                            SaveInfo->memory.temp_flags.memoryFlags[offset] |=
                                 ( 0x80 >>
                                   shift );     // This needs some work and will need to be transferred to the new structure.
                             m_AreaFlagsModified++;
@@ -382,6 +383,67 @@ namespace mod::rando
         }
     }
 
+    void Seed::LoadBOSS( uint8_t stageIDX )
+    {
+        using namespace libtp;
+
+        uint32_t num_bossChecks = m_Header->bossCheckInfo.numEntries;
+        uint32_t gci_offset = m_Header->bossCheckInfo.dataOffset;
+
+        // Set the pointer as offset into our buffer
+        BOSSCheck* allBOSS = reinterpret_cast<BOSSCheck*>( &m_GCIData[gci_offset] );
+        m_BossChecks = nullptr;
+        m_BossChecks = new BOSSCheck[1];
+
+        // There is only one BOSS check per stage. Once we have a match, we are done.
+        for ( uint32_t i = 0; i < num_bossChecks; i++ )
+        {
+            if ( allBOSS[i].stageIDX == stageIDX )
+            {
+                memcpy( &m_BossChecks[0], &allBOSS[i], sizeof( BOSSCheck ) );
+                break;
+            }
+        }
+    }
+
+    void Seed::LoadARCChecks( int32_t fileIndex )
+    {
+        using namespace libtp;
+
+        uint32_t num_arcchecks = m_Header->arcCheckInfo.numEntries;
+        uint32_t gci_offset = m_Header->arcCheckInfo.dataOffset;
+
+        // Set the pointer as offset into our buffer
+        ARCReplacement* allARC = reinterpret_cast<ARCReplacement*>( &m_GCIData[gci_offset] );
+        // Until a better way is found, we are going to clear the buffer here just to be safe
+        m_ArcReplacements = nullptr;
+        m_numLoadedArcReplacements = 0;
+
+        for ( uint32_t i = 0; i < num_arcchecks; i++ )
+        {
+            if ( allARC[i].arcFileIndex == fileIndex )
+            {
+                m_numLoadedArcReplacements++;
+            }
+        }
+
+        // Allocate memory to the actual ARCChecks
+        m_ArcReplacements = new ARCReplacement[m_numLoadedArcReplacements];
+
+        // offset into m_DZXChecks
+        uint32_t j = 0;
+
+        for ( uint32_t i = 0; i < num_arcchecks; i++ )
+        {
+            if ( allARC[i].arcFileIndex == fileIndex )
+            {
+                // Store the i'th DZX check into the j'th Loaded DZX check that's relevant to our current stage
+                memcpy( &m_ArcReplacements[j], &allARC[i], sizeof( ARCReplacement ) );
+                j++;
+            }
+        }
+    }
+
     void Seed::setArcIndex()
     {
         // Local vars
@@ -423,7 +485,7 @@ namespace mod::rando
                     len = snprintf( filePath,
                                     sizeof( filePath ),
                                     "res/Msg%s/%s",
-                                    langStrings[static_cast<s32>( lang )],
+                                    langStrings[static_cast<int32_t>( lang )],
                                     m_Seed->allARC[i].fileName );
 #endif
                     break;

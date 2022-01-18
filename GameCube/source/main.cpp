@@ -326,7 +326,7 @@ namespace mod
             if ( prevState != GAME_ACTIVE && state == 11 )
             {
                 // check whether we're in title screen CS
-                if ( 0 != strcmp( "S_MV000", gameInfo->play.mNextStage.mStage ) )
+                if ( 0 != strcmp( "S_MV000", gameInfo->play.mNextStage.stageValues.mStage ) )
                 {
                     gameState = GAME_ACTIVE;
                 }
