@@ -35,15 +35,18 @@ namespace mod::events
                 randomizer->initSave();
             }
         }
+        randomizer->overrideREL();
+
         user_patch::setHUDCosmetics();
     }
 
     void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
     {
-        if ( randomizer )
+        // Old Code
+        /*if ( randomizer )
         {
             randomizer->overrideREL( dmc );
-        }
+        }*/
 
         // Static REL overrides and patches
         uint32_t relPtrRaw = reinterpret_cast<uint32_t>( dmc->moduleInfo );
@@ -89,6 +92,15 @@ namespace mod::events
             {
                 libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x21B8 ),
                                              reinterpret_cast<void*>( assembly::asmAdjustBugReward ) );
+                break;
+            }
+            // d_a_mg_rod.rel
+            // Fishing Hole Rod
+            case 0x32:
+            {
+                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0xB2B0 ),
+                                             reinterpret_cast<void*>( libtp::tp::d_item::execItemGet ) );
+
                 break;
             }
         }

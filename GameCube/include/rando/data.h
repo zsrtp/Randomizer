@@ -97,7 +97,8 @@ namespace mod::rando
     enum class FileDirectory : uint8_t
     {
         Stage = 0x0,
-        Message = 0x1
+        Message = 0x1,
+        Object = 0x2
     };
 
     enum class ArcReplacementType : uint8_t

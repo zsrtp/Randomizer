@@ -2,6 +2,9 @@
 80003458:memset
 80003540:memcpy
 
+// OSModule.o
+800030C8:osModuleList
+
 // m_Do_ext.o
 // text
 8000EDF4:getArchiveHeapPtr

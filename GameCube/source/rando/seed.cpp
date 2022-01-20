@@ -113,7 +113,7 @@ namespace mod::rando
             this->LoadREL( stageIDX );
             this->LoadPOE( stageIDX );
             this->LoadBOSS( stageIDX );
-
+            this->LoadBugReward();
             // Save current stageIDX for next time
             m_StageIDX = stageIDX;
         }
@@ -126,10 +126,14 @@ namespace mod::rando
         m_numLoadedDZXChecks = 0;
         m_numLoadedRELChecks = 0;
         m_numLoadedPOEChecks = 0;
+        m_numLoadedBossChecks = 0;
+        m_numBugRewardChecks = 0;
 
         delete[] m_DZXChecks;
         delete[] m_RELChecks;
         delete[] m_POEChecks;
+        delete[] m_BossChecks;
+        delete[] m_BugRewardChecks;
     }
 
     void Seed::applyPatches( bool set )
@@ -364,6 +368,7 @@ namespace mod::rando
     void Seed::LoadHiddenSkill()
     {
         using namespace libtp;
+        m_numHiddenSkillChecks = 0;
 
         uint32_t num_hiddenSkillChecks = m_Header->hiddenSkillCheckInfo.numEntries;
         for ( uint32_t i = 0; i < num_hiddenSkillChecks; i++ )
@@ -376,10 +381,28 @@ namespace mod::rando
     {
         using namespace libtp;
 
-        uint32_t num_bugRewardChecks = m_Header->bugRewardCheckInfo.numEntries;
-        for ( uint32_t i = 0; i < num_bugRewardChecks; i++ )
+        uint32_t num_bugRewards = m_Header->bugRewardCheckInfo.numEntries;
+        uint32_t gci_offset = m_Header->bugRewardCheckInfo.dataOffset;
+
+        // Set the pointer as offset into our buffer
+        BugReward* allBUG = reinterpret_cast<BugReward*>( &m_GCIData[gci_offset] );
+
+        for ( uint32_t i = 0; i < num_bugRewards; i++ )
         {
             m_numBugRewardChecks++;
+        }
+
+        // Allocate memory to the actual POEChecks
+        // Do NOT need to clear the previous buffer as that's taken care of by LoadChecks()
+        m_BugRewardChecks = new BugReward[m_numBugRewardChecks];
+
+        // offset into m_POEChecks
+        uint32_t j = 0;
+
+        for ( uint32_t i = 0; i < num_bugRewards; i++ )
+        {
+            memcpy( &m_BugRewardChecks[j], &allBUG[i], sizeof( BugReward ) );
+            j++;
         }
     }
 
@@ -416,7 +439,7 @@ namespace mod::rando
         // Set the pointer as offset into our buffer
         ARCReplacement* allARC = reinterpret_cast<ARCReplacement*>( &m_GCIData[gci_offset] );
         // Until a better way is found, we are going to clear the buffer here just to be safe
-        m_ArcReplacements = nullptr;
+        delete[] m_ArcReplacements;
         m_numLoadedArcReplacements = 0;
 
         for ( uint32_t i = 0; i < num_arcchecks; i++ )
@@ -488,6 +511,11 @@ namespace mod::rando
                                     langStrings[static_cast<int32_t>( lang )],
                                     m_Seed->allARC[i].fileName );
 #endif
+                    break;
+                }
+                case rando::FileDirectory::Object:
+                {
+                    len = snprintf( filePath, sizeof( filePath ), "res/Object/%s", allARC[i].fileName );
                     break;
                 }
                 default:

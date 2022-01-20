@@ -69,34 +69,27 @@ namespace mod::rando
         m_Seed->LoadChecks( stage );
     }
 
-    void Randomizer::overrideREL( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
+    void Randomizer::overrideREL()
     {
         // Local vars
-        uint32_t numReplacements = m_Seed->m_numLoadedDZXChecks;
+        uint32_t numReplacements = m_Seed->m_numLoadedRELChecks;
         RELCheck* relReplacements = m_Seed->m_RELChecks;
-
-        // Get the pointer to the current REL file
-        libtp::gc::os_module::OSModuleInfo* moduleInfo = dmc->moduleInfo;
 
         // If we don't have replacements just leave
         if ( !numReplacements )
             return;
 
-        // Also make sure the REL is actually loaded
-        if ( !moduleInfo )
-            return;
-
-        // Get the REL pointer as a raw u32, to use for overwrites
-        uint32_t relPtrRaw = reinterpret_cast<uint32_t>( moduleInfo );
-
-        // Loop through RELChecks and apply if necessary
-        for ( uint32_t i = 0; i < numReplacements; i++ )
+        // Loop through all loaded OSModuleInfo entries and apply the specified values to the rels already loaded.
+        libtp::gc::os_module::OSModuleInfo* rel = libtp::gc::os_module::osModuleList.first;
+        for ( ; rel; rel = rel->next )
         {
-            RELCheck* relCheck = &relReplacements[i];
-            if ( moduleInfo->id == relCheck->moduleID )
+            for ( uint32_t i = 0; i < numReplacements; i++ )
             {
-                // Override as specified
-                *reinterpret_cast<uint32_t*>( relPtrRaw + relCheck->offset ) = relCheck->override;
+                if ( rel->id == relReplacements[i].moduleID )
+                {
+                    *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( rel ) + relReplacements[i].offset ) =
+                        relReplacements[i].override;
+                }
             }
         }
     }
@@ -167,9 +160,6 @@ namespace mod::rando
         // Loop through all ArcChecks and replace the item at an offset given the fileIndex.
         for ( uint32_t i = 0; i < numReplacements; i++ )
         {
-            mod::console << "Arc: " << m_Seed->m_ArcReplacements[i].offset << " "
-                         << m_Seed->m_ArcReplacements[i].replacementValue << " "
-                         << m_Seed->m_ArcReplacements[i].replacementValue + 0x65 << "\n";
             switch ( m_Seed->m_ArcReplacements[i].replacementType )
             {
                 case rando::ArcReplacementType::Item:

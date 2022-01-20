@@ -28,7 +28,7 @@ namespace mod::rando
 
         void onStageLoad( void );
 
-        void overrideREL( libtp::tp::dynamic_link::DynamicModuleControl* dmc );
+        void overrideREL();
         void overrideDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo );
 
         int32_t getPoeItem( uint8_t flag );
