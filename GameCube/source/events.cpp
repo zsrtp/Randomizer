@@ -103,6 +103,17 @@ namespace mod::events
 
                 break;
             }
+            // d_a_Statue_Tag.rel
+            // Owl Statues
+            case 0x85:     // d_a_Tag_Statue - Owl Statues
+            {
+                // replace sky character
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0xB7C ) = 0x48000020;     // b 0x20
+                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0xB9C ),
+                                             reinterpret_cast<void*>( assembly::asmAdjustSkyCharacter ) );
+
+                break;
+            }
         }
     }
 
@@ -124,6 +135,19 @@ namespace mod::events
         {
             // Default item
             return static_cast<int32_t>( libtp::data::items::Poe_Soul );
+        }
+    }
+
+    uint8_t onSkyCharacter( rando::Randomizer* randomizer )
+    {
+        if ( randomizer )
+        {
+            return randomizer->getSkyCharacter();
+        }
+        else
+        {
+            // Default item
+            return static_cast<int32_t>( libtp::data::items::Ancient_Sky_Book_partly_filled );
         }
     }
 
@@ -153,5 +177,42 @@ namespace mod::events
         {
             libtp::tp::d_item::execItemGet( randomizer->getHiddenSkillItem( eventIndex ) );
         }
+    }
+
+    uint32_t verifyProgressiveItem( rando::Randomizer* randomizer, uint32_t itemID )
+    {
+        using namespace libtp::data::items;
+        using namespace libtp::tp::d_item;
+        if ( randomizer )
+        {
+            switch ( itemID )
+            {
+                // The lowest item in the chain is used to determine the progressive item for now
+                case Wooden_Sword:
+                case Ordon_Sword:
+                case Master_Sword:
+                case Master_Sword_Light:
+                    if ( !checkItemGet( Master_Sword_Light, 1 ) )
+                    {
+                        if ( !checkItemGet( Master_Sword, 1 ) )
+                        {
+                            if ( !checkItemGet( Ordon_Sword, 1 ) )
+                            {
+                                if ( !checkItemGet( Wooden_Sword, 1 ) )
+                                {
+                                    return Wooden_Sword;
+                                }
+                                return Ordon_Sword;
+                            }
+                            return Master_Sword;
+                        }
+                        return Master_Sword_Light;
+                    }
+                    break;
+                default:
+                    return itemID;
+            }
+        }
+        return itemID;
     }
 }     // namespace mod::events

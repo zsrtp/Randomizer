@@ -36,6 +36,7 @@ namespace mod::rando
         uint8_t getBossItem();
         uint8_t getHiddenSkillItem( uint16_t eventIndex );
         uint8_t overrideBugReward( uint8_t bugID );
+        uint8_t getSkyCharacter();
 
         /**
          * @brief Returns the seed

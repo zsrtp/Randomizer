@@ -81,5 +81,20 @@ namespace mod::events
      * @param bugID The item ID of the bug being presented.
      */
     void onBugReward( rando::Randomizer* randomizer, uint32_t msgEventAddress, uint8_t bugID );
+
+    /**
+     * @brief Runs when the game attempts to give the player a sky character
+     *
+     * @param randomizer Pointer to mod::randomizer.
+     */
+    uint8_t onSkyCharacter( rando::Randomizer* randomizer );
+
+    /**
+     * @brief Runs when the game attempts to give the player an item
+     *
+     * @param randomizer Pointer to mod::randomizer.
+     * @param itemID The ID of the item the game is trying to give
+     */
+    uint32_t verifyProgressiveItem( rando::Randomizer* randomizer, uint32_t itemID );
 }     // namespace mod::events
 #endif

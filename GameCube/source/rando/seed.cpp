@@ -18,7 +18,9 @@
 #include "main.h"
 #include "rando/data.h"
 #include "tools.h"
+#include "tp/d_a_shop_item_static.h"
 #include "tp/d_com_inf_game.h"
+#include "tp/d_item_data.h"
 #include "tp/d_save.h"
 #include "user_patch/user_patch.h"
 
@@ -114,6 +116,8 @@ namespace mod::rando
             this->LoadPOE( stageIDX );
             this->LoadBOSS( stageIDX );
             this->LoadBugReward();
+            this->LoadSkyCharacter( stageIDX );
+            this->LoadHiddenSkill();
             // Save current stageIDX for next time
             m_StageIDX = stageIDX;
         }
@@ -128,12 +132,16 @@ namespace mod::rando
         m_numLoadedPOEChecks = 0;
         m_numLoadedBossChecks = 0;
         m_numBugRewardChecks = 0;
+        m_numSkyBookChecks = 0;
+        m_numHiddenSkillChecks = 0;
 
         delete[] m_DZXChecks;
         delete[] m_RELChecks;
         delete[] m_POEChecks;
         delete[] m_BossChecks;
         delete[] m_BugRewardChecks;
+        delete[] m_SkyBookChecks;
+        delete[] m_HiddenSkillChecks;
     }
 
     void Seed::applyPatches( bool set )
@@ -365,14 +373,43 @@ namespace mod::rando
         }
     }
 
+    void Seed::loadShopModels()
+    {
+        using namespace libtp::tp;
+
+        uint32_t num_shopItems = m_Header->shopItemCheckInfo.numEntries;
+        uint32_t gci_offset = m_Header->shopItemCheckInfo.dataOffset;
+
+        // Set the pointer as offset into our buffer
+        shopCheck* allSHOP = reinterpret_cast<shopCheck*>( &m_GCIData[gci_offset] );
+
+        d_item_data::ItemResource* itemResourcePtr = &d_item_data::item_resource[0];
+        for ( uint32_t i = 0; i < num_shopItems; i++ )
+        {
+            d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].arcName =
+                itemResourcePtr[allSHOP[i].replacementItemID].arcName;
+            d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].modelResIdx =
+                itemResourcePtr[allSHOP[i].replacementItemID].modelResIdx;
+            d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].posY = 15.0f;
+        }
+    }
+
     void Seed::LoadHiddenSkill()
     {
         using namespace libtp;
-        m_numHiddenSkillChecks = 0;
 
-        uint32_t num_hiddenSkillChecks = m_Header->hiddenSkillCheckInfo.numEntries;
-        for ( uint32_t i = 0; i < num_hiddenSkillChecks; i++ )
+        uint32_t num_hiddenSkills = m_Header->hiddenSkillCheckInfo.numEntries;
+        uint32_t gci_offset = m_Header->hiddenSkillCheckInfo.dataOffset;
+
+        // Set the pointer as offset into our buffer
+        HiddenSkillCheck* allSKILL = reinterpret_cast<HiddenSkillCheck*>( &m_GCIData[gci_offset] );
+        uint32_t j = 0;
+        m_HiddenSkillChecks = new HiddenSkillCheck[num_hiddenSkills];
+        for ( uint32_t i = 0; i < num_hiddenSkills; i++ )
         {
+            // Store the i'th DZX check into the j'th Loaded DZX check that's relevant to our current stage
+            memcpy( &m_HiddenSkillChecks[j], &allSKILL[i], sizeof( HiddenSkillCheck ) );
+            j++;
             m_numHiddenSkillChecks++;
         }
     }
@@ -403,6 +440,25 @@ namespace mod::rando
         {
             memcpy( &m_BugRewardChecks[j], &allBUG[i], sizeof( BugReward ) );
             j++;
+        }
+    }
+
+    void Seed::LoadSkyCharacter( uint8_t stageIDX )
+    {
+        uint32_t num_skycharacters = m_Header->skyCharacterCheckInfo.numEntries;
+        uint32_t gci_offset = m_Header->skyCharacterCheckInfo.dataOffset;
+
+        SkyCharacter* allCHAR = reinterpret_cast<SkyCharacter*>( &m_GCIData[gci_offset] );
+        m_SkyBookChecks = new SkyCharacter[num_skycharacters];
+        uint32_t j = 0;
+        for ( uint32_t i = 0; i < num_skycharacters; i++ )
+        {
+            if ( ( allCHAR[i].stageIDX == stageIDX ) )
+            {
+                m_numSkyBookChecks++;
+                memcpy( &m_SkyBookChecks[j], &allCHAR[i], sizeof( SkyCharacter ) );
+                j++;
+            }
         }
     }
 

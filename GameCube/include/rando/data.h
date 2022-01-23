@@ -41,6 +41,7 @@ namespace mod::rando
         entryInfo hiddenSkillCheckInfo;
         entryInfo bugRewardCheckInfo;
         entryInfo skyCharacterCheckInfo;
+        entryInfo shopItemCheckInfo;
     } __attribute__( ( __packed__ ) );
 
     // Seed with index
@@ -72,11 +73,8 @@ namespace mod::rando
 
     struct shopCheck
     {
-        uint16_t stageIDX;
-        uint16_t hash;
-        uint16_t actor;      // New actor for the dzx
-        uint8_t target;      // target item id
-        uint8_t replace;     // replacement item id
+        uint16_t shopItemID;            // target item id
+        uint16_t replacementItemID;     // replacement item id
     } __attribute__( ( __packed__ ) );
 
     struct RELCheck

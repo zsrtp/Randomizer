@@ -42,6 +42,7 @@ namespace mod::rando
             m_SeedInfo = seedInfo;
             m_Seed = new Seed( CARD_SLOT_A, seedInfo );
             m_Seed->setArcIndex();
+            m_Seed->loadShopModels();
             // Load checks for first load
             onStageLoad();
         }
@@ -151,6 +152,26 @@ namespace mod::rando
         return libtp::data::items::Poe_Soul;
     }
 
+    uint8_t Randomizer::getSkyCharacter()
+    {
+        if ( m_Seed->m_numSkyBookChecks == 1 )
+        {
+            return m_Seed->m_SkyBookChecks[0].itemID;
+        }
+        else
+        {
+            for ( uint32_t i = 0; i < m_Seed->m_numSkyBookChecks; i++ )
+            {
+                if ( m_Seed->m_SkyBookChecks[i].roomID == libtp::tp::d_kankyo::env_light.currentRoom )
+                {
+                    return m_Seed->m_SkyBookChecks[i].itemID;
+                }
+            }
+        }
+        // default
+        return libtp::data::items::Ancient_Sky_Book_partly_filled;
+    }
+
     uint8_t Randomizer::getBossItem() { return m_Seed->m_BossChecks[0].item; }
 
     void Randomizer::overrideARC( void* filePtr, int32_t fileIndex )
@@ -176,14 +197,15 @@ namespace mod::rando
                           stageIDX < sizeof( libtp::data::stage::allStages ) / sizeof( libtp::data::stage::allStages[0] );
                           stageIDX++ )
                     {
-                        if ( strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info
-                                         .player_last_stage,
-                                     libtp::data::stage::allStages[stageIDX] ) )
+                        if ( !strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info
+                                          .player_last_stage,
+                                      libtp::data::stage::allStages[stageIDX] ) )
                         {
                             break;
                         }
                     }
-                    for ( uint i = 0; i < sizeof( m_Seed->m_numHiddenSkillChecks ); i++ )
+
+                    for ( uint i = 0; i < m_Seed->m_numHiddenSkillChecks; i++ )
                     {
                         if ( ( m_Seed->m_HiddenSkillChecks[i].stageIDX == stageIDX ) &&
                              ( m_Seed->m_HiddenSkillChecks[i].roomID == libtp::tp::d_kankyo::env_light.currentRoom ) )

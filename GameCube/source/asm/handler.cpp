@@ -30,4 +30,6 @@ namespace mod::assembly
     {
         events::onBugReward( mod::randomizer, msgEventAddress, bugID );
     }
+
+    uint8_t handleAdjustSkyCharacter() { return events::onSkyCharacter( mod::randomizer ); }
 }     // namespace mod::assembly

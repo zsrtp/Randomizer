@@ -211,3 +211,6 @@
 
 //d_meter2_info.o
 80430188:g_meter2_info
+
+//d_a_shop_item_static.o
+803792e8:shopItemData

@@ -41,6 +41,9 @@ namespace mod::assembly
         // d_a_npc_ins.rel
         void asmAdjustBugReward();
         void handleAdjustBugReward( uint32_t msgEventAddress, uint8_t bugID );
+
+        void asmAdjustSkyCharacter();
+        uint8_t handleAdjustSkyCharacter();
     }
 }     // namespace mod::assembly
 

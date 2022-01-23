@@ -48,6 +48,12 @@ namespace mod::rando
         BugReward* m_BugRewardChecks = nullptr;
         uint32_t m_numBugRewardChecks = 0;
 
+        SkyCharacter* m_SkyBookChecks = nullptr;
+        uint32_t m_numSkyBookChecks = 0;
+
+        shopCheck* m_ShopChecks = nullptr;
+        uint32_t m_numShopChecks = 0;
+
         // Member functions
        public:
         /**
@@ -77,6 +83,7 @@ namespace mod::rando
         bool LoadChecks( const char* stage );
         void LoadARCChecks( int32_t fileIndex );
 
+        void loadShopModels();
         void setArcIndex();
 
        private:
@@ -98,7 +105,7 @@ namespace mod::rando
         void LoadREL( uint8_t stageIDX );
         void LoadPOE( uint8_t stageIDX );
         void LoadBOSS( uint8_t stageIDX );
-
+        void LoadSkyCharacter( uint8_t stageIDX );
         void LoadHiddenSkill();
         void LoadBugReward();
     };

@@ -72,6 +72,14 @@ namespace mod
                                            float unk7,
                                            int32_t parameters ) = nullptr;
 
+    int32_t ( *return_createItemForPresentDemo )( const float pos[3],
+                                                  int32_t item,
+                                                  uint8_t unk3,
+                                                  int32_t unk4,
+                                                  int32_t unk5,
+                                                  const float unk6[3],
+                                                  const float unk7[3] ) = nullptr;
+
     void* ( *return_loadToMainRAM2 )( int32_t fileIndex,
                                       uint8_t* unk2,
                                       uint32_t jkrExpandSwitch,
@@ -192,6 +200,20 @@ namespace mod
                                      // Spawn the appropriate item with model
                                      uint32_t params = randomizer->getBossItem() | 0xFFFF00;
                                      return tp::f_op_actor_mng::fopAcM_create( 539, params, pos, roomNo, rot, scale, -1 );
+                                 } );
+
+        return_createItemForPresentDemo =
+            patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForPresentDemo,
+                                 []( const float pos[3],
+                                     int32_t item,
+                                     uint8_t unk3,
+                                     int32_t unk4,
+                                     int32_t unk5,
+                                     const float rot[3],
+                                     const float scale[3] )
+                                 {
+                                     item = events::verifyProgressiveItem( mod::randomizer, item );
+                                     return return_createItemForPresentDemo( pos, item, unk3, 0x32, 0x32, rot, scale );
                                  } );
 
         return_loadToMainRAM2 = patch::hookFunction(

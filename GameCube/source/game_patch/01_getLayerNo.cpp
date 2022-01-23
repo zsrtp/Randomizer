@@ -1,10 +1,10 @@
 #include <string.h>
 
+#include "data/stages.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_kankyo.h"
 #include "tp/d_save.h"
-#include "data/stages.h"
 
 namespace mod::game_patch
 {
@@ -47,39 +47,11 @@ namespace mod::game_patch
                 switch ( stageID )
                 {
                     case stage::stageIDs::Snowpeak_Ruins:
-                    {
-                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
-                            libtp::tp::d_save::saveBitLabels[0x10A] );     // Snowpeak Ruins Completed
-                        if ( condition)
-                        {
-                             chosenLayer = stage::snowpeakStateIDs::SPR_Dungeon_Completed;
-                        }
-                        break;
-                    }
                     case stage::stageIDs::Snowpeak:
                     {
-                        //TODO need to set a condition that checks for the portal before updating the state as this can lose the portal
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                             libtp::tp::d_save::saveBitLabels[0x10A] );     // Snowpeak Ruins Completed
-                        if ( condition == false )
-                        {
-                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
-                                libtp::tp::d_save::saveBitLabels[0xA3] );     // Yeta unlocks the West door in SPR
-                            if ( condition == false )
-                            {
-                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
-                                    libtp::tp::d_save::saveBitLabels[0xA2] );     // Yeta unlocks the North-West door in SPR
-                                if ( condition != false )
-                                {
-                                    chosenLayer = stage::snowpeakStateIDs::SPR_Northwest_Door_Unlocked;
-                                }
-                            }
-                            else
-                            {
-                                chosenLayer = stage::snowpeakStateIDs::SPR_West_Door_Unlocked;
-                            }
-                        }
-                        else
+                        if ( condition )
                         {
                             chosenLayer = stage::snowpeakStateIDs::SPR_Dungeon_Completed;
                         }
@@ -129,22 +101,9 @@ namespace mod::game_patch
                                     condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x701 );     // Goron Mines Completed
                                     if ( condition == false )
                                     {
-                                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xa08 );     // KB1 Beaten
-                                        if ( condition == false )
-                                        {
-                                            condition =
-                                                libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x608 );     // KB1 Trigger Tripped
-                                            if ( condition != false )
-                                            {
-                                                chosenLayer = stage::kakarikoStateIDs::Kakariko_KB1_Active;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            chosenLayer = stage::kakarikoStateIDs::Kakariko_KB1_Completed;
-                                            // If it is night, the layer is different.
-                                            libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
-                                        }
+                                        chosenLayer = stage::kakarikoStateIDs::Kakariko_KB1_Completed;
+                                        // If it is night, the layer is different.
+                                        libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
                                     }
                                     else
                                     {
@@ -212,12 +171,14 @@ namespace mod::game_patch
                                     condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x701 );     // Goron Mines Completed
                                     if ( condition != false )
                                     {
-                                        chosenLayer = stage::deathMountainInteriorStateIDs::Death_Mountain_Int_Goron_Mines_Completed;
+                                        chosenLayer =
+                                            stage::deathMountainInteriorStateIDs::Death_Mountain_Int_Goron_Mines_Completed;
                                     }
                                 }
                                 else
                                 {
-                                    chosenLayer = stage::deathMountainInteriorStateIDs::Death_Mountain_Int_Master_Sword_CS_Watched;
+                                    chosenLayer =
+                                        stage::deathMountainInteriorStateIDs::Death_Mountain_Int_Master_Sword_CS_Watched;
                                 }
                             }
                             else
@@ -477,13 +438,15 @@ namespace mod::game_patch
                     {
                         if ( roomId == 1 )
                         {
-                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4902 ); //Bought slinghot from Sera
+                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4902 );     // Bought slinghot from Sera
                             if ( condition )
-                                {
-                                    chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
-                                }
-                            /* This is the original code, which updates the state of the shop once you've cleared Faron Twilight.
-                            * We modify this in rando to instead update once you've bought the Slingshot as to not lose the check and to 
+                            {
+                                chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
+                            }
+                            /* This is the original code, which updates the state of the shop once you've cleared Faron
+                            Twilight.
+                            * We modify this in rando to instead update once you've bought the Slingshot as to not lose the
+                            check and to
                             * help prevent logical linearity/softlocks in the early game.
                             uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
                             if ( uVar2 != 0 )
@@ -719,7 +682,8 @@ namespace mod::game_patch
                                     }
                                     else
                                     {
-                                        chosenLayer = stage::outsideCastleTownStateIDs::Outside_Castle_Town_Talked_To_Louise_Before_Statue;
+                                        chosenLayer = stage::outsideCastleTownStateIDs::
+                                            Outside_Castle_Town_Talked_To_Louise_Before_Statue;
                                     }
                                 }
                                 else
