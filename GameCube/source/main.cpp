@@ -17,6 +17,7 @@
 #include "tp/control.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_meter2_info.h"
+#include "tp/d_msg_class.h"
 #include "tp/d_msg_object.h"
 #include "tp/d_stage.h"
 #include "tp/dzx.h"
@@ -80,6 +81,13 @@ namespace mod
                                                   const float unk6[3],
                                                   const float unk7[3] ) = nullptr;
 
+    int32_t ( *return_createItemForTrBoxDemo )( const float pos[3],
+                                                int32_t item,
+                                                int32_t itemPickupFlag,
+                                                int32_t roomNo,
+                                                const int16_t rot[3],
+                                                const float scale[3] ) = nullptr;
+
     void* ( *return_loadToMainRAM2 )( int32_t fileIndex,
                                       uint8_t* unk2,
                                       uint32_t jkrExpandSwitch,
@@ -90,7 +98,13 @@ namespace mod
                                       int32_t* unk8,
                                       uint32_t* unk9 ) = nullptr;
 
-    bool ( *return_render )( void* TControl ) = nullptr;
+    bool ( *return_setMessageCode_inSequence )( libtp::tp::control::TControl* control,
+                                                const void* TProcessor,
+                                                uint16_t unk3,
+                                                uint16_t msgId ) = nullptr;
+
+    uint32_t ( *return_getFontCCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
+    uint32_t ( *return_getFontGCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
 
     void main()
     {
@@ -167,23 +181,49 @@ namespace mod
                                  []( const char* stageName, int32_t roomId, int32_t layerOverride )
                                  { return game_patch::_01_getLayerNo( stageName, roomId, layerOverride ); } );
 
-        // Custom GetItem Text
-        return_render = patch::hookFunction(
-            tp::control::render,
-            []( void* TControl )
+        // Custom Item Messages
+        return_setMessageCode_inSequence = patch::hookFunction(
+            libtp::tp::control::setMessageCode_inSequence,
+            []( libtp::tp::control::TControl* control, const void* TProcessor, uint16_t unk3, uint16_t msgId )
             {
-                // Get the address of the current text to draw
-                const char** currentTextPtr = reinterpret_cast<const char**>( reinterpret_cast<uint32_t>( TControl ) + 0x20 );
+                // Call the original function immediately, as a lot of stuff needs to be set before our code runs
+                const bool ret = return_setMessageCode_inSequence( control, TProcessor, unk3, msgId );
 
-                const char* currentText = *currentTextPtr;
-
-                // Make sure a pointer is set
-                if ( !currentText )
+                // Make sure the function ran successfully
+                if ( !ret )
                 {
-                    return return_render( TControl );
+                    return ret;
                 }
-                return return_render( TControl );
+                game_patch::_05_setCustomItemMessage( control, TProcessor, unk3, msgId );
+                return ret;
             } );
+
+        // Set custom font color
+        return_getFontCCColorTable = patch::hookFunction( tp::d_msg_class::getFontCCColorTable,
+                                                          []( uint8_t colorId, uint8_t unk )
+                                                          {
+                                                              if ( colorId >= 0x9 )
+                                                              {
+                                                                  return game_patch::_05_getCustomMsgColor( colorId );
+                                                              }
+                                                              else
+                                                              {
+                                                                  return return_getFontCCColorTable( colorId, unk );
+                                                              }
+                                                          } );
+        // Set custom font color
+        return_getFontGCColorTable = patch::hookFunction( tp::d_msg_class::getFontGCColorTable,
+                                                          []( uint8_t colorId, uint8_t unk )
+                                                          {
+                                                              if ( colorId >= 0x9 )
+                                                              {
+                                                                  return game_patch::_05_getCustomMsgColor( colorId );
+                                                              }
+                                                              else
+                                                              {
+                                                                  return return_getFontCCColorTable( colorId, unk );
+                                                              }
+                                                          } );
 
         // Replace the Item that spawns when a boss is defeated
         return_createItemForBoss =
@@ -212,8 +252,21 @@ namespace mod
                                      const float rot[3],
                                      const float scale[3] )
                                  {
-                                     item = events::verifyProgressiveItem( mod::randomizer, item );
+                                     item = game_patch::_04_verifyProgressiveItem( mod::randomizer, item );
                                      return return_createItemForPresentDemo( pos, item, unk3, 0x32, 0x32, rot, scale );
+                                 } );
+
+        return_createItemForTrBoxDemo =
+            patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForTrBoxDemo,
+                                 []( const float pos[3],
+                                     int32_t item,
+                                     int32_t itemPickupFlag,
+                                     int32_t roomNo,
+                                     const int16_t rot[3],
+                                     const float scale[3] )
+                                 {
+                                     item = game_patch::_04_verifyProgressiveItem( mod::randomizer, item );
+                                     return return_createItemForTrBoxDemo( pos, item, itemPickupFlag, roomNo, rot, scale );
                                  } );
 
         return_loadToMainRAM2 = patch::hookFunction(
@@ -234,54 +287,6 @@ namespace mod
                 events::onARC( mod::randomizer, filePtr, fileIndex );
                 return filePtr;
             } );
-    }
-
-    int32_t getMsgIndex( libtp::tp::d_msg_object::StringDataTable* stringDataTable, uint32_t itemId )
-    {
-        uint32_t totalEntries = stringDataTable->totalEntries;
-        libtp::tp::d_msg_object::StringDataTableEntry* entry = &stringDataTable->entry[0];
-
-        // Increment itemId to be at the start of the table entries for items
-        itemId += 0x65;
-
-        for ( uint32_t index = 0; index < totalEntries; index++ )
-        {
-            if ( entry->stringId == itemId )
-            {
-                return static_cast<int32_t>( index );
-            }
-            entry++;
-        }
-
-        // Didn't find a proper index
-        return -1;
-    }
-
-    const char* getItemMsgAddress( uint32_t itemId )
-    {
-        // Get the pointer to the string data table
-        libtp::tp::d_msg_object::StringDataTable* stringDataTable = libtp::tp::d_meter2_info::g_meter2_info.stringDataTable;
-
-        // Make sure the pointer is set
-        if ( !stringDataTable )
-        {
-            return nullptr;
-        }
-
-        // Get the index for the current item
-        int32_t itemIndex = getMsgIndex( stringDataTable, itemId );
-
-        // Make sure the index is valid
-        if ( itemIndex < 0 )
-        {
-            return nullptr;
-        }
-
-        // Get the string address
-        libtp::tp::d_msg_object::StringDataTableEntry* entry = &stringDataTable->entry[itemIndex];
-
-        return reinterpret_cast<const char*>( reinterpret_cast<uint32_t>( &stringDataTable->unk_20 ) + entry->offsetToString +
-                                              ( stringDataTable->stringsStartOffset + 0x8 ) );
     }
 
     void setScreen( bool state )

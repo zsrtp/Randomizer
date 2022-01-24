@@ -147,7 +147,7 @@ namespace mod::events
         else
         {
             // Default item
-            return static_cast<int32_t>( libtp::data::items::Ancient_Sky_Book_partly_filled );
+            return static_cast<int32_t>( libtp::data::items::Ancient_Sky_Book_Partly_Filled );
         }
     }
 
@@ -179,40 +179,8 @@ namespace mod::events
         }
     }
 
-    uint32_t verifyProgressiveItem( rando::Randomizer* randomizer, uint32_t itemID )
+    void setSaveFileEventFlag( uint16_t flag )
     {
-        using namespace libtp::data::items;
-        using namespace libtp::tp::d_item;
-        if ( randomizer )
-        {
-            switch ( itemID )
-            {
-                // The lowest item in the chain is used to determine the progressive item for now
-                case Wooden_Sword:
-                case Ordon_Sword:
-                case Master_Sword:
-                case Master_Sword_Light:
-                    if ( !checkItemGet( Master_Sword_Light, 1 ) )
-                    {
-                        if ( !checkItemGet( Master_Sword, 1 ) )
-                        {
-                            if ( !checkItemGet( Ordon_Sword, 1 ) )
-                            {
-                                if ( !checkItemGet( Wooden_Sword, 1 ) )
-                                {
-                                    return Wooden_Sword;
-                                }
-                                return Ordon_Sword;
-                            }
-                            return Master_Sword;
-                        }
-                        return Master_Sword_Light;
-                    }
-                    break;
-                default:
-                    return itemID;
-            }
-        }
-        return itemID;
+        libtp::tp::d_save::onEventBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.events, flag );
     }
 }     // namespace mod::events

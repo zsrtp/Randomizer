@@ -90,11 +90,10 @@ namespace mod::events
     uint8_t onSkyCharacter( rando::Randomizer* randomizer );
 
     /**
-     * @brief Runs when the game attempts to give the player an item
+     * @brief Sets a specified event bit given a specific flag
      *
-     * @param randomizer Pointer to mod::randomizer.
-     * @param itemID The ID of the item the game is trying to give
+     * @param flag The event flag that we want to set
      */
-    uint32_t verifyProgressiveItem( rando::Randomizer* randomizer, uint32_t itemID );
+    void setSaveFileEventFlag( uint16_t flag );
 }     // namespace mod::events
 #endif

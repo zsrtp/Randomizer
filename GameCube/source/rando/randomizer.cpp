@@ -169,7 +169,7 @@ namespace mod::rando
             }
         }
         // default
-        return libtp::data::items::Ancient_Sky_Book_partly_filled;
+        return libtp::data::items::Ancient_Sky_Book_Partly_Filled;
     }
 
     uint8_t Randomizer::getBossItem() { return m_Seed->m_BossChecks[0].item; }
