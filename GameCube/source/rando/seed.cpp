@@ -21,6 +21,7 @@
 #include "tp/d_a_shop_item_static.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item_data.h"
+#include "tp/d_s_logo.h"
 #include "tp/d_save.h"
 #include "user_patch/user_patch.h"
 
@@ -553,11 +554,11 @@ namespace mod::rando
                     len = snprintf( filePath, sizeof( filePath ), "res/Msgjp/%s", allARC[i].fileName );
 #elif defined TP_EU
                     // PAL uses a different file for each language
-                    libtp::tp::d_s_logo::Languages lang = tp::d_s_logo::getPalLanguage2( nullptr );
-                    if ( ( lang < tp::d_s_logo::Languages::uk ) || ( lang > tp::d_s_logo::Languages::it ) )
+                    libtp::tp::d_s_logo::Languages lang = libtp::tp::d_s_logo::getPalLanguage2( nullptr );
+                    if ( ( lang < libtp::tp::d_s_logo::Languages::uk ) || ( lang > libtp::tp::d_s_logo::Languages::it ) )
                     {
                         // The language is invalid/unsupported, so the game defaults to English
-                        lang = tp::d_s_logo::Languages::uk;
+                        lang = libtp::tp::d_s_logo::Languages::uk;
                     }
 
                     static const char* langStrings[] = { "uk", "de", "fr", "sp", "it" };
@@ -565,7 +566,7 @@ namespace mod::rando
                                     sizeof( filePath ),
                                     "res/Msg%s/%s",
                                     langStrings[static_cast<int32_t>( lang )],
-                                    m_Seed->allARC[i].fileName );
+                                    allARC[i].fileName );
 #endif
                     break;
                 }

@@ -741,6 +741,14 @@ namespace mod::game_patch
             events::setSaveFileEventFlag( 0x1440 );     // SPR Lobby Door Unlocked
         };
         itemFuncPtr[items::Ordon_Pumpkin] = onGetOrdonPumpkin;
+
+        // Gate Keys
+        d_item::ItemFunc onGetGateKeys = []()
+        {
+            events::setSaveFileEventFlag( 0x840 );     // Started Zora Escort
+            events::setSaveFileEventFlag( 0x810 );     // Completed Zora Escort
+        };
+        itemFuncPtr[items::Gate_Keys] = onGetGateKeys;
     }
     void _02_modifyItemData()
     {

@@ -2,6 +2,9 @@
 80003458:memset
 80003540:memcpy
 
+// OSModule.o
+800030C8:osModuleList
+
 // m_Do_ext.o
 // text
 8000EDA8:getArchiveHeapPtr
@@ -23,6 +26,9 @@
 80035220:putSave
 80034ABC:onEventBit
 80034AD4:offEventBit
+803a8f68:saveBitLabels
+80032c58:isDarkClearLV
+80032c94:isTransformLV
 
 // d_event.o
 800428A8:defaultSkipStb
@@ -46,6 +52,7 @@
 8001C21C:createItemForMidBoss
 8001C260:createItemForDirectGet
 80019B50:CreateAppend
+80019e40:fopAcM_create
 
 // f_pc_node_req
 803A5718:l_fpcNdRq_Queue
@@ -55,6 +62,7 @@
 
 // d_item.o
 80098010:checkItemGet
+80097fbc:execItemGet
 803B0E58:item_func_ptr
 803B1258:item_getcheck_func_ptr
 
@@ -64,9 +72,17 @@
 8011A908:checkTreasureRupeeReturn
 8011EC04:procGanonFinishInit
 8011EC84:procGanonFinish
+8009dc6c:checkStageName
+801415a8:dComIfGs_isEventBit
+80141470:dComIfGs_isItemFirstBit
+8039325C:getSeType
 
 // data
-8039038C:ladderVars
+8039038C:climbVars
+8038f9e0:wallMoveVars
+
+//d_meter2_info.o
+80432148:g_meter2_info
 
 // d_menu_collect.o
 801B3598:setWalletMaxNum
@@ -157,6 +173,7 @@
 803697C4:strcmp
 80369918:strncpy
 8036995C:strcpy
+80369784:strncmp
 
 // m_Do_controller_pad.o
 // data
@@ -165,10 +182,13 @@
 // d_com_inf_game.o
 // data
 80408160:dComIfG_gameInfo
+8002b4dc:getLayerNo_common_common
+8002b49c:dComIfG_get_timelayer
 
 // d_kankyo.o
 // data
 8042EA14:env_light
+801ac964:dKy_darkworld_stage_check
 
 // JFWSystem.o
 // data
@@ -188,3 +208,21 @@
 
 //d_s_logo.o
 802591F8:getPalLanguage2
+
+//control.o
+802a8820:setMessageCode_inSequence
+
+//d_msg_class.o
+80228bc0:getFontCCColorTable
+80228c6c:getFontGCColorTable
+
+//d_item_data.o
+803ae280:item_resource
+803b0a58:item_info
+803afa68:field_item_res
+
+//processor.o
+802a8a54:getResource_groupID
+
+//d_a_shop_item_static.o
+8037a178:shopItemData

@@ -216,12 +216,15 @@ namespace mod::game_patch
                                     libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x3120 );     // Sky Cannon Warped to Lake Hylia
                                 if ( condition == false )
                                 {
-                                    condition =
+                                    chosenLayer = stage::lakeHyliaStateIDs::Lake_Hylia_Lakebed_Completed;
+                                    // Below is the default condition. However this does not allow grottos to spawn.
+                                    // This will also make Auru available from the start.
+                                    /*condition =
                                         libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x904 );     // Lakebed Temple Completed
                                     if ( condition != false )
                                     {
                                         chosenLayer = stage::lakeHyliaStateIDs::Lake_Hylia_Lakebed_Completed;
-                                    }
+                                    }*/
                                 }
                                 else
                                 {
@@ -343,45 +346,34 @@ namespace mod::game_patch
                     {
                         if ( roomId == 0 )
                         {
-                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
-                                libtp::tp::d_save::saveBitLabels[0x38] );     // Epona Tamed
-                            if ( condition == false )
+                            uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
+                            if ( uVar2 == 0 )
                             {
-                                uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                                if ( uVar2 == 0 )
+                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
+                                    libtp::tp::d_save::saveBitLabels[0x2F] );     // First Trip to Sewers Done
+                                if ( condition == false )
                                 {
-                                    condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
-                                        libtp::tp::d_save::saveBitLabels[0x2F] );     // First Trip to Sewers Done
+                                    condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
                                     if ( condition == false )
                                     {
-                                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
+                                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4a40 );     // Ordon Day 1 done
                                         if ( condition == false )
                                         {
-                                            condition =
-                                                libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4a40 );     // Ordon Day 1 done
-                                            if ( condition == false )
-                                            {
-                                                chosenLayer = stage::ordonVillageStateIDs::Ordon_New_Game;
-                                            }
-                                            else
-                                            {
-                                                chosenLayer = stage::ordonVillageStateIDs::Ordon_Goats_1_Completed;
-                                            }
+                                            chosenLayer = stage::ordonVillageStateIDs::Ordon_New_Game;
                                         }
                                         else
                                         {
-                                            chosenLayer = stage::ordonVillageStateIDs::Ordon_Talo_Rescued;
+                                            chosenLayer = stage::ordonVillageStateIDs::Ordon_Goats_1_Completed;
                                         }
                                     }
                                     else
                                     {
-                                        chosenLayer = stage::ordonVillageStateIDs::Ordon_Finished_Sewers;
+                                        chosenLayer = stage::ordonVillageStateIDs::Ordon_Talo_Rescued;
                                     }
                                 }
                                 else
                                 {
-                                    chosenLayer = stage::ordonVillageStateIDs::Ordon_Faron_Twilight_Cleared;
-                                    libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
+                                    chosenLayer = stage::ordonVillageStateIDs::Ordon_Finished_Sewers;
                                 }
                             }
                             else
@@ -436,7 +428,7 @@ namespace mod::game_patch
 
                     case stage::stageIDs::Ordon_Village_Interiors:
                     {
-                        if ( roomId == 1 )
+                        if ( roomId == 1 )     // Sera's Shop
                         {
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4902 );     // Bought slinghot from Sera
                             if ( condition )
@@ -456,7 +448,7 @@ namespace mod::game_patch
                         }
                         else
                         {
-                            if ( roomId == 2 )
+                            if ( roomId == 2 )     // Jaggle's House
                             {
                                 condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x780 );     // Watched Colin CS after
                                                                                                     // KB1
@@ -484,7 +476,7 @@ namespace mod::game_patch
                             }
                             else
                             {
-                                if ( roomId == 5 )
+                                if ( roomId == 5 )     // Rusl's House
                                 {
                                     condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x601 );     // Epona Tamed
                                     if ( condition == false )
