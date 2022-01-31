@@ -114,6 +114,24 @@ namespace mod::events
 
                 break;
             }
+            // d_a_obj_life_container.rel
+            // Heart Pieces/Containers
+            case 0x35:
+            {
+                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x1804 ),
+                                             reinterpret_cast<void*>( assembly::asmAdjustFieldItemParams ) );
+                break;
+            }
+            // d_a_obj_bosswarp.rel
+            // Post-Boss Cutscene
+            case 0x5B:
+            {
+                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x1884 ),
+                                             reinterpret_cast<void*>( libtp::tp::d_item::execItemGet ) );
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1888 ) = 0x480000A8;     // b 0xA8
+                // Replace dungeon reward that is given after beating a boss and show the appropriate text.
+                break;
+            }
         }
     }
 

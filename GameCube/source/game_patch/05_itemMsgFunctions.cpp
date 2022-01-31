@@ -333,6 +333,18 @@ namespace mod::game_patch
                 break;
             }
 
+            case Progressive_Fused_Shadow:
+            {
+                setMessageText( control, firstFusedShadowText );
+                break;
+            }
+
+            case Progressive_Mirror_Shard:
+            {
+                setMessageText( control, firstMirrorShardText );
+                break;
+            }
+
             default:
             {
                 break;

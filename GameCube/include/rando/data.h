@@ -112,8 +112,8 @@ namespace mod::rando
         int32_t arcFileIndex;                   // The index of the file that contains the check.
         uint32_t replacementValue;              // Used to be item, but can be more now.
         FileDirectory directory;                // The type of directory where the check is stored.
-        char fileName[18];                      // The name of the file where the check is stored
         ArcReplacementType replacementType;     // The type of replacement that is taking place.
+        char fileName[18];                      // The name of the file where the check is stored
     } __attribute__( ( __packed__ ) );
 
     struct BOSSCheck

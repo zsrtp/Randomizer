@@ -44,6 +44,10 @@ namespace mod::assembly
 
         void asmAdjustSkyCharacter();
         uint8_t handleAdjustSkyCharacter();
+
+        // d_a_obj_life_container.rel
+        void asmAdjustFieldItemParams();
+        void handleAdjustFieldItemParams( void* fopAc_ac_c, void* daObjLife_c );
     }
 }     // namespace mod::assembly
 

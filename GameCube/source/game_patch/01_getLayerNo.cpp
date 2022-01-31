@@ -61,8 +61,31 @@ namespace mod::game_patch
                     case stage::stageIDs::Faron_Woods:
                     case stage::stageIDs::Faron_Woods_Interiors:
                     {
-                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xD4 );     // Can Transform at Will
-                        if ( condition == false )
+                        if ( ( roomId == 5 ) || ( roomId == 6 ) )     // North Faron or Mist Area
+                        {
+                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xD4 );     // Can Transform at Will
+                            if ( condition == false )
+                            {
+                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x602 );     // Forest Temple Completed
+                                if ( condition == false )
+                                {
+                                    condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
+                                    if ( condition == false )
+                                    {
+                                        chosenLayer = stage::faronStateIDs::Faron_Talo_Captured;
+                                    }
+                                }
+                                else
+                                {
+                                    chosenLayer = stage::faronStateIDs::Faron_Forest_Temple_Completed;
+                                }
+                            }
+                            else
+                            {
+                                chosenLayer = stage::faronStateIDs::Faron_Snowpeak_Completed;
+                            }
+                        }
+                        else
                         {
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x602 );     // Forest Temple Completed
                             if ( condition == false )
@@ -77,10 +100,6 @@ namespace mod::game_patch
                             {
                                 chosenLayer = stage::faronStateIDs::Faron_Forest_Temple_Completed;
                             }
-                        }
-                        else
-                        {
-                            chosenLayer = stage::faronStateIDs::Faron_Snowpeak_Completed;
                         }
                         break;
                     }

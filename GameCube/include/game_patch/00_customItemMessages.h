@@ -638,5 +638,31 @@ namespace mod::game_patch
     MSG_COLOR(MSG_COLOR_WHITE)
     "! A missing part\nof the word in the Ancient\nSky Book has been restored."
     MSG_END()
+
+    MSG_BEGIN(firstFusedShadowText)
+    MSG_SPEED(MSG_SPEED_FAST)
+    "You got a "
+    MSG_COLOR(MSG_COLOR_RED)
+    "Fused Shadow!\n"
+    MSG_COLOR(MSG_COLOR_WHITE)
+    "It seems to have some "
+    MSG_COLOR(MSG_COLOR_GREEN) 
+    "moss"
+    MSG_COLOR(MSG_COLOR_WHITE) 
+    "\ngrowing on it.."
+    MSG_END()
+
+    MSG_BEGIN(firstMirrorShardText)
+    MSG_SPEED(MSG_SPEED_FAST)
+    "You got a shard of the\n"
+    MSG_COLOR(MSG_COLOR_RED)
+    "Mirror of Twilight! "
+    MSG_COLOR(MSG_COLOR_WHITE)
+    "It\nseems to have traces of\n"
+    MSG_COLOR(MSG_COLOR_ORANGE)
+    "sand"
+    MSG_COLOR(MSG_COLOR_WHITE)
+    " on it.."
+    MSG_END()
 }     // namespace mod::game_patch
 #endif
