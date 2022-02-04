@@ -5,11 +5,14 @@
 
 #include "asm.h"
 #include "data/items.h"
+#include "data/stages.h"
 #include "main.h"
 #include "patch.h"
 #include "rando/randomizer.h"
+#include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
+#include "tp/d_kankyo.h"
 #include "tp/dzx.h"
 #include "user_patch/03_customCosmetics.h"
 
@@ -37,7 +40,7 @@ namespace mod::events
         }
         randomizer->overrideREL();
 
-        user_patch::setHUDCosmetics();
+        user_patch::setHUDCosmetics( randomizer );
     }
 
     void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
@@ -77,7 +80,12 @@ namespace mod::events
             case 0x1FA:
                 // Nop out the instruction that stores the new total small key value when the game attempts to
                 // remove a small key from the inventory when opening the boss door
-                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1198 ) = 0x60000000;     // Previous: 0x3803ffff
+                if ( libtp::tp::d_a_alink::checkStageName(
+                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Lakebed_Temple] ) &&
+                     libtp::tp::d_kankyo::env_light.currentRoom == 3 )
+                {
+                    *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1198 ) = 0x60000000;     // Previous: 0x3803ffff
+                }
                 break;
             // d_a_npc_kn.rel
             // Hero's Shade
@@ -130,6 +138,30 @@ namespace mod::events
                                              reinterpret_cast<void*>( libtp::tp::d_item::execItemGet ) );
                 *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1888 ) = 0x480000A8;     // b 0xA8
                 // Replace dungeon reward that is given after beating a boss and show the appropriate text.
+                break;
+            }
+            // d_a_npc_bouS.rel
+            // Inside Bo's House
+            case 0x121:
+            {
+                // Prevent Bo from talking after the chest has been opened
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1A44 ) = 0x48000028;     // b 0x28
+                break;
+            }
+            // d_a_npc_ykm.rel
+            // Yeto
+            case 0x17F:
+            {
+                // Prevent Yeto from leaving the dungeon if the player has the boss key
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1524 ) = 0x38600000;     // li r3,0
+                break;
+            }
+            // d_a_npc_ykw.rel
+            // Yeta
+            case 0x180:
+            {
+                // Prevent Yeta from leaving the dungeon if the player has the boss key
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1038 ) = 0x38600000;     // li r3,0
                 break;
             }
         }
@@ -199,6 +231,138 @@ namespace mod::events
 
     void setSaveFileEventFlag( uint16_t flag )
     {
-        libtp::tp::d_save::onEventBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.events, flag );
+        libtp::tp::d_save::onEventBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags, flag );
+    }
+
+    void onAdjustFieldItemParams( void* fopAC, void* daObjLife )
+    {
+        *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 2.0f;     // scale
+
+        if ( libtp::tp::d_a_alink::checkStageName(
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hyrule_Field] ) ||
+             libtp::tp::d_a_alink::checkStageName(
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Upper_Zoras_River] ) )
+        {
+            *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( fopAC ) + 0x530 ) = 0.0f;     // gravity
+        }
+        else
+        {
+            *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x61C ) = 2.0f;     // height
+        }
+    }
+
+    void handleDungeonHeartContainer()
+    {
+        using namespace libtp::data::stage;
+        const char* bossStages[8] = { allStages[stageIDs::Morpheel],
+                                      allStages[stageIDs::Fyrus],
+                                      allStages[stageIDs::Diababa],
+                                      allStages[stageIDs::Armogohma],
+                                      allStages[stageIDs::Argorok],
+                                      allStages[stageIDs::Zant_Main_Room],
+                                      allStages[stageIDs::Stallord],
+                                      allStages[stageIDs::Blizzeta] };
+        // Set the flag for the dungeon heart container if we are on a boss stage since this is the function that gets
+        // called when the player picks up a heart container.
+        uint32_t totalDungeonStages = sizeof( bossStages ) / sizeof( bossStages[0] );
+        for ( uint32_t i = 0; i < totalDungeonStages; i++ )
+        {
+            if ( libtp::tp::d_a_alink::checkStageName( bossStages[i] ) )
+            {
+                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x1D] |= 0x10;
+            }
+        }
+    }
+
+    bool proc_query022( void* unk1, void* unk2, int32_t unk3 )
+    {
+        // Check to see if currently in one of the Ordon interiors
+        if ( libtp::tp::d_a_alink::checkStageName(
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Ordon_Village_Interiors] ) )
+        {
+            // Check to see if ckecking for the Iron Boots
+            uint16_t item = *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( unk2 ) + 0x4 );
+
+            if ( item == libtp::data::items::Iron_Boots )
+            {
+                // Return false so that the door in Bo's house can be opened without having the
+                // Iron Boots
+                return false;
+            }
+        }
+        return mod::return_query022( unk1, unk2, unk3 );
+    }
+
+    bool proc_query023( void* unk1, void* unk2, int32_t unk3 )
+    {
+        // Check to see if currently in one of the Ordon interiors
+        if ( libtp::tp::d_a_alink::checkStageName(
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Village_Interiors] ) &&
+             libtp::tp::d_kankyo::env_light.currentRoom == 1 )
+        {
+            // If player has not bought Barnes' Bomb Bag, we want to allow them to be able to get the check.
+            if ( ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x908 ) ) )
+            {
+                return false;
+            }
+            // If the player has bought the bomb bag check, we won't allow them to get the check, regardless of if they
+            // have bombs or not
+            else
+            {
+                return true;
+            }
+        }
+
+        // Call original function
+        return mod::return_query023( unk1, unk2, unk3 );
+    }
+
+    bool proc_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int memBit )
+    {
+        using namespace libtp::data::stage;
+
+        switch ( memBit )
+        {
+            case 3:
+            {
+                const char* dungeonStages[8] = { allStages[stageIDs::Forest_Temple],
+                                                 allStages[stageIDs::Goron_Mines],
+                                                 allStages[stageIDs::Lakebed_Temple],
+                                                 allStages[stageIDs::Arbiters_Grounds],
+                                                 allStages[stageIDs::Snowpeak_Ruins],
+                                                 allStages[stageIDs::Temple_of_Time],
+                                                 allStages[stageIDs::City_in_the_Sky],
+                                                 allStages[stageIDs::Palace_of_Twilight] };
+                uint32_t totalDungeonStages = sizeof( dungeonStages ) / sizeof( dungeonStages[0] );
+                for ( uint32_t i = 0; i < totalDungeonStages; i++ )
+                {
+                    if ( libtp::tp::d_a_alink::checkStageName( dungeonStages[i] ) )
+                    {
+                        return false;
+                    }
+                }
+                break;
+            }
+
+            case 7:
+            {
+                if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Forest_Temple] ) )
+                {
+                    if ( ( libtp::tp::d_kankyo::env_light.currentRoom == 3 ) ||
+                         ( libtp::tp::d_kankyo::env_light.currentRoom == 1 ) )
+                    {
+                        return false;
+                    }
+                }
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+        // Call original function
+        return mod::return_isDungeonItem( memBitPtr, memBit );
     }
 }     // namespace mod::events

@@ -3,7 +3,6 @@
 
 #include "data/items.h"
 #include "game_patch/game_patch.h"
-#include "main.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_item.h"
 

@@ -95,5 +95,15 @@ namespace mod::events
      * @param flag The event flag that we want to set
      */
     void setSaveFileEventFlag( uint16_t flag );
+
+    void onAdjustFieldItemParams( void* fopAC, void* daObjLife );
+
+    void handleDungeonHeartContainer();
+
+    bool proc_query022( void* unk1, void* unk2, int32_t unk3 );
+
+    bool proc_query023( void* unk1, void* unk2, int32_t unk3 );
+
+    bool proc_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int memBit );
 }     // namespace mod::events
 #endif

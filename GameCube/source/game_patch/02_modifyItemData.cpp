@@ -416,7 +416,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetForestTempleSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Forest_Temple;
-            const char* stage = stage::allStages[Stage_Forest_Temple];
+            const char* stage = stage::allStages[stage::stageIDs::Forest_Temple];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Forest_Temple_Small_Key] = onGetForestTempleSmallKey;
@@ -424,7 +424,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetForestTempleDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Forest_Temple;
-            const char* stage = stage::allStages[Stage_Forest_Temple];
+            const char* stage = stage::allStages[stage::stageIDs::Forest_Temple];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Forest_Temple_Dungeon_Map] = onGetForestTempleDungeonMap;
@@ -432,7 +432,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetForestTempleCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Forest_Temple;
-            const char* stage = stage::allStages[Stage_Forest_Temple];
+            const char* stage = stage::allStages[stage::stageIDs::Forest_Temple];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Forest_Temple_Compass] = onGetForestTempleCompass;
@@ -440,7 +440,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetForestTempleBigKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Forest_Temple;
-            const char* stage = stage::allStages[Stage_Forest_Temple];
+            const char* stage = stage::allStages[stage::stageIDs::Forest_Temple];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
         };
         itemFuncPtr[items::Forest_Temple_Big_Key] = onGetForestTempleBigKey;
@@ -449,7 +449,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetGoronMinesSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Goron_Mines;
-            const char* stage = stage::allStages[Stage_Goron_Mines];
+            const char* stage = stage::allStages[stage::stageIDs::Goron_Mines];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Goron_Mines_Small_Key] = onGetGoronMinesSmallKey;
@@ -457,7 +457,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetGoronMinesDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Goron_Mines;
-            const char* stage = stage::allStages[Stage_Goron_Mines];
+            const char* stage = stage::allStages[stage::stageIDs::Goron_Mines];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Goron_Mines_Dungeon_Map] = onGetGoronMinesDungeonMap;
@@ -465,7 +465,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetGoronMinesCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Goron_Mines;
-            const char* stage = stage::allStages[Stage_Goron_Mines];
+            const char* stage = stage::allStages[stage::stageIDs::Goron_Mines];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Goron_Mines_Compass] = onGetGoronMinesCompass;
@@ -474,7 +474,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetLakebedTempleSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Lakebed_Temple;
-            const char* stage = stage::allStages[Stage_Lakebed_Temple];
+            const char* stage = stage::allStages[stage::stageIDs::Lakebed_Temple];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Lakebed_Temple_Small_Key] = onGetLakebedTempleSmallKey;
@@ -482,7 +482,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetLakebedTempleDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Lakebed_Temple;
-            const char* stage = stage::allStages[Stage_Lakebed_Temple];
+            const char* stage = stage::allStages[stage::stageIDs::Lakebed_Temple];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Lakebed_Temple_Dungeon_Map] = onGetLakebedTempleDungeonMap;
@@ -490,7 +490,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetLakebedTempleCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Lakebed_Temple;
-            const char* stage = stage::allStages[Stage_Lakebed_Temple];
+            const char* stage = stage::allStages[stage::stageIDs::Lakebed_Temple];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Lakebed_Temple_Compass] = onGetLakebedTempleCompass;
@@ -498,7 +498,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetLakebedTempleBigKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Lakebed_Temple;
-            const char* stage = stage::allStages[Stage_Lakebed_Temple];
+            const char* stage = stage::allStages[stage::stageIDs::Lakebed_Temple];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
         };
         itemFuncPtr[items::Lakebed_Temple_Big_Key] = onGetLakebedTempleBigKey;
@@ -507,7 +507,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetArbitersGroundsSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Arbiters_Grounds;
-            const char* stage = stage::allStages[Stage_Arbiters_Grounds];
+            const char* stage = stage::allStages[stage::stageIDs::Arbiters_Grounds];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Arbiters_Grounds_Small_Key] = onGetArbitersGroundsSmallKey;
@@ -515,7 +515,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetArbitersGroundsDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Arbiters_Grounds;
-            const char* stage = stage::allStages[Stage_Arbiters_Grounds];
+            const char* stage = stage::allStages[stage::stageIDs::Arbiters_Grounds];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Arbiters_Grounds_Dungeon_Map] = onGetArbitersGroundsDungeonMap;
@@ -523,7 +523,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetArbitersGroundsCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Arbiters_Grounds;
-            const char* stage = stage::allStages[Stage_Arbiters_Grounds];
+            const char* stage = stage::allStages[stage::stageIDs::Arbiters_Grounds];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Arbiters_Grounds_Compass] = onGetArbitersGroundsCompass;
@@ -531,7 +531,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetArbitersGroundsBigKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Arbiters_Grounds;
-            const char* stage = stage::allStages[Stage_Arbiters_Grounds];
+            const char* stage = stage::allStages[stage::stageIDs::Arbiters_Grounds];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
         };
         itemFuncPtr[items::Arbiters_Grounds_Big_Key] = onGetArbitersGroundsBigKey;
@@ -540,7 +540,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetSnowpeakRuinsSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Snowpeak_Ruins;
-            const char* stage = stage::allStages[Stage_Snowpeak_Ruins];
+            const char* stage = stage::allStages[stage::stageIDs::Snowpeak_Ruins];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Snowpeak_Ruins_Small_Key] = onGetSnowpeakRuinsSmallKey;
@@ -548,7 +548,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetSnowpeakRuinsDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Snowpeak_Ruins;
-            const char* stage = stage::allStages[Stage_Snowpeak_Ruins];
+            const char* stage = stage::allStages[stage::stageIDs::Snowpeak_Ruins];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Snowpeak_Ruins_Dungeon_Map] = onGetSnowpeakRuinsDungeonMap;
@@ -556,7 +556,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetSnowpeakRuinsCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Snowpeak_Ruins;
-            const char* stage = stage::allStages[Stage_Snowpeak_Ruins];
+            const char* stage = stage::allStages[stage::stageIDs::Snowpeak_Ruins];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Snowpeak_Ruins_Compass] = onGetSnowpeakRuinsCompass;
@@ -565,7 +565,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetTempleofTimeSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Temple_of_Time;
-            const char* stage = stage::allStages[Stage_Temple_of_Time];
+            const char* stage = stage::allStages[stage::stageIDs::Temple_of_Time];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Temple_of_Time_Small_Key] = onGetTempleofTimeSmallKey;
@@ -573,7 +573,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetTempleofTimeDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Temple_of_Time;
-            const char* stage = stage::allStages[Stage_Temple_of_Time];
+            const char* stage = stage::allStages[stage::stageIDs::Temple_of_Time];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Temple_of_Time_Dungeon_Map] = onGetTempleofTimeDungeonMap;
@@ -581,7 +581,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetTempleofTimeCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Temple_of_Time;
-            const char* stage = stage::allStages[Stage_Temple_of_Time];
+            const char* stage = stage::allStages[stage::stageIDs::Temple_of_Time];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Temple_of_Time_Compass] = onGetTempleofTimeCompass;
@@ -589,7 +589,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetTempleofTimeBigKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Temple_of_Time;
-            const char* stage = stage::allStages[Stage_Temple_of_Time];
+            const char* stage = stage::allStages[stage::stageIDs::Temple_of_Time];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
         };
         itemFuncPtr[items::Temple_of_Time_Big_Key] = onGetTempleofTimeBigKey;
@@ -598,7 +598,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetCityinTheSkySmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::City_in_the_Sky;
-            const char* stage = stage::allStages[Stage_City_in_the_Sky];
+            const char* stage = stage::allStages[stage::stageIDs::City_in_the_Sky];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::City_in_The_Sky_Small_Key] = onGetCityinTheSkySmallKey;
@@ -606,7 +606,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetCityinTheSkyDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::City_in_the_Sky;
-            const char* stage = stage::allStages[Stage_City_in_the_Sky];
+            const char* stage = stage::allStages[stage::stageIDs::City_in_the_Sky];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::City_in_The_Sky_Dungeon_Map] = onGetCityinTheSkyDungeonMap;
@@ -614,7 +614,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetCityinTheSkyCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::City_in_the_Sky;
-            const char* stage = stage::allStages[Stage_City_in_the_Sky];
+            const char* stage = stage::allStages[stage::stageIDs::City_in_the_Sky];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::City_in_The_Sky_Compass] = onGetCityinTheSkyCompass;
@@ -622,7 +622,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetCityinTheSkyBigKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::City_in_the_Sky;
-            const char* stage = stage::allStages[Stage_City_in_the_Sky];
+            const char* stage = stage::allStages[stage::stageIDs::City_in_the_Sky];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
         };
         itemFuncPtr[items::City_in_The_Sky_Big_Key] = onGetCityinTheSkyBigKey;
@@ -631,7 +631,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetPalaceofTwilightSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Palace_of_Twilight;
-            const char* stage = stage::allStages[Stage_Palace_of_Twilight];
+            const char* stage = stage::allStages[stage::stageIDs::Palace_of_Twilight];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Palace_of_Twilight_Small_Key] = onGetPalaceofTwilightSmallKey;
@@ -639,7 +639,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetPalaceofTwilightDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Palace_of_Twilight;
-            const char* stage = stage::allStages[Stage_Palace_of_Twilight];
+            const char* stage = stage::allStages[stage::stageIDs::Palace_of_Twilight];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Palace_of_Twilight_Dungeon_Map] = onGetPalaceofTwilightDungeonMap;
@@ -647,7 +647,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetPalaceofTwilightCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Palace_of_Twilight;
-            const char* stage = stage::allStages[Stage_Palace_of_Twilight];
+            const char* stage = stage::allStages[stage::stageIDs::Palace_of_Twilight];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Palace_of_Twilight_Compass] = onGetPalaceofTwilightCompass;
@@ -655,7 +655,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetPalaceofTwilightBigKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Palace_of_Twilight;
-            const char* stage = stage::allStages[Stage_Palace_of_Twilight];
+            const char* stage = stage::allStages[stage::stageIDs::Palace_of_Twilight];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
         };
         itemFuncPtr[items::Palace_of_Twilight_Big_Key] = onGetPalaceofTwilightBigKey;
@@ -664,7 +664,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetHyruleCastleSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Hyrule_Castle;
-            const char* stage = stage::allStages[Stage_Hyrule_Castle];
+            const char* stage = stage::allStages[stage::stageIDs::Hyrule_Castle];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Hyrule_Castle_Small_Key] = onGetHyruleCastleSmallKey;
@@ -672,7 +672,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetHyruleCastleDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Hyrule_Castle;
-            const char* stage = stage::allStages[Stage_Hyrule_Castle];
+            const char* stage = stage::allStages[stage::stageIDs::Hyrule_Castle];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Hyrule_Castle_Dungeon_Map] = onGetHyruleCastleDungeonMap;
@@ -680,7 +680,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetHyruleCastleCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Hyrule_Castle;
-            const char* stage = stage::allStages[Stage_Hyrule_Castle];
+            const char* stage = stage::allStages[stage::stageIDs::Hyrule_Castle];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Hyrule_Castle_Compass] = onGetHyruleCastleCompass;
@@ -688,7 +688,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetHyruleCastleBigKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Hyrule_Castle;
-            const char* stage = stage::allStages[Stage_Hyrule_Castle];
+            const char* stage = stage::allStages[stage::stageIDs::Hyrule_Castle];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
         };
         itemFuncPtr[items::Hyrule_Castle_Big_Key] = onGetHyruleCastleBigKey;
@@ -697,12 +697,122 @@ namespace mod::game_patch
         d_item::ItemFunc onGetBublinCampKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Gerudo_Desert;
-            const char* stage = stage::allStages[Stage_Bublin_Camp];
+            const char* stage = stage::allStages[stage::stageIDs::Bulblin_Camp];
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Bulblin_Camp_Key] = onGetBublinCampKey;
 
-        // Sky Characters need a valid getCheck function.
+        // Faron Key
+        d_item::ItemFunc onGetFaronKey = []()
+        {
+            const stage::AreaNodesID nodeId = stage::AreaNodesID::Faron;
+            const char* stage = stage::allStages[stage::stageIDs::Faron_Woods];
+            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
+        };
+        itemFuncPtr[items::Small_Key_N_Faron_Gate] = onGetFaronKey;
+
+        // Shadow Crystal
+        d_item::ItemFunc onGetShadowCrystal = []() { events::setSaveFileEventFlag( 0xD04 ); };     // Can transform at will
+        itemFuncPtr[items::Shadow_Crystal] = onGetShadowCrystal;
+
+        // Charged Dominion Rod
+        d_item::ItemFunc onGetPoweredDominionRod = []()
+        { events::setSaveFileEventFlag( 0x2580 ); };     // Dominion Rod powered up.
+        itemFuncPtr[items::Dominion_Rod] = onGetPoweredDominionRod;
+
+        // Auru's Memo
+        d_item::ItemFunc onGetMemo = []()
+        {
+            d_save::setItem( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_item, 0x7, items::Aurus_Memo );
+        };     // Put Auru's Memo in slot 7 because it is unused
+        itemFuncPtr[items::Aurus_Memo] = onGetMemo;
+
+        // Ordon Pumpkin
+        d_item::ItemFunc onGetOrdonPumpkin = []()
+        {
+            events::setSaveFileEventFlag( 0x480 );      // Told Yeta about Pumpkin
+            events::setSaveFileEventFlag( 0x020 );      // Yeto took Pumpkin
+            events::setSaveFileEventFlag( 0x002 );      // Yeto put Pumpkin in soup
+            events::setSaveFileEventFlag( 0x1440 );     // SPR Lobby Door Unlocked
+            if ( d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Snowpeak_Ruins] ) )
+            {
+                d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x9] |= 0x4;
+            }
+            else
+            {
+                d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0xA].temp_flags.memoryFlags[0x9] |= 0x4;
+            }
+        };
+        itemFuncPtr[items::Ordon_Pumpkin] = onGetOrdonPumpkin;
+
+        // Ordon Pumpkin
+        d_item::ItemFunc onGetOrdonGoatCheese = []()
+        {
+            events::setSaveFileEventFlag( 0x120 );      // Told Yeta about Cheese
+            events::setSaveFileEventFlag( 0x010 );      // Yeto took Cheese and put it in soup
+            events::setSaveFileEventFlag( 0x01 );       // Yeto put cheese in soup
+            events::setSaveFileEventFlag( 0x1420 );     // SPR Lobby West Door Unlocked
+            if ( d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Snowpeak_Ruins] ) )
+            {
+                d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x9] |= 0x8;
+            }
+            else
+            {
+                d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0xA].temp_flags.memoryFlags[0x9] |= 0x8;
+            }
+        };
+        itemFuncPtr[items::Ordon_Goat_Cheese] = onGetOrdonGoatCheese;
+
+        // Gate Keys
+        d_item::ItemFunc onGetGateKeys = []()
+        {
+            events::setSaveFileEventFlag( 0x840 );     // Started Zora Escort
+            events::setSaveFileEventFlag( 0x810 );     // Completed Zora Escort
+        };
+        itemFuncPtr[items::Gate_Keys] = onGetGateKeys;
+
+        d_item::ItemFunc onCollectHeartContainer = []()
+        {
+            d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.maxHealth += 5;
+            d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentHealth =
+                d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.maxHealth;
+        };
+        itemFuncPtr[items::Heart_Container] = onCollectHeartContainer;
+
+        // Fused Shadows/Mirror Shards
+        d_item::ItemFunc onGetFusedShadow1 = []()
+        {
+            d_save::onCollectCrystal( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, 0x0 );
+        };     // Give player first fused shadow.
+        itemFuncPtr[items::Fused_Shadow_1] = onGetFusedShadow1;
+        d_item::ItemFunc onGetFusedShadow2 = []()
+        {
+            d_save::onCollectCrystal( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, 0x1 );
+        };     // Give player second fused shadow.
+        itemFuncPtr[items::Fused_Shadow_2] = onGetFusedShadow2;
+        d_item::ItemFunc onGetFusedShadow3 = []()
+        {
+            d_save::onCollectCrystal( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, 0x2 );
+        };     // Give player third fused shadow.
+        itemFuncPtr[items::Fused_Shadow_3] = onGetFusedShadow3;
+
+        d_item::ItemFunc onGetMirrorShard2 = []()
+        {
+            d_save::onCollectMirror( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, 0x1 );
+        };     // Give player second mirror shard.
+        itemFuncPtr[items::Mirror_Piece_2] = onGetMirrorShard2;
+        d_item::ItemFunc onGetMirrorShard3 = []()
+        {
+            d_save::onCollectMirror( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, 0x2 );
+        };     // Give player third mirror shard.
+        itemFuncPtr[items::Mirror_Piece_3] = onGetMirrorShard3;
+        d_item::ItemFunc onGetMirrorShard4 = []()
+        {
+            d_save::onCollectMirror( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, 0x3 );
+        };     // Give player fourth mirror shard.
+        itemFuncPtr[items::Mirror_Piece_4] = onGetMirrorShard4;
+
+        // Some items need a valid getCheckFunc definition.
         d_item::ItemGetCheckFunc item_getcheck_func_first_character = []()
         { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Ancient_Sky_Book_First_Character ); };
         itemGetCheckFuncPtr[items::Ancient_Sky_Book_First_Character] = item_getcheck_func_first_character;
@@ -723,32 +833,29 @@ namespace mod::game_patch
         { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Ancient_Sky_Book_Fifth_Character ); };
         itemGetCheckFuncPtr[items::Ancient_Sky_Book_Fifth_Character] = item_getcheck_func_fifth_character;
 
-        // Shadow Crystal
-        d_item::ItemFunc onGetShadowCrystal = []() { events::setSaveFileEventFlag( 0xD04 ); };     // Can transform at will
-        itemFuncPtr[items::Shadow_Crystal] = onGetShadowCrystal;
+        d_item::ItemGetCheckFunc item_getcheck_func_big_wallet = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Big_Wallet ); };
+        itemGetCheckFuncPtr[items::Big_Wallet] = item_getcheck_func_big_wallet;
 
-        // Charged Dominion Rod
-        d_item::ItemFunc onGetPoweredDominionRod = []()
-        { events::setSaveFileEventFlag( 0x2580 ); };     // Dominion Rod powered up.
-        itemFuncPtr[items::Dominion_Rod] = onGetPoweredDominionRod;
+        d_item::ItemGetCheckFunc item_getcheck_func_first_fused_shadow = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Fused_Shadow_1 ); };
+        itemGetCheckFuncPtr[items::Fused_Shadow_1] = item_getcheck_func_first_fused_shadow;
 
-        // Ordon Pumpkin
-        d_item::ItemFunc onGetOrdonPumpkin = []()
-        {
-            events::setSaveFileEventFlag( 0x480 );      // Told Yeta about Pumpkin
-            events::setSaveFileEventFlag( 0x020 );      // Yeto took Pumpkin
-            events::setSaveFileEventFlag( 0x002 );      // Yeto put Pumpkin in soup
-            events::setSaveFileEventFlag( 0x1440 );     // SPR Lobby Door Unlocked
-        };
-        itemFuncPtr[items::Ordon_Pumpkin] = onGetOrdonPumpkin;
+        d_item::ItemGetCheckFunc item_getcheck_func_second_fused_shadow = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Fused_Shadow_2 ); };
+        itemGetCheckFuncPtr[items::Fused_Shadow_2] = item_getcheck_func_second_fused_shadow;
 
-        // Gate Keys
-        d_item::ItemFunc onGetGateKeys = []()
-        {
-            events::setSaveFileEventFlag( 0x840 );     // Started Zora Escort
-            events::setSaveFileEventFlag( 0x810 );     // Completed Zora Escort
-        };
-        itemFuncPtr[items::Gate_Keys] = onGetGateKeys;
+        d_item::ItemGetCheckFunc item_getcheck_func_second_mirror_shard = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Mirror_Piece_2 ); };
+        itemGetCheckFuncPtr[items::Mirror_Piece_2] = item_getcheck_func_second_mirror_shard;
+
+        d_item::ItemGetCheckFunc item_getcheck_func_third_mirror_shard = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Mirror_Piece_3 ); };
+        itemGetCheckFuncPtr[items::Mirror_Piece_3] = item_getcheck_func_third_mirror_shard;
+
+        d_item::ItemGetCheckFunc item_getcheck_func_shadow_crystal = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Shadow_Crystal ); };
+        itemGetCheckFuncPtr[items::Shadow_Crystal] = item_getcheck_func_shadow_crystal;
     }
     void _02_modifyItemData()
     {

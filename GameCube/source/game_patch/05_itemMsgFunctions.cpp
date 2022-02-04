@@ -333,15 +333,15 @@ namespace mod::game_patch
                 break;
             }
 
-            case Progressive_Fused_Shadow:
+            case Fused_Shadow_1:
             {
                 setMessageText( control, firstFusedShadowText );
                 break;
             }
 
-            case Progressive_Mirror_Shard:
+            case Mirror_Piece_2:
             {
-                setMessageText( control, firstMirrorShardText );
+                setMessageText( control, secondMirrorShardText );
                 break;
             }
 

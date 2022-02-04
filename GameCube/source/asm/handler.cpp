@@ -3,7 +3,6 @@
  */
 
 #include "asm.h"
-#include "data/stages.h"
 #include "events.h"
 #include "main.h"
 #include "tp/d_a_alink.h"
@@ -38,18 +37,5 @@ namespace mod::assembly
 
     uint8_t handleAdjustSkyCharacter() { return events::onSkyCharacter( mod::randomizer ); }
 
-    void handleAdjustFieldItemParams( void* fopAC, void* daObjLife )
-    {
-        *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 2.0f;     // scale
-
-        if ( libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[Stage_Hyrule_Field] ) ||
-             libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[Stage_Upper_Zoras_River] ) )
-        {
-            *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( fopAC ) + 0x530 ) = 0.0f;     // gravity
-        }
-        else
-        {
-            *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x61C ) = 2.0f;     // height
-        }
-    }
+    void handleAdjustFieldItemParams( void* fopAC, void* daObjLife ) { events::onAdjustFieldItemParams( fopAC, daObjLife ); }
 }     // namespace mod::assembly

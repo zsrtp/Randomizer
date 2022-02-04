@@ -42,6 +42,14 @@ namespace mod::rando
         entryInfo bugRewardCheckInfo;
         entryInfo skyCharacterCheckInfo;
         entryInfo shopItemCheckInfo;
+        uint8_t heartColor;
+        uint8_t aButtonColor;
+        uint8_t bButtonColor;
+        uint8_t xButtonColor;
+        uint8_t yButtonColor;
+        uint8_t zButtonColor;
+        uint8_t lanternColor;
+        uint8_t transformAnywhere;
     } __attribute__( ( __packed__ ) );
 
     // Seed with index
@@ -49,7 +57,7 @@ namespace mod::rando
     {
         Header header;
         uint8_t fileIndex;     // (0-9) rando-dataX
-    };
+    } __attribute__( ( __packed__ ) );
 
     struct regionFlag
     {

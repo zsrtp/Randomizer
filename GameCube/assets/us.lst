@@ -29,6 +29,10 @@
 80032bb0:isDarkClearLV
 80032bec:isTransformLV
 803a7288:saveBitLabels
+80034270:onCollectMirror
+8003422c:onCollectCrystal
+80032fb8:setItem
+80034934:isDungeonItem
 
 // d_event.o
 80042778:defaultSkipStb
@@ -84,6 +88,7 @@
 // data
 8038EB8C:climbVars
 8038E1E0:wallMoveVars
+8038e77c:lanternVars
 
 // d_menu_collect.o
 801B3340:setWalletMaxNum
@@ -186,6 +191,7 @@
 8002b3f4:dComIfG_get_timelayer
 8002b434:getLayerNo_common_common
 80141264:dComIfGs_isItemFirstBit
+8002f810:dComIfGs_Wolf_Change_Check
 
 // d_kankyo.o
 // data
@@ -223,3 +229,10 @@
 
 //processor.o
 802A7C54:getResource_groupID
+
+//d_msg_flow.o
+8024b8e4:query022
+8024b918:query023
+
+//d_menu_window.o
+801fa590:collect_save_open_init

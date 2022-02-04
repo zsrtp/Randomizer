@@ -1,6 +1,7 @@
 #include <string.h>
 
 #include "data/stages.h"
+#include "game_patch/game_patch.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_kankyo.h"
@@ -66,14 +67,10 @@ namespace mod::game_patch
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xD4 );     // Can Transform at Will
                             if ( condition == false )
                             {
-                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x602 );     // Forest Temple Completed
+                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
                                 if ( condition == false )
                                 {
-                                    condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
-                                    if ( condition == false )
-                                    {
-                                        chosenLayer = stage::faronStateIDs::Faron_Talo_Captured;
-                                    }
+                                    chosenLayer = stage::faronStateIDs::Faron_Talo_Captured;
                                 }
                                 else
                                 {
@@ -469,46 +466,29 @@ namespace mod::game_patch
                         {
                             if ( roomId == 2 )     // Jaggle's House
                             {
-                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x780 );     // Watched Colin CS after
-                                                                                                    // KB1
-                                if ( condition == false )
+                                uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
+                                if ( uVar2 == 0 )
                                 {
-                                    uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                                    if ( uVar2 == 0 )
+                                    condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
+                                        libtp::tp::d_save::saveBitLabels[0x2F] );     // First Trip to Sewers done
+                                    if ( condition != false )
                                     {
-                                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
-                                            libtp::tp::d_save::saveBitLabels[0x2F] );     // First Trip to Sewers done
-                                        if ( condition != false )
-                                        {
-                                            chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Finished_Sewers;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
+                                        chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Finished_Sewers;
                                     }
                                 }
                                 else
                                 {
-                                    chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_KB1_Completed;
+                                    chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
                                 }
                             }
                             else
                             {
                                 if ( roomId == 5 )     // Rusl's House
                                 {
-                                    condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x601 );     // Epona Tamed
-                                    if ( condition == false )
+                                    uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
+                                    if ( uVar2 != 0 )
                                     {
-                                        uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                                        if ( uVar2 != 0 )
-                                        {
-                                            chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        chosenLayer = stage::ordonVillageStateIDs::Ordon_Epona_Tamed;
+                                        chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
                                     }
                                 }
                             }

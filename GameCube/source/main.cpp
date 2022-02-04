@@ -15,9 +15,14 @@
 #include "tools.h"
 #include "tp/JKRDvdRipper.h"
 #include "tp/control.h"
+#include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
+#include "tp/d_item.h"
+#include "tp/d_kankyo.h"
+#include "tp/d_menu_window.h"
 #include "tp/d_meter2_info.h"
 #include "tp/d_msg_class.h"
+#include "tp/d_msg_flow.h"
 #include "tp/d_msg_object.h"
 #include "tp/d_stage.h"
 #include "tp/dzx.h"
@@ -88,6 +93,8 @@ namespace mod
                                                 const int16_t rot[3],
                                                 const float scale[3] ) = nullptr;
 
+    int32_t ( *return_execItemGet )( uint8_t item ) = nullptr;
+
     void* ( *return_loadToMainRAM2 )( int32_t fileIndex,
                                       uint8_t* unk2,
                                       uint32_t jkrExpandSwitch,
@@ -106,12 +113,23 @@ namespace mod
     uint32_t ( *return_getFontCCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
     uint32_t ( *return_getFontGCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
 
+    bool ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    bool ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+
+    bool ( *return_checkTreasureRupeeReturn )( void* unk1, int32_t item ) = nullptr;
+
+    void ( *return_collect_save_open_init )( uint8_t param_1 ) = nullptr;
+
+    bool ( *return_isDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int memBit ) = nullptr;
+
     void main()
     {
         // Run game patches
         game_patch::_00_poe();
         game_patch::_02_modifyItemData();
         game_patch::_03_increaseClimbSpeed();
+        game_patch::_06_patchMDHWolfReturn();
+        game_patch::_06_patchSaveBitFlags();
 
         // Display some info
         console << "Welcome to TPR!\n"
@@ -225,6 +243,13 @@ namespace mod
                                                               }
                                                           } );
 
+        return_collect_save_open_init = patch::hookFunction( tp::d_menu_window::collect_save_open_init,
+                                                             []( uint8_t param_1 )
+                                                             {
+                                                                 game_patch::_07_checkDesertCrystal();
+                                                                 return return_collect_save_open_init( param_1 );
+                                                             } );
+
         // Replace the Item that spawns when a boss is defeated
         return_createItemForBoss =
             patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForBoss,
@@ -238,7 +263,9 @@ namespace mod
                                      int32_t parameters )
                                  {
                                      // Spawn the appropriate item with model
-                                     uint32_t params = randomizer->getBossItem() | 0xFFFF00;
+                                     uint8_t itemID = randomizer->getBossItem();
+                                     itemID = game_patch::_04_verifyProgressiveItem( mod::randomizer, itemID );
+                                     uint32_t params = itemID | 0xFFFF00;
                                      return tp::f_op_actor_mng::fopAcM_create( 539, params, pos, roomNo, rot, scale, -1 );
                                  } );
 
@@ -256,6 +283,25 @@ namespace mod
                                      return return_createItemForPresentDemo( pos, item, unk3, 0x32, 0x32, rot, scale );
                                  } );
 
+        // Set custom font color
+        return_checkTreasureRupeeReturn =
+            patch::hookFunction( tp::d_a_alink::checkTreasureRupeeReturn, []( void* unk1, int32_t item ) { return false; } );
+
+        return_execItemGet = patch::hookFunction( libtp::tp::d_item::execItemGet,
+                                                  []( uint8_t item )
+                                                  {
+                                                      item = game_patch::_04_verifyProgressiveItem( mod::randomizer, item );
+                                                      return return_execItemGet( item );
+                                                  } );
+
+        return_query022 = patch::hookFunction( libtp::tp::d_msg_flow::query022,
+                                               []( void* unk1, void* unk2, int32_t unk3 )
+                                               { return events::proc_query022( unk1, unk2, unk3 ); } );
+
+        return_query023 = patch::hookFunction( libtp::tp::d_msg_flow::query023,
+                                               []( void* unk1, void* unk2, int32_t unk3 )
+                                               { return events::proc_query023( unk1, unk2, unk3 ); } );
+
         return_createItemForTrBoxDemo =
             patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForTrBoxDemo,
                                  []( const float pos[3],
@@ -265,6 +311,8 @@ namespace mod
                                      const int16_t rot[3],
                                      const float scale[3] )
                                  {
+                                     events::handleDungeonHeartContainer();     // Set the flag for the dungeon heart container
+                                                                                // if this item replaces it.
                                      item = game_patch::_04_verifyProgressiveItem( mod::randomizer, item );
                                      return return_createItemForTrBoxDemo( pos, item, itemPickupFlag, roomNo, rot, scale );
                                  } );
@@ -287,6 +335,10 @@ namespace mod
                 events::onARC( mod::randomizer, filePtr, fileIndex );
                 return filePtr;
             } );
+
+        return_isDungeonItem = patch::hookFunction( tp::d_save::isDungeonItem,
+                                                    []( tp::d_save::dSv_memBit_c* membitPtr, const int memBit )
+                                                    { return events::proc_isDungeonItem( membitPtr, memBit ); } );
     }
 
     void setScreen( bool state )

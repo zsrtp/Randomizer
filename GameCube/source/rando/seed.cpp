@@ -242,9 +242,7 @@ namespace mod::rando
                         // Failsafe; localAreaNode size is 0x20
                         if ( offset < 0x20 )
                         {
-                            SaveInfo->memory.temp_flags.memoryFlags[offset] |=
-                                ( 0x80 >>
-                                  shift );     // This needs some work and will need to be transferred to the new structure.
+                            SaveInfo->memory.temp_flags.memoryFlags[offset] |= ( 0x80 >> shift );
                             m_AreaFlagsModified++;
                         }
                     }

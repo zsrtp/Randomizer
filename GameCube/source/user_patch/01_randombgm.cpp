@@ -151,10 +151,8 @@ namespace mod::user_patch
 
     void patchRandomBgm( rando::Randomizer* randomizer, bool set )
     {
-        mod::console << "[1] RandomBgm [" << ( set ? "x" : " " ) << "]\n";
-
         uint64_t seed = randomizer->getSeed();
-
+        mod::console << "[2] EnemyBgmDisabled [" << ( set ? "x" : " " ) << "]\n";
         if ( !set )
         {
             if ( bgm::bgmrando::return_sceneChange != nullptr )
@@ -207,7 +205,8 @@ namespace mod::user_patch
                 uint8_t BgmWave1,
                 uint8_t BgmWave2,
                 uint8_t DemoWave,
-                bool param_7 ) {
+                bool param_7 )
+            {
                 uint32_t id = BGMid.id;
                 if ( id >= 0x1000000 && id < 0x2000000 )
                 {

@@ -10,8 +10,15 @@
 #include "user_patch/00_wallet.h"
 #include "user_patch/01_randombgm.h"
 #include "user_patch/02_enemybgm.h"
+#include "user_patch/03_customCosmetics.h"
+#include "user_patch/04_removeIBLimit.h"
 
 namespace mod::user_patch
 {
-    GamePatch patches[3] = { patchWallet, patchRandomBgm, patchBattleMusic };
+    GamePatch patches[4] = {
+        patchWallet,
+        patchRandomBgm,
+        patchBattleMusic,
+        removeIBLimit,
+    };
 }

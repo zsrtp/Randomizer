@@ -23,6 +23,7 @@
 #include "tp/d_kankyo.h"
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
+#include "user_patch/03_customCosmetics.h"
 
 namespace mod::rando
 {
@@ -43,6 +44,7 @@ namespace mod::rando
             m_Seed = new Seed( CARD_SLOT_A, seedInfo );
             m_Seed->setArcIndex();
             m_Seed->loadShopModels();
+            user_patch::setLanternColor( randomizer );
             // Load checks for first load
             onStageLoad();
         }

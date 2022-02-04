@@ -1,5 +1,4 @@
 #include "game_patch/game_patch.h"
-#include "main.h"
 #include "tp/d_a_alink.h"
 
 namespace mod::game_patch

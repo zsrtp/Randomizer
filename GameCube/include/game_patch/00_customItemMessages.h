@@ -652,17 +652,69 @@ namespace mod::game_patch
     "\ngrowing on it.."
     MSG_END()
 
-    MSG_BEGIN(firstMirrorShardText)
+    MSG_BEGIN(secondFusedShadowText)
     MSG_SPEED(MSG_SPEED_FAST)
-    "You got a shard of the\n"
+    "You got the second "
     MSG_COLOR(MSG_COLOR_RED)
-    "Mirror of Twilight! "
+    "Fused\nShadow"
     MSG_COLOR(MSG_COLOR_WHITE)
-    "It\nseems to have traces of\n"
-    MSG_COLOR(MSG_COLOR_ORANGE)
-    "sand"
+    "! It feels "
+    MSG_COLOR(MSG_COLOR_RED) 
+    "warm"
+    MSG_COLOR(MSG_COLOR_WHITE) 
+    " to\nthe touch.."
+    MSG_END()
+
+    MSG_BEGIN(thirdFusedShadowText)
+    MSG_SPEED(MSG_SPEED_FAST)
+    "You got the final "
+    MSG_COLOR(MSG_COLOR_RED)
+    "Fused\nShadow"
     MSG_COLOR(MSG_COLOR_WHITE)
-    " on it.."
+    "! It feels "
+    MSG_COLOR(CUSTOM_MSG_COLOR_BLUE) 
+    "wet"
+    MSG_COLOR(MSG_COLOR_WHITE) 
+    " and\nsmells like fish.."
+    MSG_END()
+
+    MSG_BEGIN(secondMirrorShardText)
+    MSG_SPEED(MSG_SPEED_FAST)
+    "You got the second shard of\nthe"
+    MSG_COLOR(MSG_COLOR_RED)
+    "Mirror of Twilight"
+    MSG_COLOR(MSG_COLOR_WHITE)
+    "! It\nhas a beautiful shine to it\nand feels slightly"
+    MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
+    "cold"
+    MSG_COLOR(MSG_COLOR_WHITE)
+    ".."
+    MSG_END()
+
+    MSG_BEGIN(thirdMirrorShardText)
+    MSG_SPEED(MSG_SPEED_FAST)
+    "You got the third shard of\nthe"
+    MSG_COLOR(MSG_COLOR_RED)
+    "Mirror of Twilight"
+    MSG_COLOR(MSG_COLOR_WHITE)
+    "! It\nis covered in dirt and\n"
+    MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
+    "webs"
+    MSG_COLOR(MSG_COLOR_WHITE)
+    ".."
+    MSG_END()
+
+    MSG_BEGIN(fourthMirrorShardText)
+    MSG_SPEED(MSG_SPEED_FAST)
+    "You got the final shard of\nthe"
+    MSG_COLOR(MSG_COLOR_RED)
+    "Mirror of Twilight"
+    MSG_COLOR(MSG_COLOR_WHITE)
+    "! It\nfeels lighter than "
+    MSG_COLOR(MSG_COLOR_YELLOW)
+    "air"
+    MSG_COLOR(MSG_COLOR_WHITE)
+    ".."
     MSG_END()
 }     // namespace mod::game_patch
 #endif

@@ -13,7 +13,7 @@
 #include "display/console.h"
 #include "rando/randomizer.h"
 #include "rando/seedlist.h"
-#include "tp/d_stage.h"
+#include "tp/d_save.h"
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
 
@@ -75,5 +75,9 @@ namespace mod
                                                   float unk7,
                                                   int32_t parameters );
 
+    extern bool ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 );
+    extern bool ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 );
+
+    extern bool ( *return_isDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int memBit );
 }     // namespace mod
 #endif
