@@ -8,6 +8,7 @@
 
 #include <cinttypes>
 
+#include "main.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_meter2_info.h"
 #include "user_patch/user_patch.h"

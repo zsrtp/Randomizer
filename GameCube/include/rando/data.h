@@ -50,6 +50,7 @@ namespace mod::rando
         uint8_t zButtonColor;
         uint8_t lanternColor;
         uint8_t transformAnywhere;
+        uint8_t padding[0x8];
     } __attribute__( ( __packed__ ) );
 
     // Seed with index
@@ -57,7 +58,7 @@ namespace mod::rando
     {
         Header header;
         uint8_t fileIndex;     // (0-9) rando-dataX
-    } __attribute__( ( __packed__ ) );
+    };
 
     struct regionFlag
     {

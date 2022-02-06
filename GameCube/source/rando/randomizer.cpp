@@ -44,7 +44,6 @@ namespace mod::rando
             m_Seed = new Seed( CARD_SLOT_A, seedInfo );
             m_Seed->setArcIndex();
             m_Seed->loadShopModels();
-            user_patch::setLanternColor( randomizer );
             // Load checks for first load
             onStageLoad();
         }

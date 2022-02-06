@@ -47,6 +47,10 @@ namespace mod::rando
         m_GCIData = new uint8_t[length];
 
         m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, fileName, length, 0x00, m_GCIData );
+
+        // Patches need to be applied whenever the seed is loaded.
+        mod::console << "Patching game:\n";
+        this->applyPatches( true );
     }
 
     Seed::~Seed()
@@ -73,10 +77,6 @@ namespace mod::rando
 
         if ( m_CARDResult == CARD_RESULT_READY )
         {
-            mod::console << "Patching game:\n";
-
-            this->applyPatches( true );
-
             mod::console << "Setting Event Flags... \n";
             this->applyEventFlags();
 
@@ -199,7 +199,7 @@ namespace mod::rando
                 uint8_t offset = eventFlags[i].offset;
                 uint8_t flag = eventFlags[i].flag;
 
-                gameInfo->save.events.event_flags[offset] |= flag;
+                gameInfo->save.save_file.event_flags.event_flags[offset] |= flag;
                 m_EventFlagsModified++;
             }
         }

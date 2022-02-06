@@ -139,11 +139,11 @@ namespace mod
                 << "on ORIGINAL HARDWARE as it wears down your\n"
                 << "Memory Card!\n\n";
 
-        // Just hook functions for now
-        hookFunctions();
-
         // Generate our seedList
         seedList = new rando::SeedList();
+
+        // Just hook functions for now
+        hookFunctions();
     }
 
     void hookFunctions()

@@ -41,6 +41,7 @@ namespace mod::events
         randomizer->overrideREL();
 
         user_patch::setHUDCosmetics( randomizer );
+        user_patch::setLanternColor( randomizer );
     }
 
     void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )

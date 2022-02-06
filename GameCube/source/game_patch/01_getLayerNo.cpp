@@ -180,21 +180,11 @@ namespace mod::game_patch
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2004 );     // Temple of Time Completed
                             if ( condition == false )
                             {
-                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
-                                    0x2020 );     // Master Sword Story Progression Flag
-                                if ( condition == false )
-                                {
-                                    condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x701 );     // Goron Mines Completed
-                                    if ( condition != false )
-                                    {
-                                        chosenLayer =
-                                            stage::deathMountainInteriorStateIDs::Death_Mountain_Int_Goron_Mines_Completed;
-                                    }
-                                }
-                                else
+                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x701 );     // Goron Mines Completed
+                                if ( condition != false )
                                 {
                                     chosenLayer =
-                                        stage::deathMountainInteriorStateIDs::Death_Mountain_Int_Master_Sword_CS_Watched;
+                                        stage::deathMountainInteriorStateIDs::Death_Mountain_Int_Goron_Mines_Completed;
                                 }
                             }
                             else
