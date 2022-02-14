@@ -48,11 +48,20 @@ namespace mod::game_patch
                 switch ( stageID )
                 {
                     case stage::stageIDs::Snowpeak_Ruins:
-                    case stage::stageIDs::Snowpeak:
                     {
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                             libtp::tp::d_save::saveBitLabels[0x10A] );     // Snowpeak Ruins Completed
                         if ( condition )
+                        {
+                            chosenLayer = stage::snowpeakStateIDs::SPR_Dungeon_Completed;
+                        }
+                        break;
+                    }
+                    case stage::stageIDs::Snowpeak:
+                    {
+                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
+                            libtp::tp::d_save::saveBitLabels[0x10A] );     // Snowpeak Ruins Completed
+                        if ( condition && ( roomId != 0 ) )
                         {
                             chosenLayer = stage::snowpeakStateIDs::SPR_Dungeon_Completed;
                         }
@@ -102,6 +111,31 @@ namespace mod::game_patch
                     }
 
                     case stage::stageIDs::Kakariko_Village:
+                    {
+                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x1320 );     // Cutscene after GM
+                                                                                             // Watched
+                        if ( condition == false )
+                        {
+                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x701 );     // Goron Mines Completed
+                            if ( condition == false )
+                            {
+                                chosenLayer = stage::kakarikoStateIDs::Kakariko_KB1_Completed;
+                                // If it is night, the layer is different.
+                                libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
+                            }
+                            else
+                            {
+                                chosenLayer = stage::kakarikoStateIDs::Kakariko_Goron_Mines_Completed;
+                            }
+                        }
+                        else
+                        {
+                            chosenLayer = stage::kakarikoStateIDs::Kakariko_KB1_Completed;
+                            libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
+                        }
+
+                        break;
+                    }
                     case stage::stageIDs::Kakariko_Graveyard:
                     {
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x804 );     // Got Zora Armor from Rutela
@@ -142,6 +176,7 @@ namespace mod::game_patch
                             chosenLayer = stage::kakarikoStateIDs::Kakariko_KB1_Completed;
                             libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
                         }
+                        break;
                     }
 
                     case stage::stageIDs::Kakariko_Village_Interiors:
@@ -174,7 +209,7 @@ namespace mod::game_patch
 
                     case stage::stageIDs::Death_Mountain_Interiors:
                     {
-                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2320 );     // Ilia shown Horse Call
+                        /*condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2320 );     // Ilia shown Horse Call
                         if ( condition == false )
                         {
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2004 );     // Temple of Time Completed
@@ -195,7 +230,8 @@ namespace mod::game_patch
                         else
                         {
                             chosenLayer = stage::deathMountainInteriorStateIDs::Death_Mountain_Int_Ilia_Given_Charm;
-                        }
+                        }*/
+                        chosenLayer = 0;
                         break;
                     }
 
@@ -282,6 +318,10 @@ namespace mod::game_patch
                                 {
                                     chosenLayer = stage::castleTownStateIDs::Castle_Town_Finished_Zora_Escort;
                                 }
+                            }
+                            else
+                            {
+                                chosenLayer = stage::castleTownStateIDs::Castle_Town_Lakebed_Completed;
                             }
                         }
                         else

@@ -48,6 +48,10 @@ namespace mod::assembly
         // d_a_obj_life_container.rel
         void asmAdjustFieldItemParams();
         void handleAdjustFieldItemParams( void* fopAc_ac_c, void* daObjLife_c );
+
+        // d_a_e_mk.rel
+        void asmTransformOokWolf();
+        void handleTransformOokWolf();
     }
 }     // namespace mod::assembly
 

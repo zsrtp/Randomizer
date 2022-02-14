@@ -684,7 +684,7 @@ namespace mod::game_patch
     MSG_COLOR(MSG_COLOR_RED)
     "Mirror of Twilight"
     MSG_COLOR(MSG_COLOR_WHITE)
-    "! It\nhas a beautiful shine to it\nand feels slightly"
+    "! It\nhas a beautiful shine to it\nand feels slightly "
     MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
     "cold"
     MSG_COLOR(MSG_COLOR_WHITE)

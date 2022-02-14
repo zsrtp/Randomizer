@@ -128,6 +128,44 @@ namespace mod::game_patch
         return static_cast<uint32_t>( Big_Key_Goron_Mines );
     };
 
+    auto getProgressiveMirrorShard = []()
+    {
+        using namespace libtp::data::items;
+        const uint8_t progressiveMirrorShardsList[] { Mirror_Piece_2, Mirror_Piece_3, Mirror_Piece_4 };
+
+        const uint32_t listLength = sizeof( progressiveMirrorShardsList ) / sizeof( progressiveMirrorShardsList[0] );
+        for ( uint32_t i = 0; i < listLength; i++ )
+        {
+            uint32_t item = progressiveMirrorShardsList[i];
+            if ( !libtp::tp::d_item::checkItemGet( item, 1 ) )
+            {
+                return item;
+            }
+        }
+
+        // All previous obtained, so return last upgrade
+        return static_cast<uint32_t>( Mirror_Piece_4 );
+    };
+
+    auto getProgressiveFusedShadow = []()
+    {
+        using namespace libtp::data::items;
+        const uint8_t progressiveFusedShadowList[] { Fused_Shadow_1, Fused_Shadow_2, Fused_Shadow_3 };
+
+        const uint32_t listLength = sizeof( progressiveFusedShadowList ) / sizeof( progressiveFusedShadowList[0] );
+        for ( uint32_t i = 0; i < listLength; i++ )
+        {
+            uint32_t item = progressiveFusedShadowList[i];
+            if ( !libtp::tp::d_item::checkItemGet( item, 1 ) )
+            {
+                return item;
+            }
+        }
+
+        // All previous obtained, so return last upgrade
+        return static_cast<uint32_t>( Fused_Shadow_3 );
+    };
+
     uint32_t _04_verifyProgressiveItem( rando::Randomizer* randomizer, uint32_t itemID )
     {
         using namespace libtp::data::items;
@@ -231,6 +269,36 @@ namespace mod::game_patch
                     {
                         itemID = Dominion_Rod_Uncharged;
                     }
+                    break;
+                }
+
+                case Fishing_Rod:
+                case Coral_Earring:
+                {
+                    if ( libtp::tp::d_item::checkItemGet( Fishing_Rod, 1 ) )
+                    {
+                        itemID = Coral_Earring;
+                    }
+                    else
+                    {
+                        itemID = Fishing_Rod;
+                    }
+                    break;
+                }
+
+                case Mirror_Piece_2:
+                case Mirror_Piece_3:
+                case Mirror_Piece_4:
+                {
+                    itemID = getProgressiveMirrorShard();
+                    break;
+                }
+
+                case Fused_Shadow_1:
+                case Fused_Shadow_2:
+                case Fused_Shadow_3:
+                {
+                    itemID = getProgressiveFusedShadow();
                     break;
                 }
 

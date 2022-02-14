@@ -6,6 +6,7 @@
 #include <cstring>
 
 #include "data/items.h"
+#include "data/stages.h"
 #include "events.h"
 #include "game_patch/game_patch.h"
 #include "patch.h"
@@ -24,6 +25,7 @@
 #include "tp/d_msg_class.h"
 #include "tp/d_msg_flow.h"
 #include "tp/d_msg_object.h"
+#include "tp/d_save.h"
 #include "tp/d_stage.h"
 #include "tp/dzx.h"
 #include "tp/f_ap_game.h"
@@ -47,6 +49,7 @@ namespace mod
 
     // Function hook return trampolines
     void ( *return_fapGm_Execute )( void ) = nullptr;
+    void ( *return_setLineUpItem )( libtp::tp::d_save::dSv_player_item_c* ) = nullptr;
     bool ( *return_do_Link )( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) = nullptr;
 
     // DZX trampolines
@@ -92,8 +95,17 @@ namespace mod
                                                 int32_t roomNo,
                                                 const int16_t rot[3],
                                                 const float scale[3] ) = nullptr;
+    int32_t ( *return_createItemForMidBoss )( const float pos[3],
+                                              int32_t item,
+                                              int32_t roomNo,
+                                              const int16_t rot[3],
+                                              const float scale[3],
+                                              int32_t unk6,
+                                              int32_t itemPickupFlag ) = nullptr;
 
     int32_t ( *return_execItemGet )( uint8_t item ) = nullptr;
+
+    int32_t ( *return_checkItemGet )( uint8_t item, int32_t defaultValue ) = nullptr;
 
     void* ( *return_loadToMainRAM2 )( int32_t fileIndex,
                                       uint8_t* unk2,
@@ -115,6 +127,7 @@ namespace mod
 
     bool ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     bool ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    bool ( *return_query025 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
 
     bool ( *return_checkTreasureRupeeReturn )( void* unk1, int32_t item ) = nullptr;
 
@@ -122,14 +135,19 @@ namespace mod
 
     bool ( *return_isDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int memBit ) = nullptr;
 
+    bool ( *return_chkEvtBit )( uint32_t flag ) = nullptr;
+
+    bool ( *return_isEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
+    uint32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
+
     void main()
     {
         // Run game patches
         game_patch::_00_poe();
         game_patch::_02_modifyItemData();
         game_patch::_03_increaseClimbSpeed();
-        game_patch::_06_patchMDHWolfReturn();
-        game_patch::_06_patchSaveBitFlags();
+        game_patch::_06_writeASMPatches();
+        // game_patch::_06_patchSaveBitFlags();
 
         // Display some info
         console << "Welcome to TPR!\n"
@@ -138,6 +156,10 @@ namespace mod
                 << "Please avoid [re]starting rando unnecessarily\n"
                 << "on ORIGINAL HARDWARE as it wears down your\n"
                 << "Memory Card!\n\n";
+
+        mod::console << "Seed: " << &libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mEvtManager << "\n";
+        mod::console << "Seed: " << &libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.field_0x4780 << "\n";
+        mod::console << "Seed: " << &libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer << "\n";
 
         // Generate our seedList
         seedList = new rando::SeedList();
@@ -269,6 +291,27 @@ namespace mod
                                      return tp::f_op_actor_mng::fopAcM_create( 539, params, pos, roomNo, rot, scale, -1 );
                                  } );
 
+        return_createItemForMidBoss =
+            patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForMidBoss,
+                                 []( const float pos[3],
+                                     int32_t item,
+                                     int32_t roomNo,
+                                     const int16_t rot[3],
+                                     const float scale[3],
+                                     int32_t unk6,
+                                     int32_t itemPickupFlag )
+                                 {
+                                     if ( item == 0x40 )
+                                     {
+                                         // Spawn the appropriate item
+                                         uint8_t itemID = randomizer->getBossItem();
+                                         itemID = game_patch::_04_verifyProgressiveItem( mod::randomizer, itemID );
+                                         uint32_t params = itemID | 0xFFFF00;
+                                         return tp::f_op_actor_mng::fopAcM_create( 539, params, pos, roomNo, rot, scale, -1 );
+                                     }
+                                     return return_createItemForMidBoss( pos, item, roomNo, rot, scale, unk6, itemPickupFlag );
+                                 } );
+
         return_createItemForPresentDemo =
             patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForPresentDemo,
                                  []( const float pos[3],
@@ -283,7 +326,6 @@ namespace mod
                                      return return_createItemForPresentDemo( pos, item, unk3, 0x32, 0x32, rot, scale );
                                  } );
 
-        // Set custom font color
         return_checkTreasureRupeeReturn =
             patch::hookFunction( tp::d_a_alink::checkTreasureRupeeReturn, []( void* unk1, int32_t item ) { return false; } );
 
@@ -294,6 +336,47 @@ namespace mod
                                                       return return_execItemGet( item );
                                                   } );
 
+        return_checkItemGet = patch::hookFunction(
+            libtp::tp::d_item::checkItemGet,
+            []( uint8_t item, int32_t defaultValue )
+            {
+                switch ( item )
+                {
+                    using namespace libtp::tp;
+                    using namespace libtp::data;
+                    case items::Hylian_Shield:
+                    {
+                        // Check if we are at Kakariko Malo mart and verify that we have not bought the shield.
+                        if ( tp::d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Kakariko_Village_Interiors] ) &&
+                             tp::d_kankyo::env_light.currentRoom == 3 && tp::d_a_alink::dComIfGs_isEventBit( 0x6002 ) )
+                        {
+                            // Return false so we can buy the shield.
+                            return 0;
+                        }
+                        break;
+                    }
+                    case items::Hawkeye:
+                    {
+                        // Check if we are at Kakariko Village and that the hawkeye is currently not for sale.
+                        if ( ( tp::d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Kakariko_Village] ) &&
+                               !libtp::tp::d_save::isSwitch_dSv_memBit(
+                                   &d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
+                                   0x3E ) ) )
+                        {
+                            // Return false so we can buy the hawkeye.
+                            return 0;
+                        }
+                        break;
+                    }
+                    default:
+                    {
+                        // Call original function if the conditions are not met.
+                        return return_checkItemGet( item, defaultValue );
+                    }
+                }
+                return return_checkItemGet( item, defaultValue );
+            } );
+
         return_query022 = patch::hookFunction( libtp::tp::d_msg_flow::query022,
                                                []( void* unk1, void* unk2, int32_t unk3 )
                                                { return events::proc_query022( unk1, unk2, unk3 ); } );
@@ -301,6 +384,113 @@ namespace mod
         return_query023 = patch::hookFunction( libtp::tp::d_msg_flow::query023,
                                                []( void* unk1, void* unk2, int32_t unk3 )
                                                { return events::proc_query023( unk1, unk2, unk3 ); } );
+
+        return_query025 =
+            patch::hookFunction( libtp::tp::d_msg_flow::query025,
+                                 []( void* unk1, void* unk2, int32_t unk3 )
+                                 {
+                                     if ( libtp::tp::d_a_alink::checkStageName(
+                                              libtp::data::stage::allStages[libtp::data::stage::stageIDs::Cave_of_Ordeals] ) )
+                                     {
+                                         // Return False to allow us to collect the item from the floor 50 reward.
+                                         return false;
+                                     }
+                                     return return_query025( unk1, unk2, unk3 );
+                                 } );
+
+        return_chkEvtBit = patch::hookFunction(
+            libtp::tp::d_msg_flow::chkEvtBit,
+            []( uint32_t flag )
+            {
+                if ( ( flag == 0x153 ) && libtp::tp::d_a_alink::checkStageName(
+                                              libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Skill] ) )
+                {
+                    return true;
+                }
+                return return_chkEvtBit( flag );
+            } );
+
+        return_setLineUpItem = patch::hookFunction(
+            tp::d_save::setLineUpItem,
+            []( libtp::tp::d_save::dSv_player_item_c* unk1 )
+            {
+                using namespace libtp::tp::d_com_inf_game;
+                static uint8_t i_item_lst[24] = { 0x0A, 0x08, 0x06, 0x02, 0x09, 0x04, 0x03, 0x00, 0x01, 0x17, 0x14, 0x05,
+                                                  0x0F, 0x10, 0x11, 0x0B, 0x0C, 0x0D, 0x0E, 0x13, 0x12, 0x16, 0x15, 0x7 };
+                int i1 = 0;
+                int i2 = 0;
+
+                for ( ; i1 < 24; i1++ )
+                {
+                    dComIfG_gameInfo.save.save_file.player.player_item.item_slots[i1] = 0xFF;
+                }
+
+                for ( i1 = 0; i1 < 24; i1++ )
+                {
+                    if ( dComIfG_gameInfo.save.save_file.player.player_item.item[i_item_lst[i1]] != 0xFF )
+                    {
+                        dComIfG_gameInfo.save.save_file.player.player_item.item_slots[i2] = i_item_lst[i1];
+                        i2++;
+                    }
+                }
+            } );
+        return_isEventBit = patch::hookFunction( libtp::tp::d_save::isEventBit,
+                                                 []( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag )
+                                                 {
+                                                     using namespace libtp::tp::d_a_alink;
+                                                     using namespace libtp::data::stage;
+                                                     switch ( flag )
+                                                     {
+                                                         case 0x2904:
+                                                         {
+                                                             if ( checkStageName( allStages[stageIDs::Hidden_Skill] ) )
+                                                             {
+                                                                 return true;
+                                                             }
+                                                             break;
+                                                         }
+
+                                                         case 0x2320:
+                                                         case 0x3E02:
+                                                         {
+                                                             if ( checkStageName( allStages[stageIDs::Hidden_Village] ) )
+                                                             {
+                                                                 if ( !dComIfGs_isEventBit( 0x2280 ) )
+                                                                 {
+                                                                     return false;
+                                                                 }
+                                                             }
+                                                             break;
+                                                         }
+
+                                                         case 0x701:
+                                                         {
+                                                             if ( checkStageName( allStages[stageIDs::Goron_Mines] ) )
+                                                             {
+                                                                 return false;
+                                                             }
+                                                             break;
+                                                         }
+                                                         default:
+                                                         {
+                                                             return return_isEventBit( eventPtr, flag );
+                                                             break;
+                                                         }
+                                                     }
+                                                     return return_isEventBit( eventPtr, flag );
+                                                 } );
+        return_event000 =
+            patch::hookFunction( libtp::tp::d_msg_flow::event000,
+                                 []( void* messageFlow, void* nodeEvent, void* actrPtr )
+                                 {
+                                     // Prevent the hidden skill CS from setting the proper flags
+                                     if ( libtp::tp::d_a_alink::checkStageName(
+                                              libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Skill] ) )
+                                     {
+                                         *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 ) = 0x0000;
+                                     }
+                                     return return_event000( messageFlow, nodeEvent, actrPtr );
+                                 } );
 
         return_createItemForTrBoxDemo =
             patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForTrBoxDemo,

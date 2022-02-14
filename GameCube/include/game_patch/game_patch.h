@@ -25,8 +25,7 @@ namespace mod::game_patch
                                    uint16_t unk3,
                                    uint16_t msgId );
     uint32_t _05_getCustomMsgColor( uint8_t colorId );
-    void _06_patchMDHWolfReturn();
-    void _06_patchSaveBitFlags();
+    void _06_writeASMPatches();
     void _07_checkDesertCrystal();
 }     // namespace mod::game_patch
 #endif

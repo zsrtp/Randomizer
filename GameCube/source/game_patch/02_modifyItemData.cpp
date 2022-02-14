@@ -470,6 +470,15 @@ namespace mod::game_patch
         };
         itemFuncPtr[items::Goron_Mines_Compass] = onGetGoronMinesCompass;
 
+        d_item::ItemFunc onGetGoronMinesBigKey = []()
+        {
+            const stage::AreaNodesID nodeId = stage::AreaNodesID::Goron_Mines;
+            const char* stage = stage::allStages[stage::stageIDs::Goron_Mines];
+            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
+            d_item::execItemGet( items::Key_Shard_3 );
+        };
+        itemFuncPtr[items::Big_Key_Goron_Mines] = onGetGoronMinesBigKey;
+
         // Lakebed Temple
         d_item::ItemFunc onGetLakebedTempleSmallKey = []()
         {
@@ -560,6 +569,14 @@ namespace mod::game_patch
             giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Snowpeak_Ruins_Compass] = onGetSnowpeakRuinsCompass;
+
+        d_item::ItemFunc onGetSnowpeakRuinsBedroomKey = []()
+        {
+            const stage::AreaNodesID nodeId = stage::AreaNodesID::Snowpeak_Ruins;
+            const char* stage = stage::allStages[stage::stageIDs::Snowpeak_Ruins];
+            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
+        };
+        itemFuncPtr[items::Bed_Key] = onGetSnowpeakRuinsBedroomKey;
 
         // Temple of Time
         d_item::ItemFunc onGetTempleofTimeSmallKey = []()
@@ -734,40 +751,66 @@ namespace mod::game_patch
             events::setSaveFileEventFlag( 0x020 );      // Yeto took Pumpkin
             events::setSaveFileEventFlag( 0x002 );      // Yeto put Pumpkin in soup
             events::setSaveFileEventFlag( 0x1440 );     // SPR Lobby Door Unlocked
-            if ( d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Snowpeak_Ruins] ) )
+            if ( d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Snowpeak_Ruins] ) ||
+                 d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Darkhammer] ) ||
+                 d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Blizzeta] ) )
             {
                 d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x9] |= 0x4;
             }
             else
             {
-                d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0xA].temp_flags.memoryFlags[0x9] |= 0x4;
+                d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x14].temp_flags.memoryFlags[0x9] |= 0x4;
             }
         };
         itemFuncPtr[items::Ordon_Pumpkin] = onGetOrdonPumpkin;
 
-        // Ordon Pumpkin
+        // Ordon Goat Cheese
         d_item::ItemFunc onGetOrdonGoatCheese = []()
         {
             events::setSaveFileEventFlag( 0x120 );      // Told Yeta about Cheese
-            events::setSaveFileEventFlag( 0x010 );      // Yeto took Cheese and put it in soup
+            events::setSaveFileEventFlag( 0x010 );      // Yeto took Cheese
             events::setSaveFileEventFlag( 0x01 );       // Yeto put cheese in soup
             events::setSaveFileEventFlag( 0x1420 );     // SPR Lobby West Door Unlocked
-            if ( d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Snowpeak_Ruins] ) )
+            if ( d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Snowpeak_Ruins] ) ||
+                 d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Darkhammer] ) ||
+                 d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Blizzeta] ) )
             {
                 d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x9] |= 0x8;
             }
             else
             {
-                d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0xA].temp_flags.memoryFlags[0x9] |= 0x8;
+                d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x14].temp_flags.memoryFlags[0x9] |= 0x8;
             }
         };
         itemFuncPtr[items::Ordon_Goat_Cheese] = onGetOrdonGoatCheese;
+
+        // Completed Skybook
+        d_item::ItemFunc onGetFilledSkybook = []()
+        {
+            events::setSaveFileEventFlag( 0x3B08 );     // Repaired Cannon at Lake
+        };
+        itemFuncPtr[items::Ancient_Sky_Book_Completed] = onGetFilledSkybook;
 
         // Gate Keys
         d_item::ItemFunc onGetGateKeys = []()
         {
             events::setSaveFileEventFlag( 0x840 );     // Started Zora Escort
             events::setSaveFileEventFlag( 0x810 );     // Completed Zora Escort
+            if ( d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Kakariko_Village] ) ||
+                 d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Kakariko_Graveyard] ) ||
+                 d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Death_Mountain] ) ||
+                 d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Hidden_Village] ) )
+            {
+                d_save::onSwitch_dSv_memBit( &d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x69 );
+                d_save::onSwitch_dSv_memBit( &d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x65 );
+            }
+            else
+            {
+                d_save::onSwitch_dSv_memBit( &d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x3].temp_flags,
+                                             0x69 );
+                d_save::onSwitch_dSv_memBit( &d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x3].temp_flags,
+                                             0x65 );
+            }
         };
         itemFuncPtr[items::Gate_Keys] = onGetGateKeys;
 
@@ -782,33 +825,33 @@ namespace mod::game_patch
         // Fused Shadows/Mirror Shards
         d_item::ItemFunc onGetFusedShadow1 = []()
         {
-            d_save::onCollectCrystal( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, 0x0 );
+            d_save::onCollectCrystal( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\0' );
         };     // Give player first fused shadow.
         itemFuncPtr[items::Fused_Shadow_1] = onGetFusedShadow1;
         d_item::ItemFunc onGetFusedShadow2 = []()
         {
-            d_save::onCollectCrystal( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, 0x1 );
+            d_save::onCollectCrystal( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x01' );
         };     // Give player second fused shadow.
         itemFuncPtr[items::Fused_Shadow_2] = onGetFusedShadow2;
         d_item::ItemFunc onGetFusedShadow3 = []()
         {
-            d_save::onCollectCrystal( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, 0x2 );
+            d_save::onCollectCrystal( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x02' );
         };     // Give player third fused shadow.
         itemFuncPtr[items::Fused_Shadow_3] = onGetFusedShadow3;
 
         d_item::ItemFunc onGetMirrorShard2 = []()
         {
-            d_save::onCollectMirror( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, 0x1 );
+            d_save::onCollectMirror( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x01' );
         };     // Give player second mirror shard.
         itemFuncPtr[items::Mirror_Piece_2] = onGetMirrorShard2;
         d_item::ItemFunc onGetMirrorShard3 = []()
         {
-            d_save::onCollectMirror( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, 0x2 );
+            d_save::onCollectMirror( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x02' );
         };     // Give player third mirror shard.
         itemFuncPtr[items::Mirror_Piece_3] = onGetMirrorShard3;
         d_item::ItemFunc onGetMirrorShard4 = []()
         {
-            d_save::onCollectMirror( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, 0x3 );
+            d_save::onCollectMirror( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x03' );
         };     // Give player fourth mirror shard.
         itemFuncPtr[items::Mirror_Piece_4] = onGetMirrorShard4;
 
@@ -859,8 +902,8 @@ namespace mod::game_patch
     }
     void _02_modifyItemData()
     {
-        modifyItemModels();
         setCustomItemResourceData();
+        modifyItemModels();
         setCustomItemFunctions();
     }
 }     // namespace mod::game_patch

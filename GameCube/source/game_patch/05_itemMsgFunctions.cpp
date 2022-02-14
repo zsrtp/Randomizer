@@ -297,7 +297,7 @@ namespace mod::game_patch
                 break;
             }
 
-            case Dominion_Rod_Uncharged:
+            case Dominion_Rod:
             {
                 setMessageText( control, customPoweredRodText );
                 break;

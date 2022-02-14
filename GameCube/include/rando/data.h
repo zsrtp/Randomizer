@@ -112,7 +112,7 @@ namespace mod::rando
     {
         Item = 0x0,
         HiddenSkill = 0x1,
-        ItemMessage = 0x2
+        ItemMessage = 0x2,
     };
 
     struct ARCReplacement

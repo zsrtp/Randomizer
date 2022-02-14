@@ -38,7 +38,6 @@ namespace mod::events
                 randomizer->initSave();
             }
         }
-        randomizer->overrideREL();
 
         user_patch::setHUDCosmetics( randomizer );
         user_patch::setLanternColor( randomizer );
@@ -46,11 +45,10 @@ namespace mod::events
 
     void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
     {
-        // Old Code
-        /*if ( randomizer )
+        if ( randomizer )
         {
-            randomizer->overrideREL( dmc );
-        }*/
+            randomizer->overrideREL();
+        }
 
         // Static REL overrides and patches
         uint32_t relPtrRaw = reinterpret_cast<uint32_t>( dmc->moduleInfo );
@@ -165,6 +163,16 @@ namespace mod::events
                 *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1038 ) = 0x38600000;     // li r3,0
                 break;
             }
+            // d_a_e_mk.rel
+            // Ook
+            case 0xD2:
+            {
+                // Transform back into link if you are wolf when defeating Ook
+                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x4A88 ),
+                                             reinterpret_cast<void*>( assembly::asmTransformOokWolf ) );
+
+                break;
+            }
         }
     }
 
@@ -217,8 +225,12 @@ namespace mod::events
             uint8_t itemID = randomizer->overrideBugReward( bugID );
             *reinterpret_cast<uint16_t*>( ( *reinterpret_cast<uint32_t*>( msgEventAddress + 0xA04 ) + 0x3580 ) + 0x6 ) =
                 itemID;     // Change Big Wallet Item
+            *reinterpret_cast<uint16_t*>( ( *reinterpret_cast<uint32_t*>( msgEventAddress + 0xA04 ) + 0x3628 ) + 0x6 ) =
+                itemID;     // Change Giant Wallet Item
             *reinterpret_cast<uint16_t*>( ( *reinterpret_cast<uint32_t*>( msgEventAddress + 0xA04 ) + 0x35c8 ) + 0x6 ) =
                 itemID;     // Change Purple Rupee Item
+            *reinterpret_cast<uint16_t*>( ( *reinterpret_cast<uint32_t*>( msgEventAddress + 0xA04 ) + 0x35F0 ) + 0x6 ) =
+                itemID;     // Change Orange Rupee Item
         }
     }
 
@@ -237,19 +249,19 @@ namespace mod::events
 
     void onAdjustFieldItemParams( void* fopAC, void* daObjLife )
     {
+        using namespace libtp::data::stage;
         *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 2.0f;     // scale
 
-        if ( libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hyrule_Field] ) ||
-             libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Upper_Zoras_River] ) )
+        if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Hyrule_Field] ) ||
+             libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Upper_Zoras_River] ) ||
+             libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Sacred_Grove] ) )
         {
             *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( fopAC ) + 0x530 ) = 0.0f;     // gravity
         }
-        else
+        /*else if ( !libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Gerudo_Desert] ) )
         {
             *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x61C ) = 2.0f;     // height
-        }
+        }  Causes crashing in some areas*/
     }
 
     void handleDungeonHeartContainer()

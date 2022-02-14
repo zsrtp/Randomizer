@@ -38,4 +38,12 @@ namespace mod::assembly
     uint8_t handleAdjustSkyCharacter() { return events::onSkyCharacter( mod::randomizer ); }
 
     void handleAdjustFieldItemParams( void* fopAC, void* daObjLife ) { events::onAdjustFieldItemParams( fopAC, daObjLife ); }
+
+    void handleTransformOokWolf()
+    {
+        if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm == 1 )
+        {
+            libtp::tp::d_a_alink::procCoMetamorphoseInit( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer );
+        }
+    }
 }     // namespace mod::assembly
