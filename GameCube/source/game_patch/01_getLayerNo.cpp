@@ -73,13 +73,13 @@ namespace mod::game_patch
                     {
                         if ( ( roomId == 5 ) || ( roomId == 6 ) )     // North Faron or Mist Area
                         {
-                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xD4 );     // Can Transform at Will
-                            if ( condition == false )
+                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
+                            if ( condition )
                             {
-                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
-                                if ( condition == false )
+                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xD4 );     // Can Transform at Will
+                                if ( condition )
                                 {
-                                    chosenLayer = stage::faronStateIDs::Faron_Talo_Captured;
+                                    chosenLayer = stage::faronStateIDs::Faron_Snowpeak_Completed;
                                 }
                                 else
                                 {
@@ -88,23 +88,23 @@ namespace mod::game_patch
                             }
                             else
                             {
-                                chosenLayer = stage::faronStateIDs::Faron_Snowpeak_Completed;
+                                chosenLayer = stage::faronStateIDs::Faron_Talo_Captured;
                             }
                         }
                         else
                         {
-                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x602 );     // Forest Temple Completed
-                            if ( condition == false )
+                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
+                            if ( condition )
                             {
-                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
-                                if ( condition == false )
+                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x602 );     // Forest Temple Completed
+                                if ( condition )
                                 {
-                                    chosenLayer = stage::faronStateIDs::Faron_Talo_Captured;
+                                    chosenLayer = stage::faronStateIDs::Faron_Forest_Temple_Completed;
                                 }
                             }
                             else
                             {
-                                chosenLayer = stage::faronStateIDs::Faron_Forest_Temple_Completed;
+                                chosenLayer = stage::faronStateIDs::Faron_Talo_Captured;
                             }
                         }
                         break;
@@ -392,24 +392,25 @@ namespace mod::game_patch
                     {
                         if ( roomId == 0 )
                         {
-                            uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                            if ( uVar2 == 0 )
+                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4a40 );     // Ordon Day 1 done
+                            if ( condition )
                             {
-                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
-                                    libtp::tp::d_save::saveBitLabels[0x2F] );     // First Trip to Sewers Done
-                                if ( condition == false )
+                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
+                                if ( condition )
                                 {
-                                    condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
-                                    if ( condition == false )
+                                    condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
+                                        libtp::tp::d_save::saveBitLabels[0x2F] );     // First trip to Sewers done
+                                    if ( condition )
                                     {
-                                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4a40 );     // Ordon Day 1 done
-                                        if ( condition == false )
+                                        uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
+                                        if ( uVar2 == 0 )
                                         {
-                                            chosenLayer = stage::ordonVillageStateIDs::Ordon_New_Game;
+                                            chosenLayer = stage::ordonVillageStateIDs::Ordon_Finished_Sewers;
                                         }
                                         else
                                         {
-                                            chosenLayer = stage::ordonVillageStateIDs::Ordon_Goats_1_Completed;
+                                            chosenLayer = stage::ordonVillageStateIDs::Ordon_Epona_Tamed;
+                                            libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
                                         }
                                     }
                                     else
@@ -419,38 +420,36 @@ namespace mod::game_patch
                                 }
                                 else
                                 {
-                                    chosenLayer = stage::ordonVillageStateIDs::Ordon_Finished_Sewers;
+                                    chosenLayer = stage::ordonVillageStateIDs::Ordon_Goats_1_Completed;
                                 }
                             }
                             else
                             {
-                                chosenLayer = stage::ordonVillageStateIDs::Ordon_Epona_Tamed;
-                                libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
+                                chosenLayer = stage::ordonVillageStateIDs::Ordon_New_Game;
                             }
                         }
                         else
                         {
                             if ( roomId == 1 )
                             {
-                                uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                                if ( uVar2 == 0 )
+                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4a40 );     // Ordon Day 1 done
+                                if ( condition )
                                 {
-                                    condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
-                                        libtp::tp::d_save::saveBitLabels[0x2F] );     // First trip to Sewers done
-                                    if ( condition == false )
+                                    condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
+                                    if ( condition )
                                     {
-                                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
-                                        if ( condition == false )
+                                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
+                                            libtp::tp::d_save::saveBitLabels[0x2F] );     // First trip to Sewers done
+                                        if ( condition )
                                         {
-                                            condition =
-                                                libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4a40 );     // Ordon Day 1 done
-                                            if ( condition == false )
+                                            uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
+                                            if ( uVar2 == 0 )
                                             {
-                                                chosenLayer = stage::ordonVillageStateIDs::Ordon_Link_House_New_Game;
+                                                chosenLayer = stage::ordonVillageStateIDs::Ordon_Finished_Sewers;
                                             }
                                             else
                                             {
-                                                chosenLayer = stage::ordonVillageStateIDs::Ordon_Link_House_Goats_1_Completed;
+                                                chosenLayer = stage::ordonVillageStateIDs::Ordon_Faron_Twilight_Cleared;
                                             }
                                         }
                                         else
@@ -460,12 +459,12 @@ namespace mod::game_patch
                                     }
                                     else
                                     {
-                                        chosenLayer = stage::ordonVillageStateIDs::Ordon_Finished_Sewers;
+                                        chosenLayer = stage::ordonVillageStateIDs::Ordon_Link_House_Goats_1_Completed;
                                     }
                                 }
                                 else
                                 {
-                                    chosenLayer = stage::ordonVillageStateIDs::Ordon_Faron_Twilight_Cleared;
+                                    chosenLayer = stage::ordonVillageStateIDs::Ordon_Link_House_New_Game;
                                 }
                             }
                         }

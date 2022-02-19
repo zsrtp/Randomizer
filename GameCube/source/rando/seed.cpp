@@ -432,7 +432,7 @@ namespace mod::rando
         // Do NOT need to clear the previous buffer as that's taken care of by LoadChecks()
         m_BugRewardChecks = new BugReward[m_numBugRewardChecks];
 
-        // offset into m_POEChecks
+        // offset into m_BugRewardChecks
         uint32_t j = 0;
 
         for ( uint32_t i = 0; i < num_bugRewards; i++ )
@@ -587,7 +587,6 @@ namespace mod::rando
             {
                 allARC[i].arcFileIndex = -1;
             }
-            memcpy( &m_ArcReplacements[j], &allARC[i], sizeof( ARCReplacement ) );
             j++;
         }
     }

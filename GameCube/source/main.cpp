@@ -157,10 +157,6 @@ namespace mod
                 << "on ORIGINAL HARDWARE as it wears down your\n"
                 << "Memory Card!\n\n";
 
-        mod::console << "Seed: " << &libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mEvtManager << "\n";
-        mod::console << "Seed: " << &libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.field_0x4780 << "\n";
-        mod::console << "Seed: " << &libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer << "\n";
-
         // Generate our seedList
         seedList = new rando::SeedList();
 

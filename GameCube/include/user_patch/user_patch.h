@@ -26,7 +26,7 @@ namespace mod::user_patch
     typedef void ( *GamePatch )( rando::Randomizer* randomizer, bool set );
 
     // Available Game patches accessible by index
-    extern GamePatch patches[4];
+    extern GamePatch patches[7];
 
 }     // namespace mod::user_patch
 #endif

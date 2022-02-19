@@ -33,17 +33,18 @@ namespace mod::events
             // Check if the seed is already applied to the save-file (flags etc.)
             // Try to do it otherwise
             if ( !randomizer->m_SeedInit &&
-                 !strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage, "F_SP103" ) )
+                 ( strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage, "F_SP108" ) == 0 ) &&
+                 ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo == 1 ) &&
+                 ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mPoint == 0x15 ) )
             {
                 randomizer->initSave();
             }
+            user_patch::setHUDCosmetics( randomizer );
+            user_patch::setLanternColor( randomizer );
         }
-
-        user_patch::setHUDCosmetics( randomizer );
-        user_patch::setLanternColor( randomizer );
     }
 
-    void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
+        void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
     {
         if ( randomizer )
         {
@@ -308,7 +309,7 @@ namespace mod::events
 
     bool proc_query023( void* unk1, void* unk2, int32_t unk3 )
     {
-        // Check to see if currently in one of the Ordon interiors
+        // Check to see if currently in one of the Kakariko interiors
         if ( libtp::tp::d_a_alink::checkStageName(
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Village_Interiors] ) &&
              libtp::tp::d_kankyo::env_light.currentRoom == 1 )

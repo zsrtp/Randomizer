@@ -210,7 +210,6 @@ namespace mod::rando
                         if ( ( m_Seed->m_HiddenSkillChecks[j].stageIDX == stageIDX ) &&
                              ( m_Seed->m_HiddenSkillChecks[j].roomID == libtp::tp::d_kankyo::env_light.currentRoom ) )
                         {
-                            mod::console << "chk ld: " << m_Seed->m_ArcReplacements[i].offset << "\n";
                             *reinterpret_cast<uint16_t*>(
                                 ( reinterpret_cast<uint32_t>( filePtr ) + m_Seed->m_ArcReplacements[i].offset ) ) =
                                 m_Seed->m_HiddenSkillChecks[j].itemID + 0x65;
