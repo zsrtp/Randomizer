@@ -680,7 +680,7 @@ namespace mod::game_patch
 
     MSG_BEGIN(secondMirrorShardText)
     MSG_SPEED(MSG_SPEED_FAST)
-    "You got the second shard of\nthe"
+    "You got the second shard of\nthe "
     MSG_COLOR(MSG_COLOR_RED)
     "Mirror of Twilight"
     MSG_COLOR(MSG_COLOR_WHITE)
@@ -693,7 +693,7 @@ namespace mod::game_patch
 
     MSG_BEGIN(thirdMirrorShardText)
     MSG_SPEED(MSG_SPEED_FAST)
-    "You got the third shard of\nthe"
+    "You got the third shard of\nthe "
     MSG_COLOR(MSG_COLOR_RED)
     "Mirror of Twilight"
     MSG_COLOR(MSG_COLOR_WHITE)
@@ -706,7 +706,7 @@ namespace mod::game_patch
 
     MSG_BEGIN(fourthMirrorShardText)
     MSG_SPEED(MSG_SPEED_FAST)
-    "You got the final shard of\nthe"
+    "You got the final shard of\nthe "
     MSG_COLOR(MSG_COLOR_RED)
     "Mirror of Twilight"
     MSG_COLOR(MSG_COLOR_WHITE)

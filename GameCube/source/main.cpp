@@ -147,7 +147,6 @@ namespace mod
         game_patch::_02_modifyItemData();
         game_patch::_03_increaseClimbSpeed();
         game_patch::_06_writeASMPatches();
-        // game_patch::_06_patchSaveBitFlags();
 
         // Display some info
         console << "Welcome to TPR!\n"
@@ -155,7 +154,8 @@ namespace mod
                 << "Note:\n"
                 << "Please avoid [re]starting rando unnecessarily\n"
                 << "on ORIGINAL HARDWARE as it wears down your\n"
-                << "Memory Card!\n\n";
+                << "Memory Card!\n"
+                << "Press R + Z to close the console.\n\n";
 
         // Generate our seedList
         seedList = new rando::SeedList();
@@ -264,7 +264,7 @@ namespace mod
         return_collect_save_open_init = patch::hookFunction( tp::d_menu_window::collect_save_open_init,
                                                              []( uint8_t param_1 )
                                                              {
-                                                                 game_patch::_07_checkDesertCrystal();
+                                                                 game_patch::_07_checkPlayerStageReturn();
                                                                  return return_collect_save_open_init( param_1 );
                                                              } );
 
@@ -360,6 +360,19 @@ namespace mod
                                    0x3E ) ) )
                         {
                             // Return false so we can buy the hawkeye.
+                            return 0;
+                        }
+                        break;
+                    }
+
+                    case items::Ordon_Pumpkin:
+                    case items::Ordon_Goat_Cheese:
+                    {
+                        // Check to see if currently in Snowpeak Ruins
+                        if ( libtp::tp::d_a_alink::checkStageName(
+                                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) )
+                        {
+                            // Return false so that yeta will give the map item no matter what.
                             return 0;
                         }
                         break;
@@ -644,7 +657,7 @@ namespace mod
             {
                 // Disallow during boot as we print copyright info etc.
                 // Will automatically disappear if there is no seeds to select from
-                setScreen( !consoleState || gameState == GAME_BOOT );
+                setScreen( !consoleState );
             }
             // Handle Inputs if console is already active
             else if ( consoleState )

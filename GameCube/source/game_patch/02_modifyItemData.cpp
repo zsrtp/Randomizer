@@ -729,7 +729,11 @@ namespace mod::game_patch
         itemFuncPtr[items::Small_Key_N_Faron_Gate] = onGetFaronKey;
 
         // Shadow Crystal
-        d_item::ItemFunc onGetShadowCrystal = []() { events::setSaveFileEventFlag( 0xD04 ); };     // Can transform at will
+        d_item::ItemFunc onGetShadowCrystal = []()
+        {
+            events::setSaveFileEventFlag( 0xD04 );     // Can transform at will
+            events::setSaveFileEventFlag( 0xC10 );     // Midna Accompanies Wolf
+        };
         itemFuncPtr[items::Shadow_Crystal] = onGetShadowCrystal;
 
         // Charged Dominion Rod
@@ -748,7 +752,6 @@ namespace mod::game_patch
         d_item::ItemFunc onGetOrdonPumpkin = []()
         {
             events::setSaveFileEventFlag( 0x480 );      // Told Yeta about Pumpkin
-            events::setSaveFileEventFlag( 0x020 );      // Yeto took Pumpkin
             events::setSaveFileEventFlag( 0x002 );      // Yeto put Pumpkin in soup
             events::setSaveFileEventFlag( 0x1440 );     // SPR Lobby Door Unlocked
             if ( d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Snowpeak_Ruins] ) ||
@@ -768,7 +771,6 @@ namespace mod::game_patch
         d_item::ItemFunc onGetOrdonGoatCheese = []()
         {
             events::setSaveFileEventFlag( 0x120 );      // Told Yeta about Cheese
-            events::setSaveFileEventFlag( 0x010 );      // Yeto took Cheese
             events::setSaveFileEventFlag( 0x01 );       // Yeto put cheese in soup
             events::setSaveFileEventFlag( 0x1420 );     // SPR Lobby West Door Unlocked
             if ( d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Snowpeak_Ruins] ) ||
@@ -855,6 +857,34 @@ namespace mod::game_patch
         };     // Give player fourth mirror shard.
         itemFuncPtr[items::Mirror_Piece_4] = onGetMirrorShard4;
 
+        // Ending Blow
+        d_item::ItemFunc onGetEndingBlow = []() { events::setSaveFileEventFlag( 0x2904 ); };     // Learned Ending Blow.
+        itemFuncPtr[items::Ending_Blow] = onGetEndingBlow;
+
+        // Shield Attack
+        d_item::ItemFunc onGetShieldAttack = []() { events::setSaveFileEventFlag( 0x2908 ); };     // Learned Shield Attack.
+        itemFuncPtr[items::Shield_Attack] = onGetShieldAttack;
+
+        // Back Slice
+        d_item::ItemFunc onGetBackSlice = []() { events::setSaveFileEventFlag( 0x2902 ); };     // Learned Back Slice.
+        itemFuncPtr[items::Back_Slice] = onGetBackSlice;
+
+        // Helm Splitter
+        d_item::ItemFunc onGetHelmSplitter = []() { events::setSaveFileEventFlag( 0x2901 ); };     // Learned Helm Splitter.
+        itemFuncPtr[items::Helm_Splitter] = onGetHelmSplitter;
+
+        // Mortal Draw
+        d_item::ItemFunc onGetMortalDraw = []() { events::setSaveFileEventFlag( 0x2A80 ); };     // Learned Mortal Draw.
+        itemFuncPtr[items::Mortal_Draw] = onGetMortalDraw;
+
+        // Jump Strike
+        d_item::ItemFunc onGetJumpStrike = []() { events::setSaveFileEventFlag( 0x2A40 ); };     // Learned Jump Strike.
+        itemFuncPtr[items::Jump_Strike] = onGetJumpStrike;
+
+        // Great Spin
+        d_item::ItemFunc onGetGreatSpin = []() { events::setSaveFileEventFlag( 0x2A20 ); };     // Learned Great Spin.
+        itemFuncPtr[items::Great_Spin] = onGetGreatSpin;
+
         // Some items need a valid getCheckFunc definition.
         d_item::ItemGetCheckFunc item_getcheck_func_first_character = []()
         { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Ancient_Sky_Book_First_Character ); };
@@ -899,6 +929,30 @@ namespace mod::game_patch
         d_item::ItemGetCheckFunc item_getcheck_func_shadow_crystal = []()
         { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Shadow_Crystal ); };
         itemGetCheckFuncPtr[items::Shadow_Crystal] = item_getcheck_func_shadow_crystal;
+
+        d_item::ItemGetCheckFunc item_getcheck_func_ending_blow = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Ending_Blow ); };
+        itemGetCheckFuncPtr[items::Ending_Blow] = item_getcheck_func_ending_blow;
+
+        d_item::ItemGetCheckFunc item_getcheck_func_shield_attack = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Shield_Attack ); };
+        itemGetCheckFuncPtr[items::Shield_Attack] = item_getcheck_func_shield_attack;
+
+        d_item::ItemGetCheckFunc item_getcheck_func_back_slice = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Back_Slice ); };
+        itemGetCheckFuncPtr[items::Back_Slice] = item_getcheck_func_back_slice;
+
+        d_item::ItemGetCheckFunc item_getcheck_func_helm_splitter = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Helm_Splitter ); };
+        itemGetCheckFuncPtr[items::Helm_Splitter] = item_getcheck_func_helm_splitter;
+
+        d_item::ItemGetCheckFunc item_getcheck_func_mortal_draw = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Mortal_Draw ); };
+        itemGetCheckFuncPtr[items::Mortal_Draw] = item_getcheck_func_mortal_draw;
+
+        d_item::ItemGetCheckFunc item_getcheck_func_jump_strike = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Jump_Strike ); };
+        itemGetCheckFuncPtr[items::Jump_Strike] = item_getcheck_func_jump_strike;
     }
     void _02_modifyItemData()
     {

@@ -29,6 +29,14 @@
 803a8f68:saveBitLabels
 80032c58:isDarkClearLV
 80032c94:isTransformLV
+80034990:isSwitch_dSv_memBit
+800333a0:setLineUpItem
+80034aec:isEventBit
+80034a64:isDungeonItem
+80034318:onCollectMirror
+800342d4:onCollectCrystal
+80034940:onSwitch_dSv_memBit
+80033060:setItem
 
 // d_event.o
 800428A8:defaultSkipStb
@@ -76,10 +84,12 @@
 801415a8:dComIfGs_isEventBit
 80141470:dComIfGs_isItemFirstBit
 8039325C:getSeType
+800c7a00:procCoMetamorphoseInit
 
 // data
 8039038C:climbVars
 8038f9e0:wallMoveVars
+8038ff7c:lanternVars
 
 //d_meter2_info.o
 80432148:g_meter2_info
@@ -184,6 +194,7 @@
 80408160:dComIfG_gameInfo
 8002b4dc:getLayerNo_common_common
 8002b49c:dComIfG_get_timelayer
+8002f8b8:dComIfGs_Wolf_Change_Check
 
 // d_kankyo.o
 // data
@@ -226,3 +237,16 @@
 
 //d_a_shop_item_static.o
 8037a178:shopItemData
+
+//d_menu_window.o
+801fa854:collect_save_open_init
+
+//d_msg_flow.o
+8024bf88:query022
+8024bfbc:query023
+8024c018:query025
+8024caa0:event000
+8024de6c:event035
+
+//d_a_npc.o
+8014ccb8:chkEvtBit

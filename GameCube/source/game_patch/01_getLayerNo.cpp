@@ -239,14 +239,19 @@ namespace mod::game_patch
                     {
                         if ( roomId == 1 )     // Lanayru Spring
                         {
-                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xc01 );     // MDH has been started
-                            if ( condition == false )
+                            condition =
+                                libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x904 );     // Lakebed Temple has been completed
+                            if ( condition )
                             {
-                                chosenLayer = stage::lakeHyliaStateIDs::Lake_Int_Lakebed_Completed;
-                            }
-                            else
-                            {
-                                chosenLayer = stage::lakeHyliaStateIDs::Lake_Int_MDH_Started;
+                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xc01 );     // MDH has been started
+                                if ( condition == false )
+                                {
+                                    chosenLayer = stage::lakeHyliaStateIDs::Lake_Int_Lakebed_Completed;
+                                }
+                                else
+                                {
+                                    chosenLayer = stage::lakeHyliaStateIDs::Lake_Int_MDH_Started;
+                                }
                             }
                         }
                         else

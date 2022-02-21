@@ -108,7 +108,6 @@ namespace mod::rando
         // Check if we have DZX checks to work with
         if ( !numReplacements )
             return;
-
         // Loop through all chunks the game is currently loading/setting
         for ( uint32_t i = 0; i < numChunks; i++ )
         {

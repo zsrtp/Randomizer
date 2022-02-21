@@ -18,6 +18,7 @@
 #include "main.h"
 #include "rando/data.h"
 #include "tools.h"
+#include "tp/d_a_alink.h"
 #include "tp/d_a_shop_item_static.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item_data.h"
@@ -215,7 +216,7 @@ namespace mod::rando
         if ( num_regionFlags > 0 )
         {
             tp::d_save::dSv_info_c* SaveInfo = &tp::d_com_inf_game::dComIfG_gameInfo.save;
-            tp::d_com_inf_game::dComIfG_inf_c* gameInfo = &tp::d_com_inf_game::dComIfG_gameInfo;
+            // tp::d_com_inf_game::dComIfG_inf_c* gameInfo = &tp::d_com_inf_game::dComIfG_gameInfo;
 
             // Set the pointer as offset into our buffer
             regionFlag* regionFlags = reinterpret_cast<regionFlag*>( &m_GCIData[gci_offset] );
@@ -252,15 +253,7 @@ namespace mod::rando
                 tp::d_save::putSave( SaveInfo, regionID );
             }
 
-            // Reset to previous region ID
-            uint8_t i = 0;
-
-            while ( !strcmp( data::stage::allStages[i], gameInfo->play.mStartStage.mStage ) )
-            {
-                i++;
-            }
-
-            tp::d_save::getSave( SaveInfo, data::stage::regions[i] );
+            tp::d_save::getSave( SaveInfo, data::stage::regions[2] );
         }
     }
 

@@ -44,7 +44,7 @@ namespace mod::events
         }
     }
 
-        void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
+    void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
     {
         if ( randomizer )
         {
@@ -362,8 +362,9 @@ namespace mod::events
             {
                 if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Forest_Temple] ) )
                 {
-                    if ( ( libtp::tp::d_kankyo::env_light.currentRoom == 3 ) ||
-                         ( libtp::tp::d_kankyo::env_light.currentRoom == 1 ) )
+                    if ( ( ( libtp::tp::d_kankyo::env_light.currentRoom == 3 ) ||
+                           ( libtp::tp::d_kankyo::env_light.currentRoom == 1 ) ) &&
+                         ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mEvtManager.mRoomNo != 0 ) )
                     {
                         return false;
                     }
