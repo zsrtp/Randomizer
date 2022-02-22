@@ -1,1 +1,4 @@
 
+[submodule "GameCube/externals/libtp_rel"]
+	path = GameCube/externals/libtp_rel
+	url = git://github.com/lunarsoap5/libtp_rel.git
