@@ -169,7 +169,7 @@ namespace mod::game_patch
 
         // If the key is for the current area, then update the local node
         // Only check the first 4 characters, since those are what determine each area
-        if ( strcmp( gameInfoPtr->save_file.player.player_return_place.link_current_stage, stage ) == 0 )
+        if ( strncmp( gameInfoPtr->save_file.player.player_return_place.link_current_stage, stage, 6 ) == 0 )
         {
             switch ( type )
             {

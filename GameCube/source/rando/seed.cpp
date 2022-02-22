@@ -390,8 +390,7 @@ namespace mod::rando
                 itemResourcePtr[allSHOP[i].replacementItemID].btpResIdx;
             d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].tevFrm =
                 itemResourcePtr[allSHOP[i].replacementItemID].tevFrm;
-            d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].btpFrm =
-                itemResourcePtr[allSHOP[i].replacementItemID].btpFrm;
+            d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].btpFrm = 0xFF;
             d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].posY = 15.0f;
         }
     }
