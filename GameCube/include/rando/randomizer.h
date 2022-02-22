@@ -49,7 +49,6 @@ namespace mod::rando
 
        private:
         Seed* m_Seed;
-        void loadCustomActors();
-    };
+        };
 }     // namespace mod::rando
 #endif

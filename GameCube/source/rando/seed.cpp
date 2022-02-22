@@ -382,6 +382,16 @@ namespace mod::rando
                 itemResourcePtr[allSHOP[i].replacementItemID].arcName;
             d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].modelResIdx =
                 itemResourcePtr[allSHOP[i].replacementItemID].modelResIdx;
+            d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBckResIdx =
+                itemResourcePtr[allSHOP[i].replacementItemID].bckResIdx;
+            d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBrkResIdx =
+                itemResourcePtr[allSHOP[i].replacementItemID].brkResIdx;
+            d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBtpResIdx =
+                itemResourcePtr[allSHOP[i].replacementItemID].btpResIdx;
+            d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].tevFrm =
+                itemResourcePtr[allSHOP[i].replacementItemID].tevFrm;
+            d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].btpFrm =
+                itemResourcePtr[allSHOP[i].replacementItemID].btpFrm;
             d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].posY = 15.0f;
         }
     }

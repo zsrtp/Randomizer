@@ -183,6 +183,7 @@ namespace mod::events
         {
             randomizer->overrideDZX( chunkTypeInfo );
         }
+        loadCustomActors();
     }
 
     int32_t onPoe( rando::Randomizer* randomizer, uint8_t flag )
@@ -379,5 +380,16 @@ namespace mod::events
         }
         // Call original function
         return mod::return_isDungeonItem( memBitPtr, memBit );
+    }
+
+    void loadCustomActors()
+    {
+        using namespace libtp;
+        if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) ||
+             tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Outside_Castle_Town] ) )
+        {
+            libtp::tp::dzx::ACTR EponaActr = { "Horse", 0x00000F0D, 0.f, 0.f, 0.f, 0, -180, 0, 0xFFFF };
+            tools::SpawnActor( 0, EponaActr );
+        }
     }
 }     // namespace mod::events

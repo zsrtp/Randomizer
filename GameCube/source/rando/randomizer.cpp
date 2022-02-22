@@ -67,7 +67,6 @@ namespace mod::rando
     void Randomizer::onStageLoad( void )
     {
         const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mStage;
-        this->loadCustomActors();
         m_Seed->LoadChecks( stage );
     }
 
@@ -252,15 +251,5 @@ namespace mod::rando
         }
         // Default
         return libtp::data::items::Recovery_Heart;
-    }
-
-    void Randomizer::loadCustomActors()
-    {
-        using namespace libtp;
-        if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) )
-        {
-            libtp::tp::dzx::ACTR EponaActr = { "Horse", 0x00000F0D, 0.f, 0.f, 0.f, 0, -180, 0, 0xFFFF };
-            tools::SpawnActor( 0, EponaActr );
-        }
     }
 }     // namespace mod::rando

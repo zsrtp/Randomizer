@@ -699,6 +699,11 @@ namespace mod::game_patch
                                             {
                                                 chosenLayer = stage::outsideCastleTownStateIDs::Outside_Castle_Town_MDH_Started;
                                             }
+                                            else
+                                            {
+                                                chosenLayer =
+                                                    stage::outsideCastleTownStateIDs::Outside_Castle_Town_MDH_Completed;
+                                            }
                                         }
                                         else
                                         {
