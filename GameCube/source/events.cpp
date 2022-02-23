@@ -174,6 +174,14 @@ namespace mod::events
 
                 break;
             }
+            // d_a_obj_swBallC.rel
+            // Light Sword Cutscene
+            case 0x280:
+            {
+                // The cutscene gives link the MS during the cutscene by default, so we just nop out the link to the function.
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0xB50 ) = 0x60000000;
+                break;
+            }
         }
     }
 

@@ -168,49 +168,51 @@ namespace mod::game_patch
 
         // If the key is for the current area, then update the local node
         int32_t stageIndex = libtp::tools::getStageIndex( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage );
-        if ( ( stageIndex != -1 ) &&
-             nodeId == static_cast<libtp::data::stage::AreaNodesID>( libtp::data::stage::regionID[stageIndex] ) )
+        if ( stageIndex != -1 )
         {
-            switch ( type )
+            if ( nodeId == static_cast<libtp::data::stage::AreaNodesID>( libtp::data::stage::regionID[stageIndex] ) )
             {
-                case NodeDungeonItemType::Small_Key:
-                    gameInfoPtr->memory.temp_flags.memoryFlags[0x1C]++;
-                    break;
-                case NodeDungeonItemType::Dungeon_Map:
-                    gameInfoPtr->memory.temp_flags.memoryFlags[0x1D] |= 0x1;
-                    break;
-                case NodeDungeonItemType::Compass:
-                    gameInfoPtr->memory.temp_flags.memoryFlags[0x1D] |= 0x2;
-                    break;
-                case NodeDungeonItemType::Big_Key:
-                    gameInfoPtr->memory.temp_flags.memoryFlags[0x1D] |= 0x4;
-                    break;
+                switch ( type )
+                {
+                    case NodeDungeonItemType::Small_Key:
+                        gameInfoPtr->memory.temp_flags.memoryFlags[0x1C]++;
+                        break;
+                    case NodeDungeonItemType::Dungeon_Map:
+                        gameInfoPtr->memory.temp_flags.memoryFlags[0x1D] |= 0x1;
+                        break;
+                    case NodeDungeonItemType::Compass:
+                        gameInfoPtr->memory.temp_flags.memoryFlags[0x1D] |= 0x2;
+                        break;
+                    case NodeDungeonItemType::Big_Key:
+                        gameInfoPtr->memory.temp_flags.memoryFlags[0x1D] |= 0x4;
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
             }
-        }
-        else     // Key is not for the current area, so update the appropriate node
-        {
-            libtp::tp::d_save::dSv_memory_c* node =
-                reinterpret_cast<libtp::tp::d_save::dSv_memory_c*>( &gameInfoPtr->save_file.area_flags[0] );
-
-            switch ( type )
+            else     // Key is not for the current area, so update the appropriate node
             {
-                case NodeDungeonItemType::Small_Key:
-                    node[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags[0x1C]++;
-                    break;
-                case NodeDungeonItemType::Dungeon_Map:
-                    node[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags[0x1D] |= 0x1;
-                    break;
-                case NodeDungeonItemType::Compass:
-                    node[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags[0x1D] |= 0x2;
-                    break;
-                case NodeDungeonItemType::Big_Key:
-                    node[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags[0x1D] |= 0x4;
-                    break;
-                default:
-                    break;
+                libtp::tp::d_save::dSv_memory_c* node =
+                    reinterpret_cast<libtp::tp::d_save::dSv_memory_c*>( &gameInfoPtr->save_file.area_flags[0] );
+
+                switch ( type )
+                {
+                    case NodeDungeonItemType::Small_Key:
+                        node[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags[0x1C]++;
+                        break;
+                    case NodeDungeonItemType::Dungeon_Map:
+                        node[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags[0x1D] |= 0x1;
+                        break;
+                    case NodeDungeonItemType::Compass:
+                        node[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags[0x1D] |= 0x2;
+                        break;
+                    case NodeDungeonItemType::Big_Key:
+                        node[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags[0x1D] |= 0x4;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
