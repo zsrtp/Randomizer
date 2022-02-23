@@ -167,8 +167,7 @@ namespace mod::game_patch
         libtp::tp::d_save::dSv_info_c* gameInfoPtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save;
 
         // If the key is for the current area, then update the local node
-        uint32_t stageIndex =
-            libtp::tools::getStageIndex( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage );
+        int32_t stageIndex = libtp::tools::getStageIndex( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage );
         if ( ( stageIndex != -1 ) &&
              nodeId == static_cast<libtp::data::stage::AreaNodesID>( libtp::data::stage::regionID[stageIndex] ) )
         {

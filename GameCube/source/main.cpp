@@ -284,7 +284,7 @@ namespace mod
                                      // Spawn the appropriate item with model
                                      uint8_t itemID = randomizer->getBossItem();
                                      itemID = game_patch::_04_verifyProgressiveItem( mod::randomizer, itemID );
-                                     uint32_t params = itemID | 0xFFFF00;
+                                     uint32_t params = 0xFF0000 | ( parameters & 0xFF ) << 0x8 | ( itemID & 0xFF );
                                      return tp::f_op_actor_mng::fopAcM_create( 539, params, pos, roomNo, rot, scale, -1 );
                                  } );
 
