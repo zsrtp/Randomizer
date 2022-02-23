@@ -161,15 +161,16 @@ namespace mod::game_patch
                                                      libtp::data::items::Coro_Key };
 
     void giveNodeDungeonItems( const libtp::data::stage::AreaNodesID nodeId,
-                               const char* stage,
                                const libtp::data::items::NodeDungeonItemType type )
     {
         using namespace libtp::data::items;
         libtp::tp::d_save::dSv_info_c* gameInfoPtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save;
 
         // If the key is for the current area, then update the local node
-        // Only check the first 4 characters, since those are what determine each area
-        if ( strncmp( gameInfoPtr->save_file.player.player_return_place.link_current_stage, stage, 6 ) == 0 )
+        uint32_t stageIndex =
+            libtp::tools::getStageIndex( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage );
+        if ( ( stageIndex != -1 ) &&
+             nodeId == static_cast<libtp::data::stage::AreaNodesID>( libtp::data::stage::regionID[stageIndex] ) )
         {
             switch ( type )
             {
@@ -418,32 +419,28 @@ namespace mod::game_patch
         d_item::ItemFunc onGetForestTempleSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Forest_Temple;
-            const char* stage = stage::allStages[stage::stageIDs::Forest_Temple];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Forest_Temple_Small_Key] = onGetForestTempleSmallKey;
 
         d_item::ItemFunc onGetForestTempleDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Forest_Temple;
-            const char* stage = stage::allStages[stage::stageIDs::Forest_Temple];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Forest_Temple_Dungeon_Map] = onGetForestTempleDungeonMap;
 
         d_item::ItemFunc onGetForestTempleCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Forest_Temple;
-            const char* stage = stage::allStages[stage::stageIDs::Forest_Temple];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Forest_Temple_Compass] = onGetForestTempleCompass;
 
         d_item::ItemFunc onGetForestTempleBigKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Forest_Temple;
-            const char* stage = stage::allStages[stage::stageIDs::Forest_Temple];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
         };
         itemFuncPtr[items::Forest_Temple_Big_Key] = onGetForestTempleBigKey;
 
@@ -451,32 +448,28 @@ namespace mod::game_patch
         d_item::ItemFunc onGetGoronMinesSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Goron_Mines;
-            const char* stage = stage::allStages[stage::stageIDs::Goron_Mines];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Goron_Mines_Small_Key] = onGetGoronMinesSmallKey;
 
         d_item::ItemFunc onGetGoronMinesDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Goron_Mines;
-            const char* stage = stage::allStages[stage::stageIDs::Goron_Mines];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Goron_Mines_Dungeon_Map] = onGetGoronMinesDungeonMap;
 
         d_item::ItemFunc onGetGoronMinesCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Goron_Mines;
-            const char* stage = stage::allStages[stage::stageIDs::Goron_Mines];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Goron_Mines_Compass] = onGetGoronMinesCompass;
 
         d_item::ItemFunc onGetGoronMinesBigKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Goron_Mines;
-            const char* stage = stage::allStages[stage::stageIDs::Goron_Mines];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
             d_item::execItemGet( items::Key_Shard_3 );
         };
         itemFuncPtr[items::Big_Key_Goron_Mines] = onGetGoronMinesBigKey;
@@ -485,32 +478,28 @@ namespace mod::game_patch
         d_item::ItemFunc onGetLakebedTempleSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Lakebed_Temple;
-            const char* stage = stage::allStages[stage::stageIDs::Lakebed_Temple];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Lakebed_Temple_Small_Key] = onGetLakebedTempleSmallKey;
 
         d_item::ItemFunc onGetLakebedTempleDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Lakebed_Temple;
-            const char* stage = stage::allStages[stage::stageIDs::Lakebed_Temple];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Lakebed_Temple_Dungeon_Map] = onGetLakebedTempleDungeonMap;
 
         d_item::ItemFunc onGetLakebedTempleCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Lakebed_Temple;
-            const char* stage = stage::allStages[stage::stageIDs::Lakebed_Temple];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Lakebed_Temple_Compass] = onGetLakebedTempleCompass;
 
         d_item::ItemFunc onGetLakebedTempleBigKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Lakebed_Temple;
-            const char* stage = stage::allStages[stage::stageIDs::Lakebed_Temple];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
         };
         itemFuncPtr[items::Lakebed_Temple_Big_Key] = onGetLakebedTempleBigKey;
 
@@ -518,32 +507,28 @@ namespace mod::game_patch
         d_item::ItemFunc onGetArbitersGroundsSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Arbiters_Grounds;
-            const char* stage = stage::allStages[stage::stageIDs::Arbiters_Grounds];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Arbiters_Grounds_Small_Key] = onGetArbitersGroundsSmallKey;
 
         d_item::ItemFunc onGetArbitersGroundsDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Arbiters_Grounds;
-            const char* stage = stage::allStages[stage::stageIDs::Arbiters_Grounds];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Arbiters_Grounds_Dungeon_Map] = onGetArbitersGroundsDungeonMap;
 
         d_item::ItemFunc onGetArbitersGroundsCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Arbiters_Grounds;
-            const char* stage = stage::allStages[stage::stageIDs::Arbiters_Grounds];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Arbiters_Grounds_Compass] = onGetArbitersGroundsCompass;
 
         d_item::ItemFunc onGetArbitersGroundsBigKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Arbiters_Grounds;
-            const char* stage = stage::allStages[stage::stageIDs::Arbiters_Grounds];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
         };
         itemFuncPtr[items::Arbiters_Grounds_Big_Key] = onGetArbitersGroundsBigKey;
 
@@ -551,32 +536,28 @@ namespace mod::game_patch
         d_item::ItemFunc onGetSnowpeakRuinsSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Snowpeak_Ruins;
-            const char* stage = stage::allStages[stage::stageIDs::Snowpeak_Ruins];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Snowpeak_Ruins_Small_Key] = onGetSnowpeakRuinsSmallKey;
 
         d_item::ItemFunc onGetSnowpeakRuinsDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Snowpeak_Ruins;
-            const char* stage = stage::allStages[stage::stageIDs::Snowpeak_Ruins];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Snowpeak_Ruins_Dungeon_Map] = onGetSnowpeakRuinsDungeonMap;
 
         d_item::ItemFunc onGetSnowpeakRuinsCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Snowpeak_Ruins;
-            const char* stage = stage::allStages[stage::stageIDs::Snowpeak_Ruins];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Snowpeak_Ruins_Compass] = onGetSnowpeakRuinsCompass;
 
         d_item::ItemFunc onGetSnowpeakRuinsBedroomKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Snowpeak_Ruins;
-            const char* stage = stage::allStages[stage::stageIDs::Snowpeak_Ruins];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
         };
         itemFuncPtr[items::Bed_Key] = onGetSnowpeakRuinsBedroomKey;
 
@@ -584,32 +565,28 @@ namespace mod::game_patch
         d_item::ItemFunc onGetTempleofTimeSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Temple_of_Time;
-            const char* stage = stage::allStages[stage::stageIDs::Temple_of_Time];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Temple_of_Time_Small_Key] = onGetTempleofTimeSmallKey;
 
         d_item::ItemFunc onGetTempleofTimeDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Temple_of_Time;
-            const char* stage = stage::allStages[stage::stageIDs::Temple_of_Time];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Temple_of_Time_Dungeon_Map] = onGetTempleofTimeDungeonMap;
 
         d_item::ItemFunc onGetTempleofTimeCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Temple_of_Time;
-            const char* stage = stage::allStages[stage::stageIDs::Temple_of_Time];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Temple_of_Time_Compass] = onGetTempleofTimeCompass;
 
         d_item::ItemFunc onGetTempleofTimeBigKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Temple_of_Time;
-            const char* stage = stage::allStages[stage::stageIDs::Temple_of_Time];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
         };
         itemFuncPtr[items::Temple_of_Time_Big_Key] = onGetTempleofTimeBigKey;
 
@@ -617,32 +594,28 @@ namespace mod::game_patch
         d_item::ItemFunc onGetCityinTheSkySmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::City_in_the_Sky;
-            const char* stage = stage::allStages[stage::stageIDs::City_in_the_Sky];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::City_in_The_Sky_Small_Key] = onGetCityinTheSkySmallKey;
 
         d_item::ItemFunc onGetCityinTheSkyDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::City_in_the_Sky;
-            const char* stage = stage::allStages[stage::stageIDs::City_in_the_Sky];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::City_in_The_Sky_Dungeon_Map] = onGetCityinTheSkyDungeonMap;
 
         d_item::ItemFunc onGetCityinTheSkyCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::City_in_the_Sky;
-            const char* stage = stage::allStages[stage::stageIDs::City_in_the_Sky];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::City_in_The_Sky_Compass] = onGetCityinTheSkyCompass;
 
         d_item::ItemFunc onGetCityinTheSkyBigKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::City_in_the_Sky;
-            const char* stage = stage::allStages[stage::stageIDs::City_in_the_Sky];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
         };
         itemFuncPtr[items::City_in_The_Sky_Big_Key] = onGetCityinTheSkyBigKey;
 
@@ -650,32 +623,28 @@ namespace mod::game_patch
         d_item::ItemFunc onGetPalaceofTwilightSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Palace_of_Twilight;
-            const char* stage = stage::allStages[stage::stageIDs::Palace_of_Twilight];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Palace_of_Twilight_Small_Key] = onGetPalaceofTwilightSmallKey;
 
         d_item::ItemFunc onGetPalaceofTwilightDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Palace_of_Twilight;
-            const char* stage = stage::allStages[stage::stageIDs::Palace_of_Twilight];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Palace_of_Twilight_Dungeon_Map] = onGetPalaceofTwilightDungeonMap;
 
         d_item::ItemFunc onGetPalaceofTwilightCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Palace_of_Twilight;
-            const char* stage = stage::allStages[stage::stageIDs::Palace_of_Twilight];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Palace_of_Twilight_Compass] = onGetPalaceofTwilightCompass;
 
         d_item::ItemFunc onGetPalaceofTwilightBigKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Palace_of_Twilight;
-            const char* stage = stage::allStages[stage::stageIDs::Palace_of_Twilight];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
         };
         itemFuncPtr[items::Palace_of_Twilight_Big_Key] = onGetPalaceofTwilightBigKey;
 
@@ -683,32 +652,28 @@ namespace mod::game_patch
         d_item::ItemFunc onGetHyruleCastleSmallKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Hyrule_Castle;
-            const char* stage = stage::allStages[stage::stageIDs::Hyrule_Castle];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Hyrule_Castle_Small_Key] = onGetHyruleCastleSmallKey;
 
         d_item::ItemFunc onGetHyruleCastleDungeonMap = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Hyrule_Castle;
-            const char* stage = stage::allStages[stage::stageIDs::Hyrule_Castle];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Dungeon_Map );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
         };
         itemFuncPtr[items::Hyrule_Castle_Dungeon_Map] = onGetHyruleCastleDungeonMap;
 
         d_item::ItemFunc onGetHyruleCastleCompass = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Hyrule_Castle;
-            const char* stage = stage::allStages[stage::stageIDs::Hyrule_Castle];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Compass );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
         };
         itemFuncPtr[items::Hyrule_Castle_Compass] = onGetHyruleCastleCompass;
 
         d_item::ItemFunc onGetHyruleCastleBigKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Hyrule_Castle;
-            const char* stage = stage::allStages[stage::stageIDs::Hyrule_Castle];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Big_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
         };
         itemFuncPtr[items::Hyrule_Castle_Big_Key] = onGetHyruleCastleBigKey;
 
@@ -716,8 +681,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetBublinCampKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Gerudo_Desert;
-            const char* stage = stage::allStages[stage::stageIDs::Bulblin_Camp];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Bulblin_Camp_Key] = onGetBublinCampKey;
 
@@ -725,8 +689,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetFaronKey = []()
         {
             const stage::AreaNodesID nodeId = stage::AreaNodesID::Faron;
-            const char* stage = stage::allStages[stage::stageIDs::Faron_Woods];
-            giveNodeDungeonItems( nodeId, stage, items::NodeDungeonItemType::Small_Key );
+            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
         };
         itemFuncPtr[items::Small_Key_N_Faron_Gate] = onGetFaronKey;
 
