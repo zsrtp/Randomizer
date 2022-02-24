@@ -400,4 +400,6 @@ namespace mod::events
             tools::SpawnActor( 0, EponaActr );
         }
     }
+
+    bool haveItem( uint8_t item ) { return libtp::tp::d_item::checkItemGet( item, 1 ); }
 }     // namespace mod::events

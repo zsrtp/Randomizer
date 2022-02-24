@@ -2,6 +2,7 @@
 
 #include "data/items.h"
 #include "data/stages.h"
+#include "events.h"
 #include "game_patch/game_patch.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
@@ -15,7 +16,7 @@ namespace mod::game_patch
         using namespace libtp::data;
         if ( libtp::tp::d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Gerudo_Desert] ) )
         {
-            if ( !libtp::tp::d_item::checkItemGet( items::Shadow_Crystal, 1 ) )
+            if ( !events::haveItem( items::Shadow_Crystal ) )
             {
                 strncpy( dComIfG_gameInfo.save.save_file.player.player_return_place.link_current_stage,
                          stage::allStages[stage::stageIDs::Lake_Hylia],
@@ -26,7 +27,7 @@ namespace mod::game_patch
         }
         else if ( libtp::tp::d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Lake_Hylia] ) )
         {
-            if ( libtp::tp::d_item::checkItemGet( items::Shadow_Crystal, 1 ) ||
+            if ( events::haveItem( items::Shadow_Crystal ) ||
                  libtp::tp::d_save::isTransformLV(
                      &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b,
                      2 ) )

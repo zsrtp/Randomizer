@@ -2,6 +2,7 @@
 #include <cstring>
 
 #include "data/items.h"
+#include "events.h"
 #include "game_patch/game_patch.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_item.h"
@@ -17,7 +18,7 @@ namespace mod::game_patch
         for ( uint32_t i = 0; i < listLength; i++ )
         {
             uint32_t item = progressiveSwordsList[i];
-            if ( !libtp::tp::d_item::checkItemGet( item, 1 ) )
+            if ( !events::haveItem( item ) )
             {
                 return item;
             }
@@ -36,7 +37,7 @@ namespace mod::game_patch
         for ( uint32_t i = 0; i < listLength; i++ )
         {
             uint32_t item = progressiveBowsList[i];
-            if ( !libtp::tp::d_item::checkItemGet( item, 1 ) )
+            if ( !events::haveItem( item ) )
             {
                 return item;
             }
@@ -56,7 +57,7 @@ namespace mod::game_patch
         for ( uint32_t i = 0; i < listLength; i++ )
         {
             uint32_t item = progressiveSkillsList[i];
-            if ( !libtp::tp::d_item::checkItemGet( item, 1 ) )
+            if ( !events::haveItem( item ) )
             {
                 return item;
             }
@@ -80,7 +81,7 @@ namespace mod::game_patch
         for ( uint32_t i = 0; i < listLength; i++ )
         {
             uint32_t item = progressiveSkyBooksList[i];
-            if ( !libtp::tp::d_item::checkItemGet( item, 1 ) )
+            if ( !events::haveItem( item ) )
             {
                 return item;
             }
@@ -99,7 +100,7 @@ namespace mod::game_patch
         for ( uint32_t i = 0; i < listLength; i++ )
         {
             uint32_t item = progressiveBombBagsList[i];
-            if ( !libtp::tp::d_item::checkItemGet( item, 1 ) )
+            if ( !events::haveItem( item ) )
             {
                 return item;
             }
@@ -118,7 +119,7 @@ namespace mod::game_patch
         for ( uint32_t i = 0; i < listLength; i++ )
         {
             uint32_t item = progressiveKeyShardsList[i];
-            if ( !libtp::tp::d_item::checkItemGet( item, 1 ) )
+            if ( !events::haveItem( item ) )
             {
                 return item;
             }
@@ -137,7 +138,7 @@ namespace mod::game_patch
         for ( uint32_t i = 0; i < listLength; i++ )
         {
             uint32_t item = progressiveMirrorShardsList[i];
-            if ( !libtp::tp::d_item::checkItemGet( item, 1 ) )
+            if ( !events::haveItem( item ) )
             {
                 return item;
             }
@@ -156,7 +157,7 @@ namespace mod::game_patch
         for ( uint32_t i = 0; i < listLength; i++ )
         {
             uint32_t item = progressiveFusedShadowList[i];
-            if ( !libtp::tp::d_item::checkItemGet( item, 1 ) )
+            if ( !events::haveItem( item ) )
             {
                 return item;
             }
