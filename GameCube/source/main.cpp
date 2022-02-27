@@ -209,6 +209,7 @@ namespace mod
                                  []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
                                  {
                                      events::onDZX( mod::randomizer, chunkTypeInfo );
+                                     events::loadCustomRoomActors();
                                      return return_actorCommonLayerInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
                                  } );
 
@@ -412,16 +413,19 @@ namespace mod
             libtp::tp::d_msg_flow::chkEvtBit,
             []( uint32_t flag )
             {
-                // need to make this a switch
-                if ( ( flag == 0x153 ) && libtp::tp::d_a_alink::checkStageName(
-                                              libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Skill] ) )
+                switch ( flag )
                 {
-                    return true;
-                }
-                if ( ( flag == 0x169 ) && libtp::tp::d_a_alink::checkStageName(
-                                              libtp::data::stage::allStages[libtp::data::stage::stageIDs::Lake_Hylia] ) )
-                {
-                    return false;
+                    case 0x153:     // Checking if the player has Ending Blow
+                    {
+                        if ( libtp::tp::d_a_alink::checkStageName(
+                                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Skill] ) )
+                        {
+                            return true;
+                        }
+                        break;
+                    }
+                    default:
+                        break;
                 }
                 return return_chkEvtBit( flag );
             } );
@@ -466,6 +470,16 @@ namespace mod
                                                              break;
                                                          }
 
+                                                         case 0x2A20:
+                                                         {
+                                                             if ( checkStageName( allStages[stageIDs::Hidden_Skill] ) )
+                                                             {
+                                                                 return false;     // Tell the game we don't have great spin to
+                                                                                   // not softlock in hidden skill training.
+                                                             }
+                                                             break;
+                                                         }
+
                                                          case 0x2320:
                                                          case 0x3E02:
                                                          {
@@ -482,6 +496,15 @@ namespace mod
                                                          case 0x701:
                                                          {
                                                              if ( checkStageName( allStages[stageIDs::Goron_Mines] ) )
+                                                             {
+                                                                 return false;
+                                                             }
+                                                             break;
+                                                         }
+
+                                                         case 0x2010:
+                                                         {
+                                                             if ( checkStageName( allStages[stageIDs::Stallord] ) )
                                                              {
                                                                  return false;
                                                              }

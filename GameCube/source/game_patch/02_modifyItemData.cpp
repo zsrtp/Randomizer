@@ -699,6 +699,7 @@ namespace mod::game_patch
         {
             events::setSaveFileEventFlag( 0xD04 );     // Can transform at will
             events::setSaveFileEventFlag( 0xC10 );     // Midna Accompanies Wolf
+            events::setSaveFileEventFlag( 0x501 );     // Midna Charge Unlocked
         };
         itemFuncPtr[items::Shadow_Crystal] = onGetShadowCrystal;
 

@@ -107,6 +107,7 @@ namespace mod::events
     bool proc_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int memBit );
 
     void loadCustomActors();
+    void loadCustomRoomActors();
 
     bool haveItem( uint8_t item );
 }     // namespace mod::events

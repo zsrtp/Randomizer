@@ -187,7 +187,8 @@ namespace mod::events
             case 0x15F:
             {
                 // Allow Auru to spawn, even if you have raised the Mirror.
-                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x6C8 ) = 0x38800000;
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x6C4 ) =
+                    0x38600131;     // set auru to check for whether he gave the player the item to spawn.
                 break;
             }
         }
@@ -415,18 +416,16 @@ namespace mod::events
             libtp::tp::dzx::ACTR EponaActr = { "Horse", 0x00000F0D, 0.f, 0.f, 0.f, 0, -180, 0, 0xFFFF };
             tools::SpawnActor( 0, EponaActr );
         }
+    }
+
+    void loadCustomRoomActors()
+    {
+        using namespace libtp;
         if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Lake_Hylia] ) &&
-             libtp::tp::d_kankyo::env_light.currentRoom == 0 )
+             ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mLayer != 0x2 ) )
         {
-            libtp::tp::dzx::ACTR AuruActr = { "Rafrel",
-                                              0x00001D01,
-                                              -116486.945f,
-                                              -13860.f,
-                                              58533.0078f,
-                                              0x0000,
-                                              static_cast<int16_t>( 0xCCCD ),
-                                              0x0000,
-                                              0xFFFF };
+            libtp::tp::dzx::ACTR AuruActr =
+                { "Rafrel", 0x00001D01, -116486.945f, -13860.f, 58533.0078f, 0, static_cast<int16_t>( 0xCCCD ), 0, 0xFFFF };
             tools::SpawnActor( 0, AuruActr );
         }
     }

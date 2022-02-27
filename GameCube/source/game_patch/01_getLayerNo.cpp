@@ -288,10 +288,6 @@ namespace mod::game_patch
 
                     case stage::stageIDs::Castle_Town_Interiors:
                     {
-                        if ( roomId == 5 )     // Telma's Bar
-                        {
-                            chosenLayer = stage::castleTownInteriorsStateIDs::Castle_Town_Int_Watched_MS_Cutscene;
-                        }
                         if ( condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x904 ),
                              condition )     // Lakebed Temple Completed
                         {
@@ -300,11 +296,11 @@ namespace mod::game_patch
                                  condition )     // MDH Completed
                             {
                                 chosenLayer = stage::castleTownInteriorsStateIDs::Castle_Town_Int_Twilight_Cleared;
-                                if ( roomId == 5 )     // Telma's Bar
-                                {
-                                    chosenLayer = stage::castleTownInteriorsStateIDs::Castle_Town_Int_Watched_MS_Cutscene;
-                                }
                             }
+                        }
+                        if ( roomId == 5 )     // Telma's Bar
+                        {
+                            chosenLayer = stage::castleTownInteriorsStateIDs::Castle_Town_Int_Watched_MS_Cutscene;
                         }
                         break;
                     }
