@@ -37,6 +37,7 @@
 80034810:onSwitch_dSv_memBit
 80034860:isSwitch_dSv_memBit
 800332f8:setLineUpItem
+80034368:onLightDropGetFlag
 
 // d_event.o
 80042778:defaultSkipStb

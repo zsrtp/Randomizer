@@ -851,6 +851,16 @@ namespace mod::game_patch
         d_item::ItemFunc onGetGreatSpin = []() { events::setSaveFileEventFlag( 0x2A20 ); };     // Learned Great Spin.
         itemFuncPtr[items::Great_Spin] = onGetGreatSpin;
 
+        // Lanayru Vessel of Light
+        d_item::ItemFunc onGetLanayruVessel = []()
+        {
+            libtp::tp::d_save::onLightDropGetFlag(
+                &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.light_drop,
+                '\x02' );
+            events::setSaveFileEventFlag( 0x1E80 );     // Enable Malo Mart Donation
+        };
+        itemFuncPtr[items::Vessel_Of_Light_Lanayru] = onGetLanayruVessel;
+
         // Some items need a valid getCheckFunc definition.
         d_item::ItemGetCheckFunc item_getcheck_func_first_character = []()
         { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Ancient_Sky_Book_First_Character ); };

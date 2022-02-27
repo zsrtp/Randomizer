@@ -412,10 +412,16 @@ namespace mod
             libtp::tp::d_msg_flow::chkEvtBit,
             []( uint32_t flag )
             {
+                // need to make this a switch
                 if ( ( flag == 0x153 ) && libtp::tp::d_a_alink::checkStageName(
                                               libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Skill] ) )
                 {
                     return true;
+                }
+                if ( ( flag == 0x169 ) && libtp::tp::d_a_alink::checkStageName(
+                                              libtp::data::stage::allStages[libtp::data::stage::stageIDs::Lake_Hylia] ) )
+                {
+                    return false;
                 }
                 return return_chkEvtBit( flag );
             } );

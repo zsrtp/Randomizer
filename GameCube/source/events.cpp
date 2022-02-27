@@ -182,6 +182,14 @@ namespace mod::events
                 *reinterpret_cast<uint32_t*>( relPtrRaw + 0xB50 ) = 0x60000000;
                 break;
             }
+            // d_a_npc_rafrel.rel
+            // Auru
+            case 0x15F:
+            {
+                // Allow Auru to spawn, even if you have raised the Mirror.
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x6C8 ) = 0x38800000;
+                break;
+            }
         }
     }
 
@@ -348,14 +356,23 @@ namespace mod::events
         {
             case 3:
             {
-                const char* dungeonStages[8] = { allStages[stageIDs::Forest_Temple],
-                                                 allStages[stageIDs::Goron_Mines],
-                                                 allStages[stageIDs::Lakebed_Temple],
-                                                 allStages[stageIDs::Arbiters_Grounds],
-                                                 allStages[stageIDs::Snowpeak_Ruins],
-                                                 allStages[stageIDs::Temple_of_Time],
-                                                 allStages[stageIDs::City_in_the_Sky],
-                                                 allStages[stageIDs::Palace_of_Twilight] };
+                const char* dungeonStages[] = { allStages[stageIDs::Forest_Temple],
+                                                allStages[stageIDs::Ook],
+                                                allStages[stageIDs::Goron_Mines],
+                                                allStages[stageIDs::Dangoro],
+                                                allStages[stageIDs::Lakebed_Temple],
+                                                allStages[stageIDs::Deku_Toad],
+                                                allStages[stageIDs::Arbiters_Grounds],
+                                                allStages[stageIDs::Death_Sword],
+                                                allStages[stageIDs::Snowpeak_Ruins],
+                                                allStages[stageIDs::Darkhammer],
+                                                allStages[stageIDs::Temple_of_Time],
+                                                allStages[stageIDs::Darknut],
+                                                allStages[stageIDs::City_in_the_Sky],
+                                                allStages[stageIDs::Aeralfos],
+                                                allStages[stageIDs::Palace_of_Twilight],
+                                                allStages[stageIDs::Phantom_Zant_1],
+                                                allStages[stageIDs::Phantom_Zant_2] };
                 uint32_t totalDungeonStages = sizeof( dungeonStages ) / sizeof( dungeonStages[0] );
                 for ( uint32_t i = 0; i < totalDungeonStages; i++ )
                 {
@@ -393,11 +410,24 @@ namespace mod::events
     void loadCustomActors()
     {
         using namespace libtp;
-        if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) ||
-             tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Outside_Castle_Town] ) )
+        if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) )
         {
             libtp::tp::dzx::ACTR EponaActr = { "Horse", 0x00000F0D, 0.f, 0.f, 0.f, 0, -180, 0, 0xFFFF };
             tools::SpawnActor( 0, EponaActr );
+        }
+        if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Lake_Hylia] ) &&
+             libtp::tp::d_kankyo::env_light.currentRoom == 0 )
+        {
+            libtp::tp::dzx::ACTR AuruActr = { "Rafrel",
+                                              0x00001D01,
+                                              -116486.945f,
+                                              -13860.f,
+                                              58533.0078f,
+                                              0x0000,
+                                              static_cast<int16_t>( 0xCCCD ),
+                                              0x0000,
+                                              0xFFFF };
+            tools::SpawnActor( 0, AuruActr );
         }
     }
 
