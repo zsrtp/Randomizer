@@ -138,6 +138,7 @@ namespace mod
     bool ( *return_chkEvtBit )( uint32_t flag ) = nullptr;
 
     bool ( *return_isEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
+    void ( *return_onEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
     uint32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
 
     void main()
@@ -518,6 +519,34 @@ namespace mod
                                                      }
                                                      return return_isEventBit( eventPtr, flag );
                                                  } );
+
+        return_onEventBit = patch::hookFunction(
+            libtp::tp::d_save::onEventBit,
+            []( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag )
+            {
+                using namespace libtp::tp::d_a_alink;
+                using namespace libtp::data::stage;
+                switch ( flag )
+                {
+                    case 0x1E08:
+                    {
+                        if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm ==
+                             1 )
+                        {
+                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm = 0;
+                        }
+                        break;
+                    }
+
+                    default:
+                    {
+                        return return_onEventBit( eventPtr, flag );
+                        break;
+                    }
+                }
+                return return_onEventBit( eventPtr, flag );
+            } );
+
         return_event000 =
             patch::hookFunction( libtp::tp::d_msg_flow::event000,
                                  []( void* messageFlow, void* nodeEvent, void* actrPtr )

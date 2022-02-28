@@ -76,7 +76,7 @@ namespace mod::game_patch
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
                             if ( condition )
                             {
-                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xD4 );     // Can Transform at Will
+                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xD04 );     // Can Transform at Will
                                 if ( condition )
                                 {
                                     chosenLayer = stage::faronStateIDs::Faron_Snowpeak_Completed;

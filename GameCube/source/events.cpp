@@ -422,7 +422,7 @@ namespace mod::events
     {
         using namespace libtp;
         if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Lake_Hylia] ) &&
-             ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mLayer != 0x2 ) )
+             ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mLayer != 0x2 ) )
         {
             libtp::tp::dzx::ACTR AuruActr =
                 { "Rafrel", 0x00001D01, -116486.945f, -13860.f, 58533.0078f, 0, static_cast<int16_t>( 0xCCCD ), 0, 0xFFFF };

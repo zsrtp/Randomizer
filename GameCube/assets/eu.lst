@@ -37,6 +37,7 @@
 800342d4:onCollectCrystal
 80034940:onSwitch_dSv_memBit
 80033060:setItem
+80034410:onLightDropGetFlag
 
 // d_event.o
 800428A8:defaultSkipStb

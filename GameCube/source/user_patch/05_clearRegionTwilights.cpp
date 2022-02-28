@@ -20,6 +20,7 @@ namespace mod::user_patch
         {
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.light_drop.faron_tear_count = 0x10;
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag |= 0x1;
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info.player_last_region |= 0x4;
             libtp::tp::d_item::execItemGet( libtp::data::items::Vessel_Of_Light_Faron );
             libtp::tp::d_item::execItemGet( libtp::data::items::Heros_Clothes );
         }
