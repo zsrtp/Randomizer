@@ -6,6 +6,10 @@
 // text
 8000EDA8:getArchiveHeapPtr
 
+// m_Do_MemCard.o
+// data
+803E2EE0:MemCardWorkArea0
+
 // d_stage
 800267B4:roomTresureInit
 80027DAC:setTresure
