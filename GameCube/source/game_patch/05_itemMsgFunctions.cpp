@@ -4,7 +4,7 @@
 #include "data/items.h"
 #include "game_patch/00_customItemMessages.h"
 #include "game_patch/game_patch.h"
-#include "gc/bmgres.h"
+#include "gc_wii/bmgres.h"
 #include "main.h"
 #include "tp/control.h"
 #include "tp/d_a_alink.h"

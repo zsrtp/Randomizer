@@ -12,8 +12,8 @@
 #include "data/items.h"
 #include "data/stages.h"
 #include "game_patch/game_patch.h"
-#include "gc/OSModule.h"
-#include "gc/card.h"
+#include "gc_wii/OSModule.h"
+#include "gc_wii/card.h"
 #include "main.h"
 #include "patch.h"
 #include "rando/data.h"
@@ -82,7 +82,7 @@ namespace mod::rando
             return;
 
         // Loop through all loaded OSModuleInfo entries and apply the specified values to the rels already loaded.
-        libtp::gc::os_module::OSModuleInfo* rel = libtp::gc::os_module::osModuleList.first;
+        libtp::gc_wii::os_module::OSModuleInfo* rel = libtp::gc_wii::os_module::osModuleList.first;
         for ( ; rel; rel = rel->next )
         {
             for ( uint32_t i = 0; i < numReplacements; i++ )

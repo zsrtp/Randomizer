@@ -6,12 +6,11 @@
  */
 #include "rando/seedlist.h"
 
-#include <gc_wii/card.h>
-
 #include <cinttypes>
 #include <cstdio>
 #include <cstring>
 
+#include "gc_wii/card.h"
 #include "main.h"
 #include "rando/data.h"
 #include "rando/seed.h"

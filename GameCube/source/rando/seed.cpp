@@ -13,8 +13,8 @@
 #include <cstdio>
 
 #include "data/stages.h"
-#include "gc/card.h"
-#include "gc/dvdfs.h"
+#include "gc_wii/card.h"
+#include "gc_wii/dvdfs.h"
 #include "main.h"
 #include "rando/data.h"
 #include "tools.h"
@@ -583,7 +583,7 @@ namespace mod::rando
 
             if ( ( len >= 0 ) && ( len < static_cast<int32_t>( sizeof( filePath ) ) ) )
             {
-                allARC[i].arcFileIndex = libtp::gc::dvdfs::DVDConvertPathToEntrynum( filePath );
+                allARC[i].arcFileIndex = libtp::gc_wii::dvdfs::DVDConvertPathToEntrynum( filePath );
             }
             else     // Failsafe in case we did not get a valid result.
             {
