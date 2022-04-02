@@ -2,8 +2,9 @@
 /**	@file events.h
  *  @brief Custom events
  *
- *	@author AECX
- *	@bug No known bugs.
+ *  @author AECX
+ *  @author Isaac
+ *  @bug No known bugs.
  *  @todo Expand this to allow dynamic addition/removal of functions to be executed within the event function
  */
 
@@ -39,6 +40,14 @@ namespace mod::events
      * @param dmc DynamicModuleControl
      */
     void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc );
+
+    /**
+     * @brief Runs right before a module is unlinked
+     *
+     * @param randomizer Pointer to mod::randomizer
+     * @param dmc DynamicModuleControl
+     */
+    void onRELUnlink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc );
 
     /**
      * @brief Runs when one of the DZX init functions run

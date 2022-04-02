@@ -1,10 +1,11 @@
 /**	@file asm.h
  *  @brief ASM functions
  *
- *	@author AECX
+ *  @author AECX
  *  @author Zephiles
  *  @author Lunar Soap
- *	@bug No known bugs.
+ *  @author Isaac
+ *  @bug No known bugs.
  */
 #ifndef RANDO_ASM_H
 #define RANDO_ASM_H
@@ -21,6 +22,12 @@
 // Normally increments poe count
 #define e_hp_ExecDead_incOffset 0x2354
 #define e_po_ExecDead_incOffset 0x36A8
+
+// d_a_obj_Lv5Key__Wait_offset:
+// 0xBC is offset to the text section relative to the start of the decompressed
+// REL. 0x4E4 is offset to Wait function relative to the start of the text
+// section (as seen on line 14 of d_a_obj_Lv5Key.map).
+#define d_a_obj_Lv5Key__Wait_offset 0xBC + 0x4E4
 
 namespace mod::assembly
 {
