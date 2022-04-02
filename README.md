@@ -64,3 +64,9 @@ Like other Randomizers, the **Twilight Princess Randomizer** (TPR) shuffles the 
 * [Asxce](//twitter.com/dAsxce2)
 * Sushi
 * XModxGodX
+* Epic Bonington
+* Jared Swensen
+* clabrus
+* XModxGodX
+* Zushi
+* Giraudet Evan

@@ -6,7 +6,7 @@
  */
 #include "rando/seedlist.h"
 
-#include <gc/card.h>
+#include <gc_wii/card.h>
 
 #include <cinttypes>
 #include <cstdio>

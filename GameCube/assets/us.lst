@@ -9,6 +9,10 @@
 // text
 8000EDF4:getArchiveHeapPtr
 
+// m_Do_MemCard.o
+// data
+803E0F40:MemCardWorkArea0
+
 // d_stage
 800266A4:roomTresureInit
 80027D04:setTresure
@@ -173,7 +177,18 @@
 803621DC:_savegpr_29
 803621E0:_savegpr_30
 803621E4:_savegpr_31
+80362238:__udivdi3
+80362324:__divdi3
 8036245C:__umoddi3
+80362540:__moddi3
+8036264C:__ashldi3
+80362670:__lshrdi3
+80362694:__ashrdi3
+803626BC:__floatdisf
+80362770:__fixsfdi
+80362770:__fixdfdi
+80362770:__fixunssfdi
+80362770:__fixunsdfdi
 
 // mem.o
 8036608C:memcmp

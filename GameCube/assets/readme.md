@@ -15,5 +15,6 @@ To use a custom banner and icon in the resulting gci you want to look at the fol
 
 ![](https://share.aecx.cc/E1B13M)
 (No compression; Origin: Bottom Left)
+
 3. Execute `Tga2bti.exe -4A3 <file.tga> <file.raw>` for both files (`icon` and `banner`)
 _Note: `5A3` is _not_ supported by the tool but 4A3 seems to work just fine_
