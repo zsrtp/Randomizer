@@ -268,6 +268,20 @@ namespace mod::events
         }
     }
 
+    void onRELUnlink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
+    {
+        switch ( dmc->moduleInfo->id )
+        {
+            // d_a_obj_Lv5Key.rel
+            // Snowpeak Ruins Small Key Lock
+            case 0x189:
+            {
+                return_daObjLv5Key_c__Wait = libtp::patch::unhookFunction( return_daObjLv5Key_c__Wait );
+                break;
+            }
+        }
+    }
+
     void onDZX( rando::Randomizer* randomizer, libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo )
     {
         if ( randomizer )

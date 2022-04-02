@@ -51,6 +51,7 @@ namespace mod
     void ( *return_fapGm_Execute )( void ) = nullptr;
     void ( *return_setLineUpItem )( libtp::tp::d_save::dSv_player_item_c* ) = nullptr;
     bool ( *return_do_Link )( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) = nullptr;
+    bool ( *return_do_unlink )( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) = nullptr;
 
     // DZX trampolines
     bool ( *return_actorInit )( void* mStatus_roomControl,
@@ -187,6 +188,14 @@ namespace mod
 
                                                   return result;
                                               } );
+
+        return_do_unlink = patch::hookFunction( libtp::tp::dynamic_link::do_unlink,
+                                                []( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
+                                                {
+                                                    events::onRELUnlink( randomizer, dmc );
+
+                                                    return return_do_unlink( dmc );
+                                                } );
 
         // DZX
         return_actorInit =

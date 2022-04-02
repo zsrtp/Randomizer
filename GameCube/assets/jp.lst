@@ -34,6 +34,7 @@
 
 // DynamicLink.o
 8026508C:do_link
+80265358:do_unlink
 
 // f_op_scene_req.o
 // data
