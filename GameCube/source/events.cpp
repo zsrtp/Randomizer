@@ -209,60 +209,62 @@ namespace mod::events
             case 0x189:
             {
                 // Prevent Snowpeak Ruins Small Key softlock
-                return_daObjLv5Key_c__Wait = libtp::patch::hookFunction(
-                    reinterpret_cast<void ( * )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* )>( relPtrRaw + fish ),
-                    []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr )
-                    {
-                        float playerPos[3];
-                        libtp::tp::d_map_path_dmap::getMapPlayerPos( playerPos );
+                return_daObjLv5Key_c__Wait =
+                    libtp::patch::hookFunction( reinterpret_cast<void ( * )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* )>(
+                                                    relPtrRaw + d_a_obj_Lv5Key__Wait_offset ),
+                                                []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr )
+                                                {
+                                                    float playerPos[3];
+                                                    libtp::tp::d_map_path_dmap::getMapPlayerPos( playerPos );
 
-                        // Will compare xPos if 0x4000 & yRot is nonzero (lock is on x-axis).
-                        // Will compare zPos if 0x4000 & yRot is zero (lock is on z-axis).
-                        // Will compare greater if 0x8000 & yRot is nonzero.
-                        // This implementation reduces instruction count to 49 compared to naive approach's 86.
+                                                    // Will compare xPos if 0x4000 & yRot is nonzero (lock is on x-axis).
+                                                    // Will compare zPos if 0x4000 & yRot is zero (lock is on z-axis).
+                                                    // Will compare greater if 0x8000 & yRot is nonzero.
+                                                    // This implementation reduces instruction count to 49 compared to naive
+                                                    // approach's 86.
 
-                        bool isCompareX = lv5KeyPtr->mCollisionRot.y & 0x4000;
-                        bool isCompareGreater = lv5KeyPtr->mCollisionRot.y & 0x8000;
+                                                    bool isCompareX = lv5KeyPtr->mCollisionRot.y & 0x4000;
+                                                    bool isCompareGreater = lv5KeyPtr->mCollisionRot.y & 0x8000;
 
-                        float* playerAxisPos = nullptr;
-                        float* lockPos = nullptr;
+                                                    float* playerAxisPos = nullptr;
+                                                    float* lockPos = nullptr;
 
-                        if ( isCompareX )
-                        {
-                            playerAxisPos = &playerPos[0];
-                            lockPos = &( lv5KeyPtr->mCurrent.mPosition.x );
-                        }
-                        else
-                        {
-                            playerAxisPos = &playerPos[2];
-                            lockPos = &( lv5KeyPtr->mCurrent.mPosition.z );
-                        }
+                                                    if ( isCompareX )
+                                                    {
+                                                        playerAxisPos = &playerPos[0];
+                                                        lockPos = &( lv5KeyPtr->mCurrent.mPosition.x );
+                                                    }
+                                                    else
+                                                    {
+                                                        playerAxisPos = &playerPos[2];
+                                                        lockPos = &( lv5KeyPtr->mCurrent.mPosition.z );
+                                                    }
 
-                        bool swapDoorSides = false;
+                                                    bool swapDoorSides = false;
 
-                        if ( isCompareGreater )
-                        {
-                            if ( *playerAxisPos > *lockPos + 17 )
-                            {
-                                swapDoorSides = true;
-                                *lockPos += 34;
-                            }
-                        }
-                        else if ( *playerAxisPos < *lockPos - 17 )
-                        {
-                            swapDoorSides = true;
-                            *lockPos -= 34;
-                        }
+                                                    if ( isCompareGreater )
+                                                    {
+                                                        if ( *playerAxisPos > *lockPos + 17 )
+                                                        {
+                                                            swapDoorSides = true;
+                                                            *lockPos += 34;
+                                                        }
+                                                    }
+                                                    else if ( *playerAxisPos < *lockPos - 17 )
+                                                    {
+                                                        swapDoorSides = true;
+                                                        *lockPos -= 34;
+                                                    }
 
-                        if ( swapDoorSides )
-                        {
-                            lv5KeyPtr->mCollisionRot.y ^= 0x8000;       // facing
-                            lv5KeyPtr->mCurrent.mAngle.y ^= 0x8000;     // speed direction
-                        }
+                                                    if ( swapDoorSides )
+                                                    {
+                                                        lv5KeyPtr->mCollisionRot.y ^= 0x8000;       // facing
+                                                        lv5KeyPtr->mCurrent.mAngle.y ^= 0x8000;     // speed direction
+                                                    }
 
-                        // Call original function
-                        return_daObjLv5Key_c__Wait( lv5KeyPtr );
-                    } );
+                                                    // Call original function
+                                                    return_daObjLv5Key_c__Wait( lv5KeyPtr );
+                                                } );
                 break;
             }
         }
