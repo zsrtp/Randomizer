@@ -191,6 +191,14 @@ namespace mod::events
                     0x38600131;     // set auru to check for whether he gave the player the item to spawn.
                 break;
             }
+            // d_a_obj_smallkey.rel
+            // Freestanding Small Keys
+            case 0x26D:
+            {
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0xC88 ) =
+                    0x48000058;     // patch instruction to prevent game from removing bulblin camp key.
+                break;
+            }
         }
     }
 

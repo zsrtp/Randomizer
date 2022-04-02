@@ -347,7 +347,7 @@ namespace mod
                     {
                         // Check if we are at Kakariko Malo mart and verify that we have not bought the shield.
                         if ( tp::d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Kakariko_Village_Interiors] ) &&
-                             tp::d_kankyo::env_light.currentRoom == 3 && tp::d_a_alink::dComIfGs_isEventBit( 0x6002 ) )
+                             tp::d_kankyo::env_light.currentRoom == 3 && !tp::d_a_alink::dComIfGs_isEventBit( 0x6102 ) )
                         {
                             // Return false so we can buy the shield.
                             return 0;

@@ -20,7 +20,7 @@ namespace mod::user_patch
     void patchBattleMusic( rando::Randomizer* randomizer, bool set )
     {
         mod::console << "[2] EnemyBgmDisabled [" << ( set ? "x" : " " ) << "]\n";
-        if ( set )
+        if ( !set )
         {
             bgm::enemybgm::return_startBattleBgm = libtp::patch::hookFunction(
                 libtp::tp::z2audiolib::z2seqmgr::startBattleBgm,

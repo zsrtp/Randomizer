@@ -11,6 +11,7 @@
 
 #include "data/items.h"
 #include "data/stages.h"
+#include "game_patch/game_patch.h"
 #include "gc/OSModule.h"
 #include "gc/card.h"
 #include "main.h"
@@ -183,9 +184,10 @@ namespace mod::rando
             {
                 case rando::ArcReplacementType::Item:
                 {
+                    uint32_t replacementValue =
+                        game_patch::_04_verifyProgressiveItem( mod::randomizer, m_Seed->m_ArcReplacements[i].replacementValue );
                     *reinterpret_cast<uint8_t*>(
-                        ( reinterpret_cast<uint32_t>( filePtr ) + m_Seed->m_ArcReplacements[i].offset ) ) =
-                        m_Seed->m_ArcReplacements[i].replacementValue;
+                        ( reinterpret_cast<uint32_t>( filePtr ) + m_Seed->m_ArcReplacements[i].offset ) ) = replacementValue;
                     break;
                 }
                 case rando::ArcReplacementType::HiddenSkill:
@@ -208,18 +210,20 @@ namespace mod::rando
                         if ( ( m_Seed->m_HiddenSkillChecks[j].stageIDX == stageIDX ) &&
                              ( m_Seed->m_HiddenSkillChecks[j].roomID == libtp::tp::d_kankyo::env_light.currentRoom ) )
                         {
-                            *reinterpret_cast<uint16_t*>(
-                                ( reinterpret_cast<uint32_t>( filePtr ) + m_Seed->m_ArcReplacements[i].offset ) ) =
-                                m_Seed->m_HiddenSkillChecks[j].itemID + 0x65;
+                            uint16_t msgID =
+                                game_patch::_04_verifyProgressiveItem( mod::randomizer, m_Seed->m_HiddenSkillChecks[j].itemID );
+                            *reinterpret_cast<uint16_t*>( ( reinterpret_cast<uint32_t>( filePtr ) +
+                                                            m_Seed->m_ArcReplacements[i].offset ) ) = msgID + 0x65;
                         }
                     }
                     break;
                 }
                 case rando::ArcReplacementType::ItemMessage:
                 {
-                    *reinterpret_cast<uint16_t*>(
-                        ( reinterpret_cast<uint32_t>( filePtr ) + m_Seed->m_ArcReplacements[i].offset ) ) =
-                        m_Seed->m_ArcReplacements[i].replacementValue + 0x65;
+                    uint32_t replacementValue =
+                        game_patch::_04_verifyProgressiveItem( mod::randomizer, m_Seed->m_ArcReplacements[i].replacementValue );
+                    *reinterpret_cast<uint16_t*>( ( reinterpret_cast<uint32_t>( filePtr ) +
+                                                    m_Seed->m_ArcReplacements[i].offset ) ) = replacementValue + 0x65;
                 }
             }
         }
