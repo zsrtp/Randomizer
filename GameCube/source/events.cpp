@@ -206,7 +206,7 @@ namespace mod::events
             }
             // d_a_obj_Lv5Key.rel
             // Snowpeak Ruins Small Key Lock
-            case 0x0189:
+            case 0x189:
             {
                 // Prevent Snowpeak Ruins Small Key softlock
                 return_daObjLv5Key_c__Wait = libtp::patch::hookFunction(

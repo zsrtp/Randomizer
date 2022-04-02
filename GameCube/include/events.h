@@ -42,7 +42,7 @@ namespace mod::events
     void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc );
 
     /**
-     * @brief Runs after a module has been unlinked
+     * @brief Runs right before a module is unlinked
      *
      * @param randomizer Pointer to mod::randomizer
      * @param dmc DynamicModuleControl
