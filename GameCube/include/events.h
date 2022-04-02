@@ -2,9 +2,9 @@
 /**	@file events.h
  *  @brief Custom events
  *
- *	@author AECX
- *	@author Isaac
- *	@bug No known bugs.
+ *  @author AECX
+ *  @author Isaac
+ *  @bug No known bugs.
  *  @todo Expand this to allow dynamic addition/removal of functions to be executed within the event function
  */
 

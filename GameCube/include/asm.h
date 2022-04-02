@@ -1,10 +1,11 @@
 /**	@file asm.h
  *  @brief ASM functions
  *
- *	@author AECX
+ *  @author AECX
  *  @author Zephiles
  *  @author Lunar Soap
- *	@bug No known bugs.
+ *  @author Isaac
+ *  @bug No known bugs.
  */
 #ifndef RANDO_ASM_H
 #define RANDO_ASM_H
