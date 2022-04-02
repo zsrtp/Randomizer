@@ -22,6 +22,9 @@
 #define e_hp_ExecDead_incOffset 0x2354
 #define e_po_ExecDead_incOffset 0x36A8
 
+// abc
+#define fish 0xBC + 0x4E4
+
 namespace mod::assembly
 {
     extern "C"
