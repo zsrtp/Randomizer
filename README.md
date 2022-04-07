@@ -6,9 +6,9 @@ Like other Randomizers, the **Twilight Princess Randomizer** (TPR) shuffles the 
 # Main Contributors
 |Name|Role|
 |----------------|-------------------------------|
-|[AECX](//github.com/AECX)|Project Leadership, coordination and head of development|
+|[AECX](//github.com/AECX)|Server Hosting, development, and various code additions|
 |[Zephiles](//github.com/Zephiles)|Reverse engineering and various code additions|
-|[lunarsoap5](//github.com/lunarsoap5)|Developer and Community Manager|
+|[lunarsoap5](//github.com/lunarsoap5)|Project leadership, Community Manager, and Head of Development|
 |[vbn598](//github.com/vbn598)|Developer|
 
 # Roadmap
