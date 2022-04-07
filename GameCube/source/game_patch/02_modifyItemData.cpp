@@ -930,6 +930,10 @@ namespace mod::game_patch
         d_item::ItemGetCheckFunc item_getcheck_func_jump_strike = []()
         { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Jump_Strike ); };
         itemGetCheckFuncPtr[items::Jump_Strike] = item_getcheck_func_jump_strike;
+
+        d_item::ItemGetCheckFunc item_getcheck_func_bulblin_camp_key = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Bulblin_Camp_Key ); };
+        itemGetCheckFuncPtr[items::Bulblin_Camp_Key] = item_getcheck_func_bulblin_camp_key;
     }
     void _02_modifyItemData()
     {

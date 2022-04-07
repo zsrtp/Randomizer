@@ -1,6 +1,7 @@
 #include <string.h>
 
 #include "data/stages.h"
+#include "events.h"
 #include "game_patch/game_patch.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
@@ -179,11 +180,25 @@ namespace mod::game_patch
                         break;
                     }
 
-                    case stage::stageIDs::Kakariko_Village_Interiors:
                     case stage::stageIDs::Kakariko_Graveyard_Interiors:
                     {
                         if ( ( ( roomId == 1 && ( condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x904 ),
                                                   condition != false ) ) ) )     // Lakebed Completed
+                        {
+                            chosenLayer = stage::kakarikoInteriorStateIDs::Kakariko_Int_Lakebed_Completed;
+                            libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
+                        }
+                        else
+                        {
+                            chosenLayer = stage::kakarikoInteriorStateIDs::Kakariko_Int_KB1_Completed;
+                            libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
+                        }
+                        break;
+                    }
+
+                    case stage::stageIDs::Kakariko_Village_Interiors:
+                    {
+                        if ( roomId == 1 )     // Lakebed Completed
                         {
                             chosenLayer = stage::kakarikoInteriorStateIDs::Kakariko_Int_Lakebed_Completed;
                             libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
@@ -783,8 +798,17 @@ namespace mod::game_patch
                             else
                             {
                                 chosenLayer = stage::bulblinCampStateIDs::Bulblin_Camp_Watched_Mirror_Cutscene;
+                                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x1C] = 0x0;
                             }
                         }
+                        else
+                        {
+                            if ( events::haveItem( libtp::data::items::Bulblin_Camp_Key ) )
+                            {
+                                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x1C] = 0x1;
+                            }
+                        }
+
                         break;
                     }
 

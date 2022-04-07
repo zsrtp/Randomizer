@@ -184,7 +184,10 @@ namespace mod
                                                   // before applying patches
                                                   const bool result = return_do_Link( dmc );
 
-                                                  events::onRELLink( randomizer, dmc );
+                                                  if ( result && dmc->moduleInfo )
+                                                  {
+                                                      events::onRELLink( randomizer, dmc );
+                                                  }
 
                                                   return result;
                                               } );
@@ -434,6 +437,16 @@ namespace mod
                         }
                         break;
                     }
+
+                    case 0x40:     // Checking if the player has completed Goron Mines
+                    {
+                        if ( libtp::tp::d_a_alink::checkStageName(
+                                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Village_Interiors] ) )
+                        {
+                            return true;
+                        }
+                        break;
+                    }
                     default:
                         break;
                 }
@@ -508,6 +521,15 @@ namespace mod
                                                              if ( checkStageName( allStages[stageIDs::Goron_Mines] ) )
                                                              {
                                                                  return false;
+                                                             }
+                                                             break;
+                                                         }
+
+                                                         case 0x810:
+                                                         {
+                                                             if ( checkStageName( allStages[stageIDs::Castle_Town] ) )
+                                                             {
+                                                                 return true;
                                                              }
                                                              break;
                                                          }

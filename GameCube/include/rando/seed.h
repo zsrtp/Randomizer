@@ -86,10 +86,10 @@ namespace mod::rando
         void loadShopModels();
         void setArcIndex();
 
-       private:
         uint8_t* m_GCIData = nullptr;     // GCI Data including header
-        uint8_t m_fileIndex = 0xFF;       // GCI Fileindex
-        int32_t m_CardSlot = 0;           // Selected Card slot
+       private:
+        uint8_t m_fileIndex = 0xFF;     // GCI Fileindex
+        int32_t m_CardSlot = 0;         // Selected Card slot
         void ClearChecks( void );
 
         /**

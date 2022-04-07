@@ -12,7 +12,7 @@
 #include "user_patch/02_enemybgm.h"
 #include "user_patch/03_customCosmetics.h"
 #include "user_patch/04_removeIBLimit.h"
-#include "user_patch/05_clearRegionTwilights.h"
+#include "user_patch/05_newFileFunctions.h"
 
 namespace mod::user_patch
 {
@@ -22,5 +22,6 @@ namespace mod::user_patch
                             removeIBLimit,
                             clearFaronTwilight,
                             clearEldinTwilight,
-                            clearLanayruTwilight };
+                            clearLanayruTwilight,
+                            loadShopModels };
 }
