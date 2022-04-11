@@ -24,8 +24,6 @@ namespace mod::user_patch
                 0x10;     // Set number of tears to fill the vessel.
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag |=
                 0x1;     // Set the flag for having completed Faron Twilight.
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info.player_last_region |=
-                0x4;     // Add Faron province to the map.
             libtp::tp::d_item::execItemGet( libtp::data::items::Vessel_Of_Light_Faron );
             libtp::tp::d_item::execItemGet( libtp::data::items::Heros_Clothes );
         }
@@ -41,8 +39,6 @@ namespace mod::user_patch
                 0x1;     // Set the flag for the last transformed twilight.
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag |=
                 0x2;     // Set the flag for having completed Eldin Twilight.
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info.player_last_region |=
-                0x8;     // Add Eldin Province to the map.
             libtp::tp::d_item::execItemGet( libtp::data::items::Vessel_Of_Light_Eldin );
         }
     }
@@ -57,8 +53,6 @@ namespace mod::user_patch
                 0x2;     // Set the flag for the last transformed twilight.
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag |=
                 0x4;     // Set the flag for having completed Lanayru Twilight.
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info.player_last_region |=
-                0x10;     // Add Lanayru Province to the map.
             libtp::tp::d_item::execItemGet( libtp::data::items::Vessel_Of_Light_Lanayru );
         }
     }
