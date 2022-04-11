@@ -480,7 +480,6 @@ namespace mod::rando
         // There is only one BOSS check per stage. Once we have a match, we are done.
         for ( uint32_t i = 0; i < num_bossChecks; i++ )
         {
-            mod::console << allBOSS[i].stageIDX << "\n";
             if ( allBOSS[i].stageIDX == stageIDX )
             {
                 memcpy( &m_BossChecks[0], &allBOSS[i], sizeof( BOSSCheck ) );
