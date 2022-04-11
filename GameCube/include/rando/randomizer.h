@@ -47,6 +47,9 @@ namespace mod::rando
         SeedInfo* m_SeedInfo = nullptr;     // SeedInfo associated with this randomizer instance
         bool m_SeedInit = false;            // True if seed-specific patches, flags, etc. have been applied to the save-file
         Seed* m_Seed;
+
+       private:
+        void setNewSaveValues();
     };
 }     // namespace mod::rando
 #endif

@@ -43,6 +43,7 @@ namespace mod::rando
             m_SeedInfo = seedInfo;
             m_Seed = new Seed( CARD_SLOT_A, seedInfo );
             m_Seed->setArcIndex();
+            m_Seed->loadShopModels();
             // Load checks for first load
             onStageLoad();
         }
@@ -254,5 +255,12 @@ namespace mod::rando
         }
         // Default
         return libtp::data::items::Recovery_Heart;
+    }
+
+    void setNewSaveValues()
+    {
+        libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags.event_flags[0xF8] = 0x1;
+        libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags.event_flags[0xF9] = 0xF4;
+        return;
     }
 }     // namespace mod::rando

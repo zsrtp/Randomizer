@@ -19,6 +19,7 @@
 #include "rando/data.h"
 #include "tools.h"
 #include "tp/d_a_alink.h"
+#include "tp/d_a_shop_item_static.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item_data.h"
 #include "tp/d_s_logo.h"
@@ -364,6 +365,38 @@ namespace mod::rando
         }
     }
 
+    void Seed::loadShopModels()
+    {
+        using namespace libtp::tp;
+        if ( m_GCIData )
+        {
+            uint32_t num_shopItems = m_Header->shopItemCheckInfo.numEntries;
+            uint32_t gci_offset = m_Header->shopItemCheckInfo.dataOffset;
+
+            // Set the pointer as offset into our buffer
+            shopCheck* allSHOP = reinterpret_cast<shopCheck*>( &m_GCIData[gci_offset] );
+
+            d_item_data::ItemResource* itemResourcePtr = &d_item_data::item_resource[0];
+            for ( uint32_t i = 0; i < num_shopItems; i++ )
+            {
+                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].arcName =
+                    itemResourcePtr[allSHOP[i].replacementItemID].arcName;
+                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].modelResIdx =
+                    itemResourcePtr[allSHOP[i].replacementItemID].modelResIdx;
+                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBckResIdx =
+                    itemResourcePtr[allSHOP[i].replacementItemID].bckResIdx;
+                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBrkResIdx =
+                    itemResourcePtr[allSHOP[i].replacementItemID].brkResIdx;
+                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBtpResIdx =
+                    itemResourcePtr[allSHOP[i].replacementItemID].btpResIdx;
+                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].tevFrm =
+                    itemResourcePtr[allSHOP[i].replacementItemID].tevFrm;
+                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].btpFrm = 0xFF;
+                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].posY = 15.0f;
+            }
+        }
+    }
+
     void Seed::LoadHiddenSkill()
     {
         using namespace libtp;
@@ -447,6 +480,7 @@ namespace mod::rando
         // There is only one BOSS check per stage. Once we have a match, we are done.
         for ( uint32_t i = 0; i < num_bossChecks; i++ )
         {
+            mod::console << allBOSS[i].stageIDX << "\n";
             if ( allBOSS[i].stageIDX == stageIDX )
             {
                 memcpy( &m_BossChecks[0], &allBOSS[i], sizeof( BOSSCheck ) );

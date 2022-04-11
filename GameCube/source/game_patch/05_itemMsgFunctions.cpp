@@ -339,9 +339,33 @@ namespace mod::game_patch
                 break;
             }
 
+            case Fused_Shadow_2:
+            {
+                setMessageText( control, secondFusedShadowText );
+                break;
+            }
+
+            case Fused_Shadow_3:
+            {
+                setMessageText( control, thirdFusedShadowText );
+                break;
+            }
+
             case Mirror_Piece_2:
             {
                 setMessageText( control, secondMirrorShardText );
+                break;
+            }
+
+            case Mirror_Piece_3:
+            {
+                setMessageText( control, thirdMirrorShardText );
+                break;
+            }
+
+            case Mirror_Piece_4:
+            {
+                setMessageText( control, fourthMirrorShardText );
                 break;
             }
 

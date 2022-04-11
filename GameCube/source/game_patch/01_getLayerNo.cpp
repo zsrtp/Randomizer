@@ -100,7 +100,7 @@ namespace mod::game_patch
                                 condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x602 );     // Forest Temple Completed
                                 if ( condition )
                                 {
-                                    chosenLayer = stage::faronStateIDs::Faron_Forest_Temple_Completed;
+                                    chosenLayer = stage::faronStateIDs::Faron_Snowpeak_Completed;
                                 }
                             }
                             else

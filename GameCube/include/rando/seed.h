@@ -86,10 +86,12 @@ namespace mod::rando
         void loadShopModels();
         void setArcIndex();
 
-        uint8_t* m_GCIData = nullptr;     // GCI Data including header
+        void applyPatches( bool set );
+
        private:
-        uint8_t m_fileIndex = 0xFF;     // GCI Fileindex
-        int32_t m_CardSlot = 0;         // Selected Card slot
+        uint8_t* m_GCIData = nullptr;     // GCI Data including header
+        uint8_t m_fileIndex = 0xFF;       // GCI Fileindex
+        int32_t m_CardSlot = 0;           // Selected Card slot
         void ClearChecks( void );
 
         /**
@@ -97,7 +99,7 @@ namespace mod::rando
          *
          *  @param set If true it will set the patches, otherwise restore the original
          */
-        void applyPatches( bool set );
+
         void applyEventFlags( void );
         void applyRegionFlags( void );
 
