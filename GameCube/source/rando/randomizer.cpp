@@ -43,7 +43,6 @@ namespace mod::rando
             m_SeedInfo = seedInfo;
             m_Seed = new Seed( CARD_SLOT_A, seedInfo );
             m_Seed->setArcIndex();
-            m_Seed->loadShopModels();
             // Load checks for first load
             onStageLoad();
         }

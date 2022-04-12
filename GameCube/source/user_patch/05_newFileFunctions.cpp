@@ -59,9 +59,19 @@ namespace mod::user_patch
 
     void loadShopModels( rando::Randomizer* randomizer, bool set )
     {
-        if ( set )
+        if ( set && randomizer )
         {
             randomizer->m_Seed->loadShopModels();
+        }
+    }
+
+    void setMinorCutsceneValues( rando::Randomizer* randomizer, bool set )
+    {
+        if ( set )
+        {
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_get_item.mItemsFlags[0] |= 0x7E;
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.letter_info.letter_get_bitfields[0] |= 0xFFFF;
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.letter_info.letter_read_bitfields[0] |= 0xFFFF;
         }
     }
 }     // namespace mod::user_patch

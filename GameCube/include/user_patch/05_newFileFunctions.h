@@ -20,6 +20,7 @@ namespace mod::user_patch
     void clearEldinTwilight( rando::Randomizer* randomizer, bool set );
     void clearLanayruTwilight( rando::Randomizer* randomizer, bool set );
     void loadShopModels( rando::Randomizer* randomizer, bool set );
+    void setMinorCutsceneValues( rando::Randomizer* randomizer, bool set );
 }     // namespace mod::user_patch
 
 #endif

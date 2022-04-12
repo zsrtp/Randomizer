@@ -368,7 +368,7 @@ namespace mod::rando
     void Seed::loadShopModels()
     {
         using namespace libtp::tp;
-        if ( m_GCIData )
+        if ( m_GCIData && m_Header )
         {
             uint32_t num_shopItems = m_Header->shopItemCheckInfo.numEntries;
             uint32_t gci_offset = m_Header->shopItemCheckInfo.dataOffset;

@@ -23,5 +23,6 @@ namespace mod::user_patch
                             clearFaronTwilight,
                             clearEldinTwilight,
                             clearLanayruTwilight,
-                            loadShopModels };
+                            loadShopModels,
+                            setMinorCutsceneValues };
 }
