@@ -456,5 +456,28 @@ namespace mod::events
         }
     }
 
+    void loadCustomRoomSCOBs()
+    {
+        using namespace libtp;
+        if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Hyrule_Field] ) &&
+             libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x1E08 ) )
+        {
+            libtp::tp::dzx::SCOB HJumpActr = { "Hjump",
+                                               0x044FFF02,
+                                               5600.f,
+                                               -5680.f,
+                                               52055.f,
+                                               0,
+                                               static_cast<int16_t>( 0x4000 ),
+                                               0,
+                                               0xFFFF,
+                                               0x20,
+                                               0x2D,
+                                               0x2D,
+                                               0xFF };
+            tools::SpawnSCOB( 3, HJumpActr );
+        }
+    }
+
     bool haveItem( uint8_t item ) { return libtp::tp::d_item::checkItemGet( item, 1 ); }
 }     // namespace mod::events

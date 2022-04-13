@@ -888,6 +888,10 @@ namespace mod::game_patch
         { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Big_Wallet ); };
         itemGetCheckFuncPtr[items::Big_Wallet] = item_getcheck_func_big_wallet;
 
+        d_item::ItemGetCheckFunc item_getcheck_func_giant_wallet = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Giant_Wallet ); };
+        itemGetCheckFuncPtr[items::Giant_Wallet] = item_getcheck_func_giant_wallet;
+
         d_item::ItemGetCheckFunc item_getcheck_func_first_fused_shadow = []()
         { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Fused_Shadow_1 ); };
         itemGetCheckFuncPtr[items::Fused_Shadow_1] = item_getcheck_func_first_fused_shadow;

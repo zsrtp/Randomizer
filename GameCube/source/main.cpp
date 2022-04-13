@@ -142,6 +142,8 @@ namespace mod
     void ( *return_onEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
     uint32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
 
+    int32_t ( *return_tgscInfoInit )( void* stageDt, void* i_data, int32_t entryNum, void* param_3 ) = nullptr;
+
     void main()
     {
         // Run game patches
@@ -225,6 +227,13 @@ namespace mod
                                      events::loadCustomRoomActors();
                                      return return_actorCommonLayerInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
                                  } );
+
+        return_tgscInfoInit = patch::hookFunction( tgscInfoInit,
+                                                   []( void* stageDt, void* i_data, int32_t entryNum, void* param_3 )
+                                                   {
+                                                       events::loadCustomRoomSCOBs();
+                                                       return return_tgscInfoInit( stageDt, i_data, entryNum, param_3 );
+                                                   } );
 
         // Custom States
         return_getLayerNo_common_common =
@@ -766,6 +775,9 @@ namespace mod
             if ( seedList->m_numSeeds > 0 && !randomizer )
             {
                 randomizer = new rando::Randomizer( &seedList->m_seedInfo[seedList->m_selectedSeed] );
+                // Patches need to be applied whenever the seed is loaded.
+                mod::console << "Patching game:\n";
+                randomizer->m_Seed->applyPatches( true );
             }
         }
         else if ( randomizer )

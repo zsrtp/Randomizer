@@ -117,6 +117,7 @@ namespace mod::events
 
     void loadCustomActors();
     void loadCustomRoomActors();
+    void loadCustomRoomSCOBs();
 
     bool haveItem( uint8_t item );
 }     // namespace mod::events

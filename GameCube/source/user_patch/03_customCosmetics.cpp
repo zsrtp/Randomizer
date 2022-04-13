@@ -8,6 +8,7 @@
 
 #include <cinttypes>
 
+#include "events.h"
 #include "main.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_meter2_info.h"
@@ -136,7 +137,8 @@ namespace mod::user_patch
             }
         }
 
-        for ( uint16_t i = 0x908; i <= 0x914; i += 0x4 )
+        for ( uint16_t i = 0x908, i1 = 0x3F8, i2 = 0x5A8, i3 = 0x758, rupee = 0x1038; i <= 0x914;
+              i += 0x4, i1 += 0x4, i2 += 0x4, i3 += 0x4, rupee += 0x4 )
         {
             // Patch the Big Heart color
             if ( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow != nullptr )
@@ -144,6 +146,28 @@ namespace mod::user_patch
                 ( *reinterpret_cast<uint32_t*>(
                     reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + i ) ) =
                     heartColorRGBA[randomizer->m_SeedInfo->header.heartColor];
+                ( *reinterpret_cast<uint32_t*>(
+                    reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + i1 ) ) =
+                    heartColorRGBA[randomizer->m_SeedInfo->header.heartColor];
+                ( *reinterpret_cast<uint32_t*>(
+                    reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + i2 ) ) =
+                    heartColorRGBA[randomizer->m_SeedInfo->header.heartColor];
+                ( *reinterpret_cast<uint32_t*>(
+                    reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + i3 ) ) =
+                    heartColorRGBA[randomizer->m_SeedInfo->header.heartColor];
+
+                if ( events::haveItem( libtp::data::items::Giant_Wallet ) )
+                {
+                    ( *reinterpret_cast<uint32_t*>(
+                        reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + rupee ) ) =
+                        0xaf00ffff;
+                }
+                else if ( events::haveItem( libtp::data::items::Big_Wallet ) )
+                {
+                    ( *reinterpret_cast<uint32_t*>(
+                        reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + rupee ) ) =
+                        0xff0000ff;
+                }
             }
         }
 

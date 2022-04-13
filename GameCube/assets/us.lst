@@ -20,6 +20,7 @@
 80025A38:actorInit
 80025B24:actorInit_always
 8002586C:actorCommonLayerInit
+80025bfc:tgscInfoInit
 
 // data
 80450C34:archiveHeap

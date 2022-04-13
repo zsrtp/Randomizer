@@ -48,10 +48,6 @@ namespace mod::rando
         m_GCIData = new uint8_t[length];
 
         m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, fileName, length, 0x00, m_GCIData );
-
-        // Patches need to be applied whenever the seed is loaded.
-        mod::console << "Patching game:\n";
-        this->applyPatches( true );
     }
 
     Seed::~Seed()
