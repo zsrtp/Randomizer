@@ -78,6 +78,8 @@ namespace mod
     extern bool ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 );
     extern bool ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 );
 
+    extern bool ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 );
+
     extern bool ( *return_isDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int memBit );
 }     // namespace mod
 #endif

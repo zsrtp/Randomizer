@@ -204,6 +204,7 @@
 80368AE8:strncpy
 80368B2C:strcpy
 80368954:strncmp
+80368be4:strlen
 
 // m_Do_controller_pad.o
 // data
@@ -258,6 +259,7 @@
 8024b8e4:query022
 8024b918:query023
 8024b974:query025
+8024bfec:query042
 8024c3fc:event000
 8024d7c8:event035
 
@@ -267,3 +269,6 @@
 //d_a_npc.o
 8014caac:chkEvtBit
 80155634:chkEvtBitF
+
+//resource.o
+802a9490:parseCharacter_1Byte

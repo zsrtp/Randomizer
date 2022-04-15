@@ -74,4 +74,13 @@ namespace mod::user_patch
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.letter_info.letter_read_bitfields[0] |= 0xFFFF;
         }
     }
+
+    void clearMDH( rando::Randomizer* randomizer, bool set )
+    {
+        if ( set )
+        {
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.transform_level_flag |=
+                0x8;     // Set the flag for the last transformed twilight. Also puts Midna on the player's back
+        }
+    }
 }     // namespace mod::user_patch

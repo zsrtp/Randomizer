@@ -28,6 +28,7 @@ namespace mod::game_patch
                                    uint16_t unk3,
                                    uint16_t msgId );
     uint32_t _05_getCustomMsgColor( uint8_t colorId );
+    const char** _05_replaceMessageString( const char** text );
     void _06_writeASMPatches();
     void _07_checkPlayerStageReturn();
 }     // namespace mod::game_patch

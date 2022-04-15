@@ -24,5 +24,6 @@ namespace mod::user_patch
                             clearEldinTwilight,
                             clearLanayruTwilight,
                             loadShopModels,
-                            setMinorCutsceneValues };
+                            setMinorCutsceneValues,
+                            clearMDH };
 }

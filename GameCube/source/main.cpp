@@ -33,6 +33,7 @@
 #include "tp/f_op_scene_req.h"
 #include "tp/f_pc_node_req.h"
 #include "tp/m_do_controller_pad.h"
+#include "tp/resource.h"
 
 namespace mod
 {
@@ -126,9 +127,12 @@ namespace mod
     uint32_t ( *return_getFontCCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
     uint32_t ( *return_getFontGCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
 
+    char ( *return_parseCharacter_1Byte )( const char** text ) = nullptr;
+
     bool ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     bool ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     bool ( *return_query025 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    bool ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
 
     bool ( *return_checkTreasureRupeeReturn )( void* unk1, int32_t item ) = nullptr;
 
@@ -292,6 +296,13 @@ namespace mod
                                                                  return return_collect_save_open_init( param_1 );
                                                              } );
 
+        return_parseCharacter_1Byte = patch::hookFunction( tp::resource::parseCharacter_1Byte,
+                                                           []( const char** text )
+                                                           {
+                                                               game_patch::_05_replaceMessageString( text );
+                                                               return return_parseCharacter_1Byte( text );
+                                                           } );
+
         // Replace the Item that spawns when a boss is defeated
         return_createItemForBoss =
             patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForBoss,
@@ -430,6 +441,10 @@ namespace mod
                                      }
                                      return return_query025( unk1, unk2, unk3 );
                                  } );
+
+        return_query042 = patch::hookFunction( libtp::tp::d_msg_flow::query042,
+                                               []( void* unk1, void* unk2, int32_t unk3 )
+                                               { return events::proc_query042( unk1, unk2, unk3 ); } );
 
         return_chkEvtBit = patch::hookFunction(
             libtp::tp::d_msg_flow::chkEvtBit,

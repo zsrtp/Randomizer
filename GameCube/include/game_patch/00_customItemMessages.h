@@ -716,5 +716,7 @@ namespace mod::game_patch
     MSG_COLOR(MSG_COLOR_WHITE)
     ".."
     MSG_END()
+
+    const char* talkToMidnaText = { "Talk to Midna" };
 }     // namespace mod::game_patch
 #endif

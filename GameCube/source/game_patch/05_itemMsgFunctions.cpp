@@ -404,4 +404,24 @@ namespace mod::game_patch
         }
         return newColorCode;
     }
+
+    const char** _05_replaceMessageString( const char** text )
+    {
+        if ( strncmp( *text, talkToMidnaText, strlen( talkToMidnaText ) ) == 0 )
+        {
+            // Replacement text
+            const char* replacementText;
+            if ( ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle >= 284 ) ||
+                 ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle <= 105 ) )
+            {
+                replacementText = { "Wait until day" };
+            }
+            else
+            {
+                replacementText = { "Wait until night" };
+            }
+            *text = replacementText;
+        }
+        return text;
+    }
 }     // namespace mod::game_patch

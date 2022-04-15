@@ -375,6 +375,19 @@ namespace mod::events
         return mod::return_query023( unk1, unk2, unk3 );
     }
 
+    bool proc_query042( void* unk1, void* unk2, int32_t unk3 )
+    {
+        // Check to see if currently in one of the Ordon interiors
+        if ( randomizer )
+        {
+            if ( randomizer->m_Seed->m_Header->transformAnywhere )
+            {
+                return 0;
+            }
+        }
+        return mod::return_query042( unk1, unk2, unk3 );
+    }
+
     bool proc_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int memBit )
     {
         using namespace libtp::data::stage;

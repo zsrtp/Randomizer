@@ -113,6 +113,8 @@ namespace mod::events
 
     bool proc_query023( void* unk1, void* unk2, int32_t unk3 );
 
+    bool proc_query042( void* unk1, void* unk2, int32_t unk3 );
+
     bool proc_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int memBit );
 
     void loadCustomActors();
