@@ -120,6 +120,7 @@ namespace mod::events
     void loadCustomActors();
     void loadCustomRoomActors();
     void loadCustomRoomSCOBs();
+    void handleQuickTransform();
 
     bool haveItem( uint8_t item );
 }     // namespace mod::events

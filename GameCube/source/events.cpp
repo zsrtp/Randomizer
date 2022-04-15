@@ -10,9 +10,12 @@
 #include "patch.h"
 #include "rando/randomizer.h"
 #include "tp/d_a_alink.h"
+#include "tp/d_a_player.h"
+#include "tp/d_camera.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
 #include "tp/d_kankyo.h"
+#include "tp/d_meter2_info.h"
 #include "tp/dzx.h"
 #include "tp/rel/d_a_obj_Lv5Key.h"
 #include "user_patch/03_customCosmetics.h"
@@ -493,4 +496,91 @@ namespace mod::events
     }
 
     bool haveItem( uint8_t item ) { return libtp::tp::d_item::checkItemGet( item, 1 ); }
+
+    void handleQuickTransform()
+    {
+        uint32_t zButtonAlphaPtr = reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::wZButtonPtr );
+        libtp::tp::d_a_alink::daAlink* linkMapPtr = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer;
+
+        // Ensure that Link is loaded on the map.
+        if ( !linkMapPtr )
+        {
+            return;
+        }
+
+        // Ensure that link is not in a cutscene.
+        if ( libtp::tp::d_a_alink::checkEventRun( linkMapPtr ) )
+        {
+            return;
+        }
+
+        // Ensure there is a proper pointer to the Z Button Alpha.
+        if ( !zButtonAlphaPtr )
+        {
+            return;
+        }
+
+        zButtonAlphaPtr = *reinterpret_cast<uint32_t*>( zButtonAlphaPtr + 0x10C );
+        if ( !zButtonAlphaPtr )
+        {
+            return;
+        }
+
+        // Ensure that the Z Button is not dimmed
+        float zButtonAlpha = *reinterpret_cast<float*>( zButtonAlphaPtr + 0x720 );
+        if ( zButtonAlpha != 1.f )
+        {
+            return;
+        }
+
+        // Make sure Link is not underwater or talking to someone.
+        if ( libtp::tp::d_a_alink::linkStatus->status != 0x1 )
+        {
+            return;
+        }
+
+        // Check to see if Link has the ability to transform.
+        if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xD04 ) )
+        {
+            return;
+        }
+
+        if ( linkMapPtr->mEquipItem == libtp::data::items::Ball_and_Chain )
+        {
+            return;
+        }
+
+        if ( libtp::tp::d_camera::checkRide( linkMapPtr ) )
+        {
+            return;
+        }
+
+        uint32_t m_midnaActorPtr =
+            *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( libtp::tp::d_a_player::m_midnaActor ) + 0x890 );
+
+        if ( randomizer )
+        {
+            if ( randomizer->m_Seed->m_Header->transformAnywhere )
+            {
+                libtp::tp::d_a_alink::procCoMetamorphoseInit( linkMapPtr );
+            }
+        }
+
+        if ( ( m_midnaActorPtr & 0x100000 ) != 0 )
+        {
+            return;
+        }
+
+        if ( ( m_midnaActorPtr & 0x40000 ) != 0 )
+        {
+            return;
+        }
+
+        if ( ( libtp::tp::d_kankyo::env_light.mEvilPacketEnabled & 0x80 ) != 0 )
+        {
+            return;
+        }
+
+        libtp::tp::d_a_alink::procCoMetamorphoseInit( linkMapPtr );
+    }
 }     // namespace mod::events

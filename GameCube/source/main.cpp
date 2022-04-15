@@ -501,79 +501,152 @@ namespace mod
                     }
                 }
             } );
-        return_isEventBit = patch::hookFunction( libtp::tp::d_save::isEventBit,
-                                                 []( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag )
-                                                 {
-                                                     using namespace libtp::tp::d_a_alink;
-                                                     using namespace libtp::data::stage;
-                                                     switch ( flag )
-                                                     {
-                                                         case 0x2904:
-                                                         {
-                                                             if ( checkStageName( allStages[stageIDs::Hidden_Skill] ) )
-                                                             {
-                                                                 return true;
-                                                             }
-                                                             break;
-                                                         }
+        return_isEventBit = patch::hookFunction(
+            libtp::tp::d_save::isEventBit,
+            []( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag )
+            {
+                using namespace libtp::tp::d_a_alink;
+                using namespace libtp::data::stage;
+                switch ( flag )
+                {
+                    case 0x2904:
+                    {
+                        if ( checkStageName( allStages[stageIDs::Hidden_Skill] ) )
+                        {
+                            return true;
+                        }
+                        break;
+                    }
 
-                                                         case 0x2A20:
-                                                         {
-                                                             if ( checkStageName( allStages[stageIDs::Hidden_Skill] ) )
-                                                             {
-                                                                 return false;     // Tell the game we don't have great spin to
-                                                                                   // not softlock in hidden skill training.
-                                                             }
-                                                             break;
-                                                         }
+                    case 0x2A20:
+                    {
+                        if ( checkStageName( allStages[stageIDs::Hidden_Skill] ) )
+                        {
+                            return false;     // Tell the game we don't have great spin to
+                                              // not softlock in hidden skill training.
+                        }
+                        break;
+                    }
 
-                                                         case 0x2320:
-                                                         case 0x3E02:
-                                                         {
-                                                             if ( checkStageName( allStages[stageIDs::Hidden_Village] ) )
-                                                             {
-                                                                 if ( !dComIfGs_isEventBit( 0x2280 ) )
-                                                                 {
-                                                                     return false;
-                                                                 }
-                                                             }
-                                                             break;
-                                                         }
+                    case 0x2320:
+                    case 0x3E02:
+                    {
+                        if ( checkStageName( allStages[stageIDs::Hidden_Village] ) )
+                        {
+                            if ( !dComIfGs_isEventBit( 0x2280 ) )
+                            {
+                                return false;
+                            }
+                        }
+                        break;
+                    }
 
-                                                         case 0x701:
-                                                         {
-                                                             if ( checkStageName( allStages[stageIDs::Goron_Mines] ) )
-                                                             {
-                                                                 return false;
-                                                             }
-                                                             break;
-                                                         }
+                    case 0x701:
+                    {
+                        if ( checkStageName( allStages[stageIDs::Goron_Mines] ) )
+                        {
+                            return false;
+                        }
+                        break;
+                    }
 
-                                                         case 0x810:
-                                                         {
-                                                             if ( checkStageName( allStages[stageIDs::Castle_Town] ) )
-                                                             {
-                                                                 return true;
-                                                             }
-                                                             break;
-                                                         }
+                    case 0x810:
+                    {
+                        if ( checkStageName( allStages[stageIDs::Castle_Town] ) )
+                        {
+                            return true;
+                        }
+                        break;
+                    }
 
-                                                         case 0x2010:
-                                                         {
-                                                             if ( checkStageName( allStages[stageIDs::Stallord] ) )
-                                                             {
-                                                                 return false;
-                                                             }
-                                                             break;
-                                                         }
-                                                         default:
-                                                         {
-                                                             return return_isEventBit( eventPtr, flag );
-                                                             break;
-                                                         }
-                                                     }
-                                                     return return_isEventBit( eventPtr, flag );
-                                                 } );
+                    case 0x2010:
+                    {
+                        if ( checkStageName( allStages[stageIDs::Stallord] ) )
+                        {
+                            return false;
+                        }
+                        break;
+                    }
+
+                    case 0x5410:     // Zant Defeated (PoT Story Flag)
+                    {
+                        if ( checkStageName( allStages[stageIDs::Castle_Town] ) )
+                        {
+                            if ( !tp::d_a_alink::dComIfGs_isEventBit( 0x4208 ) )
+                            {
+                                using namespace libtp::data;
+                                if ( randomizer )
+                                {
+                                    console << randomizer->m_Seed->m_Header->castleRequirements << "\n";
+                                    switch ( randomizer->m_Seed->m_Header->castleRequirements )
+                                    {
+                                        case 0:     // Open
+                                        {
+                                            events::setSaveFileEventFlag( 0x4208 );
+                                            break;
+                                        }
+                                        case 1:     // Fused Shadows
+                                        {
+                                            if ( events::haveItem( items::Fused_Shadow_1 ) &&
+                                                 events::haveItem( items::Fused_Shadow_2 ) &&
+                                                 events::haveItem( items::Fused_Shadow_3 ) )
+                                            {
+                                                events::setSaveFileEventFlag( 0x4208 );
+                                                break;
+                                            }
+                                            break;
+                                        }
+                                        case 2:     // Mirror Shards
+                                        {
+                                            if ( events::haveItem( items::Mirror_Piece_2 ) &&
+                                                 events::haveItem( items::Mirror_Piece_3 ) &&
+                                                 events::haveItem( items::Mirror_Piece_4 ) )
+                                            {
+                                                events::setSaveFileEventFlag( 0x4208 );
+                                                break;
+                                            }
+                                            break;
+                                        }
+                                        case 3:     // All Dungeons
+                                        {
+                                            uint8_t numDungeons = 0x0;
+                                            for ( int i = 0x10; i < 0x18; i++ )
+                                            {
+                                                if ( libtp::tp::d_save::isDungeonItem(
+                                                         &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file
+                                                              .area_flags[i]
+                                                              .temp_flags,
+                                                         3 ) )
+                                                {
+                                                    numDungeons++;
+                                                }
+                                            }
+                                            if ( numDungeons == 0x8 )
+                                            {
+                                                events::setSaveFileEventFlag( 0x4208 );
+                                                break;
+                                            }
+                                        }
+                                        default:
+                                        {
+                                            return return_isEventBit( eventPtr, flag );
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    }
+
+                    default:
+                    {
+                        return return_isEventBit( eventPtr, flag );
+                        break;
+                    }
+                }
+                return return_isEventBit( eventPtr, flag );
+            } );
 
         return_onEventBit = patch::hookFunction(
             libtp::tp::d_save::onEventBit,
@@ -781,6 +854,14 @@ namespace mod
                 // Disable input so game doesn't notice
                 padInfo->buttonInput = 0;
                 padInfo->buttonInputTrg = 0;
+            }
+
+            else if ( ( padInfo->buttonInput & ( PadInputs::Button_R | PadInputs::Button_Y ) ) ==
+                      ( PadInputs::Button_R | PadInputs::Button_Y ) )
+            {
+                // Disallow during boot as we print copyright info etc.
+                // Will automatically disappear if there is no seeds to select from
+                events::handleQuickTransform();
             }
         }
 

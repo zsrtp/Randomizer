@@ -8,6 +8,7 @@
 #include "main.h"
 #include "tp/control.h"
 #include "tp/d_a_alink.h"
+#include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
 #include "tp/processor.h"
 

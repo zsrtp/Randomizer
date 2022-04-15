@@ -900,6 +900,10 @@ namespace mod::game_patch
         { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Fused_Shadow_2 ); };
         itemGetCheckFuncPtr[items::Fused_Shadow_2] = item_getcheck_func_second_fused_shadow;
 
+        d_item::ItemGetCheckFunc item_getcheck_func_third_fused_shadow = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Fused_Shadow_3 ); };
+        itemGetCheckFuncPtr[items::Fused_Shadow_3] = item_getcheck_func_third_fused_shadow;
+
         d_item::ItemGetCheckFunc item_getcheck_func_second_mirror_shard = []()
         { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Mirror_Piece_2 ); };
         itemGetCheckFuncPtr[items::Mirror_Piece_2] = item_getcheck_func_second_mirror_shard;
@@ -907,6 +911,10 @@ namespace mod::game_patch
         d_item::ItemGetCheckFunc item_getcheck_func_third_mirror_shard = []()
         { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Mirror_Piece_3 ); };
         itemGetCheckFuncPtr[items::Mirror_Piece_3] = item_getcheck_func_third_mirror_shard;
+
+        d_item::ItemGetCheckFunc item_getcheck_func_fourth_mirror_shard = []()
+        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Mirror_Piece_4 ); };
+        itemGetCheckFuncPtr[items::Mirror_Piece_4] = item_getcheck_func_fourth_mirror_shard;
 
         d_item::ItemGetCheckFunc item_getcheck_func_shadow_crystal = []()
         { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Shadow_Crystal ); };

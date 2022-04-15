@@ -97,6 +97,8 @@
 8009DA60:checkStageName
 800d29d4:checkDownAttackState
 800c77f4:procCoMetamorphoseInit
+80115c20:checkEventRun
+803DCE54:linkStatus
 
 // data
 8038EB8C:climbVars
@@ -244,6 +246,7 @@
 
 //d_meter2_info.o
 80430188:g_meter2_info
+804301A4:wZButtonPtr
 
 //d_a_shop_item_static.o
 803792e8:shopItemData
@@ -272,3 +275,9 @@
 
 //resource.o
 802a9490:parseCharacter_1Byte
+
+//d_a_player.o
+80451018:m_midnaActor
+
+//d_camera.o
+80182ad8:checkRide

@@ -50,7 +50,9 @@ namespace mod::rando
         uint8_t zButtonColor;
         uint8_t lanternColor;
         uint8_t transformAnywhere;
-        uint8_t padding[0x8];
+        uint8_t quickTransform;
+        uint8_t castleRequirements;
+        uint8_t padding[0x6];
     } __attribute__( ( __packed__ ) );
 
     // Seed with index
