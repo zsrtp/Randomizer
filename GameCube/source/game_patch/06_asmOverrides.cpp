@@ -31,6 +31,9 @@ namespace mod::game_patch
         // uint32_t wolfChangeCheckAddress = reinterpret_cast<uint32_t>( &libtp::tp::d_com_inf_game::dComIfGs_Wolf_Change_Check
         // ); *reinterpret_cast<uint32_t*>( wolfChangeCheckAddress + 0x108 ) = 0x3be00000;     // Previous 0x3be00001
 
+        uint32_t woodenSwordFunctionAddress = reinterpret_cast<uint32_t>( &libtp::tp::d_item::item_func_WOOD_STICK );
+        *reinterpret_cast<uint32_t*>( woodenSwordFunctionAddress + 0x40 ) = 0x60000000;     // Previous 0x4bf9cafd
+
         // Modify event035 to not remove Auru's Memo from inventory after talking to Fyer.
         uint32_t event035MemoAddress = reinterpret_cast<uint32_t>( &libtp::tp::d_msg_flow::event035 );
         *reinterpret_cast<uint32_t*>( event035MemoAddress + 0x40 ) = 0x2c040091;     // Previous 0x2c040090

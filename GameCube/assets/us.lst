@@ -80,6 +80,7 @@
 803AF178:item_func_ptr
 803AF578:item_getcheck_func_ptr
 80097e8c:execItemGet
+800986c4:item_func_WOOD_STICK
 
 // d_item_data.o
 803AC5A0:item_resource
