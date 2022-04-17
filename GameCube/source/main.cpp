@@ -133,6 +133,7 @@ namespace mod
     bool ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     bool ( *return_query025 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     bool ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    int ( *return_query004 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
 
     bool ( *return_checkTreasureRupeeReturn )( void* unk1, int32_t item ) = nullptr;
 
@@ -144,7 +145,11 @@ namespace mod
 
     bool ( *return_isEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
     void ( *return_onEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
+
+    bool ( *return_isSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag ) = nullptr;
     uint32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
+    int ( *return_event003 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
+    int ( *return_event041 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
 
     int32_t ( *return_tgscInfoInit )( void* stageDt, void* i_data, int32_t entryNum, void* param_3 ) = nullptr;
 
@@ -442,9 +447,44 @@ namespace mod
                                      return return_query025( unk1, unk2, unk3 );
                                  } );
 
+        return_query004 = patch::hookFunction(
+            libtp::tp::d_msg_flow::query004,
+            []( void* unk1, void* unk2, int32_t unk3 )
+            {
+                if ( libtp::tp::d_a_alink::checkStageName(
+                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) &&
+                     tp::d_kankyo::env_light.currentRoom == 2 )
+                {
+                    uint16_t donationCheck = *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( unk2 ) + 4 );
+                    if ( donationCheck == 0x1E )
+                    {
+                        *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( unk2 ) + 4 ) = 100;
+                    }
+                }
+                return return_query004( unk1, unk2, unk3 );
+            } );
+
         return_query042 = patch::hookFunction( libtp::tp::d_msg_flow::query042,
                                                []( void* unk1, void* unk2, int32_t unk3 )
                                                { return events::proc_query042( unk1, unk2, unk3 ); } );
+
+        return_isSwitch_dSv_memBit = patch::hookFunction(
+            libtp::tp::d_save::isSwitch_dSv_memBit,
+            []( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag )
+            {
+                if ( libtp::tp::d_a_alink::checkStageName(
+                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Graveyard] ) )
+                {
+                    if ( flag == 0x66 )
+                    {
+                        if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x804 ) )
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return return_isSwitch_dSv_memBit( memoryBit, flag );
+            } );
 
         return_chkEvtBit = patch::hookFunction(
             libtp::tp::d_msg_flow::chkEvtBit,
@@ -568,6 +608,15 @@ namespace mod
                         break;
                     }
 
+                    case 0x602:
+                    {
+                        if ( checkStageName( allStages[stageIDs::Diababa] ) )
+                        {
+                            return false;
+                        }
+                        break;
+                    }
+
                     case 0x5410:     // Zant Defeated (PoT Story Flag)
                     {
                         if ( checkStageName( allStages[stageIDs::Castle_Town] ) )
@@ -577,7 +626,6 @@ namespace mod
                                 using namespace libtp::data;
                                 if ( randomizer )
                                 {
-                                    console << randomizer->m_Seed->m_Header->castleRequirements << "\n";
                                     switch ( randomizer->m_Seed->m_Header->castleRequirements )
                                     {
                                         case 0:     // Open
@@ -658,11 +706,61 @@ namespace mod
                 {
                     case 0x1E08:
                     {
-                        if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm ==
-                             1 )
+                        libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                            .dark_clear_level_flag |= 0x8;
+                        break;
+                    }
+
+                    case 0x610:
+                    {
+                        if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x1e08 ) )
                         {
-                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm = 0;
+                            if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                     .dark_clear_level_flag == 0x6 )
+                            {
+                                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                    .transform_level_flag = 0x8;     // Set the flag for the last transformed twilight.
+                                                                     // Also puts Midna on the player's back
+                                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                    .dark_clear_level_flag |= 0x8;
+                            }
                         }
+                        break;
+                    }
+
+                    case 0x708:
+                    {
+                        if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x1e08 ) )
+                        {
+                            if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                     .dark_clear_level_flag == 0x5 )
+                            {
+                                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                    .transform_level_flag |= 0x8;     // Set the flag for the last transformed twilight.
+                                // Also puts Midna on the player's back
+                                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                    .dark_clear_level_flag |= 0x8;
+                            }
+                        }
+
+                        break;
+                    }
+
+                    case 0xC02:
+                    {
+                        if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x1e08 ) )
+                        {
+                            if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                     .dark_clear_level_flag == 0x3 )
+                            {
+                                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                    .transform_level_flag |= 0x8;     // Set the flag for the last transformed twilight.
+                                // Also puts Midna on the player's back
+                                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                    .dark_clear_level_flag |= 0x8;
+                            }
+                        }
+
                         break;
                     }
 
@@ -687,6 +785,45 @@ namespace mod
                                      }
                                      return return_event000( messageFlow, nodeEvent, actrPtr );
                                  } );
+
+        return_event003 = patch::hookFunction(
+            libtp::tp::d_msg_flow::event003,
+            []( void* messageFlow, void* nodeEvent, void* actrPtr )
+            {
+                if ( libtp::tp::d_a_alink::checkStageName(
+                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) &&
+                     tp::d_kankyo::env_light.currentRoom == 2 )
+                {
+                    uint32_t donationAmount = *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 );
+                    if ( donationAmount == 0x1E )
+                    {
+                        libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentRupees =
+                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentRupees -
+                            100;
+                        return 1;
+                    }
+                }
+                return return_event003( messageFlow, nodeEvent, actrPtr );
+            } );
+
+        return_event041 = patch::hookFunction(
+            libtp::tp::d_msg_flow::event041,
+            []( void* messageFlow, void* nodeEvent, void* actrPtr )
+            {
+                if ( libtp::tp::d_a_alink::checkStageName(
+                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) &&
+                     tp::d_kankyo::env_light.currentRoom == 2 )
+                {
+                    uint32_t donationAmount = *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 );
+                    if ( donationAmount == 0x1E )
+                    {
+                        *reinterpret_cast<uint16_t*>(
+                            &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags.event_flags[0xF7] ) += 100;
+                        return 1;
+                    }
+                }
+                return return_event003( messageFlow, nodeEvent, actrPtr );
+            } );
 
         return_createItemForTrBoxDemo =
             patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForTrBoxDemo,

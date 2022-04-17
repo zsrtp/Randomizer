@@ -35,8 +35,6 @@ namespace mod::user_patch
         {
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.light_drop.eldin_tear_count =
                 0x10;     // Set number of tears to fill the vessel.
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.transform_level_flag |=
-                0x1;     // Set the flag for the last transformed twilight.
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag |=
                 0x2;     // Set the flag for having completed Eldin Twilight.
             libtp::tp::d_item::execItemGet( libtp::data::items::Vessel_Of_Light_Eldin );
@@ -49,8 +47,6 @@ namespace mod::user_patch
         {
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.light_drop.lanayru_tear_count =
                 0x10;     // Set number of tears to fill the vessel.
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.transform_level_flag |=
-                0x2;     // Set the flag for the last transformed twilight.
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag |=
                 0x4;     // Set the flag for having completed Lanayru Twilight.
             libtp::tp::d_item::execItemGet( libtp::data::items::Vessel_Of_Light_Lanayru );
@@ -77,10 +73,12 @@ namespace mod::user_patch
 
     void clearMDH( rando::Randomizer* randomizer, bool set )
     {
-        if ( set )
+        if ( set &&
+             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag == 0x7 )
         {
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.transform_level_flag |=
                 0x8;     // Set the flag for the last transformed twilight. Also puts Midna on the player's back
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag |= 0x8;
         }
     }
 }     // namespace mod::user_patch

@@ -408,10 +408,11 @@ namespace mod::game_patch
 
     const char** _05_replaceMessageString( const char** text )
     {
+        const char* replacementText;
         if ( strncmp( *text, talkToMidnaText, strlen( talkToMidnaText ) ) == 0 )
         {
             // Replacement text
-            const char* replacementText;
+
             if ( ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle >= 284 ) ||
                  ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle <= 105 ) )
             {
@@ -421,6 +422,16 @@ namespace mod::game_patch
             {
                 replacementText = { "Wait until night" };
             }
+            *text = replacementText;
+        }
+        else if ( strncmp( *text, smallDonationText, strlen( smallDonationText ) ) == 0 )
+        {
+            replacementText = {
+                "100 Rupees"
+                "\x0A\x1A\x06\x00\x00\x09\x02"
+                "50 Rupees"
+                "\x0A\x1A\x06\x00\x00\x09\x03"
+                "Sorry" };
             *text = replacementText;
         }
         return text;

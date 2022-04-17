@@ -259,12 +259,15 @@
 802A7C54:getResource_groupID
 
 //d_msg_flow.o
+8024b250:query004
 8024b8e4:query022
 8024b918:query023
 8024b974:query025
 8024bfec:query042
 8024c3fc:event000
 8024d7c8:event035
+8024c550:event003
+8024da78:event041
 
 //d_menu_window.o
 801fa590:collect_save_open_init

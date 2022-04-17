@@ -824,10 +824,14 @@ namespace mod::game_patch
 
                     case stage::stageIDs::Hyrule_Castle_Sewers:
                     {
-                        condition = libtp::tp::d_save::isTransformLV( playerStatusBPtr, 3 );     // Midna on Back
-                        if ( condition != false )
+                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x502 );     // Sewers Finished
+                        if ( condition )
                         {
                             chosenLayer = stage::sewersStateIDs::Sewers_Midna_On_Back;
+                        }
+                        else
+                        {
+                            chosenLayer = stage::twilightStateIDs::Default_Twilight_State;
                         }
                         break;
                     }

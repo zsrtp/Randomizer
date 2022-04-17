@@ -718,5 +718,6 @@ namespace mod::game_patch
     MSG_END()
 
     const char* talkToMidnaText = { "Talk to Midna" };
+    const char* smallDonationText = { "30 Rupees" };
 }     // namespace mod::game_patch
 #endif
