@@ -17,17 +17,8 @@ namespace mod::user_patch
     {
         if ( set )
         {
-            // li 0
-            uint32_t li = 0x38600000;
-            // b +4C
-            uint32_t b = 0x4800004C;
-
-            // CheckHeavyState overwrite
-            uint32_t checkHeavyStateOnAddress = reinterpret_cast<uint32_t>( &libtp::tp::d_a_alink::checkHeavyStateOn );
-            *reinterpret_cast<uint32_t*>( checkHeavyStateOnAddress + 0x84 ) = li;
-
-            uint32_t setStickDataAddress = reinterpret_cast<uint32_t>( &libtp::tp::d_a_alink::setStickData );
-            *reinterpret_cast<uint32_t*>( setStickDataAddress + 0x5FC ) = b;
+            uint32_t ironBootsVars = reinterpret_cast<uint32_t>( &libtp::tp::d_a_alink::ironBootsVars );
+            *reinterpret_cast<float*>( ironBootsVars + 0x14 ) = 1.f;
         }
     }
 }     // namespace mod::user_patch

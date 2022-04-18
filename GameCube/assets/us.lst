@@ -100,11 +100,13 @@
 800c77f4:procCoMetamorphoseInit
 80115c20:checkEventRun
 803DCE54:linkStatus
+800e251c:checkBootsMoveAnime
 
 // data
 8038EB8C:climbVars
 8038E1E0:wallMoveVars
 8038e77c:lanternVars
+8038e7f4:ironBootsVars
 
 // d_menu_collect.o
 801B3340:setWalletMaxNum

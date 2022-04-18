@@ -11,6 +11,7 @@
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
 #include "tp/d_item_data.h"
+#include "tp/d_meter2_info.h"
 #include "tp/d_save.h"
 
 namespace mod::game_patch
@@ -51,6 +52,7 @@ namespace mod::game_patch
                                                      libtp::data::items::Giant_Bomb_Bag,
                                                      libtp::data::items::Empty_Bomb_Bag,
                                                      libtp::data::items::Goron_Bomb_Bag,
+                                                     libtp::data::items::Bomb_Bag_Regular_Bombs,
                                                      libtp::data::items::Big_Quiver,
                                                      libtp::data::items::Giant_Quiver,
                                                      libtp::data::items::Empty_Bottle,
@@ -760,6 +762,40 @@ namespace mod::game_patch
             events::setSaveFileEventFlag( 0x3B08 );     // Repaired Cannon at Lake
         };
         itemFuncPtr[items::Ancient_Sky_Book_Completed] = onGetFilledSkybook;
+
+        // Change rupee color for big wallet
+        d_item::ItemFunc onGetBigWallet = []()
+        {
+            d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentWallet = items::BIG_WALLET;
+            for ( uint16_t rupee = 0x1038; rupee <= 0x1044; rupee += 0x4 )
+            {
+                if ( libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow != nullptr )
+                {
+                    ( *reinterpret_cast<uint32_t*>(
+                        reinterpret_cast<uint32_t>(
+                            libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
+                        rupee ) ) = 0xff0000ff;
+                }
+            }
+        };
+        itemFuncPtr[items::Big_Wallet] = onGetBigWallet;
+
+        // Change rupee color for giant wallet
+        d_item::ItemFunc onGetGiantWallet = []()
+        {
+            d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentWallet = items::GIANT_WALLET;
+            for ( uint16_t rupee = 0x1038; rupee <= 0x1044; rupee += 0x4 )
+            {
+                if ( libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow != nullptr )
+                {
+                    ( *reinterpret_cast<uint32_t*>(
+                        reinterpret_cast<uint32_t>(
+                            libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
+                        rupee ) ) = 0xaf00ffff;
+                }
+            }
+        };
+        itemFuncPtr[items::Giant_Wallet] = onGetGiantWallet;
 
         // Gate Keys
         d_item::ItemFunc onGetGateKeys = []()

@@ -52,7 +52,8 @@ namespace mod::rando
         uint8_t transformAnywhere;
         uint8_t quickTransform;
         uint8_t castleRequirements;
-        uint8_t padding[0x6];
+        uint8_t palaceRequirements;
+        uint8_t padding[0x5];
     } __attribute__( ( __packed__ ) );
 
     // Seed with index

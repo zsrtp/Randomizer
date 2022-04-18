@@ -153,6 +153,8 @@ namespace mod
 
     int32_t ( *return_tgscInfoInit )( void* stageDt, void* i_data, int32_t entryNum, void* param_3 ) = nullptr;
 
+    bool ( *return_checkBootsMoveAnime )( libtp::tp::d_a_alink::daAlink* d_a_alink, int param_1 ) = nullptr;
+
     void main()
     {
         // Run game patches
@@ -687,6 +689,54 @@ namespace mod
                         break;
                     }
 
+                    case 0x2002:     // City in the Sky Story flag
+                    {
+                        if ( checkStageName( allStages[stageIDs::Mirror_Chamber] ) )
+                        {
+                            if ( !tp::d_a_alink::dComIfGs_isEventBit( 0x2B08 ) )
+                            {
+                                using namespace libtp::data;
+                                if ( randomizer )
+                                {
+                                    switch ( randomizer->m_Seed->m_Header->palaceRequirements )
+                                    {
+                                        case 0:     // Open
+                                        {
+                                            return true;
+                                            break;
+                                        }
+                                        case 1:     // Fused Shadows
+                                        {
+                                            if ( events::haveItem( items::Fused_Shadow_1 ) &&
+                                                 events::haveItem( items::Fused_Shadow_2 ) &&
+                                                 events::haveItem( items::Fused_Shadow_3 ) )
+                                            {
+                                                return true;
+                                            }
+                                            break;
+                                        }
+                                        case 2:     // Mirror Shards
+                                        {
+                                            if ( events::haveItem( items::Mirror_Piece_2 ) &&
+                                                 events::haveItem( items::Mirror_Piece_3 ) &&
+                                                 events::haveItem( items::Mirror_Piece_4 ) )
+                                            {
+                                                return true;
+                                            }
+                                            break;
+                                        }
+                                        default:
+                                        {
+                                            return return_isEventBit( eventPtr, flag );
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    }
+
                     default:
                     {
                         return return_isEventBit( eventPtr, flag );
@@ -823,6 +873,18 @@ namespace mod
                     }
                 }
                 return return_event003( messageFlow, nodeEvent, actrPtr );
+            } );
+
+        return_checkBootsMoveAnime = patch::hookFunction(
+            libtp::tp::d_a_alink::checkBootsMoveAnime,
+            []( libtp::tp::d_a_alink::daAlink* d_a_alink, int param_1 )
+            {
+                uint32_t ironBootsVars = reinterpret_cast<uint32_t>( &libtp::tp::d_a_alink::ironBootsVars );
+                if ( *reinterpret_cast<float*>( ironBootsVars + 0x14 ) == 1.f )
+                {
+                    return false;
+                }
+                return return_checkBootsMoveAnime( d_a_alink, param_1 );
             } );
 
         return_createItemForTrBoxDemo =
