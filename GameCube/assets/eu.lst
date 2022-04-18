@@ -80,6 +80,7 @@
 80097fbc:execItemGet
 803B0E58:item_func_ptr
 803B1258:item_getcheck_func_ptr
+800987f4:item_func_WOOD_STICK
 
 // d_a_alink.h
 800B2928:setStickData
@@ -92,14 +93,19 @@
 80141470:dComIfGs_isItemFirstBit
 8039325C:getSeType
 800c7a00:procCoMetamorphoseInit
+80115E2C:checkEventRun
+803DEDF4:linkStatus
+800e2728:checkBootsMoveAnime
 
 // data
 8039038C:climbVars
 8038f9e0:wallMoveVars
 8038ff7c:lanternVars
+8038fff4:ironBootsVars
 
 //d_meter2_info.o
 80432148:g_meter2_info
+80432164:wZButtonPtr
 
 // d_menu_collect.o
 801B3598:setWalletMaxNum
@@ -267,9 +273,19 @@
 8024c690:query042
 8024caa0:event000
 8024de6c:event035
+8024b8f4:query004
+8024cbf4:event003
+8024e11c:event041
+
 
 //d_a_npc.o
 8014ccb8:chkEvtBit
 
 //resource.o
 802aa290:parseCharacter_1Byte
+
+//d_camera.o
+80182ce4:checkRide
+
+//d_a_player.o
+80452fd8:m_midnaActor
