@@ -152,23 +152,7 @@ namespace mod::game_patch
     MSG_COLOR(MSG_COLOR_RED)
     "Zant's "
     MSG_COLOR(MSG_COLOR_WHITE)
-    "power that allows\nyou to transform at will!\nHold "
-    MSG_ICON(MSG_ICON_R)
-    MSG_COLOR(MSG_COLOR_WHITE)
-    " then "
-    MSG_ICON(MSG_ICON_Y)
-    MSG_COLOR(MSG_COLOR_WHITE)
-    " at the same\ntime to quickly transform.\nWhile talking to "
-    MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-    "Midna"
-    MSG_COLOR(MSG_COLOR_WHITE)
-    ", hold\n"
-    MSG_ICON(MSG_ICON_R)
-    MSG_COLOR(MSG_COLOR_WHITE)
-    " then "
-    MSG_ICON(MSG_ICON_Y)
-    MSG_COLOR(MSG_COLOR_WHITE)
-    " to change time."
+    "power that allows\nyou to transform at will!"
     MSG_END()
 
     MSG_BEGIN(customForestMapText) 

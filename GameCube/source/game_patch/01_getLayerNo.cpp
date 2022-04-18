@@ -590,49 +590,49 @@ namespace mod::game_patch
 
                     case stage::stageIDs::Ordon_Ranch:
                     {
-                        uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                        if ( uVar2 == 0 )
+                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4a40 );     // Day 1 done
+                        if ( condition )
                         {
-                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
-                                libtp::tp::d_save::saveBitLabels[0x2F] );     // First trip to Sewers done
-                            if ( condition == false )
+                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
+                            if ( condition )
                             {
                                 condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                     libtp::tp::d_save::saveBitLabels[0xA9] );     // Saw CS after Goats 2 done
-                                if ( condition == false )
+                                if ( condition )
                                 {
-                                    condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
-                                    if ( condition == false )
+                                    condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
+                                        libtp::tp::d_save::saveBitLabels[0x2F] );     // First trip to Sewers done
+                                    if ( condition )
                                     {
-                                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4a40 );     // Day 1 done
-                                        if ( condition == false )
+                                        uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
+                                        if ( uVar2 == 1 )
                                         {
-                                            chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_New_Game;
+                                            chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Faron_Twilight_Cleared;
+                                            libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
                                         }
                                         else
                                         {
-                                            chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Goats_1_Completed;
+                                            chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Finished_Sewers;
                                         }
                                     }
                                     else
                                     {
-                                        chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Talo_Rescued;
+                                        chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Goats_2_Completed;
                                     }
                                 }
                                 else
                                 {
-                                    chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Goats_2_Completed;
+                                    chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Talo_Rescued;
                                 }
                             }
                             else
                             {
-                                chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Finished_Sewers;
+                                chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Goats_1_Completed;
                             }
                         }
                         else
                         {
-                            chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Faron_Twilight_Cleared;
-                            libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
+                            chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_New_Game;
                         }
                         break;
                     }

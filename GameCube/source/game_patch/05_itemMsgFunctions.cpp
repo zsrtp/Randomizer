@@ -2,6 +2,7 @@
 #include <cstring>
 
 #include "data/items.h"
+#include "data/stages.h"
 #include "game_patch/00_customItemMessages.h"
 #include "game_patch/game_patch.h"
 #include "gc_wii/bmgres.h"
@@ -10,6 +11,7 @@
 #include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
+#include "tp/d_kankyo.h"
 #include "tp/processor.h"
 
 namespace mod::game_patch
@@ -426,13 +428,18 @@ namespace mod::game_patch
         }
         else if ( strncmp( *text, smallDonationText, strlen( smallDonationText ) ) == 0 )
         {
-            replacementText = {
-                "100 Rupees"
-                "\x0A\x1A\x06\x00\x00\x09\x02"
-                "50 Rupees"
-                "\x0A\x1A\x06\x00\x00\x09\x03"
-                "Sorry" };
-            *text = replacementText;
+            if ( libtp::tp::d_a_alink::checkStageName(
+                     libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) &&
+                 libtp::tp::d_kankyo::env_light.currentRoom == 2 )
+            {
+                replacementText = {
+                    "100 Rupees"
+                    "\x0A\x1A\x06\x00\x00\x09\x02"
+                    "50 Rupees"
+                    "\x0A\x1A\x06\x00\x00\x09\x03"
+                    "Sorry" };
+                *text = replacementText;
+            }
         }
         return text;
     }
