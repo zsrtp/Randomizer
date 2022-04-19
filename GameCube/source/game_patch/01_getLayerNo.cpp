@@ -639,22 +639,30 @@ namespace mod::game_patch
 
                     case stage::stageIDs::Hyrule_Field:
                     {
-                        condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x1e08 );     // MDH Completed
-                        if ( condition == false )
+                        if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                 .dark_clear_level_flag >= 0x7 )
                         {
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xc01 );     // MDH State Activated
-                            if ( condition == false )
+                            if ( condition )
                             {
-                                chosenLayer = stage::hyruleFieldStateIDs::Hyrule_Field_New_Game;
+                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x1e08 );     // MDH Completed
+                                if ( condition )
+                                {
+                                    chosenLayer = stage::hyruleFieldStateIDs::Hyrule_Field_MDH_Completed;
+                                }
+                                else
+                                {
+                                    chosenLayer = stage::hyruleFieldStateIDs::Hyrule_Field_MDH_Started;
+                                }
                             }
                             else
                             {
-                                chosenLayer = stage::hyruleFieldStateIDs::Hyrule_Field_MDH_Started;
+                                chosenLayer = stage::hyruleFieldStateIDs::Hyrule_Field_New_Game;
                             }
                         }
                         else
                         {
-                            chosenLayer = stage::hyruleFieldStateIDs::Hyrule_Field_MDH_Completed;
+                            chosenLayer = stage::hyruleFieldStateIDs::Hyrule_Field_New_Game;
                         }
                         break;
                     }
@@ -790,9 +798,9 @@ namespace mod::game_patch
                             libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xb40 );     // Escaped Burning Tent in Bublin Camp
                         if ( condition )
                         {
-                            if ( roomId ==
-                                 3 )     // Other states for this room are very similar, but do not have the boar in the dzx.
-                            {            // Setting state 1 solves for any potential softlocks regarding the boar in that area.
+                            if ( roomId == 3 )     // Other states for this room are very similar, but do not have the boar
+                                                   // in the dzx.
+                            {     // Setting state 1 solves for any potential softlocks regarding the boar in that area.
                                 chosenLayer = stage::bulblinCampStateIDs::Bulblin_Camp_KB3_Completed;
                             }
                             else

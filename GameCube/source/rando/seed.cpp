@@ -389,6 +389,7 @@ namespace mod::rando
                     itemResourcePtr[allSHOP[i].replacementItemID].tevFrm;
                 d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].btpFrm = 0xFF;
                 d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].posY = 15.0f;
+                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].mFlags = 0xFFFFFFFF;
             }
         }
     }
