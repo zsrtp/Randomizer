@@ -32,7 +32,8 @@ namespace mod::rando
         void overrideDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo );
 
         int32_t getPoeItem( uint8_t flag );
-        void overrideARC( void* filePtr, int32_t fileIndex );
+        void overrideARC( uint32_t fileAddr, FileDirectory fileDirectory, int roomNo );
+        void overrideEventARC();
         uint8_t getBossItem();
         uint8_t getHiddenSkillItem( uint16_t eventIndex );
         uint8_t overrideBugReward( uint8_t bugID );

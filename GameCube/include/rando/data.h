@@ -106,26 +106,30 @@ namespace mod::rando
 
     enum class FileDirectory : uint8_t
     {
-        Stage = 0x0,
+        Room = 0x0,
         Message = 0x1,
-        Object = 0x2
+        Object = 0x2,
+        Stage = 0x3,
     };
 
     enum class ArcReplacementType : uint8_t
     {
-        Item = 0x0,
-        HiddenSkill = 0x1,
-        ItemMessage = 0x2,
+        Item = 0x0,                // Standard item replacement
+        HiddenSkill = 0x1,         // Hidden Skill checks check for the room last loaded into.
+        ItemMessage = 0x2,         // Replaces messages for item IDs
+        Instruction = 0x3,         // Replaces a u32 instruction
+        AlwaysLoaded = 0x4,        // Replaces values specifically in the bmgres archive which is always loaded.
+        MessageResource = 0x5,     // Replaces values in the MESG section of a bmgres archive file.
     };
 
     struct ARCReplacement
     {
-        int32_t offset;                         // The offset of the byte where the item is stored from the start of the file.
-        int32_t arcFileIndex;                   // The index of the file that contains the check.
+        int32_t offset;                         // The offset where the item is stored from the message flow header.
         uint32_t replacementValue;              // Used to be item, but can be more now.
         FileDirectory directory;                // The type of directory where the check is stored.
         ArcReplacementType replacementType;     // The type of replacement that is taking place.
-        char fileName[18];                      // The name of the file where the check is stored
+        uint8_t stageIDX;                       // The name of the file where the check is stored
+        uint8_t roomID;                         // The room number for chests/room based dzr checks.
     } __attribute__( ( __packed__ ) );
 
     struct BOSSCheck

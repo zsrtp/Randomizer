@@ -109,16 +109,6 @@ namespace mod
 
     int32_t ( *return_checkItemGet )( uint8_t item, int32_t defaultValue ) = nullptr;
 
-    void* ( *return_loadToMainRAM2 )( int32_t fileIndex,
-                                      uint8_t* unk2,
-                                      uint32_t jkrExpandSwitch,
-                                      uint32_t unk4,
-                                      void* jkrHeap,
-                                      uint32_t eAllocDirection,
-                                      uint32_t unk7,
-                                      int32_t* unk8,
-                                      uint32_t* unk9 ) = nullptr;
-
     bool ( *return_setMessageCode_inSequence )( libtp::tp::control::TControl* control,
                                                 const void* TProcessor,
                                                 uint16_t unk3,
@@ -154,6 +144,8 @@ namespace mod
     int32_t ( *return_tgscInfoInit )( void* stageDt, void* i_data, int32_t entryNum, void* param_3 ) = nullptr;
 
     bool ( *return_checkBootsMoveAnime )( libtp::tp::d_a_alink::daAlink* d_a_alink, int param_1 ) = nullptr;
+
+    void ( *return_roomLoader )( void* data, void* stageDt, int roomNo ) = nullptr;
 
     void main()
     {
@@ -486,6 +478,18 @@ namespace mod
                     }
                 }
                 return return_isSwitch_dSv_memBit( memoryBit, flag );
+            } );
+
+        return_roomLoader = patch::hookFunction(
+            libtp::tp::d_stage::roomLoader,
+            []( void* data, void* stageDt, int roomNo )
+            {
+                events::onARC( randomizer, data, roomNo, rando::FileDirectory::Room );     // Replace room based checks.
+                void* filePtr = libtp::tp::d_com_inf_game::dComIfG_getStageRes(
+                    "stage.dzs" );     // Could hook stageLoader instead since it takes the first param as a pointer to the
+                                       // stage.dzs
+                events::onARC( randomizer, filePtr, roomNo, rando::FileDirectory::Stage );     // Replace stage based checks.
+                return return_roomLoader( data, stageDt, roomNo );
             } );
 
         return_chkEvtBit = patch::hookFunction(
@@ -901,25 +905,6 @@ namespace mod
                                      item = game_patch::_04_verifyProgressiveItem( mod::randomizer, item );
                                      return return_createItemForTrBoxDemo( pos, item, itemPickupFlag, roomNo, rot, scale );
                                  } );
-
-        return_loadToMainRAM2 = patch::hookFunction(
-            tp::JKRDvdRipper::loadToMainRAM2,
-            []( int32_t fileIndex,
-                uint8_t* unk2,
-                uint32_t jkrExpandSwitch,
-                uint32_t unk4,
-                void* jkrHeap,
-                uint32_t eAllocDirection,
-                uint32_t unk7,
-                int32_t* unk8,
-                uint32_t* unk9 )
-            {
-                // Call the original function immediately, as we need the pointer it returns
-                void* filePtr =
-                    return_loadToMainRAM2( fileIndex, unk2, jkrExpandSwitch, unk4, jkrHeap, eAllocDirection, unk7, unk8, unk9 );
-                events::onARC( mod::randomizer, filePtr, fileIndex );
-                return filePtr;
-            } );
 
         return_isDungeonItem = patch::hookFunction( tp::d_save::isDungeonItem,
                                                     []( tp::d_save::dSv_memBit_c* membitPtr, const int memBit )

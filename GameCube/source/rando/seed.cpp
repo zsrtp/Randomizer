@@ -22,6 +22,7 @@
 #include "tp/d_a_shop_item_static.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item_data.h"
+#include "tp/d_meter2_info.h"
 #include "tp/d_s_logo.h"
 #include "tp/d_save.h"
 #include "user_patch/user_patch.h"
@@ -116,6 +117,21 @@ namespace mod::rando
             this->LoadBugReward();
             this->LoadSkyCharacter( stageIDX );
             this->LoadHiddenSkill();
+
+            if ( randomizer->m_Seed->m_StageIDX == 45 )
+            {
+                uint32_t bmgHeaderLocation =
+                    reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
+
+                uint32_t messageFlowOffset = bmgHeaderLocation + *reinterpret_cast<uint32_t*>( bmgHeaderLocation + 0x8 );
+
+                *reinterpret_cast<uint8_t*>( messageFlowOffset + 0x30f ) = 0x32;
+                *reinterpret_cast<uint8_t*>( messageFlowOffset + 0x3a7 ) = 0x32;
+
+                mod::console << bmgHeaderLocation << "'...\n";
+                mod::console << messageFlowOffset << "'...\n";
+                mod::console << *reinterpret_cast<uint8_t*>( messageFlowOffset + 0x3a7 ) << "'...\n";
+            }
             // Save current stageIDX for next time
             m_StageIDX = stageIDX;
         }
@@ -485,7 +501,7 @@ namespace mod::rando
         }
     }
 
-    void Seed::LoadARCChecks( int32_t fileIndex )
+    void Seed::LoadARCChecks( uint8_t stageIDX, FileDirectory fileDirectory, int roomNo )
     {
         using namespace libtp;
 
@@ -500,7 +516,7 @@ namespace mod::rando
 
         for ( uint32_t i = 0; i < num_arcchecks; i++ )
         {
-            if ( allARC[i].arcFileIndex == fileIndex )
+            if ( ( allARC[i].stageIDX == stageIDX ) && ( allARC[i].directory == fileDirectory ) )
             {
                 m_numLoadedArcReplacements++;
             }
@@ -509,86 +525,44 @@ namespace mod::rando
         // Allocate memory to the actual ARCChecks
         m_ArcReplacements = new ARCReplacement[m_numLoadedArcReplacements];
 
-        // offset into m_DZXChecks
+        // offset into m_ArcReplacements
         uint32_t j = 0;
 
         for ( uint32_t i = 0; i < num_arcchecks; i++ )
         {
-            if ( allARC[i].arcFileIndex == fileIndex )
+            switch ( fileDirectory )
             {
-                // Store the i'th DZX check into the j'th Loaded DZX check that's relevant to our current stage
-                memcpy( &m_ArcReplacements[j], &allARC[i], sizeof( ARCReplacement ) );
-                j++;
-            }
-        }
-    }
-
-    void Seed::setArcIndex()
-    {
-        // Local vars
-        uint32_t numReplacements = m_Header->arcCheckInfo.numEntries;
-        uint32_t gci_offset = m_Header->arcCheckInfo.dataOffset;
-        char filePath[32];
-        int32_t len = 0;
-
-        // Set the pointer as offset into our buffer
-        ARCReplacement* allARC = reinterpret_cast<ARCReplacement*>( &m_GCIData[gci_offset] );
-        uint32_t j = 0;
-
-        // Loop through all ArcChecks and set their corresponding file index
-        for ( uint32_t i = 0; i < numReplacements; i++ )
-        {
-            switch ( allARC[i].directory )
-            {
-                case rando::FileDirectory::Stage:
-                {
-                    len = snprintf( filePath, sizeof( filePath ), "res/Stage/%s", allARC[i].fileName );
-                    break;
-                }
                 case rando::FileDirectory::Message:
                 {
-#ifdef TP_US
-                    len = snprintf( filePath, sizeof( filePath ), "res/Msgus/%s", allARC[i].fileName );
-#elif defined TP_JP
-                    len = snprintf( filePath, sizeof( filePath ), "res/Msgjp/%s", allARC[i].fileName );
-#elif defined TP_EU
-                    // PAL uses a different file for each language
-                    libtp::tp::d_s_logo::Languages lang = libtp::tp::d_s_logo::getPalLanguage2( nullptr );
-                    if ( ( lang < libtp::tp::d_s_logo::Languages::uk ) || ( lang > libtp::tp::d_s_logo::Languages::it ) )
+                    if ( ( allARC[i].stageIDX == stageIDX ) && ( allARC[i].directory == fileDirectory ) )
                     {
-                        // The language is invalid/unsupported, so the game defaults to English
-                        lang = libtp::tp::d_s_logo::Languages::uk;
+                        memcpy( &m_ArcReplacements[j], &allARC[i], sizeof( ARCReplacement ) );
+                        j++;
                     }
+                    break;
+                }
 
-                    static const char* langStrings[] = { "uk", "de", "fr", "sp", "it" };
-                    len = snprintf( filePath,
-                                    sizeof( filePath ),
-                                    "res/Msg%s/%s",
-                                    langStrings[static_cast<int32_t>( lang )],
-                                    allARC[i].fileName );
-#endif
-                    break;
-                }
-                case rando::FileDirectory::Object:
+                case rando::FileDirectory::Stage:
                 {
-                    len = snprintf( filePath, sizeof( filePath ), "res/Object/%s", allARC[i].fileName );
+                    if ( ( allARC[i].stageIDX == stageIDX ) && ( allARC[i].directory == fileDirectory ) &&
+                         ( allARC[i].roomID == roomNo ) )
+                    {
+                        memcpy( &m_ArcReplacements[j], &allARC[i], sizeof( ARCReplacement ) );
+                        j++;
+                    }
                     break;
                 }
+
                 default:
                 {
-                    len = snprintf( filePath, sizeof( filePath ), "%s", allARC[i].fileName );
+                    if ( ( allARC[i].stageIDX == stageIDX ) && ( allARC[i].directory == fileDirectory ) )
+                    {
+                        memcpy( &m_ArcReplacements[j], &allARC[i], sizeof( ARCReplacement ) );
+                        j++;
+                    }
+                    break;
                 }
             }
-
-            if ( ( len >= 0 ) && ( len < static_cast<int32_t>( sizeof( filePath ) ) ) )
-            {
-                allARC[i].arcFileIndex = libtp::gc_wii::dvdfs::DVDConvertPathToEntrynum( filePath );
-            }
-            else     // Failsafe in case we did not get a valid result.
-            {
-                allARC[i].arcFileIndex = -1;
-            }
-            j++;
         }
     }
 

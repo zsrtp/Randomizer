@@ -47,22 +47,9 @@ namespace mod::events
             {
                 randomizer->initSave();
             }
+            randomizer->overrideEventARC();
             user_patch::setHUDCosmetics( randomizer );
             user_patch::setLanternColor( randomizer );
-
-            if ( randomizer->m_Seed->m_StageIDX == 65 )
-            {
-                uint32_t bmgHeaderLocation =
-                    reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
-
-                uint32_t messageFlowOffset = bmgHeaderLocation + *reinterpret_cast<uint32_t*>( bmgHeaderLocation + 0x8 );
-
-                *reinterpret_cast<uint8_t*>( messageFlowOffset + 0x26A7 ) = 0x32;
-
-                mod::console << bmgHeaderLocation << "'...\n";
-                mod::console << messageFlowOffset << "'...\n";
-                mod::console << *reinterpret_cast<uint8_t*>( messageFlowOffset + 0x26A7 ) << "'...\n";
-            }
         }
     }
 
@@ -337,11 +324,11 @@ namespace mod::events
         }
     }
 
-    void onARC( rando::Randomizer* randomizer, void* filePtr, int32_t fileIndex )
+    void onARC( rando::Randomizer* randomizer, void* data, int roomNo, rando::FileDirectory fileDirectory )
     {
         if ( randomizer )
         {
-            randomizer->overrideARC( filePtr, fileIndex );
+            randomizer->overrideARC( reinterpret_cast<uint32_t>( data ), fileDirectory, roomNo );
         }
     }
 

@@ -21,6 +21,7 @@
 80025B24:actorInit_always
 8002586C:actorCommonLayerInit
 80025bfc:tgscInfoInit
+80026bbc:roomLoader
 
 // data
 80450C34:archiveHeap
@@ -222,6 +223,7 @@
 8002b434:getLayerNo_common_common
 80141264:dComIfGs_isItemFirstBit
 8002f810:dComIfGs_Wolf_Change_Check
+8002f434:dComIfG_getStageRes
 
 // d_kankyo.o
 // data
