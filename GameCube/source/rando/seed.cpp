@@ -532,17 +532,7 @@ namespace mod::rando
         {
             switch ( fileDirectory )
             {
-                case rando::FileDirectory::Message:
-                {
-                    if ( ( allARC[i].stageIDX == stageIDX ) && ( allARC[i].directory == fileDirectory ) )
-                    {
-                        memcpy( &m_ArcReplacements[j], &allARC[i], sizeof( ARCReplacement ) );
-                        j++;
-                    }
-                    break;
-                }
-
-                case rando::FileDirectory::Stage:
+                case rando::FileDirectory::Room:
                 {
                     if ( ( allARC[i].stageIDX == stageIDX ) && ( allARC[i].directory == fileDirectory ) &&
                          ( allARC[i].roomID == roomNo ) )

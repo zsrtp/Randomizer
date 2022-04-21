@@ -80,7 +80,7 @@ namespace mod::events
      * @param filePtr Pointer to the file being read.
      * @param fileIndex Index of the file being read.
      */
-    void onARC( rando::Randomizer* randomizer, void* filePtr, int32_t fileIndex );
+    void onARC( rando::Randomizer* randomizer, void* data, int roomNo, rando::FileDirectory fileDirectory );
 
     /**
      * @brief Runs when the player selects a bug to give to Agitha
