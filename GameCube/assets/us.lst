@@ -102,6 +102,7 @@
 80115c20:checkEventRun
 803DCE54:linkStatus
 800e251c:checkBootsMoveAnime
+80119d98:procCoTalkInit
 
 // data
 8038EB8C:climbVars
@@ -289,3 +290,6 @@
 
 //d_camera.o
 80182ad8:checkRide
+
+//d_resource.o
+8003c1e4:getResInfo

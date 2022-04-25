@@ -118,20 +118,6 @@ namespace mod::rando
             this->LoadSkyCharacter( stageIDX );
             this->LoadHiddenSkill();
 
-            if ( randomizer->m_Seed->m_StageIDX == 45 )
-            {
-                uint32_t bmgHeaderLocation =
-                    reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
-
-                uint32_t messageFlowOffset = bmgHeaderLocation + *reinterpret_cast<uint32_t*>( bmgHeaderLocation + 0x8 );
-
-                *reinterpret_cast<uint8_t*>( messageFlowOffset + 0x30f ) = 0x32;
-                *reinterpret_cast<uint8_t*>( messageFlowOffset + 0x3a7 ) = 0x32;
-
-                mod::console << bmgHeaderLocation << "'...\n";
-                mod::console << messageFlowOffset << "'...\n";
-                mod::console << *reinterpret_cast<uint8_t*>( messageFlowOffset + 0x3a7 ) << "'...\n";
-            }
             // Save current stageIDX for next time
             m_StageIDX = stageIDX;
         }
@@ -552,6 +538,43 @@ namespace mod::rando
                     }
                     break;
                 }
+            }
+        }
+    }
+
+    void Seed::LoadObjectARCChecks()
+    {
+        using namespace libtp;
+
+        uint32_t num_objarcchecks = m_Header->objectArcCheckInfo.numEntries;
+        uint32_t gci_offset = m_Header->objectArcCheckInfo.dataOffset;
+
+        // Set the pointer as offset into our buffer
+        ObjectArchiveReplacement* allARC = reinterpret_cast<ObjectArchiveReplacement*>( &m_GCIData[gci_offset] );
+        // Until a better way is found, we are going to clear the buffer here just to be safe
+        delete[] m_ObjectArcReplacements;
+        m_numLoadedObjectArcReplacements = 0;
+
+        for ( uint32_t i = 0; i < num_objarcchecks; i++ )
+        {
+            if ( ( allARC[i].stageIDX == m_StageIDX ) )
+            {
+                m_numLoadedObjectArcReplacements++;
+            }
+        }
+
+        // Allocate memory to the actual ARCChecks
+        m_ObjectArcReplacements = new ObjectArchiveReplacement[m_numLoadedObjectArcReplacements];
+
+        // offset into m_ArcReplacements
+        uint32_t j = 0;
+
+        for ( uint32_t i = 0; i < num_objarcchecks; i++ )
+        {
+            if ( ( allARC[i].stageIDX == m_StageIDX ) )
+            {
+                memcpy( &m_ObjectArcReplacements[j], &allARC[i], sizeof( ObjectArchiveReplacement ) );
+                j++;
             }
         }
     }

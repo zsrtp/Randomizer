@@ -21,6 +21,7 @@
 80025BCC:actorInit_always
 80025914:actorCommonLayerInit
 80025ca4:tgscInfoInit
+80026c64:roomLoader
 
 // data
 80452BF4:archiveHeap
@@ -220,6 +221,7 @@
 8002b4dc:getLayerNo_common_common
 8002b49c:dComIfG_get_timelayer
 8002f8b8:dComIfGs_Wolf_Change_Check
+8002f4dc:dComIfG_getStageRes
 
 // d_kankyo.o
 // data
@@ -289,3 +291,6 @@
 
 //d_a_player.o
 80452fd8:m_midnaActor
+
+//d_resource.o
+8003c314:getResInfo

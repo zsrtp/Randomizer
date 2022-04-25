@@ -13,6 +13,7 @@
 #include <cinttypes>
 
 #include "rando/randomizer.h"
+#include "tp/d_resource.h"
 #include "tp/d_save.h"
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
@@ -122,6 +123,8 @@ namespace mod::events
     void loadCustomRoomSCOBs();
     void handleQuickTransform();
 
+    libtp::tp::d_resource::dRes_info_c* getObjectResInfo( const char* arcName );
     bool haveItem( uint8_t item );
+    bool checkMembitSaveSwitchFlag( int32_t flag );
 }     // namespace mod::events
 #endif

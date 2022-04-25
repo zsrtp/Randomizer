@@ -230,17 +230,6 @@ namespace mod::game_patch
         uint8_t* getSeTypePtr = &libtp::tp::d_a_alink::getSeType[0];
         d_item_data::ItemInfo* yellowRupeeInfoPtr = &d_item_data::item_info[items::Yellow_Rupee];
 
-        uint32_t loopCount = sizeof( itemsWithNoFieldModel ) / sizeof( itemsWithNoFieldModel[0] );
-        for ( uint32_t i = 0; i < loopCount; i++ )
-        {
-            uint32_t item = itemsWithNoFieldModel[i];
-            // Set the item's field model to use the getItem model.
-            itemInfoPtr[item].mShadowSize = yellowRupeeInfoPtr->mShadowSize;
-            itemInfoPtr[item].mCollisionH = yellowRupeeInfoPtr->mCollisionH;
-            itemInfoPtr[item].mCollisionR = yellowRupeeInfoPtr->mCollisionR;
-            fieldItemResPtr[item].arcName = itemResourcePtr[item].arcName;
-            fieldItemResPtr[item].modelResIdx = itemResourcePtr[item].modelResIdx;
-        }
         memcpy( &itemResourcePtr[items::Master_Sword],
                 &itemResourcePtr[items::Ordon_Sword],
                 sizeof( d_item_data::ItemResource ) );
@@ -253,6 +242,21 @@ namespace mod::game_patch
         memcpy( &itemResourcePtr[items::Bomb_Bag_Regular_Bombs],
                 &itemResourcePtr[items::Goron_Bomb_Bag],
                 sizeof( d_item_data::ItemResource ) );
+        memcpy( &itemResourcePtr[items::Purple_Rupee_Links_House],
+                &itemResourcePtr[items::Purple_Rupee],
+                sizeof( d_item_data::ItemResource ) );
+
+        uint32_t loopCount = sizeof( itemsWithNoFieldModel ) / sizeof( itemsWithNoFieldModel[0] );
+        for ( uint32_t i = 0; i < loopCount; i++ )
+        {
+            uint32_t item = itemsWithNoFieldModel[i];
+            // Set the item's field model to use the getItem model.
+            itemInfoPtr[item].mShadowSize = yellowRupeeInfoPtr->mShadowSize;
+            itemInfoPtr[item].mCollisionH = yellowRupeeInfoPtr->mCollisionH;
+            itemInfoPtr[item].mCollisionR = yellowRupeeInfoPtr->mCollisionR;
+            fieldItemResPtr[item].arcName = itemResourcePtr[item].arcName;
+            fieldItemResPtr[item].modelResIdx = itemResourcePtr[item].modelResIdx;
+        }
 
         itemResourcePtr[items::Master_Sword].ringTexResIdx = 0x0042;
         itemResourcePtr[items::Shadow_Crystal].ringTexResIdx = 0x002E;

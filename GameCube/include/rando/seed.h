@@ -54,6 +54,9 @@ namespace mod::rando
         shopCheck* m_ShopChecks = nullptr;
         uint32_t m_numShopChecks = 0;
 
+        ObjectArchiveReplacement* m_ObjectArcReplacements = nullptr;
+        uint32_t m_numLoadedObjectArcReplacements = 0;
+
         // Member functions
        public:
         /**
@@ -82,6 +85,8 @@ namespace mod::rando
          */
         bool LoadChecks( const char* stage );
         void LoadARCChecks( uint8_t stageIDX, FileDirectory fileDirectory, int roomNo );
+
+        void LoadObjectARCChecks();
 
         void loadShopModels();
         void setArcIndex();

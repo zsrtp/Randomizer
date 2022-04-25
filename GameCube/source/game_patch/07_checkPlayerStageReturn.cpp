@@ -14,7 +14,8 @@ namespace mod::game_patch
     {
         using namespace libtp::tp::d_com_inf_game;
         using namespace libtp::data;
-        if ( libtp::tp::d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Gerudo_Desert] ) )
+        if ( libtp::tp::d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Gerudo_Desert] ) ||
+             libtp::tp::d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Bulblin_Camp] ) )
         {
             if ( !events::haveItem( items::Shadow_Crystal ) )
             {

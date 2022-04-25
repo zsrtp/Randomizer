@@ -11,6 +11,7 @@
 
 #include "data/items.h"
 #include "data/stages.h"
+#include "events.h"
 #include "game_patch/game_patch.h"
 #include "gc_wii/OSModule.h"
 #include "gc_wii/card.h"
@@ -23,6 +24,7 @@
 #include "tp/d_com_inf_game.h"
 #include "tp/d_kankyo.h"
 #include "tp/d_meter2_info.h"
+#include "tp/d_resource.h"
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
 #include "user_patch/03_customCosmetics.h"
@@ -190,7 +192,8 @@ namespace mod::rando
                 }
                 case rando::ArcReplacementType::HiddenSkill:
                 {
-                    fileAddr = reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
+                    uint32_t adjustedFilePtr =
+                        reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
                     uint8_t stageIDX;
                     for ( stageIDX = 0;
                           stageIDX < sizeof( libtp::data::stage::allStages ) / sizeof( libtp::data::stage::allStages[0] );
@@ -211,7 +214,8 @@ namespace mod::rando
                         {
                             uint16_t msgID =
                                 game_patch::_04_verifyProgressiveItem( mod::randomizer, m_Seed->m_HiddenSkillChecks[j].itemID );
-                            *reinterpret_cast<uint16_t*>( ( fileAddr + m_Seed->m_ArcReplacements[i].offset ) ) = msgID + 0x65;
+                            *reinterpret_cast<uint16_t*>( adjustedFilePtr + m_Seed->m_ArcReplacements[i].offset ) =
+                                msgID + 0x65;
                         }
                     }
                     break;
@@ -226,19 +230,23 @@ namespace mod::rando
 
                 case rando::ArcReplacementType::AlwaysLoaded:
                 {
-                    fileAddr = reinterpret_cast<uint32_t>( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mMsgDtArchive[0] );
+                    uint32_t adjustedFilePtr =
+                        reinterpret_cast<uint32_t>( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mMsgDtArchive[0] );
                     uint32_t replacementValue =
                         game_patch::_04_verifyProgressiveItem( mod::randomizer, m_Seed->m_ArcReplacements[i].replacementValue );
-                    *reinterpret_cast<uint8_t*>( ( fileAddr + m_Seed->m_ArcReplacements[i].offset ) ) = replacementValue;
+                    *reinterpret_cast<uint16_t*>( ( adjustedFilePtr + m_Seed->m_ArcReplacements[i].offset ) ) =
+                        replacementValue + 0x65;
                     break;
                 }
 
                 case rando::ArcReplacementType::MessageResource:
                 {
-                    fileAddr = reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
+                    uint32_t adjustedFilePtr =
+                        reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
+
                     uint32_t replacementValue =
                         game_patch::_04_verifyProgressiveItem( mod::randomizer, m_Seed->m_ArcReplacements[i].replacementValue );
-                    *reinterpret_cast<uint16_t*>( ( fileAddr + m_Seed->m_ArcReplacements[i].offset ) ) =
+                    *reinterpret_cast<uint16_t*>( ( adjustedFilePtr + m_Seed->m_ArcReplacements[i].offset ) ) =
                         replacementValue + 0x65;
                 }
 
@@ -246,6 +254,28 @@ namespace mod::rando
                 {
                     break;
                 }
+            }
+        }
+    }
+
+    void Randomizer::overrideObjectARC()
+    {
+        m_Seed->LoadObjectARCChecks();
+        uint32_t numReplacements = m_Seed->m_numLoadedObjectArcReplacements;
+        // Loop through all ArcChecks and replace the item at an offset given the fileIndex.
+        for ( uint32_t i = 0; i < numReplacements; i++ )
+        {
+            libtp::tp::d_resource::dRes_info_c* resourcePtr =
+                events::getObjectResInfo( m_Seed->m_ObjectArcReplacements[i].fileName );
+            if ( resourcePtr )
+            {
+                uint32_t replacementValue =
+                    game_patch::_04_verifyProgressiveItem( mod::randomizer,
+                                                           m_Seed->m_ObjectArcReplacements[i].replacementValue );
+
+                uint32_t archiveData =
+                    *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( resourcePtr->mArchive ) + 0x28 );
+                *reinterpret_cast<uint8_t*>( ( archiveData + m_Seed->m_ObjectArcReplacements[i].offset ) ) = replacementValue;
             }
         }
     }

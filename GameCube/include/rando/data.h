@@ -37,6 +37,7 @@ namespace mod::rando
         entryInfo relCheckInfo;
         entryInfo poeCheckInfo;
         entryInfo arcCheckInfo;
+        entryInfo objectArcCheckInfo;
         entryInfo bossCheckInfo;
         entryInfo hiddenSkillCheckInfo;
         entryInfo bugRewardCheckInfo;
@@ -53,7 +54,7 @@ namespace mod::rando
         uint8_t quickTransform;
         uint8_t castleRequirements;
         uint8_t palaceRequirements;
-        uint8_t padding[0x5];
+        uint8_t padding[0x1];
     } __attribute__( ( __packed__ ) );
 
     // Seed with index
@@ -130,6 +131,14 @@ namespace mod::rando
         ArcReplacementType replacementType;     // The type of replacement that is taking place.
         uint8_t stageIDX;                       // The name of the file where the check is stored
         uint8_t roomID;                         // The room number for chests/room based dzr checks.
+    } __attribute__( ( __packed__ ) );
+
+    struct ObjectArchiveReplacement
+    {
+        int32_t offset;                // The offset where the item is stored from the message flow header.
+        uint32_t replacementValue;     // Used to be item, but can be more now.
+        char fileName[15];
+        uint8_t stageIDX;     // The name of the file where the check is stored
     } __attribute__( ( __packed__ ) );
 
     struct BOSSCheck

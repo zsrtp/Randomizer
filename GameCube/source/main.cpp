@@ -137,6 +137,7 @@ namespace mod
     void ( *return_onEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
 
     bool ( *return_isSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag ) = nullptr;
+    void ( *return_onSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag ) = nullptr;
     uint32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
     int ( *return_event003 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
     int ( *return_event041 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
@@ -477,18 +478,51 @@ namespace mod
                         }
                     }
                 }
+
+                if ( libtp::tp::d_a_alink::checkStageName(
+                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Forest_Temple] ) )
+                {
+                    if ( flag == 0x3E && libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mEvtManager.mRoomNo == 0 )
+                    {
+                        return events::haveItem( libtp::data::items::Lantern );
+                    }
+                }
                 return return_isSwitch_dSv_memBit( memoryBit, flag );
             } );
+
+        return_onSwitch_dSv_memBit =
+            patch::hookFunction( libtp::tp::d_save::onSwitch_dSv_memBit,
+                                 []( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag )
+                                 {
+                                     if ( libtp::tp::d_a_alink::checkStageName(
+                                              libtp::data::stage::allStages[libtp::data::stage::stageIDs::Forest_Temple] ) )
+                                     {
+                                         if ( memoryBit == &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags )
+                                         {
+                                             if ( flag == 0x52 )
+                                             {
+                                                 return;
+                                             }
+                                         }
+                                     }
+                                     return return_onSwitch_dSv_memBit( memoryBit, flag );
+                                 } );
 
         return_roomLoader = patch::hookFunction(
             libtp::tp::d_stage::roomLoader,
             []( void* data, void* stageDt, int roomNo )
             {
-                events::onARC( randomizer, data, roomNo, rando::FileDirectory::Room );     // Replace room based checks.
-                void* filePtr = libtp::tp::d_com_inf_game::dComIfG_getStageRes(
-                    "stage.dzs" );     // Could hook stageLoader instead since it takes the first param as a pointer to the
-                                       // stage.dzs
-                events::onARC( randomizer, filePtr, roomNo, rando::FileDirectory::Stage );     // Replace stage based checks.
+                if ( randomizer )
+                {
+                    events::onARC( randomizer, data, roomNo, rando::FileDirectory::Room );     // Replace room based checks.
+                    void* filePtr = libtp::tp::d_com_inf_game::dComIfG_getStageRes(
+                        "stage.dzs" );     // Could hook stageLoader instead since it takes the first param as a pointer to the
+                                           // stage.dzs
+                    events::onARC( randomizer,
+                                   filePtr,
+                                   roomNo,
+                                   rando::FileDirectory::Stage );     // Replace stage based checks.
+                }
                 return return_roomLoader( data, stageDt, roomNo );
             } );
 
@@ -602,12 +636,27 @@ namespace mod
                         {
                             return true;
                         }
+                        else if ( checkStageName( allStages[stageIDs::Kakariko_Village_Interiors] ) &&
+                                  ( libtp::tp::d_kankyo::env_light.currentRoom ==
+                                    0 ) )     // Return true to prevent Renado/Illia crash after ToT
+                        {
+                            return true;
+                        }
                         break;
                     }
 
                     case 0x2010:
                     {
                         if ( checkStageName( allStages[stageIDs::Stallord] ) )
+                        {
+                            return false;
+                        }
+                        break;
+                    }
+
+                    case 0x2008:
+                    {
+                        if ( checkStageName( allStages[stageIDs::Kakariko_Graveyard] ) )
                         {
                             return false;
                         }
@@ -648,6 +697,10 @@ namespace mod
                                                 events::setSaveFileEventFlag( 0x4208 );
                                                 break;
                                             }
+                                            else
+                                            {
+                                                return false;
+                                            }
                                             break;
                                         }
                                         case 2:     // Mirror Shards
@@ -658,6 +711,10 @@ namespace mod
                                             {
                                                 events::setSaveFileEventFlag( 0x4208 );
                                                 break;
+                                            }
+                                            else
+                                            {
+                                                return false;
                                             }
                                             break;
                                         }
@@ -679,6 +736,10 @@ namespace mod
                                             {
                                                 events::setSaveFileEventFlag( 0x4208 );
                                                 break;
+                                            }
+                                            else
+                                            {
+                                                return false;
                                             }
                                         }
                                         default:
@@ -717,6 +778,10 @@ namespace mod
                                             {
                                                 return true;
                                             }
+                                            else
+                                            {
+                                                return false;
+                                            }
                                             break;
                                         }
                                         case 2:     // Mirror Shards
@@ -726,6 +791,10 @@ namespace mod
                                                  events::haveItem( items::Mirror_Piece_4 ) )
                                             {
                                                 return true;
+                                            }
+                                            else
+                                            {
+                                                return false;
                                             }
                                             break;
                                         }
@@ -876,7 +945,7 @@ namespace mod
                         return 1;
                     }
                 }
-                return return_event003( messageFlow, nodeEvent, actrPtr );
+                return return_event041( messageFlow, nodeEvent, actrPtr );
             } );
 
         return_checkBootsMoveAnime = patch::hookFunction(

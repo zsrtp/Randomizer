@@ -17,6 +17,7 @@
 #include "tp/d_kankyo.h"
 #include "tp/d_map_path_dmap.h"
 #include "tp/d_meter2_info.h"
+#include "tp/d_resource.h"
 #include "tp/dzx.h"
 #include "tp/rel/d_a_obj_Lv5Key.h"
 #include "user_patch/03_customCosmetics.h"
@@ -48,6 +49,7 @@ namespace mod::events
                 randomizer->initSave();
             }
             randomizer->overrideEventARC();
+            randomizer->overrideObjectARC();
             user_patch::setHUDCosmetics( randomizer );
             user_patch::setLanternColor( randomizer );
         }
@@ -91,7 +93,7 @@ namespace mod::events
                 // remove a small key from the inventory when opening the boss door
                 if ( libtp::tp::d_a_alink::checkStageName(
                          libtp::data::stage::allStages[libtp::data::stage::stageIDs::Lakebed_Temple] ) &&
-                     libtp::tp::d_kankyo::env_light.currentRoom == 3 )
+                     libtp::tp::d_kankyo::env_light.currentRoom == 2 )
                 {
                     *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1198 ) = 0x60000000;     // Previous: 0x3803ffff
                 }
@@ -648,5 +650,10 @@ namespace mod::events
         }
 
         libtp::tp::d_a_alink::procCoMetamorphoseInit( linkMapPtr );
+    }
+
+    libtp::tp::d_resource::dRes_info_c* getObjectResInfo( const char* arcName )
+    {
+        return getResInfo( arcName, libtp::tp::d_com_inf_game::dComIfG_gameInfo.mResControl.mObjectInfo, 0x80 );
     }
 }     // namespace mod::events
