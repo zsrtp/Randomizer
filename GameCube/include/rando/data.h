@@ -43,6 +43,7 @@ namespace mod::rando
         entryInfo bugRewardCheckInfo;
         entryInfo skyCharacterCheckInfo;
         entryInfo shopItemCheckInfo;
+        entryInfo startingItemInfo;
         uint8_t heartColor;
         uint8_t aButtonColor;
         uint8_t bButtonColor;
@@ -54,7 +55,7 @@ namespace mod::rando
         uint8_t quickTransform;
         uint8_t castleRequirements;
         uint8_t palaceRequirements;
-        uint8_t padding[0x1];
+        uint8_t padding[0xD];
     } __attribute__( ( __packed__ ) );
 
     // Seed with index

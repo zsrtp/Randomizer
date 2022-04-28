@@ -210,7 +210,9 @@ namespace mod::rando
                     for ( uint j = 0; j < m_Seed->m_numHiddenSkillChecks; j++ )
                     {
                         if ( ( m_Seed->m_HiddenSkillChecks[j].stageIDX == stageIDX ) &&
-                             ( m_Seed->m_HiddenSkillChecks[j].roomID == libtp::tp::d_kankyo::env_light.currentRoom ) )
+                             ( m_Seed->m_HiddenSkillChecks[j].roomID ==
+                               libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info
+                                   .player_last_room_id ) )
                         {
                             uint16_t msgID =
                                 game_patch::_04_verifyProgressiveItem( mod::randomizer, m_Seed->m_HiddenSkillChecks[j].itemID );

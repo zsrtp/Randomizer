@@ -89,7 +89,6 @@ namespace mod::rando
         void LoadObjectARCChecks();
 
         void loadShopModels();
-        void setArcIndex();
 
         void applyPatches( bool set );
 
@@ -107,6 +106,7 @@ namespace mod::rando
 
         void applyEventFlags( void );
         void applyRegionFlags( void );
+        void giveStartingItems( void );
 
         void LoadDZX( uint8_t stageIDX );
         void LoadREL( uint8_t stageIDX );

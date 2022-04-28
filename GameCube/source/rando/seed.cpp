@@ -21,6 +21,7 @@
 #include "tp/d_a_alink.h"
 #include "tp/d_a_shop_item_static.h"
 #include "tp/d_com_inf_game.h"
+#include "tp/d_item.h"
 #include "tp/d_item_data.h"
 #include "tp/d_meter2_info.h"
 #include "tp/d_s_logo.h"
@@ -80,6 +81,8 @@ namespace mod::rando
 
             mod::console << "Setting Region Flags... \n";
             this->applyRegionFlags();
+
+            this->giveStartingItems();
             return true;
         }
         else
@@ -252,6 +255,25 @@ namespace mod::rando
             }
 
             tp::d_save::getSave( SaveInfo, data::stage::regions[2] );
+        }
+    }
+
+    void Seed::giveStartingItems()
+    {
+        using namespace libtp;
+
+        uint32_t num_startingItems = m_Header->startingItemInfo.numEntries;
+        uint32_t gci_offset = m_Header->startingItemInfo.dataOffset;
+
+        if ( num_startingItems > 0 )
+        {
+            // Set the pointer as offset into our buffer
+            uint8_t* startingItems = reinterpret_cast<uint8_t*>( &m_GCIData[gci_offset] );
+
+            for ( uint32_t i = 0; i < num_startingItems; i++ )
+            {
+                libtp::tp::d_item::execItemGet( startingItems[i] );
+            }
         }
     }
 

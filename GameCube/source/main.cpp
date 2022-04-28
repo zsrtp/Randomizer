@@ -484,7 +484,7 @@ namespace mod
                 {
                     if ( flag == 0x3E && libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mEvtManager.mRoomNo == 0 )
                     {
-                        return events::haveItem( libtp::data::items::Lantern );
+                        return false;
                     }
                 }
                 return return_isSwitch_dSv_memBit( memoryBit, flag );
@@ -694,6 +694,9 @@ namespace mod
                                                  events::haveItem( items::Fused_Shadow_2 ) &&
                                                  events::haveItem( items::Fused_Shadow_3 ) )
                                             {
+                                                libtp::tp::d_save::onSwitch_dSv_memBit(
+                                                    &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
+                                                    0x0F );
                                                 events::setSaveFileEventFlag( 0x4208 );
                                                 break;
                                             }
@@ -709,6 +712,9 @@ namespace mod
                                                  events::haveItem( items::Mirror_Piece_3 ) &&
                                                  events::haveItem( items::Mirror_Piece_4 ) )
                                             {
+                                                libtp::tp::d_save::onSwitch_dSv_memBit(
+                                                    &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
+                                                    0x0F );
                                                 events::setSaveFileEventFlag( 0x4208 );
                                                 break;
                                             }
@@ -734,6 +740,9 @@ namespace mod
                                             }
                                             if ( numDungeons == 0x8 )
                                             {
+                                                libtp::tp::d_save::onSwitch_dSv_memBit(
+                                                    &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
+                                                    0x0F );
                                                 events::setSaveFileEventFlag( 0x4208 );
                                                 break;
                                             }
