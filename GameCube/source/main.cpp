@@ -124,6 +124,7 @@ namespace mod
     bool ( *return_query025 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     bool ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     int ( *return_query004 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    int ( *return_query037 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
 
     bool ( *return_checkTreasureRupeeReturn )( void* unk1, int32_t item ) = nullptr;
 
@@ -459,6 +460,17 @@ namespace mod
                 return return_query004( unk1, unk2, unk3 );
             } );
 
+        return_query037 = patch::hookFunction( libtp::tp::d_msg_flow::query037,
+                                               []( void* unk1, void* unk2, int32_t unk3 )
+                                               {
+                                                   int menuType = return_query037( unk1, unk2, unk3 );
+                                                   if ( menuType == 0x2 )
+                                                   {
+                                                       events::handleTimeOfDayChange();
+                                                   }
+                                                   return menuType;
+                                               } );
+
         return_query042 = patch::hookFunction( libtp::tp::d_msg_flow::query042,
                                                []( void* unk1, void* unk2, int32_t unk3 )
                                                { return events::proc_query042( unk1, unk2, unk3 ); } );
@@ -683,47 +695,6 @@ namespace mod
                                 {
                                     switch ( randomizer->m_Seed->m_Header->castleRequirements )
                                     {
-                                        case 0:     // Open
-                                        {
-                                            events::setSaveFileEventFlag( 0x4208 );
-                                            break;
-                                        }
-                                        case 1:     // Fused Shadows
-                                        {
-                                            if ( events::haveItem( items::Fused_Shadow_1 ) &&
-                                                 events::haveItem( items::Fused_Shadow_2 ) &&
-                                                 events::haveItem( items::Fused_Shadow_3 ) )
-                                            {
-                                                libtp::tp::d_save::onSwitch_dSv_memBit(
-                                                    &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
-                                                    0x0F );
-                                                events::setSaveFileEventFlag( 0x4208 );
-                                                break;
-                                            }
-                                            else
-                                            {
-                                                return false;
-                                            }
-                                            break;
-                                        }
-                                        case 2:     // Mirror Shards
-                                        {
-                                            if ( events::haveItem( items::Mirror_Piece_2 ) &&
-                                                 events::haveItem( items::Mirror_Piece_3 ) &&
-                                                 events::haveItem( items::Mirror_Piece_4 ) )
-                                            {
-                                                libtp::tp::d_save::onSwitch_dSv_memBit(
-                                                    &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
-                                                    0x0F );
-                                                events::setSaveFileEventFlag( 0x4208 );
-                                                break;
-                                            }
-                                            else
-                                            {
-                                                return false;
-                                            }
-                                            break;
-                                        }
                                         case 3:     // All Dungeons
                                         {
                                             uint8_t numDungeons = 0x0;
@@ -772,46 +743,9 @@ namespace mod
                                 using namespace libtp::data;
                                 if ( randomizer )
                                 {
-                                    switch ( randomizer->m_Seed->m_Header->palaceRequirements )
+                                    if ( randomizer->m_Seed->m_Header->palaceRequirements != 3 )
                                     {
-                                        case 0:     // Open
-                                        {
-                                            return true;
-                                            break;
-                                        }
-                                        case 1:     // Fused Shadows
-                                        {
-                                            if ( events::haveItem( items::Fused_Shadow_1 ) &&
-                                                 events::haveItem( items::Fused_Shadow_2 ) &&
-                                                 events::haveItem( items::Fused_Shadow_3 ) )
-                                            {
-                                                return true;
-                                            }
-                                            else
-                                            {
-                                                return false;
-                                            }
-                                            break;
-                                        }
-                                        case 2:     // Mirror Shards
-                                        {
-                                            if ( events::haveItem( items::Mirror_Piece_2 ) &&
-                                                 events::haveItem( items::Mirror_Piece_3 ) &&
-                                                 events::haveItem( items::Mirror_Piece_4 ) )
-                                            {
-                                                return true;
-                                            }
-                                            else
-                                            {
-                                                return false;
-                                            }
-                                            break;
-                                        }
-                                        default:
-                                        {
-                                            return return_isEventBit( eventPtr, flag );
-                                            break;
-                                        }
+                                        return false;
                                     }
                                 }
                             }

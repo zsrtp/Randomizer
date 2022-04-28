@@ -656,4 +656,27 @@ namespace mod::events
     {
         return getResInfo( arcName, libtp::tp::d_com_inf_game::dComIfG_gameInfo.mResControl.mObjectInfo, 0x80 );
     }
+
+    void handleTimeOfDayChange()
+    {
+        uint8_t todStages[] = { 43, 44, 41, 45, 47, 48, 46, 49, 50, 61, 52, 57, 56, 54, 55, 59, 63, 62 };
+        uint32_t totaltodStages = sizeof( todStages ) / sizeof( todStages[0] );
+        int32_t stageIndex = libtp::tools::getStageIndex( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage );
+
+        for ( uint32_t i = 0; i < totaltodStages; i++ )
+        {
+            if ( todStages[i] == stageIndex )
+            {
+                if ( ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle >= 284 ) ||
+                     ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle <= 105 ) )
+                {
+                    libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle = 105;
+                }
+                else
+                {
+                    libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle = 285;
+                }
+            }
+        }
+    }
 }     // namespace mod::events

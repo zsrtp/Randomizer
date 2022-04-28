@@ -122,6 +122,7 @@ namespace mod::events
     void loadCustomRoomActors();
     void loadCustomRoomSCOBs();
     void handleQuickTransform();
+    void handleTimeOfDayChange();
 
     libtp::tp::d_resource::dRes_info_c* getObjectResInfo( const char* arcName );
     bool haveItem( uint8_t item );

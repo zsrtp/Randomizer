@@ -7,6 +7,7 @@
 #include "data/stages.h"
 #include "events.h"
 #include "game_patch/game_patch.h"
+#include "main.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
@@ -846,6 +847,20 @@ namespace mod::game_patch
         d_item::ItemFunc onGetFusedShadow3 = []()
         {
             d_save::onCollectCrystal( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x02' );
+            if ( randomizer )
+            {
+                if ( randomizer->m_Seed->m_Header->castleRequirements == 1 )
+                {
+                    libtp::tp::d_save::onSwitch_dSv_memBit(
+                        &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[9].temp_flags,
+                        0x0F );
+                    events::setSaveFileEventFlag( 0x4208 );
+                }
+                if ( randomizer->m_Seed->m_Header->palaceRequirements == 1 )
+                {
+                    events::setSaveFileEventFlag( 0x2B08 );
+                }
+            }
         };     // Give player third fused shadow.
         itemFuncPtr[items::Fused_Shadow_3] = onGetFusedShadow3;
 
@@ -862,6 +877,20 @@ namespace mod::game_patch
         d_item::ItemFunc onGetMirrorShard4 = []()
         {
             d_save::onCollectMirror( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x03' );
+            if ( randomizer )
+            {
+                if ( randomizer->m_Seed->m_Header->castleRequirements == 2 )
+                {
+                    libtp::tp::d_save::onSwitch_dSv_memBit(
+                        &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[9].temp_flags,
+                        0x0F );
+                    events::setSaveFileEventFlag( 0x4208 );
+                }
+                if ( randomizer->m_Seed->m_Header->palaceRequirements == 2 )
+                {
+                    events::setSaveFileEventFlag( 0x2B08 );
+                }
+            }
         };     // Give player fourth mirror shard.
         itemFuncPtr[items::Mirror_Piece_4] = onGetMirrorShard4;
 
