@@ -932,6 +932,12 @@ namespace mod::game_patch
         };
         itemFuncPtr[items::Vessel_Of_Light_Lanayru] = onGetLanayruVessel;
 
+        d_item::ItemFunc onGetFoolishItem = []()
+        {
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve[0] = 0x1;
+        };     // Use the first bit in reserve for the foolish item flag.
+        itemFuncPtr[items::Foolish_Item] = onGetFoolishItem;
+
         // Some items need a valid getCheckFunc definition.
         d_item::ItemGetCheckFunc item_getcheck_func_first_character = []()
         { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Ancient_Sky_Book_First_Character ); };

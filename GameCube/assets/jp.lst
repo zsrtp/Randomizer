@@ -201,3 +201,7 @@
 
 //dvdfs.o
 8034a9c4:DVDConvertPathToEntrynum
+
+// m_Do_MemCard.o
+// data
+803DB080:MemCardWorkArea0

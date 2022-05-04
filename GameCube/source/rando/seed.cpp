@@ -33,6 +33,7 @@ namespace mod::rando
     Seed::Seed( int32_t chan, SeedInfo* seedInfo ): m_CardSlot( chan )
     {
         m_Header = &seedInfo->header;
+        mod::console << m_Header << "\n";
 
         // Loading seed rando-dataX '<seed>'...
 
@@ -49,7 +50,7 @@ namespace mod::rando
 
         m_GCIData = new uint8_t[length];
 
-        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, fileName, length, 0x00, m_GCIData );
+        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, fileName, length, 0x00, m_GCIData, false );
     }
 
     Seed::~Seed()
@@ -269,6 +270,7 @@ namespace mod::rando
         {
             // Set the pointer as offset into our buffer
             uint8_t* startingItems = reinterpret_cast<uint8_t*>( &m_GCIData[gci_offset] );
+            mod::console << reinterpret_cast<uint32_t>( startingItems ) << "\n";
 
             for ( uint32_t i = 0; i < num_startingItems; i++ )
             {

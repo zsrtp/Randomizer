@@ -294,3 +294,7 @@
 
 //d_resource.o
 8003c314:getResInfo
+
+// m_Do_MemCard.o
+// data
+803E2EE0:MemCardWorkArea0

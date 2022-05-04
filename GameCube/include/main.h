@@ -40,6 +40,7 @@ namespace mod
     void setScreen( bool state );     // Sets visibility of console
 
     void handleInput( uint32_t inputs );
+    // void* Z2ScenePtr;
 
     // Function hook handlers & trampolines
     void handle_fapGm_Execute( void );

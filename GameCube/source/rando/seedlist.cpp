@@ -44,7 +44,7 @@ namespace mod::rando
 
             Header header;
 
-            if ( CARD_RESULT_READY == libtp::tools::ReadGCI( CARD_SLOT_A, filename, sizeof( header ), 0, &header ) )
+            if ( CARD_RESULT_READY == libtp::tools::ReadGCI( CARD_SLOT_A, filename, sizeof( header ), 0, &header, true ) )
             {
                 uint16_t minVersion = header.minVersion;
                 uint16_t maxVersion = header.maxVersion;

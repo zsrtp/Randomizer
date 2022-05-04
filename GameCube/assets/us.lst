@@ -127,6 +127,7 @@
 803580B4:CARDClose
 80357F98:CARDOpen
 80356A4C:CARDProbeEx
+80358e88:CARDGetStatus
 
 // OSCache.o
 // 8033B56C:DCEnable
@@ -237,6 +238,7 @@
 
 // Z2SceneMgr.o
 802B9B68:sceneChange
+802ba704:loadSeWave
 
 // Z2SeqMgr.o
 802B4EB0:startBattleBgm
@@ -294,3 +296,7 @@
 
 //d_resource.o
 8003c1e4:getResInfo
+
+// m_Do_MemCard.o
+// data
+803E0F40:MemCardWorkArea0

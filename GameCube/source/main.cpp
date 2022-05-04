@@ -15,6 +15,7 @@
 #include "rando/seedlist.h"
 #include "tools.h"
 #include "tp/JKRDvdRipper.h"
+#include "tp/Z2SceneMgr.h"
 #include "tp/control.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
@@ -148,6 +149,10 @@ namespace mod
     bool ( *return_checkBootsMoveAnime )( libtp::tp::d_a_alink::daAlink* d_a_alink, int param_1 ) = nullptr;
 
     void ( *return_roomLoader )( void* data, void* stageDt, int roomNo ) = nullptr;
+
+    void ( *return_checkDamageAction )( libtp::tp::d_a_alink::daAlink* linkMapPtr ) = nullptr;
+
+    void ( *return_loadSeWave )( void* Z2SceneMgr, uint32_t waveID ) = nullptr;
 
     void main()
     {
@@ -430,6 +435,19 @@ namespace mod
                                                []( void* unk1, void* unk2, int32_t unk3 )
                                                { return events::proc_query023( unk1, unk2, unk3 ); } );
 
+        /*return_checkDamageAction =
+            patch::hookFunction( libtp::tp::d_a_alink::checkDamageAction,
+                                 []( libtp::tp::d_a_alink::daAlink* linkMapPtr )
+                                 {
+                                     if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve[0] == 0x1 )
+                                     {
+                                         libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve[0] = 0;
+                                        libtp::tp::z2audiolib::z2scenemgr::eraseSeWave(Z2ScenePtr)
+                                         return
+                                     }
+                                     return return_checkDamageAction( linkMapPtr );
+                                 } );*/
+
         return_query025 =
             patch::hookFunction( libtp::tp::d_msg_flow::query025,
                                  []( void* unk1, void* unk2, int32_t unk3 )
@@ -459,6 +477,13 @@ namespace mod
                 }
                 return return_query004( unk1, unk2, unk3 );
             } );
+
+        return_loadSeWave = patch::hookFunction( libtp::tp::z2audiolib::z2scenemgr::loadSeWave,
+                                                 []( void* Z2SceneMgr, uint32_t waveID )
+                                                 {
+                                                     // Z2ScenePtr = Z2SceneMgr;
+                                                     return return_loadSeWave( Z2SceneMgr, waveID );
+                                                 } );
 
         return_query037 = patch::hookFunction( libtp::tp::d_msg_flow::query037,
                                                []( void* unk1, void* unk2, int32_t unk3 )
