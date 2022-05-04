@@ -42,14 +42,14 @@ namespace mod::rando
         mod::console << "Loading seed " << m_fileIndex << ": '" << m_Header->seed << "'...\n";
 
         // Load the whole gci locally to reduce number of reads (memcard)
-        uint32_t length = m_Header->fileSize;
+        uint32_t length = m_Header->dataSize;
         char fileName[12] = "rando-data\0";
 
         fileName[10] = static_cast<char>( '0' + m_fileIndex );
 
         m_GCIData = new uint8_t[length];
 
-        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, fileName, length, sizeof( seedInfo->header ), m_GCIData, true );
+        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, fileName, length, m_Header->headerSize, m_GCIData, true );
     }
 
     Seed::~Seed()

@@ -24,7 +24,8 @@ namespace mod::rando
 
     struct Header
     {
-        uint32_t fileSize;       // Total number of bytes including the header
+        uint16_t headerSize;     // Total size of the header in bytes
+        uint16_t dataSize;       // Total number of bytes
         uint64_t seed;           // Current seed
         uint16_t minVersion;     // minimal required REL version, u8 Major and u8 Minor
         uint16_t maxVersion;     // maximum supported REL version, u8 Major and u8 Minor
