@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <cstring>
 
+#include "Z2AudioLib/Z2AudioMgr.h"
 #include "data/items.h"
 #include "data/stages.h"
 #include "events.h"
@@ -15,7 +16,6 @@
 #include "rando/seedlist.h"
 #include "tools.h"
 #include "tp/JKRDvdRipper.h"
-#include "tp/Z2SceneMgr.h"
 #include "tp/control.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
@@ -48,6 +48,8 @@ namespace mod
     int32_t lastLoadingState = 0;
     bool consoleState = true;
     uint8_t gameState = GAME_BOOT;
+    void* Z2ScenePtr = nullptr;
+    bool isFoolishTrapQueued = false;
 
     // Function hook return trampolines
     void ( *return_fapGm_Execute )( void ) = nullptr;
@@ -150,9 +152,11 @@ namespace mod
 
     void ( *return_roomLoader )( void* data, void* stageDt, int roomNo ) = nullptr;
 
-    void ( *return_checkDamageAction )( libtp::tp::d_a_alink::daAlink* linkMapPtr ) = nullptr;
+    bool ( *return_checkDamageAction )( libtp::tp::d_a_alink::daAlink* linkMapPtr ) = nullptr;
 
     void ( *return_loadSeWave )( void* Z2SceneMgr, uint32_t waveID ) = nullptr;
+
+    void ( *return_setGetItemFace )( libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID ) = nullptr;
 
     void main()
     {
@@ -435,18 +439,28 @@ namespace mod
                                                []( void* unk1, void* unk2, int32_t unk3 )
                                                { return events::proc_query023( unk1, unk2, unk3 ); } );
 
-        /*return_checkDamageAction =
+        return_checkDamageAction =
             patch::hookFunction( libtp::tp::d_a_alink::checkDamageAction,
                                  []( libtp::tp::d_a_alink::daAlink* linkMapPtr )
                                  {
-                                     if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve[0] == 0x1 )
+                                     if ( isFoolishTrapQueued )
                                      {
-                                         libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve[0] = 0;
-                                        libtp::tp::z2audiolib::z2scenemgr::eraseSeWave(Z2ScenePtr)
-                                         return
+                                         if ( events::checkFoolItemFreeze() )
+                                         {
+                                             isFoolishTrapQueued = false;
+                                             libtp::z2audiolib::z2scenemgr::eraseSeWave(
+                                                 Z2ScenePtr,
+                                                 libtp::z2audiolib::z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_1 );
+                                             libtp::z2audiolib::z2scenemgr::eraseSeWave(
+                                                 Z2ScenePtr,
+                                                 libtp::z2audiolib::z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2 );
+                                             libtp::z2audiolib::z2scenemgr::loadSeWave( Z2ScenePtr, 0x46 );
+                                             libtp::z2audiolib::z2semgr::seStartLevel( 0x10040, nullptr, 0, 0 );
+                                             return libtp::tp::d_a_alink::procDamageInit( linkMapPtr, nullptr, 0 );
+                                         }
                                      }
                                      return return_checkDamageAction( linkMapPtr );
-                                 } );*/
+                                 } );
 
         return_query025 =
             patch::hookFunction( libtp::tp::d_msg_flow::query025,
@@ -478,10 +492,10 @@ namespace mod
                 return return_query004( unk1, unk2, unk3 );
             } );
 
-        return_loadSeWave = patch::hookFunction( libtp::tp::z2audiolib::z2scenemgr::loadSeWave,
+        return_loadSeWave = patch::hookFunction( libtp::z2audiolib::z2scenemgr::loadSeWave,
                                                  []( void* Z2SceneMgr, uint32_t waveID )
                                                  {
-                                                     // Z2ScenePtr = Z2SceneMgr;
+                                                     Z2ScenePtr = Z2SceneMgr;
                                                      return return_loadSeWave( Z2SceneMgr, waveID );
                                                  } );
 
@@ -946,6 +960,24 @@ namespace mod
         return_isDungeonItem = patch::hookFunction( tp::d_save::isDungeonItem,
                                                     []( tp::d_save::dSv_memBit_c* membitPtr, const int memBit )
                                                     { return events::proc_isDungeonItem( membitPtr, memBit ); } );
+
+        return_setGetItemFace = patch::hookFunction( libtp::tp::d_a_alink::setGetItemFace,
+                                                     []( libtp::tp::d_a_alink::daAlink* linkMapPtr, uint16_t itemID )
+                                                     {
+                                                         switch ( itemID )
+                                                         {
+                                                             case libtp::data::items::Foolish_Item:
+                                                             {
+                                                                 itemID = libtp::data::items::Ordon_Pumpkin;
+                                                                 break;
+                                                             }
+                                                             default:
+                                                             {
+                                                                 break;
+                                                             }
+                                                         }
+                                                         return return_setGetItemFace( linkMapPtr, itemID );
+                                                     } );
     }
 
     void setScreen( bool state )

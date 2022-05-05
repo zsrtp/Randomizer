@@ -36,31 +36,38 @@ namespace mod::rando
 
         m_numSeeds = 0;
 
-        for ( uint8_t i = 0; i < SEED_MAX_ENTRIES; i++ )
+        // Only mount/unmount the memory card once
+        constexpr int32_t memCardChan = CARD_SLOT_A;
+        if ( CARD_RESULT_READY == tools::mountMemoryCard( memCardChan ) )
         {
-            // Check next filename depending on i
-            // rando-data0, rando-data1, ...
-            filename[10] = static_cast<char>( '0' + i );
-
-            Header header;
-
-            if ( CARD_RESULT_READY == libtp::tools::ReadGCI( CARD_SLOT_A, filename, sizeof( header ), 0, &header, true ) )
+            for ( uint8_t i = 0; i < SEED_MAX_ENTRIES; i++ )
             {
-                uint16_t minVersion = header.minVersion;
-                uint16_t maxVersion = header.maxVersion;
+                // Check next filename depending on i
+                // rando-data0, rando-data1, ...
+                filename[10] = static_cast<char>( '0' + i );
 
-                uint16_t version = static_cast<uint16_t>( _VERSION_MAJOR << 8 | _VERSION_MINOR );
-                if ( minVersion <= version )
+                Header header;
+
+                if ( CARD_RESULT_READY ==
+                     libtp::tools::ReadGCIMounted( memCardChan, filename, sizeof( header ), 0, &header, true ) )
                 {
-                    if ( maxVersion >= version )
-                    {
-                        seedIDX = seedIDX | ( 1 << i );
-                        memcpy( &headerBuffer[i], &header, sizeof( Header ) );
+                    uint16_t minVersion = header.minVersion;
+                    uint16_t maxVersion = header.maxVersion;
 
-                        m_numSeeds++;
+                    uint16_t version = static_cast<uint16_t>( _VERSION_MAJOR << 8 | _VERSION_MINOR );
+                    if ( minVersion <= version )
+                    {
+                        if ( maxVersion >= version )
+                        {
+                            seedIDX = seedIDX | ( 1 << i );
+                            memcpy( &headerBuffer[i], &header, sizeof( Header ) );
+
+                            m_numSeeds++;
+                        }
                     }
                 }
             }
+            libtp::gc_wii::card::CARDUnmount( memCardChan );
         }
 
         if ( m_numSeeds > 0 )

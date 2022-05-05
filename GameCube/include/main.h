@@ -40,7 +40,6 @@ namespace mod
     void setScreen( bool state );     // Sets visibility of console
 
     void handleInput( uint32_t inputs );
-    // void* Z2ScenePtr;
 
     // Function hook handlers & trampolines
     void handle_fapGm_Execute( void );
@@ -82,5 +81,7 @@ namespace mod
     extern bool ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 );
 
     extern bool ( *return_isDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int memBit );
+    extern void* Z2ScenePtr;
+    extern bool isFoolishTrapQueued;
 }     // namespace mod
 #endif

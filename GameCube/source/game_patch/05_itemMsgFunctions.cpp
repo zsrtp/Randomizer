@@ -372,6 +372,12 @@ namespace mod::game_patch
                 break;
             }
 
+            case Foolish_Item:
+            {
+                setMessageText( control, foolishItemText );
+                break;
+            }
+
             default:
             {
                 break;

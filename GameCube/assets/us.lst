@@ -103,6 +103,9 @@
 803DCE54:linkStatus
 800e251c:checkBootsMoveAnime
 80119d98:procCoTalkInit
+800d8f3c:procDamageInit
+800d7c40:checkDamageAction
+801181a0:setGetItemFace
 
 // data
 8038EB8C:climbVars
@@ -239,6 +242,13 @@
 // Z2SceneMgr.o
 802B9B68:sceneChange
 802ba704:loadSeWave
+802ba5c8:eraseSeWave
+
+// Z2AudioMgr.o
+803dbf4c:g_mDoAud_zelAudio
+
+// Z2SeMgr.o
+8014113c:seStartLevel
 
 // Z2SeqMgr.o
 802B4EB0:startBattleBgm

@@ -9,10 +9,10 @@
  */
 #include "user_patch/01_randombgm.h"
 
+#include "Z2AudioLib/Z2SceneMgr.h"
 #include "main.h"
 #include "patch.h"
 #include "tools.h"
-#include "tp/Z2SceneMgr.h"
 
 namespace mod::user_patch
 {
@@ -138,8 +138,8 @@ namespace mod::user_patch
 
         static uint8_t randomizedBgms[bgmSourceLength];
 
-        void ( *return_sceneChange )( libtp::tp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
-                                      libtp::tp::z2audiolib::z2scenemgr::JAISoundID id,
+        void ( *return_sceneChange )( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
+                                      libtp::z2audiolib::z2scenemgr::JAISoundID id,
                                       uint8_t SeWave1,
                                       uint8_t SeWave2,
                                       uint8_t BgmWave1,
@@ -197,9 +197,9 @@ namespace mod::user_patch
         }
 
         bgm::bgmrando::return_sceneChange = libtp::patch::hookFunction(
-            libtp::tp::z2audiolib::z2scenemgr::sceneChange,
-            []( libtp::tp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
-                libtp::tp::z2audiolib::z2scenemgr::JAISoundID BGMid,
+            libtp::z2audiolib::z2scenemgr::sceneChange,
+            []( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
+                libtp::z2audiolib::z2scenemgr::JAISoundID BGMid,
                 uint8_t SeWave1,
                 uint8_t SeWave2,
                 uint8_t BgmWave1,
@@ -227,7 +227,7 @@ namespace mod::user_patch
 
                     if ( found )
                     {
-                        libtp::tp::z2audiolib::z2scenemgr::JAISoundID new_id;
+                        libtp::z2audiolib::z2scenemgr::JAISoundID new_id;
                         new_id.id = bgm::bgmrando::bgmSource[index_of_id].id + 0x1000000;
                         bgm::bgmrando::return_sceneChange( sceneMgr,
                                                            new_id,

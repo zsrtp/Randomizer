@@ -932,10 +932,7 @@ namespace mod::game_patch
         };
         itemFuncPtr[items::Vessel_Of_Light_Lanayru] = onGetLanayruVessel;
 
-        d_item::ItemFunc onGetFoolishItem = []()
-        {
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve[0] = 0x1;
-        };     // Use the first bit in reserve for the foolish item flag.
+        d_item::ItemFunc onGetFoolishItem = []() { mod::isFoolishTrapQueued = true; };
         itemFuncPtr[items::Foolish_Item] = onGetFoolishItem;
 
         // Some items need a valid getCheckFunc definition.

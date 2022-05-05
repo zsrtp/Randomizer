@@ -123,6 +123,7 @@ namespace mod::events
     void loadCustomRoomSCOBs();
     void handleQuickTransform();
     void handleTimeOfDayChange();
+    bool checkFoolItemFreeze();
 
     libtp::tp::d_resource::dRes_info_c* getObjectResInfo( const char* arcName );
     bool haveItem( uint8_t item );

@@ -701,6 +701,16 @@ namespace mod::game_patch
     ".."
     MSG_END()
 
+
+    MSG_BEGIN(foolishItemText)
+    MSG_SPEED(MSG_SPEED_FAST)
+    "A "
+    MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
+    "cold"
+    MSG_COLOR(MSG_COLOR_WHITE)
+    " wind blows.."
+    MSG_END()
+
     const char* talkToMidnaText = { "Talk to Midna" };
     const char* smallDonationText = { "30 Rupees" };
 }     // namespace mod::game_patch
