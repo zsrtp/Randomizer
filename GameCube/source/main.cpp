@@ -82,39 +82,35 @@ namespace mod
         return_fapGm_Execute = patch::hookFunction( libtp::tp::f_ap_game::fapGm_Execute, mod::handle_fapGm_Execute );
 
         // DMC
-        return_do_Link = patch::hookFunction( libtp::tp::dynamic_link::do_link,
-                                              []( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
-                                              {
-                                                  // Call the original function immediately, as the REL file needs to be linked
-                                                  // before applying patches
-                                                  const bool result = return_do_Link( dmc );
+        return_do_Link =
+            patch::hookFunction( libtp::tp::dynamic_link::do_link, []( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) {
+                // Call the original function immediately, as the REL file needs to be linked
+                // before applying patches
+                const bool result = return_do_Link( dmc );
 
-                                                  events::onRELLink( randomizer, dmc );
+                events::onRELLink( randomizer, dmc );
 
-                                                  return result;
-                                              } );
+                return result;
+            } );
 
         // DZX
         return_actorInit =
             patch::hookFunction( actorInit,
-                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
-                                 {
+                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 ) {
                                      events::onDZX( mod::randomizer, chunkTypeInfo );
                                      return return_actorInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
                                  } );
 
         return_actorInit_always =
             patch::hookFunction( actorInit_always,
-                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
-                                 {
+                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 ) {
                                      events::onDZX( mod::randomizer, chunkTypeInfo );
                                      return return_actorInit_always( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
                                  } );
 
         return_actorCommonLayerInit =
             patch::hookFunction( actorCommonLayerInit,
-                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
-                                 {
+                                 []( void* mStatus_roomControl, ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 ) {
                                      events::onDZX( mod::randomizer, chunkTypeInfo );
                                      return return_actorCommonLayerInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
                                  } );

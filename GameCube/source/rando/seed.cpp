@@ -42,7 +42,7 @@ namespace mod::rando
 
         m_GCIData = new uint8_t[length];
 
-        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, fileName, length, 0x00, m_GCIData );
+        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, fileName, length, 0x00, m_GCIData, false );
     }
 
     Seed::~Seed()
