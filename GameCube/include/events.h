@@ -20,6 +20,9 @@
 
 namespace mod::events
 {
+
+    typedef bool ( *CMEB )( void* );
+    extern CMEB checkNpcTransform;
     /**
      * @brief Runs when loading just started
      *

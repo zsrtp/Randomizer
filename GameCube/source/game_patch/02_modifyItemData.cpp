@@ -231,6 +231,14 @@ namespace mod::game_patch
         uint8_t* getSeTypePtr = &libtp::tp::d_a_alink::getSeType[0];
         d_item_data::ItemInfo* yellowRupeeInfoPtr = &d_item_data::item_info[items::Yellow_Rupee];
 
+        int16_t bombBagIcon = itemResourcePtr[items::Bomb_Bag_Regular_Bombs].ringTexResIdx;
+
+        memcpy( &itemResourcePtr[items::Bomb_Bag_Regular_Bombs],
+                &itemResourcePtr[items::Goron_Bomb_Bag],
+                sizeof( d_item_data::ItemResource ) );
+
+        itemResourcePtr[items::Bomb_Bag_Regular_Bombs].ringTexResIdx = bombBagIcon;
+
         memcpy( &itemResourcePtr[items::Master_Sword],
                 &itemResourcePtr[items::Ordon_Sword],
                 sizeof( d_item_data::ItemResource ) );
@@ -239,9 +247,6 @@ namespace mod::game_patch
                 sizeof( d_item_data::ItemResource ) );
         memcpy( &itemResourcePtr[items::Horse_Call],
                 &itemResourcePtr[items::Ilias_Charm],
-                sizeof( d_item_data::ItemResource ) );
-        memcpy( &itemResourcePtr[items::Bomb_Bag_Regular_Bombs],
-                &itemResourcePtr[items::Goron_Bomb_Bag],
                 sizeof( d_item_data::ItemResource ) );
         memcpy( &itemResourcePtr[items::Purple_Rupee_Links_House],
                 &itemResourcePtr[items::Purple_Rupee],

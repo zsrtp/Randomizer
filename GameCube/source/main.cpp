@@ -18,6 +18,7 @@
 #include "tp/JKRDvdRipper.h"
 #include "tp/control.h"
 #include "tp/d_a_alink.h"
+#include "tp/d_a_player.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
 #include "tp/d_kankyo.h"
@@ -499,16 +500,18 @@ namespace mod
                                                      return return_loadSeWave( Z2SceneMgr, waveID );
                                                  } );
 
-        return_query037 = patch::hookFunction( libtp::tp::d_msg_flow::query037,
-                                               []( void* unk1, void* unk2, int32_t unk3 )
-                                               {
-                                                   int menuType = return_query037( unk1, unk2, unk3 );
-                                                   if ( menuType == 0x2 )
-                                                   {
-                                                       events::handleTimeOfDayChange();
-                                                   }
-                                                   return menuType;
-                                               } );
+        return_query037 = patch::hookFunction(
+            libtp::tp::d_msg_flow::query037,
+            []( void* unk1, void* unk2, int32_t unk3 )
+            {
+                int menuType = return_query037( unk1, unk2, unk3 );
+                if ( ( menuType == 0x2 ) && ( reinterpret_cast<int32_t>( &libtp::tp::d_a_player::m_midnaActor ) ==
+                                              libtp::tp::f_op_actor_mng::fopAcM_getTalkEventPartner( nullptr ) ) )
+                {
+                    events::handleTimeOfDayChange();
+                }
+                return menuType;
+            } );
 
         return_query042 = patch::hookFunction( libtp::tp::d_msg_flow::query042,
                                                []( void* unk1, void* unk2, int32_t unk3 )

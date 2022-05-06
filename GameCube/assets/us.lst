@@ -69,6 +69,7 @@
 8001C1B8:createItemForDirectGet
 80019AA8:CreateAppend
 80019D98:fopAcM_create
+8001bb14:fopAcM_getTalkEventPartner
 
 // f_pc_node_req
 803A3A38:l_fpcNdRq_Queue

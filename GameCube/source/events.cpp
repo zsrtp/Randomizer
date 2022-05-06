@@ -26,6 +26,7 @@ namespace mod::events
 {
     // REL patching trampolines
     void ( *return_daObjLv5Key_c__Wait )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* _this ) = nullptr;
+    CMEB checkNpcTransform = nullptr;
 
     void onLoad( rando::Randomizer* randomizer )
     {
@@ -274,6 +275,13 @@ namespace mod::events
                                                 } );
                 break;
             }
+            // d_a_midna.rel
+            // Midna
+            case 0x33:
+            {
+                checkNpcTransform = reinterpret_cast<CMEB>( relPtrRaw + 0x8A0C );
+                break;
+            }
         }
     }
 
@@ -287,6 +295,12 @@ namespace mod::events
             {
                 return_daObjLv5Key_c__Wait = libtp::patch::unhookFunction( return_daObjLv5Key_c__Wait );
                 break;
+            }
+            // d_a_midna.rel
+            // Midna
+            case 0x33:
+            {
+                checkNpcTransform = nullptr;
             }
         }
     }
@@ -623,25 +637,23 @@ namespace mod::events
             return;
         }
 
-        uint32_t m_midnaActorPtr =
-            *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( libtp::tp::d_a_player::m_midnaActor ) + 0x890 );
-
         if ( randomizer )
         {
             if ( randomizer->m_Seed->m_Header->transformAnywhere )
             {
                 libtp::tp::d_a_alink::procCoMetamorphoseInit( linkMapPtr );
             }
-        }
-
-        if ( ( m_midnaActorPtr & 0x100000 ) != 0 )
-        {
-            return;
-        }
-
-        if ( ( m_midnaActorPtr & 0x40000 ) != 0 )
-        {
-            return;
+            else
+            {
+                CMEB tempCMEB = checkNpcTransform;
+                if ( tempCMEB )
+                {
+                    if ( !tempCMEB( libtp::tp::d_a_player::m_midnaActor ) )
+                    {
+                        return;
+                    }
+                }
+            }
         }
 
         if ( ( libtp::tp::d_kankyo::env_light.mEvilPacketEnabled & 0x80 ) != 0 )
