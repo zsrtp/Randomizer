@@ -13,6 +13,7 @@
 #include <cstdio>
 
 #include "data/stages.h"
+#include "game_patch/game_patch.h"
 #include "gc_wii/card.h"
 #include "gc_wii/dvdfs.h"
 #include "main.h"
@@ -400,6 +401,10 @@ namespace mod::rando
             d_item_data::ItemResource* itemResourcePtr = &d_item_data::item_resource[0];
             for ( uint32_t i = 0; i < num_shopItems; i++ )
             {
+                if ( allSHOP[i].shopItemID == libtp::data::items::Foolish_Item )
+                {
+                    game_patch::_02_modifyFoolishShopModel( allSHOP[i].shopItemID );
+                }
                 d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].arcName =
                     itemResourcePtr[allSHOP[i].replacementItemID].arcName;
                 d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].modelResIdx =

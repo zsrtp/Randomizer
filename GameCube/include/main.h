@@ -34,10 +34,13 @@ namespace mod
     extern int32_t lastLoadingState;
     extern bool consoleState;
     extern uint8_t gameState;
+    extern uint32_t nextVal;
 
     void main();
     void hookFunctions();
     void setScreen( bool state );     // Sets visibility of console
+    uint32_t rand( uint32_t* seed );
+    uint32_t ulRand( uint32_t range );
 
     void handleInput( uint32_t inputs );
 

@@ -10,6 +10,7 @@
 #include "data/stages.h"
 #include "events.h"
 #include "game_patch/game_patch.h"
+#include "gc_wii/OSTime.h"
 #include "patch.h"
 #include "rando/data.h"
 #include "rando/randomizer.h"
@@ -51,6 +52,7 @@ namespace mod
     uint8_t gameState = GAME_BOOT;
     void* Z2ScenePtr = nullptr;
     bool isFoolishTrapQueued = false;
+    uint32_t nextVal = libtp::gc_wii::os_time::OSGetTick();
 
     // Function hook return trampolines
     void ( *return_fapGm_Execute )( void ) = nullptr;
@@ -440,28 +442,32 @@ namespace mod
                                                []( void* unk1, void* unk2, int32_t unk3 )
                                                { return events::proc_query023( unk1, unk2, unk3 ); } );
 
-        return_checkDamageAction =
-            patch::hookFunction( libtp::tp::d_a_alink::checkDamageAction,
-                                 []( libtp::tp::d_a_alink::daAlink* linkMapPtr )
-                                 {
-                                     if ( isFoolishTrapQueued )
-                                     {
-                                         if ( events::checkFoolItemFreeze() )
-                                         {
-                                             isFoolishTrapQueued = false;
-                                             libtp::z2audiolib::z2scenemgr::eraseSeWave(
-                                                 Z2ScenePtr,
-                                                 libtp::z2audiolib::z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_1 );
-                                             libtp::z2audiolib::z2scenemgr::eraseSeWave(
-                                                 Z2ScenePtr,
-                                                 libtp::z2audiolib::z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2 );
-                                             libtp::z2audiolib::z2scenemgr::loadSeWave( Z2ScenePtr, 0x46 );
-                                             libtp::z2audiolib::z2semgr::seStartLevel( 0x10040, nullptr, 0, 0 );
-                                             return libtp::tp::d_a_alink::procDamageInit( linkMapPtr, nullptr, 0 );
-                                         }
-                                     }
-                                     return return_checkDamageAction( linkMapPtr );
-                                 } );
+        return_checkDamageAction = patch::hookFunction(
+            libtp::tp::d_a_alink::checkDamageAction,
+            []( libtp::tp::d_a_alink::daAlink* linkMapPtr )
+            {
+                if ( isFoolishTrapQueued )
+                {
+                    if ( events::checkFoolItemFreeze() )
+                    {
+                        uint8_t seWave1 = libtp::z2audiolib::z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_1;
+                        uint8_t seWave2 = libtp::z2audiolib::z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2;
+                        isFoolishTrapQueued = false;
+                        libtp::z2audiolib::z2scenemgr::eraseSeWave(
+                            Z2ScenePtr,
+                            libtp::z2audiolib::z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_1 );
+                        libtp::z2audiolib::z2scenemgr::eraseSeWave(
+                            Z2ScenePtr,
+                            libtp::z2audiolib::z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2 );
+                        libtp::z2audiolib::z2scenemgr::loadSeWave( Z2ScenePtr, 0x46 );
+                        libtp::z2audiolib::z2semgr::seStartLevel( 0x10040, nullptr, 0, 0 );
+                        libtp::z2audiolib::z2scenemgr::loadSeWave( Z2ScenePtr, seWave1 );
+                        libtp::z2audiolib::z2scenemgr::loadSeWave( Z2ScenePtr, seWave2 );
+                        return libtp::tp::d_a_alink::procDamageInit( linkMapPtr, nullptr, 0 );
+                    }
+                }
+                return return_checkDamageAction( linkMapPtr );
+            } );
 
         return_query025 =
             patch::hookFunction( libtp::tp::d_msg_flow::query025,
@@ -1152,8 +1158,34 @@ namespace mod
         }
 
         lastLoadingState = tp::f_op_scene_req::isLoading;
+        rand( &nextVal );
         // End of custom events
 
         return return_fapGm_Execute();
+    }
+
+    uint32_t rand( uint32_t* seed )
+    {
+        uint32_t externSeed = *seed;
+        uint32_t val = ( externSeed * 0x41C64E6D ) + 0x3039;
+        *seed = val;
+        return val;
+    }
+
+    uint32_t ulRand( uint32_t range )
+    {
+        uint32_t ret;
+
+        if ( range > 0 )
+        {
+            ret = rand( &nextVal );
+            ret -= ( ret / range ) * range;
+        }
+        else
+        {
+            ret = 0;
+        }
+
+        return ret;
     }
 }     // namespace mod

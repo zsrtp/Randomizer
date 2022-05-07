@@ -188,6 +188,10 @@ namespace mod::rando
                     uint32_t replacementValue =
                         game_patch::_04_verifyProgressiveItem( mod::randomizer, m_Seed->m_ArcReplacements[i].replacementValue );
                     *reinterpret_cast<uint8_t*>( ( fileAddr + m_Seed->m_ArcReplacements[i].offset ) ) = replacementValue;
+                    if ( replacementValue == libtp::data::items::Foolish_Item )
+                    {
+                        game_patch::_02_modifyFoolishFieldModel();
+                    }
                     break;
                 }
                 case rando::ArcReplacementType::HiddenSkill:
@@ -211,8 +215,8 @@ namespace mod::rando
                     {
                         if ( ( m_Seed->m_HiddenSkillChecks[j].stageIDX == stageIDX ) &&
                              ( m_Seed->m_HiddenSkillChecks[j].roomID ==
-                               libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info
-                                   .player_last_room_id ) )
+                               libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_return_place
+                                   .link_room_id ) )
                         {
                             uint16_t msgID =
                                 game_patch::_04_verifyProgressiveItem( mod::randomizer, m_Seed->m_HiddenSkillChecks[j].itemID );

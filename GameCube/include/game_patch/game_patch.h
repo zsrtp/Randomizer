@@ -21,6 +21,8 @@ namespace mod::game_patch
     void _00_poe( void );
     int32_t _01_getLayerNo( const char* stageName, int32_t roomId, int32_t layerOverride );
     void _02_modifyItemData();
+    void _02_modifyFoolishFieldModel();
+    void _02_modifyFoolishShopModel( uint16_t shopID );
     void _03_increaseClimbSpeed();
     uint32_t _04_verifyProgressiveItem( rando::Randomizer* randomizer, uint32_t itemID );
     void _05_setCustomItemMessage( libtp::tp::control::TControl* control,

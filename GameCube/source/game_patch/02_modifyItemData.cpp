@@ -9,6 +9,7 @@
 #include "game_patch/game_patch.h"
 #include "main.h"
 #include "tp/d_a_alink.h"
+#include "tp/d_a_shop_item_static.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
 #include "tp/d_item_data.h"
@@ -163,6 +164,29 @@ namespace mod::game_patch
                                                      libtp::data::items::Key_Shard_3,
                                                      libtp::data::items::Big_Key_Goron_Mines,
                                                      libtp::data::items::Coro_Key };
+
+    static const uint8_t foolishModelItemList[] = {
+        libtp::data::items::Magic_Armor,
+        libtp::data::items::Master_Sword,
+        libtp::data::items::Ordon_Shield,
+        libtp::data::items::Hylian_Shield,
+        libtp::data::items::Shadow_Crystal,
+        libtp::data::items::Coral_Earring,
+        libtp::data::items::Hawkeye,
+        libtp::data::items::Boomerang,
+        libtp::data::items::Spinner,
+        libtp::data::items::Ball_and_Chain,
+        libtp::data::items::Heros_Bow,
+        libtp::data::items::Clawshot,
+        libtp::data::items::Iron_Boots,
+        libtp::data::items::Dominion_Rod,
+        libtp::data::items::Master_Sword_Light,
+        libtp::data::items::Fishing_Rod,
+        libtp::data::items::Slingshot,
+        libtp::data::items::Dominion_Rod_Uncharged,
+        libtp::data::items::Empty_Bomb_Bag,
+        libtp::data::items::Ancient_Sky_Book_Empty,
+    };
 
     void giveNodeDungeonItems( const libtp::data::stage::AreaNodesID nodeId,
                                const libtp::data::items::NodeDungeonItemType type )
@@ -1030,5 +1054,30 @@ namespace mod::game_patch
         setCustomItemResourceData();
         modifyItemModels();
         setCustomItemFunctions();
+    }
+
+    void _02_modifyFoolishFieldModel()
+    {
+        libtp::tp::d_item_data::FieldItemRes* fieldItemResPtr = &libtp::tp::d_item_data::field_item_res[0];
+        uint32_t modelListSize = sizeof( foolishModelItemList ) / sizeof( foolishModelItemList[0] );
+        uint32_t randomIndex = mod::ulRand( modelListSize );
+        uint32_t fieldModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
+        memcpy( &fieldItemResPtr[libtp::data::items::Foolish_Item],
+                &fieldItemResPtr[fieldModelItemID],
+                sizeof( libtp::tp::d_item_data::FieldItemRes ) );
+    }
+    void _02_modifyFoolishShopModel( uint16_t shopID )
+    {
+        using namespace libtp::tp::d_a_shop_item_static;
+        libtp::tp::d_item_data::ItemResource* itemResourcePtr = &libtp::tp::d_item_data::item_resource[0];
+        uint32_t modelListSize = sizeof( foolishModelItemList ) / sizeof( foolishModelItemList[0] );
+        uint32_t randomIndex = mod::ulRand( modelListSize );
+        uint32_t shopModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
+        shopItemData[shopID].arcName = itemResourcePtr[shopModelItemID].arcName;
+        shopItemData[shopID].modelResIdx = itemResourcePtr[shopModelItemID].modelResIdx;
+        shopItemData[shopID].wBckResIdx = itemResourcePtr[shopModelItemID].bckResIdx;
+        shopItemData[shopID].wBrkResIdx = itemResourcePtr[shopModelItemID].brkResIdx;
+        shopItemData[shopID].wBtpResIdx = itemResourcePtr[shopModelItemID].btpResIdx;
+        shopItemData[shopID].tevFrm = itemResourcePtr[shopModelItemID].tevFrm;
     }
 }     // namespace mod::game_patch

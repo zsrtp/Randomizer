@@ -5,6 +5,9 @@
 // OSModule.o
 800030C8:osModuleList
 
+// OSTime.o
+80342714:OSGetTick
+
 // m_Do_ext.o
 // text
 8000EDF4:getArchiveHeapPtr

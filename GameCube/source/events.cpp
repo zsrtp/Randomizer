@@ -712,23 +712,31 @@ namespace mod::events
             return false;
         }
 
-        // Ensure there is a proper pointer to the Z Button Alpha.
-        if ( !zButtonAlphaPtr )
+        if ( libtp::tp::d_camera::checkRide( linkMapPtr ) )
         {
             return false;
         }
 
-        zButtonAlphaPtr = *reinterpret_cast<uint32_t*>( zButtonAlphaPtr + 0x10C );
-        if ( !zButtonAlphaPtr )
+        if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xC10 ) )
         {
-            return false;
-        }
+            // Ensure there is a proper pointer to the Z Button Alpha.
+            if ( !zButtonAlphaPtr )
+            {
+                return false;
+            }
 
-        // Ensure that the Z Button is not dimmed
-        float zButtonAlpha = *reinterpret_cast<float*>( zButtonAlphaPtr + 0x720 );
-        if ( zButtonAlpha != 1.f )
-        {
-            return false;
+            zButtonAlphaPtr = *reinterpret_cast<uint32_t*>( zButtonAlphaPtr + 0x10C );
+            if ( !zButtonAlphaPtr )
+            {
+                return false;
+            }
+
+            // Ensure that the Z Button is not dimmed
+            float zButtonAlpha = *reinterpret_cast<float*>( zButtonAlphaPtr + 0x720 );
+            if ( zButtonAlpha != 1.f )
+            {
+                return false;
+            }
         }
 
         // Make sure Link is not underwater or talking to someone.
