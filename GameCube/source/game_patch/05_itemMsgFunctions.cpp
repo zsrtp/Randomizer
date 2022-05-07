@@ -422,7 +422,7 @@ namespace mod::game_patch
             // Replacement text
 
             if ( ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle >= 284 ) ||
-                 ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle <= 105 ) )
+                 ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle <= 104 ) )
             {
                 replacementText = { "Wait until day" };
             }

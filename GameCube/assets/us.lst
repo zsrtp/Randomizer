@@ -108,6 +108,7 @@
 800e251c:checkBootsMoveAnime
 80119d98:procCoTalkInit
 800d8f3c:procDamageInit
+801360ec:procWolfDamageInit
 800d7c40:checkDamageAction
 801181a0:setGetItemFace
 

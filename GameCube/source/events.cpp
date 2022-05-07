@@ -682,7 +682,7 @@ namespace mod::events
             if ( todStages[i] == stageIndex )
             {
                 if ( ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle >= 284 ) ||
-                     ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle <= 105 ) )
+                     ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle <= 104 ) )
                 {
                     libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle = 105;
                 }

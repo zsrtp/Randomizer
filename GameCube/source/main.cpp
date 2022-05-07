@@ -463,7 +463,15 @@ namespace mod
                         libtp::z2audiolib::z2semgr::seStartLevel( 0x10040, nullptr, 0, 0 );
                         libtp::z2audiolib::z2scenemgr::loadSeWave( Z2ScenePtr, seWave1 );
                         libtp::z2audiolib::z2scenemgr::loadSeWave( Z2ScenePtr, seWave2 );
-                        return libtp::tp::d_a_alink::procDamageInit( linkMapPtr, nullptr, 0 );
+                        if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm ==
+                             1 )
+                        {
+                            libtp::tp::d_a_alink::procWolfDamageInit( linkMapPtr, nullptr );
+                        }
+                        else
+                        {
+                            return libtp::tp::d_a_alink::procDamageInit( linkMapPtr, nullptr, 0 );
+                        }
                     }
                 }
                 return return_checkDamageAction( linkMapPtr );
