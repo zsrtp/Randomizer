@@ -5,6 +5,9 @@
 // OSModule.o
 800030C8:osModuleList
 
+// OSTime.o
+80343580:OSGetTick
+
 // m_Do_ext.o
 // text
 8000EDA8:getArchiveHeapPtr
@@ -69,6 +72,7 @@
 8001C260:createItemForDirectGet
 80019B50:CreateAppend
 80019e40:fopAcM_create
+8001bbbc:fopAcM_getTalkEventPartner
 
 // f_pc_node_req
 803A5718:l_fpcNdRq_Queue
@@ -97,6 +101,9 @@
 80115E2C:checkEventRun
 803DEDF4:linkStatus
 800e2728:checkBootsMoveAnime
+800d9148:procDamageInit
+800d7e4c:checkDamageAction
+801183ac:setGetItemFace
 
 // data
 8039038C:climbVars
@@ -125,6 +132,7 @@
 80358EE4:CARDClose
 80358DC8:CARDOpen
 8035787C:CARDProbeEx
+80359cb8:CARDGetStatus
 
 // OSCache.o
 // 8033C36C:DCEnable
@@ -234,9 +242,12 @@
 
 // Z2SceneMgr
 802BA968:sceneChange
+802bb3c8:eraseSeWave
+802bb504:loadSeWave
 
 // Z2SeqMgr
 802B5CB0:startBattleBgm
+802ad30c:seStartLevel
 
 //JKRDvdRipper.o
 802daa54:loadToMainRAM2
@@ -272,6 +283,7 @@
 8024bf88:query022
 8024bfbc:query023
 8024c018:query025
+8024c324:query037
 8024c690:query042
 8024caa0:event000
 8024de6c:event035
@@ -298,3 +310,7 @@
 // m_Do_MemCard.o
 // data
 803E2EE0:MemCardWorkArea0
+
+// m_Do_Audio.o
+803ddeec:g_mDoAud_zelAudio
+

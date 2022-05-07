@@ -401,22 +401,25 @@ namespace mod::rando
             d_item_data::ItemResource* itemResourcePtr = &d_item_data::item_resource[0];
             for ( uint32_t i = 0; i < num_shopItems; i++ )
             {
-                if ( allSHOP[i].shopItemID == libtp::data::items::Foolish_Item )
+                if ( allSHOP[i].replacementItemID == libtp::data::items::Foolish_Item )
                 {
                     game_patch::_02_modifyFoolishShopModel( allSHOP[i].shopItemID );
                 }
-                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].arcName =
-                    itemResourcePtr[allSHOP[i].replacementItemID].arcName;
-                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].modelResIdx =
-                    itemResourcePtr[allSHOP[i].replacementItemID].modelResIdx;
-                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBckResIdx =
-                    itemResourcePtr[allSHOP[i].replacementItemID].bckResIdx;
-                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBrkResIdx =
-                    itemResourcePtr[allSHOP[i].replacementItemID].brkResIdx;
-                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBtpResIdx =
-                    itemResourcePtr[allSHOP[i].replacementItemID].btpResIdx;
-                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].tevFrm =
-                    itemResourcePtr[allSHOP[i].replacementItemID].tevFrm;
+                else
+                {
+                    d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].arcName =
+                        itemResourcePtr[allSHOP[i].replacementItemID].arcName;
+                    d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].modelResIdx =
+                        itemResourcePtr[allSHOP[i].replacementItemID].modelResIdx;
+                    d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBckResIdx =
+                        itemResourcePtr[allSHOP[i].replacementItemID].bckResIdx;
+                    d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBrkResIdx =
+                        itemResourcePtr[allSHOP[i].replacementItemID].brkResIdx;
+                    d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBtpResIdx =
+                        itemResourcePtr[allSHOP[i].replacementItemID].btpResIdx;
+                    d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].tevFrm =
+                        itemResourcePtr[allSHOP[i].replacementItemID].tevFrm;
+                }
                 d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].btpFrm = 0xFF;
                 d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].posY = 15.0f;
                 d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].mFlags = 0xFFFFFFFF;

@@ -511,7 +511,7 @@ namespace mod
             []( void* unk1, void* unk2, int32_t unk3 )
             {
                 int menuType = return_query037( unk1, unk2, unk3 );
-                if ( ( menuType == 0x2 ) && ( reinterpret_cast<int32_t>( &libtp::tp::d_a_player::m_midnaActor ) ==
+                if ( ( menuType == 0x2 ) && ( reinterpret_cast<int32_t>( libtp::tp::d_a_player::m_midnaActor ) ==
                                               libtp::tp::f_op_actor_mng::fopAcM_getTalkEventPartner( nullptr ) ) )
                 {
                     events::handleTimeOfDayChange();
