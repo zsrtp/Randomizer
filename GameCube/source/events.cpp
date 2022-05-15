@@ -30,7 +30,7 @@ namespace mod::events
 
     void onLoad( rando::Randomizer* randomizer )
     {
-        if ( randomizer )
+        if ( randoIsEnabled( randomizer ) )
         {
             randomizer->onStageLoad();
         }
@@ -38,7 +38,7 @@ namespace mod::events
 
     void offLoad( rando::Randomizer* randomizer )
     {
-        if ( randomizer )
+        if ( randoIsEnabled( randomizer ) )
         {
             // Check if the seed is already applied to the save-file (flags etc.)
             // Try to do it otherwise
@@ -58,7 +58,7 @@ namespace mod::events
 
     void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
     {
-        if ( randomizer )
+        if ( randoIsEnabled( randomizer ) )
         {
             randomizer->overrideREL();
         }
@@ -307,7 +307,7 @@ namespace mod::events
 
     void onDZX( rando::Randomizer* randomizer, libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo )
     {
-        if ( randomizer )
+        if ( randoIsEnabled( randomizer ) )
         {
             randomizer->overrideDZX( chunkTypeInfo );
         }
@@ -316,7 +316,7 @@ namespace mod::events
 
     int32_t onPoe( rando::Randomizer* randomizer, uint8_t flag )
     {
-        if ( randomizer )
+        if ( randoIsEnabled( randomizer ) )
         {
             return randomizer->getPoeItem( flag );
         }
@@ -329,7 +329,7 @@ namespace mod::events
 
     uint8_t onSkyCharacter( rando::Randomizer* randomizer )
     {
-        if ( randomizer )
+        if ( randoIsEnabled( randomizer ) )
         {
             return randomizer->getSkyCharacter();
         }
@@ -342,7 +342,7 @@ namespace mod::events
 
     void onARC( rando::Randomizer* randomizer, void* data, int roomNo, rando::FileDirectory fileDirectory )
     {
-        if ( randomizer )
+        if ( randoIsEnabled( randomizer ) )
         {
             randomizer->overrideARC( reinterpret_cast<uint32_t>( data ), fileDirectory, roomNo );
         }
@@ -350,7 +350,7 @@ namespace mod::events
 
     void onBugReward( rando::Randomizer* randomizer, uint32_t msgEventAddress, uint8_t bugID )
     {
-        if ( randomizer )
+        if ( randoIsEnabled( randomizer ) )
         {
             uint8_t itemID = randomizer->overrideBugReward( bugID );
             *reinterpret_cast<uint16_t*>( ( *reinterpret_cast<uint32_t*>( msgEventAddress + 0xA04 ) + 0x3580 ) + 0x6 ) =
@@ -366,7 +366,7 @@ namespace mod::events
 
     void onHiddenSkill( rando::Randomizer* randomizer, uint16_t eventIndex )
     {
-        if ( randomizer )
+        if ( randoIsEnabled( randomizer ) )
         {
             libtp::tp::d_item::execItemGet( randomizer->getHiddenSkillItem( eventIndex ) );
         }
@@ -463,7 +463,7 @@ namespace mod::events
     bool proc_query042( void* unk1, void* unk2, int32_t unk3 )
     {
         // Check to see if currently in one of the Ordon interiors
-        if ( randomizer )
+        if ( randoIsEnabled( randomizer ) )
         {
             if ( randomizer->m_Seed->m_Header->transformAnywhere )
             {
@@ -637,7 +637,7 @@ namespace mod::events
             return;
         }
 
-        if ( randomizer )
+        if ( randoIsEnabled( randomizer ) )
         {
             if ( randomizer->m_Seed->m_Header->transformAnywhere )
             {

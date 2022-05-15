@@ -43,6 +43,17 @@ namespace mod
     uint32_t ulRand( uint32_t range );
 
     void handleInput( uint32_t inputs );
+    
+    // Inline randoIsEnabled, as it's short enough to use less memory when inlined
+    inline bool randoIsEnabled(rando::Randomizer* rando)
+    {
+        if (!rando)
+        {
+            return false;
+        }
+        
+        return rando->m_Enabled;
+    }
 
     // Function hook handlers & trampolines
     void handle_fapGm_Execute( void );

@@ -865,7 +865,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetFusedShadow3 = []()
         {
             d_save::onCollectCrystal( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x02' );
-            if ( randomizer )
+            if ( randoIsEnabled( randomizer ) )
             {
                 // If the player has the castle requirement set to Fused Shadows.
                 if ( randomizer->m_Seed->m_Header->castleRequirements == 1 )
@@ -897,7 +897,7 @@ namespace mod::game_patch
         d_item::ItemFunc onGetMirrorShard4 = []()
         {
             d_save::onCollectMirror( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x03' );
-            if ( randomizer )
+            if ( randoIsEnabled( randomizer ) )
             {
                 // If the player has the castle requirement set to Mirror Shards.
                 if ( randomizer->m_Seed->m_Header->castleRequirements == 2 )

@@ -148,8 +148,8 @@ namespace mod::game_patch
 
     const char* _05_getMsgById( rando::Randomizer* randomizer, uint32_t msgId )
     {
-        // Make sure the randomizer is loaded
-        if ( !randomizer )
+        // Make sure the randomizer is loaded/enabled
+        if ( !randoIsEnabled( randomizer ) )
         {
             return nullptr;
         }
@@ -192,9 +192,8 @@ namespace mod::game_patch
         {
             if ( msgIds[i] == msgId )
             {
-                mod::console << &seed->m_MsgTableInfo << "\n";
+                mod::console << reinterpret_cast<void*>(msgTableInfoRaw) << "\n";
                 mod::console << &messages << "\n";
-                mod::console << &messages[msgOffsets[i]] << "\n";
                 return &messages[msgOffsets[i]];
             }
         }

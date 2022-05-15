@@ -21,9 +21,11 @@ namespace mod::rando
     class Randomizer
     {
        public:
-        Randomizer( SeedInfo* seedInfo );
+        Randomizer( SeedInfo* seedInfo, uint8_t selectedSeed );
         ~Randomizer();
 
+        void loadSeed( SeedInfo* seedInfo, uint8_t selectedSeed );
+        void changeSeed( SeedInfo* seedInfo, uint8_t newSeed );
         void initSave( void );
 
         void onStageLoad( void );
@@ -47,8 +49,10 @@ namespace mod::rando
 
        public:
         SeedInfo* m_SeedInfo = nullptr;     // SeedInfo associated with this randomizer instance
-        bool m_SeedInit = false;            // True if seed-specific patches, flags, etc. have been applied to the save-file
         Seed* m_Seed;
+        bool m_Enabled = true;              // True if the randomizer is currently enabled
+        bool m_SeedInit = false;            // True if seed-specific patches, flags, etc. have been applied to the save-file
+        uint8_t m_CurrentSeed = 0xFF;       // The seed that is currently loaded
     };
 }     // namespace mod::rando
 #endif
