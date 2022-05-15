@@ -185,8 +185,6 @@ namespace mod::rando
 
     struct CustomMessageHeaderInfo
     {
-        uint16_t minVersion;
-        uint16_t maxVersion;
         uint16_t headerSize;
         uint8_t totalLanguages;
         uint8_t padding[1];

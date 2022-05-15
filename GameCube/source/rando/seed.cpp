@@ -48,13 +48,19 @@ namespace mod::rando
 
         fileName[10] = static_cast<char>( '0' + m_fileIndex );
 
-        m_GCIData = new uint8_t[m_Header->dataSize];
-        uint8_t* data = new ( -0x20 ) uint8_t[m_Header->totalSize];
+        // Allocate the buffer to the back of the heap to prevent fragmentation
+        uint32_t totalSize = m_Header->totalSize;
+        uint8_t* data = new ( -0x20 ) uint8_t[totalSize];
 
-        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, fileName, m_Header->totalSize, 0, data, true );
+        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, fileName, totalSize, 0, data, true );
         if ( m_CARDResult == CARD_RESULT_READY )
         {
-            memcpy( m_GCIData, &data[m_Header->headerSize], m_Header->dataSize );
+            // Get the main seed data
+            uint32_t dataSize = m_Header->dataSize;
+            m_GCIData = new uint8_t[dataSize];
+            memcpy( m_GCIData, &data[m_Header->headerSize], dataSize );
+            
+            // Get the custom text data
             this->loadCustomText( data );
         }
         delete[] data;
@@ -64,6 +70,13 @@ namespace mod::rando
     {
         // Make sure to delete tempcheck buffers
         this->ClearChecks();
+        
+        // Reset m_TotalMsgEntries back to 0
+        m_TotalMsgEntries = 0;
+        
+        // Clear m_MsgTableInfo
+        delete[] m_MsgTableInfo;
+        m_MsgTableInfo = nullptr;
 
         // Only work with m_GCIData if the buffer is populated
         if ( m_GCIData )
@@ -72,6 +85,7 @@ namespace mod::rando
 
             // Last clear gcibuffer as other functions before rely on it
             delete[] m_GCIData;
+            m_GCIData = nullptr;
         }
     }
 
@@ -147,12 +161,25 @@ namespace mod::rando
         m_numHiddenSkillChecks = 0;
 
         delete[] m_DZXChecks;
+        m_DZXChecks = nullptr;
+        
         delete[] m_RELChecks;
+        m_RELChecks = nullptr;
+        
         delete[] m_POEChecks;
+        m_POEChecks = nullptr;
+        
         delete[] m_BossChecks;
+        m_BossChecks = nullptr;
+        
         delete[] m_BugRewardChecks;
+        m_BugRewardChecks = nullptr;
+        
         delete[] m_SkyBookChecks;
+        m_SkyBookChecks = nullptr;
+        
         delete[] m_HiddenSkillChecks;
+        m_HiddenSkillChecks = nullptr;
     }
 
     void Seed::applyPatches( bool set )
@@ -619,71 +646,64 @@ namespace mod::rando
 
     bool Seed::loadCustomText( uint8_t* data )
     {
-        if ( m_CARDResult == CARD_RESULT_READY )
-        {
-            // Get the custom message header
-            CustomMessageHeaderInfo* customMessageHeader =
-                reinterpret_cast<CustomMessageHeaderInfo*>( &data[m_Header->customTextHeaderOffset] );
-
-            uint16_t minVersion = customMessageHeader->minVersion;
-            uint16_t maxVersion = customMessageHeader->maxVersion;
-
-            uint16_t version = static_cast<uint16_t>( _VERSION_MAJOR << 8 | _VERSION_MINOR );
-            if ( ( minVersion <= version ) && ( maxVersion >= version ) )
-            {
-                // Get the text for the current language
+        // Get the custom message header
+        CustomMessageHeaderInfo* customMessageHeader =
+            reinterpret_cast<CustomMessageHeaderInfo*>( &data[m_Header->customTextHeaderOffset] );
+        
+        // Get the text for the current language
 #ifdef TP_EU
-                libtp::tp::d_s_logo::Languages lang = libtp::tp::d_s_logo::getPalLanguage2( nullptr );
-                if ( ( lang < libtp::tp::d_s_logo::Languages::uk ) || ( lang > libtp::tp::d_s_logo::Languages::it ) )
-                {
-                    // The language is invalid/unsupported, so the game defaults to English
-                    lang = libtp::tp::d_s_logo::Languages::uk;
-                }
-                uint32_t language = static_cast<uint32_t>( lang );
+        libtp::tp::d_s_logo::Languages lang = libtp::tp::d_s_logo::getPalLanguage2( nullptr );
+        if ( ( lang < libtp::tp::d_s_logo::Languages::uk ) || ( lang > libtp::tp::d_s_logo::Languages::it ) )
+        {
+            // The language is invalid/unsupported, so the game defaults to English
+            lang = libtp::tp::d_s_logo::Languages::uk;
+        }
+        uint32_t language = static_cast<uint32_t>( lang );
 
-                // Get a pointer to the language to use
-                CustomMessageEntryInfo* customMessageInfo = nullptr;
-                for ( uint32_t i = 0; i < customMessageHeader->totalLanguages; i++ )
-                {
-                    if ( customMessageHeader->entry[i].language == language )
-                    {
-                        customMessageInfo = &customMessageHeader->entry[i];
-                        break;
-                    }
-                }
-
-                // If the language wasn't found, then default to English, which should always be the first language included
-                if ( !customMessageInfo )
-                {
-                    customMessageInfo = &customMessageHeader->entry[0];
-                }
-#else
-                // US/JP should only have one language included
-                CustomMessageEntryInfo* customMessageInfo = &customMessageHeader->entry[0];
-#endif
-
-                // Allocate memory for the ids, message offsets, and messages
-                m_TotalMsgEntries = customMessageInfo->totalEntries;
-                uint32_t msgIdTableSize = m_TotalMsgEntries * sizeof( uint16_t );
-                uint32_t msgOffsetTableSize = m_TotalMsgEntries * sizeof( uint32_t );
-                // Round msgIdTableSize up to the size of the offsets to make sure the offsets are properly aligned
-                msgIdTableSize = ( msgIdTableSize + sizeof( uint32_t ) - 1 ) & ~( sizeof( uint32_t ) - 1 );
-                uint32_t msgTableInfoSize = msgIdTableSize + msgOffsetTableSize + customMessageInfo->msgTableSize;
-
-                m_MsgTableInfo = new uint8_t[msgTableInfoSize];
-                // When calculating the offset the the message table information, we are assuming that the message header is
-                // followed by the entry information for all of the languages in the seed data.
-                uint32_t offset = m_Header->customTextHeaderOffset + customMessageInfo->msgIdTableOffset +
-                                  ( sizeof( CustomMessageEntryInfo ) * ( customMessageInfo->language ) ) +
-                                  sizeof( CustomMessageHeaderInfo );
-
-                // Copy the data to the pointers
-                memcpy( m_MsgTableInfo, &data[offset], msgTableInfoSize );
-                return true;
+        // Get a pointer to the language to use
+        CustomMessageEntryInfo* customMessageInfo = nullptr;
+        for ( uint32_t i = 0; i < customMessageHeader->totalLanguages; i++ )
+        {
+            if ( customMessageHeader->entry[i].language == language )
+            {
+                customMessageInfo = &customMessageHeader->entry[i];
+                break;
             }
         }
 
-        return false;
+        // If the language wasn't found, then default to English, which should always be the first language included
+        if ( !customMessageInfo )
+        {
+            customMessageInfo = &customMessageHeader->entry[0];
+        }
+#else
+        // US/JP should only have one language included
+        CustomMessageEntryInfo* customMessageInfo = &customMessageHeader->entry[0];
+#endif
+
+        // Allocate memory for the ids, message offsets, and messages
+        uint32_t totalEntries = customMessageInfo->totalEntries;
+        m_TotalMsgEntries = totalEntries;
+        
+        uint32_t msgIdTableSize = totalEntries * sizeof( uint16_t );
+        uint32_t msgOffsetTableSize = totalEntries * sizeof( uint32_t );
+        
+        // Round msgIdTableSize up to the size of the offsets to make sure the offsets are properly aligned
+        msgIdTableSize = ( msgIdTableSize + sizeof( uint32_t ) - 1 ) & ~( sizeof( uint32_t ) - 1 );
+        uint32_t msgTableInfoSize = msgIdTableSize + msgOffsetTableSize + customMessageInfo->msgTableSize;
+
+        m_MsgTableInfo = new uint8_t[msgTableInfoSize];
+        
+        // When calculating the offset the the message table information, we are assuming that the message header is
+        // followed by the entry information for all of the languages in the seed data.
+        
+        uint32_t offset = m_Header->customTextHeaderOffset + customMessageInfo->msgIdTableOffset +
+                            ( sizeof( CustomMessageEntryInfo ) * ( customMessageInfo->language ) ) +
+                            sizeof( CustomMessageHeaderInfo );
+
+        // Copy the data to the pointers
+        memcpy( m_MsgTableInfo, &data[offset], msgTableInfoSize );
+        return true;
     }
 
 }     // namespace mod::rando
