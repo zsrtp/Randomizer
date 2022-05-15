@@ -192,9 +192,9 @@ namespace mod::game_patch
         {
             if ( msgIds[i] == msgId )
             {
-                // mod::console << &seed->m_MsgTableInfo << "\n";
-                // mod::console << &messages << "\n";
-                // mod::console << &messages[msgOffsets[i]] << "\n";
+                mod::console << &seed->m_MsgTableInfo << "\n";
+                mod::console << &messages << "\n";
+                mod::console << &messages[msgOffsets[i]] << "\n";
                 return &messages[msgOffsets[i]];
             }
         }
