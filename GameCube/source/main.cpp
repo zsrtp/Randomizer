@@ -584,7 +584,7 @@ namespace mod
             libtp::tp::d_stage::roomLoader,
             []( void* data, void* stageDt, int roomNo )
             {
-                if ( randomizer )
+                if ( randoIsEnabled( randomizer ) )
                 {
                     events::onARC( randomizer, data, roomNo, rando::FileDirectory::Room );     // Replace room based checks.
                     void* filePtr = libtp::tp::d_com_inf_game::dComIfG_getStageRes(
@@ -754,7 +754,7 @@ namespace mod
                             if ( !tp::d_a_alink::dComIfGs_isEventBit( 0x4208 ) )
                             {
                                 using namespace libtp::data;
-                                if ( randomizer )
+                                if ( randoIsEnabled( randomizer ) )
                                 {
                                     switch ( randomizer->m_Seed->m_Header->castleRequirements )
                                     {
@@ -808,7 +808,7 @@ namespace mod
                             if ( !tp::d_a_alink::dComIfGs_isEventBit( 0x2B08 ) )
                             {
                                 using namespace libtp::data;
-                                if ( randomizer )
+                                if ( randoIsEnabled( randomizer ) )
                                 {
                                     if ( randomizer->m_Seed->m_Header->palaceRequirements != 3 )
                                     {
@@ -1149,18 +1149,43 @@ namespace mod
         // Handle rando state
         if ( gameState == GAME_ACTIVE )
         {
-            if ( seedList->m_numSeeds > 0 && !randomizer )
+            if ( !randoIsEnabled( randomizer ) && ( seedList->m_numSeeds > 0 ) )
             {
-                randomizer = new rando::Randomizer( &seedList->m_seedInfo[seedList->m_selectedSeed] );
-                // Patches need to be applied whenever the seed is loaded.
+                uint8_t selectedSeed = seedList->m_selectedSeed;
+                
+                if (!randomizer)
+                {
+                    // The randomizer constructor sets m_Enabled to true
+                    randomizer = new rando::Randomizer( &seedList->m_seedInfo[selectedSeed], selectedSeed );
+                }
+                else
+                {
+                    // Enable the randomizer
+                    randomizer->m_Enabled = true;
+                    
+                    // Check if loading a different seed
+                    if (randomizer->m_CurrentSeed != selectedSeed)
+                    {
+                        mod::console << "Changing seed:\n";
+                        randomizer->changeSeed(&seedList->m_seedInfo[selectedSeed], selectedSeed);
+                    }
+                    else
+                    {
+                        // Not loading a different seed, so load checks for first load
+                        randomizer->onStageLoad();
+                    }
+                }
+                
+                // Patches need to be applied whenever a seed is loaded.
                 mod::console << "Patching game:\n";
                 randomizer->m_Seed->applyPatches( true );
             }
         }
-        else if ( randomizer )
+        else if ( randoIsEnabled( randomizer ) )
         {
-            delete randomizer;
-            randomizer = nullptr;
+            // Temporarily disable the randomizer
+            randomizer->m_Enabled = false;
+            randomizer->m_SeedInit = false;
         }
 
         // Custom events

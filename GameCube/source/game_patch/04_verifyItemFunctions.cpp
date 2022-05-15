@@ -1,6 +1,7 @@
 #include <cinttypes>
 #include <cstring>
 
+#include "main.h"
 #include "data/items.h"
 #include "events.h"
 #include "game_patch/game_patch.h"
@@ -170,7 +171,7 @@ namespace mod::game_patch
     uint32_t _04_verifyProgressiveItem( rando::Randomizer* randomizer, uint32_t itemID )
     {
         using namespace libtp::data::items;
-        if ( randomizer )
+        if ( randoIsEnabled( randomizer ) )
         {
             switch ( itemID )
             {

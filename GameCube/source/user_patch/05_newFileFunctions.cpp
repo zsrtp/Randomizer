@@ -6,6 +6,7 @@
  */
 #include <cinttypes>
 
+#include "main.h"
 #include "events.h"
 #include "rando/data.h"
 #include "rando/randomizer.h"
@@ -55,7 +56,7 @@ namespace mod::user_patch
 
     void loadShopModels( rando::Randomizer* randomizer, bool set )
     {
-        if ( set && randomizer )
+        if ( set && randoIsEnabled( randomizer ) )
         {
             randomizer->m_Seed->loadShopModels();
         }

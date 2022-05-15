@@ -71,12 +71,9 @@ namespace mod::rando
         // Make sure to delete tempcheck buffers
         this->ClearChecks();
         
-        // Reset m_TotalMsgEntries back to 0
+        // Reset the custom message data
         m_TotalMsgEntries = 0;
-        
-        // Clear m_MsgTableInfo
         delete[] m_MsgTableInfo;
-        m_MsgTableInfo = nullptr;
 
         // Only work with m_GCIData if the buffer is populated
         if ( m_GCIData )
@@ -85,7 +82,6 @@ namespace mod::rando
 
             // Last clear gcibuffer as other functions before rely on it
             delete[] m_GCIData;
-            m_GCIData = nullptr;
         }
     }
 
@@ -161,25 +157,12 @@ namespace mod::rando
         m_numHiddenSkillChecks = 0;
 
         delete[] m_DZXChecks;
-        m_DZXChecks = nullptr;
-        
         delete[] m_RELChecks;
-        m_RELChecks = nullptr;
-        
         delete[] m_POEChecks;
-        m_POEChecks = nullptr;
-        
         delete[] m_BossChecks;
-        m_BossChecks = nullptr;
-        
         delete[] m_BugRewardChecks;
-        m_BugRewardChecks = nullptr;
-        
         delete[] m_SkyBookChecks;
-        m_SkyBookChecks = nullptr;
-        
         delete[] m_HiddenSkillChecks;
-        m_HiddenSkillChecks = nullptr;
     }
 
     void Seed::applyPatches( bool set )
@@ -650,6 +633,9 @@ namespace mod::rando
         CustomMessageHeaderInfo* customMessageHeader =
             reinterpret_cast<CustomMessageHeaderInfo*>( &data[m_Header->customTextHeaderOffset] );
         
+        // Keep track of the index for the language that is about to be selected
+        uint32_t languageIndex = 0;
+        
         // Get the text for the current language
 #ifdef TP_EU
         libtp::tp::d_s_logo::Languages lang = libtp::tp::d_s_logo::getPalLanguage2( nullptr );
@@ -661,12 +647,16 @@ namespace mod::rando
         uint32_t language = static_cast<uint32_t>( lang );
 
         // Get a pointer to the language to use
+        uint32_t totalLanguages = customMessageHeader->totalLanguages;
         CustomMessageEntryInfo* customMessageInfo = nullptr;
-        for ( uint32_t i = 0; i < customMessageHeader->totalLanguages; i++ )
+        
+        for ( uint32_t i = 0; i < totalLanguages; i++ )
         {
-            if ( customMessageHeader->entry[i].language == language )
+            CustomMessageEntryInfo* entry = &customMessageHeader->entry[i];
+            if ( entry->language == language )
             {
-                customMessageInfo = &customMessageHeader->entry[i];
+                languageIndex = i;
+                customMessageInfo = entry;
                 break;
             }
         }
@@ -690,15 +680,15 @@ namespace mod::rando
         
         // Round msgIdTableSize up to the size of the offsets to make sure the offsets are properly aligned
         msgIdTableSize = ( msgIdTableSize + sizeof( uint32_t ) - 1 ) & ~( sizeof( uint32_t ) - 1 );
-        uint32_t msgTableInfoSize = msgIdTableSize + msgOffsetTableSize + customMessageInfo->msgTableSize;
 
+        uint32_t msgTableInfoSize = msgIdTableSize + msgOffsetTableSize + customMessageInfo->msgTableSize;
         m_MsgTableInfo = new uint8_t[msgTableInfoSize];
         
         // When calculating the offset the the message table information, we are assuming that the message header is
         // followed by the entry information for all of the languages in the seed data.
         
         uint32_t offset = m_Header->customTextHeaderOffset + customMessageInfo->msgIdTableOffset +
-                            ( sizeof( CustomMessageEntryInfo ) * ( customMessageInfo->language ) ) +
+                            ( sizeof( CustomMessageEntryInfo ) * languageIndex ) +
                             sizeof( CustomMessageHeaderInfo );
 
         // Copy the data to the pointers
