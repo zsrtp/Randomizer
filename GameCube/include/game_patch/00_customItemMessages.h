@@ -12,6 +12,7 @@
 
 namespace mod::game_patch
 {
+    // Custom strings that are used for text search. Need a better way to do this.
     const char* talkToMidnaText = { "Talk to Midna" };
     const char* smallDonationText = { "30 Rupees" };
 }     // namespace mod::game_patch
