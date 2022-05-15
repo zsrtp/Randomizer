@@ -14,6 +14,7 @@ namespace mod::game_patch
     {
         using namespace libtp::tp::d_com_inf_game;
         using namespace libtp::data;
+        // If we are in the desert and cannot transform/warp, we set link's save point to Lake Hylia.
         if ( libtp::tp::d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Gerudo_Desert] ) ||
              libtp::tp::d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Bulblin_Camp] ) )
         {
@@ -26,6 +27,7 @@ namespace mod::game_patch
                 dComIfG_gameInfo.save.save_file.player.player_return_place.link_room_id = 0x0;
             }
         }
+        // If we are in Lake Hylia during Lanayru Twilight and we cannot transform, set link's spawn point to Hyrule Field.
         else if ( libtp::tp::d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Lake_Hylia] ) )
         {
             if ( events::haveItem( items::Shadow_Crystal ) ||

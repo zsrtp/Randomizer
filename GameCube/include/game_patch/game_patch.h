@@ -28,8 +28,10 @@ namespace mod::game_patch
     void _05_setCustomItemMessage( libtp::tp::control::TControl* control,
                                    const void* TProcessor,
                                    uint16_t unk3,
-                                   uint16_t msgId );
+                                   uint16_t msgId,
+                                   rando::Randomizer* randomizer );
     uint32_t _05_getCustomMsgColor( uint8_t colorId );
+    const char* _05_getMsgById( rando::Randomizer* randomizer, uint32_t msgId );
     const char** _05_replaceMessageString( const char** text );
     void _06_writeASMPatches();
     void _07_checkPlayerStageReturn();

@@ -17,6 +17,7 @@ namespace mod::user_patch
     {
         if ( set )
         {
+            // Set the float that Link's actor references when heavy to be the default value.
             uint32_t ironBootsVars = reinterpret_cast<uint32_t>( &libtp::tp::d_a_alink::ironBootsVars );
             *reinterpret_cast<float*>( ironBootsVars + 0x14 ) = 1.f;
         }

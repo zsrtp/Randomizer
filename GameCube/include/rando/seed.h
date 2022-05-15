@@ -57,6 +57,9 @@ namespace mod::rando
         ObjectArchiveReplacement* m_ObjectArcReplacements = nullptr;
         uint32_t m_numLoadedObjectArcReplacements = 0;
 
+        uint32_t m_TotalMsgEntries = 0;
+        void* m_MsgTableInfo = nullptr;
+
         // Member functions
        public:
         /**
@@ -115,6 +118,7 @@ namespace mod::rando
         void LoadSkyCharacter( uint8_t stageIDX );
         void LoadHiddenSkill();
         void LoadBugReward();
+        bool loadCustomText( uint8_t* data );
     };
 }     // namespace mod::rando
 #endif

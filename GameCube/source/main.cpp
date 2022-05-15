@@ -271,7 +271,7 @@ namespace mod
                 {
                     return ret;
                 }
-                game_patch::_05_setCustomItemMessage( control, TProcessor, unk3, msgId );
+                game_patch::_05_setCustomItemMessage( control, TProcessor, unk3, msgId, randomizer );
                 return ret;
             } );
 
@@ -367,7 +367,7 @@ namespace mod
                                      const float scale[3] )
                                  {
                                      item = game_patch::_04_verifyProgressiveItem( mod::randomizer, item );
-                                     return return_createItemForPresentDemo( pos, item, unk3, 0x32, 0x32, rot, scale );
+                                     return return_createItemForPresentDemo( pos, item, unk3, unk4, unk5, rot, scale );
                                  } );
 
         return_checkTreasureRupeeReturn =
@@ -450,6 +450,9 @@ namespace mod
                 {
                     if ( events::checkFoolItemFreeze() )
                     {
+                        /* Store the currently loaded sound wave to local variables as we will need to load them back later.
+                         * We use this method because if we just loaded the sound waves every time the item was gotten, we'd
+                         * eventually run out of memory so it is safer to unload everything and load it back in.*/
                         uint8_t seWave1 = libtp::z2audiolib::z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_1;
                         uint8_t seWave2 = libtp::z2audiolib::z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2;
                         isFoolishTrapQueued = false;
@@ -466,7 +469,7 @@ namespace mod
                         if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm ==
                              1 )
                         {
-                            libtp::tp::d_a_alink::procWolfDamageInit( linkMapPtr, nullptr );
+                            return libtp::tp::d_a_alink::procWolfDamageInit( linkMapPtr, nullptr );
                         }
                         else
                         {
@@ -538,9 +541,10 @@ namespace mod
                 if ( libtp::tp::d_a_alink::checkStageName(
                          libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Graveyard] ) )
                 {
-                    if ( flag == 0x66 )
+                    if ( flag == 0x66 )     // Check for escort completed flag
                     {
-                        if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x804 ) )
+                        if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit(
+                                 0x804 ) )     // return false if we haven't gotten the item from Rutella.
                         {
                             return false;
                         }
@@ -635,12 +639,12 @@ namespace mod
                 int i1 = 0;
                 int i2 = 0;
 
-                for ( ; i1 < 24; i1++ )
+                for ( ; i1 < 24; i1++ )     // Clear all of the item slots.
                 {
                     dComIfG_gameInfo.save.save_file.player.player_item.item_slots[i1] = 0xFF;
                 }
 
-                for ( i1 = 0; i1 < 24; i1++ )
+                for ( i1 = 0; i1 < 24; i1++ )     // Fill all of the item wheel slots with their respective items if gotten.
                 {
                     if ( dComIfG_gameInfo.save.save_file.player.player_item.item[i_item_lst[i1]] != 0xFF )
                     {
@@ -657,11 +661,12 @@ namespace mod
                 using namespace libtp::data::stage;
                 switch ( flag )
                 {
-                    case 0x2904:
+                    case 0x2904:     // Checking for ending blow.
                     {
                         if ( checkStageName( allStages[stageIDs::Hidden_Skill] ) )
                         {
-                            return true;
+                            return true;     // If we don't have the flag, the game sends us to Faron by default. Which we don't
+                                             // want.
                         }
                         break;
                     }
@@ -676,33 +681,35 @@ namespace mod
                         break;
                     }
 
-                    case 0x2320:
-                    case 0x3E02:
+                    case 0x2320:     // Gave Ilia the charm
+                    case 0x3E02:     // CiTS Intro CS watched
                     {
                         if ( checkStageName( allStages[stageIDs::Hidden_Village] ) )
                         {
                             if ( !dComIfGs_isEventBit( 0x2280 ) )
                             {
-                                return false;
+                                return false;     // If we haven't gotten the item from Impaz then we need to return false or it
+                                                  // will break her dialogue.
                             }
                         }
                         break;
                     }
 
-                    case 0x701:
+                    case 0x701:     // Goron Mines Story Flag
                     {
                         if ( checkStageName( allStages[stageIDs::Goron_Mines] ) )
                         {
-                            return false;
+                            return false;     // The elders will not spawn if the flag is set.
                         }
                         break;
                     }
 
-                    case 0x810:
+                    case 0x810:     // Escort Completed
                     {
                         if ( checkStageName( allStages[stageIDs::Castle_Town] ) )
                         {
-                            return true;
+                            return true;     // If flag isn't set, the player will be thrown into escort when they open the
+                                             // door.
                         }
                         else if ( checkStageName( allStages[stageIDs::Kakariko_Village_Interiors] ) &&
                                   ( libtp::tp::d_kankyo::env_light.currentRoom ==
@@ -713,29 +720,29 @@ namespace mod
                         break;
                     }
 
-                    case 0x2010:
+                    case 0x2010:     // AG story flag.
                     {
                         if ( checkStageName( allStages[stageIDs::Stallord] ) )
                         {
-                            return false;
+                            return false;     // If the flag is set, the post boss music plays during the boss fight.
                         }
                         break;
                     }
 
-                    case 0x2008:
+                    case 0x2008:     // Snowpeak Ruins Story flag
                     {
                         if ( checkStageName( allStages[stageIDs::Kakariko_Graveyard] ) )
                         {
-                            return false;
+                            return false;     // If the flag is set, Ralis will no longer spawn in the graveyard.
                         }
                         break;
                     }
 
-                    case 0x602:
+                    case 0x602:     // Forest Temple Story Flag
                     {
                         if ( checkStageName( allStages[stageIDs::Diababa] ) )
                         {
-                            return false;
+                            return false;     // If the flag is set, the post boss music plays during the boss fight.
                         }
                         break;
                     }
@@ -778,10 +785,14 @@ namespace mod
                                                 return false;
                                             }
                                         }
-                                        default:
+                                        case 4:
                                         {
                                             return return_isEventBit( eventPtr, flag );
                                             break;
+                                        }
+                                        default:
+                                        {
+                                            return false;
                                         }
                                     }
                                 }

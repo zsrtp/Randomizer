@@ -61,329 +61,25 @@ namespace mod::game_patch
     void _05_setCustomItemMessage( libtp::tp::control::TControl* control,
                                    const void* TProcessor,
                                    uint16_t unk3,
-                                   uint16_t msgId )
+                                   uint16_t msgId,
+                                   rando::Randomizer* randomizer )
     {
         using namespace libtp::data::items;
-        // Check if the current text is for an item
-        int32_t index = getItemIdFromMsgId( TProcessor, unk3, msgId );
         // The current text is for an item
         auto setMessageText = []( libtp::tp::control::TControl* control, const char* text )
         {
             control->msg = text;
             control->wMsgRender = text;
         };
-        switch ( static_cast<uint32_t>( index ) )
+
+        const char* newMessage = _05_getMsgById( randomizer, msgId );
+        // Only replace the message if we get a valid string returned.
+        if ( newMessage )
         {
-            case Forest_Temple_Small_Key:
-            {
-                setMessageText( control, customForestSKText );
-                break;
-            }
-            case Forest_Temple_Dungeon_Map:
-            {
-                setMessageText( control, customForestMapText );
-                break;
-            }
-            case Forest_Temple_Compass:
-            {
-                setMessageText( control, customForestCompassText );
-                break;
-            }
-            case Forest_Temple_Big_Key:
-            {
-                setMessageText( control, customForestBigKeyText );
-                break;
-            }
-
-            case Goron_Mines_Small_Key:
-            {
-                setMessageText( control, customMinesSKText );
-                break;
-            }
-            case Goron_Mines_Dungeon_Map:
-            {
-                setMessageText( control, customMinesMapText );
-                break;
-            }
-            case Goron_Mines_Compass:
-            {
-                setMessageText( control, customMinesCompassText );
-                break;
-            }
-
-            case Lakebed_Temple_Small_Key:
-            {
-                setMessageText( control, customLakebedSKText );
-                break;
-            }
-            case Lakebed_Temple_Dungeon_Map:
-            {
-                setMessageText( control, customLakebedMapText );
-                break;
-            }
-            case Lakebed_Temple_Compass:
-            {
-                setMessageText( control, customLakebedCompassText );
-                break;
-            }
-            case Lakebed_Temple_Big_Key:
-            {
-                setMessageText( control, customLakebedBigKeyText );
-                break;
-            }
-
-            case Arbiters_Grounds_Small_Key:
-            {
-                setMessageText( control, customArbitersSKText );
-                break;
-            }
-            case Arbiters_Grounds_Dungeon_Map:
-            {
-                setMessageText( control, customArbitersMapText );
-                break;
-            }
-            case Arbiters_Grounds_Compass:
-            {
-                setMessageText( control, customArbitersCompassText );
-                break;
-            }
-            case Arbiters_Grounds_Big_Key:
-            {
-                setMessageText( control, customArbitersBigKeyText );
-                break;
-            }
-
-            case Snowpeak_Ruins_Small_Key:
-            {
-                setMessageText( control, customSnowpeakSKText );
-                break;
-            }
-            case Snowpeak_Ruins_Dungeon_Map:
-            {
-                setMessageText( control, customSnowpeakMapText );
-                break;
-            }
-            case Snowpeak_Ruins_Compass:
-            {
-                setMessageText( control, customSnowpeakCompassText );
-                break;
-            }
-
-            case Temple_of_Time_Small_Key:
-            {
-                setMessageText( control, customToTSKText );
-                break;
-            }
-            case Temple_of_Time_Dungeon_Map:
-            {
-                setMessageText( control, customToTMapText );
-                break;
-            }
-            case Temple_of_Time_Compass:
-            {
-                setMessageText( control, customToTCompassText );
-                break;
-            }
-            case Temple_of_Time_Big_Key:
-            {
-                setMessageText( control, customToTBigKeyText );
-                break;
-            }
-
-            case City_in_The_Sky_Small_Key:
-            {
-                setMessageText( control, customCitySKText );
-                break;
-            }
-            case City_in_The_Sky_Dungeon_Map:
-            {
-                setMessageText( control, customCityMapText );
-                break;
-            }
-            case City_in_The_Sky_Compass:
-            {
-                setMessageText( control, customCityCompassText );
-                break;
-            }
-            case City_in_The_Sky_Big_Key:
-            {
-                setMessageText( control, customCityBigKeyText );
-                break;
-            }
-
-            case Palace_of_Twilight_Small_Key:
-            {
-                setMessageText( control, customPalaceSKText );
-                break;
-            }
-            case Palace_of_Twilight_Dungeon_Map:
-            {
-                setMessageText( control, customPalaceMapText );
-                break;
-            }
-            case Palace_of_Twilight_Compass:
-            {
-                setMessageText( control, customPalaceCompassText );
-                break;
-            }
-            case Palace_of_Twilight_Big_Key:
-            {
-                setMessageText( control, customPalaceBigKeyText );
-                break;
-            }
-
-            case Hyrule_Castle_Small_Key:
-            {
-                setMessageText( control, customCastleSKText );
-                break;
-            }
-            case Hyrule_Castle_Dungeon_Map:
-            {
-                setMessageText( control, customCastleMapText );
-                break;
-            }
-            case Hyrule_Castle_Compass:
-            {
-                setMessageText( control, customCastleCompassText );
-                break;
-            }
-            case Hyrule_Castle_Big_Key:
-            {
-                setMessageText( control, customCastleBigKeyText );
-                break;
-            }
-            case Shadow_Crystal:
-            {
-                setMessageText( control, customCrystalText );
-                break;
-            }
-
-            case Ending_Blow:
-            {
-                setMessageText( control, endingBlowText );
-                break;
-            }
-            case Shield_Attack:
-            {
-                setMessageText( control, shieldAttackText );
-                break;
-            }
-            case Back_Slice:
-            {
-                setMessageText( control, backSliceText );
-                break;
-            }
-            case Helm_Splitter:
-            {
-                setMessageText( control, helmSplitterText );
-                break;
-            }
-            case Mortal_Draw:
-            {
-                setMessageText( control, mortalDrawText );
-                break;
-            }
-            case Jump_Strike:
-            {
-                setMessageText( control, jumpStrikeText );
-                break;
-            }
-            case Great_Spin:
-            {
-                setMessageText( control, greatSpinText );
-                break;
-            }
-
-            case Bulblin_Camp_Key:
-            {
-                setMessageText( control, customBublinSKText );
-                break;
-            }
-
-            case Dominion_Rod:
-            {
-                setMessageText( control, customPoweredRodText );
-                break;
-            }
-
-            case Ancient_Sky_Book_First_Character:
-            {
-                setMessageText( control, firstCharacterText );
-                break;
-            }
-
-            case Ancient_Sky_Book_Second_Character:
-            {
-                setMessageText( control, secondCharacterText );
-                break;
-            }
-
-            case Ancient_Sky_Book_Third_Character:
-            {
-                setMessageText( control, thirdCharacterText );
-                break;
-            }
-
-            case Ancient_Sky_Book_Fourth_Character:
-            {
-                setMessageText( control, fourthCharacterText );
-                break;
-            }
-
-            case Ancient_Sky_Book_Fifth_Character:
-            {
-                setMessageText( control, fifthCharacterText );
-                break;
-            }
-
-            case Fused_Shadow_1:
-            {
-                setMessageText( control, firstFusedShadowText );
-                break;
-            }
-
-            case Fused_Shadow_2:
-            {
-                setMessageText( control, secondFusedShadowText );
-                break;
-            }
-
-            case Fused_Shadow_3:
-            {
-                setMessageText( control, thirdFusedShadowText );
-                break;
-            }
-
-            case Mirror_Piece_2:
-            {
-                setMessageText( control, secondMirrorShardText );
-                break;
-            }
-
-            case Mirror_Piece_3:
-            {
-                setMessageText( control, thirdMirrorShardText );
-                break;
-            }
-
-            case Mirror_Piece_4:
-            {
-                setMessageText( control, fourthMirrorShardText );
-                break;
-            }
-
-            case Foolish_Item:
-            {
-                setMessageText( control, foolishItemText );
-                break;
-            }
-
-            default:
-            {
-                break;
-            }
+            setMessageText( control, newMessage );
         }
     }
+
     uint32_t _05_getCustomMsgColor( uint8_t colorId )
     {
         uint32_t newColorCode;     // RGBA
@@ -419,7 +115,7 @@ namespace mod::game_patch
         const char* replacementText;
         if ( strncmp( *text, talkToMidnaText, strlen( talkToMidnaText ) ) == 0 )
         {
-            // Replacement text
+            // If it is day/night set the text to reflect the current time.
 
             if ( ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle >= 284 ) ||
                  ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle <= 104 ) )
@@ -448,5 +144,62 @@ namespace mod::game_patch
             }
         }
         return text;
+    }
+
+    const char* _05_getMsgById( rando::Randomizer* randomizer, uint32_t msgId )
+    {
+        // Make sure the randomizer is loaded
+        if ( !randomizer )
+        {
+            return nullptr;
+        }
+
+        // Make sure the seed data is loaded
+        rando::Seed* seed = randomizer->m_Seed;
+        if ( !seed )
+        {
+            return nullptr;
+        }
+
+        // Make sure the custom text is loaded
+        uint32_t msgTableInfoRaw = reinterpret_cast<uint32_t>( seed->m_MsgTableInfo );
+        if ( !msgTableInfoRaw )
+        {
+            return nullptr;
+        }
+
+        // Get a pointer to the message ids to search for
+        uint16_t* msgIds = reinterpret_cast<uint16_t*>( msgTableInfoRaw );
+
+        // Get the total size of the message ids
+        uint32_t totalMessages = seed->m_TotalMsgEntries;
+        uint32_t msgIdTableSize = totalMessages * sizeof( uint16_t );
+
+        // Round msgIdTableSize up to the size of the offset type to make sure the offsets are properly aligned
+        msgIdTableSize = ( msgIdTableSize + sizeof( uint32_t ) - 1 ) & ~( sizeof( uint32_t ) - 1 );
+
+        // Get a pointer to the message offsets
+        uint32_t* msgOffsets = reinterpret_cast<uint32_t*>( msgTableInfoRaw + msgIdTableSize );
+
+        // Get the total size of the message offsets
+        uint32_t msgOffsetTableSize = totalMessages * sizeof( uint32_t );
+
+        // Get a pointer to the messages
+        const char* messages = reinterpret_cast<const char*>( msgTableInfoRaw + msgIdTableSize + msgOffsetTableSize );
+
+        // Get the custom message
+        for ( uint32_t i = 0; i < totalMessages; i++ )
+        {
+            if ( msgIds[i] == msgId )
+            {
+                mod::console << &seed->m_MsgTableInfo << "\n";
+                mod::console << &messages << "\n";
+                mod::console << &messages[msgOffsets[i]] << "\n";
+                return &messages[msgOffsets[i]];
+            }
+        }
+
+        // Didn't find msgId
+        return nullptr;
     }
 }     // namespace mod::game_patch

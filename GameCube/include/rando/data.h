@@ -27,8 +27,9 @@ namespace mod::rando
         uint16_t minVersion;     // minimal required REL version, u8 Major and u8 Minor
         uint16_t maxVersion;     // maximum supported REL version, u8 Major and u8 Minor
         uint16_t headerSize;     // Total size of the header in bytes
-        uint16_t dataSize;       // Total number of bytes
+        uint16_t dataSize;       // Total number of bytes of seed data
         uint64_t seed;           // Current seed
+        uint32_t totalSize;      // Total number of bytes in the gci.
 
         entryInfo patchInfo;     // bitArray where each bit represents a patch/modification to be applied for this playthrough
         entryInfo eventFlagsInfo;      // eventFlags that need to be set for this seed
@@ -45,6 +46,8 @@ namespace mod::rando
         entryInfo skyCharacterCheckInfo;
         entryInfo shopItemCheckInfo;
         entryInfo startingItemInfo;
+        uint16_t customTextHeaderSize;
+        uint16_t customTextHeaderOffset;
         uint8_t heartColor;
         uint8_t aButtonColor;
         uint8_t bButtonColor;
@@ -56,7 +59,7 @@ namespace mod::rando
         uint8_t quickTransform;
         uint8_t castleRequirements;
         uint8_t palaceRequirements;
-        uint8_t padding[0xD];
+        uint8_t padding[0x3];
     } __attribute__( ( __packed__ ) );
 
     // Seed with index
@@ -169,6 +172,25 @@ namespace mod::rando
         uint8_t itemID;        // The item to be given.
         uint16_t stageIDX;     // The stage that the Owl Statue is located.
         uint8_t roomID;        // The room that the Owl Statue is located in.
+    } __attribute__( ( __packed__ ) );
+
+    struct CustomMessageEntryInfo
+    {
+        uint8_t language;
+        uint8_t padding[1];
+        uint16_t totalEntries;
+        uint32_t msgTableSize;
+        uint32_t msgIdTableOffset;
+    } __attribute__( ( __packed__ ) );
+
+    struct CustomMessageHeaderInfo
+    {
+        uint16_t minVersion;
+        uint16_t maxVersion;
+        uint16_t headerSize;
+        uint8_t totalLanguages;
+        uint8_t padding[1];
+        CustomMessageEntryInfo entry[];     // Size is totalLanguages
     } __attribute__( ( __packed__ ) );
 
 }     // namespace mod::rando

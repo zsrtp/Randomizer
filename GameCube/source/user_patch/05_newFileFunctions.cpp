@@ -65,8 +65,11 @@ namespace mod::user_patch
     {
         if ( set )
         {
+            // Set the flag for rupee cutscenes.
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_get_item.mItemsFlags[0] |= 0x7E;
+            // Set the flag for having recieved all of the postman's letters.
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.letter_info.letter_get_bitfields[0] |= 0xFFFF;
+            // Set the flags for having read all of the Postman's Letters.
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.letter_info.letter_read_bitfields[0] |= 0xFFFF;
         }
     }

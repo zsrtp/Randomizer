@@ -12,6 +12,7 @@
 #include <cstdint>
 #include <cstdio>
 
+#include "cxx.h"
 #include "data/stages.h"
 #include "game_patch/game_patch.h"
 #include "gc_wii/card.h"
@@ -43,14 +44,20 @@ namespace mod::rando
         mod::console << "Loading seed " << m_fileIndex << ": '" << m_Header->seed << "'...\n";
 
         // Load the whole gci locally to reduce number of reads (memcard)
-        uint32_t length = m_Header->dataSize;
         char fileName[12] = "rando-data\0";
 
         fileName[10] = static_cast<char>( '0' + m_fileIndex );
 
-        m_GCIData = new uint8_t[length];
+        m_GCIData = new uint8_t[m_Header->dataSize];
+        uint8_t* data = new ( -0x20 ) uint8_t[m_Header->totalSize];
 
-        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, fileName, length, m_Header->headerSize, m_GCIData, true );
+        m_CARDResult = libtp::tools::ReadGCI( m_CardSlot, fileName, m_Header->totalSize, 0, data, true );
+        if ( m_CARDResult == CARD_RESULT_READY )
+        {
+            memcpy( m_GCIData, &data[m_Header->headerSize], m_Header->dataSize );
+            this->loadCustomText( data );
+        }
+        delete[] data;
     }
 
     Seed::~Seed()
@@ -270,7 +277,6 @@ namespace mod::rando
         {
             // Set the pointer as offset into our buffer
             uint8_t* startingItems = reinterpret_cast<uint8_t*>( &m_GCIData[gci_offset] );
-            mod::console << reinterpret_cast<uint32_t>( startingItems ) << "\n";
 
             for ( uint32_t i = 0; i < num_startingItems; i++ )
             {
@@ -297,7 +303,7 @@ namespace mod::rando
             }
         }
 
-        // Allocate memory the actual RELChecks
+        // Allocate memory the actual DZXChecks
         // We do NOT have to clear the previous buffer as that's already done in "LoadChecks()"
         m_DZXChecks = new dzxCheck[m_numLoadedDZXChecks];
 
@@ -390,7 +396,8 @@ namespace mod::rando
     void Seed::loadShopModels()
     {
         using namespace libtp::tp;
-        if ( m_GCIData && m_Header )
+        if ( m_GCIData &&
+             m_Header )     // A fail-safe as the randomizer will crash if it tries to read a seed and there isn't one.
         {
             uint32_t num_shopItems = m_Header->shopItemCheckInfo.numEntries;
             uint32_t gci_offset = m_Header->shopItemCheckInfo.dataOffset;
@@ -608,6 +615,75 @@ namespace mod::rando
                 j++;
             }
         }
+    }
+
+    bool Seed::loadCustomText( uint8_t* data )
+    {
+        if ( m_CARDResult == CARD_RESULT_READY )
+        {
+            // Get the custom message header
+            CustomMessageHeaderInfo* customMessageHeader =
+                reinterpret_cast<CustomMessageHeaderInfo*>( &data[m_Header->customTextHeaderOffset] );
+
+            uint16_t minVersion = customMessageHeader->minVersion;
+            uint16_t maxVersion = customMessageHeader->maxVersion;
+
+            uint16_t version = static_cast<uint16_t>( _VERSION_MAJOR << 8 | _VERSION_MINOR );
+            if ( ( minVersion <= version ) && ( maxVersion >= version ) )
+            {
+                // Get the text for the current language
+#ifdef TP_EU
+                libtp::tp::d_s_logo::Languages lang = libtp::tp::d_s_logo::getPalLanguage2( nullptr );
+                if ( ( lang < libtp::tp::d_s_logo::Languages::uk ) || ( lang > libtp::tp::d_s_logo::Languages::it ) )
+                {
+                    // The language is invalid/unsupported, so the game defaults to English
+                    lang = libtp::tp::d_s_logo::Languages::uk;
+                }
+                uint32_t language = static_cast<uint32_t>( lang );
+
+                // Get a pointer to the language to use
+                CustomMessageEntryInfo* customMessageInfo = nullptr;
+                for ( uint32_t i = 0; i < customMessageHeader->totalLanguages; i++ )
+                {
+                    if ( customMessageHeader->entry[i].language == language )
+                    {
+                        customMessageInfo = &customMessageHeader->entry[i];
+                        break;
+                    }
+                }
+
+                // If the language wasn't found, then default to English, which should always be the first language included
+                if ( !customMessageInfo )
+                {
+                    customMessageInfo = &customMessageHeader->entry[0];
+                }
+#else
+                // US/JP should only have one language included
+                CustomMessageEntryInfo* customMessageInfo = &customMessageHeader->entry[0];
+#endif
+
+                // Allocate memory for the ids, message offsets, and messages
+                m_TotalMsgEntries = customMessageInfo->totalEntries;
+                uint32_t msgIdTableSize = m_TotalMsgEntries * sizeof( uint16_t );
+                uint32_t msgOffsetTableSize = m_TotalMsgEntries * sizeof( uint32_t );
+                // Round msgIdTableSize up to the size of the offsets to make sure the offsets are properly aligned
+                msgIdTableSize = ( msgIdTableSize + sizeof( uint32_t ) - 1 ) & ~( sizeof( uint32_t ) - 1 );
+                uint32_t msgTableInfoSize = msgIdTableSize + msgOffsetTableSize + customMessageInfo->msgTableSize;
+
+                m_MsgTableInfo = new uint8_t[msgTableInfoSize];
+                // When calculating the offset the the message table information, we are assuming that the message header is
+                // followed by the entry information for all of the languages in the seed data.
+                uint32_t offset = m_Header->customTextHeaderOffset + customMessageInfo->msgIdTableOffset +
+                                  ( sizeof( CustomMessageEntryInfo ) * ( customMessageInfo->language ) ) +
+                                  sizeof( CustomMessageHeaderInfo );
+
+                // Copy the data to the pointers
+                memcpy( m_MsgTableInfo, &data[offset], msgTableInfoSize );
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }     // namespace mod::rando

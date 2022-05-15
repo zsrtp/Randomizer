@@ -154,6 +154,7 @@ namespace mod::rando
 
     uint8_t Randomizer::getSkyCharacter()
     {
+        // Return the item id if we only have one item to pick from, otherwise, check the room to get the character we want.
         if ( m_Seed->m_numSkyBookChecks == 1 )
         {
             return m_Seed->m_SkyBookChecks[0].itemID;
@@ -172,6 +173,7 @@ namespace mod::rando
         return libtp::data::items::Ancient_Sky_Book_Partly_Filled;
     }
 
+    // There is (currently) never a situation where there are multiple boss checks on the same stage, so just return the item.
     uint8_t Randomizer::getBossItem() { return m_Seed->m_BossChecks[0].item; }
 
     void Randomizer::overrideARC( uint32_t fileAddr, FileDirectory fileDirectory, int roomNo )
@@ -211,7 +213,7 @@ namespace mod::rando
                         }
                     }
 
-                    for ( uint j = 0; j < m_Seed->m_numHiddenSkillChecks; j++ )
+                    for ( uint32_t j = 0; j < m_Seed->m_numHiddenSkillChecks; j++ )
                     {
                         if ( ( m_Seed->m_HiddenSkillChecks[j].stageIDX == stageIDX ) &&
                              ( m_Seed->m_HiddenSkillChecks[j].roomID ==

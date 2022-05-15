@@ -44,6 +44,7 @@ namespace mod::game_patch
                                                      libtp::data::items::Ball_and_Chain,
                                                      libtp::data::items::Heros_Bow,
                                                      libtp::data::items::Clawshot,
+                                                     libtp::data::items::Ordon_Shield,
                                                      libtp::data::items::Iron_Boots,
                                                      libtp::data::items::Dominion_Rod,
                                                      libtp::data::items::Double_Clawshots,
@@ -198,49 +199,39 @@ namespace mod::game_patch
         int32_t stageIndex = libtp::tools::getStageIndex( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage );
         if ( stageIndex != -1 )
         {
+            uint8_t* memoryFlags;
             if ( nodeId == static_cast<libtp::data::stage::AreaNodesID>( libtp::data::stage::regionID[stageIndex] ) )
             {
-                switch ( type )
-                {
-                    case NodeDungeonItemType::Small_Key:
-                        gameInfoPtr->memory.temp_flags.memoryFlags[0x1C]++;
-                        break;
-                    case NodeDungeonItemType::Dungeon_Map:
-                        gameInfoPtr->memory.temp_flags.memoryFlags[0x1D] |= 0x1;
-                        break;
-                    case NodeDungeonItemType::Compass:
-                        gameInfoPtr->memory.temp_flags.memoryFlags[0x1D] |= 0x2;
-                        break;
-                    case NodeDungeonItemType::Big_Key:
-                        gameInfoPtr->memory.temp_flags.memoryFlags[0x1D] |= 0x4;
-                        break;
-
-                    default:
-                        break;
-                }
+                memoryFlags = gameInfoPtr->memory.temp_flags.memoryFlags;
             }
             else     // Key is not for the current area, so update the appropriate node
             {
-                libtp::tp::d_save::dSv_memory_c* node =
-                    reinterpret_cast<libtp::tp::d_save::dSv_memory_c*>( &gameInfoPtr->save_file.area_flags[0] );
+                memoryFlags = gameInfoPtr->save_file.area_flags[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags;
+            }
 
-                switch ( type )
+            switch ( type )
+            {
+                case NodeDungeonItemType::Small_Key:
                 {
-                    case NodeDungeonItemType::Small_Key:
-                        node[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags[0x1C]++;
-                        break;
-                    case NodeDungeonItemType::Dungeon_Map:
-                        node[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags[0x1D] |= 0x1;
-                        break;
-                    case NodeDungeonItemType::Compass:
-                        node[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags[0x1D] |= 0x2;
-                        break;
-                    case NodeDungeonItemType::Big_Key:
-                        node[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags[0x1D] |= 0x4;
-                        break;
-                    default:
-                        break;
+                    // The vanilla code caps the key count at 100
+                    uint8_t smallKeyCount = memoryFlags[0x1C];
+                    if ( smallKeyCount < 100 )
+                    {
+                        memoryFlags[0x1C] = smallKeyCount + 1;
+                    }
+                    break;
                 }
+                case NodeDungeonItemType::Dungeon_Map:
+                    memoryFlags[0x1D] |= 0x1;
+                    break;
+                case NodeDungeonItemType::Compass:
+                    memoryFlags[0x1D] |= 0x2;
+                    break;
+                case NodeDungeonItemType::Big_Key:
+                    memoryFlags[0x1D] |= 0x4;
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -735,8 +726,6 @@ namespace mod::game_patch
         d_item::ItemFunc onGetShadowCrystal = []()
         {
             events::setSaveFileEventFlag( 0xD04 );     // Can transform at will
-            events::setSaveFileEventFlag( 0xC10 );     // Midna Accompanies Wolf
-            events::setSaveFileEventFlag( 0x501 );     // Midna Charge Unlocked
         };
         itemFuncPtr[items::Shadow_Crystal] = onGetShadowCrystal;
 
@@ -878,6 +867,7 @@ namespace mod::game_patch
             d_save::onCollectCrystal( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x02' );
             if ( randomizer )
             {
+                // If the player has the castle requirement set to Fused Shadows.
                 if ( randomizer->m_Seed->m_Header->castleRequirements == 1 )
                 {
                     libtp::tp::d_save::onSwitch_dSv_memBit(
@@ -885,6 +875,7 @@ namespace mod::game_patch
                         0x0F );
                     events::setSaveFileEventFlag( 0x4208 );
                 }
+                // If the player has the palace requirement set to Fused Shadows.
                 if ( randomizer->m_Seed->m_Header->palaceRequirements == 1 )
                 {
                     events::setSaveFileEventFlag( 0x2B08 );
@@ -908,6 +899,7 @@ namespace mod::game_patch
             d_save::onCollectMirror( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x03' );
             if ( randomizer )
             {
+                // If the player has the castle requirement set to Mirror Shards.
                 if ( randomizer->m_Seed->m_Header->castleRequirements == 2 )
                 {
                     libtp::tp::d_save::onSwitch_dSv_memBit(
@@ -915,6 +907,7 @@ namespace mod::game_patch
                         0x0F );
                     events::setSaveFileEventFlag( 0x4208 );
                 }
+                // If the player has the palace requirement set to Mirror Shards.
                 if ( randomizer->m_Seed->m_Header->palaceRequirements == 2 )
                 {
                     events::setSaveFileEventFlag( 0x2B08 );
@@ -954,6 +947,7 @@ namespace mod::game_patch
         // Lanayru Vessel of Light
         d_item::ItemFunc onGetLanayruVessel = []()
         {
+            // Set the flag for lanayru twilight to be cleared.
             libtp::tp::d_save::onLightDropGetFlag(
                 &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.light_drop,
                 '\x02' );
@@ -1058,6 +1052,7 @@ namespace mod::game_patch
 
     void _02_modifyFoolishFieldModel()
     {
+        // Set the field model of the Foolish Item ID to the model of a random important item.
         libtp::tp::d_item_data::FieldItemRes* fieldItemResPtr = &libtp::tp::d_item_data::field_item_res[0];
         uint32_t modelListSize = sizeof( foolishModelItemList ) / sizeof( foolishModelItemList[0] );
         uint32_t randomIndex = mod::ulRand( modelListSize );
@@ -1068,6 +1063,7 @@ namespace mod::game_patch
     }
     void _02_modifyFoolishShopModel( uint16_t shopID )
     {
+        // Set the shop model of the Foolish Item ID to the model of a random important item.
         using namespace libtp::tp::d_a_shop_item_static;
         libtp::tp::d_item_data::ItemResource* itemResourcePtr = &libtp::tp::d_item_data::item_resource[0];
         uint32_t modelListSize = sizeof( foolishModelItemList ) / sizeof( foolishModelItemList[0] );
