@@ -6,8 +6,9 @@
  */
 #include "rando/randomizer.h"
 
-#include <cstdio>
 #include <cstring>
+#include <cstdio>
+#include <cinttypes>
 
 #include "data/items.h"
 #include "data/stages.h"

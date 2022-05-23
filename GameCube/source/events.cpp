@@ -1,6 +1,5 @@
 #include "events.h"
 
-#include <cinttypes>
 #include <cstring>
 
 #include "asm.h"
@@ -9,6 +8,7 @@
 #include "main.h"
 #include "patch.h"
 #include "rando/randomizer.h"
+#include "tp/J2DTextBox.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_a_player.h"
 #include "tp/d_camera.h"
@@ -19,8 +19,10 @@
 #include "tp/d_meter2_info.h"
 #include "tp/d_resource.h"
 #include "tp/dzx.h"
+#include "tp/m_do_ext.h"
 #include "tp/rel/d_a_obj_Lv5Key.h"
 #include "user_patch/03_customCosmetics.h"
+#include "tp/J2DPicture.h"
 
 namespace mod::events
 {
@@ -747,4 +749,98 @@ namespace mod::events
 
         return true;
     }
+
+    float __attribute__( ( noinline ) ) intToFloat( int32_t value ) { return static_cast<float>( value ); }
+
+    void drawWindow(int32_t x, int32_t y, int32_t width, int32_t height, uint32_t color)
+    {
+        // Make sure the background window exists
+        libtp::tp::J2DPicture::J2DPicture* tempBgWindow = bgWindow;
+        if (!tempBgWindow)
+        {
+            return;
+        }
+        
+        // Set the window color
+        tempBgWindow->setWhiteColor(color);
+        
+        // Convert x, y, width, and height to floats
+        constexpr int32_t numValues = 4;
+        int32_t values[numValues] = { x, y, width, height };
+        float valuesOut[numValues];
+        
+        for (int32_t i = 0; i < numValues; i++)
+        {
+            valuesOut[i] = intToFloat(values[i]);
+        }
+        
+        // Draw the window
+        libtp::tp::J2DPicture::J2DPicture_draw(
+            tempBgWindow, 
+            valuesOut[0], 
+            valuesOut[1], 
+            valuesOut[2], 
+            valuesOut[3], 
+            false, 
+            false, 
+            false);
+    }
+    
+    void drawText( const char* text, int32_t x, int32_t y, uint32_t color, float textSize )
+    {
+        // The font takes a bit to load, so it won't be loaded immediately at boot
+        void* font = libtp::tp::m_Do_ext::mDoExt_getMesgFont();
+        if ( !font )
+        {
+            return;
+        }
+
+        using namespace libtp::tp::J2DTextBox;
+        J2DTextBox tempTextBox;
+
+        tempTextBox.setSolidColor( color );
+        tempTextBox.setLineSpacing( textSize );
+        tempTextBox.setFontSize( textSize, textSize );
+        J2DTextBox_setFont( &tempTextBox, font );
+        J2DTextBox_setString1( &tempTextBox, text );
+
+        J2DTextBox_draw1( &tempTextBox, intToFloat( x ), intToFloat( y ) );
+
+        // Must manually call the destructor, as it takes auto-generated parameters
+        J2DTextBox_dt( &tempTextBox, static_cast<int16_t>( false ) );
+    }
+    
+    int32_t getCurrentAreaNodeId()
+    {
+        int32_t stageIndex = libtp::tools::getStageIndex( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage );
+        if (stageIndex >= 0)
+        {
+            return static_cast<int32_t>(libtp::data::stage::regionID[stageIndex]);
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    uint8_t* getNodeMemoryFlags( 
+        const libtp::data::stage::AreaNodesID nodeId, 
+        const libtp::data::stage::AreaNodesID currentAreaNodeId )
+    {
+        using namespace libtp::data::items;
+        libtp::tp::d_save::dSv_info_c* saveDataPtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save;
+        
+        uint8_t* memoryFlags;
+        if (nodeId == currentAreaNodeId)
+        {
+            memoryFlags = saveDataPtr->memory.temp_flags.memoryFlags;
+        }
+        else     // We are not in the correct node, so use the appropriate region node
+        {
+            memoryFlags = saveDataPtr->save_file.area_flags[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags;
+        }
+        
+        return memoryFlags;
+    }
+
 }     // namespace mod::events

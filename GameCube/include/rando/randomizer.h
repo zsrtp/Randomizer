@@ -7,8 +7,6 @@
 #ifndef RANDO_RANDOMIZER_H
 #define RANDO_RANDOMIZER_H
 
-#include <cinttypes>
-
 #include "rando/data.h"
 #include "rando/seed.h"
 #include "rando/seedlist.h"

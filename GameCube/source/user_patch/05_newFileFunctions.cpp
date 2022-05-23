@@ -4,7 +4,6 @@
  *
  * @bug No known bugs
  */
-#include <cinttypes>
 
 #include "main.h"
 #include "events.h"

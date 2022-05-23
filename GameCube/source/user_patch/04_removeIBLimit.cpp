@@ -5,7 +5,6 @@
  *
  * @bug No known bugs
  */
-#include <cinttypes>
 
 #include "rando/randomizer.h"
 #include "tp/d_a_alink.h"

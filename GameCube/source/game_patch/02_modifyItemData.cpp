@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <cstdio>
+#include <cinttypes>
 
 #include "data/items.h"
 #include "data/stages.h"

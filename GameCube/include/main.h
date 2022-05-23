@@ -16,6 +16,7 @@
 #include "tp/d_save.h"
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
+#include "tp/J2DPicture.h"
 
 // Game States
 #define GAME_BOOT 0       // Default; At startup (should only ever be active once)
@@ -30,11 +31,13 @@ namespace mod
     extern rando::SeedList* seedList;
 
     // Variables
+    extern libtp::tp::J2DPicture::J2DPicture* bgWindow;
     extern uint32_t lastButtonInput;
     extern int32_t lastLoadingState;
+    extern uint32_t nextVal;
     extern bool consoleState;
     extern uint8_t gameState;
-    extern uint32_t nextVal;
+    extern bool ringDrawnThisFrame;
 
     void main();
     void hookFunctions();

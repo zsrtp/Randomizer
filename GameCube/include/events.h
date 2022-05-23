@@ -10,8 +10,8 @@
 
 #ifndef EVENTS_H
 #define EVENTS_H
-#include <cinttypes>
 
+#include "data/stages.h"
 #include "rando/randomizer.h"
 #include "tp/d_resource.h"
 #include "tp/d_save.h"
@@ -131,5 +131,12 @@ namespace mod::events
     libtp::tp::d_resource::dRes_info_c* getObjectResInfo( const char* arcName );
     bool haveItem( uint8_t item );
     bool checkMembitSaveSwitchFlag( int32_t flag );
+
+    float intToFloat( int32_t value );
+    void drawWindow( int32_t x, int32_t y, int32_t width, int32_t height, uint32_t color );
+    void drawText( const char* text, int32_t x, int32_t y, uint32_t color, float textSize );
+    int32_t getCurrentAreaNodeId();
+    uint8_t* getNodeMemoryFlags( const libtp::data::stage::AreaNodesID nodeId,
+                                 const libtp::data::stage::AreaNodesID currentAreaNodeId );
 }     // namespace mod::events
 #endif

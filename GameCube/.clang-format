@@ -23,7 +23,7 @@ IndentWrappedFunctionNames: 'true'
 Language: Cpp
 NamespaceIndentation: All
 PointerAlignment: Left
-SortIncludes: 'true'
+SortIncludes: 'false'
 SortUsingDeclarations: 'true'
 SpaceAfterCStyleCast: 'true'
 SpaceAfterLogicalNot: 'false'

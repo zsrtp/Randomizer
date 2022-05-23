@@ -6,8 +6,6 @@
  */
 #include "user_patch/03_customCosmetics.h"
 
-#include <cinttypes>
-
 #include "events.h"
 #include "main.h"
 #include "tp/d_a_alink.h"

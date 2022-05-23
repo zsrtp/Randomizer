@@ -6,7 +6,6 @@
  */
 #ifndef RANDO_SEEDLIST_H
 #define RANDO_SEEDLIST_H
-#include <cinttypes>
 
 #include "rando/data.h"
 #include "rando/seed.h"
