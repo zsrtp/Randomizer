@@ -9,7 +9,6 @@
 
 #ifndef EVENTS_H
 #define EVENTS_H
-#include <cinttypes>
 
 #include "data/items.h"
 #include "rando/randomizer.h"

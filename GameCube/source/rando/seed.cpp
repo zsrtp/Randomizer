@@ -7,9 +7,8 @@
 
 #include "rando/seed.h"
 
-#include <string.h>
-
 #include <cstdint>
+#include <cstring>
 #include <cstdio>
 
 #include "data/stages.h"

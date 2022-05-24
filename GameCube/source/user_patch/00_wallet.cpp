@@ -4,7 +4,6 @@
  *
  * @bug No known bugs
  */
-#include <cinttypes>
 
 #include "gc_wii/OSCache.h"
 #include "main.h"

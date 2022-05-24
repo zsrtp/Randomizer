@@ -1,9 +1,9 @@
 #include "main.h"
 
-#include <cinttypes>
 #include <cstdint>
-#include <cstdio>
 #include <cstring>
+#include <cstdio>
+#include <cinttypes>
 
 #include "events.h"
 #include "game_patch/game_patch.h"
@@ -72,6 +72,8 @@ namespace mod
         // Generate our seedList
         seedList = new rando::SeedList();
     }
+
+    void exit() {}
 
     void hookFunctions()
     {
