@@ -750,42 +750,39 @@ namespace mod::events
         return true;
     }
 
-    float __attribute__( ( noinline ) ) intToFloat( int32_t value ) { return static_cast<float>( value ); }
-
-    void drawWindow(int32_t x, int32_t y, int32_t width, int32_t height, uint32_t color)
+    void drawWindow( int32_t x, int32_t y, int32_t width, int32_t height, uint32_t color )
     {
         // Make sure the background window exists
         libtp::tp::J2DPicture::J2DPicture* tempBgWindow = bgWindow;
-        if (!tempBgWindow)
+        if ( !tempBgWindow )
         {
             return;
         }
-        
+
         // Set the window color
-        tempBgWindow->setWhiteColor(color);
-        
+        tempBgWindow->setWhiteColor( color );
+
         // Convert x, y, width, and height to floats
         constexpr int32_t numValues = 4;
         int32_t values[numValues] = { x, y, width, height };
         float valuesOut[numValues];
-        
-        for (int32_t i = 0; i < numValues; i++)
+
+        for ( int32_t i = 0; i < numValues; i++ )
         {
-            valuesOut[i] = intToFloat(values[i]);
+            valuesOut[i] = intToFloat( values[i] );
         }
-        
+
         // Draw the window
-        libtp::tp::J2DPicture::J2DPicture_draw(
-            tempBgWindow, 
-            valuesOut[0], 
-            valuesOut[1], 
-            valuesOut[2], 
-            valuesOut[3], 
-            false, 
-            false, 
-            false);
+        libtp::tp::J2DPicture::J2DPicture_draw( tempBgWindow,
+                                                valuesOut[0],
+                                                valuesOut[1],
+                                                valuesOut[2],
+                                                valuesOut[3],
+                                                false,
+                                                false,
+                                                false );
     }
-    
+
     void drawText( const char* text, int32_t x, int32_t y, uint32_t color, float textSize )
     {
         // The font takes a bit to load, so it won't be loaded immediately at boot
@@ -809,13 +806,13 @@ namespace mod::events
         // Must manually call the destructor, as it takes auto-generated parameters
         J2DTextBox_dt( &tempTextBox, static_cast<int16_t>( false ) );
     }
-    
+
     int32_t getCurrentAreaNodeId()
     {
         int32_t stageIndex = libtp::tools::getStageIndex( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage );
-        if (stageIndex >= 0)
+        if ( stageIndex >= 0 )
         {
-            return static_cast<int32_t>(libtp::data::stage::regionID[stageIndex]);
+            return static_cast<int32_t>( libtp::data::stage::regionID[stageIndex] );
         }
         else
         {
@@ -823,15 +820,14 @@ namespace mod::events
         }
     }
 
-    uint8_t* getNodeMemoryFlags( 
-        const libtp::data::stage::AreaNodesID nodeId, 
-        const libtp::data::stage::AreaNodesID currentAreaNodeId )
+    uint8_t* getNodeMemoryFlags( const libtp::data::stage::AreaNodesID nodeId,
+                                 const libtp::data::stage::AreaNodesID currentAreaNodeId )
     {
         using namespace libtp::data::items;
         libtp::tp::d_save::dSv_info_c* saveDataPtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save;
-        
+
         uint8_t* memoryFlags;
-        if (nodeId == currentAreaNodeId)
+        if ( nodeId == currentAreaNodeId )
         {
             memoryFlags = saveDataPtr->memory.temp_flags.memoryFlags;
         }
@@ -839,7 +835,7 @@ namespace mod::events
         {
             memoryFlags = saveDataPtr->save_file.area_flags[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags;
         }
-        
+
         return memoryFlags;
     }
 

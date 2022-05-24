@@ -1677,4 +1677,6 @@ namespace mod
 
         return ret;
     }
+
+    float __attribute__( ( noinline ) ) intToFloat( int32_t value ) { return static_cast<float>( value ); }
 }     // namespace mod
