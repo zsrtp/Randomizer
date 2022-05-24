@@ -40,11 +40,11 @@ namespace mod::user_patch
         *reinterpret_cast<uint32_t*>( getRupeeMaxPtr + 0x40 ) = ASM_LOAD_IMMEDIATE( 3, values[2] );
 
         // 600 -> 5000
-        *reinterpret_cast<uint32_t*>( setWalletMaxNumPtr + 0x18 ) = ASM_COMPARE_WORD_IMMEDIATE( 0, values[0] );
+        *reinterpret_cast<uint32_t*>( setWalletMaxNumPtr + 0x18 ) = ASM_COMPARE_WORD_IMMEDIATE( 0, values[1] );
         // 300 -> 1000
-        *reinterpret_cast<uint32_t*>( setWalletMaxNumPtr + 0x24 ) = ASM_COMPARE_WORD_IMMEDIATE( 0, values[1] );
+        *reinterpret_cast<uint32_t*>( setWalletMaxNumPtr + 0x24 ) = ASM_COMPARE_WORD_IMMEDIATE( 0, values[0] );
         // 1000 -> 9999
-        *reinterpret_cast<uint32_t*>( setWalletMaxNumPtr + 0x30 ) = ASM_COMPARE_WORD_IMMEDIATE( 0, values[1] );
+        *reinterpret_cast<uint32_t*>( setWalletMaxNumPtr + 0x30 ) = ASM_COMPARE_WORD_IMMEDIATE( 0, values[2] );
 
         // Update the cache
         gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( getRupeeMaxPtr ), 0x41 );
