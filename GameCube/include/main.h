@@ -51,6 +51,7 @@ namespace mod
     uint32_t ulRand( uint32_t range );
     float intToFloat( int32_t value );
     void handleInput( uint32_t inputs );
+    void handleFoolishItem();
 
     // Inline randoIsEnabled, as it's short enough to use less memory when inlined
     inline bool randoIsEnabled( rando::Randomizer* rando )
@@ -109,7 +110,7 @@ namespace mod
     int handle_getLayerNo_common_common( const char* stageName, int32_t roomId, int32_t layerOverride );
     extern int ( *return_getLayerNo_common_common )( const char* stageName, int32_t roomId, int32_t layerOverride );
 
-    // Item cration functions. These are ran when the game displays an item though various means.
+    // Item creation functions. These are ran when the game displays an item though various means.
     int32_t handle_createItemForBoss( const float pos[3],
                                       int32_t item,
                                       int32_t roomNo,
@@ -247,7 +248,7 @@ namespace mod
     bool handle_isSwitch_dSv_memBit( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag );
     extern bool ( *return_isSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag );
 
-    void handle_onSwitch_dSv_mdmBit( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag );
+    void handle_onSwitch_dSv_memBit( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag );
     extern void ( *return_onSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag );
 
     bool handle_checkTreasureRupeeReturn( void* unk1, int32_t item );
@@ -260,9 +261,6 @@ namespace mod
     // Link functions
     bool handle_checkBootsMoveAnime( libtp::tp::d_a_alink::daAlink* d_a_alink, int param_1 );
     extern bool ( *return_checkBootsMoveAnime )( libtp::tp::d_a_alink::daAlink* d_a_alink, int param_1 );
-
-    bool handle_checkDamageAction( libtp::tp::d_a_alink::daAlink* linkMapPtr );
-    extern bool ( *return_checkDamageAction )( libtp::tp::d_a_alink::daAlink* linkMapPtr );
 
     void handle_setGetItemFace( libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID );
     extern void ( *return_setGetItemFace )( libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID );
