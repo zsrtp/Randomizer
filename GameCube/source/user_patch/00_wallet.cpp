@@ -11,6 +11,7 @@
 #include "tp/d_menu_collect.h"
 #include "tp/d_save.h"
 #include "user_patch/user_patch.h"
+#include "memory.h"
 
 namespace mod::user_patch
 {
@@ -39,18 +40,16 @@ namespace mod::user_patch
         // 1000 -> 9999 (> 4 digit not good)
         *reinterpret_cast<uint32_t*>( getRupeeMaxPtr + 0x40 ) = ASM_LOAD_IMMEDIATE( 3, values[2] );
 
-        // 600 -> 5000
-        *reinterpret_cast<uint32_t*>( setWalletMaxNumPtr + 0x18 ) = ASM_COMPARE_WORD_IMMEDIATE( 0, values[1] );
         // 300 -> 1000
         *reinterpret_cast<uint32_t*>( setWalletMaxNumPtr + 0x24 ) = ASM_COMPARE_WORD_IMMEDIATE( 0, values[0] );
+        // 600 -> 5000
+        *reinterpret_cast<uint32_t*>( setWalletMaxNumPtr + 0x18 ) = ASM_COMPARE_WORD_IMMEDIATE( 0, values[1] );
         // 1000 -> 9999
         *reinterpret_cast<uint32_t*>( setWalletMaxNumPtr + 0x30 ) = ASM_COMPARE_WORD_IMMEDIATE( 0, values[2] );
 
         // Update the cache
-        gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( getRupeeMaxPtr ), 0x41 );
-        gc_wii::os_cache::ICInvalidateRange( reinterpret_cast<void*>( getRupeeMaxPtr ), 0x41 );
+        libtp::memory::clear_DC_IC_Cache( reinterpret_cast<void*>( getRupeeMaxPtr ), 0x41 );
 
-        gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( setWalletMaxNumPtr ), 0x31 );
-        gc_wii::os_cache::ICInvalidateRange( reinterpret_cast<void*>( setWalletMaxNumPtr ), 0x31 );
+        libtp::memory::clear_DC_IC_Cache( reinterpret_cast<void*>( setWalletMaxNumPtr ), 0x31 );
     }
 }     // namespace mod::user_patch
