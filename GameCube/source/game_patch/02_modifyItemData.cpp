@@ -446,603 +446,112 @@ namespace mod::game_patch
         d_item::ItemGetCheckFunc* itemGetCheckFuncPtr = &d_item::item_getcheck_func_ptr[0];
 
         // Forest Temple
-        d_item::ItemFunc onGetForestTempleSmallKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Forest_Temple;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
-        };
-        itemFuncPtr[items::Forest_Temple_Small_Key] = onGetForestTempleSmallKey;
-
-        d_item::ItemFunc onGetForestTempleDungeonMap = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Forest_Temple;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
-        };
-        itemFuncPtr[items::Forest_Temple_Dungeon_Map] = onGetForestTempleDungeonMap;
-
-        d_item::ItemFunc onGetForestTempleCompass = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Forest_Temple;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
-        };
-        itemFuncPtr[items::Forest_Temple_Compass] = onGetForestTempleCompass;
-
-        d_item::ItemFunc onGetForestTempleBigKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Forest_Temple;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
-        };
-        itemFuncPtr[items::Forest_Temple_Big_Key] = onGetForestTempleBigKey;
+        itemFuncPtr[items::Forest_Temple_Small_Key] = _02_forestSmallKeyItemFunc;
+        itemFuncPtr[items::Forest_Temple_Dungeon_Map] = _02_forestMapItemFunc;
+        itemFuncPtr[items::Forest_Temple_Compass] = _02_forestCompassItemFunc;
+        itemFuncPtr[items::Forest_Temple_Big_Key] = _02_forestBigKeyItemFunc;
 
         // Goron Mines
-        d_item::ItemFunc onGetGoronMinesSmallKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Goron_Mines;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
-        };
-        itemFuncPtr[items::Goron_Mines_Small_Key] = onGetGoronMinesSmallKey;
-
-        d_item::ItemFunc onGetGoronMinesDungeonMap = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Goron_Mines;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
-        };
-        itemFuncPtr[items::Goron_Mines_Dungeon_Map] = onGetGoronMinesDungeonMap;
-
-        d_item::ItemFunc onGetGoronMinesCompass = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Goron_Mines;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
-        };
-        itemFuncPtr[items::Goron_Mines_Compass] = onGetGoronMinesCompass;
-
-        d_item::ItemFunc onGetGoronMinesBigKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Goron_Mines;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
-            d_item::execItemGet( items::Key_Shard_3 );
-        };
-        itemFuncPtr[items::Big_Key_Goron_Mines] = onGetGoronMinesBigKey;
+        itemFuncPtr[items::Goron_Mines_Small_Key] = _02_minesSmallKeyItemFunc;
+        itemFuncPtr[items::Goron_Mines_Dungeon_Map] = _02_minesMapItemFunc;
+        itemFuncPtr[items::Goron_Mines_Compass] = _02_minesCompassItemFunc;
+        itemFuncPtr[items::Big_Key_Goron_Mines] = _02_minesBigKeyItemFunc;
 
         // Lakebed Temple
-        d_item::ItemFunc onGetLakebedTempleSmallKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Lakebed_Temple;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
-        };
-        itemFuncPtr[items::Lakebed_Temple_Small_Key] = onGetLakebedTempleSmallKey;
-
-        d_item::ItemFunc onGetLakebedTempleDungeonMap = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Lakebed_Temple;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
-        };
-        itemFuncPtr[items::Lakebed_Temple_Dungeon_Map] = onGetLakebedTempleDungeonMap;
-
-        d_item::ItemFunc onGetLakebedTempleCompass = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Lakebed_Temple;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
-        };
-        itemFuncPtr[items::Lakebed_Temple_Compass] = onGetLakebedTempleCompass;
-
-        d_item::ItemFunc onGetLakebedTempleBigKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Lakebed_Temple;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
-        };
-        itemFuncPtr[items::Lakebed_Temple_Big_Key] = onGetLakebedTempleBigKey;
+        itemFuncPtr[items::Lakebed_Temple_Small_Key] = _02_lakebedSmallKeyItemFunc;
+        itemFuncPtr[items::Lakebed_Temple_Dungeon_Map] = _02_lakebedMapItemFunc;
+        itemFuncPtr[items::Lakebed_Temple_Compass] = _02_lakebedCompassItemFunc;
+        itemFuncPtr[items::Lakebed_Temple_Big_Key] = _02_lakebedBigKeyItemFunc;
 
         // Arbiters Grounds
-        d_item::ItemFunc onGetArbitersGroundsSmallKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Arbiters_Grounds;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
-        };
-        itemFuncPtr[items::Arbiters_Grounds_Small_Key] = onGetArbitersGroundsSmallKey;
-
-        d_item::ItemFunc onGetArbitersGroundsDungeonMap = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Arbiters_Grounds;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
-        };
-        itemFuncPtr[items::Arbiters_Grounds_Dungeon_Map] = onGetArbitersGroundsDungeonMap;
-
-        d_item::ItemFunc onGetArbitersGroundsCompass = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Arbiters_Grounds;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
-        };
-        itemFuncPtr[items::Arbiters_Grounds_Compass] = onGetArbitersGroundsCompass;
-
-        d_item::ItemFunc onGetArbitersGroundsBigKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Arbiters_Grounds;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
-        };
-        itemFuncPtr[items::Arbiters_Grounds_Big_Key] = onGetArbitersGroundsBigKey;
+        itemFuncPtr[items::Arbiters_Grounds_Small_Key] = _02_arbitersSmallKeyItemFunc;
+        itemFuncPtr[items::Arbiters_Grounds_Dungeon_Map] = _02_arbitersMapItemFunc;
+        itemFuncPtr[items::Arbiters_Grounds_Compass] = _02_arbitersCompassItemFunc;
+        itemFuncPtr[items::Arbiters_Grounds_Big_Key] = _02_arbitersBigKeyItemFunc;
 
         // Snowpeak Ruins
-        d_item::ItemFunc onGetSnowpeakRuinsSmallKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Snowpeak_Ruins;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
-        };
-        itemFuncPtr[items::Snowpeak_Ruins_Small_Key] = onGetSnowpeakRuinsSmallKey;
-
-        d_item::ItemFunc onGetSnowpeakRuinsDungeonMap = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Snowpeak_Ruins;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
-        };
-        itemFuncPtr[items::Snowpeak_Ruins_Dungeon_Map] = onGetSnowpeakRuinsDungeonMap;
-
-        d_item::ItemFunc onGetSnowpeakRuinsCompass = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Snowpeak_Ruins;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
-        };
-        itemFuncPtr[items::Snowpeak_Ruins_Compass] = onGetSnowpeakRuinsCompass;
-
-        d_item::ItemFunc onGetSnowpeakRuinsBedroomKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Snowpeak_Ruins;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
-        };
-        itemFuncPtr[items::Bed_Key] = onGetSnowpeakRuinsBedroomKey;
+        itemFuncPtr[items::Snowpeak_Ruins_Small_Key] = _02_snowpeakSmallKeyItemFunc;
+        itemFuncPtr[items::Snowpeak_Ruins_Dungeon_Map] = _02_snowpeakMapItemFunc;
+        itemFuncPtr[items::Snowpeak_Ruins_Compass] = _02_snowpeakCompassItemFunc;
+        itemFuncPtr[items::Bed_Key] = _02_snowpeakBigKeyItemFunc;
 
         // Temple of Time
-        d_item::ItemFunc onGetTempleofTimeSmallKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Temple_of_Time;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
-        };
-        itemFuncPtr[items::Temple_of_Time_Small_Key] = onGetTempleofTimeSmallKey;
-
-        d_item::ItemFunc onGetTempleofTimeDungeonMap = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Temple_of_Time;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
-        };
-        itemFuncPtr[items::Temple_of_Time_Dungeon_Map] = onGetTempleofTimeDungeonMap;
-
-        d_item::ItemFunc onGetTempleofTimeCompass = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Temple_of_Time;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
-        };
-        itemFuncPtr[items::Temple_of_Time_Compass] = onGetTempleofTimeCompass;
-
-        d_item::ItemFunc onGetTempleofTimeBigKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Temple_of_Time;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
-        };
-        itemFuncPtr[items::Temple_of_Time_Big_Key] = onGetTempleofTimeBigKey;
+        itemFuncPtr[items::Temple_of_Time_Small_Key] = _02_totSmallKeyItemFunc;
+        itemFuncPtr[items::Temple_of_Time_Dungeon_Map] = _02_totMapItemFunc;
+        itemFuncPtr[items::Temple_of_Time_Compass] = _02_totCompassItemFunc;
+        itemFuncPtr[items::Temple_of_Time_Big_Key] = _02_totBigKeyItemFunc;
 
         // City in The Sky
-        d_item::ItemFunc onGetCityinTheSkySmallKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::City_in_the_Sky;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
-        };
-        itemFuncPtr[items::City_in_The_Sky_Small_Key] = onGetCityinTheSkySmallKey;
-
-        d_item::ItemFunc onGetCityinTheSkyDungeonMap = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::City_in_the_Sky;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
-        };
-        itemFuncPtr[items::City_in_The_Sky_Dungeon_Map] = onGetCityinTheSkyDungeonMap;
-
-        d_item::ItemFunc onGetCityinTheSkyCompass = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::City_in_the_Sky;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
-        };
-        itemFuncPtr[items::City_in_The_Sky_Compass] = onGetCityinTheSkyCompass;
-
-        d_item::ItemFunc onGetCityinTheSkyBigKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::City_in_the_Sky;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
-        };
-        itemFuncPtr[items::City_in_The_Sky_Big_Key] = onGetCityinTheSkyBigKey;
+        itemFuncPtr[items::City_in_The_Sky_Small_Key] = _02_citySmallKeyItemFunc;
+        itemFuncPtr[items::City_in_The_Sky_Dungeon_Map] = _02_cityMapItemFunc;
+        itemFuncPtr[items::City_in_The_Sky_Compass] = _02_cityCompassItemFunc;
+        itemFuncPtr[items::City_in_The_Sky_Big_Key] = _02_cityBigKeyItemFunc;
 
         // Palace of Twilight
-        d_item::ItemFunc onGetPalaceofTwilightSmallKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Palace_of_Twilight;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
-        };
-        itemFuncPtr[items::Palace_of_Twilight_Small_Key] = onGetPalaceofTwilightSmallKey;
-
-        d_item::ItemFunc onGetPalaceofTwilightDungeonMap = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Palace_of_Twilight;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
-        };
-        itemFuncPtr[items::Palace_of_Twilight_Dungeon_Map] = onGetPalaceofTwilightDungeonMap;
-
-        d_item::ItemFunc onGetPalaceofTwilightCompass = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Palace_of_Twilight;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
-        };
-        itemFuncPtr[items::Palace_of_Twilight_Compass] = onGetPalaceofTwilightCompass;
-
-        d_item::ItemFunc onGetPalaceofTwilightBigKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Palace_of_Twilight;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
-        };
-        itemFuncPtr[items::Palace_of_Twilight_Big_Key] = onGetPalaceofTwilightBigKey;
+        itemFuncPtr[items::Palace_of_Twilight_Small_Key] = _02_palaceSmallKeyItemFunc;
+        itemFuncPtr[items::Palace_of_Twilight_Dungeon_Map] = _02_palaceMapItemFunc;
+        itemFuncPtr[items::Palace_of_Twilight_Compass] = _02_palaceCompassItemFunc;
+        itemFuncPtr[items::Palace_of_Twilight_Big_Key] = _02_palaceBigKeyItemFunc;
 
         // Hyrule Castle
-        d_item::ItemFunc onGetHyruleCastleSmallKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Hyrule_Castle;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
-        };
-        itemFuncPtr[items::Hyrule_Castle_Small_Key] = onGetHyruleCastleSmallKey;
-
-        d_item::ItemFunc onGetHyruleCastleDungeonMap = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Hyrule_Castle;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Dungeon_Map );
-        };
-        itemFuncPtr[items::Hyrule_Castle_Dungeon_Map] = onGetHyruleCastleDungeonMap;
-
-        d_item::ItemFunc onGetHyruleCastleCompass = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Hyrule_Castle;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Compass );
-        };
-        itemFuncPtr[items::Hyrule_Castle_Compass] = onGetHyruleCastleCompass;
-
-        d_item::ItemFunc onGetHyruleCastleBigKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Hyrule_Castle;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Big_Key );
-        };
-        itemFuncPtr[items::Hyrule_Castle_Big_Key] = onGetHyruleCastleBigKey;
-
-        // Bulblin Camp
-        d_item::ItemFunc onGetBublinCampKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Gerudo_Desert;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
-        };
-        itemFuncPtr[items::Bulblin_Camp_Key] = onGetBublinCampKey;
-
-        // Faron Key
-        d_item::ItemFunc onGetFaronKey = []()
-        {
-            const stage::AreaNodesID nodeId = stage::AreaNodesID::Faron;
-            giveNodeDungeonItems( nodeId, items::NodeDungeonItemType::Small_Key );
-        };
-        itemFuncPtr[items::Small_Key_N_Faron_Gate] = onGetFaronKey;
-
-        // Shadow Crystal
-        d_item::ItemFunc onGetShadowCrystal = []()
-        {
-            events::setSaveFileEventFlag( 0xD04 );     // Can transform at will
-        };
-        itemFuncPtr[items::Shadow_Crystal] = onGetShadowCrystal;
-
-        // Charged Dominion Rod
-        d_item::ItemFunc onGetPoweredDominionRod = []()
-        { events::setSaveFileEventFlag( 0x2580 ); };     // Dominion Rod powered up.
-        itemFuncPtr[items::Dominion_Rod] = onGetPoweredDominionRod;
-
-        // Auru's Memo
-        d_item::ItemFunc onGetMemo = []()
-        {
-            d_save::setItem( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_item, 0x7, items::Aurus_Memo );
-        };     // Put Auru's Memo in slot 7 because it is unused
-        itemFuncPtr[items::Aurus_Memo] = onGetMemo;
-
-        // Ordon Pumpkin
-        d_item::ItemFunc onGetOrdonPumpkin = []()
-        {
-            events::setSaveFileEventFlag( 0x480 );      // Told Yeta about Pumpkin
-            events::setSaveFileEventFlag( 0x002 );      // Yeto put Pumpkin in soup
-            events::setSaveFileEventFlag( 0x1440 );     // SPR Lobby Door Unlocked
-            if ( d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Snowpeak_Ruins] ) ||
-                 d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Darkhammer] ) ||
-                 d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Blizzeta] ) )
-            {
-                d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x9] |= 0x4;
-            }
-            else
-            {
-                d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x14].temp_flags.memoryFlags[0x9] |= 0x4;
-            }
-        };
-        itemFuncPtr[items::Ordon_Pumpkin] = onGetOrdonPumpkin;
-
-        // Ordon Goat Cheese
-        d_item::ItemFunc onGetOrdonGoatCheese = []()
-        {
-            events::setSaveFileEventFlag( 0x120 );      // Told Yeta about Cheese
-            events::setSaveFileEventFlag( 0x01 );       // Yeto put cheese in soup
-            events::setSaveFileEventFlag( 0x1420 );     // SPR Lobby West Door Unlocked
-            if ( d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Snowpeak_Ruins] ) ||
-                 d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Darkhammer] ) ||
-                 d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Blizzeta] ) )
-            {
-                d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x9] |= 0x8;
-            }
-            else
-            {
-                d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x14].temp_flags.memoryFlags[0x9] |= 0x8;
-            }
-        };
-        itemFuncPtr[items::Ordon_Goat_Cheese] = onGetOrdonGoatCheese;
-
-        // Completed Skybook
-        d_item::ItemFunc onGetFilledSkybook = []()
-        {
-            events::setSaveFileEventFlag( 0x3B08 );     // Repaired Cannon at Lake
-        };
-        itemFuncPtr[items::Ancient_Sky_Book_Completed] = onGetFilledSkybook;
-
-        // Change rupee color for big wallet
-        d_item::ItemFunc onGetBigWallet = []()
-        {
-            d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentWallet = items::BIG_WALLET;
-            for ( uint16_t rupee = 0x1038; rupee <= 0x1044; rupee += 0x4 )
-            {
-                if ( libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow != nullptr )
-                {
-                    ( *reinterpret_cast<uint32_t*>(
-                        reinterpret_cast<uint32_t>(
-                            libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
-                        rupee ) ) = 0xff0000ff;
-                }
-            }
-        };
-        itemFuncPtr[items::Big_Wallet] = onGetBigWallet;
-
-        // Change rupee color for giant wallet
-        d_item::ItemFunc onGetGiantWallet = []()
-        {
-            d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentWallet = items::GIANT_WALLET;
-            for ( uint16_t rupee = 0x1038; rupee <= 0x1044; rupee += 0x4 )
-            {
-                if ( libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow != nullptr )
-                {
-                    ( *reinterpret_cast<uint32_t*>(
-                        reinterpret_cast<uint32_t>(
-                            libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
-                        rupee ) ) = 0xaf00ffff;
-                }
-            }
-        };
-        itemFuncPtr[items::Giant_Wallet] = onGetGiantWallet;
-
-        // Gate Keys
-        d_item::ItemFunc onGetGateKeys = []()
-        {
-            events::setSaveFileEventFlag( 0x840 );     // Started Zora Escort
-            events::setSaveFileEventFlag( 0x810 );     // Completed Zora Escort
-            if ( d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Kakariko_Village] ) ||
-                 d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Kakariko_Graveyard] ) ||
-                 d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Death_Mountain] ) ||
-                 d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Hidden_Village] ) )
-            {
-                d_save::onSwitch_dSv_memBit( &d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x69 );
-                d_save::onSwitch_dSv_memBit( &d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x65 );
-            }
-            else
-            {
-                d_save::onSwitch_dSv_memBit( &d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x3].temp_flags,
-                                             0x69 );
-                d_save::onSwitch_dSv_memBit( &d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x3].temp_flags,
-                                             0x65 );
-            }
-        };
-        itemFuncPtr[items::Gate_Keys] = onGetGateKeys;
-
-        d_item::ItemFunc onCollectHeartContainer = []()
-        {
-            d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.maxHealth += 5;
-            d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentHealth =
-                d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.maxHealth;
-        };
-        itemFuncPtr[items::Heart_Container] = onCollectHeartContainer;
+        itemFuncPtr[items::Hyrule_Castle_Small_Key] = _02_hyruleSmallKeyItemFunc;
+        itemFuncPtr[items::Hyrule_Castle_Dungeon_Map] = _02_hyruleMapItemFunc;
+        itemFuncPtr[items::Hyrule_Castle_Compass] = _02_hyruleCompassItemFunc;
+        itemFuncPtr[items::Hyrule_Castle_Big_Key] = _02_hyruleBigKeyItemFunc;
 
         // Fused Shadows/Mirror Shards
-        d_item::ItemFunc onGetFusedShadow1 = []()
-        {
-            d_save::onCollectCrystal( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\0' );
-        };     // Give player first fused shadow.
-        itemFuncPtr[items::Fused_Shadow_1] = onGetFusedShadow1;
-        d_item::ItemFunc onGetFusedShadow2 = []()
-        {
-            d_save::onCollectCrystal( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x01' );
-        };     // Give player second fused shadow.
-        itemFuncPtr[items::Fused_Shadow_2] = onGetFusedShadow2;
-        d_item::ItemFunc onGetFusedShadow3 = []()
-        {
-            d_save::onCollectCrystal( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x02' );
-            if ( randoIsEnabled( randomizer ) )
-            {
-                // If the player has the castle requirement set to Fused Shadows.
-                if ( randomizer->m_Seed->m_Header->castleRequirements == 1 )
-                {
-                    libtp::tp::d_save::onSwitch_dSv_memBit(
-                        &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[9].temp_flags,
-                        0x0F );
-                    events::setSaveFileEventFlag( 0x4208 );
-                }
-                // If the player has the palace requirement set to Fused Shadows.
-                if ( randomizer->m_Seed->m_Header->palaceRequirements == 1 )
-                {
-                    events::setSaveFileEventFlag( 0x2B08 );
-                }
-            }
-        };     // Give player third fused shadow.
-        itemFuncPtr[items::Fused_Shadow_3] = onGetFusedShadow3;
+        itemFuncPtr[items::Fused_Shadow_1] = _02_firstFusedShadowItemFunc;
+        itemFuncPtr[items::Fused_Shadow_2] = _02_secondFusedShadowItemFunc;
+        itemFuncPtr[items::Fused_Shadow_3] = _02_thirdFusedShadowItemFunc;
+        itemFuncPtr[items::Mirror_Piece_2] = _02_secondMirrorShardItemFunc;
+        itemFuncPtr[items::Mirror_Piece_3] = _02_thirdMirrorShardItemFunc;
+        itemFuncPtr[items::Mirror_Piece_4] = _02_fourthMirrorShardItemFunc;
 
-        d_item::ItemFunc onGetMirrorShard2 = []()
-        {
-            d_save::onCollectMirror( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x01' );
-        };     // Give player second mirror shard.
-        itemFuncPtr[items::Mirror_Piece_2] = onGetMirrorShard2;
-        d_item::ItemFunc onGetMirrorShard3 = []()
-        {
-            d_save::onCollectMirror( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x02' );
-        };     // Give player third mirror shard.
-        itemFuncPtr[items::Mirror_Piece_3] = onGetMirrorShard3;
-        d_item::ItemFunc onGetMirrorShard4 = []()
-        {
-            d_save::onCollectMirror( &d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect, '\x03' );
-            if ( randoIsEnabled( randomizer ) )
-            {
-                // If the player has the castle requirement set to Mirror Shards.
-                if ( randomizer->m_Seed->m_Header->castleRequirements == 2 )
-                {
-                    libtp::tp::d_save::onSwitch_dSv_memBit(
-                        &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[9].temp_flags,
-                        0x0F );
-                    events::setSaveFileEventFlag( 0x4208 );
-                }
-                // If the player has the palace requirement set to Mirror Shards.
-                if ( randomizer->m_Seed->m_Header->palaceRequirements == 2 )
-                {
-                    events::setSaveFileEventFlag( 0x2B08 );
-                }
-            }
-        };     // Give player fourth mirror shard.
-        itemFuncPtr[items::Mirror_Piece_4] = onGetMirrorShard4;
-
-        // Ending Blow
-        d_item::ItemFunc onGetEndingBlow = []() { events::setSaveFileEventFlag( 0x2904 ); };     // Learned Ending Blow.
-        itemFuncPtr[items::Ending_Blow] = onGetEndingBlow;
-
-        // Shield Attack
-        d_item::ItemFunc onGetShieldAttack = []() { events::setSaveFileEventFlag( 0x2908 ); };     // Learned Shield Attack.
-        itemFuncPtr[items::Shield_Attack] = onGetShieldAttack;
-
-        // Back Slice
-        d_item::ItemFunc onGetBackSlice = []() { events::setSaveFileEventFlag( 0x2902 ); };     // Learned Back Slice.
-        itemFuncPtr[items::Back_Slice] = onGetBackSlice;
-
-        // Helm Splitter
-        d_item::ItemFunc onGetHelmSplitter = []() { events::setSaveFileEventFlag( 0x2901 ); };     // Learned Helm Splitter.
-        itemFuncPtr[items::Helm_Splitter] = onGetHelmSplitter;
-
-        // Mortal Draw
-        d_item::ItemFunc onGetMortalDraw = []() { events::setSaveFileEventFlag( 0x2A80 ); };     // Learned Mortal Draw.
-        itemFuncPtr[items::Mortal_Draw] = onGetMortalDraw;
-
-        // Jump Strike
-        d_item::ItemFunc onGetJumpStrike = []() { events::setSaveFileEventFlag( 0x2A40 ); };     // Learned Jump Strike.
-        itemFuncPtr[items::Jump_Strike] = onGetJumpStrike;
-
-        // Great Spin
-        d_item::ItemFunc onGetGreatSpin = []() { events::setSaveFileEventFlag( 0x2A20 ); };     // Learned Great Spin.
-        itemFuncPtr[items::Great_Spin] = onGetGreatSpin;
-
-        // Lanayru Vessel of Light
-        d_item::ItemFunc onGetLanayruVessel = []()
-        {
-            // Set the flag for lanayru twilight to be cleared.
-            libtp::tp::d_save::onLightDropGetFlag(
-                &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.light_drop,
-                '\x02' );
-            events::setSaveFileEventFlag( 0x1E80 );     // Enable Malo Mart Donation
-        };
-        itemFuncPtr[items::Vessel_Of_Light_Lanayru] = onGetLanayruVessel;
-
-        d_item::ItemFunc onGetFoolishItem = []() { mod::isFoolishTrapQueued = true; };
-        itemFuncPtr[items::Foolish_Item] = onGetFoolishItem;
+        // Other Items
+        itemFuncPtr[items::Bulblin_Camp_Key] = _02_campSmallKeyItemFunc;
+        itemFuncPtr[items::Small_Key_N_Faron_Gate] = _02_faronSmallKeyItemFunc;
+        itemFuncPtr[items::Shadow_Crystal] = _02_shadowCrystalItemFunc;
+        itemFuncPtr[items::Dominion_Rod] = _02_poweredDominionRodItemFunc;
+        itemFuncPtr[items::Aurus_Memo] = _02_auruMemoItemFunc;
+        itemFuncPtr[items::Ordon_Pumpkin] = _02_ordonPumpkinItemFunc;
+        itemFuncPtr[items::Ordon_Goat_Cheese] = _02_ordonGoatCheeseItemFunc;
+        itemFuncPtr[items::Ancient_Sky_Book_Completed] = _02_filledSkybookItemFunc;
+        itemFuncPtr[items::Big_Wallet] = _02_bigWalletItemFunc;
+        itemFuncPtr[items::Giant_Wallet] = _02_giantWalletItemFunc;
+        itemFuncPtr[items::Gate_Keys] = _02_gateKeysItemFunc;
+        itemFuncPtr[items::Heart_Container] = _02_heartContainerItemFunc;
+        itemFuncPtr[items::Ending_Blow] = _02_endingBlowItemFunc;
+        itemFuncPtr[items::Shield_Attack] = _02_shieldAttackItemFunc;
+        itemFuncPtr[items::Back_Slice] = _02_backSliceItemFunc;
+        itemFuncPtr[items::Helm_Splitter] = _02_helmSplitterItemFunc;
+        itemFuncPtr[items::Mortal_Draw] = _02_mortalDrawItemFunc;
+        itemFuncPtr[items::Jump_Strike] = _02_jumpStrikeItemFunc;
+        itemFuncPtr[items::Great_Spin] = _02_greatSpinItemFunc;
+        itemFuncPtr[items::Vessel_Of_Light_Lanayru] = _02_lanayruVesselItemFunc;
+        itemFuncPtr[items::Foolish_Item] = _02_foolishItemFunc;
 
         // Some items need a valid getCheckFunc definition.
-        d_item::ItemGetCheckFunc item_getcheck_func_first_character = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Ancient_Sky_Book_First_Character ); };
-        itemGetCheckFuncPtr[items::Ancient_Sky_Book_First_Character] = item_getcheck_func_first_character;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_second_character = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Ancient_Sky_Book_Second_Character ); };
-        itemGetCheckFuncPtr[items::Ancient_Sky_Book_Second_Character] = item_getcheck_func_second_character;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_third_character = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Ancient_Sky_Book_Third_Character ); };
-        itemGetCheckFuncPtr[items::Ancient_Sky_Book_Third_Character] = item_getcheck_func_third_character;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_fourth_character = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Ancient_Sky_Book_Fourth_Character ); };
-        itemGetCheckFuncPtr[items::Ancient_Sky_Book_Fourth_Character] = item_getcheck_func_fourth_character;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_fifth_character = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Ancient_Sky_Book_Fifth_Character ); };
-        itemGetCheckFuncPtr[items::Ancient_Sky_Book_Fifth_Character] = item_getcheck_func_fifth_character;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_big_wallet = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Big_Wallet ); };
-        itemGetCheckFuncPtr[items::Big_Wallet] = item_getcheck_func_big_wallet;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_giant_wallet = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Giant_Wallet ); };
-        itemGetCheckFuncPtr[items::Giant_Wallet] = item_getcheck_func_giant_wallet;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_first_fused_shadow = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Fused_Shadow_1 ); };
-        itemGetCheckFuncPtr[items::Fused_Shadow_1] = item_getcheck_func_first_fused_shadow;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_second_fused_shadow = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Fused_Shadow_2 ); };
-        itemGetCheckFuncPtr[items::Fused_Shadow_2] = item_getcheck_func_second_fused_shadow;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_third_fused_shadow = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Fused_Shadow_3 ); };
-        itemGetCheckFuncPtr[items::Fused_Shadow_3] = item_getcheck_func_third_fused_shadow;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_second_mirror_shard = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Mirror_Piece_2 ); };
-        itemGetCheckFuncPtr[items::Mirror_Piece_2] = item_getcheck_func_second_mirror_shard;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_third_mirror_shard = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Mirror_Piece_3 ); };
-        itemGetCheckFuncPtr[items::Mirror_Piece_3] = item_getcheck_func_third_mirror_shard;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_fourth_mirror_shard = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Mirror_Piece_4 ); };
-        itemGetCheckFuncPtr[items::Mirror_Piece_4] = item_getcheck_func_fourth_mirror_shard;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_shadow_crystal = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Shadow_Crystal ); };
-        itemGetCheckFuncPtr[items::Shadow_Crystal] = item_getcheck_func_shadow_crystal;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_ending_blow = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Ending_Blow ); };
-        itemGetCheckFuncPtr[items::Ending_Blow] = item_getcheck_func_ending_blow;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_shield_attack = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Shield_Attack ); };
-        itemGetCheckFuncPtr[items::Shield_Attack] = item_getcheck_func_shield_attack;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_back_slice = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Back_Slice ); };
-        itemGetCheckFuncPtr[items::Back_Slice] = item_getcheck_func_back_slice;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_helm_splitter = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Helm_Splitter ); };
-        itemGetCheckFuncPtr[items::Helm_Splitter] = item_getcheck_func_helm_splitter;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_mortal_draw = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Mortal_Draw ); };
-        itemGetCheckFuncPtr[items::Mortal_Draw] = item_getcheck_func_mortal_draw;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_jump_strike = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Jump_Strike ); };
-        itemGetCheckFuncPtr[items::Jump_Strike] = item_getcheck_func_jump_strike;
-
-        d_item::ItemGetCheckFunc item_getcheck_func_bulblin_camp_key = []()
-        { return libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( items::Bulblin_Camp_Key ); };
-        itemGetCheckFuncPtr[items::Bulblin_Camp_Key] = item_getcheck_func_bulblin_camp_key;
+        itemGetCheckFuncPtr[items::Ancient_Sky_Book_First_Character] = _02_firstSkybookItemGetCheck;
+        itemGetCheckFuncPtr[items::Ancient_Sky_Book_Second_Character] = _02_secondSkybookItemGetCheck;
+        itemGetCheckFuncPtr[items::Ancient_Sky_Book_Third_Character] = _02_thirdSkybookItemGetCheck;
+        itemGetCheckFuncPtr[items::Ancient_Sky_Book_Fourth_Character] = _02_fourthSkybookItemGetCheck;
+        itemGetCheckFuncPtr[items::Ancient_Sky_Book_Fifth_Character] = _02_fifthSkybookItemGetCheck;
+        itemGetCheckFuncPtr[items::Big_Wallet] = _02_bigWalletItemGetCheck;
+        itemGetCheckFuncPtr[items::Giant_Wallet] = _02_giantWalletItemGetCheck;
+        itemGetCheckFuncPtr[items::Fused_Shadow_1] = _02_firstFusedShadowItemGetCheck;
+        itemGetCheckFuncPtr[items::Fused_Shadow_2] = _02_secondFusedShadowItemGetCheck;
+        itemGetCheckFuncPtr[items::Fused_Shadow_3] = _02_thirdFusedShadowItemGetCheck;
+        itemGetCheckFuncPtr[items::Mirror_Piece_2] = _02_secondMirrorShardItemGetCheck;
+        itemGetCheckFuncPtr[items::Mirror_Piece_3] = _02_thirdMirrorShardItemGetCheck;
+        itemGetCheckFuncPtr[items::Mirror_Piece_4] = _02_fourthMirrorShardItemGetCheck;
+        itemGetCheckFuncPtr[items::Shadow_Crystal] = _02_shadowCrystalItemGetCheck;
+        itemGetCheckFuncPtr[items::Ending_Blow] = _02_endingBlowItemGetCheck;
+        itemGetCheckFuncPtr[items::Shield_Attack] = _02_shieldAttackItemGetCheck;
+        itemGetCheckFuncPtr[items::Back_Slice] = _02_backSliceItemGetCheck;
+        itemGetCheckFuncPtr[items::Helm_Splitter] = _02_helmSplitterItemGetCheck;
+        itemGetCheckFuncPtr[items::Mortal_Draw] = _02_mortalDrawItemGetCheck;
+        itemGetCheckFuncPtr[items::Jump_Strike] = _02_jumpStrikeItemGetCheck;
+        itemGetCheckFuncPtr[items::Bulblin_Camp_Key] = _02_campSmallKeyItemGetCheck;
     }
     void _02_modifyItemData()
     {
@@ -1076,5 +585,578 @@ namespace mod::game_patch
         shopItemData[shopID].wBrkResIdx = itemResourcePtr[shopModelItemID].brkResIdx;
         shopItemData[shopID].wBtpResIdx = itemResourcePtr[shopModelItemID].btpResIdx;
         shopItemData[shopID].tevFrm = itemResourcePtr[shopModelItemID].tevFrm;
+    }
+
+    void _02_forestSmallKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Forest_Temple;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Small_Key );
+    }
+
+    void _02_forestMapItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Forest_Temple;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Dungeon_Map );
+    }
+
+    void _02_forestCompassItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Forest_Temple;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Compass );
+    }
+
+    void _02_forestBigKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Forest_Temple;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Big_Key );
+    }
+
+    void _02_minesSmallKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Goron_Mines;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Small_Key );
+    }
+
+    void _02_minesMapItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Goron_Mines;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Dungeon_Map );
+    }
+
+    void _02_minesCompassItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Goron_Mines;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Compass );
+    }
+
+    void _02_minesBigKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Goron_Mines;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Big_Key );
+        libtp::tp::d_item::execItemGet( libtp::data::items::Key_Shard_3 );
+    }
+
+    void _02_lakebedSmallKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Lakebed_Temple;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Small_Key );
+    }
+
+    void _02_lakebedMapItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Lakebed_Temple;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Dungeon_Map );
+    }
+
+    void _02_lakebedCompassItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Lakebed_Temple;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Compass );
+    }
+
+    void _02_lakebedBigKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Lakebed_Temple;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Big_Key );
+    }
+
+    void _02_arbitersSmallKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Arbiters_Grounds;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Small_Key );
+    }
+
+    void _02_arbitersMapItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Arbiters_Grounds;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Dungeon_Map );
+    }
+
+    void _02_arbitersCompassItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Arbiters_Grounds;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Compass );
+    }
+
+    void _02_arbitersBigKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Arbiters_Grounds;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Big_Key );
+    }
+
+    void _02_snowpeakSmallKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Snowpeak_Ruins;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Small_Key );
+    }
+
+    void _02_snowpeakMapItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Snowpeak_Ruins;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Dungeon_Map );
+    }
+
+    void _02_snowpeakCompassItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Snowpeak_Ruins;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Compass );
+    }
+
+    void _02_snowpeakBigKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Snowpeak_Ruins;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Big_Key );
+    }
+
+    void _02_totSmallKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Temple_of_Time;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Small_Key );
+    }
+
+    void _02_totMapItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Temple_of_Time;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Dungeon_Map );
+    }
+
+    void _02_totCompassItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Temple_of_Time;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Compass );
+    }
+
+    void _02_totBigKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Temple_of_Time;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Big_Key );
+    }
+
+    void _02_citySmallKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::City_in_the_Sky;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Small_Key );
+    }
+
+    void _02_cityMapItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::City_in_the_Sky;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Dungeon_Map );
+    }
+
+    void _02_cityCompassItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::City_in_the_Sky;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Compass );
+    }
+
+    void _02_cityBigKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::City_in_the_Sky;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Big_Key );
+    }
+
+    void _02_palaceSmallKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Palace_of_Twilight;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Small_Key );
+    }
+
+    void _02_palaceMapItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Palace_of_Twilight;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Dungeon_Map );
+    }
+
+    void _02_palaceCompassItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Palace_of_Twilight;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Compass );
+    }
+
+    void _02_palaceBigKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Palace_of_Twilight;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Big_Key );
+    }
+
+    void _02_hyruleSmallKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Hyrule_Castle;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Small_Key );
+    }
+
+    void _02_hyruleMapItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Hyrule_Castle;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Dungeon_Map );
+    }
+
+    void _02_hyruleCompassItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Hyrule_Castle;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Compass );
+    }
+
+    void _02_hyruleBigKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Hyrule_Castle;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Big_Key );
+    }
+
+    void _02_campSmallKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Gerudo_Desert;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Small_Key );
+    }
+
+    void _02_faronSmallKeyItemFunc()
+    {
+        const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Faron;
+        giveNodeDungeonItems( nodeId, libtp::data::items::NodeDungeonItemType::Small_Key );
+    }
+
+    void _02_shadowCrystalItemFunc()
+    {
+        events::setSaveFileEventFlag( 0xD04 );     // Can transform at will
+    }
+
+    void _02_poweredDominionRodItemFunc() { events::setSaveFileEventFlag( 0x2580 ); }     // Dominion Rod powered up.
+
+    void _02_auruMemoItemFunc()
+    {
+        libtp::tp::d_save::setItem( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_item,
+                                    0x7,
+                                    libtp::data::items::Aurus_Memo );
+    }     // Put Auru's Memo in slot 7 because it is unused
+
+    void _02_ordonPumpkinItemFunc()
+    {
+        events::setSaveFileEventFlag( 0x480 );      // Told Yeta about Pumpkin
+        events::setSaveFileEventFlag( 0x002 );      // Yeto put Pumpkin in soup
+        events::setSaveFileEventFlag( 0x1440 );     // SPR Lobby Door Unlocked
+        if ( libtp::tp::d_a_alink::checkStageName(
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) ||
+             libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Darkhammer] ) ||
+             libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Blizzeta] ) )
+        {
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x9] |= 0x4;
+        }
+        else
+        {
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x14].temp_flags.memoryFlags[0x9] |= 0x4;
+        }
+    }
+
+    void _02_ordonGoatCheeseItemFunc()
+    {
+        events::setSaveFileEventFlag( 0x120 );      // Told Yeta about Cheese
+        events::setSaveFileEventFlag( 0x01 );       // Yeto put cheese in soup
+        events::setSaveFileEventFlag( 0x1420 );     // SPR Lobby West Door Unlocked
+        if ( libtp::tp::d_a_alink::checkStageName(
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) ||
+             libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Darkhammer] ) ||
+             libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Blizzeta] ) )
+        {
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x9] |= 0x8;
+        }
+        else
+        {
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x14].temp_flags.memoryFlags[0x9] |= 0x8;
+        }
+    }
+
+    void _02_filledSkybookItemFunc()
+    {
+        events::setSaveFileEventFlag( 0x3B08 );     // Repaired Cannon at Lake
+    }
+
+    void _02_bigWalletItemFunc()
+    {
+        libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentWallet =
+            libtp::data::items::BIG_WALLET;
+        for ( uint16_t rupee = 0x1038; rupee <= 0x1044; rupee += 0x4 )
+        {
+            if ( libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow != nullptr )
+            {
+                ( *reinterpret_cast<uint32_t*>(
+                    reinterpret_cast<uint32_t>(
+                        libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
+                    rupee ) ) = 0xff0000ff;
+            }
+        }
+    }
+
+    void _02_giantWalletItemFunc()
+    {
+        libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentWallet =
+            libtp::data::items::GIANT_WALLET;
+        for ( uint16_t rupee = 0x1038; rupee <= 0x1044; rupee += 0x4 )
+        {
+            if ( libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow != nullptr )
+            {
+                ( *reinterpret_cast<uint32_t*>(
+                    reinterpret_cast<uint32_t>(
+                        libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
+                    rupee ) ) = 0xaf00ffff;
+            }
+        }
+    }
+
+    void _02_gateKeysItemFunc()
+    {
+        events::setSaveFileEventFlag( 0x840 );     // Started Zora Escort
+        events::setSaveFileEventFlag( 0x810 );     // Completed Zora Escort
+        if ( libtp::tp::d_a_alink::checkStageName(
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Village] ) ||
+             libtp::tp::d_a_alink::checkStageName(
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Graveyard] ) ||
+             libtp::tp::d_a_alink::checkStageName(
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Death_Mountain] ) ||
+             libtp::tp::d_a_alink::checkStageName(
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Village] ) )
+        {
+            libtp::tp::d_save::onSwitch_dSv_memBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x69 );
+            libtp::tp::d_save::onSwitch_dSv_memBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x65 );
+        }
+        else
+        {
+            libtp::tp::d_save::onSwitch_dSv_memBit(
+                &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x3].temp_flags,
+                0x69 );
+            libtp::tp::d_save::onSwitch_dSv_memBit(
+                &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x3].temp_flags,
+                0x65 );
+        }
+    }
+
+    void _02_heartContainerItemFunc()
+    {
+        libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.maxHealth += 5;
+        libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentHealth =
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.maxHealth;
+    }
+
+    void _02_firstFusedShadowItemFunc()
+    {
+        libtp::tp::d_save::onCollectCrystal( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect,
+                                             '\0' );
+    }     // Give player first fused shadow.
+
+    void _02_secondFusedShadowItemFunc()
+    {
+        libtp::tp::d_save::onCollectCrystal( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect,
+                                             '\x01' );
+    }     // Give player second fused shadow.
+
+    void _02_thirdFusedShadowItemFunc()
+    {
+        libtp::tp::d_save::onCollectCrystal( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect,
+                                             '\x02' );
+        if ( randoIsEnabled( randomizer ) )
+        {
+            // If the player has the castle requirement set to Fused Shadows.
+            if ( randomizer->m_Seed->m_Header->castleRequirements == 1 )
+            {
+                libtp::tp::d_save::onSwitch_dSv_memBit(
+                    &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[9].temp_flags,
+                    0x0F );
+                events::setSaveFileEventFlag( 0x4208 );
+            }
+            // If the player has the palace requirement set to Fused Shadows.
+            if ( randomizer->m_Seed->m_Header->palaceRequirements == 1 )
+            {
+                events::setSaveFileEventFlag( 0x2B08 );
+            }
+        }
+    }     // Give player third fused shadow.
+
+    void _02_secondMirrorShardItemFunc()
+    {
+        libtp::tp::d_save::onCollectMirror( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect,
+                                            '\x01' );
+    }     // Give player second mirror shard.
+
+    void _02_thirdMirrorShardItemFunc()
+    {
+        libtp::tp::d_save::onCollectMirror( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect,
+                                            '\x02' );
+    }     // Give player third mirror shard.
+
+    void _02_fourthMirrorShardItemFunc()
+    {
+        libtp::tp::d_save::onCollectMirror( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect,
+                                            '\x03' );
+        if ( randoIsEnabled( randomizer ) )
+        {
+            // If the player has the castle requirement set to Mirror Shards.
+            if ( randomizer->m_Seed->m_Header->castleRequirements == 2 )
+            {
+                libtp::tp::d_save::onSwitch_dSv_memBit(
+                    &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[9].temp_flags,
+                    0x0F );
+                events::setSaveFileEventFlag( 0x4208 );
+            }
+            // If the player has the palace requirement set to Mirror Shards.
+            if ( randomizer->m_Seed->m_Header->palaceRequirements == 2 )
+            {
+                events::setSaveFileEventFlag( 0x2B08 );
+            }
+        }
+    }     // Give player fourth mirror shard.
+
+    void _02_endingBlowItemFunc() { events::setSaveFileEventFlag( 0x2904 ); }     // Learned Ending Blow.
+
+    void _02_shieldAttackItemFunc() { events::setSaveFileEventFlag( 0x2908 ); }     // Learned Shield Attack.
+
+    void _02_backSliceItemFunc() { events::setSaveFileEventFlag( 0x2902 ); }     // Learned Back Slice.
+
+    void _02_helmSplitterItemFunc() { events::setSaveFileEventFlag( 0x2901 ); }     // Learned Helm Splitter.
+
+    void _02_mortalDrawItemFunc() { events::setSaveFileEventFlag( 0x2A80 ); }     // Learned Mortal Draw.
+
+    void _02_jumpStrikeItemFunc() { events::setSaveFileEventFlag( 0x2A40 ); }     // Learned Jump Strike.
+
+    void _02_greatSpinItemFunc() { events::setSaveFileEventFlag( 0x2A20 ); }     // Learned Great Spin.
+
+    void _02_lanayruVesselItemFunc()
+    {
+        // Set the flag for lanayru twilight to be cleared.
+        libtp::tp::d_save::onLightDropGetFlag( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.light_drop,
+                                               '\x02' );
+        events::setSaveFileEventFlag( 0x1E80 );     // Enable Malo Mart Donation
+    }
+
+    void _02_foolishItemFunc() { mod::isFoolishTrapQueued = true; }
+
+    int32_t _02_firstSkybookItemGetCheck()
+    {
+        bool result =
+            libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Ancient_Sky_Book_First_Character );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_secondSkybookItemGetCheck()
+    {
+        bool result =
+            libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Ancient_Sky_Book_Second_Character );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_thirdSkybookItemGetCheck()
+    {
+        bool result =
+            libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Ancient_Sky_Book_Third_Character );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_fourthSkybookItemGetCheck()
+    {
+        bool result =
+            libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Ancient_Sky_Book_Fourth_Character );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_fifthSkybookItemGetCheck()
+    {
+        bool result =
+            libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Ancient_Sky_Book_Fifth_Character );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_bigWalletItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Big_Wallet );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_giantWalletItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Giant_Wallet );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_firstFusedShadowItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Fused_Shadow_1 );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_secondFusedShadowItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Fused_Shadow_2 );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_thirdFusedShadowItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Fused_Shadow_3 );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_secondMirrorShardItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Mirror_Piece_2 );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_thirdMirrorShardItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Mirror_Piece_3 );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_fourthMirrorShardItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Mirror_Piece_4 );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_shadowCrystalItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Shadow_Crystal );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_endingBlowItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Ending_Blow );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_shieldAttackItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Shield_Attack );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_backSliceItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Back_Slice );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_helmSplitterItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Helm_Splitter );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_mortalDrawItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Mortal_Draw );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_jumpStrikeItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Jump_Strike );
+        return static_cast<int32_t>( result );
+    }
+
+    int32_t _02_campSmallKeyItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Bulblin_Camp_Key );
+        return static_cast<int32_t>( result );
     }
 }     // namespace mod::game_patch
