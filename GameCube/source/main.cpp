@@ -8,39 +8,31 @@
 #include "Z2AudioLib/Z2AudioMgr.h"
 #include "data/items.h"
 #include "data/stages.h"
-#include "events.h"
 #include "game_patch/game_patch.h"
 #include "gc_wii/OSTime.h"
-#include "patch.h"
+#include "cxx.h"
+#include "memory.h"
 #include "rando/data.h"
 #include "rando/randomizer.h"
 #include "rando/seedlist.h"
 #include "tools.h"
 #include "tp/J2DPicture.h"
 #include "tp/JKRArchive.h"
-#include "tp/JKRDvdRipper.h"
 #include "tp/control.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_a_player.h"
 #include "tp/d_com_inf_game.h"
-#include "tp/d_item.h"
 #include "tp/d_kankyo.h"
-#include "tp/d_menu_ring.h"
-#include "tp/d_menu_window.h"
-#include "tp/d_meter2_info.h"
 #include "tp/d_msg_class.h"
-#include "tp/d_msg_flow.h"
-#include "tp/d_msg_object.h"
 #include "tp/d_save.h"
-#include "tp/d_stage.h"
 #include "tp/dzx.h"
-#include "tp/f_ap_game.h"
 #include "tp/f_op_actor_mng.h"
 #include "tp/f_op_scene_req.h"
 #include "tp/f_pc_node_req.h"
 #include "tp/m_do_controller_pad.h"
 #include "tp/resource.h"
-#include "tp/d_s_logo.h"
+#include "gc_wii/card.h"
+#include "gc_wii/OSModule.h"
 
 namespace mod
 {
@@ -61,36 +53,36 @@ namespace mod
     uint32_t nextVal = libtp::gc_wii::os_time::OSGetTick();
 
     // Function hook return trampolines
-    void ( *return_fapGm_Execute )( void ) = nullptr;
+    void KEEP_VAR(".bss") ( *return_fapGm_Execute )( void ) = nullptr;
     // DMC (REL) Hook
-    bool ( *return_do_Link )( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) = nullptr;
-    bool ( *return_do_unlink )( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) = nullptr;
+    bool KEEP_VAR(".bss") ( *return_do_Link )( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) = nullptr;
+    bool KEEP_VAR(".bss") ( *return_do_unlink )( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) = nullptr;
 
     // DZX trampolines
-    bool ( *return_actorInit )( void* mStatus_roomControl,
+    bool KEEP_VAR(".bss") ( *return_actorInit )( void* mStatus_roomControl,
                                 libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
                                 int32_t unk3,
                                 void* unk4 ) = nullptr;
 
-    bool ( *return_actorInit_always )( void* mStatus_roomControl,
+    bool KEEP_VAR(".bss") ( *return_actorInit_always )( void* mStatus_roomControl,
                                        libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
                                        int32_t unk3,
                                        void* unk4 ) = nullptr;
 
-    bool ( *return_actorCommonLayerInit )( void* mStatus_roomControl,
+    bool KEEP_VAR(".bss") ( *return_actorCommonLayerInit )( void* mStatus_roomControl,
                                            libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
                                            int32_t unk3,
                                            void* unk4 ) = nullptr;
 
-    int32_t ( *return_tgscInfoInit )( void* stageDt, void* i_data, int32_t entryNum, void* param_3 ) = nullptr;
+    int32_t KEEP_VAR(".bss") ( *return_tgscInfoInit )( void* stageDt, void* i_data, int32_t entryNum, void* param_3 ) = nullptr;
 
-    void ( *return_roomLoader )( void* data, void* stageDt, int roomNo ) = nullptr;
+    void KEEP_VAR(".bss") ( *return_roomLoader )( void* data, void* stageDt, int32_t roomNo ) = nullptr;
 
     // GetLayerNo trampoline
-    int32_t ( *return_getLayerNo_common_common )( const char* stageName, int32_t roomId, int32_t layerOverride ) = nullptr;
+    int32_t KEEP_VAR(".bss") ( *return_getLayerNo_common_common )( const char* stageName, int32_t roomId, int32_t layerOverride ) = nullptr;
 
     // Item creation functions.
-    int32_t ( *return_createItemForBoss )( const float pos[3],
+    int32_t KEEP_VAR(".bss") ( *return_createItemForBoss )( const float pos[3],
                                            int32_t item,
                                            int32_t roomNo,
                                            const int16_t rot[3],
@@ -99,7 +91,7 @@ namespace mod
                                            float unk7,
                                            int32_t parameters ) = nullptr;
 
-    int32_t ( *return_createItemForPresentDemo )( const float pos[3],
+    int32_t KEEP_VAR(".bss") ( *return_createItemForPresentDemo )( const float pos[3],
                                                   int32_t item,
                                                   uint8_t unk3,
                                                   int32_t unk4,
@@ -107,14 +99,14 @@ namespace mod
                                                   const float unk6[3],
                                                   const float unk7[3] ) = nullptr;
 
-    int32_t ( *return_createItemForTrBoxDemo )( const float pos[3],
+    int32_t KEEP_VAR(".bss") ( *return_createItemForTrBoxDemo )( const float pos[3],
                                                 int32_t item,
                                                 int32_t itemPickupFlag,
                                                 int32_t roomNo,
                                                 const int16_t rot[3],
                                                 const float scale[3] ) = nullptr;
 
-    int32_t ( *return_createItemForMidBoss )( const float pos[3],
+    int32_t KEEP_VAR(".bss") ( *return_createItemForMidBoss )( const float pos[3],
                                               int32_t item,
                                               int32_t roomNo,
                                               const int16_t rot[3],
@@ -123,56 +115,56 @@ namespace mod
                                               int32_t itemPickupFlag ) = nullptr;
 
     // Item Wheel trampolines
-    void ( *return_setLineUpItem )( libtp::tp::d_save::dSv_player_item_c* ) = nullptr;
-    void ( *return_dMenuRing__draw )( void* dMenuRing ) = nullptr;
+    void KEEP_VAR(".bss") ( *return_setLineUpItem )( libtp::tp::d_save::dSv_player_item_c* ) = nullptr;
+    void KEEP_VAR(".bss") ( *return_dMenuRing__draw )( void* dMenuRing ) = nullptr;
 
     // ItemGet functions.
-    int32_t ( *return_execItemGet )( uint8_t item ) = nullptr;
-    int32_t ( *return_checkItemGet )( uint8_t item, int32_t defaultValue ) = nullptr;
+    int32_t KEEP_VAR(".bss") ( *return_execItemGet )( uint8_t item ) = nullptr;
+    int32_t KEEP_VAR(".bss") ( *return_checkItemGet )( uint8_t item, int32_t defaultValue ) = nullptr;
 
     // Message functions
-    bool ( *return_setMessageCode_inSequence )( libtp::tp::control::TControl* control,
+    bool KEEP_VAR(".bss") ( *return_setMessageCode_inSequence )( libtp::tp::control::TControl* control,
                                                 const void* TProcessor,
                                                 uint16_t unk3,
                                                 uint16_t msgId ) = nullptr;
 
-    uint32_t ( *return_getFontCCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
-    uint32_t ( *return_getFontGCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
-    char ( *return_parseCharacter_1Byte )( const char** text ) = nullptr;
+    uint32_t KEEP_VAR(".bss") ( *return_getFontCCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
+    uint32_t KEEP_VAR(".bss") ( *return_getFontGCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
+    char KEEP_VAR(".bss") ( *return_parseCharacter_1Byte )( const char** text ) = nullptr;
 
     // Query/Event functions.
-    bool ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
-    bool ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
-    bool ( *return_query025 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
-    bool ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
-    int ( *return_query004 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
-    int ( *return_query037 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
-    uint32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
-    int ( *return_event003 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
-    int ( *return_event041 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
+    bool KEEP_VAR(".bss") ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    bool KEEP_VAR(".bss") ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    bool KEEP_VAR(".bss") ( *return_query025 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    bool KEEP_VAR(".bss") ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    int32_t KEEP_VAR(".bss") ( *return_query004 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    int32_t KEEP_VAR(".bss") ( *return_query037 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    uint32_t KEEP_VAR(".bss") ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
+    int32_t KEEP_VAR(".bss") ( *return_event003 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
+    int32_t KEEP_VAR(".bss") ( *return_event041 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
 
     // Save flag functions
-    bool ( *return_isDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int memBit ) = nullptr;
-    bool ( *return_chkEvtBit )( uint32_t flag ) = nullptr;
-    bool ( *return_isEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
-    void ( *return_onEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
-    bool ( *return_isSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag ) = nullptr;
-    void ( *return_onSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag ) = nullptr;
-    bool ( *return_checkTreasureRupeeReturn )( void* unk1, int32_t item ) = nullptr;
+    bool KEEP_VAR(".bss") ( *return_isDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit ) = nullptr;
+    bool KEEP_VAR(".bss") ( *return_chkEvtBit )( uint32_t flag ) = nullptr;
+    bool KEEP_VAR(".bss") ( *return_isEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
+    void KEEP_VAR(".bss") ( *return_onEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
+    bool KEEP_VAR(".bss") ( *return_isSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag ) = nullptr;
+    void KEEP_VAR(".bss") ( *return_onSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag ) = nullptr;
+    bool KEEP_VAR(".bss") ( *return_checkTreasureRupeeReturn )( void* unk1, int32_t item ) = nullptr;
 
     // Pause menu functions
-    void ( *return_collect_save_open_init )( uint8_t param_1 ) = nullptr;
+    void KEEP_VAR(".bss") ( *return_collect_save_open_init )( uint8_t param_1 ) = nullptr;
 
     // Link functions
-    bool ( *return_checkBootsMoveAnime )( libtp::tp::d_a_alink::daAlink* d_a_alink, int param_1 ) = nullptr;
-    bool ( *return_checkDamageAction )( libtp::tp::d_a_alink::daAlink* linkMapPtr ) = nullptr;
-    void ( *return_setGetItemFace )( libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID ) = nullptr;
+    bool KEEP_VAR(".bss") ( *return_checkBootsMoveAnime )( libtp::tp::d_a_alink::daAlink* d_a_alink, int32_t param_1 ) = nullptr;
+    bool KEEP_VAR(".bss") ( *return_checkDamageAction )( libtp::tp::d_a_alink::daAlink* linkMapPtr ) = nullptr;
+    void KEEP_VAR(".bss") ( *return_setGetItemFace )( libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID ) = nullptr;
 
     // Audio functions
-    void ( *return_loadSeWave )( void* Z2SceneMgr, uint32_t waveID ) = nullptr;
+    void KEEP_VAR(".bss") ( *return_loadSeWave )( void* Z2SceneMgr, uint32_t waveID ) = nullptr;
 
     // Title Screen functions
-    void* ( *return_dScnLogo_c_dt )( void* dScnLogo_c, int16_t bFreeThis ) = nullptr;
+    void* KEEP_VAR(".bss") ( *return_dScnLogo_c_dt )( void* dScnLogo_c, int16_t bFreeThis ) = nullptr;
 
     void main()
     {
@@ -181,112 +173,184 @@ namespace mod
         game_patch::_02_modifyItemData();
         game_patch::_03_increaseClimbSpeed();
         game_patch::_06_writeASMPatches();
-
-        // Display some info
-        console << "Welcome to TPR!\n"
-                << "(C) AECX, Lunar Soap, Zephiles\n\n"
-                << "Note:\n"
-                << "Please avoid [re]starting rando unnecessarily\n"
-                << "on ORIGINAL HARDWARE as it wears down your\n"
-                << "Memory Card!\n"
-                << "Press R + Z to close the console.\n"
-                << "Press X/Y to select a seed.\n\n";
-
-        // Generate our seedList
-        seedList = new rando::SeedList();
-
-        // Just hook functions for now
-        hookFunctions();
+        
+        // Call the boot rel
+        // The seedlist will be generated in the boot rel, so avoid mounting the memory card multiple times
+        constexpr int32_t chan = CARD_SLOT_A;
+        if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
+        {
+            callRelPrologMounted(chan, 0x1002);
+            libtp::gc_wii::card::CARDUnmount( chan );
+        }
     }
-
-    void hookFunctions()
+    
+    // Required for keeping certain unused functions/variables from being removed
+    extern "C"
     {
-        using namespace libtp;
-        using namespace libtp::tp::d_stage;
-        using namespace libtp::tp::d_com_inf_game;
+        void KEEP_FUNC _sector_anchor(){}
+        uint8_t KEEP_VAR(".bss") _sector_anchor_var = 0;
+    }
+    
+    // Will be moved to libtp_rel later
+    bool callRelPrologMounted(int32_t chan, uint32_t rel_id)
+    {
+        using namespace libtp::gc_wii::card;
+        using namespace libtp::gc_wii::os_module;
+        int32_t result;
+        
+        // All of the RELs should be in the main save file, which always uses an internal name of "Custom REL File"
+        CARDFileInfo fileInfo;
+        result = CARDOpen(chan, "Custom REL File", &fileInfo);
+        if (result != CARD_RESULT_READY)
+        {
+            return false;
+        }
+        
+        // Allocate bytes to hold the area of the file that contains the size
+        uint8_t *fileData = new uint8_t[CARD_READ_SIZE];
+        
+        // Get the data from the area that holds the size
+        result = CARDRead(&fileInfo, fileData, CARD_READ_SIZE, 0x2000);
+        if (result != CARD_RESULT_READY)
+        {
+            delete[] fileData;
+            CARDClose(&fileInfo);
+            return false;
+        }
+        
+        // Loop through the REL entries until the desired one is found
+        RelEntry *entry = reinterpret_cast<RelEntry *>(&fileData[0x44]);
+        bool foundDesiredRel = false;
+        
+        for (uint32_t i = 0; i < MAX_REL_ENTRIES; i++)
+        {
+            // If any of the fields are 0, then there are no more entries
+            if ((entry->rel_id == 0) || 
+                (entry->rel_size == 0) || 
+                (entry->offset == 0))
+            {
+                break;
+            }
+            
+            if (entry->rel_id == rel_id)
+            {
+                // Found the desired REL
+                foundDesiredRel = true;
+                break;
+            }
+            
+            entry++;
+        }
+        
+        if (!foundDesiredRel)
+        {
+            delete[] fileData;
+            CARDClose(&fileInfo);
+            return false;
+        }
+        
+        // Get the variables from the entry so that fileData can be freed
+        uint32_t fileSize = entry->rel_size;
+        uint32_t fileOffset = entry->offset;
+        delete[] fileData;
+        
+        // Allocate memory to hold the REL file, and clear it's cache since assembly will run from it
+        // Allocate the memory to the back of the heap to avoid fragmentation
+        // Buffers that CARDRead uses must be aligned to 0x20 bytes
+        fileData = new (-0x20) uint8_t[fileSize];
+        libtp::memory::clear_DC_IC_Cache(fileData, fileSize);
+        
+        // Since we can only read in and at increments of CARD_READ_SIZE do this to calculate the region we require
+        int32_t adjustedOffset = ( fileOffset / CARD_READ_SIZE ) * CARD_READ_SIZE;
+        int32_t adjustedLength = ( 1 + ( ( fileOffset - adjustedOffset + fileSize - 1 ) / CARD_READ_SIZE ) ) * CARD_READ_SIZE;
+        
+        // Buffer might not be adjusted to the new length so create a temporary data buffer
+        uint8_t* data = new uint8_t[adjustedLength];
+        
+        // Read the REL file from the memory card
+        result = CARDRead(&fileInfo, data, adjustedLength, adjustedOffset);
+        
+        // Close the file, as it's no longer needed
+        CARDClose(&fileInfo);
+        
+        if (result != CARD_RESULT_READY)
+        {
+            delete[] fileData;
+            delete[] data;
+            return false;
+        }
+        
+        // Copy data to the user's buffer
+        memcpy( fileData, data + ( fileOffset - adjustedOffset ), fileSize );
+        
+        // Delete the temporary data buffer, as it's no longer needed
+        delete[] data;
+        
+        // Failsafe: Be 100% sure the REL file loaded is the correct one
+        OSModuleInfo *relFile = reinterpret_cast<OSModuleInfo *>(fileData);
+        if (relFile->id != rel_id)
+        {
+            delete[] relFile;
+            return false;
+        }
+        
+        // Get the REL's BSS size and allocate memory for it
+        uint32_t bssSize = relFile->bssSize;
+        
+        // If bssSize is 0, then use an arbitrary size
+        if (bssSize == 0)
+        {
+            bssSize = 0x4;
+        }
+        
+        // Allocate the memory to the back of the heap to avoid fragmentation
+        uint8_t *bssArea = new (-(relFile->bssAlignment)) uint8_t[bssSize];
+        
+        // Link the REL file
+        bool relFileIsLinked = OSLink(relFile, bssArea);
+        if (!relFileIsLinked)
+        {
+            // Try to unlink to be safe
+            OSUnlink(relFile);
+            
+            delete[] bssArea;
+            delete[] relFile;
+            return false;
+        }
+        
+        // Call the REL's prolog functon
+        reinterpret_cast<void(*)()>(relFile->prologFuncOffset)();
+        
+        // We are done with the REL file, so call it's epilog function to perform any necessary exit code
+        reinterpret_cast<void(*)()>(relFile->epilogFuncOffset)();
+        
+        // All REL functions are done, so the file can be unlinked
+        OSUnlink(relFile);
+        
+        // Clear the cache of the memory used by the REL file since assembly ran from it
+        libtp::memory::clear_DC_IC_Cache(relFile, fileSize);
+        
+        // Cleanup
+        delete[] bssArea;
+        delete[] relFile;
+        
+        return true;
+    }
+    
+    // Will be moved to libtp_rel later
+    bool callRelProlog(int32_t chan, uint32_t rel_id)
+    {
+        using namespace libtp::gc_wii::card;
+        bool result = false;
 
-        // Hook functions
-        return_fapGm_Execute = patch::hookFunction( libtp::tp::f_ap_game::fapGm_Execute, mod::handle_fapGm_Execute );
-
-        // DMC
-        return_do_Link = patch::hookFunction( libtp::tp::dynamic_link::do_link, mod::handle_do_link );
-        return_do_unlink = patch::hookFunction( libtp::tp::dynamic_link::do_unlink, mod::handle_do_unlink );
-
-        // DZX
-        return_actorInit = patch::hookFunction( actorInit, mod::handle_actorInit );
-        return_actorInit_always = patch::hookFunction( actorInit_always, mod::handle_actorInit_always );
-        return_actorCommonLayerInit = patch::hookFunction( actorCommonLayerInit, mod::handle_actorCommonLayerInit );
-        return_tgscInfoInit = patch::hookFunction( tgscInfoInit, mod::handle_tgscInfoInit );
-        return_roomLoader = patch::hookFunction( libtp::tp::d_stage::roomLoader, mod::handle_roomLoader );
-
-        // Custom States
-        return_getLayerNo_common_common = patch::hookFunction( getLayerNo_common_common, mod::handle_getLayerNo_common_common );
-
-        // Item Creation Functions
-        return_createItemForBoss =
-            patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForBoss, mod::handle_createItemForBoss );
-        return_createItemForMidBoss =
-            patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForMidBoss, mod::handle_createItemForMidBoss );
-        return_createItemForPresentDemo =
-            patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForPresentDemo, mod::handle_createItemForPresentDemo );
-        return_createItemForTrBoxDemo =
-            patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForTrBoxDemo, mod::handle_createItemForTrBoxDemo );
-
-        // Item Wheel functions
-        return_setLineUpItem = patch::hookFunction( tp::d_save::setLineUpItem, mod::handle_setLineUpItem );
-        return_dMenuRing__draw = patch::hookFunction( libtp::tp::d_menu_ring::dMenuRing__draw, mod::handle_dMenuRing__draw );
-
-        // ItemGet functions
-        return_execItemGet = patch::hookFunction( libtp::tp::d_item::execItemGet, mod::handle_execItemGet );
-        return_checkItemGet = patch::hookFunction( libtp::tp::d_item::checkItemGet, mod::handle_checkItemGet );
-
-        // Message Functions
-        return_setMessageCode_inSequence =
-            patch::hookFunction( libtp::tp::control::setMessageCode_inSequence, mod::handle_setMessageCode_inSequence );
-        return_getFontCCColorTable =
-            patch::hookFunction( tp::d_msg_class::getFontCCColorTable, mod::handle_getFontCCColorTable );
-        return_getFontGCColorTable =
-            patch::hookFunction( tp::d_msg_class::getFontGCColorTable, mod::handle_getFontGCColorTable );
-        return_parseCharacter_1Byte =
-            patch::hookFunction( tp::resource::parseCharacter_1Byte, mod::handle_parseCharacter_1Byte );
-
-        // Query/EventFunctions
-        return_query022 = patch::hookFunction( libtp::tp::d_msg_flow::query022, mod::handle_query022 );
-        return_query023 = patch::hookFunction( libtp::tp::d_msg_flow::query023, mod::handle_query023 );
-        return_query025 = patch::hookFunction( libtp::tp::d_msg_flow::query025, mod::handle_query025 );
-        return_query004 = patch::hookFunction( libtp::tp::d_msg_flow::query004, mod::handle_query004 );
-        return_query037 = patch::hookFunction( libtp::tp::d_msg_flow::query037, mod::handle_query037 );
-        return_query042 = patch::hookFunction( libtp::tp::d_msg_flow::query042, mod::handle_query042 );
-        return_event000 = patch::hookFunction( libtp::tp::d_msg_flow::event000, mod::handle_event000 );
-        return_event003 = patch::hookFunction( libtp::tp::d_msg_flow::event003, mod::handle_event003 );
-        return_event041 = patch::hookFunction( libtp::tp::d_msg_flow::event041, mod::handle_event041 );
-
-        // Save flag functions
-        return_isDungeonItem = patch::hookFunction( tp::d_save::isDungeonItem, mod::handle_isDungeonItem );
-        return_chkEvtBit = patch::hookFunction( libtp::tp::d_msg_flow::chkEvtBit, mod::handle_chkEvtBit );
-        return_isEventBit = patch::hookFunction( libtp::tp::d_save::isEventBit, mod::handle_isEventBit );
-        return_onEventBit = patch::hookFunction( libtp::tp::d_save::onEventBit, mod::handle_onEventBit );
-        return_isSwitch_dSv_memBit =
-            patch::hookFunction( libtp::tp::d_save::isSwitch_dSv_memBit, mod::handle_isSwitch_dSv_memBit );
-        return_onSwitch_dSv_memBit =
-            patch::hookFunction( libtp::tp::d_save::onSwitch_dSv_memBit, mod::handle_onSwitch_dSv_memBit );
-        return_checkTreasureRupeeReturn =
-            patch::hookFunction( tp::d_a_alink::checkTreasureRupeeReturn, mod::handle_checkTreasureRupeeReturn );
-
-        // Pause Menu Functions
-        return_collect_save_open_init =
-            patch::hookFunction( tp::d_menu_window::collect_save_open_init, mod::handle_collect_save_open_init );
-
-        // Link functions
-        return_checkBootsMoveAnime =
-            patch::hookFunction( libtp::tp::d_a_alink::checkBootsMoveAnime, mod::handle_checkBootsMoveAnime );
-        return_setGetItemFace = patch::hookFunction( libtp::tp::d_a_alink::setGetItemFace, mod::handle_setGetItemFace );
-
-        // Audio functions
-        return_loadSeWave = patch::hookFunction( libtp::z2audiolib::z2scenemgr::loadSeWave, mod::handle_loadSeWave );
-
-        // Title Screen functions
-        return_dScnLogo_c_dt = patch::hookFunction( libtp::tp::d_s_logo::dScnLogo_c_dt, mod::handle_dScnLogo_c_dt );
+        // Mount the memory card
+        if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
+        {
+            result = callRelPrologMounted(chan, rel_id);
+            CARDUnmount( chan );
+        }
+        
+        return result;
     }
 
     void setScreen( bool state )
@@ -330,7 +394,7 @@ namespace mod
         // End of handling title screen inputs
     }
 
-    void handle_fapGm_Execute()
+    void KEEP_FUNC handle_fapGm_Execute()
     {
         using namespace libtp;
         using namespace tp::m_do_controller_pad;
@@ -498,7 +562,7 @@ namespace mod
         return return_fapGm_Execute();
     }
 
-    bool handle_do_link( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
+    bool KEEP_FUNC handle_do_link( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
     {
         // Call the original function immediately, as the REL file needs to be linked
         // before applying patches
@@ -512,21 +576,21 @@ namespace mod
         return result;
     }
 
-    bool handle_do_unlink( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
+    bool KEEP_FUNC handle_do_unlink( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
     {
         events::onRELUnlink( randomizer, dmc );
 
         return return_do_unlink( dmc );
     }
 
-    bool handle_actorInit( void* mStatus_roomControl, libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
+    bool KEEP_FUNC handle_actorInit( void* mStatus_roomControl, libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
     {
         // Load DZX based randomizer checks that are stored in the local DZX
         events::onDZX( mod::randomizer, chunkTypeInfo );
         return return_actorInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
     }
 
-    bool handle_actorInit_always( void* mStatus_roomControl,
+    bool KEEP_FUNC handle_actorInit_always( void* mStatus_roomControl,
                                   libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
                                   int32_t unk3,
                                   void* unk4 )
@@ -536,7 +600,7 @@ namespace mod
         return return_actorInit_always( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
     }
 
-    bool handle_actorCommonLayerInit( void* mStatus_roomControl,
+    bool KEEP_FUNC handle_actorCommonLayerInit( void* mStatus_roomControl,
                                       libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
                                       int32_t unk3,
                                       void* unk4 )
@@ -547,13 +611,13 @@ namespace mod
         return return_actorCommonLayerInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
     }
 
-    int32_t handle_tgscInfoInit( void* stageDt, void* i_data, int32_t entryNum, void* param_3 )
+    int32_t KEEP_FUNC handle_tgscInfoInit( void* stageDt, void* i_data, int32_t entryNum, void* param_3 )
     {
         events::loadCustomRoomSCOBs();
         return return_tgscInfoInit( stageDt, i_data, entryNum, param_3 );
     }
 
-    void handle_roomLoader( void* data, void* stageDt, int roomNo )
+    void KEEP_FUNC handle_roomLoader( void* data, void* stageDt, int32_t roomNo )
     {
         if ( randoIsEnabled( randomizer ) )
         {
@@ -567,13 +631,13 @@ namespace mod
         return return_roomLoader( data, stageDt, roomNo );
     }
 
-    int handle_getLayerNo_common_common( const char* stageName, int32_t roomId, int32_t layerOverride )
+    int32_t KEEP_FUNC handle_getLayerNo_common_common( const char* stageName, int32_t roomId, int32_t layerOverride )
     {
         // Return the custom function that the randomizer uses to determine the current state.
         return game_patch::_01_getLayerNo( stageName, roomId, layerOverride );
     }
 
-    int32_t handle_createItemForBoss( const float pos[3],
+    int32_t KEEP_FUNC handle_createItemForBoss( const float pos[3],
                                       int32_t item,
                                       int32_t roomNo,
                                       const int16_t rot[3],
@@ -589,7 +653,7 @@ namespace mod
         return libtp::tp::f_op_actor_mng::fopAcM_create( 539, params, pos, roomNo, rot, scale, -1 );
     }
 
-    int32_t handle_createItemForMidBoss( const float pos[3],
+    int32_t KEEP_FUNC handle_createItemForMidBoss( const float pos[3],
                                          int32_t item,
                                          int32_t roomNo,
                                          const int16_t rot[3],
@@ -608,7 +672,7 @@ namespace mod
         return return_createItemForMidBoss( pos, item, roomNo, rot, scale, unk6, itemPickupFlag );
     }
 
-    int32_t handle_createItemForPresentDemo( const float pos[3],
+    int32_t KEEP_FUNC handle_createItemForPresentDemo( const float pos[3],
                                              int32_t item,
                                              uint8_t unk3,
                                              int32_t unk4,
@@ -620,7 +684,7 @@ namespace mod
         return return_createItemForPresentDemo( pos, item, unk3, unk4, unk5, rot, scale );
     }
 
-    int32_t handle_createItemForTrBoxDemo( const float pos[3],
+    int32_t KEEP_FUNC handle_createItemForTrBoxDemo( const float pos[3],
                                            int32_t item,
                                            int32_t itemPickupFlag,
                                            int32_t roomNo,
@@ -633,13 +697,13 @@ namespace mod
         return return_createItemForTrBoxDemo( pos, item, itemPickupFlag, roomNo, rot, scale );
     }
 
-    void handle_setLineUpItem( libtp::tp::d_save::dSv_player_item_c* unk1 )
+    void KEEP_FUNC handle_setLineUpItem( libtp::tp::d_save::dSv_player_item_c* unk1 )
     {
         using namespace libtp::tp::d_com_inf_game;
         static uint8_t i_item_lst[24] = { 0x0A, 0x08, 0x06, 0x02, 0x09, 0x04, 0x03, 0x00, 0x01, 0x17, 0x14, 0x05,
                                           0x0F, 0x10, 0x11, 0x0B, 0x0C, 0x0D, 0x0E, 0x13, 0x12, 0x16, 0x15, 0x7 };
-        int i1 = 0;
-        int i2 = 0;
+        int32_t i1 = 0;
+        int32_t i2 = 0;
 
         for ( ; i1 < 24; i1++ )     // Clear all of the item slots.
         {
@@ -656,7 +720,7 @@ namespace mod
         }
     }
 
-    void handle_dMenuRing__draw( void* dMenuRing )
+    void KEEP_FUNC handle_dMenuRing__draw( void* dMenuRing )
     {
         using namespace libtp::tp::m_do_controller_pad;
         using namespace libtp::data::items;
@@ -1051,13 +1115,13 @@ namespace mod
         }
     }
 
-    int32_t handle_execItemGet( uint8_t item )
+    int32_t KEEP_FUNC handle_execItemGet( uint8_t item )
     {
         item = game_patch::_04_verifyProgressiveItem( mod::randomizer, item );
         return return_execItemGet( item );
     }
 
-    int32_t handle_checkItemGet( uint8_t item, int32_t defaultValue )
+    int32_t KEEP_FUNC handle_checkItemGet( uint8_t item, int32_t defaultValue )
     {
         using namespace libtp;
         switch ( item )
@@ -1109,7 +1173,7 @@ namespace mod
         return return_checkItemGet( item, defaultValue );
     }
 
-    bool handle_setMessageCode_inSequence( libtp::tp::control::TControl* control,
+    bool KEEP_FUNC handle_setMessageCode_inSequence( libtp::tp::control::TControl* control,
                                            const void* TProcessor,
                                            uint16_t unk3,
                                            uint16_t msgId )
@@ -1126,7 +1190,7 @@ namespace mod
         return ret;
     }
 
-    uint32_t handle_getFontCCColorTable( uint8_t colorId, uint8_t unk )
+    uint32_t KEEP_FUNC handle_getFontCCColorTable( uint8_t colorId, uint8_t unk )
     {
         if ( colorId >= 0x9 )
         {
@@ -1138,7 +1202,7 @@ namespace mod
         }
     }
 
-    uint32_t handle_getFontGCColorTable( uint8_t colorId, uint8_t unk )
+    uint32_t KEEP_FUNC handle_getFontGCColorTable( uint8_t colorId, uint8_t unk )
     {
         if ( colorId >= 0x9 )
         {
@@ -1150,17 +1214,17 @@ namespace mod
         }
     }
 
-    char handle_parseCharacter_1Byte( const char** text )
+    char KEEP_FUNC handle_parseCharacter_1Byte( const char** text )
     {
         game_patch::_05_replaceMessageString( text );
         return return_parseCharacter_1Byte( text );
     }
 
-    bool handle_query022( void* unk1, void* unk2, int32_t unk3 ) { return events::proc_query022( unk1, unk2, unk3 ); }
+    bool KEEP_FUNC handle_query022( void* unk1, void* unk2, int32_t unk3 ) { return events::proc_query022( unk1, unk2, unk3 ); }
 
-    bool handle_query023( void* unk1, void* unk2, int32_t unk3 ) { return events::proc_query023( unk1, unk2, unk3 ); }
+    bool KEEP_FUNC handle_query023( void* unk1, void* unk2, int32_t unk3 ) { return events::proc_query023( unk1, unk2, unk3 ); }
 
-    bool handle_query025( void* unk1, void* unk2, int32_t unk3 )
+    bool KEEP_FUNC handle_query025( void* unk1, void* unk2, int32_t unk3 )
     {
         if ( libtp::tp::d_a_alink::checkStageName(
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Cave_of_Ordeals] ) )
@@ -1171,7 +1235,7 @@ namespace mod
         return return_query025( unk1, unk2, unk3 );
     }
 
-    int handle_query004( void* unk1, void* unk2, int32_t unk3 )
+    int32_t KEEP_FUNC handle_query004( void* unk1, void* unk2, int32_t unk3 )
     {
         if ( libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) &&
              libtp::tp::d_kankyo::env_light.currentRoom == 2 )
@@ -1185,10 +1249,10 @@ namespace mod
         return return_query004( unk1, unk2, unk3 );
     }
 
-    int handle_query037( void* unk1, void* unk2, int32_t unk3 )
+    int32_t KEEP_FUNC handle_query037( void* unk1, void* unk2, int32_t unk3 )
     {
         // Return the original function immediately as we need its output
-        int menuType = return_query037( unk1, unk2, unk3 );
+        int32_t menuType = return_query037( unk1, unk2, unk3 );
         if ( ( menuType == 0x2 ) && ( reinterpret_cast<int32_t>( libtp::tp::d_a_player::m_midnaActor ) ==
                                       libtp::tp::f_op_actor_mng::fopAcM_getTalkEventPartner( nullptr ) ) )
         {
@@ -1197,9 +1261,9 @@ namespace mod
         return menuType;
     }
 
-    bool handle_query042( void* unk1, void* unk2, int32_t unk3 ) { return events::proc_query042( unk1, unk2, unk3 ); }
+    bool KEEP_FUNC handle_query042( void* unk1, void* unk2, int32_t unk3 ) { return events::proc_query042( unk1, unk2, unk3 ); }
 
-    uint32_t handle_event000( void* messageFlow, void* nodeEvent, void* actrPtr )
+    uint32_t KEEP_FUNC handle_event000( void* messageFlow, void* nodeEvent, void* actrPtr )
     {
         // Prevent the hidden skill CS from setting the proper flags
         if ( libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Skill] ) )
@@ -1209,7 +1273,7 @@ namespace mod
         return return_event000( messageFlow, nodeEvent, actrPtr );
     }
 
-    int handle_event003( void* messageFlow, void* nodeEvent, void* actrPtr )
+    int32_t KEEP_FUNC handle_event003( void* messageFlow, void* nodeEvent, void* actrPtr )
     {
         // If we are donating to charlo, we want to remove 100 rupees instead of the normal 30
         if ( libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) &&
@@ -1226,7 +1290,7 @@ namespace mod
         return return_event003( messageFlow, nodeEvent, actrPtr );
     }
 
-    int handle_event041( void* messageFlow, void* nodeEvent, void* actrPtr )
+    int32_t KEEP_FUNC handle_event041( void* messageFlow, void* nodeEvent, void* actrPtr )
     {
         // If we are donating to Charlo, we want to increase the donated amount by 100 instead of the normal 30.
         if ( libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) &&
@@ -1243,12 +1307,12 @@ namespace mod
         return return_event041( messageFlow, nodeEvent, actrPtr );
     }
 
-    bool handle_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* membitPtr, const int memBit )
+    bool KEEP_FUNC handle_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* membitPtr, const int32_t memBit )
     {
         return events::proc_isDungeonItem( membitPtr, memBit );
     }
 
-    bool handle_chkEvtBit( uint32_t flag )
+    bool KEEP_FUNC handle_chkEvtBit( uint32_t flag )
     {
         switch ( flag )
         {
@@ -1277,7 +1341,7 @@ namespace mod
         return return_chkEvtBit( flag );
     }
 
-    bool handle_isEventBit( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag )
+    bool KEEP_FUNC handle_isEventBit( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag )
     {
         using namespace libtp::tp::d_a_alink;
         using namespace libtp::data::stage;
@@ -1383,7 +1447,7 @@ namespace mod
                                 case 3:     // All Dungeons
                                 {
                                     uint8_t numDungeons = 0x0;
-                                    for ( int i = 0x10; i < 0x18; i++ )
+                                    for ( int32_t i = 0x10; i < 0x18; i++ )
                                     {
                                         if ( libtp::tp::d_save::isDungeonItem(
                                                  &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[i]
@@ -1450,7 +1514,7 @@ namespace mod
         return return_isEventBit( eventPtr, flag );
     }
 
-    void handle_onEventBit( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag )
+    void KEEP_FUNC handle_onEventBit( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag )
     {
         using namespace libtp::tp::d_a_alink;
         using namespace libtp::data::stage;
@@ -1524,7 +1588,7 @@ namespace mod
         return return_onEventBit( eventPtr, flag );
     }
 
-    bool handle_isSwitch_dSv_memBit( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag )
+    bool KEEP_FUNC handle_isSwitch_dSv_memBit( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag )
     {
         if ( libtp::tp::d_a_alink::checkStageName(
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Graveyard] ) )
@@ -1551,7 +1615,7 @@ namespace mod
         return return_isSwitch_dSv_memBit( memoryBit, flag );
     }
 
-    void handle_onSwitch_dSv_memBit( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag )
+    void KEEP_FUNC handle_onSwitch_dSv_memBit( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag )
     {
         if ( libtp::tp::d_a_alink::checkStageName(
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Forest_Temple] ) )
@@ -1567,15 +1631,15 @@ namespace mod
         return return_onSwitch_dSv_memBit( memoryBit, flag );
     }
 
-    bool handle_checkTreasureRupeeReturn( void* unk1, int32_t item ) { return false; }
+    bool KEEP_FUNC handle_checkTreasureRupeeReturn( void* unk1, int32_t item ) { return false; }
 
-    void handle_collect_save_open_init( uint8_t param_1 )
+    void KEEP_FUNC handle_collect_save_open_init( uint8_t param_1 )
     {
         game_patch::_07_checkPlayerStageReturn();
         return return_collect_save_open_init( param_1 );
     }
 
-    bool handle_checkBootsMoveAnime( libtp::tp::d_a_alink::daAlink* d_a_alink, int param_1 )
+    bool KEEP_FUNC handle_checkBootsMoveAnime( libtp::tp::d_a_alink::daAlink* d_a_alink, int32_t param_1 )
     {
         uint32_t ironBootsVars = reinterpret_cast<uint32_t>( &libtp::tp::d_a_alink::ironBootsVars );
         if ( *reinterpret_cast<float*>( ironBootsVars + 0x14 ) == 1.f )
@@ -1585,7 +1649,7 @@ namespace mod
         return return_checkBootsMoveAnime( d_a_alink, param_1 );
     }
 
-    void handle_setGetItemFace( libtp::tp::d_a_alink::daAlink* linkMapPtr, uint16_t itemID )
+    void KEEP_FUNC handle_setGetItemFace( libtp::tp::d_a_alink::daAlink* linkMapPtr, uint16_t itemID )
     {
         switch ( itemID )
         {
@@ -1602,13 +1666,13 @@ namespace mod
         return return_setGetItemFace( linkMapPtr, itemID );
     }
 
-    void handle_loadSeWave( void* Z2SceneMgr, uint32_t waveID )
+    void KEEP_FUNC handle_loadSeWave( void* Z2SceneMgr, uint32_t waveID )
     {
         Z2ScenePtr = Z2SceneMgr;
         return return_loadSeWave( Z2SceneMgr, waveID );
     }
 
-    void* handle_dScnLogo_c_dt( void* dScnLogo_c, int16_t bFreeThis )
+    void* KEEP_FUNC handle_dScnLogo_c_dt( void* dScnLogo_c, int16_t bFreeThis )
     {
         // Call the original function immediately, as certain values need to be set first
         void* ret = return_dScnLogo_c_dt( dScnLogo_c, bFreeThis );
@@ -1634,7 +1698,7 @@ namespace mod
         return ret;
     }
 
-    void handleFoolishItem()
+    void KEEP_FUNC handleFoolishItem()
     {
         if ( events::checkFoolItemFreeze() )
         {

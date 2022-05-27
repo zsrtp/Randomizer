@@ -2,6 +2,13 @@
 80003458:memset
 80003540:memcpy
 
+// OSModule.o
+// text
+803409ac:OSLink
+80340c44:OSUnlink
+// data
+800030C8:osModuleList
+
 // m_Do_ext.o
 // text
 8000EDF4:getArchiveHeapPtr

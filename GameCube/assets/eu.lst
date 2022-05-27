@@ -3,6 +3,10 @@
 80003540:memcpy
 
 // OSModule.o
+// text
+8033f310:OSLink
+8033f5a8:OSUnlink
+// data
 800030C8:osModuleList
 
 // OSTime.o

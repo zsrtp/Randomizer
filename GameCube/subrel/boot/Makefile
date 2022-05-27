@@ -22,21 +22,18 @@ _VARIANT:=public
 
 # This shows up in the memory card (manager) and can contain spaces
 PROJECT_NAME := Randomizer
-# This will be the resulting .gci file - No spaces
-OUTPUT_FILENAME := Randomizer
-
+# This will be the resulting .rel file - No spaces
+OUTPUT_FILENAME := boot
 
 # DON'T TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
-LIBTP_REL := externals/libtp_rel
-
-GCIPACK := python3 ../bin/gcipack.py
+LIBTP_REL := ../../externals/libtp_rel
 
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
-	ELF2REL := ../bin/elf2rel
+	ELF2REL := ../../../bin/elf2rel
 else
-	ELF2REL := ../bin/elf2rel.exe
+	ELF2REL := ../../../bin/elf2rel.exe
 endif
 
 
@@ -48,35 +45,6 @@ jp:
 	@$(MAKE) --no-print-directory VERSION=jp
 eu:
 	@$(MAKE) --no-print-directory VERSION=eu
-
-deploy:
-	@status=$$(git status --porcelain); \
-	if test "x$${status}" = x; then \
-		echo Ready for deployment!; \
-		echo Twilight Princess :: $(PROJECT_NAME) > build.log; \
-		echo ------------------------- >> build.log; \
-		echo Version: $(_VERSION) >> build.log; \
-		echo Variant: $(_VARIANT) >> build.log; \
-		echo Build ID: $(BUILDID) >> build.log; \
-		printf "Build Log:\n\n-----\n" >> build.log; \
-		make clean; \
-		make all >> build.log; \
-		echo ----- >> build.log; \
-		echo Done. >> build.log; \
-		echo Working directory is dirty; \		echo Ready for deployment!; \
-		echo Twilight Princess :: $(PROJECT_NAME) > build.log; \
-		echo ------------------------- >> build.log; \
-		echo Version: $(_VERSION) >> build.log; \
-		echo Variant: $(_VARIANT) >> build.log; \
-		echo Build ID: $(BUILDID) >> build.log; \
-		printf "Build Log:\n\n-----\n" >> build.log; \
-		make clean; \
-		make all >> build.log; \
-		echo ----- >> build.log; \
-		echo Done. >> build.log; \
-	else \
-		echo Working directory isn\'t clean, cannot release like this...; \
-	fi
 
 clean:
 	@$(MAKE) --no-print-directory clean_target VERSION=us
@@ -96,7 +64,7 @@ TARGET		:=	$(OUTPUT_FILENAME).$(VERSION)
 BUILD		:=	build.$(VERSION)
 SOURCES		:=	source $(wildcard source/*) $(LIBTP_REL)/source $(wildcard $(LIBTP_REL)/source/*)
 DATA		:=	data
-INCLUDES	:=	include $(LIBTP_REL)/include
+INCLUDES	:=	include ../../include $(LIBTP_REL)/include
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -107,27 +75,21 @@ MACHDEP		= -mno-sdata -mgcn -DGEKKO -mcpu=750 -meabi -mhard-float
 CFLAGS		= -nostdlib -ffreestanding -ffunction-sections -fdata-sections -g -Os -Wall -Werror -Wno-address-of-packed-member $(MACHDEP) $(INCLUDE) -D_PROJECT_NAME='"$(PROJECT_NAME)"' -D_VERSION_MAJOR='$(_VERSION_MAJOR)' -D_VERSION_MINOR='$(_VERSION_MINOR)' -D_VERSION_PATCH='$(_VERSION_PATCH)'  -D_VERSION='"$(_VERSION)"' -D_VARIANT='"$(_VARIANT)"'
 CXXFLAGS	= -fno-exceptions -fno-rtti -std=gnu++17 $(CFLAGS)
 
-LDFLAGS		= -r -e _prolog -u _prolog -u _epilog -u _unresolved -u _sector_anchor -u _sector_anchor_var -Wl,--gc-sections -nostdlib -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
+LDFLAGS		= -r -e _prolog -u _prolog -u _epilog -u _unresolved -Wl,--gc-sections -nostdlib -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
 
 # Platform options
 ifeq ($(VERSION),us)
 	CFLAGS += -DTP_US
 	CFLAGS += -D_BUILDID='"$(BUILDID)US"'
 	ASFLAGS += -DTP_US
-	GAMECODE = "GZ2E"
-	PRINTVER = "US"
 else ifeq ($(VERSION),eu)
 	CFLAGS += -DTP_EU
 	CFLAGS += -D_BUILDID='"$(BUILDID)EU"'
 	ASFLAGS += -DTP_EU
-	GAMECODE = "GZ2P"
-	PRINTVER = "EU"
 else ifeq ($(VERSION),jp)
 	CFLAGS += -DTP_JP
 	CFLAGS += -D_BUILDID='"$(BUILDID)JP"'
 	ASFLAGS += -DTP_JP
-	GAMECODE = "GZ2J"
-	PRINTVER = "JP"
 endif
 
 
@@ -182,9 +144,7 @@ export HFILES := $(addsuffix .h,$(subst .,_,$(BINFILES)))
 
 # For REL linking
 export LDFILES		:= $(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.ld)))
-export MAPFILE		:= $(realpath assets/$(VERSION).lst)
-export BANNERFILE	:= $(realpath assets/banner.raw)
-export ICONFILE		:= $(realpath assets/icon.raw)
+export MAPFILE		:= $(realpath temp.$(VERSION).lst)
 
 #---------------------------------------------------------------------------------
 # build a list of include paths
@@ -211,7 +171,7 @@ $(BUILD):
 #---------------------------------------------------------------------------------
 clean_target:
 	@echo clean ... $(VERSION)
-	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).dol $(OUTPUT).rel $(OUTPUT).gci
+	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).dol $(OUTPUT).rel temp.*.lst
 
 #---------------------------------------------------------------------------------
 else
@@ -221,7 +181,6 @@ DEPENDS	:=	$(OFILES:.o=.d)
 #---------------------------------------------------------------------------------
 # main targets
 #---------------------------------------------------------------------------------
-$(OUTPUT).gci: $(OUTPUT).rel $(BANNERFILE) $(ICONFILE)
 $(OUTPUT).rel: $(OUTPUT).elf $(MAPFILE)
 $(OUTPUT).elf: $(LDFILES) $(OFILES)
 
@@ -230,11 +189,7 @@ $(OFILES_SOURCES) : $(HFILES)
 # REL linking
 %.rel: %.elf
 	@echo output ... $(notdir $@)
-	@$(ELF2REL) $< -s $(MAPFILE)
-
-%.gci: %.rel
-	@echo packing ... $(notdir $@)
-	@$(GCIPACK) $< "Custom REL File" "Twilight Princess" "($(PRINTVER)) $(PROJECT_NAME)" $(BANNERFILE) $(ICONFILE) $(GAMECODE)
+	@$(ELF2REL) $< -s $(MAPFILE) --rel-id 4098
 
 #---------------------------------------------------------------------------------
 # This rule links in binary data with the .jpg extension

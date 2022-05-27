@@ -26,6 +26,22 @@
 #define GAME_TITLE 1      // When user is on title screen; let them choose their seed etc.
 #define GAME_ACTIVE 2     // When user is ingame and rando should be active
 
+#define MAX_REL_ENTRIES 37
+
+struct RelEntry
+{
+    uint32_t rel_id;   // Module ID
+    uint32_t rel_size; // Size of the REL file excluding CARD_READ_SIZE rounding
+    uint32_t offset;   // Offset to the REL file from the start of the gci file, excluding the gci header
+} __attribute__((__packed__));
+
+static_assert(sizeof(RelEntry) == 0xC);
+
+// May be moved somewhere else later
+// Required for keeping certain unused functions/variables from being removed
+#define KEEP_FUNC __attribute__((used, section (".text")))
+#define KEEP_VAR(sect) __attribute__((section (sect)))
+
 namespace mod
 {
     // General public objects
@@ -44,7 +60,6 @@ namespace mod
     extern void* Z2ScenePtr;
     extern bool isFoolishTrapQueued;
 
-    void main();
     void hookFunctions();
     void setScreen( bool state );     // Sets visibility of console
     uint32_t rand( uint32_t* seed );
@@ -52,6 +67,10 @@ namespace mod
     float intToFloat( int32_t value );
     void handleInput( uint32_t inputs );
     void handleFoolishItem();
+    
+    // Will be moved to libtp_rel later
+    bool callRelPrologMounted(int32_t chan, uint32_t rel_id);
+    bool callRelProlog(int32_t chan, uint32_t rel_id);
 
     // Inline randoIsEnabled, as it's short enough to use less memory when inlined
     inline bool randoIsEnabled( rando::Randomizer* rando )
@@ -103,12 +122,12 @@ namespace mod
     int32_t handle_tgscInfoInit( void* stageDt, void* i_data, int32_t entryNum, void* param_3 );
     extern int32_t ( *return_tgscInfoInit )( void* stageDt, void* i_data, int32_t entryNum, void* param_3 );
 
-    void handle_roomLoader( void* data, void* stageDt, int roomNo );
-    extern void ( *return_roomLoader )( void* data, void* stageDt, int roomNo );
+    void handle_roomLoader( void* data, void* stageDt, int32_t roomNo );
+    extern void ( *return_roomLoader )( void* data, void* stageDt, int32_t roomNo );
 
     // State functions
-    int handle_getLayerNo_common_common( const char* stageName, int32_t roomId, int32_t layerOverride );
-    extern int ( *return_getLayerNo_common_common )( const char* stageName, int32_t roomId, int32_t layerOverride );
+    int32_t handle_getLayerNo_common_common( const char* stageName, int32_t roomId, int32_t layerOverride );
+    extern int32_t ( *return_getLayerNo_common_common )( const char* stageName, int32_t roomId, int32_t layerOverride );
 
     // Item creation functions. These are ran when the game displays an item though various means.
     int32_t handle_createItemForBoss( const float pos[3],
@@ -217,24 +236,24 @@ namespace mod
     bool handle_query042( void* unk1, void* unk2, int32_t unk3 );
     extern bool ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 );
 
-    int handle_query004( void* unk1, void* unk2, int32_t unk3 );
-    extern int ( *return_query004 )( void* unk1, void* unk2, int32_t unk3 );
+    int32_t handle_query004( void* unk1, void* unk2, int32_t unk3 );
+    extern int32_t ( *return_query004 )( void* unk1, void* unk2, int32_t unk3 );
 
-    int handle_query037( void* unk1, void* unk2, int32_t unk3 );
-    extern int ( *return_query037 )( void* unk1, void* unk2, int32_t unk3 );
+    int32_t handle_query037( void* unk1, void* unk2, int32_t unk3 );
+    extern int32_t ( *return_query037 )( void* unk1, void* unk2, int32_t unk3 );
 
     uint32_t handle_event000( void* messageFlow, void* nodeEvent, void* actrPtr );
     extern uint32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr );
 
-    int handle_event003( void* messageFlow, void* nodeEvent, void* actrPtr );
-    extern int ( *return_event003 )( void* messageFlow, void* nodeEvent, void* actrPtr );
+    int32_t handle_event003( void* messageFlow, void* nodeEvent, void* actrPtr );
+    extern int32_t ( *return_event003 )( void* messageFlow, void* nodeEvent, void* actrPtr );
 
-    int handle_event041( void* messageFlow, void* nodeEvent, void* actrPtr );
-    extern int ( *return_event041 )( void* messageFlow, void* nodeEvent, void* actrPtr );
+    int32_t handle_event041( void* messageFlow, void* nodeEvent, void* actrPtr );
+    extern int32_t ( *return_event041 )( void* messageFlow, void* nodeEvent, void* actrPtr );
 
     // Save flag functions
-    bool handle_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int memBit );
-    extern bool ( *return_isDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int memBit );
+    bool handle_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit );
+    extern bool ( *return_isDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit );
 
     bool handle_chkEvtBit( uint32_t flag );
     extern bool ( *return_chkEvtBit )( uint32_t flag );
@@ -245,11 +264,11 @@ namespace mod
     void handle_onEventBit( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag );
     extern void ( *return_onEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag );
 
-    bool handle_isSwitch_dSv_memBit( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag );
-    extern bool ( *return_isSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag );
+    bool handle_isSwitch_dSv_memBit( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag );
+    extern bool ( *return_isSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag );
 
-    void handle_onSwitch_dSv_memBit( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag );
-    extern void ( *return_onSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int flag );
+    void handle_onSwitch_dSv_memBit( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag );
+    extern void ( *return_onSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag );
 
     bool handle_checkTreasureRupeeReturn( void* unk1, int32_t item );
     extern bool ( *return_checkTreasureRupeeReturn )( void* unk1, int32_t item );
@@ -259,8 +278,8 @@ namespace mod
     extern void ( *return_collect_save_open_init )( uint8_t param_1 );
 
     // Link functions
-    bool handle_checkBootsMoveAnime( libtp::tp::d_a_alink::daAlink* d_a_alink, int param_1 );
-    extern bool ( *return_checkBootsMoveAnime )( libtp::tp::d_a_alink::daAlink* d_a_alink, int param_1 );
+    bool handle_checkBootsMoveAnime( libtp::tp::d_a_alink::daAlink* d_a_alink, int32_t param_1 );
+    extern bool ( *return_checkBootsMoveAnime )( libtp::tp::d_a_alink::daAlink* d_a_alink, int32_t param_1 );
 
     void handle_setGetItemFace( libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID );
     extern void ( *return_setGetItemFace )( libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID );
