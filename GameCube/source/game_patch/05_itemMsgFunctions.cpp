@@ -1,15 +1,14 @@
 #include <cstring>
 
+#include "game_patch/game_patch.h"
+#include "game_patch/00_customItemMessages.h"
 #include "data/items.h"
 #include "data/stages.h"
-#include "game_patch/00_customItemMessages.h"
-#include "game_patch/game_patch.h"
 #include "gc_wii/bmgres.h"
 #include "main.h"
 #include "tp/control.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
-#include "tp/d_item.h"
 #include "tp/d_kankyo.h"
 #include "tp/processor.h"
 

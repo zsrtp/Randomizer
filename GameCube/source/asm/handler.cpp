@@ -6,9 +6,7 @@
 #include "events.h"
 #include "main.h"
 #include "tp/d_a_alink.h"
-#include "tp/d_meter2_info.h"
-#include "tp/d_msg_object.h"
-#include "tp/f_op_msg_mng.h"
+#include "tp/d_com_inf_game.h"
 
 namespace mod::assembly
 {

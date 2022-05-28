@@ -1,8 +1,7 @@
-#include "game_patch/game_patch.h"
-
 #include <cstdint>
 #include <cstring>
 
+#include "game_patch/game_patch.h"
 #include "data/items.h"
 #include "tp/d_item_data.h"
 #include "tp/d_a_alink.h"

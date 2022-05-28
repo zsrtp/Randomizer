@@ -1,7 +1,6 @@
-#include "events.h"
-
 #include <cstring>
 
+#include "events.h"
 #include "asm.h"
 #include "data/items.h"
 #include "data/stages.h"

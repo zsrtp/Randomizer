@@ -1,12 +1,11 @@
 #include <cstring>
 
+#include "game_patch/game_patch.h"
 #include "data/items.h"
 #include "data/stages.h"
 #include "events.h"
-#include "game_patch/game_patch.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
-#include "tp/d_item.h"
 
 namespace mod::game_patch
 {

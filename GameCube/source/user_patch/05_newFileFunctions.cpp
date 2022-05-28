@@ -6,12 +6,10 @@
  */
 
 #include "main.h"
-#include "events.h"
 #include "rando/data.h"
 #include "rando/randomizer.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
-#include "tp/d_item_data.h"
 #include "user_patch/user_patch.h"
 
 namespace mod::user_patch

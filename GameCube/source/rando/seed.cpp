@@ -9,23 +9,19 @@
 
 #include <cstdint>
 #include <cstring>
-#include <cstdio>
-#include <cinttypes>
 
+#include "rando/seed.h"
 #include "cxx.h"
 #include "data/stages.h"
 #include "game_patch/game_patch.h"
 #include "gc_wii/card.h"
-#include "gc_wii/dvdfs.h"
 #include "main.h"
 #include "rando/data.h"
 #include "tools.h"
-#include "tp/d_a_alink.h"
 #include "tp/d_a_shop_item_static.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
 #include "tp/d_item_data.h"
-#include "tp/d_meter2_info.h"
 #include "tp/d_s_logo.h"
 #include "tp/d_save.h"
 #include "user_patch/user_patch.h"

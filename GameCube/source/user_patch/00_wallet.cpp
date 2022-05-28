@@ -5,12 +5,11 @@
  * @bug No known bugs
  */
 
-#include "gc_wii/OSCache.h"
+#include "user_patch/user_patch.h"
 #include "main.h"
 #include "rando/randomizer.h"
 #include "tp/d_menu_collect.h"
 #include "tp/d_save.h"
-#include "user_patch/user_patch.h"
 #include "memory.h"
 
 namespace mod::user_patch

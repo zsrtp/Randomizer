@@ -7,17 +7,8 @@
 #include "rando/seedlist.h"
 
 #include <cstring>
-#include <cstdio>
-#include <cinttypes>
 
-#include "gc_wii/card.h"
-#include "main.h"
-#include "rando/data.h"
-#include "rando/seed.h"
-#include "tools.h"
-#include "tp/JKRExpHeap.h"
-#include "tp/m_do_controller_pad.h"
-#include "tp/m_do_ext.h"
+#include "rando/seedlist.h"
 
 namespace mod::rando
 {

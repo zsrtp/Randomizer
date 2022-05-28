@@ -1,8 +1,6 @@
 #include "game_patch/game_patch.h"
 #include "main.h"
-#include "data/items.h"
 #include "tp/d_com_inf_game.h"
-#include "tp/d_item.h"
 
 namespace mod::game_patch
 {

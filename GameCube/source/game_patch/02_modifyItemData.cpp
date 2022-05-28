@@ -1,10 +1,10 @@
 #include <cstdint>
 #include <cstring>
 
+#include "game_patch/game_patch.h"
 #include "data/items.h"
 #include "data/stages.h"
 #include "events.h"
-#include "game_patch/game_patch.h"
 #include "main.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_a_shop_item_static.h"

@@ -4,12 +4,9 @@
  *	@author AECX
  *	@bug No known bugs.
  */
-#include "rando/randomizer.h"
-
 #include <cstring>
-#include <cstdio>
-#include <cinttypes>
 
+#include "rando/randomizer.h"
 #include "data/items.h"
 #include "data/stages.h"
 #include "events.h"
@@ -17,18 +14,14 @@
 #include "gc_wii/OSModule.h"
 #include "gc_wii/card.h"
 #include "main.h"
-#include "patch.h"
 #include "rando/data.h"
 #include "rando/seed.h"
 #include "rando/seedlist.h"
-#include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_kankyo.h"
 #include "tp/d_meter2_info.h"
 #include "tp/d_resource.h"
-#include "tp/dynamic_link.h"
 #include "tp/dzx.h"
-#include "user_patch/03_customCosmetics.h"
 
 namespace mod::rando
 {
