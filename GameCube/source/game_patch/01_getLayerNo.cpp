@@ -1,12 +1,13 @@
-#include <string.h>
-
+#include "game_patch/game_patch.h"
+#include "main.h"
 #include "data/stages.h"
 #include "events.h"
-#include "game_patch/game_patch.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_kankyo.h"
 #include "tp/d_save.h"
+
+#include <cstring>
 
 namespace mod::game_patch
 {
@@ -23,7 +24,7 @@ namespace mod::game_patch
         // Didn't find the current stage for some reason
         return -1;
     }
-    int32_t _01_getLayerNo( const char* stageName, int roomId, int layerOverride )
+    KEEP_FUNC int32_t _01_getLayerNo( const char* stageName, int roomId, int layerOverride )
     {
         int chosenLayer;
         bool condition;

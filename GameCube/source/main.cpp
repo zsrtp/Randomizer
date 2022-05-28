@@ -623,12 +623,6 @@ namespace mod
         return return_roomLoader( data, stageDt, roomNo );
     }
 
-    KEEP_FUNC int32_t handle_getLayerNo_common_common( const char* stageName, int32_t roomId, int32_t layerOverride )
-    {
-        // Return the custom function that the randomizer uses to determine the current state.
-        return game_patch::_01_getLayerNo( stageName, roomId, layerOverride );
-    }
-
     KEEP_FUNC int32_t handle_createItemForBoss( const float pos[3],
                                                 int32_t item,
                                                 int32_t roomNo,
@@ -653,7 +647,7 @@ namespace mod
                                                    int32_t unk6,
                                                    int32_t itemPickupFlag )
     {
-        if ( item == 0x40 )
+        if ( static_cast<uint32_t>(item) == libtp::data::items::Boomerang)
         {
             // Spawn the appropriate item
             uint8_t itemID = randomizer->getBossItem();
@@ -692,7 +686,7 @@ namespace mod
     KEEP_FUNC void handle_setLineUpItem( libtp::tp::d_save::dSv_player_item_c* unk1 )
     {
         using namespace libtp::tp::d_com_inf_game;
-        static uint8_t i_item_lst[24] = { 0x0A, 0x08, 0x06, 0x02, 0x09, 0x04, 0x03, 0x00, 0x01, 0x17, 0x14, 0x05,
+        static const uint8_t i_item_lst[24] = { 0x0A, 0x08, 0x06, 0x02, 0x09, 0x04, 0x03, 0x00, 0x01, 0x17, 0x14, 0x05,
                                           0x0F, 0x10, 0x11, 0x0B, 0x0C, 0x0D, 0x0E, 0x13, 0x12, 0x16, 0x15, 0x7 };
         int32_t i1 = 0;
         int32_t i2 = 0;

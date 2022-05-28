@@ -67,7 +67,7 @@ namespace mod
         return_roomLoader = patch::hookFunction( libtp::tp::d_stage::roomLoader, mod::handle_roomLoader );
 
         // Custom States
-        return_getLayerNo_common_common = patch::hookFunction( getLayerNo_common_common, mod::handle_getLayerNo_common_common );
+        return_getLayerNo_common_common = patch::hookFunction( getLayerNo_common_common, game_patch::_01_getLayerNo );
 
         // Item Creation Functions
         return_createItemForBoss =

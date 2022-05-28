@@ -126,7 +126,6 @@ namespace mod
     extern void ( *return_roomLoader )( void* data, void* stageDt, int32_t roomNo );
 
     // State functions
-    int32_t handle_getLayerNo_common_common( const char* stageName, int32_t roomId, int32_t layerOverride );
     extern int32_t ( *return_getLayerNo_common_common )( const char* stageName, int32_t roomId, int32_t layerOverride );
 
     // Item creation functions. These are ran when the game displays an item though various means.
