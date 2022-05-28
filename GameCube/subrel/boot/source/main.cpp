@@ -1,6 +1,7 @@
 #include "main.h"
 #include "patch.h"
 
+#include "game_patch/game_patch.h"
 #include "tp/d_stage.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/f_ap_game.h"
@@ -20,6 +21,9 @@ namespace mod
 {
     void main()
     {
+        // Run game patches
+        game_patch::_02_modifyItemData();
+        
         // Display some info
         console << "Welcome to TPR!\n"
                 << "(C) AECX, Lunar Soap, Zephiles\n\n"

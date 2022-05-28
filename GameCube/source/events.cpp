@@ -761,6 +761,7 @@ namespace mod::events
 
         // Set the window color
         tempBgWindow->setWhiteColor( color );
+        tempBgWindow->setBlackColor( color );
 
         // Convert x, y, width, and height to floats
         constexpr int32_t numValues = 4;

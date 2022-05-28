@@ -39,8 +39,8 @@ static_assert( sizeof( RelEntry ) == 0xC );
 
 // May be moved somewhere else later
 // Required for keeping certain unused functions/variables from being removed
-#define KEEP_FUNC __attribute__( ( used, section( ".text" ) ) )
-#define KEEP_VAR( sect ) __attribute__( ( section( sect ) ) )
+#define KEEP_FUNC __attribute__((used, visibility("default")))
+#define KEEP_VAR __attribute__((visibility("default")))
 
 namespace mod
 {

@@ -21,6 +21,7 @@
 
 namespace mod::rando
 {
+    // Currently unused, so will leave in for now
     SeedInfo SeedList::FindSeed( uint64_t seed )
     {
         for ( uint8_t i = 0; i < SEED_MAX_ENTRIES && i < m_numSeeds; i++ )

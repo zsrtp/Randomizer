@@ -18,6 +18,7 @@
 #include "tp/JKRExpHeap.h"
 #include "tp/m_do_controller_pad.h"
 #include "tp/m_do_ext.h"
+#include "cxx.h"
 
 namespace mod::rando
 {
@@ -32,7 +33,8 @@ namespace mod::rando
         uint16_t seedIDX = 0;
 
         // Store header data so we don't have to open the files again later
-        Header* headerBuffer = new Header[SEED_MAX_ENTRIES];
+        // Allocate the memory to the back of the heap to avoid fragmentation
+        Header* headerBuffer = new (-0x4) Header[SEED_MAX_ENTRIES];
 
         m_numSeeds = 0;
 
@@ -86,20 +88,6 @@ namespace mod::rando
         mod::console << m_numSeeds << " seed(s) available.\n";
 
         delete[] headerBuffer;
-    }
-
-    SeedInfo SeedList::FindSeed( uint64_t seed )
-    {
-        for ( uint8_t i = 0; i < SEED_MAX_ENTRIES && i < m_numSeeds; i++ )
-        {
-            if ( m_seedInfo[i].header.seed == seed )
-            {
-                return static_cast<SeedInfo>( m_seedInfo[i] );
-            }
-        }
-
-        // No seed found; Return one with index FF as error indicator (max is 9)
-        return { 0x00, 0xFF };
     }
 
     SeedList::~SeedList() { delete[] m_seedInfo; }

@@ -104,10 +104,10 @@ INCLUDES	:=	include $(LIBTP_REL)/include
 
 MACHDEP		= -mno-sdata -mgcn -DGEKKO -mcpu=750 -meabi -mhard-float
 
-CFLAGS		= -nostdlib -ffreestanding -ffunction-sections -fdata-sections -g -Os -Wall -Werror -Wno-address-of-packed-member $(MACHDEP) $(INCLUDE) -D_PROJECT_NAME='"$(PROJECT_NAME)"' -D_VERSION_MAJOR='$(_VERSION_MAJOR)' -D_VERSION_MINOR='$(_VERSION_MINOR)' -D_VERSION_PATCH='$(_VERSION_PATCH)'  -D_VERSION='"$(_VERSION)"' -D_VARIANT='"$(_VARIANT)"'
+CFLAGS		= -nostdlib -ffreestanding -ffunction-sections -fdata-sections -g -Os -fvisibility=hidden -Wall -Werror -Wno-address-of-packed-member $(MACHDEP) $(INCLUDE) -D_PROJECT_NAME='"$(PROJECT_NAME)"' -D_VERSION_MAJOR='$(_VERSION_MAJOR)' -D_VERSION_MINOR='$(_VERSION_MINOR)' -D_VERSION_PATCH='$(_VERSION_PATCH)'  -D_VERSION='"$(_VERSION)"' -D_VARIANT='"$(_VARIANT)"'
 CXXFLAGS	= -fno-exceptions -fno-rtti -std=gnu++17 $(CFLAGS)
 
-LDFLAGS		= -r -e _prolog -u _prolog -u _epilog -u _unresolved -u _sector_anchor -u _sector_anchor_var -Wl,--gc-sections -nostdlib -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
+LDFLAGS		= -r -e _prolog -u _prolog -u _epilog -u _unresolved -Wl,--gc-sections,--gc-keep-exported -nostdlib -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
 
 # Platform options
 ifeq ($(VERSION),us)
