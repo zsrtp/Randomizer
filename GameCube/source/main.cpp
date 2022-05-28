@@ -376,7 +376,8 @@ namespace mod
                 // 8 is the line it typically appears
                 console.setLine( 8 );
                 console << "\r"
-                        << "[" << seedList->m_selectedSeed + 1 << "/" << seedList->m_numSeeds
+                        << "Press X/Y to select a seed\n"
+                        << "[" << seedList->m_selectedSeed + 1 << "/" << static_cast<int32_t>( seedList->m_numSeeds )
                         << "] Seed: " << seedList->m_seedInfo[seedList->m_selectedSeed].header.seed << "\n";
             }
         }
@@ -438,7 +439,6 @@ namespace mod
                         default:
                             // User has to select one of the seeds
 
-                            console << "Please select a seed <X/Y>\n";
                             // trigger a dummy input to print the current selection
                             doInput( Button_Start );
 

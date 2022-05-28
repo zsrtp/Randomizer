@@ -80,7 +80,7 @@ namespace mod::rando
             }
         }
 
-        mod::console << m_numSeeds << " seed(s) available.\n";
+        mod::console << static_cast<int32_t>( m_numSeeds ) << " seed(s) available.\n";
 
         delete[] headerBuffer;
     }
