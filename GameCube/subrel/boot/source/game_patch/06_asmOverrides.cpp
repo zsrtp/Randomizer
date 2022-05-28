@@ -1,8 +1,6 @@
 #include "game_patch/game_patch.h"
-#include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
 #include "tp/d_msg_flow.h"
-#include "tp/d_save.h"
 namespace mod::game_patch
 {
     void _06_writeASMPatches()

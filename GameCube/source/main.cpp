@@ -170,12 +170,6 @@ namespace mod
 
     void main()
     {
-        // Run game patches
-        game_patch::_00_poe();
-        // game_patch::_02_modifyItemData();
-        game_patch::_03_increaseClimbSpeed();
-        game_patch::_06_writeASMPatches();
-
         // Call the boot rel
         // The seedlist will be generated in the boot rel, so avoid mounting the memory card multiple times
         constexpr int32_t chan = CARD_SLOT_A;

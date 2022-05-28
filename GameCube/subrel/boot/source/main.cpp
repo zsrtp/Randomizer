@@ -22,7 +22,10 @@ namespace mod
     void main()
     {
         // Run game patches
+        game_patch::_00_poe();
         game_patch::_02_modifyItemData();
+        game_patch::_03_increaseClimbSpeed();
+        game_patch::_06_writeASMPatches();
 
         // Display some info
         console << "Welcome to TPR!\n"
