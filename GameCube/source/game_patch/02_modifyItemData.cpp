@@ -37,7 +37,7 @@ namespace mod::game_patch
         libtp::data::items::Empty_Bomb_Bag,
         libtp::data::items::Ancient_Sky_Book_Empty,
     };
-    
+
     void giveNodeDungeonItems( const libtp::data::stage::AreaNodesID nodeId,
                                const libtp::data::items::NodeDungeonItemType type )
     {
@@ -96,7 +96,7 @@ namespace mod::game_patch
                 &fieldItemResPtr[fieldModelItemID],
                 sizeof( libtp::tp::d_item_data::FieldItemRes ) );
     }
-    
+
     void _02_modifyFoolishShopModel( uint16_t shopID )
     {
         // Set the shop model of the Foolish Item ID to the model of a random important item.

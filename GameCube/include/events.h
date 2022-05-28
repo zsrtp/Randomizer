@@ -20,7 +20,6 @@
 
 namespace mod::events
 {
-
     typedef bool ( *CMEB )( void* );
     extern CMEB checkNpcTransform;
     /**

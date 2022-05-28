@@ -72,7 +72,7 @@ namespace mod::rando
         m_Seed = nullptr;
         m_SeedInit = false;
         m_CurrentSeed = 0xFF;
-        
+
         mod::console << "Seed Loading...\n";
         loadSeed( seedInfo, newSeed );
     }

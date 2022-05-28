@@ -34,7 +34,7 @@ namespace mod::rando
 
         // Store header data so we don't have to open the files again later
         // Allocate the memory to the back of the heap to avoid fragmentation
-        Header* headerBuffer = new (-0x4) Header[SEED_MAX_ENTRIES];
+        Header* headerBuffer = new ( -0x4 ) Header[SEED_MAX_ENTRIES];
 
         m_numSeeds = 0;
 
@@ -48,7 +48,8 @@ namespace mod::rando
 
             Header header;
 
-            if ( CARD_RESULT_READY == libtp::tools::ReadGCIMounted( memCardChan, filename, sizeof( header ), 0, &header, true ) )
+            if ( CARD_RESULT_READY ==
+                 libtp::tools::ReadGCIMounted( memCardChan, filename, sizeof( header ), 0, &header, true ) )
             {
                 uint16_t minVersion = header.minVersion;
                 uint16_t maxVersion = header.maxVersion;

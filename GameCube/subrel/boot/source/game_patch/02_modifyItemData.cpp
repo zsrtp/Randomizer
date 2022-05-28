@@ -2,8 +2,6 @@
 
 #include <cstdint>
 #include <cstring>
-#include <cstdio>
-#include <cinttypes>
 
 #include "data/items.h"
 #include "tp/d_item_data.h"
@@ -476,7 +474,7 @@ namespace mod::game_patch
         itemGetCheckFuncPtr[items::Jump_Strike] = _02_jumpStrikeItemGetCheck;
         itemGetCheckFuncPtr[items::Bulblin_Camp_Key] = _02_campSmallKeyItemGetCheck;
     }
-    
+
     void _02_modifyItemData()
     {
         setCustomItemResourceData();

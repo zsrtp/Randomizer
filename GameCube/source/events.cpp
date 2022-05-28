@@ -222,8 +222,7 @@ namespace mod::events
                 return_daObjLv5Key_c__Wait =
                     libtp::patch::hookFunction( reinterpret_cast<void ( * )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* )>(
                                                     relPtrRaw + d_a_obj_Lv5Key__Wait_offset ),
-                                                []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr )
-                                                {
+                                                []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr ) {
                                                     float playerPos[3];
                                                     libtp::tp::d_map_path_dmap::getMapPlayerPos( playerPos );
 

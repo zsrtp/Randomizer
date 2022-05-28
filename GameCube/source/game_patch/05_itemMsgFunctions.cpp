@@ -65,8 +65,7 @@ namespace mod::game_patch
     {
         using namespace libtp::data::items;
         // The current text is for an item
-        auto setMessageText = []( libtp::tp::control::TControl* control, const char* text )
-        {
+        auto setMessageText = []( libtp::tp::control::TControl* control, const char* text ) {
             control->msg = text;
             control->wMsgRender = text;
         };
@@ -191,7 +190,7 @@ namespace mod::game_patch
         {
             if ( msgIds[i] == msgId )
             {
-                mod::console << reinterpret_cast<void*>(msgTableInfoRaw) << "\n";
+                mod::console << reinterpret_cast<void*>( msgTableInfoRaw ) << "\n";
                 mod::console << &messages << "\n";
                 return &messages[msgOffsets[i]];
             }

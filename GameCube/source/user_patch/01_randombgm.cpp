@@ -205,8 +205,7 @@ namespace mod::user_patch
                 uint8_t BgmWave1,
                 uint8_t BgmWave2,
                 uint8_t DemoWave,
-                bool param_7 )
-            {
+                bool param_7 ) {
                 uint32_t id = BGMid.id;
                 if ( id >= 0x1000000 && id < 0x2000000 )
                 {

@@ -60,59 +60,61 @@ namespace mod
 
     // DZX trampolines
     KEEP_VAR bool ( *return_actorInit )( void* mStatus_roomControl,
-                                libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
-                                int32_t unk3,
-                                void* unk4 ) = nullptr;
+                                         libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
+                                         int32_t unk3,
+                                         void* unk4 ) = nullptr;
 
     KEEP_VAR bool ( *return_actorInit_always )( void* mStatus_roomControl,
-                                       libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
-                                       int32_t unk3,
-                                       void* unk4 ) = nullptr;
+                                                libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
+                                                int32_t unk3,
+                                                void* unk4 ) = nullptr;
 
     KEEP_VAR bool ( *return_actorCommonLayerInit )( void* mStatus_roomControl,
-                                           libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
-                                           int32_t unk3,
-                                           void* unk4 ) = nullptr;
+                                                    libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
+                                                    int32_t unk3,
+                                                    void* unk4 ) = nullptr;
 
     KEEP_VAR int32_t ( *return_tgscInfoInit )( void* stageDt, void* i_data, int32_t entryNum, void* param_3 ) = nullptr;
 
     KEEP_VAR void ( *return_roomLoader )( void* data, void* stageDt, int32_t roomNo ) = nullptr;
 
     // GetLayerNo trampoline
-    KEEP_VAR int32_t ( *return_getLayerNo_common_common )( const char* stageName, int32_t roomId, int32_t layerOverride ) = nullptr;
+    KEEP_VAR int32_t ( *return_getLayerNo_common_common )( const char* stageName,
+                                                           int32_t roomId,
+                                                           int32_t layerOverride ) = nullptr;
 
     // Item creation functions.
     KEEP_VAR int32_t ( *return_createItemForBoss )( const float pos[3],
-                                           int32_t item,
-                                           int32_t roomNo,
-                                           const int16_t rot[3],
-                                           const float scale[3],
-                                           float unk6,
-                                           float unk7,
-                                           int32_t parameters ) = nullptr;
+                                                    int32_t item,
+                                                    int32_t roomNo,
+                                                    const int16_t rot[3],
+                                                    const float scale[3],
+                                                    float unk6,
+                                                    float unk7,
+                                                    int32_t parameters ) = nullptr;
 
     KEEP_VAR int32_t ( *return_createItemForPresentDemo )( const float pos[3],
-                                                  int32_t item,
-                                                  uint8_t unk3,
-                                                  int32_t unk4,
-                                                  int32_t unk5,
-                                                  const float unk6[3],
-                                                  const float unk7[3] ) = nullptr;
+                                                           int32_t item,
+                                                           uint8_t unk3,
+                                                           int32_t unk4,
+                                                           int32_t unk5,
+                                                           const float unk6[3],
+                                                           const float unk7[3] ) = nullptr;
 
     KEEP_VAR int32_t ( *return_createItemForTrBoxDemo )( const float pos[3],
-                                                int32_t item,
-                                                int32_t itemPickupFlag,
-                                                int32_t roomNo,
-                                                const int16_t rot[3],
-                                                const float scale[3] ) = nullptr;
+                                                         int32_t item,
+                                                         int32_t itemPickupFlag,
+                                                         int32_t roomNo,
+                                                         const int16_t rot[3],
+                                                         const float scale[3] ) = nullptr;
 
     KEEP_VAR int32_t ( *return_createItemForMidBoss )( const float pos[3],
-                                              int32_t item,
-                                              int32_t roomNo,
-                                              const int16_t rot[3],
-                                              const float scale[3],
-                                              int32_t unk6,
-                                              int32_t itemPickupFlag ) = nullptr;
+                                                       int32_t item,
+                                                       int32_t roomNo,
+                                                       const int16_t rot[3],
+                                                       const float scale[3],
+                                                       int32_t unk6,
+                                                       int32_t itemPickupFlag ) = nullptr;
 
     // Item Wheel trampolines
     KEEP_VAR void ( *return_setLineUpItem )( libtp::tp::d_save::dSv_player_item_c* ) = nullptr;
@@ -124,9 +126,9 @@ namespace mod
 
     // Message functions
     KEEP_VAR bool ( *return_setMessageCode_inSequence )( libtp::tp::control::TControl* control,
-                                                const void* TProcessor,
-                                                uint16_t unk3,
-                                                uint16_t msgId ) = nullptr;
+                                                         const void* TProcessor,
+                                                         uint16_t unk3,
+                                                         uint16_t msgId ) = nullptr;
 
     KEEP_VAR uint32_t ( *return_getFontCCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
     KEEP_VAR uint32_t ( *return_getFontGCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
@@ -183,7 +185,9 @@ namespace mod
             libtp::gc_wii::card::CARDUnmount( chan );
         }
     }
-    
+
+    void exit() {}
+
     // Will be moved to libtp_rel later
     bool callRelPrologMounted( int32_t chan, uint32_t rel_id )
     {
@@ -574,7 +578,10 @@ namespace mod
         return return_do_unlink( dmc );
     }
 
-    KEEP_FUNC bool handle_actorInit( void* mStatus_roomControl, libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
+    KEEP_FUNC bool handle_actorInit( void* mStatus_roomControl,
+                                     libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
+                                     int32_t unk3,
+                                     void* unk4 )
     {
         // Load DZX based randomizer checks that are stored in the local DZX
         events::onDZX( mod::randomizer, chunkTypeInfo );
@@ -582,9 +589,9 @@ namespace mod
     }
 
     KEEP_FUNC bool handle_actorInit_always( void* mStatus_roomControl,
-                                  libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
-                                  int32_t unk3,
-                                  void* unk4 )
+                                            libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
+                                            int32_t unk3,
+                                            void* unk4 )
     {
         // Load DZX based randomizer checks that are stored in the global DZX
         events::onDZX( mod::randomizer, chunkTypeInfo );
@@ -592,9 +599,9 @@ namespace mod
     }
 
     KEEP_FUNC bool handle_actorCommonLayerInit( void* mStatus_roomControl,
-                                      libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
-                                      int32_t unk3,
-                                      void* unk4 )
+                                                libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
+                                                int32_t unk3,
+                                                void* unk4 )
     {
         // Load DZX based checks that are stored in the current layer DZX
         events::onDZX( mod::randomizer, chunkTypeInfo );
@@ -629,13 +636,13 @@ namespace mod
     }
 
     KEEP_FUNC int32_t handle_createItemForBoss( const float pos[3],
-                                      int32_t item,
-                                      int32_t roomNo,
-                                      const int16_t rot[3],
-                                      const float scale[3],
-                                      float unk6,
-                                      float unk7,
-                                      int32_t parameters )
+                                                int32_t item,
+                                                int32_t roomNo,
+                                                const int16_t rot[3],
+                                                const float scale[3],
+                                                float unk6,
+                                                float unk7,
+                                                int32_t parameters )
     {
         // Spawn the appropriate item with model
         uint8_t itemID = randomizer->getBossItem();
@@ -645,12 +652,12 @@ namespace mod
     }
 
     KEEP_FUNC int32_t handle_createItemForMidBoss( const float pos[3],
-                                         int32_t item,
-                                         int32_t roomNo,
-                                         const int16_t rot[3],
-                                         const float scale[3],
-                                         int32_t unk6,
-                                         int32_t itemPickupFlag )
+                                                   int32_t item,
+                                                   int32_t roomNo,
+                                                   const int16_t rot[3],
+                                                   const float scale[3],
+                                                   int32_t unk6,
+                                                   int32_t itemPickupFlag )
     {
         if ( item == 0x40 )
         {
@@ -664,23 +671,23 @@ namespace mod
     }
 
     KEEP_FUNC int32_t handle_createItemForPresentDemo( const float pos[3],
-                                             int32_t item,
-                                             uint8_t unk3,
-                                             int32_t unk4,
-                                             int32_t unk5,
-                                             const float rot[3],
-                                             const float scale[3] )
+                                                       int32_t item,
+                                                       uint8_t unk3,
+                                                       int32_t unk4,
+                                                       int32_t unk5,
+                                                       const float rot[3],
+                                                       const float scale[3] )
     {
         item = game_patch::_04_verifyProgressiveItem( mod::randomizer, item );
         return return_createItemForPresentDemo( pos, item, unk3, unk4, unk5, rot, scale );
     }
 
     KEEP_FUNC int32_t handle_createItemForTrBoxDemo( const float pos[3],
-                                           int32_t item,
-                                           int32_t itemPickupFlag,
-                                           int32_t roomNo,
-                                           const int16_t rot[3],
-                                           const float scale[3] )
+                                                     int32_t item,
+                                                     int32_t itemPickupFlag,
+                                                     int32_t roomNo,
+                                                     const int16_t rot[3],
+                                                     const float scale[3] )
     {
         events::handleDungeonHeartContainer();     // Set the flag for the dungeon heart container
                                                    // if this item replaces it.
@@ -779,8 +786,7 @@ namespace mod
         char buf[32];
 
         // Set up an auto function for getting Yes or No text
-        auto getYesNoText = []( bool flag )
-        {
+        auto getYesNoText = []( bool flag ) {
             if ( flag )
             {
                 return "Yes";
@@ -1165,9 +1171,9 @@ namespace mod
     }
 
     KEEP_FUNC bool handle_setMessageCode_inSequence( libtp::tp::control::TControl* control,
-                                           const void* TProcessor,
-                                           uint16_t unk3,
-                                           uint16_t msgId )
+                                                     const void* TProcessor,
+                                                     uint16_t unk3,
+                                                     uint16_t msgId )
     {
         // Call the original function immediately, as a lot of stuff needs to be set before our code runs
         const bool ret = return_setMessageCode_inSequence( control, TProcessor, unk3, msgId );

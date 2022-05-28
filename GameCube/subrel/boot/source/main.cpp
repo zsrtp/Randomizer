@@ -23,7 +23,7 @@ namespace mod
     {
         // Run game patches
         game_patch::_02_modifyItemData();
-        
+
         // Display some info
         console << "Welcome to TPR!\n"
                 << "(C) AECX, Lunar Soap, Zephiles\n\n"
@@ -33,19 +33,16 @@ namespace mod
                 << "Memory Card!\n"
                 << "Press R + Z to close the console.\n"
                 << "Press X/Y to select a seed.\n\n";
-        
+
         // Generate our seedList
         seedList = new rando::SeedList();
-        
+
         // Just hook functions for now
         hookFunctions();
     }
-    
-    void exit()
-    {
-        
-    }
-    
+
+    void exit() {}
+
     void hookFunctions()
     {
         using namespace libtp;
