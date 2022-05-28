@@ -89,7 +89,7 @@ namespace mod::game_patch
                 sizeof( libtp::tp::d_item_data::FieldItemRes ) );
     }
 
-    void _02_modifyFoolishShopModel( uint16_t shopID )
+    KEEP_FUNC void _02_modifyFoolishShopModel( uint16_t shopID )
     {
         // Set the shop model of the Foolish Item ID to the model of a random important item.
         using namespace libtp::tp::d_a_shop_item_static;

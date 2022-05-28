@@ -50,6 +50,7 @@ namespace mod
     bool ringDrawnThisFrame = false;
     void* Z2ScenePtr = nullptr;
     bool isFoolishTrapQueued = false;
+    uint8_t seedRelAction = SEED_ACTION_NONE;
     uint32_t nextVal = libtp::gc_wii::os_time::OSGetTick();
 
     // Function hook return trampolines
@@ -171,7 +172,7 @@ namespace mod
     void main()
     {
         // Call the boot rel
-        // The seedlist will be generated in the boot rel, so avoid mounting the memory card multiple times
+        // The seedlist will be generated in the boot rel, so avoid mounting/unmounting the memory card multiple times
         constexpr int32_t chan = CARD_SLOT_A;
         if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
         {
@@ -486,36 +487,58 @@ namespace mod
         // Handle rando state
         if ( gameState == GAME_ACTIVE )
         {
-            if ( !randoIsEnabled( randomizer ) && ( seedList->m_numSeeds > 0 ) )
+            // Make sure no errors have occured
+            uint8_t currentSeedAction = seedRelAction;
+            if ( currentSeedAction == SEED_ACTION_NONE )
             {
-                uint8_t selectedSeed = seedList->m_selectedSeed;
-
-                if ( !randomizer )
+                if ( !randoIsEnabled( randomizer ) && ( seedList->m_numSeeds > 0 ) )
                 {
-                    // The randomizer constructor sets m_Enabled to true
-                    randomizer = new rando::Randomizer( &seedList->m_seedInfo[selectedSeed], selectedSeed );
-                }
-                else
-                {
-                    // Enable the randomizer
-                    randomizer->m_Enabled = true;
-
-                    // Check if loading a different seed
-                    if ( randomizer->m_CurrentSeed != selectedSeed )
+                    if ( !randomizer )
                     {
-                        mod::console << "Changing seed:\n";
-                        randomizer->changeSeed( &seedList->m_seedInfo[selectedSeed], selectedSeed );
+                        // Only mount/unmount the memory card once
+                        constexpr int32_t chan = CARD_SLOT_A;
+                        if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
+                        {
+                            seedRelAction = SEED_ACTION_LOAD_SEED;
+
+                            if ( !callRelPrologMounted( chan, 0x1001 ) )
+                            {
+                                seedRelAction = SEED_ACTION_FATAL;
+                            }
+
+                            libtp::gc_wii::card::CARDUnmount( chan );
+                        }
                     }
                     else
                     {
-                        // Not loading a different seed, so load checks for first load
-                        randomizer->onStageLoad();
+                        // Enable the randomizer
+                        randomizer->m_Enabled = true;
+
+                        // Check if loading a different seed
+                        if ( randomizer->m_CurrentSeed != seedList->m_selectedSeed )
+                        {
+                            // Only mount/unmount the memory card once
+                            constexpr int32_t chan = CARD_SLOT_A;
+                            if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
+                            {
+                                mod::console << "Changing seed:\n";
+                                seedRelAction = SEED_ACTION_CHANGE_SEED;
+
+                                if ( !callRelPrologMounted( chan, 0x1001 ) )
+                                {
+                                    seedRelAction = SEED_ACTION_FATAL;
+                                }
+
+                                libtp::gc_wii::card::CARDUnmount( chan );
+                            }
+                        }
+                        else
+                        {
+                            // Not loading a different seed, so load checks for first load
+                            randomizer->onStageLoad();
+                        }
                     }
                 }
-
-                // Patches need to be applied whenever a seed is loaded.
-                mod::console << "Patching game:\n";
-                randomizer->m_Seed->applyPatches( true );
             }
         }
         else if ( randoIsEnabled( randomizer ) )

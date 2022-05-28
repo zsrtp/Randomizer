@@ -26,6 +26,12 @@
 #define GAME_TITLE 1      // When user is on title screen; let them choose their seed etc.
 #define GAME_ACTIVE 2     // When user is ingame and rando should be active
 
+// Seed rel actions
+#define SEED_ACTION_NONE 0
+#define SEED_ACTION_LOAD_SEED 1
+#define SEED_ACTION_CHANGE_SEED 2
+#define SEED_ACTION_FATAL 255
+
 #define MAX_REL_ENTRIES 37
 
 struct RelEntry
@@ -59,6 +65,7 @@ namespace mod
     extern bool ringDrawnThisFrame;
     extern void* Z2ScenePtr;
     extern bool isFoolishTrapQueued;
+    extern uint8_t seedRelAction;
 
     void hookFunctions();
     void setScreen( bool state );     // Sets visibility of console
