@@ -53,118 +53,127 @@ namespace mod
     uint32_t nextVal = libtp::gc_wii::os_time::OSGetTick();
 
     // Function hook return trampolines
-    void KEEP_VAR(".bss") ( *return_fapGm_Execute )( void ) = nullptr;
+    void KEEP_VAR( ".bss" ) ( *return_fapGm_Execute )( void ) = nullptr;
     // DMC (REL) Hook
-    bool KEEP_VAR(".bss") ( *return_do_Link )( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) = nullptr;
-    bool KEEP_VAR(".bss") ( *return_do_unlink )( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_do_Link )( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_do_unlink )( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) = nullptr;
 
     // DZX trampolines
-    bool KEEP_VAR(".bss") ( *return_actorInit )( void* mStatus_roomControl,
-                                libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
-                                int32_t unk3,
-                                void* unk4 ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_actorInit )( void* mStatus_roomControl,
+                                                   libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
+                                                   int32_t unk3,
+                                                   void* unk4 ) = nullptr;
 
-    bool KEEP_VAR(".bss") ( *return_actorInit_always )( void* mStatus_roomControl,
-                                       libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
-                                       int32_t unk3,
-                                       void* unk4 ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_actorInit_always )( void* mStatus_roomControl,
+                                                          libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
+                                                          int32_t unk3,
+                                                          void* unk4 ) = nullptr;
 
-    bool KEEP_VAR(".bss") ( *return_actorCommonLayerInit )( void* mStatus_roomControl,
-                                           libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
-                                           int32_t unk3,
-                                           void* unk4 ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_actorCommonLayerInit )( void* mStatus_roomControl,
+                                                              libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
+                                                              int32_t unk3,
+                                                              void* unk4 ) = nullptr;
 
-    int32_t KEEP_VAR(".bss") ( *return_tgscInfoInit )( void* stageDt, void* i_data, int32_t entryNum, void* param_3 ) = nullptr;
+    int32_t KEEP_VAR( ".bss" ) ( *return_tgscInfoInit )( void* stageDt,
+                                                         void* i_data,
+                                                         int32_t entryNum,
+                                                         void* param_3 ) = nullptr;
 
-    void KEEP_VAR(".bss") ( *return_roomLoader )( void* data, void* stageDt, int32_t roomNo ) = nullptr;
+    void KEEP_VAR( ".bss" ) ( *return_roomLoader )( void* data, void* stageDt, int32_t roomNo ) = nullptr;
 
     // GetLayerNo trampoline
-    int32_t KEEP_VAR(".bss") ( *return_getLayerNo_common_common )( const char* stageName, int32_t roomId, int32_t layerOverride ) = nullptr;
+    int32_t KEEP_VAR( ".bss" ) ( *return_getLayerNo_common_common )( const char* stageName,
+                                                                     int32_t roomId,
+                                                                     int32_t layerOverride ) = nullptr;
 
     // Item creation functions.
-    int32_t KEEP_VAR(".bss") ( *return_createItemForBoss )( const float pos[3],
-                                           int32_t item,
-                                           int32_t roomNo,
-                                           const int16_t rot[3],
-                                           const float scale[3],
-                                           float unk6,
-                                           float unk7,
-                                           int32_t parameters ) = nullptr;
+    int32_t KEEP_VAR( ".bss" ) ( *return_createItemForBoss )( const float pos[3],
+                                                              int32_t item,
+                                                              int32_t roomNo,
+                                                              const int16_t rot[3],
+                                                              const float scale[3],
+                                                              float unk6,
+                                                              float unk7,
+                                                              int32_t parameters ) = nullptr;
 
-    int32_t KEEP_VAR(".bss") ( *return_createItemForPresentDemo )( const float pos[3],
-                                                  int32_t item,
-                                                  uint8_t unk3,
-                                                  int32_t unk4,
-                                                  int32_t unk5,
-                                                  const float unk6[3],
-                                                  const float unk7[3] ) = nullptr;
+    int32_t KEEP_VAR( ".bss" ) ( *return_createItemForPresentDemo )( const float pos[3],
+                                                                     int32_t item,
+                                                                     uint8_t unk3,
+                                                                     int32_t unk4,
+                                                                     int32_t unk5,
+                                                                     const float unk6[3],
+                                                                     const float unk7[3] ) = nullptr;
 
-    int32_t KEEP_VAR(".bss") ( *return_createItemForTrBoxDemo )( const float pos[3],
-                                                int32_t item,
-                                                int32_t itemPickupFlag,
-                                                int32_t roomNo,
-                                                const int16_t rot[3],
-                                                const float scale[3] ) = nullptr;
+    int32_t KEEP_VAR( ".bss" ) ( *return_createItemForTrBoxDemo )( const float pos[3],
+                                                                   int32_t item,
+                                                                   int32_t itemPickupFlag,
+                                                                   int32_t roomNo,
+                                                                   const int16_t rot[3],
+                                                                   const float scale[3] ) = nullptr;
 
-    int32_t KEEP_VAR(".bss") ( *return_createItemForMidBoss )( const float pos[3],
-                                              int32_t item,
-                                              int32_t roomNo,
-                                              const int16_t rot[3],
-                                              const float scale[3],
-                                              int32_t unk6,
-                                              int32_t itemPickupFlag ) = nullptr;
+    int32_t KEEP_VAR( ".bss" ) ( *return_createItemForMidBoss )( const float pos[3],
+                                                                 int32_t item,
+                                                                 int32_t roomNo,
+                                                                 const int16_t rot[3],
+                                                                 const float scale[3],
+                                                                 int32_t unk6,
+                                                                 int32_t itemPickupFlag ) = nullptr;
 
     // Item Wheel trampolines
-    void KEEP_VAR(".bss") ( *return_setLineUpItem )( libtp::tp::d_save::dSv_player_item_c* ) = nullptr;
-    void KEEP_VAR(".bss") ( *return_dMenuRing__draw )( void* dMenuRing ) = nullptr;
+    void KEEP_VAR( ".bss" ) ( *return_setLineUpItem )( libtp::tp::d_save::dSv_player_item_c* ) = nullptr;
+    void KEEP_VAR( ".bss" ) ( *return_dMenuRing__draw )( void* dMenuRing ) = nullptr;
 
     // ItemGet functions.
-    int32_t KEEP_VAR(".bss") ( *return_execItemGet )( uint8_t item ) = nullptr;
-    int32_t KEEP_VAR(".bss") ( *return_checkItemGet )( uint8_t item, int32_t defaultValue ) = nullptr;
+    int32_t KEEP_VAR( ".bss" ) ( *return_execItemGet )( uint8_t item ) = nullptr;
+    int32_t KEEP_VAR( ".bss" ) ( *return_checkItemGet )( uint8_t item, int32_t defaultValue ) = nullptr;
 
     // Message functions
-    bool KEEP_VAR(".bss") ( *return_setMessageCode_inSequence )( libtp::tp::control::TControl* control,
-                                                const void* TProcessor,
-                                                uint16_t unk3,
-                                                uint16_t msgId ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_setMessageCode_inSequence )( libtp::tp::control::TControl* control,
+                                                                   const void* TProcessor,
+                                                                   uint16_t unk3,
+                                                                   uint16_t msgId ) = nullptr;
 
-    uint32_t KEEP_VAR(".bss") ( *return_getFontCCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
-    uint32_t KEEP_VAR(".bss") ( *return_getFontGCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
-    char KEEP_VAR(".bss") ( *return_parseCharacter_1Byte )( const char** text ) = nullptr;
+    uint32_t KEEP_VAR( ".bss" ) ( *return_getFontCCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
+    uint32_t KEEP_VAR( ".bss" ) ( *return_getFontGCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
+    char KEEP_VAR( ".bss" ) ( *return_parseCharacter_1Byte )( const char** text ) = nullptr;
 
     // Query/Event functions.
-    bool KEEP_VAR(".bss") ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
-    bool KEEP_VAR(".bss") ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
-    bool KEEP_VAR(".bss") ( *return_query025 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
-    bool KEEP_VAR(".bss") ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
-    int32_t KEEP_VAR(".bss") ( *return_query004 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
-    int32_t KEEP_VAR(".bss") ( *return_query037 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
-    uint32_t KEEP_VAR(".bss") ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
-    int32_t KEEP_VAR(".bss") ( *return_event003 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
-    int32_t KEEP_VAR(".bss") ( *return_event041 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_query025 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    int32_t KEEP_VAR( ".bss" ) ( *return_query004 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    int32_t KEEP_VAR( ".bss" ) ( *return_query037 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    uint32_t KEEP_VAR( ".bss" ) ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
+    int32_t KEEP_VAR( ".bss" ) ( *return_event003 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
+    int32_t KEEP_VAR( ".bss" ) ( *return_event041 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
 
     // Save flag functions
-    bool KEEP_VAR(".bss") ( *return_isDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit ) = nullptr;
-    bool KEEP_VAR(".bss") ( *return_chkEvtBit )( uint32_t flag ) = nullptr;
-    bool KEEP_VAR(".bss") ( *return_isEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
-    void KEEP_VAR(".bss") ( *return_onEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
-    bool KEEP_VAR(".bss") ( *return_isSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag ) = nullptr;
-    void KEEP_VAR(".bss") ( *return_onSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag ) = nullptr;
-    bool KEEP_VAR(".bss") ( *return_checkTreasureRupeeReturn )( void* unk1, int32_t item ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_isDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr,
+                                                       const int32_t memBit ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_chkEvtBit )( uint32_t flag ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_isEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
+    void KEEP_VAR( ".bss" ) ( *return_onEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_isSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit,
+                                                             int32_t flag ) = nullptr;
+    void KEEP_VAR( ".bss" ) ( *return_onSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit,
+                                                             int32_t flag ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_checkTreasureRupeeReturn )( void* unk1, int32_t item ) = nullptr;
 
     // Pause menu functions
-    void KEEP_VAR(".bss") ( *return_collect_save_open_init )( uint8_t param_1 ) = nullptr;
+    void KEEP_VAR( ".bss" ) ( *return_collect_save_open_init )( uint8_t param_1 ) = nullptr;
 
     // Link functions
-    bool KEEP_VAR(".bss") ( *return_checkBootsMoveAnime )( libtp::tp::d_a_alink::daAlink* d_a_alink, int32_t param_1 ) = nullptr;
-    bool KEEP_VAR(".bss") ( *return_checkDamageAction )( libtp::tp::d_a_alink::daAlink* linkMapPtr ) = nullptr;
-    void KEEP_VAR(".bss") ( *return_setGetItemFace )( libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_checkBootsMoveAnime )( libtp::tp::d_a_alink::daAlink* d_a_alink,
+                                                             int32_t param_1 ) = nullptr;
+    bool KEEP_VAR( ".bss" ) ( *return_checkDamageAction )( libtp::tp::d_a_alink::daAlink* linkMapPtr ) = nullptr;
+    void KEEP_VAR( ".bss" ) ( *return_setGetItemFace )( libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID ) = nullptr;
 
     // Audio functions
-    void KEEP_VAR(".bss") ( *return_loadSeWave )( void* Z2SceneMgr, uint32_t waveID ) = nullptr;
+    void KEEP_VAR( ".bss" ) ( *return_loadSeWave )( void* Z2SceneMgr, uint32_t waveID ) = nullptr;
 
     // Title Screen functions
-    void* KEEP_VAR(".bss") ( *return_dScnLogo_c_dt )( void* dScnLogo_c, int16_t bFreeThis ) = nullptr;
+    void* KEEP_VAR( ".bss" ) ( *return_dScnLogo_c_dt )( void* dScnLogo_c, int16_t bFreeThis ) = nullptr;
 
     void main()
     {
@@ -173,172 +182,170 @@ namespace mod
         game_patch::_02_modifyItemData();
         game_patch::_03_increaseClimbSpeed();
         game_patch::_06_writeASMPatches();
-        
+
         // Call the boot rel
         // The seedlist will be generated in the boot rel, so avoid mounting the memory card multiple times
         constexpr int32_t chan = CARD_SLOT_A;
         if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
         {
-            callRelPrologMounted(chan, 0x1002);
+            callRelPrologMounted( chan, 0x1002 );
             libtp::gc_wii::card::CARDUnmount( chan );
         }
     }
-    
+
     // Required for keeping certain unused functions/variables from being removed
     extern "C"
     {
-        void KEEP_FUNC _sector_anchor(){}
-        uint8_t KEEP_VAR(".bss") _sector_anchor_var = 0;
+        void KEEP_FUNC _sector_anchor() {}
+        uint8_t KEEP_VAR( ".bss" ) _sector_anchor_var = 0;
     }
-    
+
     // Will be moved to libtp_rel later
-    bool callRelPrologMounted(int32_t chan, uint32_t rel_id)
+    bool callRelPrologMounted( int32_t chan, uint32_t rel_id )
     {
         using namespace libtp::gc_wii::card;
         using namespace libtp::gc_wii::os_module;
         int32_t result;
-        
+
         // All of the RELs should be in the main save file, which always uses an internal name of "Custom REL File"
         CARDFileInfo fileInfo;
-        result = CARDOpen(chan, "Custom REL File", &fileInfo);
-        if (result != CARD_RESULT_READY)
+        result = CARDOpen( chan, "Custom REL File", &fileInfo );
+        if ( result != CARD_RESULT_READY )
         {
             return false;
         }
-        
+
         // Allocate bytes to hold the area of the file that contains the size
-        uint8_t *fileData = new uint8_t[CARD_READ_SIZE];
-        
+        uint8_t* fileData = new uint8_t[CARD_READ_SIZE];
+
         // Get the data from the area that holds the size
-        result = CARDRead(&fileInfo, fileData, CARD_READ_SIZE, 0x2000);
-        if (result != CARD_RESULT_READY)
+        result = CARDRead( &fileInfo, fileData, CARD_READ_SIZE, 0x2000 );
+        if ( result != CARD_RESULT_READY )
         {
             delete[] fileData;
-            CARDClose(&fileInfo);
+            CARDClose( &fileInfo );
             return false;
         }
-        
+
         // Loop through the REL entries until the desired one is found
-        RelEntry *entry = reinterpret_cast<RelEntry *>(&fileData[0x44]);
+        RelEntry* entry = reinterpret_cast<RelEntry*>( &fileData[0x44] );
         bool foundDesiredRel = false;
-        
-        for (uint32_t i = 0; i < MAX_REL_ENTRIES; i++)
+
+        for ( uint32_t i = 0; i < MAX_REL_ENTRIES; i++ )
         {
             // If any of the fields are 0, then there are no more entries
-            if ((entry->rel_id == 0) || 
-                (entry->rel_size == 0) || 
-                (entry->offset == 0))
+            if ( ( entry->rel_id == 0 ) || ( entry->rel_size == 0 ) || ( entry->offset == 0 ) )
             {
                 break;
             }
-            
-            if (entry->rel_id == rel_id)
+
+            if ( entry->rel_id == rel_id )
             {
                 // Found the desired REL
                 foundDesiredRel = true;
                 break;
             }
-            
+
             entry++;
         }
-        
-        if (!foundDesiredRel)
+
+        if ( !foundDesiredRel )
         {
             delete[] fileData;
-            CARDClose(&fileInfo);
+            CARDClose( &fileInfo );
             return false;
         }
-        
+
         // Get the variables from the entry so that fileData can be freed
         uint32_t fileSize = entry->rel_size;
         uint32_t fileOffset = entry->offset;
         delete[] fileData;
-        
+
         // Allocate memory to hold the REL file, and clear it's cache since assembly will run from it
         // Allocate the memory to the back of the heap to avoid fragmentation
         // Buffers that CARDRead uses must be aligned to 0x20 bytes
-        fileData = new (-0x20) uint8_t[fileSize];
-        libtp::memory::clear_DC_IC_Cache(fileData, fileSize);
-        
+        fileData = new ( -0x20 ) uint8_t[fileSize];
+        libtp::memory::clear_DC_IC_Cache( fileData, fileSize );
+
         // Since we can only read in and at increments of CARD_READ_SIZE do this to calculate the region we require
         int32_t adjustedOffset = ( fileOffset / CARD_READ_SIZE ) * CARD_READ_SIZE;
         int32_t adjustedLength = ( 1 + ( ( fileOffset - adjustedOffset + fileSize - 1 ) / CARD_READ_SIZE ) ) * CARD_READ_SIZE;
-        
+
         // Buffer might not be adjusted to the new length so create a temporary data buffer
         uint8_t* data = new uint8_t[adjustedLength];
-        
+
         // Read the REL file from the memory card
-        result = CARDRead(&fileInfo, data, adjustedLength, adjustedOffset);
-        
+        result = CARDRead( &fileInfo, data, adjustedLength, adjustedOffset );
+
         // Close the file, as it's no longer needed
-        CARDClose(&fileInfo);
-        
-        if (result != CARD_RESULT_READY)
+        CARDClose( &fileInfo );
+
+        if ( result != CARD_RESULT_READY )
         {
             delete[] fileData;
             delete[] data;
             return false;
         }
-        
+
         // Copy data to the user's buffer
         memcpy( fileData, data + ( fileOffset - adjustedOffset ), fileSize );
-        
+
         // Delete the temporary data buffer, as it's no longer needed
         delete[] data;
-        
+
         // Failsafe: Be 100% sure the REL file loaded is the correct one
-        OSModuleInfo *relFile = reinterpret_cast<OSModuleInfo *>(fileData);
-        if (relFile->id != rel_id)
+        OSModuleInfo* relFile = reinterpret_cast<OSModuleInfo*>( fileData );
+        if ( relFile->id != rel_id )
         {
             delete[] relFile;
             return false;
         }
-        
+
         // Get the REL's BSS size and allocate memory for it
         uint32_t bssSize = relFile->bssSize;
-        
+
         // If bssSize is 0, then use an arbitrary size
-        if (bssSize == 0)
+        if ( bssSize == 0 )
         {
             bssSize = 0x4;
         }
-        
+
         // Allocate the memory to the back of the heap to avoid fragmentation
-        uint8_t *bssArea = new (-(relFile->bssAlignment)) uint8_t[bssSize];
-        
+        uint8_t* bssArea = new ( -( relFile->bssAlignment ) ) uint8_t[bssSize];
+
         // Link the REL file
-        bool relFileIsLinked = OSLink(relFile, bssArea);
-        if (!relFileIsLinked)
+        bool relFileIsLinked = OSLink( relFile, bssArea );
+        if ( !relFileIsLinked )
         {
             // Try to unlink to be safe
-            OSUnlink(relFile);
-            
+            OSUnlink( relFile );
+
             delete[] bssArea;
             delete[] relFile;
             return false;
         }
-        
+
         // Call the REL's prolog functon
-        reinterpret_cast<void(*)()>(relFile->prologFuncOffset)();
-        
+        reinterpret_cast<void ( * )()>( relFile->prologFuncOffset )();
+
         // We are done with the REL file, so call it's epilog function to perform any necessary exit code
-        reinterpret_cast<void(*)()>(relFile->epilogFuncOffset)();
-        
+        reinterpret_cast<void ( * )()>( relFile->epilogFuncOffset )();
+
         // All REL functions are done, so the file can be unlinked
-        OSUnlink(relFile);
-        
+        OSUnlink( relFile );
+
         // Clear the cache of the memory used by the REL file since assembly ran from it
-        libtp::memory::clear_DC_IC_Cache(relFile, fileSize);
-        
+        libtp::memory::clear_DC_IC_Cache( relFile, fileSize );
+
         // Cleanup
         delete[] bssArea;
         delete[] relFile;
-        
+
         return true;
     }
-    
+
     // Will be moved to libtp_rel later
-    bool callRelProlog(int32_t chan, uint32_t rel_id)
+    bool callRelProlog( int32_t chan, uint32_t rel_id )
     {
         using namespace libtp::gc_wii::card;
         bool result = false;
@@ -346,10 +353,10 @@ namespace mod
         // Mount the memory card
         if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
         {
-            result = callRelPrologMounted(chan, rel_id);
+            result = callRelPrologMounted( chan, rel_id );
             CARDUnmount( chan );
         }
-        
+
         return result;
     }
 
@@ -583,7 +590,10 @@ namespace mod
         return return_do_unlink( dmc );
     }
 
-    bool KEEP_FUNC handle_actorInit( void* mStatus_roomControl, libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 )
+    bool KEEP_FUNC handle_actorInit( void* mStatus_roomControl,
+                                     libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
+                                     int32_t unk3,
+                                     void* unk4 )
     {
         // Load DZX based randomizer checks that are stored in the local DZX
         events::onDZX( mod::randomizer, chunkTypeInfo );
@@ -591,9 +601,9 @@ namespace mod
     }
 
     bool KEEP_FUNC handle_actorInit_always( void* mStatus_roomControl,
-                                  libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
-                                  int32_t unk3,
-                                  void* unk4 )
+                                            libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
+                                            int32_t unk3,
+                                            void* unk4 )
     {
         // Load DZX based randomizer checks that are stored in the global DZX
         events::onDZX( mod::randomizer, chunkTypeInfo );
@@ -601,9 +611,9 @@ namespace mod
     }
 
     bool KEEP_FUNC handle_actorCommonLayerInit( void* mStatus_roomControl,
-                                      libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
-                                      int32_t unk3,
-                                      void* unk4 )
+                                                libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
+                                                int32_t unk3,
+                                                void* unk4 )
     {
         // Load DZX based checks that are stored in the current layer DZX
         events::onDZX( mod::randomizer, chunkTypeInfo );
@@ -638,13 +648,13 @@ namespace mod
     }
 
     int32_t KEEP_FUNC handle_createItemForBoss( const float pos[3],
-                                      int32_t item,
-                                      int32_t roomNo,
-                                      const int16_t rot[3],
-                                      const float scale[3],
-                                      float unk6,
-                                      float unk7,
-                                      int32_t parameters )
+                                                int32_t item,
+                                                int32_t roomNo,
+                                                const int16_t rot[3],
+                                                const float scale[3],
+                                                float unk6,
+                                                float unk7,
+                                                int32_t parameters )
     {
         // Spawn the appropriate item with model
         uint8_t itemID = randomizer->getBossItem();
@@ -654,12 +664,12 @@ namespace mod
     }
 
     int32_t KEEP_FUNC handle_createItemForMidBoss( const float pos[3],
-                                         int32_t item,
-                                         int32_t roomNo,
-                                         const int16_t rot[3],
-                                         const float scale[3],
-                                         int32_t unk6,
-                                         int32_t itemPickupFlag )
+                                                   int32_t item,
+                                                   int32_t roomNo,
+                                                   const int16_t rot[3],
+                                                   const float scale[3],
+                                                   int32_t unk6,
+                                                   int32_t itemPickupFlag )
     {
         if ( item == 0x40 )
         {
@@ -673,23 +683,23 @@ namespace mod
     }
 
     int32_t KEEP_FUNC handle_createItemForPresentDemo( const float pos[3],
-                                             int32_t item,
-                                             uint8_t unk3,
-                                             int32_t unk4,
-                                             int32_t unk5,
-                                             const float rot[3],
-                                             const float scale[3] )
+                                                       int32_t item,
+                                                       uint8_t unk3,
+                                                       int32_t unk4,
+                                                       int32_t unk5,
+                                                       const float rot[3],
+                                                       const float scale[3] )
     {
         item = game_patch::_04_verifyProgressiveItem( mod::randomizer, item );
         return return_createItemForPresentDemo( pos, item, unk3, unk4, unk5, rot, scale );
     }
 
     int32_t KEEP_FUNC handle_createItemForTrBoxDemo( const float pos[3],
-                                           int32_t item,
-                                           int32_t itemPickupFlag,
-                                           int32_t roomNo,
-                                           const int16_t rot[3],
-                                           const float scale[3] )
+                                                     int32_t item,
+                                                     int32_t itemPickupFlag,
+                                                     int32_t roomNo,
+                                                     const int16_t rot[3],
+                                                     const float scale[3] )
     {
         events::handleDungeonHeartContainer();     // Set the flag for the dungeon heart container
                                                    // if this item replaces it.
@@ -1174,9 +1184,9 @@ namespace mod
     }
 
     bool KEEP_FUNC handle_setMessageCode_inSequence( libtp::tp::control::TControl* control,
-                                           const void* TProcessor,
-                                           uint16_t unk3,
-                                           uint16_t msgId )
+                                                     const void* TProcessor,
+                                                     uint16_t unk3,
+                                                     uint16_t msgId )
     {
         // Call the original function immediately, as a lot of stuff needs to be set before our code runs
         const bool ret = return_setMessageCode_inSequence( control, TProcessor, unk3, msgId );

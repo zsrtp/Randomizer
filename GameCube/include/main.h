@@ -30,17 +30,17 @@
 
 struct RelEntry
 {
-    uint32_t rel_id;   // Module ID
-    uint32_t rel_size; // Size of the REL file excluding CARD_READ_SIZE rounding
-    uint32_t offset;   // Offset to the REL file from the start of the gci file, excluding the gci header
-} __attribute__((__packed__));
+    uint32_t rel_id;       // Module ID
+    uint32_t rel_size;     // Size of the REL file excluding CARD_READ_SIZE rounding
+    uint32_t offset;       // Offset to the REL file from the start of the gci file, excluding the gci header
+} __attribute__( ( __packed__ ) );
 
-static_assert(sizeof(RelEntry) == 0xC);
+static_assert( sizeof( RelEntry ) == 0xC );
 
 // May be moved somewhere else later
 // Required for keeping certain unused functions/variables from being removed
-#define KEEP_FUNC __attribute__((used, section (".text")))
-#define KEEP_VAR(sect) __attribute__((section (sect)))
+#define KEEP_FUNC __attribute__( ( used, section( ".text" ) ) )
+#define KEEP_VAR( sect ) __attribute__( ( section( sect ) ) )
 
 namespace mod
 {
@@ -67,10 +67,10 @@ namespace mod
     float intToFloat( int32_t value );
     void handleInput( uint32_t inputs );
     void handleFoolishItem();
-    
+
     // Will be moved to libtp_rel later
-    bool callRelPrologMounted(int32_t chan, uint32_t rel_id);
-    bool callRelProlog(int32_t chan, uint32_t rel_id);
+    bool callRelPrologMounted( int32_t chan, uint32_t rel_id );
+    bool callRelProlog( int32_t chan, uint32_t rel_id );
 
     // Inline randoIsEnabled, as it's short enough to use less memory when inlined
     inline bool randoIsEnabled( rando::Randomizer* rando )
