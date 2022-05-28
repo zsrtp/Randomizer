@@ -42,21 +42,13 @@ namespace mod::game_patch
                                const libtp::data::items::NodeDungeonItemType type )
     {
         using namespace libtp::data::items;
-        libtp::tp::d_save::dSv_info_c* gameInfoPtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save;
+        int32_t currentAreaNodeId = events::getCurrentAreaNodeId();
 
-        // If the key is for the current area, then update the local node
-        int32_t stageIndex = libtp::tools::getStageIndex( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage );
-        if ( stageIndex != -1 )
+        // Make sure the node id is valid
+        if ( currentAreaNodeId >= 0 )
         {
-            uint8_t* memoryFlags;
-            if ( nodeId == static_cast<libtp::data::stage::AreaNodesID>( libtp::data::stage::regionID[stageIndex] ) )
-            {
-                memoryFlags = gameInfoPtr->memory.temp_flags.memoryFlags;
-            }
-            else     // Key is not for the current area, so update the appropriate node
-            {
-                memoryFlags = gameInfoPtr->save_file.area_flags[static_cast<uint32_t>( nodeId )].temp_flags.memoryFlags;
-            }
+            uint8_t* memoryFlags =
+                events::getNodeMemoryFlags( nodeId, static_cast<libtp::data::stage::AreaNodesID>( currentAreaNodeId ) );
 
             switch ( type )
             {
