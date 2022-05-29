@@ -15,6 +15,7 @@
 // m_Do_ext.o
 // text
 8000EDA8:getArchiveHeapPtr
+800149a4:mDoExt_getMesgFont
 
 // m_Do_MemCard.o
 // data
@@ -319,3 +320,26 @@
 // m_Do_Audio.o
 803ddeec:g_mDoAud_zelAudio
 
+// J2DTextBox.h
+80300460:J2DTextBox_ct1
+80300fe0:J2DTextBox_dt
+80301078:J2DTextBox_setFont
+803010e8:J2DTextBox_draw1
+80301290:J2DTextBox_draw2
+80301460:J2DTextBox_setString1
+
+// d_menu_ring.o
+801eae40:dMenuRing__create
+801eaeac:dMenuRing__delete
+801eaf8c:dMenuRing__draw
+
+// JKRArchive.o
+802d6a64:JKRArchive_getResource2
+
+// J2DPicture.o
+802fd508:J2DPicture_ct4
+802fddf0:J2DPicture_dt
+802fea70:J2DPicture_draw
+
+// d_s_logo.o
+80257d28:dScnLogo_c_dt
