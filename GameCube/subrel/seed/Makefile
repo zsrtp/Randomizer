@@ -26,16 +26,17 @@ PROJECT_NAME := Randomizer
 OUTPUT_FILENAME := seed
 
 # DON'T TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
-LIBTP_REL := ../../externals/libtp_rel
+LIBTP_REL := $(ROOT_DIR)/externals/libtp_rel
 
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
-	ELF2REL := ../../../bin/elf2rel
+	ELF2REL := wine $(abspath $(ROOT_DIR)/bin/elf2rel.exe)
 else
-	ELF2REL := ../../../bin/elf2rel.exe
+	ELF2REL := $(abspath $(ROOT_DIR)/bin/elf2rel.exe)
 endif
 
+JSON_READ := python3 $(abspath $(ROOT_DIR)/bin/json_read.py)
 
 ifeq ($(VERSION),)
 all: us jp eu
@@ -62,9 +63,9 @@ else
 #---------------------------------------------------------------------------------
 TARGET		:=	$(OUTPUT_FILENAME).$(VERSION)
 BUILD		:=	build.$(VERSION)
-SOURCES		:=	source $(wildcard source/*) $(LIBTP_REL)/source $(wildcard $(LIBTP_REL)/source/*)
+SOURCES		:=	$(CURDIR)/source $(wildcard $(CURDIR)/source/*) $(LIBTP_REL)/source $(wildcard $(LIBTP_REL)/source/*)
 DATA		:=	data
-INCLUDES	:=	include ../../include $(LIBTP_REL)/include
+INCLUDES	:=	$(CURDIR)/include $(ROOT_DIR)/include $(LIBTP_REL)/include
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -113,7 +114,7 @@ ifneq ($(BUILD),$(notdir $(CURDIR)))
 
 export OUTPUT	:=	$(CURDIR)/$(TARGET)
 
-export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
+export VPATH	:=	$(foreach dir,$(SOURCES),$(dir)) \
 			$(foreach dir,$(DATA),$(CURDIR)/$(dir))
 
 export DEPSDIR	:=	$(CURDIR)/$(BUILD)
@@ -144,12 +145,14 @@ export HFILES := $(addsuffix .h,$(subst .,_,$(BINFILES)))
 
 # For REL linking
 export LDFILES		:= $(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.ld)))
-export MAPFILE		:= $(realpath temp.$(VERSION).lst)
+# These are already defined from the root's Makefile
+#export MAPFILE		:= $(abspath $(ROOT_DIR)/build.$(VERSION)/temp.$(VERSION).lst)
+#export MODIDS		:= $(realpath $(ROOT_DIR)/assets/modids.json)
 
 #---------------------------------------------------------------------------------
 # build a list of include paths
 #---------------------------------------------------------------------------------
-export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
+export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(abspath $(dir))) \
 			$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
 			-I$(CURDIR)/$(BUILD) \
 			-I$(LIBOGC_INC)
@@ -170,7 +173,7 @@ $(BUILD):
 
 #---------------------------------------------------------------------------------
 clean_target:
-	@echo clean ... $(VERSION)
+	@echo clean ... $(OUTPUT_FILENAME) $(VERSION)
 	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).dol $(OUTPUT).rel temp.*.lst
 
 #---------------------------------------------------------------------------------
@@ -189,7 +192,7 @@ $(OFILES_SOURCES) : $(HFILES)
 # REL linking
 %.rel: %.elf
 	@echo output ... $(notdir $@)
-	@$(ELF2REL) $< -s $(MAPFILE) --rel-id 4097
+	@$(ELF2REL) $< -s $(abspath $(MAPFILE)) --rel-id $(shell $(JSON_READ) $(MODIDS) "$(OUTPUT_FILENAME)")
 
 #---------------------------------------------------------------------------------
 # This rule links in binary data with the .jpg extension
