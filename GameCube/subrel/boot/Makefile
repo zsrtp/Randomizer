@@ -9,19 +9,6 @@ endif
 
 include $(DEVKITPPC)/gamecube_rules
 
-# Format: YYYYMMDDHHmm + 2 char Game Region
-BUILDID:='"$(shell date +'%Y%m%d%H%M')"'
-
-# Version
-_VERSION_MAJOR:=1
-_VERSION_MINOR:=0
-_VERSION_PATCH:=0
-_VERSION:='"$(_VERSION_MAJOR).$(_VERSION_MINOR).$(_VERSION_PATCH)"'
-# Variant: i.e. Public, NoLogic, Race, etc.
-_VARIANT:=public
-
-# This shows up in the memory card (manager) and can contain spaces
-PROJECT_NAME := Randomizer
 # This will be the resulting .rel file - No spaces
 OUTPUT_FILENAME := boot
 
@@ -174,7 +161,7 @@ $(BUILD):
 #---------------------------------------------------------------------------------
 clean_target:
 	@echo clean ... $(OUTPUT_FILENAME) $(VERSION)
-	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).dol $(OUTPUT).rel temp.*.lst
+	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).dol $(OUTPUT).rel
 
 #---------------------------------------------------------------------------------
 else
