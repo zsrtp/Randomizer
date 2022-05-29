@@ -218,13 +218,15 @@ namespace mod
 
         for ( uint32_t i = 0; i < MAX_REL_ENTRIES; i++ )
         {
+            uint32_t currentRelId = entry->rel_id;
+
             // If any of the fields are 0, then there are no more entries
-            if ( ( entry->rel_id == 0 ) || ( entry->rel_size == 0 ) || ( entry->offset == 0 ) )
+            if ( ( currentRelId == 0 ) || ( entry->rel_size == 0 ) || ( entry->offset == 0 ) )
             {
                 break;
             }
 
-            if ( entry->rel_id == rel_id )
+            if ( currentRelId == rel_id )
             {
                 // Found the desired REL
                 foundDesiredRel = true;
@@ -248,7 +250,7 @@ namespace mod
 
         // Allocate memory to hold the REL file, and clear it's cache since assembly will run from it
         // Allocate the memory to the back of the heap to avoid fragmentation
-        // Buffers that CARDRead uses must be aligned to 0x20 bytes
+        // Align to 0x20 to be safe
         fileData = new ( -0x20 ) uint8_t[fileSize];
         libtp::memory::clear_DC_IC_Cache( fileData, fileSize );
 
@@ -257,7 +259,9 @@ namespace mod
         int32_t adjustedLength = ( 1 + ( ( fileOffset - adjustedOffset + fileSize - 1 ) / CARD_READ_SIZE ) ) * CARD_READ_SIZE;
 
         // Buffer might not be adjusted to the new length so create a temporary data buffer
-        uint8_t* data = new uint8_t[adjustedLength];
+        // Allocate the memory to the back of the heap to avoid possible fragmentation
+        // Buffers that CARDRead uses must be aligned to 0x20 bytes
+        uint8_t* data = new ( -0x20 ) uint8_t[adjustedLength];
 
         // Read the REL file from the memory card
         result = CARDRead( &fileInfo, data, adjustedLength, adjustedOffset );
@@ -292,15 +296,14 @@ namespace mod
         // If bssSize is 0, then use an arbitrary size
         if ( bssSize == 0 )
         {
-            bssSize = 0x4;
+            bssSize = 0x1;
         }
 
         // Allocate the memory to the back of the heap to avoid fragmentation
         uint8_t* bssArea = new ( -( relFile->bssAlignment ) ) uint8_t[bssSize];
 
         // Link the REL file
-        bool relFileIsLinked = OSLink( relFile, bssArea );
-        if ( !relFileIsLinked )
+        if ( !OSLink( relFile, bssArea ) )
         {
             // Try to unlink to be safe
             OSUnlink( relFile );
@@ -491,14 +494,15 @@ namespace mod
         {
             if ( !randoIsEnabled( randomizer ) && ( seedList->m_numSeeds > 0 ) && ( seedRelAction == SEED_ACTION_NONE ) )
             {
+                constexpr int32_t chan = CARD_SLOT_A;
                 if ( !randomizer )
                 {
                     // Only mount/unmount the memory card once
-                    constexpr int32_t chan = CARD_SLOT_A;
                     if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
                     {
                         seedRelAction = SEED_ACTION_LOAD_SEED;
 
+                        // m_Enabled will be set to true in the seed rel
                         if ( !callRelPrologMounted( chan, SUBREL_SEED_ID ) )
                         {
                             seedRelAction = SEED_ACTION_FATAL;
@@ -520,7 +524,6 @@ namespace mod
                     if ( randomizer->m_CurrentSeed != seedList->m_selectedSeed )
                     {
                         // Only mount/unmount the memory card once
-                        constexpr int32_t chan = CARD_SLOT_A;
                         if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
                         {
                             mod::console << "Changing seed:\n";
