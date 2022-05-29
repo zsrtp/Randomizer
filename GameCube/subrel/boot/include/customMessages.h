@@ -10,7 +10,7 @@ namespace mod::customMessages
     struct MsgEntry
     {
         const char* msg;
-        uint32_t size;
+        uint16_t size;
         uint16_t id;
     };
 

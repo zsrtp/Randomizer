@@ -19,8 +19,6 @@
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
 #include "tp/d_item_data.h"
-#include "tp/d_s_logo.h"
-#include "tp/d_save.h"
 #include "user_patch/user_patch.h"
 
 namespace mod::rando

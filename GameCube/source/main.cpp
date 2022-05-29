@@ -178,7 +178,7 @@ namespace mod
         constexpr int32_t chan = CARD_SLOT_A;
         if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
         {
-            callRelPrologMounted( chan, 0x1002 );
+            callRelPrologMounted( chan, SUBREL_BOOT_ID );
             libtp::gc_wii::card::CARDUnmount( chan );
         }
     }
@@ -503,7 +503,7 @@ namespace mod
                         {
                             seedRelAction = SEED_ACTION_LOAD_SEED;
 
-                            if ( !callRelPrologMounted( chan, 0x1001 ) )
+                            if ( !callRelPrologMounted( chan, SUBREL_SEED_ID ) )
                             {
                                 seedRelAction = SEED_ACTION_FATAL;
                             }
@@ -526,7 +526,7 @@ namespace mod
                                 mod::console << "Changing seed:\n";
                                 seedRelAction = SEED_ACTION_CHANGE_SEED;
 
-                                if ( !callRelPrologMounted( chan, 0x1001 ) )
+                                if ( !callRelPrologMounted( chan, SUBREL_SEED_ID ) )
                                 {
                                     seedRelAction = SEED_ACTION_FATAL;
                                 }

@@ -26,6 +26,10 @@
 #define GAME_TITLE 1      // When user is on title screen; let them choose their seed etc.
 #define GAME_ACTIVE 2     // When user is ingame and rando should be active
 
+// Subrel module ids
+#define SUBREL_SEED_ID 0X1001
+#define SUBREL_BOOT_ID 0X1002
+
 // Seed rel actions
 #define SEED_ACTION_NONE 0
 #define SEED_ACTION_LOAD_SEED 1
