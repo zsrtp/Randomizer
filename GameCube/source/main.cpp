@@ -489,19 +489,42 @@ namespace mod
         // Handle rando state
         if ( gameState == GAME_ACTIVE )
         {
-            // Make sure no errors have occured
-            uint8_t currentSeedAction = seedRelAction;
-            if ( currentSeedAction == SEED_ACTION_NONE )
+            if ( !randoIsEnabled( randomizer ) && ( seedList->m_numSeeds > 0 ) && ( seedRelAction == SEED_ACTION_NONE ) )
             {
-                if ( !randoIsEnabled( randomizer ) && ( seedList->m_numSeeds > 0 ) )
+                if ( !randomizer )
                 {
-                    if ( !randomizer )
+                    // Only mount/unmount the memory card once
+                    constexpr int32_t chan = CARD_SLOT_A;
+                    if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
+                    {
+                        seedRelAction = SEED_ACTION_LOAD_SEED;
+
+                        if ( !callRelPrologMounted( chan, SUBREL_SEED_ID ) )
+                        {
+                            seedRelAction = SEED_ACTION_FATAL;
+                        }
+
+                        libtp::gc_wii::card::CARDUnmount( chan );
+                    }
+                    else
+                    {
+                        seedRelAction = SEED_ACTION_FATAL;
+                    }
+                }
+                else
+                {
+                    // Enable the randomizer
+                    randomizer->m_Enabled = true;
+
+                    // Check if loading a different seed
+                    if ( randomizer->m_CurrentSeed != seedList->m_selectedSeed )
                     {
                         // Only mount/unmount the memory card once
                         constexpr int32_t chan = CARD_SLOT_A;
                         if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
                         {
-                            seedRelAction = SEED_ACTION_LOAD_SEED;
+                            mod::console << "Changing seed:\n";
+                            seedRelAction = SEED_ACTION_CHANGE_SEED;
 
                             if ( !callRelPrologMounted( chan, SUBREL_SEED_ID ) )
                             {
@@ -510,35 +533,15 @@ namespace mod
 
                             libtp::gc_wii::card::CARDUnmount( chan );
                         }
+                        else
+                        {
+                            seedRelAction = SEED_ACTION_FATAL;
+                        }
                     }
                     else
                     {
-                        // Enable the randomizer
-                        randomizer->m_Enabled = true;
-
-                        // Check if loading a different seed
-                        if ( randomizer->m_CurrentSeed != seedList->m_selectedSeed )
-                        {
-                            // Only mount/unmount the memory card once
-                            constexpr int32_t chan = CARD_SLOT_A;
-                            if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
-                            {
-                                mod::console << "Changing seed:\n";
-                                seedRelAction = SEED_ACTION_CHANGE_SEED;
-
-                                if ( !callRelPrologMounted( chan, SUBREL_SEED_ID ) )
-                                {
-                                    seedRelAction = SEED_ACTION_FATAL;
-                                }
-
-                                libtp::gc_wii::card::CARDUnmount( chan );
-                            }
-                        }
-                        else
-                        {
-                            // Not loading a different seed, so load checks for first load
-                            randomizer->onStageLoad();
-                        }
+                        // Not loading a different seed, so load checks for first load
+                        randomizer->onStageLoad();
                     }
                 }
             }
