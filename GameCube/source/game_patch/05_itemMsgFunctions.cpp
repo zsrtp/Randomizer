@@ -151,15 +151,8 @@ namespace mod::game_patch
             return nullptr;
         }
 
-        // Make sure the seed data is loaded
-        rando::Seed* seed = randomizer->m_Seed;
-        if ( !seed )
-        {
-            return nullptr;
-        }
-
         // Make sure the custom text is loaded
-        uint32_t msgTableInfoRaw = reinterpret_cast<uint32_t>( seed->m_MsgTableInfo );
+        uint32_t msgTableInfoRaw = reinterpret_cast<uint32_t>( m_MsgTableInfo );
         if ( !msgTableInfoRaw )
         {
             return nullptr;
@@ -169,7 +162,7 @@ namespace mod::game_patch
         uint16_t* msgIds = reinterpret_cast<uint16_t*>( msgTableInfoRaw );
 
         // Get the total size of the message ids
-        uint32_t totalMessages = seed->m_TotalMsgEntries;
+        uint32_t totalMessages = m_TotalMsgEntries;
         uint32_t msgIdTableSize = totalMessages * sizeof( uint16_t );
 
         // Round msgIdTableSize up to the size of the offset type to make sure the offsets are properly aligned

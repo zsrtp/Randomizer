@@ -42,6 +42,8 @@ namespace mod
     rando::SeedList* seedList = nullptr;
 
     // Variables
+    uint8_t* m_MsgTableInfo = nullptr;
+    uint32_t m_TotalMsgEntries = 0;
     libtp::tp::J2DPicture::J2DPicture* bgWindow = nullptr;
     uint32_t lastButtonInput = 0;
     int32_t lastLoadingState = 0;

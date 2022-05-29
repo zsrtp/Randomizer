@@ -56,6 +56,8 @@ namespace mod
     extern rando::SeedList* seedList;
 
     // Variables
+    extern uint8_t* m_MsgTableInfo;        // Custom message string data
+    extern uint32_t m_TotalMsgEntries;     // Number of currently loaded custom string
     extern libtp::tp::J2DPicture::J2DPicture* bgWindow;
     extern uint32_t lastButtonInput;
     extern int32_t lastLoadingState;

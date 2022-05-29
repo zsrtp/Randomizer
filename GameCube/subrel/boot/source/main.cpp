@@ -2,6 +2,7 @@
 #include "patch.h"
 
 #include "game_patch/game_patch.h"
+#include "customMessages.h"
 #include "tp/d_stage.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/f_ap_game.h"
@@ -26,6 +27,9 @@ namespace mod
         game_patch::_02_modifyItemData();
         game_patch::_03_increaseClimbSpeed();
         game_patch::_06_writeASMPatches();
+
+        // Load custom messages
+        customMessages::createMsgTable();
 
         // Display some info
         console << "Welcome to TPR!\n"

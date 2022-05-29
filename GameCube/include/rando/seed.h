@@ -57,9 +57,6 @@ namespace mod::rando
         ObjectArchiveReplacement* m_ObjectArcReplacements = nullptr;
         uint32_t m_numLoadedObjectArcReplacements = 0;
 
-        uint8_t* m_MsgTableInfo = nullptr;     // Custom message string data
-        uint32_t m_TotalMsgEntries = 0;        // Number of currently loaded custom string
-
         // Member functions
        public:
         /**
@@ -118,7 +115,6 @@ namespace mod::rando
         void LoadSkyCharacter( uint8_t stageIDX );
         void LoadHiddenSkill();
         void LoadBugReward();
-        bool loadCustomText( uint8_t* data );
     };
 }     // namespace mod::rando
 #endif

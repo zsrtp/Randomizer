@@ -1,13 +1,14 @@
-#include "main.h"
-#include "patch.h"
+// This file should only be used for EU
+#ifdef TP_EU
 
+#include "customMessages.h"
 #include "tp/resource.h"
 
 #include <cstdint>
 
 namespace mod::customMessages
 {
-    MSG_BEGIN( forestSmallKey )
+    MSG_BEGIN_ARRAY( forestSmallKeyIt )
     MSG_SPEED( MSG_SPEED_FAST )
     "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -19,7 +20,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( minesSmallKey )
+    MSG_BEGIN_ARRAY( minesSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -31,7 +32,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( lakebedSmallKey )
+    MSG_BEGIN_ARRAY( lakebedSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -43,7 +44,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( arbitersSmallKey )
+    MSG_BEGIN_ARRAY( arbitersSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -55,7 +56,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( snowpeakSmallKey )
+    MSG_BEGIN_ARRAY( snowpeakSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -67,7 +68,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( timeSmallKey )
+    MSG_BEGIN_ARRAY( timeSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -79,7 +80,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( citySmallKey )
+    MSG_BEGIN_ARRAY( citySmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -91,7 +92,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( palaceSmallKey )
+    MSG_BEGIN_ARRAY( palaceSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -103,7 +104,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( hyruleSmallKey )
+    MSG_BEGIN_ARRAY( hyruleSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -115,7 +116,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( campSmallKey )
+    MSG_BEGIN_ARRAY( campSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -127,7 +128,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( shadowCrystal )
+    MSG_BEGIN_ARRAY( shadowCrystalIt )
         MSG_SPEED(MSG_SPEED_SLOW)
         "You got the "
         MSG_COLOR(MSG_COLOR_RED)
@@ -139,7 +140,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "power that allows\nyou to transform at will!"
     MSG_END()
-    MSG_BEGIN( forestDungeonMap )
+    MSG_BEGIN_ARRAY( forestDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -151,7 +152,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( minesDungeonMap )
+    MSG_BEGIN_ARRAY( minesDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -163,7 +164,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( lakebedDungeonMap )
+    MSG_BEGIN_ARRAY( lakebedDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -175,7 +176,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( arbitersDungeonMap )
+    MSG_BEGIN_ARRAY( arbitersDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -187,7 +188,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( snowpeakDungeonMap )
+    MSG_BEGIN_ARRAY( snowpeakDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -199,7 +200,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( timeDungeonMap )
+    MSG_BEGIN_ARRAY( timeDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -211,7 +212,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( cityDungeonMap )
+    MSG_BEGIN_ARRAY( cityDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -223,7 +224,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( palaceDungeonMap )
+    MSG_BEGIN_ARRAY( palaceDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -235,7 +236,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( hyruleDungeonMap )
+    MSG_BEGIN_ARRAY( hyruleDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -247,7 +248,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( forestCompass )
+    MSG_BEGIN_ARRAY( forestCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -259,7 +260,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( minesCompass )
+    MSG_BEGIN_ARRAY( minesCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -271,7 +272,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( lakebedCompass )
+    MSG_BEGIN_ARRAY( lakebedCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -283,7 +284,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( arbitersCompass )
+    MSG_BEGIN_ARRAY( arbitersCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -295,7 +296,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( snowpeakCompass )
+    MSG_BEGIN_ARRAY( snowpeakCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -307,7 +308,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( timeCompass )
+    MSG_BEGIN_ARRAY( timeCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -319,7 +320,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( cityCompass )
+    MSG_BEGIN_ARRAY( cityCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -331,7 +332,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( palaceCompass )
+    MSG_BEGIN_ARRAY( palaceCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -343,7 +344,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( hyruleCompass )
+    MSG_BEGIN_ARRAY( hyruleCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -355,7 +356,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( forestBigKey )
+    MSG_BEGIN_ARRAY( forestBigKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -367,7 +368,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( lakebedBigKey )
+    MSG_BEGIN_ARRAY( lakebedBigKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -379,7 +380,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( arbitersBigKey )
+    MSG_BEGIN_ARRAY( arbitersBigKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -391,7 +392,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( timeBigKey )
+    MSG_BEGIN_ARRAY( timeBigKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -403,7 +404,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( cityBigKey )
+    MSG_BEGIN_ARRAY( cityBigKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -415,7 +416,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( palaceBigKey )
+    MSG_BEGIN_ARRAY( palaceBigKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -427,7 +428,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( hyruleBigKey )
+    MSG_BEGIN_ARRAY( hyruleBigKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -439,7 +440,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
-    MSG_BEGIN( endingBlow )
+    MSG_BEGIN_ARRAY( endingBlowIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the "
         MSG_COLOR(MSG_COLOR_RED)
@@ -447,7 +448,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
     MSG_END()
-    MSG_BEGIN( shieldAttack )
+    MSG_BEGIN_ARRAY( shieldAttackIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the "
         MSG_COLOR(MSG_COLOR_RED)
@@ -455,7 +456,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
     MSG_END()
-    MSG_BEGIN( backSlice )
+    MSG_BEGIN_ARRAY( backSliceIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the "
         MSG_COLOR(MSG_COLOR_RED)
@@ -463,7 +464,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
     MSG_END()
-    MSG_BEGIN( helmSplitter )
+    MSG_BEGIN_ARRAY( helmSplitterIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the "
         MSG_COLOR(MSG_COLOR_RED)
@@ -471,7 +472,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
     MSG_END()
-    MSG_BEGIN( mortalDraw )
+    MSG_BEGIN_ARRAY( mortalDrawIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the "
         MSG_COLOR(MSG_COLOR_RED)
@@ -479,7 +480,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
     MSG_END()
-    MSG_BEGIN( jumpStrike )
+    MSG_BEGIN_ARRAY( jumpStrikeIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the "
         MSG_COLOR(MSG_COLOR_RED)
@@ -487,7 +488,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
     MSG_END()
-    MSG_BEGIN( greatSpin )
+    MSG_BEGIN_ARRAY( greatSpinIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the "
         MSG_COLOR(MSG_COLOR_RED)
@@ -495,7 +496,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
     MSG_END()
-    MSG_BEGIN( poweredRod )
+    MSG_BEGIN_ARRAY( poweredRodIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "Power has been restored to\nthe "
         MSG_COLOR(MSG_COLOR_RED)
@@ -503,7 +504,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "! Now it can\nbe used to imbude statues\nwith life in the present!"
     MSG_END()
-    MSG_BEGIN( firstCharacter )
+    MSG_BEGIN_ARRAY( firstCharacterIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You found the first "
         MSG_COLOR(MSG_COLOR_RED)
@@ -511,7 +512,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "! A missing part\nof the word in the Ancient\nSky Book has been restored."
     MSG_END()
-    MSG_BEGIN( secondCharacter )
+    MSG_BEGIN_ARRAY( secondCharacterIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You found the second "
         MSG_COLOR(MSG_COLOR_RED)
@@ -519,7 +520,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "! A missing part\nof the word in the Ancient\nSky Book has been restored."
     MSG_END()
-    MSG_BEGIN( thirdCharacter )
+    MSG_BEGIN_ARRAY( thirdCharacterIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You found the third "
         MSG_COLOR(MSG_COLOR_RED)
@@ -527,7 +528,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "! A missing part\nof the word in the Ancient\nSky Book has been restored."
     MSG_END()
-    MSG_BEGIN( fourthCharacter )
+    MSG_BEGIN_ARRAY( fourthCharacterIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You found the fourth "
         MSG_COLOR(MSG_COLOR_RED)
@@ -535,7 +536,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "! A missing part\nof the word in the Ancient\nSky Book has been restored."
     MSG_END()
-    MSG_BEGIN( fifthCharacter )
+    MSG_BEGIN_ARRAY( fifthCharacterIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You found the fifth "
         MSG_COLOR(MSG_COLOR_RED)
@@ -543,7 +544,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "! A missing part\nof the word in the Ancient\nSky Book has been restored."
     MSG_END()
-    MSG_BEGIN( firstFusedShadow )
+    MSG_BEGIN_ARRAY( firstFusedShadowIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
@@ -555,7 +556,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "\ngrowing on it.."
     MSG_END()
-    MSG_BEGIN( secondFusedShadow )
+    MSG_BEGIN_ARRAY( secondFusedShadowIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the "
         MSG_COLOR(MSG_COLOR_RED)
@@ -567,7 +568,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         " to\nthe touch.."
     MSG_END()
-    MSG_BEGIN( thirdFusedShadow )
+    MSG_BEGIN_ARRAY( thirdFusedShadowIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the "
         MSG_COLOR(MSG_COLOR_RED)
@@ -579,7 +580,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         " and\nsmells like fish.."
     MSG_END()
-    MSG_BEGIN( secondMirrorShard )
+    MSG_BEGIN_ARRAY( secondMirrorShardIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the second shard of\nthe "
         MSG_COLOR(MSG_COLOR_RED)
@@ -591,7 +592,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         ".."
     MSG_END()
-    MSG_BEGIN( thirdMirrorShard )
+    MSG_BEGIN_ARRAY( thirdMirrorShardIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the third shard of\nthe "
         MSG_COLOR(MSG_COLOR_RED)
@@ -603,7 +604,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         ".."
     MSG_END()
-    MSG_BEGIN( fourthMirrorShard )
+    MSG_BEGIN_ARRAY( fourthMirrorShardIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the final shard of\nthe "
         MSG_COLOR(MSG_COLOR_RED)
@@ -615,7 +616,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         ".."
     MSG_END()
-    MSG_BEGIN( foolishItem )
+    MSG_BEGIN_ARRAY( foolishItemIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "A "
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
@@ -623,7 +624,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         " wind blows.."
     MSG_END()
-    MSG_BEGIN( talkToMidna )
+    MSG_BEGIN_ARRAY( talkToMidnaIt )
         "What is it, "
         MSG_PLYR_NAME
         "?"
@@ -634,7 +635,7 @@ namespace mod::customMessages
         MSG_OPTION_LIST(MSG_OPTION_3)
         "Change time of day"
     MSG_END()
-    MSG_BEGIN( bigWallet )
+    MSG_BEGIN_ARRAY( bigWalletIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the "
         MSG_COLOR(MSG_COLOR_RED)
@@ -646,7 +647,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
     MSG_END()
-    MSG_BEGIN( giantWallet )
+    MSG_BEGIN_ARRAY( giantWalletIt )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the "
         MSG_COLOR(MSG_COLOR_RED)
@@ -658,5 +659,304 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
     MSG_END()
+    
+    MsgEntry entriesIt[TOTAL_CUSTOM_MESSAGES] = 
+    {
+        // Forest Temple small key
+        forestSmallKeyIt,
+        sizeof(forestSmallKeyIt),
+        0x00E9,
+        
+        // Goron Mines small key
+        minesSmallKeyIt,
+        sizeof(minesSmallKeyIt),
+        0x00EA,
+        
+        // Lakebed Temple small key
+        lakebedSmallKeyIt,
+        sizeof(lakebedSmallKeyIt),
+        0x00EB,
+        
+        // Arbiter's Grounds small key
+        arbitersSmallKeyIt,
+        sizeof(arbitersSmallKeyIt),
+        0x00EC,
+        
+        // Snowpeak Ruins small key
+        snowpeakSmallKeyIt,
+        sizeof(snowpeakSmallKeyIt),
+        0x00ED,
+        
+        // Temple of Time small key
+        timeSmallKeyIt,
+        sizeof(timeSmallKeyIt),
+        0x00EE,
+        
+        // City in the Sky small key
+        citySmallKeyIt,
+        sizeof(citySmallKeyIt),
+        0x00EF,
+        
+        // Palace of Twilight small key
+        palaceSmallKeyIt,
+        sizeof(palaceSmallKeyIt),
+        0x00F0,
+        
+        // Hyrule Castle small key
+        hyruleSmallKeyIt,
+        sizeof(hyruleSmallKeyIt),
+        0x00F1,
+        
+        // Bublin Camp small key
+        campSmallKeyIt,
+        sizeof(campSmallKeyIt),
+        0x00F2,
+        
+        // Shadow Crystal
+        shadowCrystalIt,
+        sizeof(shadowCrystalIt),
+        0x0096,
+        
+        // Forest Temple dungeon map
+        forestDungeonMapIt,
+        sizeof(forestDungeonMapIt),
+        0x011A,
+        
+        // Goron Mines dungeon map
+        minesDungeonMapIt,
+        sizeof(minesDungeonMapIt),
+        0x011B,
+        
+        // Lakebed Temple dungeon map
+        lakebedDungeonMapIt,
+        sizeof(lakebedDungeonMapIt),
+        0x011C,
+        
+        // Arbiter's Grounds dungeon map
+        arbitersDungeonMapIt,
+        sizeof(arbitersDungeonMapIt),
+        0x011D,
+        
+        // Snowpeak Ruins dungeon map
+        snowpeakDungeonMapIt,
+        sizeof(snowpeakDungeonMapIt),
+        0x011E,
+        
+        // Temple of Time dungeon map
+        timeDungeonMapIt,
+        sizeof(timeDungeonMapIt),
+        0x011F,
+        
+        // City in the Sky dungeon map
+        cityDungeonMapIt,
+        sizeof(cityDungeonMapIt),
+        0x0120,
+        
+        // Palace of Twilight dungeon map
+        palaceDungeonMapIt,
+        sizeof(palaceDungeonMapIt),
+        0x0121,
+        
+        // Hyrule Castle dungeon map
+        hyruleDungeonMapIt,
+        sizeof(hyruleDungeonMapIt),
+        0x0122,
+
+        // Forest Temple compass
+        forestCompassIt,
+        sizeof(forestCompassIt),
+        0x00FD,
+
+        // Goron Mines compass
+        minesCompassIt,
+        sizeof(minesCompassIt),
+        0x00FE,
+        
+        // Lakebed Temple compass
+        lakebedCompassIt,
+        sizeof(lakebedCompassIt),
+        0x00FF,
+
+        // Arbiter's Grounds compass
+        arbitersCompassIt,
+        sizeof(arbitersCompassIt),
+        0x010C,
+
+        // Snowpeak Ruins compass
+        snowpeakCompassIt,
+        sizeof(snowpeakCompassIt),
+        0x010D,
+
+        // Temple of Time compass
+        timeCompassIt,
+        sizeof(timeCompassIt),
+        0x010E,
+
+        // City in the Sky compass
+        cityCompassIt,
+        sizeof(cityCompassIt),
+        0x010F,
+
+        // Palace of Twilight compass
+        palaceCompassIt,
+        sizeof(palaceCompassIt),
+        0x0110,
+
+        // Hyrule Castle compass
+        hyruleCompassIt,
+        sizeof(hyruleCompassIt),
+        0x0111,
+
+        // Forest Temple big key
+        forestBigKeyIt,
+        sizeof(forestBigKeyIt),
+        0x00F6,
+
+        // Lakebed Temple big key
+        lakebedBigKeyIt,
+        sizeof(lakebedBigKeyIt),
+        0x00F7,
+
+        // Arbiter's Grounds big key
+        arbitersBigKeyIt,
+        sizeof(arbitersBigKeyIt),
+        0x00F8,
+
+        // Temple of Time big key
+        timeBigKeyIt,
+        sizeof(timeBigKeyIt),
+        0x00F9,
+
+        // City in the Sky big key
+        cityBigKeyIt,
+        sizeof(cityBigKeyIt),
+        0x00FA,
+
+        // Palace of Twilight big key
+        palaceBigKeyIt,
+        sizeof(palaceBigKeyIt),
+        0x00FB,
+
+        // Hyrule Castle big key
+        hyruleBigKeyIt,
+        sizeof(hyruleBigKeyIt),
+        0x00FC,
+        
+        // Ending Blow hidden skill
+        endingBlowIt,
+        sizeof(endingBlowIt),
+        0x0145,
+
+        // Shield Attack hidden skill
+        shieldAttackIt,
+        sizeof(shieldAttackIt),
+        0x0146,
+
+        // Back Slice hidden skill
+        backSliceIt,
+        sizeof(backSliceIt),
+        0x0147,
+
+        // Helm Splitter hidden skill
+        helmSplitterIt,
+        sizeof(helmSplitterIt),
+        0x0148,
+
+        // Mortal Draw hidden skill
+        mortalDrawIt,
+        sizeof(mortalDrawIt),
+        0x0149,
+
+        // Jump Strike hidden skill
+        jumpStrikeIt,
+        sizeof(jumpStrikeIt),
+        0x014A,
+
+        // Great Spin hidden skill
+        greatSpinIt,
+        sizeof(greatSpinIt),
+        0x014B,
+
+        // Powered up Dominion Rod
+        poweredRodIt,
+        sizeof(poweredRodIt),
+        0x00B0,
+
+        // First Ancient Sky Book character
+        firstCharacterIt,
+        sizeof(firstCharacterIt),
+        0x013F,
+
+        // Second Ancient Sky Book character
+        secondCharacterIt,
+        sizeof(secondCharacterIt),
+        0x0140,
+
+        // Third Ancient Sky Book character
+        thirdCharacterIt,
+        sizeof(thirdCharacterIt),
+        0x0141,
+
+        // Fourth Ancient Sky Book character
+        fourthCharacterIt,
+        sizeof(fourthCharacterIt),
+        0x0142,
+
+        // Fifth Ancient Sky Book character
+        fifthCharacterIt,
+        sizeof(fifthCharacterIt),
+        0x0143,
+
+        // Sixth Ancient Sky Book character
+        firstFusedShadowIt,
+        sizeof(firstFusedShadowIt),
+        0x013C,
+
+        // Second Fused Shadow
+        secondFusedShadowIt,
+        sizeof(secondFusedShadowIt),
+        0x013D,
+
+        // Third Fused Shadow
+        thirdFusedShadowIt,
+        sizeof(thirdFusedShadowIt),
+        0x013E,
+
+        // Second Mirror Shard
+        secondMirrorShardIt,
+        sizeof(secondMirrorShardIt),
+        0x0109,
+
+        // Third Mirror Shard
+        thirdMirrorShardIt,
+        sizeof(thirdMirrorShardIt),
+        0x010A,
+
+        // Fourth Mirror Shard
+        fourthMirrorShardIt,
+        sizeof(fourthMirrorShardIt),
+        0x010B,
+
+        // Foolish Item
+        foolishItemIt,
+        sizeof(foolishItemIt),
+        0x00F3,
+
+        // Talking to Midna
+        talkToMidnaIt,
+        sizeof(talkToMidnaIt),
+        0x0BBB,
+
+        // Big Wallet
+        bigWalletIt,
+        sizeof(bigWalletIt),
+        0x0099,
+
+        // Giant Wallet
+        giantWalletIt,
+        sizeof(giantWalletIt),
+        0x009A,
+    };
 
 }     // namespace mod::customMessages
+#endif
