@@ -46,8 +46,6 @@ namespace mod::rando
         entryInfo skyCharacterCheckInfo;
         entryInfo shopItemCheckInfo;
         entryInfo startingItemInfo;
-        uint16_t customTextHeaderSize;
-        uint16_t customTextHeaderOffset;
         uint8_t heartColor;
         uint8_t aButtonColor;
         uint8_t bButtonColor;
