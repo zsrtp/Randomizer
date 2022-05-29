@@ -60,10 +60,6 @@ namespace mod::rando
         // Make sure to delete tempcheck buffers
         this->ClearChecks();
 
-        // Reset the custom message data
-        m_TotalMsgEntries = 0;
-        delete[] m_MsgTableInfo;
-
         // Only work with m_GCIData if the buffer is populated
         if ( m_GCIData )
         {
