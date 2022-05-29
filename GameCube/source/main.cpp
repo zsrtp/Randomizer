@@ -543,11 +543,15 @@ namespace mod
                 }
             }
         }
-        else if ( randoIsEnabled( randomizer ) )
+        else
         {
-            // Temporarily disable the randomizer
-            randomizer->m_Enabled = false;
-            randomizer->m_SeedInit = false;
+            seedRelAction = SEED_ACTION_NONE;
+            if ( randoIsEnabled( randomizer ) )
+            {
+                // Temporarily disable the randomizer
+                randomizer->m_Enabled = false;
+                randomizer->m_SeedInit = false;
+            }
         }
 
         // Custom events
