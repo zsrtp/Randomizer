@@ -12,11 +12,9 @@
 #include "events.h"
 #include "game_patch/game_patch.h"
 #include "gc_wii/OSModule.h"
-#include "gc_wii/card.h"
 #include "main.h"
 #include "rando/data.h"
 #include "rando/seed.h"
-#include "rando/seedlist.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_kankyo.h"
 #include "tp/d_meter2_info.h"
@@ -25,18 +23,27 @@
 
 namespace mod::rando
 {
+    // Currrently unused, so will leave here
+    Randomizer::~Randomizer( void )
+    {
+        mod::console << "Rando unloading...\n";
+
+        // Clear Seed
+        delete m_Seed;
+    }
+
+    KEEP_FUNC void Randomizer::onStageLoad( void )
+    {
+        const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mStage;
+        m_Seed->LoadChecks( stage );
+    }
+
     void Randomizer::initSave( void )
     {
         if ( m_Seed )
         {
             m_SeedInit = m_Seed->InitSeed();
         }
-    }
-
-    void Randomizer::onStageLoad( void )
-    {
-        const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mStage;
-        m_Seed->LoadChecks( stage );
     }
 
     void Randomizer::overrideREL()

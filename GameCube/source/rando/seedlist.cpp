@@ -6,10 +6,6 @@
  */
 #include "rando/seedlist.h"
 
-#include <cstring>
-
-#include "rando/seedlist.h"
-
 namespace mod::rando
 {
     // Currently unused, so will leave in for now

@@ -37,13 +37,13 @@
 namespace mod
 {
     // Bind extern global variables
-    libtp::display::Console console( 9 );
-    rando::Randomizer* randomizer = nullptr;
-    rando::SeedList* seedList = nullptr;
+    KEEP_VAR libtp::display::Console console( 9 );
+    KEEP_VAR rando::Randomizer* randomizer = nullptr;
+    KEEP_VAR rando::SeedList* seedList = nullptr;
 
     // Variables
-    uint8_t* m_MsgTableInfo = nullptr;
-    uint32_t m_TotalMsgEntries = 0;
+    KEEP_VAR uint8_t* m_MsgTableInfo = nullptr;
+    KEEP_VAR uint32_t m_TotalMsgEntries = 0;
     libtp::tp::J2DPicture::J2DPicture* bgWindow = nullptr;
     uint32_t lastButtonInput = 0;
     int32_t lastLoadingState = 0;
@@ -52,7 +52,7 @@ namespace mod
     bool ringDrawnThisFrame = false;
     void* Z2ScenePtr = nullptr;
     bool isFoolishTrapQueued = false;
-    uint8_t seedRelAction = SEED_ACTION_NONE;
+    KEEP_VAR uint8_t seedRelAction = SEED_ACTION_NONE;
     uint32_t nextVal = libtp::gc_wii::os_time::OSGetTick();
 
     // Function hook return trampolines

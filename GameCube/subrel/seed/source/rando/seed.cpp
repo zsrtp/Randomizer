@@ -16,8 +16,6 @@
 #include "rando/data.h"
 #include "tools.h"
 #include "tp/d_a_shop_item_static.h"
-#include "tp/d_com_inf_game.h"
-#include "tp/d_item.h"
 #include "tp/d_item_data.h"
 #include "user_patch/user_patch.h"
 

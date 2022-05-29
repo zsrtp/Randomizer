@@ -1,5 +1,3 @@
-#include <cstring>
-
 #include "game_patch/game_patch.h"
 #include "main.h"
 #include "data/items.h"
@@ -166,7 +164,7 @@ namespace mod::game_patch
         return static_cast<uint32_t>( Fused_Shadow_3 );
     };
 
-    uint32_t _04_verifyProgressiveItem( rando::Randomizer* randomizer, uint32_t itemID )
+    KEEP_FUNC uint32_t _04_verifyProgressiveItem( rando::Randomizer* randomizer, uint32_t itemID )
     {
         using namespace libtp::data::items;
         if ( randoIsEnabled( randomizer ) )

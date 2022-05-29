@@ -7,8 +7,6 @@
 #include "tp/d_kankyo.h"
 #include "tp/d_save.h"
 
-#include <cstring>
-
 namespace mod::game_patch
 {
     int32_t getCurrentStageId()

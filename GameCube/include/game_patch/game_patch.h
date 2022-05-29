@@ -17,6 +17,9 @@
 
 namespace mod::game_patch
 {
+#define TOTAL_FOOLISH_ITEM_MODELS 20
+    extern const uint8_t foolishModelItemList[TOTAL_FOOLISH_ITEM_MODELS];
+
     // 00 - Function definitions used to patch how Poes operate
     /**
      * @brief Patches the unused itemFunc corresponding to the poe itemID

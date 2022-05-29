@@ -7,7 +7,6 @@
 #include "events.h"
 #include "main.h"
 #include "tp/d_a_alink.h"
-#include "tp/d_a_shop_item_static.h"
 #include "tp/d_item.h"
 #include "tp/d_item_data.h"
 #include "tp/d_meter2_info.h"
@@ -15,7 +14,7 @@
 
 namespace mod::game_patch
 {
-    static const uint8_t foolishModelItemList[] = {
+    const uint8_t foolishModelItemList[TOTAL_FOOLISH_ITEM_MODELS] = {
         libtp::data::items::Magic_Armor,
         libtp::data::items::Master_Sword,
         libtp::data::items::Ordon_Shield,
@@ -87,22 +86,6 @@ namespace mod::game_patch
         memcpy( &fieldItemResPtr[libtp::data::items::Foolish_Item],
                 &fieldItemResPtr[fieldModelItemID],
                 sizeof( libtp::tp::d_item_data::FieldItemRes ) );
-    }
-
-    KEEP_FUNC void _02_modifyFoolishShopModel( uint16_t shopID )
-    {
-        // Set the shop model of the Foolish Item ID to the model of a random important item.
-        using namespace libtp::tp::d_a_shop_item_static;
-        libtp::tp::d_item_data::ItemResource* itemResourcePtr = &libtp::tp::d_item_data::item_resource[0];
-        uint32_t modelListSize = sizeof( foolishModelItemList ) / sizeof( foolishModelItemList[0] );
-        uint32_t randomIndex = mod::ulRand( modelListSize );
-        uint32_t shopModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
-        shopItemData[shopID].arcName = itemResourcePtr[shopModelItemID].arcName;
-        shopItemData[shopID].modelResIdx = itemResourcePtr[shopModelItemID].modelResIdx;
-        shopItemData[shopID].wBckResIdx = itemResourcePtr[shopModelItemID].bckResIdx;
-        shopItemData[shopID].wBrkResIdx = itemResourcePtr[shopModelItemID].brkResIdx;
-        shopItemData[shopID].wBtpResIdx = itemResourcePtr[shopModelItemID].btpResIdx;
-        shopItemData[shopID].tevFrm = itemResourcePtr[shopModelItemID].tevFrm;
     }
 
     KEEP_FUNC void _02_forestSmallKeyItemFunc()

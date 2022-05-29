@@ -19,26 +19,27 @@ namespace mod::rando
     class Randomizer
     {
        public:
-        Randomizer( SeedInfo* seedInfo, uint8_t selectedSeed );
+        // Main/Subrel
         ~Randomizer();
-
-        void loadSeed( SeedInfo* seedInfo, uint8_t selectedSeed );
-        void changeSeed( SeedInfo* seedInfo, uint8_t newSeed );
-        void initSave( void );
-
         void onStageLoad( void );
 
+        // Main
+        void initSave( void );
         void overrideREL();
         void overrideDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo );
-
         int32_t getPoeItem( uint8_t flag );
-        void overrideARC( uint32_t fileAddr, FileDirectory fileDirectory, int roomNo );
-        void overrideEventARC();
-        void overrideObjectARC();
-        uint8_t getBossItem();
-        uint8_t getHiddenSkillItem( uint16_t eventIndex );
-        uint8_t overrideBugReward( uint8_t bugID );
         uint8_t getSkyCharacter();
+        uint8_t getBossItem();
+        void overrideARC( uint32_t fileAddr, FileDirectory fileDirectory, int roomNo );
+        void overrideObjectARC();
+        void overrideEventARC();
+        uint8_t overrideBugReward( uint8_t bugID );
+        uint8_t getHiddenSkillItem( uint16_t eventIndex );
+
+        // Subrel
+        Randomizer( SeedInfo* seedInfo, uint8_t selectedSeed );
+        void loadSeed( SeedInfo* seedInfo, uint8_t selectedSeed );
+        void changeSeed( SeedInfo* seedInfo, uint8_t newSeed );
 
         /**
          * @brief Returns the seed

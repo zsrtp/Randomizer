@@ -4,24 +4,11 @@
  *	@author AECX
  *	@bug No known bugs.
  */
-#include <cstring>
-
 #include "rando/randomizer.h"
-#include "data/items.h"
-#include "data/stages.h"
-#include "events.h"
-#include "game_patch/game_patch.h"
-#include "gc_wii/OSModule.h"
 #include "gc_wii/card.h"
 #include "main.h"
 #include "rando/data.h"
 #include "rando/seed.h"
-#include "rando/seedlist.h"
-#include "tp/d_com_inf_game.h"
-#include "tp/d_kankyo.h"
-#include "tp/d_meter2_info.h"
-#include "tp/d_resource.h"
-#include "tp/dzx.h"
 
 namespace mod::rando
 {
@@ -31,6 +18,7 @@ namespace mod::rando
         loadSeed( seedInfo, selectedSeed );
     }
 
+    // Currrently unused, so will leave here
     Randomizer::~Randomizer( void )
     {
         mod::console << "Rando unloading...\n";
