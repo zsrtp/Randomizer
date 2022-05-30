@@ -33,6 +33,7 @@
 #include "tp/resource.h"
 #include "gc_wii/card.h"
 #include "gc_wii/OSModule.h"
+#include "tp/m_do_audio.h"
 
 namespace mod
 {
@@ -809,7 +810,8 @@ namespace mod
         char buf[32];
 
         // Set up an auto function for getting Yes or No text
-        auto getYesNoText = []( bool flag ) {
+        auto getYesNoText = []( bool flag )
+        {
             if ( flag )
             {
                 return "Yes";
@@ -1736,7 +1738,7 @@ namespace mod
                 Z2ScenePtr,
                 libtp::z2audiolib::z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2 );
             libtp::z2audiolib::z2scenemgr::loadSeWave( Z2ScenePtr, 0x46 );
-            libtp::z2audiolib::z2semgr::seStartLevel( 0x10040, nullptr, 0, 0 );
+            libtp::tp::m_Do_Audio::mDoAud_seStartLevel( 0x10040, nullptr, 0, 0 );
             libtp::z2audiolib::z2scenemgr::loadSeWave( Z2ScenePtr, seWave1 );
             libtp::z2audiolib::z2scenemgr::loadSeWave( Z2ScenePtr, seWave2 );
             if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm == 1 )
