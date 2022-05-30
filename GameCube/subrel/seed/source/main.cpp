@@ -14,9 +14,9 @@ namespace mod
                 // The randomizer constructor sets m_Enabled to true
                 randomizer = new rando::Randomizer( &seedList->m_seedInfo[selectedSeed], selectedSeed );
 
-                // Patches need to be applied whenever a seed is loaded.
-                mod::console << "Patching game:\n";
-                randomizer->m_Seed->applyPatches( true );
+                // One-time patches need to be applied whenever a seed is loaded
+                mod::console << "Applying one-time patches:\n";
+                randomizer->m_Seed->applyOneTimePatches( true );
 
                 seedRelAction = SEED_ACTION_NONE;
                 break;
@@ -25,9 +25,9 @@ namespace mod
             {
                 randomizer->changeSeed( &seedList->m_seedInfo[selectedSeed], selectedSeed );
 
-                // Patches need to be applied whenever a seed is loaded.
-                mod::console << "Patching game:\n";
-                randomizer->m_Seed->applyPatches( true );
+                // One-time patches need to be applied whenever a seed is loaded
+                mod::console << "Applying one-time patches:\n";
+                randomizer->m_Seed->applyOneTimePatches( true );
 
                 seedRelAction = SEED_ACTION_NONE;
                 break;

@@ -149,7 +149,7 @@ namespace mod::user_patch
 
     }     // namespace bgm::bgmrando
 
-    KEEP_FUNC void patchRandomBgm( rando::Randomizer* randomizer, bool set )
+    void patchRandomBgm( rando::Randomizer* randomizer, bool set )
     {
         uint64_t seed = randomizer->getSeed();
         mod::console << "[2] EnemyBgmDisabled [" << ( set ? "x" : " " ) << "]\n";

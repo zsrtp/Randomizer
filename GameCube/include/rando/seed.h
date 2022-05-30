@@ -77,6 +77,13 @@ namespace mod::rando
 
         void LoadObjectARCChecks();
 
+        /**
+         *  @brief Manages game_patches from the seed that must occur every time a file is loaded
+         *
+         *  @param set If true it will set the patches, otherwise restore the original
+         */
+        void applyVolatilePatches( bool set );
+
         // Subrel
         /**
          *  @brief Class to dynamically load required data from a given seed
@@ -91,11 +98,11 @@ namespace mod::rando
         ~Seed();
 
         /**
-         *  @brief Manages game_patches from the seed
+         *  @brief Manages one-time game_patches from the seed
          *
          *  @param set If true it will set the patches, otherwise restore the original
          */
-        void applyPatches( bool set );
+        void applyOneTimePatches( bool set );
 
         void loadShopModels();
 

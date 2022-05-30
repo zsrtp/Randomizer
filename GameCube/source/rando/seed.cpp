@@ -17,6 +17,7 @@
 #include "rando/data.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
+#include "user_patch/user_patch.h"
 
 namespace mod::rando
 {
@@ -482,6 +483,41 @@ namespace mod::rando
             {
                 memcpy( &m_ObjectArcReplacements[j], &allARC[i], sizeof( ObjectArchiveReplacement ) );
                 j++;
+            }
+        }
+    }
+
+    KEEP_FUNC void Seed::applyVolatilePatches( bool set )
+    {
+        using namespace libtp;
+
+        uint32_t num_bytes = m_Header->volatilePatchInfo.numEntries;
+        uint32_t gci_offset = m_Header->volatilePatchInfo.dataOffset;
+
+        // Don't bother to patch anything if there's nothing to patch
+        if ( num_bytes > 0 )
+        {
+            // Set the pointer as offset into our buffer
+            uint8_t* patch_config = &m_GCIData[gci_offset];
+
+            for ( uint32_t i = 0; i < num_bytes; i++ )
+            {
+                uint8_t byte = patch_config[i];
+
+                for ( uint32_t b = 0; b < 8; b++ )
+                {
+                    if ( ( byte << b ) & 0x80 )
+                    {
+                        // Run the patch function for this bit index
+                        uint32_t index = i * 8 + b;
+
+                        if ( index < sizeof( user_patch::volatilePatches ) / sizeof( user_patch::volatilePatches[0] ) )
+                        {
+                            user_patch::volatilePatches[index]( mod::randomizer, set );
+                            m_PatchesApplied++;
+                        }
+                    }
+                }
             }
         }
     }

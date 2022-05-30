@@ -61,19 +61,20 @@ namespace mod::rando
         // Only work with m_GCIData if the buffer is populated
         if ( m_GCIData )
         {
-            this->applyPatches( false );
+            this->applyOneTimePatches( false );
+            this->applyVolatilePatches( false );     // Should be unnecessary once the BGM code is rewritten
 
             // Last clear gcibuffer as other functions before rely on it
             delete[] m_GCIData;
         }
     }
 
-    void Seed::applyPatches( bool set )
+    void Seed::applyOneTimePatches( bool set )
     {
         using namespace libtp;
 
-        uint32_t num_bytes = m_Header->patchInfo.numEntries;
-        uint32_t gci_offset = m_Header->patchInfo.dataOffset;
+        uint32_t num_bytes = m_Header->oneTimePatchInfo.numEntries;
+        uint32_t gci_offset = m_Header->oneTimePatchInfo.dataOffset;
 
         // Don't bother to patch anything if there's nothing to patch
         if ( num_bytes > 0 )
@@ -89,12 +90,12 @@ namespace mod::rando
                 {
                     if ( ( byte << b ) & 0x80 )
                     {
-                        // run the patch function for this bit index
+                        // Run the patch function for this bit index
                         uint32_t index = i * 8 + b;
 
-                        if ( index < sizeof( user_patch::patches ) / sizeof( user_patch::patches[0] ) )
+                        if ( index < sizeof( user_patch::oneTimePatches ) / sizeof( user_patch::oneTimePatches[0] ) )
                         {
-                            user_patch::patches[index]( mod::randomizer, set );
+                            user_patch::oneTimePatches[index]( mod::randomizer, set );
                             m_PatchesApplied++;
                         }
                     }

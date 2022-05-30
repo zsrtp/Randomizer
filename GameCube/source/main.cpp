@@ -493,7 +493,8 @@ namespace mod
         // Handle rando state
         if ( gameState == GAME_ACTIVE )
         {
-            if ( !randoIsEnabled( randomizer ) && ( seedList->m_numSeeds > 0 ) && ( seedRelAction == SEED_ACTION_NONE ) )
+            uint8_t currentSeedRelAction = seedRelAction;
+            if ( !randoIsEnabled( randomizer ) && ( seedList->m_numSeeds > 0 ) && ( currentSeedRelAction == SEED_ACTION_NONE ) )
             {
                 constexpr int32_t chan = CARD_SLOT_A;
                 if ( !randomizer )
@@ -504,16 +505,17 @@ namespace mod
                         seedRelAction = SEED_ACTION_LOAD_SEED;
 
                         // m_Enabled will be set to true in the seed rel
+                        // The seed rel will set seedRelAction to SEED_ACTION_NONE if it ran successfully
                         if ( !callRelPrologMounted( chan, SUBREL_SEED_ID ) )
                         {
-                            seedRelAction = SEED_ACTION_FATAL;
+                            currentSeedRelAction = SEED_ACTION_FATAL;
                         }
 
                         libtp::gc_wii::card::CARDUnmount( chan );
                     }
                     else
                     {
-                        seedRelAction = SEED_ACTION_FATAL;
+                        currentSeedRelAction = SEED_ACTION_FATAL;
                     }
                 }
                 else
@@ -530,16 +532,17 @@ namespace mod
                             mod::console << "Changing seed:\n";
                             seedRelAction = SEED_ACTION_CHANGE_SEED;
 
+                            // The seed rel will set seedRelAction to SEED_ACTION_NONE if it ran successfully
                             if ( !callRelPrologMounted( chan, SUBREL_SEED_ID ) )
                             {
-                                seedRelAction = SEED_ACTION_FATAL;
+                                currentSeedRelAction = SEED_ACTION_FATAL;
                             }
 
                             libtp::gc_wii::card::CARDUnmount( chan );
                         }
                         else
                         {
-                            seedRelAction = SEED_ACTION_FATAL;
+                            currentSeedRelAction = SEED_ACTION_FATAL;
                         }
                     }
                     else
@@ -548,6 +551,20 @@ namespace mod
                         randomizer->onStageLoad();
                     }
                 }
+
+                // Make sure no errors occurred
+                if ( randoIsEnabled( randomizer ) && ( currentSeedRelAction == SEED_ACTION_NONE ) )
+                {
+                    rando::Seed* seed = randomizer->m_Seed;
+                    if ( seed )
+                    {
+                        // Volatile patches need to be applied whenever a file is loaded
+                        mod::console << "Applying volatile patches:\n";
+                        seed->applyVolatilePatches( true );
+                    }
+                }
+
+                seedRelAction = currentSeedRelAction;
             }
         }
         else
@@ -810,8 +827,7 @@ namespace mod
         char buf[32];
 
         // Set up an auto function for getting Yes or No text
-        auto getYesNoText = []( bool flag )
-        {
+        auto getYesNoText = []( bool flag ) {
             if ( flag )
             {
                 return "Yes";

@@ -31,7 +31,12 @@ namespace mod::rando
         uint64_t seed;           // Current seed
         uint32_t totalSize;      // Total number of bytes in the gci.
 
-        entryInfo patchInfo;     // bitArray where each bit represents a patch/modification to be applied for this playthrough
+        entryInfo volatilePatchInfo;     // BitArray where each bit represents a patch/modification to be applied for this
+                                         // playthrough; these patchs/modifications must be applied every time a file is loaded
+
+        entryInfo oneTimePatchInfo;     // BitArray where each bit represents a patch/modification to be applied for this
+                                        // playthrough; these patchs/modifications must be applied only when a seed is loaded
+
         entryInfo eventFlagsInfo;      // eventFlags that need to be set for this seed
         entryInfo regionFlagsInfo;     // regionFlags that need to be set, alternating
 
