@@ -14,11 +14,11 @@
 
 namespace mod::user_patch
 {
-    GamePatch volatilePatches[7] = { patchRandomBgm,
-                                     patchBattleMusic,
-                                     clearFaronTwilight,
+    GamePatch volatilePatches[7] = { clearFaronTwilight,
                                      clearEldinTwilight,
                                      clearLanayruTwilight,
                                      setMinorCutsceneValues,
-                                     clearMDH };
+                                     clearMDH,
+                                     patchRandomBgm,
+                                     patchBattleMusic };
 }
