@@ -15,6 +15,9 @@
 #include "tp/d_menu_window.h"
 #include "Z2AudioLib/Z2AudioMgr.h"
 #include "tp/d_s_logo.h"
+#include "user_patch/01_randombgm.h"
+#include "user_patch/02_enemybgm.h"
+#include "Z2AudioLib/Z2SeqMgr.h"
 
 #include <cstdint>
 
@@ -137,5 +140,13 @@ namespace mod
 
         // Title Screen functions
         return_dScnLogo_c_dt = patch::hookFunction( libtp::tp::d_s_logo::dScnLogo_c_dt, mod::handle_dScnLogo_c_dt );
+
+        // Random BGM
+        user_patch::bgm::bgmrando::return_sceneChange =
+            patch::hookFunction( libtp::z2audiolib::z2scenemgr::sceneChange, user_patch::handleSceneChange );
+
+        // Enemy BGM
+        user_patch::bgm::enemybgm::return_startBattleBgm =
+            patch::hookFunction( libtp::z2audiolib::z2seqmgr::startBattleBgm, user_patch::handleStartBattleBgm );
     }
 }     // namespace mod

@@ -19,6 +19,6 @@ namespace mod::user_patch
                                      clearLanayruTwilight,
                                      setMinorCutsceneValues,
                                      clearMDH,
-                                     patchRandomBgm,
-                                     patchBattleMusic };
+                                     enableRandomBgm,
+                                     enableBattleMusic };
 }
