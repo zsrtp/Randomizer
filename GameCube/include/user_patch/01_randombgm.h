@@ -36,14 +36,14 @@ namespace mod::user_patch
     /**
      * @brief Handles Random Background Music
      */
-    void handleSceneChange( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
-                            libtp::z2audiolib::z2scenemgr::JAISoundID BGMid,
-                            uint8_t SeWave1,
-                            uint8_t SeWave2,
-                            uint8_t BgmWave1,
-                            uint8_t BgmWave2,
-                            uint8_t DemoWave,
-                            bool param_7 );
+    void handle_sceneChange( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
+                             libtp::z2audiolib::z2scenemgr::JAISoundID BGMid,
+                             uint8_t SeWave1,
+                             uint8_t SeWave2,
+                             uint8_t BgmWave1,
+                             uint8_t BgmWave2,
+                             uint8_t DemoWave,
+                             bool param_7 );
 
 }     // namespace mod::user_patch
 

@@ -199,14 +199,14 @@ namespace mod::user_patch
         }
     }
 
-    KEEP_FUNC void handleSceneChange( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
-                                      libtp::z2audiolib::z2scenemgr::JAISoundID BGMid,
-                                      uint8_t SeWave1,
-                                      uint8_t SeWave2,
-                                      uint8_t BgmWave1,
-                                      uint8_t BgmWave2,
-                                      uint8_t DemoWave,
-                                      bool param_7 )
+    KEEP_FUNC void handle_sceneChange( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
+                                       libtp::z2audiolib::z2scenemgr::JAISoundID BGMid,
+                                       uint8_t SeWave1,
+                                       uint8_t SeWave2,
+                                       uint8_t BgmWave1,
+                                       uint8_t BgmWave2,
+                                       uint8_t DemoWave,
+                                       bool param_7 )
     {
         if ( !randomBgm )
         {

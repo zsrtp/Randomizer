@@ -30,7 +30,7 @@ namespace mod::user_patch
     /**
      * @brief Handles Enemy Background Music
      */
-    void handleStartBattleBgm( libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1 );
+    void handle_startBattleBgm( libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1 );
 }     // namespace mod::user_patch
 
 #endif

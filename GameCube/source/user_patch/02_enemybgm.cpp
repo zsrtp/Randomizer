@@ -27,7 +27,7 @@ namespace mod::user_patch
         mod::console << "[2] EnemyBgmDisabled [" << ( set ? "x" : " " ) << "]\n";
     }
 
-    KEEP_FUNC void handleStartBattleBgm( libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1 )
+    KEEP_FUNC void handle_startBattleBgm( libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1 )
     {
         if ( !enemyBgm )
         {

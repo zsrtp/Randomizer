@@ -143,10 +143,10 @@ namespace mod
 
         // Random BGM
         user_patch::bgm::bgmrando::return_sceneChange =
-            patch::hookFunction( libtp::z2audiolib::z2scenemgr::sceneChange, user_patch::handleSceneChange );
+            patch::hookFunction( libtp::z2audiolib::z2scenemgr::sceneChange, user_patch::handle_sceneChange );
 
         // Enemy BGM
         user_patch::bgm::enemybgm::return_startBattleBgm =
-            patch::hookFunction( libtp::z2audiolib::z2seqmgr::startBattleBgm, user_patch::handleStartBattleBgm );
+            patch::hookFunction( libtp::z2audiolib::z2seqmgr::startBattleBgm, user_patch::handle_startBattleBgm );
     }
 }     // namespace mod
