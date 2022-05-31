@@ -415,7 +415,9 @@ namespace mod::game_patch
              libtp::tp::d_a_alink::checkStageName(
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Death_Mountain] ) ||
              libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Village] ) )
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Village] ) ||
+             libtp::tp::d_a_alink::checkStageName(
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Village_Interiors] ) )
         {
             libtp::tp::d_save::onSwitch_dSv_memBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x69 );
             libtp::tp::d_save::onSwitch_dSv_memBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x65 );

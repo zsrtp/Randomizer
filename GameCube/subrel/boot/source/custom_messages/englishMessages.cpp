@@ -558,9 +558,9 @@ namespace mod::customMessages
     MSG_END()
     MSG_BEGIN_ARRAY( secondFusedShadowEn )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        "You got the second"
         MSG_COLOR(MSG_COLOR_RED)
-        "second Fused\nShadow"
+        "Fused\nShadow"
         MSG_COLOR(MSG_COLOR_WHITE)
         "! It feels "
         MSG_COLOR(MSG_COLOR_RED)
@@ -570,9 +570,9 @@ namespace mod::customMessages
     MSG_END()
     MSG_BEGIN_ARRAY( thirdFusedShadowEn )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        "You got the final "
         MSG_COLOR(MSG_COLOR_RED)
-        "final Fused\nShadow"
+        "Fused\nShadow"
         MSG_COLOR(MSG_COLOR_WHITE)
         "! It feels "
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)

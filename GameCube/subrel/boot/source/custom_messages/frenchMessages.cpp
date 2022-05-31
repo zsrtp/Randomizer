@@ -26,7 +26,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_RED)
         "petite clé"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée aux\n"
+        "!\nElle peut être utilisée dans\nla "
         MSG_COLOR(MSG_COLOR_RED)
         "Mines Goron"
         MSG_COLOR(MSG_COLOR_WHITE)
@@ -98,7 +98,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_RED)
         "petite clé"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée au\n"
+        "!\nElle peut être utilisée dans\nle "
         MSG_COLOR(MSG_COLOR_PURPLE)
         "Palais du Crépuscule"
         MSG_COLOR(MSG_COLOR_WHITE)
@@ -122,7 +122,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_RED)
         "petite clé"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée au\n"
+        "!\nElle peut être utilisée dans\nle "
         MSG_COLOR(MSG_COLOR_ORANGE)
         "Camp Bulblin"
         MSG_COLOR(MSG_COLOR_WHITE)

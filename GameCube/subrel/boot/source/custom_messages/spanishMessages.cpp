@@ -8,613 +8,863 @@
 
 namespace mod::customMessages
 {
+    // Disable formatting on this namespace because it makes things look weird.
+    // clang-format off
     MSG_BEGIN_ARRAY( forestSmallKeySp )
     MSG_SPEED( MSG_SPEED_FAST )
-    "¡Has obtenido una "
+    // ¡Has obtenido una
+    "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "llave pequeña"
+        // llave pequeña
+        "\x6C\x6C\x61\x76\x65\x20\x70\x65\x71\x75\x65\xF1\x61"                         
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nPuede ser utilizada en el\n"
+        // ! Puede ser utilizada en el
+        "\x21\n\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x65\x6C\x0A"    
         MSG_COLOR(MSG_COLOR_GREEN)
-        "Templo del Bosque"
+        // Templo del Bosque
+        "\x54\x65\x6D\x70\x6C\x6F\x20\x64\x65\x6C\x20\x42\x6F\x73\x71\x75\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( minesSmallKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido una "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "llave pequeña"
+        // llave pequeña
+        "\x6C\x6C\x61\x76\x65\x20\x70\x65\x71\x75\x65\xF1\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nPuede ser utilizada en las\n"
+        // Puede ser utilizada en las
+        "\x21\0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x6C\x61\x73\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Minas de los Goron"
+        // Minas de los Goron
+        "\x4D\x69\x6E\x61\x73\x20\x64\x65\x20\x6C\x6F\x73\x20\x47\x6F\x72\x6F\x6E"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( lakebedSmallKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido una "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "llave pequeña"
+        // llave pequeña
+        "\x6C\x6C\x61\x76\x65\x20\x70\x65\x71\x75\x65\xF1\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nPuede ser utilizada en el\n"
+        // !Puede ser utilizada en el
+        "\x21\x0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x65\x6C\0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Santuario del Lago"
+        // Santuario del Lago
+        "\x53\x61\x6E\x74\x75\x61\x72\x69\x6F\x20\x64\x65\x6C\x20\x4C\x61\x67\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( arbitersSmallKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido una "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "llave pequeña"
+        // llave pequeña
+        "\x6C\x6C\x61\x76\x65\x20\x70\x65\x71\x75\x65\xF1\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nPuede ser utilizada en el\n"
+        // !Puede ser utilizada en el
+        "\x21\x0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x65\x6C\0A"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Patíbulo del Desierto"
+        // Patíbulo del Desierto
+        "\x50\x61\x74\xED\x62\x75\x6C\x6F\x20\x64\x65\x6C\x20\x44\x65\x73\x69\x65\x72\x74\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( snowpeakSmallKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido una "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "llave pequeña"
+        // llave pequeña
+        "\x6C\x6C\x61\x76\x65\x20\x70\x65\x71\x75\x65\xF1\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nPuede ser utilizada en las\n"
+        // Puede ser utilizada en las
+        "\x21\0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x6C\x61\x73\x0A"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "Ruinas del Pico Nevado"
+        // Ruinas del Pico Nevado
+        "\x52\x75\x69\x6E\x61\x73\x20\x64\x65\x6C\x20\x50\x69\x63\x6F\x20\x4E\x65\x76\x61\x64\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( timeSmallKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido una "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "llave pequeña"
+        // llave pequeña
+        "\x6C\x6C\x61\x76\x65\x20\x70\x65\x71\x75\x65\xF1\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nPuede ser utilizada en el\n"
+        // !Puede ser utilizada en el
+        "\x21\x0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x65\x6C\0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Templo del Tiempo"
+        // Templo del Tiempo
+        "\x54\x65\x6D\x70\x6C\x6F\x20\x64\x65\x6C\x20\x54\x69\x65\x6D\x70\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( citySmallKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido una "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "llave pequeña"
+        // llave pequeña
+        "\x6C\x6C\x61\x76\x65\x20\x70\x65\x71\x75\x65\xF1\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nPuede ser utilizada en\n"
+        // ! Puede ser utilizada en
+        "\x21\x0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\0A"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "Celestia"
+        // Celestia
+        "\x43\x65\x6C\x65\x73\x74\x69\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( palaceSmallKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido una "
+       // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "llave pequeña"
+        // llave pequeña
+        "\x6C\x6C\x61\x76\x65\x20\x70\x65\x71\x75\x65\xF1\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nPuede ser utilizada en el\n"
+        // !Puede ser utilizada en el
+        "\x21\x0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x65\x6C\0A"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "Palacio del Crepúsculo"
+        // Palacio del Crepúsculo
+        "\x50\x61\x6C\x61\x63\x69\x6F\x20\x64\x65\x6C\x20\x43\x72\x65\x70\xFA\x73\x63\x75\x6C\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( hyruleSmallKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido una "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "llave pequeña"
+        // llave pequeña
+        "\x6C\x6C\x61\x76\x65\x20\x70\x65\x71\x75\x65\xF1\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nPuede ser utilizada en el\n"
+        // !Puede ser utilizada en el
+        "\x21\x0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x65\x6C\0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Castillo de Hyrule"
+        // Castillo de Hyrule
+        "\x43\x61\x73\x74\x69\x6C\x6C\x6F\x20\x64\x65\x20\x48\x79\x72\x75\x6C\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( campSmallKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido una "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "llave pequeña"
+        // llave pequeña
+        "\x6C\x6C\x61\x76\x65\x20\x70\x65\x71\x75\x65\xF1\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nPuede ser utilizada en el\n"
+        // !Puede ser utilizada en el
+        "\x21\x0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x65\x6C\0A"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Campo Bulbin"
+        // Campo Bulbin
+        "\x43\x61\x6D\x70\x6F\x20\x42\x75\x6C\x62\x69\x6E"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( shadowCrystalSp )
         MSG_SPEED(MSG_SPEED_SLOW)
-        "¡Has obtenido el "
+        // ¡Has obtenido el 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Cristal Oscuro"
+        // Cristal Oscuro
+        "\x43\x72\x69\x73\x74\x61\x6C\x20\x4F\x73\x63\x75\x72\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nEsa manifestación maléfica del\npoder de "
+        // !\nEsa manifestación maléfica del\npoder de 
+        "\x21\x0A\x45\x73\x61\x20\x6D\x61\x6E\x69\x66\x65\x73\x74\x61\x63\x69\xF3\x6E\x20\x6D\x61\x6C\xE9\x66\x69\x63\x61\x20\x64\x65\x6C\x0A\x70\x6F\x64\x65\x72\x20\x64\x65\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Zant "
+        // Zant 
+        "\x5A\x61\x6E\x74\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "te permite\ntransformarte cuando quieras!"
+        // te permite\ntransformarte cuando quieras!
+        "\x74\x65\x20\x70\x65\x72\x6D\x69\x74\x65\x0A\x74\x72\x61\x6E\x73\x66\x6F\x72\x6D\x61\x72\x74\x65\x20\x63\x75\x61\x6E\x64\x6F\x20\x71\x75\x69\x65\x72\x61\x73\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( forestDungeonMapSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido el "
+        // ¡Has obtenido el 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "mapa de una\nmazmorra"
+        // mapa de una\nmazmorra
+        "\x6D\x61\x70\x61\x20\x64\x65\x20\x75\x6E\x61\x0A\x6D\x61\x7A\x6D\x6F\x72\x72\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Indica el camino en\nel "
+        //! Indica el camino en\nel 
+        "\x21\x20\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x0A\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "Templo del Bosque"
+        // Templo del Bosque
+        "\x54\x65\x6D\x70\x6C\x6F\x20\x64\x65\x6C\x20\x42\x6F\x73\x71\x75\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( minesDungeonMapSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido el "
+        // ¡Has obtenido el 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "mapa de una\nmazmorra"
+        // mapa de una\nmazmorra
+        "\x6D\x61\x70\x61\x20\x64\x65\x20\x75\x6E\x61\x0A\x6D\x61\x7A\x6D\x6F\x72\x72\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Indica el camino en\nlas "
+        //! Indica el camino en\nlas 
+        "\x21\x20\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x0A\x6C\x61\x73\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Minas de los Goron"
+        // Minas de los Goron
+        "\x4D\x69\x6E\x61\x73\x20\x64\x65\x20\x6C\x6F\x73\x20\x47\x6F\x72\x6F\x6E"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( lakebedDungeonMapSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido el "
+        // ¡Has obtenido el 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "mapa de una\nmazmorra"
+        // mapa de una\nmazmorra
+        "\x6D\x61\x70\x61\x20\x64\x65\x20\x75\x6E\x61\x0A\x6D\x61\x7A\x6D\x6F\x72\x72\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Indica el camino en\nel "
+        //! Indica el camino en\nel 
+        "\x21\x20\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x0A\x65\x6C\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Santuario del Lago"
+        // Santuario del Lago
+        "\x53\x61\x6E\x74\x75\x61\x72\x69\x6F\x20\x64\x65\x6C\x20\x4C\x61\x67\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( arbitersDungeonMapSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido el "
+        // ¡Has obtenido el 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "mapa de una\nmazmorra"
+        // mapa de una\nmazmorra
+        "\x6D\x61\x70\x61\x20\x64\x65\x20\x75\x6E\x61\x0A\x6D\x61\x7A\x6D\x6F\x72\x72\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Indica el camino en\nel "
+        //! Indica el camino en\nel 
+        "\x21\x20\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x0A\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Patíbulo del Desierto"
+        // Patíbulo del Desierto
+        "\x50\x61\x74\xED\x62\x75\x6C\x6F\x20\x64\x65\x6C\x20\x44\x65\x73\x69\x65\x72\x74\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( snowpeakDungeonMapSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido el "
+        // ¡Has obtenido el 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "mapa de una\nmazmorra"
+        // mapa de una\nmazmorra
+        "\x6D\x61\x70\x61\x20\x64\x65\x20\x75\x6E\x61\x0A\x6D\x61\x7A\x6D\x6F\x72\x72\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Indica el camino en\nlas "
+        //! Indica el camino en\nlas 
+        "\x21\x20\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x0A\x6C\x61\x73\x20"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "Ruinas del Pico Nevado"
+       // Ruinas del Pico Nevado
+        "\x52\x75\x69\x6E\x61\x73\x20\x64\x65\x6C\x20\x50\x69\x63\x6F\x20\x4E\x65\x76\x61\x64\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( timeDungeonMapSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido el "
+        // ¡Has obtenido el 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "mapa de una\nmazmorra"
+        // mapa de una\nmazmorra
+        "\x6D\x61\x70\x61\x20\x64\x65\x20\x75\x6E\x61\x0A\x6D\x61\x7A\x6D\x6F\x72\x72\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Indica el camino en\nel "
+        //! Indica el camino en\nel 
+        "\x21\x20\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x0A\x65\x6C\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Templo del Tiempo"
+        // Templo del Tiempo
+        "\x54\x65\x6D\x70\x6C\x6F\x20\x64\x65\x6C\x20\x54\x69\x65\x6D\x70\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( cityDungeonMapSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido el "
+        // ¡Has obtenido el 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "mapa de una\nmazmorra"
+        // mapa de una\nmazmorra
+        "\x6D\x61\x70\x61\x20\x64\x65\x20\x75\x6E\x61\x0A\x6D\x61\x7A\x6D\x6F\x72\x72\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Indica el camino en\n"
+        // ! Indica el camino en\n
+        "\x21\x20\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x0A"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "Celestia"
+        // Celestia
+        "\x43\x65\x6C\x65\x73\x74\x69\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( palaceDungeonMapSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido el "
+        // ¡Has obtenido el 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "mapa de una\nmazmorra"
+        // mapa de una\nmazmorra
+        "\x6D\x61\x70\x61\x20\x64\x65\x20\x75\x6E\x61\x0A\x6D\x61\x7A\x6D\x6F\x72\x72\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Indica el camino en\nel "
+        //! Indica el camino en\nel 
+        "\x21\x20\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x0A\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "Palacio del Crepúsculo"
+        // Palacio del Crepúsculo
+        "\x50\x61\x6C\x61\x63\x69\x6F\x20\x64\x65\x6C\x20\x43\x72\x65\x70\xFA\x73\x63\x75\x6C\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( hyruleDungeonMapSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "¡Has obtenido el "
+        // ¡Has obtenido el 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "mapa de una\nmazmorra"
+        // mapa de una\nmazmorra
+        "\x6D\x61\x70\x61\x20\x64\x65\x20\x75\x6E\x61\x0A\x6D\x61\x7A\x6D\x6F\x72\x72\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Indica el camino en\nel "
+        //! Indica el camino en\nel 
+        "\x21\x20\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x0A\x65\x6C\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Castillo de Hyrule"
+        // Castillo de Hyrule
+        "\x43\x61\x73\x74\x69\x6C\x6C\x6F\x20\x64\x65\x20\x48\x79\x72\x75\x6C\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( forestCompassSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "compass"
+        //brújula
+        "\x62\x72\xFA\x6A\x75\x6C\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
+        // !\nIndica el camino en el\n
+        "\x21\x0A\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x20\x65\x6C\x0A"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "Forest Temple"
+        // Templo del Bosque
+        "\x54\x65\x6D\x70\x6C\x6F\x20\x64\x65\x6C\x20\x42\x6F\x73\x71\x75\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( minesCompassSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "compass"
+        //brújula
+        "\x62\x72\xFA\x6A\x75\x6C\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
+        // !\nIndica el camino en las\n
+        "\x21\x0A\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x20\x6C\x61\x73\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Goron Mines"
+        // Minas de los Goron
+        "\x4D\x69\x6E\x61\x73\x20\x64\x65\x20\x6C\x6F\x73\x20\x47\x6F\x72\x6F\x6E"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( lakebedCompassSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "compass"
+        //brújula
+        "\x62\x72\xFA\x6A\x75\x6C\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
+        // !\nIndica el camino en el\n
+        "\x21\x0A\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x20\x65\x6C\x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Lakebed Temple"
+        // Santuario del Lago
+        "\x53\x61\x6E\x74\x75\x61\x72\x69\x6F\x20\x64\x65\x6C\x20\x4C\x61\x67\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( arbitersCompassSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "compass"
+        //brújula
+        "\x62\x72\xFA\x6A\x75\x6C\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
+        // !\nIndica el camino en el\n
+        "\x21\x0A\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x20\x65\x6C\x0A"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Arbiter's Grounds"
+        // Patíbulo del Desierto
+        "\x50\x61\x74\xED\x62\x75\x6C\x6F\x20\x64\x65\x6C\x20\x44\x65\x73\x69\x65\x72\x74\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( snowpeakCompassSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "compass"
+        //brújula
+        "\x62\x72\xFA\x6A\x75\x6C\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
+        // !\nIndica el camino en las\n
+        "\x21\x0A\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x20\x6C\x61\x73\x0A"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "Snowpeak Ruins"
+       // Ruinas del Pico Nevado
+        "\x52\x75\x69\x6E\x61\x73\x20\x64\x65\x6C\x20\x50\x69\x63\x6F\x20\x4E\x65\x76\x61\x64\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( timeCompassSp )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+       MSG_SPEED(MSG_SPEED_FAST)
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "compass"
+        //brújula
+        "\x62\x72\xFA\x6A\x75\x6C\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
+        // !\nIndica el camino en el\n
+        "\x21\x0A\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x20\x65\x6C\x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Temple of Time"
+        // Templo del Tiempo
+        "\x54\x65\x6D\x70\x6C\x6F\x20\x64\x65\x6C\x20\x54\x69\x65\x6D\x70\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( cityCompassSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "compass"
+        //brújula
+        "\x62\x72\xFA\x6A\x75\x6C\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
+        // !\nIndica el camino en\n
+        "\x21\x0A\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x0A"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "City in The Sky"
+        // Celestia
+        "\x43\x65\x6C\x65\x73\x74\x69\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( palaceCompassSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "compass"
+        //brújula
+        "\x62\x72\xFA\x6A\x75\x6C\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
+        // !\nIndica el camino en el\n
+        "\x21\x0A\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x65\x6E\x20\x65\x6C\x0A"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "Palace of Twilight"
+        // Palacio del Crepúsculo
+        "\x50\x61\x6C\x61\x63\x69\x6F\x20\x64\x65\x6C\x20\x43\x72\x65\x70\xFA\x73\x63\x75\x6C\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( hyruleCompassSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "compass"
+        //brújula
+        "\x62\x72\xFA\x6A\x75\x6C\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
+        "!\nIndica el camino a en el\n"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Hyrule Castle"
+        // Castillo de Hyrule
+        "\x43\x61\x73\x74\x69\x6C\x6C\x6F\x20\x64\x65\x20\x48\x79\x72\x75\x6C\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( forestBigKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "big key"
+        // gran llave
+        "\x67\x72\x61\x6E\x20\x6C\x6C\x61\x76\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
+        // !Puede ser utilizada en el
+        "\x21\x0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x65\x6C\0A"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "Forest Temple"
+        // Templo del Bosque
+        "\x54\x65\x6D\x70\x6C\x6F\x20\x64\x65\x6C\x20\x42\x6F\x73\x71\x75\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( lakebedBigKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "big key"
+        // gran llave
+        "\x67\x72\x61\x6E\x20\x6C\x6C\x61\x76\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
+        // !Puede ser utilizada en el
+        "\x21\x0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x65\x6C\0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Lakebed Temple"
+        // Santuario del Lago
+        "\x53\x61\x6E\x74\x75\x61\x72\x69\x6F\x20\x64\x65\x6C\x20\x4C\x61\x67\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( arbitersBigKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "big key"
+        // gran llave
+        "\x67\x72\x61\x6E\x20\x6C\x6C\x61\x76\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
+        // !Puede ser utilizada en el
+        "\x21\x0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x65\x6C\0A"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Arbiter's Grounds"
+        // Patíbulo del Desierto
+        "\x50\x61\x74\xED\x62\x75\x6C\x6F\x20\x64\x65\x6C\x20\x44\x65\x73\x69\x65\x72\x74\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( timeBigKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "big key"
+        // gran llave
+        "\x67\x72\x61\x6E\x20\x6C\x6C\x61\x76\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
+        // !Puede ser utilizada en el
+        "\x21\x0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x65\x6C\0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Temple of Time"
+        // Templo del Tiempo
+        "\x54\x65\x6D\x70\x6C\x6F\x20\x64\x65\x6C\x20\x54\x69\x65\x6D\x70\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( cityBigKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "big key"
+        // gran llave
+        "\x67\x72\x61\x6E\x20\x6C\x6C\x61\x76\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
+        // !\nPuede ser utilizada en\n
+        "\x21\x0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "City in The Sky"
+        // Celestia
+        "\x43\x65\x6C\x65\x73\x74\x69\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( palaceBigKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "big key"
+        // gran llave
+        "\x67\x72\x61\x6E\x20\x6C\x6C\x61\x76\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
+        // !Puede ser utilizada en el
+        "\x21\x0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x65\x6C\0A"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "Palace of Twilight"
+        // Palacio del Crepúsculo
+        "\x50\x61\x6C\x61\x63\x69\x6F\x20\x64\x65\x6C\x20\x43\x72\x65\x70\xFA\x73\x63\x75\x6C\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( hyruleBigKeySp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido una 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "big key"
+        // gran llave
+        "\x67\x72\x61\x6E\x20\x6C\x6C\x61\x76\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
+        // !Puede ser utilizada en el
+        "\x21\x0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x65\x6C\0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Hyrule Castle"
+        // Castillo de Hyrule
+        "\x43\x61\x73\x74\x69\x6C\x6C\x6F\x20\x64\x65\x20\x48\x79\x72\x75\x6C\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // .
+        "\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( endingBlowSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        // ¡Técnica aprendida :\n
+        "\xA1\x54\xE9\x63\x6E\x69\x63\x61\x20\x61\x70\x72\x65\x6E\x64\x69\x64\x61\x20\x3A\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Ending Blow"
+        // golpe de gracia
+        "\x67\x6F\x6C\x70\x65\x20\x64\x65\x20\x67\x72\x61\x63\x69\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        // !
+        "\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( shieldAttackSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        // ¡Técnica aprendida :\n
+        "\xA1\x54\xE9\x63\x6E\x69\x63\x61\x20\x61\x70\x72\x65\x6E\x64\x69\x64\x61\x20\x3A\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Shield Attack"
+        // ataque de escudo
+        "\x61\x74\x61\x71\x75\x65\x20\x64\x65\x20\x65\x73\x63\x75\x64\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        // !
+        "\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( backSliceSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        // ¡Técnica aprendida :\n
+        "\xA1\x54\xE9\x63\x6E\x69\x63\x61\x20\x61\x70\x72\x65\x6E\x64\x69\x64\x61\x20\x3A\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Back Slice"
+        // tajo trastero
+        "\x74\x61\x6A\x6F\x20\x74\x72\x61\x73\x74\x65\x72\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        // !
+        "\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( helmSplitterSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        // ¡Técnica aprendida :\n
+        "\xA1\x54\xE9\x63\x6E\x69\x63\x61\x20\x61\x70\x72\x65\x6E\x64\x69\x64\x61\x20\x3A\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Helm Splitter"
+        // rompeyelmos
+        "\x72\x6F\x6D\x70\x65\x79\x65\x6C\x6D\x6F\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        // !
+        "\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( mortalDrawSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        // ¡Técnica aprendida :\n
+        "\xA1\x54\xE9\x63\x6E\x69\x63\x61\x20\x61\x70\x72\x65\x6E\x64\x69\x64\x61\x20\x3A\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Mortal Draw"
+        // tajo relámpago
+        "\x74\x61\x6A\x6F\x20\x72\x65\x6C\xE1\x6D\x70\x61\x67\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        // !
+        "\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( jumpStrikeSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        // ¡Técnica aprendida :\n
+        "\xA1\x54\xE9\x63\x6E\x69\x63\x61\x20\x61\x70\x72\x65\x6E\x64\x69\x64\x61\x20\x3A\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Jump Strike"
+        // mandoble volador
+        "\x6D\x61\x6E\x64\x6F\x62\x6C\x65\x20\x76\x6F\x6C\x61\x64\x6F\x72"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        // !
+        "\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( greatSpinSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        // ¡Técnica aprendida :\n
+        "\xA1\x54\xE9\x63\x6E\x69\x63\x61\x20\x61\x70\x72\x65\x6E\x64\x69\x64\x61\x20\x3A\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Great Spin"
+        // gran ataque circular
+        "\x67\x72\x61\x6E\x20\x61\x74\x61\x71\x75\x65\x20\x63\x69\x72\x63\x75\x6C\x61\x72"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        // !
+        "\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( poweredRodSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Power has been restored to\nthe "
+        // El 
+        "\x45\x6C\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Dominion Rod"
+        // cetro de dominio 
+        "\x63\x65\x74\x72\x6F\x20\x64\x65\x20\x64\x6F\x6D\x69\x6E\x69\x6F\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Now it can\nbe used to imbude statues\nwith life in the present!"
+        // ha\nrecuperado su magia! Ahora\npuede ser utilizado para dar\nvida a estatuas en el presente."
+        "\x68\x61\x0A\x72\x65\x63\x75\x70\x65\x72\x61\x64\x6F\x20\x73\x75\x20\x6D\x61\x67\x69\x61\x21\x20\x41\x68\x6F\x72\x61\x0A\x70\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x6F\x20\x70\x61\x72\x61\x20\x64\x61\x72\x0A\x76\x69\x64\x61\x20\x61\x20\x65\x73\x74\x61\x74\x75\x61\x73\x20\x65\x6E\x20\x65\x6C\x20\x70\x72\x65\x73\x65\x6E\x74\x65\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( firstCharacterSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You found the first "
+        // ¡Has encontrado la primera\n
+        "\xA1\x48\x61\x73\x20\x65\x6E\x63\x6F\x6E\x74\x72\x61\x64\x6F\x20\x6C\x61\x20\x70\x72\x69\x6D\x65\x72\x61\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Sky\ncharacter"
+        // letra del Libro de los Cielos
+        "\x6C\x65\x74\x72\x61\x20\x64\x65\x6C\x20\x4C\x69\x62\x72\x6F\x20\x64\x65\x20\x6C\x6F\x73\x20\x43\x69\x65\x6C\x6F\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! A missing part\nof the word in the Ancient\nSky Book has been restored."
+        // !\nUna parte faltante de la palabra\nen el Libro de los Cielos\nha sido restaurada.
+        "\x21\x0A\x55\x6E\x61\x20\x70\x61\x72\x74\x65\x20\x66\x61\x6C\x74\x61\x6E\x74\x65\x20\x64\x65\x20\x6C\x61\x20\x70\x61\x6C\x61\x62\x72\x61\x0A\x65\x6E\x20\x65\x6C\x20\x4C\x69\x62\x72\x6F\x20\x64\x65\x20\x6C\x6F\x73\x20\x43\x69\x65\x6C\x6F\x73\x0A\x68\x61\x20\x73\x69\x64\x6F\x20\x72\x65\x73\x74\x61\x75\x72\x61\x64\x61\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( secondCharacterSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You found the second "
+        // ¡Has encontrado la segunda\n
+        "\xA1\x48\x61\x73\x20\x65\x6E\x63\x6F\x6E\x74\x72\x61\x64\x6F\x20\x6C\x61\x20\x73\x65\x67\x75\x6E\x64\x61\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Sky\ncharacter"
+        // letra del Libro de los Cielos
+        "\x6C\x65\x74\x72\x61\x20\x64\x65\x6C\x20\x4C\x69\x62\x72\x6F\x20\x64\x65\x20\x6C\x6F\x73\x20\x43\x69\x65\x6C\x6F\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! A missing part\nof the word in the Ancient\nSky Book has been restored."
+        // !\nUna parte faltante de la palabra\nen el Libro de los Cielos\nha sido restaurada.
+        "\x21\x0A\x55\x6E\x61\x20\x70\x61\x72\x74\x65\x20\x66\x61\x6C\x74\x61\x6E\x74\x65\x20\x64\x65\x20\x6C\x61\x20\x70\x61\x6C\x61\x62\x72\x61\x0A\x65\x6E\x20\x65\x6C\x20\x4C\x69\x62\x72\x6F\x20\x64\x65\x20\x6C\x6F\x73\x20\x43\x69\x65\x6C\x6F\x73\x0A\x68\x61\x20\x73\x69\x64\x6F\x20\x72\x65\x73\x74\x61\x75\x72\x61\x64\x61\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( thirdCharacterSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You found the third "
+        // ¡Has encontrado la tercera\n
+        "\xA1\x48\x61\x73\x20\x65\x6E\x63\x6F\x6E\x74\x72\x61\x64\x6F\x20\x6C\x61\x20\x74\x65\x72\x63\x65\x72\x61\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Sky\ncharacter"
+        // letra del Libro de los Cielos
+        "\x6C\x65\x74\x72\x61\x20\x64\x65\x6C\x20\x4C\x69\x62\x72\x6F\x20\x64\x65\x20\x6C\x6F\x73\x20\x43\x69\x65\x6C\x6F\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! A missing part\nof the word in the Ancient\nSky Book has been restored."
+        // !\nUna parte faltante de la palabra\nen el Libro de los Cielos\nha sido restaurada.
+        "\x21\x0A\x55\x6E\x61\x20\x70\x61\x72\x74\x65\x20\x66\x61\x6C\x74\x61\x6E\x74\x65\x20\x64\x65\x20\x6C\x61\x20\x70\x61\x6C\x61\x62\x72\x61\x0A\x65\x6E\x20\x65\x6C\x20\x4C\x69\x62\x72\x6F\x20\x64\x65\x20\x6C\x6F\x73\x20\x43\x69\x65\x6C\x6F\x73\x0A\x68\x61\x20\x73\x69\x64\x6F\x20\x72\x65\x73\x74\x61\x75\x72\x61\x64\x61\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( fourthCharacterSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You found the fourth "
+        // ¡Has encontrado la cuarta\n
+        "\xA1\x48\x61\x73\x20\x65\x6E\x63\x6F\x6E\x74\x72\x61\x64\x6F\x20\x6C\x61\x20\x63\x75\x61\x72\x74\x61\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Sky\ncharacter"
+        // letra del Libro de los Cielos
+        "\x6C\x65\x74\x72\x61\x20\x64\x65\x6C\x20\x4C\x69\x62\x72\x6F\x20\x64\x65\x20\x6C\x6F\x73\x20\x43\x69\x65\x6C\x6F\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! A missing part\nof the word in the Ancient\nSky Book has been restored."
+        // !\nUna parte faltante de la palabra\nen el Libro de los Cielos\nha sido restaurada.
+        "\x21\x0A\x55\x6E\x61\x20\x70\x61\x72\x74\x65\x20\x66\x61\x6C\x74\x61\x6E\x74\x65\x20\x64\x65\x20\x6C\x61\x20\x70\x61\x6C\x61\x62\x72\x61\x0A\x65\x6E\x20\x65\x6C\x20\x4C\x69\x62\x72\x6F\x20\x64\x65\x20\x6C\x6F\x73\x20\x43\x69\x65\x6C\x6F\x73\x0A\x68\x61\x20\x73\x69\x64\x6F\x20\x72\x65\x73\x74\x61\x75\x72\x61\x64\x61\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( fifthCharacterSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You found the fifth "
+        // ¡Has encontrado la quinta\n
+        "\xA1\x48\x61\x73\x20\x65\x6E\x63\x6F\x6E\x74\x72\x61\x64\x6F\x20\x6C\x61\x20\x71\x75\x69\x6E\x74\x61\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Sky\ncharacter"
+        // letra del Libro de los Cielos
+        "\x6C\x65\x74\x72\x61\x20\x64\x65\x6C\x20\x4C\x69\x62\x72\x6F\x20\x64\x65\x20\x6C\x6F\x73\x20\x43\x69\x65\x6C\x6F\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! A missing part\nof the word in the Ancient\nSky Book has been restored."
+        // !\nUna parte faltante de la palabra\nen el Libro de los Cielos\nha sido restaurada.
+        "\x21\x0A\x55\x6E\x61\x20\x70\x61\x72\x74\x65\x20\x66\x61\x6C\x74\x61\x6E\x74\x65\x20\x64\x65\x20\x6C\x61\x20\x70\x61\x6C\x61\x62\x72\x61\x0A\x65\x6E\x20\x65\x6C\x20\x4C\x69\x62\x72\x6F\x20\x64\x65\x20\x6C\x6F\x73\x20\x43\x69\x65\x6C\x6F\x73\x0A\x68\x61\x20\x73\x69\x64\x6F\x20\x72\x65\x73\x74\x61\x75\x72\x61\x64\x61\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( firstFusedShadowSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
+        // ¡Has obtenido un fragmento de\n
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x20\x66\x72\x61\x67\x6D\x65\x6E\x74\x6F\x20\x64\x65\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Fused Shadow!\n"
+        // Sombra Fundida
+        "\x53\x6F\x6D\x62\x72\x61\x20\x46\x75\x6E\x64\x69\x64\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "It seems to have some "
+        // ! Parece que\nalgo de 
+        "\x21\x20\x50\x61\x72\x65\x63\x65\x20\x71\x75\x65\x0A\x61\x6C\x67\x6F\x20\x64\x65\x20"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "moss"
+        // musgo 
+        "\x6D\x75\x73\x67\x6F\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "\ngrowing on it.."
+        // ha crecido\nsobre él..
+        "\x68\x61\x20\x63\x72\x65\x63\x69\x64\x6F\x0A\x73\x6F\x62\x72\x65\x20\xE9\x6C\x2E\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( secondFusedShadowSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        // ¡Has obtenido el segundo\nfragmento de 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20\x73\x65\x67\x75\x6E\x64\x6F\x0A\x66\x72\x61\x67\x6D\x65\x6E\x74\x6F\x20\x64\x65\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "second Fused\nShadow"
+        // Sombra Fundida
+        "\x53\x6F\x6D\x62\x72\x61\x20\x46\x75\x6E\x64\x69\x64\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! It feels "
+        // !\nEstá 
+        "\x21\x0A\x45\x73\x74\xE1\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "warm"
+        // caliente 
+        "\x63\x61\x6C\x69\x65\x6E\x74\x65\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        " to\nthe touch.."
+        // al tocar..
+        "\x61\x6C\x20\x74\x6F\x63\x61\x72\x2E\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( thirdFusedShadowSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        // ¡Has obtenido el último\nfragmento de 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20\xFA\x6C\x74\x69\x6D\x6F\x0A\x66\x72\x61\x67\x6D\x65\x6E\x74\x6F\x20\x64\x65\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "final Fused\nShadow"
+        // Sombra Fundida
+        "\x53\x6F\x6D\x62\x72\x61\x20\x46\x75\x6E\x64\x69\x64\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! It feels "
+        // !\nParece 
+        "\x21\x0A\x50\x61\x72\x65\x63\x65\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "wet"
+        // mojado 
+        "\x6D\x6F\x6A\x61\x64\x6F\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        " and\nsmells like fish.."
+        // y huele\na pescado..
+        "\x79\x20\x68\x75\x65\x6C\x65\x0A\x61\x20\x70\x65\x73\x63\x61\x64\x6F\x2E\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( secondMirrorShardSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the second shard of\nthe "
+        // ¡Has obtenido el segundo\nfragmento del 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20\x73\x65\x67\x75\x6E\x64\x6F\x0A\x66\x72\x61\x67\x6D\x65\x6E\x74\x6F\x20\x64\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Mirror of Twilight"
+        // Espejo del\nCrepúsculo
+        "\x45\x73\x70\x65\x6A\x6F\x20\x64\x65\x6C\x0A\x43\x72\x65\x70\xFA\x73\x63\x75\x6C\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! It\nhas a beautiful shine to it\nand feels slightly "
+        // ! Es reluciente y\n
+        "\x21\x20\x45\x73\x20\x72\x65\x6C\x75\x63\x69\x65\x6E\x74\x65\x20\x79\x0A"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "cold"
+        // frio 
+        "\x66\x72\x69\x6F\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        ".."
+        // al tocar..
+        "\x61\x6C\x20\x74\x6F\x63\x61\x72\x2E\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( thirdMirrorShardSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the third shard of\nthe "
+        // ¡Has obtenido el tercer\nfragmento del
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20\x74\x65\x72\x63\x65\x72\x0A\x66\x72\x61\x67\x6D\x65\x6E\x74\x6F\x20\x64\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Mirror of Twilight"
+        // Espejo del\nCrepúsculo
+        "\x45\x73\x70\x65\x6A\x6F\x20\x64\x65\x6C\x0A\x43\x72\x65\x70\xFA\x73\x63\x75\x6C\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! It\nis covered in dirt and\n"
+        // ! Está cubierto de\ntierra y 
+        "\x21\x20\x45\x73\x74\xE1\x20\x63\x75\x62\x69\x65\x72\x74\x6F\x20\x64\x65\x74\x69\x65\x72\x72\x61\x20\x79\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "webs"
+        // telarañas
+        "\x74\x65\x6C\x61\x72\x61\xF1\x61\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        ".."
+        // ..
+        "\x2E\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( fourthMirrorShardSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the final shard of\nthe "
+        // ¡Has obtenido el último\nfragmento del 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20\xFA\x6C\x74\x69\x6D\x6F\x0A\x66\x72\x61\x67\x6D\x65\x6E\x74\x6F\x20\x64\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Mirror of Twilight"
+        // Espejo del\nCrepúsculo
+        "\x45\x73\x70\x65\x6A\x6F\x20\x64\x65\x6C\x0A\x43\x72\x65\x70\xFA\x73\x63\x75\x6C\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! It\nfeels lighter than "
+        // ! Parece aún más\nligero que el 
+        "\x21\x20\x50\x61\x72\x65\x63\x65\x20\x61\xFA\x6E\x20\x6D\xE1\x73\x0A\x6C\x69\x67\x65\x72\x6F\x20\x71\x75\x65\x20\x65\x6C\x20"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "air"
+        // aire
+        "\x61\x69\x72\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        ".."
+        // ..
+        "\x2E\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( foolishItemSp )
         MSG_SPEED(MSG_SPEED_FAST)
@@ -637,27 +887,37 @@ namespace mod::customMessages
     MSG_END()
     MSG_BEGIN_ARRAY( bigWalletSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        // ¡Has obtenido la 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x6C\x61\x20" 
         MSG_COLOR(MSG_COLOR_RED)
-        "Big Wallet"
+        // bolsa grande
+        "\x62\x6F\x6C\x73\x61\x20\x67\x72\x61\x6E\x64\x65" 
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! You can now hold "
+        // !\n¡Caben 
+        "\x21\x0A\xA1\x43\x61\x62\x65\x6E\x20" 
         MSG_COLOR(MSG_COLOR_RED)
-        "5,000 Rupees"
+        // 5000 rupias
+        "\x35\x30\x30\x30\x20\x72\x75\x70\x69\x61\x73" 
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        // !
+        "\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( giantWalletSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        // ¡Has obtenido la 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x6C\x61\x20" 
         MSG_COLOR(MSG_COLOR_RED)
-        "Giant Wallet"
+        // bolsa\ngigantesca
+        "\x62\x6F\x6C\x73\x61\x0A\x67\x69\x67\x61\x6E\x74\x65\x73\x63\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! You can now hold "
+        // ! ¡Caben 
+        "\x21\x20\xA1\x43\x61\x62\x65\x6E\x20"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "9,999 Rupees"
+        // 9999 rupias
+        "\x39\x39\x39\x39\x20\x72\x75\x70\x69\x61\x73" 
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        // !
+        "\x21"
     MSG_END()
     
     MsgEntry entriesSp[TOTAL_CUSTOM_MESSAGES] = 
