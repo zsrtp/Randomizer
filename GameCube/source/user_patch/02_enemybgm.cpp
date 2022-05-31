@@ -23,8 +23,8 @@ namespace mod::user_patch
 
     void enableBattleMusic( rando::Randomizer* randomizer, bool set )
     {
-        mod::console << "[2] EnemyBgmDisabled [" << ( set ? "x" : " " ) << "]\n";
         enemyBgm = set;
+        mod::console << "[2] EnemyBgmDisabled [" << ( set ? "x" : " " ) << "]\n";
     }
 
     KEEP_FUNC void handleStartBattleBgm( libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1 )

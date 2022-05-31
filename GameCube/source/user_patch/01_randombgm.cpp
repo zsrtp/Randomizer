@@ -154,15 +154,15 @@ namespace mod::user_patch
 
     void enableRandomBgm( rando::Randomizer* randomizer, bool set )
     {
-        uint64_t seed = randomizer->getSeed();
+        randomBgm = set;
         mod::console << "[2] EnemyBgmDisabled [" << ( set ? "x" : " " ) << "]\n";
+
         if ( !set )
         {
-            randomBgm = false;
             return;
         }
 
-        randomBgm = true;
+        uint64_t seed = randomizer->getSeed();
 
         /**
          * @todo Find a better way to assign a random track to each source track
