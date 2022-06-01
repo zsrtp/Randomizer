@@ -1,7 +1,6 @@
 #include <cstring>
 
 #include "game_patch/game_patch.h"
-#include "game_patch/00_customItemMessages.h"
 #include "data/items.h"
 #include "data/stages.h"
 #include "gc_wii/bmgres.h"
@@ -11,9 +10,14 @@
 #include "tp/d_com_inf_game.h"
 #include "tp/d_kankyo.h"
 #include "tp/processor.h"
+#include "tp/resource.h"
 
 namespace mod::game_patch
 {
+    // Custom strings that are used for text search
+    const char* talkToMidnaText = { "Talk to Midna" };
+    const char* smallDonationText = { "30 Rupees" };
+
     int32_t getItemIdFromMsgId( const void* TProcessor, uint16_t unk3, uint32_t msgId )
     {
         void* unk = libtp::tp::processor::getResource_groupID( TProcessor, unk3 );

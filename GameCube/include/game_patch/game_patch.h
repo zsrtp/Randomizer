@@ -36,7 +36,9 @@ namespace mod::game_patch
     void _02_modifyFoolishShopModel( uint16_t shopID );
     void giveNodeDungeonItems( const libtp::data::stage::AreaNodesID nodeId,
                                const libtp::data::items::NodeDungeonItemType type );
+
     extern const char* _02_hiddenSkillArc;
+
     void _02_forestSmallKeyItemFunc();
     void _02_forestMapItemFunc();
     void _02_forestCompassItemFunc();
