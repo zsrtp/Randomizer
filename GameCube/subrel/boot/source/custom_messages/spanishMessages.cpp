@@ -11,9 +11,9 @@ namespace mod::customMessages
     // Disable formatting on this namespace because it makes things look weird.
     // clang-format off
     MSG_BEGIN_ARRAY( forestSmallKeySp )
-    MSG_SPEED( MSG_SPEED_FAST )
-    // ¡Has obtenido una
-    "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
+        MSG_SPEED( MSG_SPEED_FAST )
+        // ¡Has obtenido una
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
         // llave pequeña
         "\x6C\x6C\x61\x76\x65\x20\x70\x65\x71\x75\x65\xF1\x61"                         

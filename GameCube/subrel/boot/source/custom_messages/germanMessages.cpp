@@ -8,9 +8,11 @@
 
 namespace mod::customMessages
 {
+    // Disable formatting on this namespace because it makes things look weird.
+    // clang-format off
     MSG_BEGIN_ARRAY( forestSmallKeyDe )
-    MSG_SPEED( MSG_SPEED_FAST )
-    "Du erhältst einen "
+        MSG_SPEED( MSG_SPEED_FAST )
+        "Du erhältst einen "
         MSG_COLOR(MSG_COLOR_RED)
         "kleinen\nSchlüssel"
         MSG_COLOR(MSG_COLOR_WHITE)
@@ -955,6 +957,6 @@ namespace mod::customMessages
         sizeof(giantWalletDe),
         0x009A,
     };
-
+    // clang-format on
 }     // namespace mod::customMessages
 #endif

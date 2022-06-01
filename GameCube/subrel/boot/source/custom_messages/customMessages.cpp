@@ -12,7 +12,7 @@ namespace mod::customMessages
         using namespace libtp::tp::d_s_logo;
 
         // Get the MsgEntry to use
-        MsgEntry* entries;
+        const MsgEntry* entries;
 #ifdef TP_US
         entries = entriesUs;
 #elif defined TP_JP
@@ -83,7 +83,7 @@ namespace mod::customMessages
         uint32_t msgTableWrittenSize = 0;
         for ( uint32_t i = 0; i < TOTAL_CUSTOM_MESSAGES; i++ )
         {
-            MsgEntry* entry = &entries[i];
+            const MsgEntry* entry = &entries[i];
 
             msgIdTable[i] = entry->id;
             msgOffsetTable[i] = msgTableWrittenSize;
