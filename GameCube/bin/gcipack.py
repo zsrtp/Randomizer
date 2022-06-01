@@ -1,3 +1,9 @@
+#!/usr/bin/python3#!/usr/bin/python3
+
+"""
+Packs REL module(s) into a GameCube GCI file.
+"""
+
 import argparse
 from dataclasses import dataclass
 from io import BufferedReader
@@ -9,40 +15,43 @@ import math
 from datetime import datetime
 from typing import ByteString, List, Tuple
 
-
-def parseFilename(string: str):
-    string = string.strip()
-    if not string or len(string) > 32:
-        raise argparse.ArgumentError(None, "Wrong filename size")
-    return string
-
-
-def parseComment(string: str):
-    if len(string) > 32:
-        raise argparse.ArgumentError(None, "Comment too long")
-    return string
-
-
-def parseGamecode(string: str):
-    if len(string) != 4:
-        raise argparse.ArgumentError(
-            None, "Invalid Game code (wrong size, expecting 4 characters)")
-    return string
-
-
-@dataclass
-class Arguments():
-    data: BufferedReader
-    filename: str
-    comment1: str
-    comment2: str
-    banner: BufferedReader
-    icon: BufferedReader
-    code: str
-    rel: List[BufferedReader]
+__author__ = "PistonMiner, and kipcode66"
+__copyright__ = "Copyright 2018, PistonMiner"
+__credits__ = ["PistonMiner", "kipcode66"]
+__license__ = "GPL3"
+__version__ = "1.1.0"
 
 
 def main():
+    @dataclass
+    class ParserArguments():
+        data: BufferedReader
+        filename: str
+        comment1: str
+        comment2: str
+        banner: BufferedReader
+        icon: BufferedReader
+        code: str
+        rel: List[BufferedReader]
+
+    # Parsing functions
+    def parseFilename(string: str):
+        string = string.strip()
+        if not string or len(string) > 32:
+            raise argparse.ArgumentError(None, "Wrong filename size")
+        return string
+
+    def parseComment(string: str):
+        if len(string) > 32:
+            raise argparse.ArgumentError(None, "Comment too long")
+        return string
+
+    def parseGamecode(string: str):
+        if len(string) != 4:
+            raise argparse.ArgumentError(
+                None, "Invalid Game code (wrong size, expecting 4 characters)")
+        return string
+
     parser = argparse.ArgumentParser(
         sys.argv[0], description="Packs data into a GCI file.")
     parser.add_argument("data", type=argparse.FileType(
@@ -61,7 +70,7 @@ def main():
                         help="The 4 character game code (ex: GZ2E for Twilight Princess)")
     parser.add_argument("--rel", type=argparse.FileType("rb"), action="append",
                         help="Additional REL module(s) to add to the GCI file")
-    args: Arguments = parser.parse_args()
+    args: ParserArguments = parser.parse_args()
 
     if args.rel and len(args.rel) > 37:
         raise argparse.ArgumentError(None, "Too many REL modules.")
