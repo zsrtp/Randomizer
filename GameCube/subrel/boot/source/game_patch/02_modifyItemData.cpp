@@ -349,7 +349,7 @@ namespace mod::game_patch
         listLength = sizeof( customHiddenSkillItemIDs ) / sizeof( customHiddenSkillItemIDs[0] );
         for ( uint32_t i = 0; i < listLength; i++ )
         {
-            itemResourcePtr[customHiddenSkillItemIDs[i]].arcName = "O_gD_memo";
+            itemResourcePtr[customHiddenSkillItemIDs[i]].arcName = _02_hiddenSkillArc;
             itemResourcePtr[customHiddenSkillItemIDs[i]].ringTexResIdx = 0x003D;
             itemResourcePtr[customHiddenSkillItemIDs[i]].modelResIdx = 0x0003;
             itemResourcePtr[customHiddenSkillItemIDs[i]].brkResIdx = 0xFFFF;

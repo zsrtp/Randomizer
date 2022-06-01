@@ -88,6 +88,8 @@ namespace mod::game_patch
                 sizeof( libtp::tp::d_item_data::FieldItemRes ) );
     }
 
+    KEEP_VAR const char* _02_hiddenSkillArc = "O_gD_memo";
+
     KEEP_FUNC void _02_forestSmallKeyItemFunc()
     {
         const libtp::data::stage::AreaNodesID nodeId = libtp::data::stage::AreaNodesID::Forest_Temple;

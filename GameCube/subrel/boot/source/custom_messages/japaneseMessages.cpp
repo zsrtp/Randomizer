@@ -12,123 +12,153 @@ namespace mod::customMessages
     // clang-format off
     MSG_BEGIN_ARRAY( forestSmallKeyJp )
         MSG_SPEED( MSG_SPEED_FAST )
-        "You got a "
         MSG_COLOR(MSG_COLOR_RED)
-        "small key"
+        // 小さなカギ
+        "\x8F\xAC\x82\xB3\x82\xC8\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the \n"
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x20"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "Forest Temple"
+        // 森の神殿
+        "\x90\x58\x82\xCC\x90\x5F\x93\x61\x0A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // で使用できる
+        "\x82\xC5\x8E\x67\x97\x70\x82\xC5\x82\xAB\x82\xE9"
     MSG_END()
     MSG_BEGIN_ARRAY( minesSmallKeyJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
         MSG_COLOR(MSG_COLOR_RED)
-        "small key"
+        // 小さなカギ
+        "\x8F\xAC\x82\xB3\x82\xC8\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Goron Mines"
+        // ゴロン鉱山
+        "\x83\x53\x83\x8D\x83\x93\x8D\x7A\x8E\x52\x0A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // で使用できる
+        "\x82\xC5\x8E\x67\x97\x70\x82\xC5\x82\xAB\x82\xE9"
     MSG_END()
     MSG_BEGIN_ARRAY( lakebedSmallKeyJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
         MSG_COLOR(MSG_COLOR_RED)
-        "small key"
+        // 小さなカギ
+        "\x8F\xAC\x82\xB3\x82\xC8\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Lakebed Temple"
+        // 湖底の神殿
+        "\x8C\xCE\x92\xEA\x82\xCC\x90\x5F\x93\x61\x0A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // で使用できる
+        "\x82\xC5\x8E\x67\x97\x70\x82\xC5\x82\xAB\x82\xE9"
     MSG_END()
     MSG_BEGIN_ARRAY( arbitersSmallKeyJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
         MSG_COLOR(MSG_COLOR_RED)
-        "small key"
+        // 小さなカギ
+        "\x8F\xAC\x82\xB3\x82\xC8\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x20"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Arbiter's Grounds"
+        // 砂漠の処刑場
+        "\x8D\xBB\x94\x99\x82\xCC\x8F\x88\x8C\x59\x8F\xEA\x0A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // で使用できる
+        "\x82\xC5\x8E\x67\x97\x70\x82\xC5\x82\xAB\x82\xE9"
     MSG_END()
     MSG_BEGIN_ARRAY( snowpeakSmallKeyJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
         MSG_COLOR(MSG_COLOR_RED)
-        "small key"
+        // 小さなカギ
+        "\x8F\xAC\x82\xB3\x82\xC8\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x20"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "Snowpeak Ruins"
+        // 雪山の廃墟
+        "\x90\xE1\x8E\x52\x82\xCC\x94\x70\x9A\xD0\x0A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // で使用できる
+        "\x82\xC5\x8E\x67\x97\x70\x82\xC5\x82\xAB\x82\xE9"
     MSG_END()
     MSG_BEGIN_ARRAY( timeSmallKeyJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
         MSG_COLOR(MSG_COLOR_RED)
-        "small key"
+        // 小さなカギ
+        "\x8F\xAC\x82\xB3\x82\xC8\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Temple of Time"
+        // 時の神殿
+        "\x8E\x9E\x82\xCC\x90\x5F\x93\x61\x0A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // で使用できる
+        "\x82\xC5\x8E\x67\x97\x70\x82\xC5\x82\xAB\x82\xE9"
     MSG_END()
     MSG_BEGIN_ARRAY( citySmallKeyJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
         MSG_COLOR(MSG_COLOR_RED)
-        "small key"
+        // 小さなカギ
+        "\x8F\xAC\x82\xB3\x82\xC8\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x20"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "City in The Sky"
+        // 天空都市
+        "\x93\x56\x8B\xF3\x93\x73\x8E\x73\x0A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // で使用できる
+        "\x82\xC5\x8E\x67\x97\x70\x82\xC5\x82\xAB\x82\xE9"
     MSG_END()
     MSG_BEGIN_ARRAY( palaceSmallKeyJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
         MSG_COLOR(MSG_COLOR_RED)
-        "small key"
+        // 小さなカギ
+        "\x8F\xAC\x82\xB3\x82\xC8\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x20"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "Palace of Twilight"
+        // 影の宮殿
+        "\x89\x65\x82\xCC\x8B\x7B\x93\x61\x0A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // で使用できる
+        "\x82\xC5\x8E\x67\x97\x70\x82\xC5\x82\xAB\x82\xE9"
     MSG_END()
     MSG_BEGIN_ARRAY( hyruleSmallKeyJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
         MSG_COLOR(MSG_COLOR_RED)
-        "small key"
+        // 小さなカギ
+        "\x8F\xAC\x82\xB3\x82\xC8\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Hyrule Castle"
+        // ハイラル城
+        "\x83\x6E\x83\x43\x83\x89\x83\x8B\x8F\xE9\x0A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // で使用できる
+        "\x82\xC5\x8E\x67\x97\x70\x82\xC5\x82\xAB\x82\xE9"
     MSG_END()
     MSG_BEGIN_ARRAY( campSmallKeyJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
         MSG_COLOR(MSG_COLOR_RED)
-        "small key"
+        // 小さなカギ
+        "\x8F\xAC\x82\xB3\x82\xC8\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x20"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Bulblin Camp"
+        // ブルブリンの砦
+        "\x83\x75\x83\x8B\x83\x75\x83\x8A\x83\x93\x82\xCC\x8D\xD4\x0A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        // で使用できる
+        "\x82\xC5\x8E\x67\x97\x70\x82\xC5\x82\xAB\x82\xE9"
     MSG_END()
     MSG_BEGIN_ARRAY( shadowCrystalJp )
         MSG_SPEED(MSG_SPEED_SLOW)

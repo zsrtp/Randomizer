@@ -827,7 +827,8 @@ namespace mod
         char buf[32];
 
         // Set up an auto function for getting Yes or No text
-        auto getYesNoText = []( bool flag ) {
+        auto getYesNoText = []( bool flag )
+        {
             if ( flag )
             {
                 return "Yes";
@@ -1757,12 +1758,17 @@ namespace mod
             libtp::tp::m_Do_Audio::mDoAud_seStartLevel( 0x10040, nullptr, 0, 0 );
             libtp::z2audiolib::z2scenemgr::loadSeWave( Z2ScenePtr, seWave1 );
             libtp::z2audiolib::z2scenemgr::loadSeWave( Z2ScenePtr, seWave2 );
+
             if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm == 1 )
             {
+                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentHealth =
+                    libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentHealth - 2;
                 libtp::tp::d_a_alink::procWolfDamageInit( linkMapPtr, nullptr );
             }
             else
             {
+                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentHealth =
+                    libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentHealth - 1;
                 libtp::tp::d_a_alink::procDamageInit( linkMapPtr, nullptr, 0 );
             }
         }
