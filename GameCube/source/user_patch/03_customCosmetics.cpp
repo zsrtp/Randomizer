@@ -144,8 +144,7 @@ namespace mod::user_patch
 
         // get random color for big heart
         uint32_t randomHeartIndex = mod::ulRand( heartListSize );
-        for ( uint16_t i = 0x908, i1 = 0x3F8, i2 = 0x5A8, i3 = 0x758, rupee = 0x1038; i <= 0x914;
-              i += 0x4, i1 += 0x4, i2 += 0x4, i3 += 0x4, rupee += 0x4 )
+        for ( uint16_t i = 0x3F8, rupee = 0x1038; i <= 0x404; i += 0x4, rupee += 0x4 )
         {
             // Patch the Big Heart color
             if ( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow != nullptr )
@@ -156,14 +155,14 @@ namespace mod::user_patch
                         reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + i ) ) =
                         heartColorRGBA[randomHeartIndex];
                     ( *reinterpret_cast<uint32_t*>(
-                        reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + i1 ) ) =
-                        heartColorRGBA[randomHeartIndex];
+                        reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
+                        ( i + ( 0x1B0 ) ) ) ) = heartColorRGBA[randomHeartIndex];
                     ( *reinterpret_cast<uint32_t*>(
-                        reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + i2 ) ) =
-                        heartColorRGBA[randomHeartIndex];
+                        reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
+                        ( i + ( 0x1B0 * 2 ) ) ) ) = heartColorRGBA[randomHeartIndex];
                     ( *reinterpret_cast<uint32_t*>(
-                        reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + i3 ) ) =
-                        heartColorRGBA[randomHeartIndex];
+                        reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
+                        ( i + ( 0x1B0 * 3 ) ) ) ) = heartColorRGBA[randomHeartIndex];
                 }
                 else
                 {
@@ -171,14 +170,14 @@ namespace mod::user_patch
                         reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + i ) ) =
                         heartColorRGBA[heartColorIndex];
                     ( *reinterpret_cast<uint32_t*>(
-                        reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + i1 ) ) =
-                        heartColorRGBA[heartColorIndex];
+                        reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
+                        ( i + ( 0x1B0 ) ) ) ) = heartColorRGBA[heartColorIndex];
                     ( *reinterpret_cast<uint32_t*>(
-                        reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + i2 ) ) =
-                        heartColorRGBA[heartColorIndex];
+                        reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
+                        ( i + ( 0x1B0 * 2 ) ) ) ) = heartColorRGBA[heartColorIndex];
                     ( *reinterpret_cast<uint32_t*>(
-                        reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + i3 ) ) =
-                        heartColorRGBA[heartColorIndex];
+                        reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
+                        ( i + ( 0x1B0 * 3 ) ) ) ) = heartColorRGBA[heartColorIndex];
                 }
 
                 if ( events::haveItem( libtp::data::items::Giant_Wallet ) )
