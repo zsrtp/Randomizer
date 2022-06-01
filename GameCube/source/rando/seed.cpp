@@ -95,7 +95,7 @@ namespace mod::rando
 
                 tp::d_save::getSave( SaveInfo, regionID );
 
-                // Loop through region-flags from gci
+                // Loop through region-flags from GCI
                 for ( uint32_t j = 0; j < num_regionFlags; j++ )
                 {
                     if ( regionFlags[j].region_id == regionID )

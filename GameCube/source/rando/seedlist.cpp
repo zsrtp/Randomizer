@@ -1,5 +1,5 @@
 /**	@file seedselector.cpp
- *  @brief Selection tool to select the desired data-gci
+ *  @brief Selection tool to select the desired data-GCI
  *
  *	@author AECX
  *	@bug No known bugs.

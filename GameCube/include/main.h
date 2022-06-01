@@ -30,22 +30,11 @@
 #define SUBREL_SEED_ID 0X1001
 #define SUBREL_BOOT_ID 0X1002
 
-// Seed rel actions
+// Seed REL actions
 #define SEED_ACTION_NONE 0
 #define SEED_ACTION_LOAD_SEED 1
 #define SEED_ACTION_CHANGE_SEED 2
 #define SEED_ACTION_FATAL 255
-
-#define MAX_REL_ENTRIES 37
-
-struct RelEntry
-{
-    uint32_t rel_id;       // Module ID
-    uint32_t rel_size;     // Size of the REL file excluding CARD_READ_SIZE rounding
-    uint32_t offset;       // Offset to the REL file from the start of the gci file, excluding the gci header
-} __attribute__( ( __packed__ ) );
-
-static_assert( sizeof( RelEntry ) == 0xC );
 
 // May be moved somewhere else later
 // Required for keeping certain unused functions/variables from being removed
@@ -80,10 +69,6 @@ namespace mod
     float intToFloat( int32_t value );
     void handleInput( uint32_t inputs );
     void handleFoolishItem();
-
-    // Will be moved to libtp_rel later
-    bool callRelPrologMounted( int32_t chan, uint32_t rel_id );
-    bool callRelProlog( int32_t chan, uint32_t rel_id );
 
     // Inline randoIsEnabled, as it's short enough to use less memory when inlined
     inline bool randoIsEnabled( rando::Randomizer* rando )

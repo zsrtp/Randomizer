@@ -1,5 +1,5 @@
 /**	@file seedselector.cpp
- *  @brief Selection tool to select the desired data-gci
+ *  @brief Selection tool to select the desired data-GCI
  *
  *	@author AECX
  *	@bug No known bugs.
@@ -20,7 +20,7 @@ namespace mod::rando
     {
         using namespace libtp;
 
-        // Loop through possible seed-data-gcis until we don't read anything
+        // Loop through possible seed-data-GCIs until we don't read anything
         char filename[12] = "rando-data\0";
 
         // Bitwise representation of the seeds available

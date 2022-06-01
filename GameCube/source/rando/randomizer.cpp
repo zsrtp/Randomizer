@@ -56,7 +56,7 @@ namespace mod::rando
         if ( !numReplacements )
             return;
 
-        // Loop through all loaded OSModuleInfo entries and apply the specified values to the rels already loaded.
+        // Loop through all loaded OSModuleInfo entries and apply the specified values to the RELs already loaded.
         libtp::gc_wii::os_module::OSModuleInfo* rel = libtp::gc_wii::os_module::osModuleList.first;
         for ( ; rel; rel = rel->next )
         {

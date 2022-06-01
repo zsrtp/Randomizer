@@ -29,7 +29,7 @@ namespace mod::rando
         uint16_t headerSize;     // Total size of the header in bytes
         uint16_t dataSize;       // Total number of bytes of seed data
         uint64_t seed;           // Current seed
-        uint32_t totalSize;      // Total number of bytes in the gci.
+        uint32_t totalSize;      // Total number of bytes in the GCI.
 
         entryInfo volatilePatchInfo;     // BitArray where each bit represents a patch/modification to be applied for this
                                          // playthrough; these patchs/modifications must be applied every time a file is loaded

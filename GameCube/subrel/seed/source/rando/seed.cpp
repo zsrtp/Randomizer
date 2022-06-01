@@ -32,7 +32,7 @@ namespace mod::rando
 
         mod::console << "Loading seed " << m_fileIndex << ": '" << m_Header->seed << "'...\n";
 
-        // Load the whole gci locally to reduce number of reads (memcard)
+        // Load the whole GCI locally to reduce number of reads (memcard)
         char fileName[12] = "rando-data\0";
 
         fileName[10] = static_cast<char>( '0' + m_fileIndex );
