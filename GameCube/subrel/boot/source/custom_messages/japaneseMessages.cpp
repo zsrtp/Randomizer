@@ -687,6 +687,7 @@ namespace mod::customMessages
         // コケ
         "\x83\x52\x83\x50"
         MSG_COLOR(MSG_COLOR_WHITE)
+        // ケが生えている...
         "\x82\xAA\x90\xB6\x82\xA6\x82\xC4\x82\xA2\x82\xE9\x2e\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( secondFusedShadowJp )
@@ -716,6 +717,7 @@ namespace mod::customMessages
         // 魚
         "\x8B\x9B"
         MSG_COLOR(MSG_COLOR_WHITE)
+        // の臭いがする...
         "\x82\xCC\x8F\x4C\x82\xA2\x82\xAA\x82\xB7\x82\xE9\x2e\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( secondMirrorShardJp )

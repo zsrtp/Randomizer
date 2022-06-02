@@ -494,7 +494,8 @@ namespace mod::customMessages
         //brújula
         "\x62\x72\xFA\x6A\x75\x6C\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIndica el camino a en el\n"
+        // !\nIndica el camino a en el\n
+        "\x21\x0A\x49\x6E\x64\x69\x63\x61\x20\x65\x6C\x20\x63\x61\x6D\x69\x6E\x6F\x20\x61\x20\x65\x6E\x20\x65\x6C"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
         // Castillo de Hyrule
         "\x43\x61\x73\x74\x69\x6C\x6C\x6F\x20\x64\x65\x20\x48\x79\x72\x75\x6C\x65"
@@ -871,9 +872,11 @@ namespace mod::customMessages
         // Sopla un viento 
         "\x53\x6F\x70\x6C\x61\x20\x75\x6E\x20\x76\x69\x65\x6E\x74\x6F\x20"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
+        // frio
         "\x66\x72\xED\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        ".."
+        // ..
+        "\x2E\x2E"
     MSG_END()
     MSG_BEGIN_ARRAY( talkToMidnaSp )
         // ¿Qué quieres, 
