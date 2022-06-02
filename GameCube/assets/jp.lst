@@ -110,6 +110,7 @@
 80136138:procWolfDamageInit
 800d8f74:procDamageInit
 801412b0:dComIfGs_isItemFirstBit
+8011ac60:procCoGetItem
 
 // data
 80388C0C:climbVars

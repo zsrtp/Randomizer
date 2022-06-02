@@ -117,6 +117,7 @@
 800d7c40:checkDamageAction
 801181a0:setGetItemFace
 800d96dc:procCoLargeDamageInit
+8011ac28:procCoGetItem
 
 // data
 8038EB8C:climbVars
