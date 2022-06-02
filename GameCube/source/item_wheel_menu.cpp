@@ -64,25 +64,25 @@ namespace mod::item_wheel_menu
                                               AreaNodesID::Faron,
                                               AreaNodesID::Gerudo_Desert };
 
-    void setHUDOpacity( bool menuIsDisplayed )
+    void setHUDButtonsAlpha( bool menuIsDisplayed )
     {
-        float* mHUDAlpha = &libtp::tp::d_meter_hio::g_drawHIO.mHUDAlpha;
+        float* mMainHUDButtonsAlpha = &libtp::tp::d_meter_hio::g_drawHIO.mMainHUDButtonsAlpha;
         if ( !menuIsDisplayed )
         {
             // Display the HUD
-            *mHUDAlpha = 1.f;
+            *mMainHUDButtonsAlpha = 1.f;
         }
         else
         {
             // Don't display the HUD
-            *mHUDAlpha = 0.f;
+            *mMainHUDButtonsAlpha = 0.f;
         }
     }
 
     KEEP_FUNC void handle_dMenuRing__create( void* dMenuRing )
     {
         // Handle whether the controller buttons should be displayed or not
-        setHUDOpacity( displayMenu );
+        setHUDButtonsAlpha( displayMenu );
 
         // Call the original function
         return_dMenuRing__create( dMenuRing );
@@ -92,7 +92,7 @@ namespace mod::item_wheel_menu
     {
         // Handle whether the controller buttons should be displayed or not
         // Hardcode false since the ring isn't being drawn anymore
-        setHUDOpacity( false );
+        setHUDButtonsAlpha( false );
 
         // dMenuRing__delete is an empty function, so don't need to call the original function
     }
@@ -142,7 +142,7 @@ namespace mod::item_wheel_menu
                 ringDrawnThisFrame = true;
 
                 // Handle whether the controller buttons should be displayed or not
-                setHUDOpacity( shouldDisplayMenu );
+                setHUDButtonsAlpha( shouldDisplayMenu );
             }
         }
 
@@ -354,8 +354,7 @@ namespace mod::item_wheel_menu
         // Temporary variable to keep track of current y coordinate
         int32_t tempPosY = ringPosY + areasPosYOffset;
 
-        uint32_t loopCount = sizeof( areas ) / sizeof( areas[0] );
-        for ( uint32_t i = 0; i < loopCount; i++ )
+        for ( uint32_t i = 0; i < TrackedAreas::TRACKED_AREAS_END; i++ )
         {
             uint32_t currentColor = libtp::tp::d_msg_class::getFontGCColorTable( areaColorIds[i], 0 );
 

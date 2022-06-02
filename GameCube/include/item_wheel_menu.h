@@ -18,7 +18,8 @@ namespace mod::item_wheel_menu
         PALACE_OF_TWILIGHT,
         HYRULE_CASTLE,
         FARON_WOODS,
-        GERUDO_DESERT
+        GERUDO_DESERT,
+        TRACKED_AREAS_END
     };
 
     // The ring is drawn more than once per frame, so this is set to true on the first draw
