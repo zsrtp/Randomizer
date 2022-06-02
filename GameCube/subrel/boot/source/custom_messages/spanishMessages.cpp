@@ -868,22 +868,28 @@ namespace mod::customMessages
     MSG_END()
     MSG_BEGIN_ARRAY( foolishItemSp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "A "
+        // Sopla un viento 
+        "\x53\x6F\x70\x6C\x61\x20\x75\x6E\x20\x76\x69\x65\x6E\x74\x6F\x20"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "cold"
+        "\x66\x72\xED\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
-        " wind blows.."
+        ".."
     MSG_END()
     MSG_BEGIN_ARRAY( talkToMidnaSp )
-        "What is it, "
+        // ¿Qué quieres, 
+        "\xBF\x51\x75\xE9\x20\x71\x75\x69\x65\x72\x65\x73\x2C\x20"
         MSG_PLYR_NAME
-        "?"
+        // ?
+        "\x3F"
         MSG_OPTION_LIST(MSG_OPTION_1)
-        "Transform\n"
+        // Transformarse
+        "\x54\x72\x61\x6E\x73\x66\x6F\x72\x6D\x61\x72\x73\x65\x0A"
         MSG_OPTION_LIST(MSG_OPTION_2)
-        "Warp\n"
+        // Teletransportar
+        "\x54\x65\x6C\x65\x74\x72\x61\x6E\x73\x70\x6F\x72\x74\x61\x72\x0A"
         MSG_OPTION_LIST(MSG_OPTION_3)
-        "Change time of day"
+        // Cambiar la hora del día 
+        "\x43\x61\x6D\x62\x69\x61\x72\x20\x6C\x61\x20\x68\x6F\x72\x61\x20\x64\x65\x6C\x20\x64\xED\x61\x20"
     MSG_END()
     MSG_BEGIN_ARRAY( bigWalletSp )
         MSG_SPEED(MSG_SPEED_FAST)

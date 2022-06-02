@@ -765,22 +765,28 @@ namespace mod::customMessages
     MSG_END()
     MSG_BEGIN_ARRAY( foolishItemJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "A "
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "cold"
+        // 冷たい
+        "\x97\xE2\x82\xBD\x82\xA2"
         MSG_COLOR(MSG_COLOR_WHITE)
-        " wind blows.."
+        // 感じがする...
+        "\x8A\xB4\x82\xB6\x82\xAA\x82\xB7\x82\xE9\x2e\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( talkToMidnaJp )
-        "What is it, "
+        // どうした、
+        "\x82\xC7\x82\xA4\x82\xB5\x82\xBD\x81\x41"
         MSG_PLYR_NAME
-        "?"
+        // "?"
+        "\x81\x48"
         MSG_OPTION_LIST(MSG_OPTION_1)
-        "Transform\n"
+        // 獣になる
+        "\x8F\x62\x82\xC9\x82\xC8\x82\xE9\x0A"
         MSG_OPTION_LIST(MSG_OPTION_2)
-        "Warp\n"
+        // ワープ
+        "\x83\x8F\x81\x5B\x83\x76\x0A"
         MSG_OPTION_LIST(MSG_OPTION_3)
-        "Change time of day"
+        // 時間を変更する
+        "\x8E\x9E\x8A\xD4\x82\xF0\x95\xCF\x8D\x58\x82\xB7\x82\xE9"
     MSG_END()
     MSG_BEGIN_ARRAY( bigWalletJp )
         MSG_SPEED(MSG_SPEED_FAST)
