@@ -57,7 +57,6 @@ namespace mod
     extern uint32_t nextVal;
     extern bool consoleState;
     extern uint8_t gameState;
-    extern bool ringDrawnThisFrame;
     extern void* Z2ScenePtr;
     extern bool isFoolishTrapQueued;
     extern uint8_t seedRelAction;
@@ -94,6 +93,7 @@ namespace mod
 
     // DZX Functions; Handler is lambda -> randomizer::onDZX();
     bool handle_actorInit( void* mStatus_roomControl, libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo, int32_t unk3, void* unk4 );
+
     extern bool ( *return_actorInit )( void* mStatus_roomControl,
                                        libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
                                        int32_t unk3,
@@ -103,6 +103,7 @@ namespace mod
                                   libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
                                   int32_t unk3,
                                   void* unk4 );
+
     extern bool ( *return_actorInit_always )( void* mStatus_roomControl,
                                               libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
                                               int32_t unk3,
@@ -112,6 +113,7 @@ namespace mod
                                       libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
                                       int32_t unk3,
                                       void* unk4 );
+
     extern bool ( *return_actorCommonLayerInit )( void* mStatus_roomControl,
                                                   libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo,
                                                   int32_t unk3,
@@ -135,6 +137,7 @@ namespace mod
                                       float unk6,
                                       float unk7,
                                       int32_t parameters );
+
     extern int32_t ( *return_createItemForBoss )( const float pos[3],
                                                   int32_t item,
                                                   int32_t roomNo,
@@ -165,6 +168,7 @@ namespace mod
                                            int32_t roomNo,
                                            const int16_t rot[3],
                                            const float scale[3] );
+
     extern int32_t ( *return_createItemForTrBoxDemo )( const float pos[3],
                                                        int32_t item,
                                                        int32_t itemPickupFlag,
@@ -179,6 +183,7 @@ namespace mod
                                          const float scale[3],
                                          int32_t unk6,
                                          int32_t itemPickupFlag );
+
     extern int32_t ( *return_createItemForMidBoss )( const float pos[3],
                                                      int32_t item,
                                                      int32_t roomNo,
@@ -190,9 +195,6 @@ namespace mod
     // Item Wheel functions
     void handle_setLineUpItem( libtp::tp::d_save::dSv_player_item_c* );
     extern void ( *return_setLineUpItem )( libtp::tp::d_save::dSv_player_item_c* );
-
-    void handle_dMenuRing__draw( void* dMenuRing );
-    extern void ( *return_dMenuRing__draw )( void* dMenuRing );
 
     // ItemGet functions. These functions handle the player and the flags set for their inventory
     int32_t handle_execItemGet( uint8_t item );
@@ -206,6 +208,7 @@ namespace mod
                                            const void* TProcessor,
                                            uint16_t unk3,
                                            uint16_t msgId );
+
     extern bool ( *return_setMessageCode_inSequence )( libtp::tp::control::TControl* control,
                                                        const void* TProcessor,
                                                        uint16_t unk3,

@@ -337,3 +337,7 @@
 
 // JKRArchive.o
 802d8100:JKRArchive_getResource2
+
+// d_meter_HIO.o
+// data
+80428d08:g_drawHIO

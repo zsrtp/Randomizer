@@ -1,4 +1,5 @@
 #include "main.h"
+#include "item_wheel_menu.h"
 #include "patch.h"
 
 #include "game_patch/game_patch.h"
@@ -87,7 +88,15 @@ namespace mod
 
         // Item Wheel functions
         return_setLineUpItem = patch::hookFunction( tp::d_save::setLineUpItem, mod::handle_setLineUpItem );
-        return_dMenuRing__draw = patch::hookFunction( libtp::tp::d_menu_ring::dMenuRing__draw, mod::handle_dMenuRing__draw );
+
+        item_wheel_menu::return_dMenuRing__create =
+            patch::hookFunction( libtp::tp::d_menu_ring::dMenuRing__create, item_wheel_menu::handle_dMenuRing__create );
+
+        item_wheel_menu::return_dMenuRing__delete =
+            patch::hookFunction( libtp::tp::d_menu_ring::dMenuRing__delete, item_wheel_menu::handle_dMenuRing__delete );
+
+        item_wheel_menu::return_dMenuRing__draw =
+            patch::hookFunction( libtp::tp::d_menu_ring::dMenuRing__draw, item_wheel_menu::handle_dMenuRing__draw );
 
         // ItemGet functions
         return_execItemGet = patch::hookFunction( libtp::tp::d_item::execItemGet, mod::handle_execItemGet );

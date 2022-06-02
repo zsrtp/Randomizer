@@ -347,3 +347,7 @@
 
 // m_Do_Audio.o
 80141348:mDoAud_seStartLevel
+
+// d_meter_HIO.o
+// data
+80430b88:g_drawHIO
