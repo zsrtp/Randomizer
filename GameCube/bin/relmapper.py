@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+
+"""
+Extracts symbol data from relocatable ELF files.
+"""
+
 import argparse
 from dataclasses import dataclass
 from enum import IntEnum
@@ -9,6 +14,12 @@ import re
 import struct
 import sys
 from typing import ByteString, ClassVar, List, Union
+
+__author__ = "kipcode66"
+__copyright__ = "Copyright 2022, kipcode66"
+__credits__ = ["kipcode66"]
+__license__ = "GPL3"
+__version__ = "0.1.0"
 
 
 class SHID(IntEnum):
@@ -278,31 +289,26 @@ class ELFFile():
                 break
         return ret
 
-# Parsing functions
-
-
-def parseInputLstFile(string):
-    return string
-
-
-def parseOutputLstFile(string):
-    return string
-
-
-def parseInputConfigFile(string):
-    return string
-
-
-def parseInputElfFile(string):
-    return string
-
 
 def main():
     EXCLUDED_ENTRIES = ["_prolog", "_epilog", "_unresolved",
                         "_ZN3mod4mainEv", "_ZN3mod4exitEv"]
 
+    # Parsing functions
+    def parseInputLstFile(string):
+        return string
+
+    def parseOutputLstFile(string):
+        return string
+
+    def parseInputConfigFile(string):
+        return string
+
+    def parseInputElfFile(string):
+        return string
+
     parser = argparse.ArgumentParser(
-        sys.argv[0], description="Tool to extract the symbols from an ELF file.")
+        sys.argv[0], description="Tool to extract the symbols from ELF file(s).")
     parser.add_argument("-o", "--output-lst", type=parseOutputLstFile,
                         required=True, help="Path to the output file")
     parser.add_argument("-m", "--input-modules", type=parseInputConfigFile,
@@ -335,7 +341,7 @@ def main():
     if not args.input_modules is None:
         with open(args.input_modules, "r") as f:
             module_ids = json.load(f)
-    
+
     curr_id = args.start_id
 
     for elf_file in args.elf:
@@ -351,7 +357,8 @@ def main():
             for symbol in elf.symbols:
                 if symbol.st_shndx == SHID.UND or symbol.st_shndx >= len(elf.sections) or symbol.st_size == 0 or str(symbol.st_name, encoding="utf-8") in EXCLUDED_ENTRIES:
                     continue
-                provided_lst.setdefault(str(symbol.st_name, encoding="utf-8"), (module_ids[file_name], symbol.st_shndx, symbol.st_value))
+                provided_lst.setdefault(str(symbol.st_name, encoding="utf-8"),
+                                        (module_ids[file_name], symbol.st_shndx, symbol.st_value))
 
     # Output lst file
     with open(args.output_lst, "w") as f:
