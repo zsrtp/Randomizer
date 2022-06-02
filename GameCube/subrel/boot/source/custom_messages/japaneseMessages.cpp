@@ -434,7 +434,7 @@ namespace mod::customMessages
         "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
         // ハイラル城
-        "\x83\x6E\x83\x43\x83\x89\x83\x8B\x8F\xE9"
+        "\x83\x6E\x83\x43\x83\x89\x83\x8B\x8F\xE9\x0A"
         MSG_COLOR(MSG_COLOR_WHITE)
         // で使用できる
         "\x82\xC5\x8E\x67\x97\x70\x82\xC5\x82\xAB\x82\xE9"
@@ -446,7 +446,7 @@ namespace mod::customMessages
         "\x83\x7B\x83\x58\x95\x94\x89\xAE\x82\xCC\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
         // を手に入れた！
-        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\0A"
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A"
         MSG_COLOR(MSG_COLOR_GREEN)
         // 森の神殿
         "\x90\x58\x82\xCC\x90\x5F\x93\x61"
@@ -461,7 +461,7 @@ namespace mod::customMessages
         "\x83\x7B\x83\x58\x95\x94\x89\xAE\x82\xCC\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
         // を手に入れた！
-        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\0A"
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
         // 湖底の神殿
         "\x82\xC5\x8E\x67\x97\x70\x82\xC5\x82\xAB\x82\xE9"
@@ -476,7 +476,7 @@ namespace mod::customMessages
         "\x83\x7B\x83\x58\x95\x94\x89\xAE\x82\xCC\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
         // を手に入れた！
-        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\0A"
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A"
         MSG_COLOR(MSG_COLOR_ORANGE)
         // 砂漠の処刑場
         "\x8D\xBB\x94\x99\x82\xCC\x8F\x88\x8C\x59\x8F\xEA"
@@ -491,7 +491,7 @@ namespace mod::customMessages
         "\x83\x7B\x83\x58\x95\x94\x89\xAE\x82\xCC\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
         // を手に入れた！
-        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\0A"
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
         // 時の神殿
         "\x8E\x9E\x82\xCC\x90\x5F\x93\x61"
@@ -506,7 +506,7 @@ namespace mod::customMessages
         "\x83\x7B\x83\x58\x95\x94\x89\xAE\x82\xCC\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
         // を手に入れた！
-        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\0A"
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A"
         MSG_COLOR(MSG_COLOR_YELLOW)
         // 天空都市
         "\x93\x56\x8B\xF3\x93\x73\x8E\x73"
@@ -521,7 +521,7 @@ namespace mod::customMessages
         "\x83\x7B\x83\x58\x95\x94\x89\xAE\x82\xCC\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
         // を手に入れた！
-        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\0A"
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A"
         MSG_COLOR(MSG_COLOR_PURPLE)
         // 影の宮殿
         "\x89\x65\x82\xCC\x8B\x7B\x93\x61"
@@ -536,7 +536,7 @@ namespace mod::customMessages
         "\x83\x7B\x83\x58\x95\x94\x89\xAE\x82\xCC\x83\x4A\x83\x4D"
         MSG_COLOR(MSG_COLOR_WHITE)
         // を手に入れた！
-        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\0A"
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
         // ハイラル城
         "\x83\x6E\x83\x43\x83\x89\x83\x8B\x8F\xE9"
@@ -547,10 +547,10 @@ namespace mod::customMessages
     MSG_BEGIN_ARRAY( endingBlowJp )
         MSG_SPEED(MSG_SPEED_FAST)
         // 奥義その一、
-        "\x83\x6E\x83\x43\x83\x89\x83\x8B\x8F\xE9"
+        "\x89\x9C\x8B\x60\x82\xBB\x82\xCC\x88\xEA\x81\x41"
         MSG_COLOR(MSG_COLOR_RED)
         // とどめ
-        "\x82\xC6\x82\xC7\x82\xDF\x0A"
+        "\x82\xC6\x82\xC7\x82\xDF"
         MSG_COLOR(MSG_COLOR_WHITE)
         // を習得した！
         "\x82\xF0\x8F\x4B\x93\xBE\x82\xB5\x82\xBD\x81\x49"
@@ -561,7 +561,7 @@ namespace mod::customMessages
         "\x89\x9C\x8B\x60\x82\xBB\x82\xCC\x93\xF1\x81\x41"
         MSG_COLOR(MSG_COLOR_RED)
         // 盾アタック
-        "\x8F\x82\x83\x41\x83\x5E\x83\x62\x83\x4E\x0A"
+        "\x8F\x82\x83\x41\x83\x5E\x83\x62\x83\x4E"
         MSG_COLOR(MSG_COLOR_WHITE)
         // を習得した！
         "\x82\xF0\x8F\x4B\x93\xBE\x82\xB5\x82\xBD\x81\x49"
@@ -572,7 +572,7 @@ namespace mod::customMessages
         "\x89\x9C\x8B\x60\x82\xBB\x82\xCC\x8E\x4F\x81\x41"
         MSG_COLOR(MSG_COLOR_RED)
         // 背面斬り
-        "\x94\x77\x96\xCA\x8E\x61\x82\xE8\x0A"
+        "\x94\x77\x96\xCA\x8E\x61\x82\xE8"
         MSG_COLOR(MSG_COLOR_WHITE)
         // を習得した！
         "\x82\xF0\x8F\x4B\x93\xBE\x82\xB5\x82\xBD\x81\x49"
@@ -583,7 +583,7 @@ namespace mod::customMessages
         "\x89\x9C\x8B\x60\x82\xBB\x82\xCC\x8E\x6C\x81\x41"
         MSG_COLOR(MSG_COLOR_RED)
         // 兜割り
-        "\x8A\x95\x8A\x84\x82\xE8\x0A"
+        "\x8A\x95\x8A\x84\x82\xE8"
         MSG_COLOR(MSG_COLOR_WHITE)
         // を習得した！
         "\x82\xF0\x8F\x4B\x93\xBE\x82\xB5\x82\xBD\x81\x49"
@@ -594,7 +594,7 @@ namespace mod::customMessages
         "\x89\x9C\x8B\x60\x82\xBB\x82\xCC\x8C\xDC\x81\x41"
         MSG_COLOR(MSG_COLOR_RED)
         // 居合い
-        "\x8B\x8F\x8D\x87\x82\xA2\x0A"
+        "\x8B\x8F\x8D\x87\x82\xA2"
         MSG_COLOR(MSG_COLOR_WHITE)
         // を習得した！
         "\x82\xF0\x8F\x4B\x93\xBE\x82\xB5\x82\xBD\x81\x49"
@@ -605,7 +605,7 @@ namespace mod::customMessages
         "\x89\x9C\x8B\x60\x82\xBB\x82\xCC\x98\x5A\x81\x41"
         MSG_COLOR(MSG_COLOR_RED)
         // 大ジャンプ斬り
-        "\x91\xE5\x83\x57\x83\x83\x83\x93\x83\x76\x8E\x61\x82\xE8\x0A"
+        "\x91\xE5\x83\x57\x83\x83\x83\x93\x83\x76\x8E\x61\x82\xE8"
         MSG_COLOR(MSG_COLOR_WHITE)
         // を習得した！
         "\x82\xF0\x8F\x4B\x93\xBE\x82\xB5\x82\xBD\x81\x49"
@@ -623,123 +623,145 @@ namespace mod::customMessages
     MSG_END()
     MSG_BEGIN_ARRAY( poweredRodJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Power has been restored to\nthe "
         MSG_COLOR(MSG_COLOR_RED)
-        "Dominion Rod"
+        // コピーロッド
+        "\x83\x52\x83\x73\x81\x5B\x83\x8D\x83\x62\x83\x68"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Now it can\nbe used to imbude statues\nwith life in the present!"
+        // に魔力が戻った！太古の石像に命を吹き込む 不思議なロッド
+        "\x82\xC9\x96\x82\x97\xCD\x82\xAA\x96\xDF\x82\xC1\x82\xBD\x81\x49\x0A\x91\xBE\x8C\xC3\x82\xCC\x90\xCE\x91\x9C\x82\xC9\x96\xBD\x82\xF0\x90\x81\x82\xAB\x8D\x9E\x82\xDE\x0A\x95\x73\x8E\x76\x8B\x63\x82\xC8\x83\x8D\x83\x62\x83\x68"
     MSG_END()
     MSG_BEGIN_ARRAY( firstCharacterJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You found the first "
         MSG_COLOR(MSG_COLOR_RED)
-        "Sky\ncharacter"
+        // 一つ目の天空文字
+        "\x88\xEA\x82\xC2\x96\xDA\x82\xCC\x93\x56\x8B\xF3\x95\xB6\x8E\x9A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! A missing part\nof the word in the Ancient\nSky Book has been restored."
+        // を見つけた！ 天空の古文書に書かれた呪文の欠けた言葉の一部が補われた
+        "\x82\xF0\x8C\xA9\x82\xC2\x82\xAF\x82\xBD\x81\x49\x0A\x93\x56\x8B\xF3\x82\xCC\x8C\xC3\x95\xB6\x8F\x91\x82\xC9\x8F\x91\x82\xA9\x82\xEA\x82\xBD\x8E\xF4\x95\xB6\x82\xCC\x8C\x87\x82\xAF\x82\xBD\x0A\x8C\xBE\x97\x74\x82\xCC\x88\xEA\x95\x94\x82\xAA\x95\xE2\x82\xED\x82\xEA\x82\xBD"
     MSG_END()
     MSG_BEGIN_ARRAY( secondCharacterJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You found the second "
         MSG_COLOR(MSG_COLOR_RED)
-        "Sky\ncharacter"
+        // 二つ目の天空文字
+        "\x93\xF1\x82\xC2\x96\xDA\x82\xCC\x93\x56\x8B\xF3\x95\xB6\x8E\x9A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! A missing part\nof the word in the Ancient\nSky Book has been restored."
+        // を見つけた！ 天空の古文書に書かれた呪文の欠けた言葉の一部が補われた
+        "\x82\xF0\x8C\xA9\x82\xC2\x82\xAF\x82\xBD\x81\x49\x0A\x93\x56\x8B\xF3\x82\xCC\x8C\xC3\x95\xB6\x8F\x91\x82\xC9\x8F\x91\x82\xA9\x82\xEA\x82\xBD\x8E\xF4\x95\xB6\x82\xCC\x8C\x87\x82\xAF\x82\xBD\x0A\x8C\xBE\x97\x74\x82\xCC\x88\xEA\x95\x94\x82\xAA\x95\xE2\x82\xED\x82\xEA\x82\xBD"
     MSG_END()
     MSG_BEGIN_ARRAY( thirdCharacterJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You found the third "
         MSG_COLOR(MSG_COLOR_RED)
-        "Sky\ncharacter"
+        // 三つ目の天空文字
+        "\x8E\x4F\x82\xC2\x96\xDA\x82\xCC\x93\x56\x8B\xF3\x95\xB6\x8E\x9A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! A missing part\nof the word in the Ancient\nSky Book has been restored."
+        // を見つけた！ 天空の古文書に書かれた呪文の欠けた言葉の一部が補われた
+        "\x82\xF0\x8C\xA9\x82\xC2\x82\xAF\x82\xBD\x81\x49\x0A\x93\x56\x8B\xF3\x82\xCC\x8C\xC3\x95\xB6\x8F\x91\x82\xC9\x8F\x91\x82\xA9\x82\xEA\x82\xBD\x8E\xF4\x95\xB6\x82\xCC\x8C\x87\x82\xAF\x82\xBD\x0A\x8C\xBE\x97\x74\x82\xCC\x88\xEA\x95\x94\x82\xAA\x95\xE2\x82\xED\x82\xEA\x82\xBD"
     MSG_END()
     MSG_BEGIN_ARRAY( fourthCharacterJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You found the fourth "
         MSG_COLOR(MSG_COLOR_RED)
-        "Sky\ncharacter"
+        // 四つ目の天空文字
+        "\x8E\x6C\x82\xC2\x96\xDA\x82\xCC\x93\x56\x8B\xF3\x95\xB6\x8E\x9A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! A missing part\nof the word in the Ancient\nSky Book has been restored."
+        // を見つけた！ 天空の古文書に書かれた呪文の欠けた言葉の一部が補われた
+        "\x82\xF0\x8C\xA9\x82\xC2\x82\xAF\x82\xBD\x81\x49\x0A\x93\x56\x8B\xF3\x82\xCC\x8C\xC3\x95\xB6\x8F\x91\x82\xC9\x8F\x91\x82\xA9\x82\xEA\x82\xBD\x8E\xF4\x95\xB6\x82\xCC\x8C\x87\x82\xAF\x82\xBD\x0A\x8C\xBE\x97\x74\x82\xCC\x88\xEA\x95\x94\x82\xAA\x95\xE2\x82\xED\x82\xEA\x82\xBD"
     MSG_END()
     MSG_BEGIN_ARRAY( fifthCharacterJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You found the fifth "
         MSG_COLOR(MSG_COLOR_RED)
-        "Sky\ncharacter"
+        // 五つ目の天空文字
+        "\x8C\xDC\x82\xC2\x96\xDA\x82\xCC\x93\x56\x8B\xF3\x95\xB6\x8E\x9A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! A missing part\nof the word in the Ancient\nSky Book has been restored."
+        // を見つけた！ 天空の古文書に書かれた呪文の欠けた言葉の一部が補われた
+        "\x82\xF0\x8C\xA9\x82\xC2\x82\xAF\x82\xBD\x81\x49\x0A\x93\x56\x8B\xF3\x82\xCC\x8C\xC3\x95\xB6\x8F\x91\x82\xC9\x8F\x91\x82\xA9\x82\xEA\x82\xBD\x8E\xF4\x95\xB6\x82\xCC\x8C\x87\x82\xAF\x82\xBD\x0A\x8C\xBE\x97\x74\x82\xCC\x88\xEA\x95\x94\x82\xAA\x95\xE2\x82\xED\x82\xEA\x82\xBD"
     MSG_END()
     MSG_BEGIN_ARRAY( firstFusedShadowJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
         MSG_COLOR(MSG_COLOR_RED)
-        "Fused Shadow!\n"
+        // 一つ目の影の結晶石
+        "\x88\xEA\x82\xC2\x96\xDA\x82\xCC\x89\x65\x82\xCC\x8C\x8B\x8F\xBB\x90\xCE"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "It seems to have some "
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "moss"
+        // コケ
+        "\x83\x52\x83\x50"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "\ngrowing on it.."
+        "\x82\xAA\x90\xB6\x82\xA6\x82\xC4\x82\xA2\x82\xE9\x2e\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( secondFusedShadowJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
         MSG_COLOR(MSG_COLOR_RED)
-        "second Fused\nShadow"
+        // 二つ目の影の結晶石
+        "\x93\xF1\x82\xC2\x96\xDA\x82\xCC\x89\x65\x82\xCC\x8C\x8B\x8F\xBB\x90\xCE"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! It feels "
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "warm"
+        // 温かい
+        "\x89\xB7\x82\xA9\x82\xA2"
         MSG_COLOR(MSG_COLOR_WHITE)
-        " to\nthe touch.."
+        // 感じがする...
+        "\x8A\xB4\x82\xB6\x82\xAA\x82\xB7\x82\xE9\x2e\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( thirdFusedShadowJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
         MSG_COLOR(MSG_COLOR_RED)
-        "final Fused\nShadow"
+        // 三つ目の影の結晶石
+        "\x8E\x4F\x82\xC2\x96\xDA\x82\xCC\x89\x65\x82\xCC\x8C\x8B\x8F\xBB\x90\xCE"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! It feels "
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "wet"
+        // 魚
+        "\x8B\x9B"
         MSG_COLOR(MSG_COLOR_WHITE)
-        " and\nsmells like fish.."
+        "\x82\xCC\x8F\x4C\x82\xA2\x82\xAA\x82\xB7\x82\xE9\x2e\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( secondMirrorShardJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the second shard of\nthe "
         MSG_COLOR(MSG_COLOR_RED)
-        "Mirror of Twilight"
+        // 二つ目の陰りの鏡
+        "\x93\xF1\x82\xC2\x96\xDA\x82\xCC\x89\x41\x82\xE8\x82\xCC\x8B\xBE"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! It\nhas a beautiful shine to it\nand feels slightly "
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "cold"
+        // 冷たい
+        "\x97\xE2\x82\xBD\x82\xA2"
         MSG_COLOR(MSG_COLOR_WHITE)
-        ".."
+        // 感じがする...
+        "\x8A\xB4\x82\xB6\x82\xAA\x82\xB7\x82\xE9\x2e\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( thirdMirrorShardJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the third shard of\nthe "
         MSG_COLOR(MSG_COLOR_RED)
-        "Mirror of Twilight"
+        // 三つ目の陰りの鏡
+        "\x8E\x4F\x82\xC2\x96\xDA\x82\xCC\x89\x41\x82\xE8\x82\xCC\x8B\xBE"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! It\nis covered in dirt and\n"
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "webs"
+        // 汚れ
+        "\x89\x98\x82\xEA"
         MSG_COLOR(MSG_COLOR_WHITE)
-        ".."
+        // が付着している...
+        "\x82\xAA\x95\x74\x92\x85\x82\xB5\x82\xC4\x82\xA2\x82\xE9\x2e\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( fourthMirrorShardJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the final shard of\nthe "
         MSG_COLOR(MSG_COLOR_RED)
-        "Mirror of Twilight"
+        // 四つ目の陰りの鏡
+        "\x8E\x6C\x82\xC2\x96\xDA\x82\xCC\x89\x41\x82\xE8\x82\xCC\x8B\xBE"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! It\nfeels lighter than "
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "air"
+        // 空気
+        "\x8B\xF3\x8B\x43"
         MSG_COLOR(MSG_COLOR_WHITE)
-        ".."
+        // より軽く感じる...
+        "\x82\xE6\x82\xE8\x8C\x79\x82\xAD\x8A\xB4\x82\xB6\x82\xE9\x2e\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( foolishItemJp )
         MSG_SPEED(MSG_SPEED_FAST)
@@ -762,27 +784,33 @@ namespace mod::customMessages
     MSG_END()
     MSG_BEGIN_ARRAY( bigWalletJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
         MSG_COLOR(MSG_COLOR_RED)
-        "Big Wallet"
+        // 大きなサイフ
+        "\x91\xE5\x82\xAB\x82\xC8\x83\x54\x83\x43\x83\x74"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! You can now hold "
+        // を受け取った！
+        "\x82\xF0\x8E\xF3\x82\xAF\x8E\xE6\x82\xC1\x82\xBD\x81\x49\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "5,000 Rupees"
+        // ５０００ルピー
+        "\x82\x54\x82\x4F\x82\x4F\x82\x4F\x83\x8B\x83\x73\x81\x5B"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        // まで入れられる！
+        "\x82\xDC\x82\xC5\x93\xFC\x82\xEA\x82\xE7\x82\xEA\x82\xE9\x81\x49"
     MSG_END()
     MSG_BEGIN_ARRAY( giantWalletJp )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
         MSG_COLOR(MSG_COLOR_RED)
-        "Giant Wallet"
+        // 最大のサイフ
+        "\x8D\xC5\x91\xE5\x82\xCC\x83\x54\x83\x43\x83\x74"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! You can now hold "
+        // を受け取った！
+        "\x82\xF0\x8E\xF3\x82\xAF\x8E\xE6\x82\xC1\x82\xBD\x81\x49\x0A"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "9,999 Rupees"
+        // ９９９９ルピー
+        "\x82\x58\x82\x58\x82\x58\x82\x58\x83\x8B\x83\x73\x81\x5B"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        // まで入れられる！
+        "\x82\xDC\x82\xC5\x93\xFC\x82\xEA\x82\xE7\x82\xEA\x82\xE9\x81\x49"
     MSG_END()
     
     MsgEntry entriesJp[TOTAL_CUSTOM_MESSAGES] = 
