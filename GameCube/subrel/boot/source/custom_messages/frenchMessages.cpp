@@ -12,650 +12,915 @@ namespace mod::customMessages
     // clang-format off
     MSG_BEGIN_ARRAY( forestSmallKeyFr )
         MSG_SPEED( MSG_SPEED_FAST )
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "petite clé"
+        //petite clé
+        "/x70/x65/x74/x69/x74/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée au \n"
+        //!Elle peut être utilisée au 
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/x61/x75/x20/x0A"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "Temple Sylvestre"
+        //Temple Sylvestre
+        "/x54/x65/x6d/x70/x6c/x65/x20/x53/x79/x6c/x76/x65/x73/x74/x72/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( minesSmallKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "petite clé"
+        //petite clé
+        "/x70/x65/x74/x69/x74/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée dans\nla "
+        //!Elle peut être utilisée dansla 
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/x64/x61/x6e/x73/x0A/x6c/x61/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Mines Goron"
+        //Mines Goron
+        "/x4d/x69/x6e/x65/x73/x20/x47/x6f/x72/x6f/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( lakebedSmallKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "petite clé"
+        //petite clé
+        "/x70/x65/x74/x69/x74/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée au \n"
+        //!Elle peut être utilisée au 
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/x61/x75/x20/x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Temple Abyssal"
+        //Temple Abyssal
+        "/x54/x65/x6d/x70/x6c/x65/x20/x41/x62/x79/x73/x73/x61/x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( arbitersSmallKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "petite clé"
+        //petite clé
+        "/x70/x65/x74/x69/x74/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée dans la\n"
+        //!Elle peut être utilisée dans la
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/x64/x61/x6e/x73/x20/x6c/x61/x0A"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Tour du Jugement"
+        //Tour du Jugement
+        "/x54/x6f/x75/x72/x20/x64/x75/x20/x4a/x75/x67/x65/x6d/x65/x6e/x74"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( snowpeakSmallKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "petite clé"
+        //petite clé
+        "/x70/x65/x74/x69/x74/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée aux\n"
+        //!Elle peut être utilisée aux
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/x61/x75/x78/x0A"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "Ruines des Pics Blancs"
+        //Ruines des Pics Blancs
+        "/x52/x75/x69/x6e/x65/x73/x20/x64/x65/x73/x20/x50/x69/x63/x73/x20/x42/x6c/x61/x6e/x63/x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( timeSmallKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "petite clé"
+        //petite clé
+        "/x70/x65/x74/x69/x74/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée au \n"
+        //!Elle peut être utilisée au 
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/x61/x75/x20/x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Temple du Temps"
+        //Temple du Temps
+        "/x54/x65/x6d/x70/x6c/x65/x20/x64/x75/x20/x54/x65/x6d/x70/x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( citySmallKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "petite clé"
+        //petite clé
+        "/x70/x65/x74/x69/x74/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée à\n"
+        //!Elle peut être utilisée à
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/xe0/x0A"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "Célestia"
+        //Célestia
+        "/x43/xe9/x6c/x65/x73/x74/x69/x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( palaceSmallKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "petite clé"
+        //petite clé
+        "/x70/x65/x74/x69/x74/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée dans\nle "
+        //!Elle peut être utilisée dansle 
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/x64/x61/x6e/x73/x0A/x6c/x65/x20"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "Palais du Crépuscule"
+        //Palais du Crépuscule
+        "/x50/x61/x6c/x61/x69/x73/x20/x64/x75/x20/x43/x72/xe9/x70/x75/x73/x63/x75/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( hyruleSmallKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "petite clé"
+        //petite clé
+        "/x70/x65/x74/x69/x74/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée au\n"
+        //!Elle peut être utilisée au
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/x61/x75/x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Château d'Hyrule"
+        //Château d'Hyrule
+        "/x43/x68/xe2/x74/x65/x61/x75/x20/x64/x27/x48/x79/x72/x75/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( campSmallKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "petite clé"
+        //petite clé
+        "/x70/x65/x74/x69/x74/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée dans\nle "
+        //!Elle peut être utilisée dansle 
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/x64/x61/x6e/x73/x0A/x6c/x65/x20"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Camp Bulblin"
+        //Camp Bulblin
+        "/x43/x61/x6d/x70/x20/x42/x75/x6c/x62/x6c/x69/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( shadowCrystalFr )
         MSG_SPEED(MSG_SPEED_SLOW)
-        "Vous obtenez le "
+        //Vous obtenez le 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x6c/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Crystal Maudit"
+        //Crystal Maudit
+        "/x43/x72/x79/x73/x74/x61/x6c/x20/x4d/x61/x75/x64/x69/x74"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nLa sombre manifestation des\npouvoirs de Xanto qui permet\nde se transformer à volonté!"
+        //!La sombre manifestation despouvoirs de Xanto qui permetde se transformer à volonté!
+        "/x21/x0A/x4c/x61/x20/x73/x6f/x6d/x62/x72/x65/x20/x6d/x61/x6e/x69/x66/x65/x73/x74/x61/x74/x69/x6f/x6e/x20/x64/x65/x73/x0A/x70/x6f/x75/x76/x6f/x69/x72/x73/x20/x64/x65/x20/x58/x61/x6e/x74/x6f/x20/x71/x75/x69/x20/x70/x65/x72/x6d/x65/x74/x0A/x64/x65/x20/x73/x65/x20/x74/x72/x61/x6e/x73/x66/x6f/x72/x6d/x65/x72/x20/xe0/x20/x76/x6f/x6c/x6f/x6e/x74/xe9/x21"
     MSG_END()
     MSG_BEGIN_ARRAY( forestDungeonMapFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "carte de\ndonjon"
+        //carte dedonjon
+        "/x63/x61/x72/x74/x65/x20/x64/x65/x0A/x64/x6f/x6e/x6a/x6f/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Elle appartient au\n"
+        //! Elle appartient au
+        "/x21/x20/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/x61/x75/x0A"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "Temple Sylvestre"
+        //Temple Sylvestre
+        "/x54/x65/x6d/x70/x6c/x65/x20/x53/x79/x6c/x76/x65/x73/x74/x72/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( minesDungeonMapFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "carte de\ndonjon"
+        //carte dedonjon
+        "/x63/x61/x72/x74/x65/x20/x64/x65/x0A/x64/x6f/x6e/x6a/x6f/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Elle appartient aux\n"
+        //! Elle appartient aux
+        "/x21/x20/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/x61/x75/x78/x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Mines Goron"
+        //Mines Goron
+        "/x4d/x69/x6e/x65/x73/x20/x47/x6f/x72/x6f/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( lakebedDungeonMapFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "carte de\ndonjon"
+        //carte dedonjon
+        "/x63/x61/x72/x74/x65/x20/x64/x65/x0A/x64/x6f/x6e/x6a/x6f/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Elle appartient au\n"
+        //! Elle appartient au
+        "/x21/x20/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/x61/x75/x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Temple Abyssal"
+        //Temple Abyssal
+        "/x54/x65/x6d/x70/x6c/x65/x20/x41/x62/x79/x73/x73/x61/x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( arbitersDungeonMapFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "carte de\ndonjon"
+        //carte dedonjon
+        "/x63/x61/x72/x74/x65/x20/x64/x65/x0A/x64/x6f/x6e/x6a/x6f/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Elle appartient à la\n"
+        //! Elle appartient à la
+        "/x21/x20/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/xe0/x20/x6c/x61/x0A"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Tour du Jugement"
+        //Tour du Jugement
+        "/x54/x6f/x75/x72/x20/x64/x75/x20/x4a/x75/x67/x65/x6d/x65/x6e/x74"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( snowpeakDungeonMapFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "carte de\ndonjon"
+        //carte dedonjon
+        "/x63/x61/x72/x74/x65/x20/x64/x65/x0A/x64/x6f/x6e/x6a/x6f/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Elle appartient aux\n"
+        //! Elle appartient aux
+        "/x21/x20/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/x61/x75/x78/x0A"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "Ruines des Pics Blancs"
+        //Ruines des Pics Blancs
+        "/x52/x75/x69/x6e/x65/x73/x20/x64/x65/x73/x20/x50/x69/x63/x73/x20/x42/x6c/x61/x6e/x63/x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( timeDungeonMapFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "carte de\ndonjon"
+        //carte dedonjon
+        "/x63/x61/x72/x74/x65/x20/x64/x65/x0A/x64/x6f/x6e/x6a/x6f/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Elle appartient au\n"
+        //! Elle appartient au
+        "/x21/x20/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/x61/x75/x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Temple du Temps"
+        //Temple du Temps
+        "/x54/x65/x6d/x70/x6c/x65/x20/x64/x75/x20/x54/x65/x6d/x70/x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( cityDungeonMapFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "carte de\ndonjon"
+        //carte dedonjon
+        "/x63/x61/x72/x74/x65/x20/x64/x65/x0A/x64/x6f/x6e/x6a/x6f/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Elle appartient à\n"
+        //! Elle appartient à
+        "/x21/x20/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/xe0/x0A"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "Célestia"
+        //Célestia
+        "/x43/xe9/x6c/x65/x73/x74/x69/x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( palaceDungeonMapFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "carte de\ndonjon"
+        //carte dedonjon
+        "/x63/x61/x72/x74/x65/x20/x64/x65/x0A/x64/x6f/x6e/x6a/x6f/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Elle appartient au\n"
+        //! Elle appartient au
+        "/x21/x20/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/x61/x75/x0A"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "Palais du Crépuscule"
+        //Palais du Crépuscule
+        "/x50/x61/x6c/x61/x69/x73/x20/x64/x75/x20/x43/x72/xe9/x70/x75/x73/x63/x75/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( hyruleDungeonMapFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "carte de\ndonjon"
+        //carte dedonjon
+        "/x63/x61/x72/x74/x65/x20/x64/x65/x0A/x64/x6f/x6e/x6a/x6f/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Elle appartient au\n"
+        //! Elle appartient au
+        "/x21/x20/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/x61/x75/x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Château d'Hyrule"
+        //Château d'Hyrule
+        "/x43/x68/xe2/x74/x65/x61/x75/x20/x64/x27/x48/x79/x72/x75/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( forestCompassFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "boussole"
+        //boussole
+        "/x62/x6f/x75/x73/x73/x6f/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle appartient au \n"
+        //!Elle appartient au 
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/x61/x75/x20/x0A"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "Temple Sylvestre"
+        //Temple Sylvestre
+        "/x54/x65/x6d/x70/x6c/x65/x20/x53/x79/x6c/x76/x65/x73/x74/x72/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( minesCompassFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "boussole"
+        //boussole
+        "/x62/x6f/x75/x73/x73/x6f/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle appartient aux \n"
+        //!Elle appartient aux 
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/x61/x75/x78/x20/x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Mines Goron"
+        //Mines Goron
+        "/x4d/x69/x6e/x65/x73/x20/x47/x6f/x72/x6f/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( lakebedCompassFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "boussole"
+        //boussole
+        "/x62/x6f/x75/x73/x73/x6f/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle appartient au \n"
+        //!Elle appartient au 
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/x61/x75/x20/x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Temple Abyssal"
+        //Temple Abyssal
+        "/x54/x65/x6d/x70/x6c/x65/x20/x41/x62/x79/x73/x73/x61/x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( arbitersCompassFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "boussole"
+        //boussole
+        "/x62/x6f/x75/x73/x73/x6f/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle appartient à la \n"
+        //!Elle appartient à la 
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/xe0/x20/x6c/x61/x20/x0A"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Tour du Jugement"
+        //Tour du Jugement
+        "/x54/x6f/x75/x72/x20/x64/x75/x20/x4a/x75/x67/x65/x6d/x65/x6e/x74"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( snowpeakCompassFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "boussole"
+        //boussole
+        "/x62/x6f/x75/x73/x73/x6f/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle appartient aux \n"
+        //!Elle appartient aux 
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/x61/x75/x78/x20/x0A"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "Ruines des Pics Blancs"
+        //Ruines des Pics Blancs
+        "/x52/x75/x69/x6e/x65/x73/x20/x64/x65/x73/x20/x50/x69/x63/x73/x20/x42/x6c/x61/x6e/x63/x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( timeCompassFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "boussole"
+        //boussole
+        "/x62/x6f/x75/x73/x73/x6f/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle appartient au \n"
+        //!Elle appartient au 
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/x61/x75/x20/x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Temple du Temps"
+        //Temple du Temps
+        "/x54/x65/x6d/x70/x6c/x65/x20/x64/x75/x20/x54/x65/x6d/x70/x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( cityCompassFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "boussole"
+        //boussole
+        "/x62/x6f/x75/x73/x73/x6f/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle appartient à "
+        //!Elle appartient à 
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/xe0/x20"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "Célestia"
+        //Célestia
+        "/x43/xe9/x6c/x65/x73/x74/x69/x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( palaceCompassFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "boussole"
+        //boussole
+        "/x62/x6f/x75/x73/x73/x6f/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle appartient au \n"
+        //!Elle appartient au 
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/x61/x75/x20/x0A"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "Palais du Crépuscule"
+        //Palais du Crépuscule
+        "/x50/x61/x6c/x61/x69/x73/x20/x64/x75/x20/x43/x72/xe9/x70/x75/x73/x63/x75/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( hyruleCompassFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez une "
+        //Vous obtenez une 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "boussole"
+        //boussole
+        "/x62/x6f/x75/x73/x73/x6f/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle appartient au \n"
+        //!Elle appartient au 
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x61/x70/x70/x61/x72/x74/x69/x65/x6e/x74/x20/x61/x75/x20/x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Château d'Hyrule"
+        //Château d'Hyrule
+        "/x43/x68/xe2/x74/x65/x61/x75/x20/x64/x27/x48/x79/x72/x75/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( forestBigKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez "
+        //Vous obtenez 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "la grande clé"
+        //la grande clé
+        "/x6c/x61/x20/x67/x72/x61/x6e/x64/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée au\n"
+        //!Elle peut être utilisée au
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/x61/x75/x0A"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "Temple Sylvestre"
+        //Temple Sylvestre
+        "/x54/x65/x6d/x70/x6c/x65/x20/x53/x79/x6c/x76/x65/x73/x74/x72/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( lakebedBigKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez "
+        //Vous obtenez 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "la grande clé"
+        //la grande clé
+        "/x6c/x61/x20/x67/x72/x61/x6e/x64/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée au\n"
+        //!Elle peut être utilisée au
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/x61/x75/x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Temple Abyssal"
+        //Temple Abyssal
+        "/x54/x65/x6d/x70/x6c/x65/x20/x41/x62/x79/x73/x73/x61/x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( arbitersBigKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez "
+        //Vous obtenez 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "la grande clé"
+        //la grande clé
+        "/x6c/x61/x20/x67/x72/x61/x6e/x64/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée dans la\n"
+        //!Elle peut être utilisée dans la
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/x64/x61/x6e/x73/x20/x6c/x61/x0A"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Tour du Jugement"
+        //Tour du Jugement
+        "/x54/x6f/x75/x72/x20/x64/x75/x20/x4a/x75/x67/x65/x6d/x65/x6e/x74"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( timeBigKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez "
+        //Vous obtenez 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "la grande clé"
+        //la grande clé
+        "/x6c/x61/x20/x67/x72/x61/x6e/x64/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée au\n"
+        //!Elle peut être utilisée au
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/x61/x75/x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Temple du Temps"
+        //Temple du Temps
+        "/x54/x65/x6d/x70/x6c/x65/x20/x64/x75/x20/x54/x65/x6d/x70/x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( cityBigKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez "
+        //Vous obtenez 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "la grande clé"
+        //la grande clé
+        "/x6c/x61/x20/x67/x72/x61/x6e/x64/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée à\n"
+        //!Elle peut être utilisée à
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/xe0/x0A"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "Célestia"
+        //Célestia
+        "/x43/xe9/x6c/x65/x73/x74/x69/x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( palaceBigKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez "
+        //Vous obtenez 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "la grande clé"
+        //la grande clé
+        "/x6c/x61/x20/x67/x72/x61/x6e/x64/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée au\n"
+        //!Elle peut être utilisée au
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/x61/x75/x0A"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "Palais du Crépuscule"
+        //Palais du Crépuscule
+        "/x50/x61/x6c/x61/x69/x73/x20/x64/x75/x20/x43/x72/xe9/x70/x75/x73/x63/x75/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( hyruleBigKeyFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez "
+        //Vous obtenez 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "la grande clé"
+        //la grande clé
+        "/x6c/x61/x20/x67/x72/x61/x6e/x64/x65/x20/x63/x6c/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut être utilisée au\n"
+        //!Elle peut être utilisée au
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x65/x20/x61/x75/x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Château d'Hyrule"
+        //Château d'Hyrule
+        "/x43/x68/xe2/x74/x65/x61/x75/x20/x64/x27/x48/x79/x72/x75/x6c/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( endingBlowFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous avez appris le "
+        //Vous avez appris le 
+        "/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x20/x61/x70/x70/x72/x69/x73/x20/x6c/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Coup de\nGrâce"
+        //Coup deGrâce
+        "/x43/x6f/x75/x70/x20/x64/x65/x0A/x47/x72/xe2/x63/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "/x21"
     MSG_END()
     MSG_BEGIN_ARRAY( shieldAttackFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous avez appris la "
+        //Vous avez appris la 
+        "/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x20/x61/x70/x70/x72/x69/x73/x20/x6c/x61/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Charge\nBouclier"
+        //ChargeBouclier
+        "/x43/x68/x61/x72/x67/x65/x0A/x42/x6f/x75/x63/x6c/x69/x65/x72"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "/x21"
     MSG_END()
     MSG_BEGIN_ARRAY( backSliceFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous avez appris le "
+        //Vous avez appris le 
+        "/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x20/x61/x70/x70/x72/x69/x73/x20/x6c/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Coup à\nRevers"
+        //Coup àRevers
+        "/x43/x6f/x75/x70/x20/xe0/x0A/x52/x65/x76/x65/x72/x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "/x21"
     MSG_END()
     MSG_BEGIN_ARRAY( helmSplitterFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous avez appris le "
+        //Vous avez appris le 
+        "/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x20/x61/x70/x70/x72/x69/x73/x20/x6c/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "\nBrise-Casque"
+        //Brise-Casque
+        "/x0A/x42/x72/x69/x73/x65/x2d/x43/x61/x73/x71/x75/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "/x21"
     MSG_END()
     MSG_BEGIN_ARRAY( mortalDrawFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous avez appris le "
+        //Vous avez appris le 
+        "/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x20/x61/x70/x70/x72/x69/x73/x20/x6c/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Coup\nÉclair"
+        //CoupÉclair
+        "/x43/x6f/x75/x70/x0A/xc9/x63/x6c/x61/x69/x72"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "/x21"
     MSG_END()
     MSG_BEGIN_ARRAY( jumpStrikeFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous avez appris le "
+        //Vous avez appris le 
+        "/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x20/x61/x70/x70/x72/x69/x73/x20/x6c/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Coup\nPlongé"
+        //CoupPlongé
+        "/x43/x6f/x75/x70/x0A/x50/x6c/x6f/x6e/x67/xe9"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "/x21"
     MSG_END()
     MSG_BEGIN_ARRAY( greatSpinFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous avez appris "
+        //Vous avez appris 
+        "/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x20/x61/x70/x70/x72/x69/x73/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "l'Attaque\nTourbillon"
+        //l'AttaqueTourbillon
+        "/x6c/x27/x41/x74/x74/x61/x71/x75/x65/x0A/x54/x6f/x75/x72/x62/x69/x6c/x6c/x6f/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "/x21"
     MSG_END()
     MSG_BEGIN_ARRAY( poweredRodFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Le "
+        //Le 
+        "/x4c/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "bâton Anima "
+        //bâton Anima 
+        "/x62/xe2/x74/x6f/x6e/x20/x41/x6e/x69/x6d/x61/x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "a recouvré ses\npouvoirs magiques! Il peut\nmaintenant être utilisé pour\ninsuffler la vie aux statues\ndans le présent!"
+        //a recouvré sespouvoirs magiques! Il peutmaintenant être utilisé pourinsuffler la vie aux statuesdans le présent!
+        "/x61/x20/x72/x65/x63/x6f/x75/x76/x72/xe9/x20/x73/x65/x73/x0A/x70/x6f/x75/x76/x6f/x69/x72/x73/x20/x6d/x61/x67/x69/x71/x75/x65/x73/x21/x20/x49/x6c/x20/x70/x65/x75/x74/x0A/x6d/x61/x69/x6e/x74/x65/x6e/x61/x6e/x74/x20/xea/x74/x72/x65/x20/x75/x74/x69/x6c/x69/x73/xe9/x20/x70/x6f/x75/x72/x0A/x69/x6e/x73/x75/x66/x66/x6c/x65/x72/x20/x6c/x61/x20/x76/x69/x65/x20/x61/x75/x78/x20/x73/x74/x61/x74/x75/x65/x73/x0A/x64/x61/x6e/x73/x20/x6c/x65/x20/x70/x72/xe9/x73/x65/x6e/x74/x21"
     MSG_END()
     MSG_BEGIN_ARRAY( firstCharacterFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous avez trouvé le premier\n"
+        //Vous avez trouvé le premier
+        "/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x20/x74/x72/x6f/x75/x76/xe9/x20/x6c/x65/x20/x70/x72/x65/x6d/x69/x65/x72/x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "glyphe célestien"
+        //glyphe célestien
+        "/x67/x6c/x79/x70/x68/x65/x20/x63/xe9/x6c/x65/x73/x74/x69/x65/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Vous avez\ndéchiffré un des mots manquants\ndes anciens écrits célestiens!"
+        //! Vous avezdéchiffré un des mots manquantsdes anciens écrits célestiens!
+        "/x21/x20/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x0A/x64/xe9/x63/x68/x69/x66/x66/x72/xe9/x20/x75/x6e/x20/x64/x65/x73/x20/x6d/x6f/x74/x73/x20/x6d/x61/x6e/x71/x75/x61/x6e/x74/x73/x0A/x64/x65/x73/x20/x61/x6e/x63/x69/x65/x6e/x73/x20/xe9/x63/x72/x69/x74/x73/x20/x63/xe9/x6c/x65/x73/x74/x69/x65/x6e/x73/x21"
     MSG_END()
     MSG_BEGIN_ARRAY( secondCharacterFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous avez trouvé le second\n"
+        //Vous avez trouvé le second
+        "/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x20/x74/x72/x6f/x75/x76/xe9/x20/x6c/x65/x20/x73/x65/x63/x6f/x6e/x64/x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "glyphe célestien"
+        //glyphe célestien
+        "/x67/x6c/x79/x70/x68/x65/x20/x63/xe9/x6c/x65/x73/x74/x69/x65/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Vous avez\ndéchiffré un des mots manquants\ndes anciens écrits célestiens!"
+        //! Vous avezdéchiffré un des mots manquantsdes anciens écrits célestiens!
+        "/x21/x20/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x0A/x64/xe9/x63/x68/x69/x66/x66/x72/xe9/x20/x75/x6e/x20/x64/x65/x73/x20/x6d/x6f/x74/x73/x20/x6d/x61/x6e/x71/x75/x61/x6e/x74/x73/x0A/x64/x65/x73/x20/x61/x6e/x63/x69/x65/x6e/x73/x20/xe9/x63/x72/x69/x74/x73/x20/x63/xe9/x6c/x65/x73/x74/x69/x65/x6e/x73/x21"
     MSG_END()
     MSG_BEGIN_ARRAY( thirdCharacterFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous avez trouvé le troisième\n"
+        //Vous avez trouvé le troisième
+        "/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x20/x74/x72/x6f/x75/x76/xe9/x20/x6c/x65/x20/x74/x72/x6f/x69/x73/x69/xe8/x6d/x65/x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "glyphe célestien"
+        //glyphe célestien
+        "/x67/x6c/x79/x70/x68/x65/x20/x63/xe9/x6c/x65/x73/x74/x69/x65/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Vous avez\ndéchiffré un des mots manquants\ndes anciens écrits célestiens!"
+        //! Vous avezdéchiffré un des mots manquantsdes anciens écrits célestiens!
+        "/x21/x20/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x0A/x64/xe9/x63/x68/x69/x66/x66/x72/xe9/x20/x75/x6e/x20/x64/x65/x73/x20/x6d/x6f/x74/x73/x20/x6d/x61/x6e/x71/x75/x61/x6e/x74/x73/x0A/x64/x65/x73/x20/x61/x6e/x63/x69/x65/x6e/x73/x20/xe9/x63/x72/x69/x74/x73/x20/x63/xe9/x6c/x65/x73/x74/x69/x65/x6e/x73/x21"
     MSG_END()
     MSG_BEGIN_ARRAY( fourthCharacterFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous avez trouvé le quatrième\n"
+        //Vous avez trouvé le quatrième
+        "/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x20/x74/x72/x6f/x75/x76/xe9/x20/x6c/x65/x20/x71/x75/x61/x74/x72/x69/xe8/x6d/x65/x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "glyphe célestien"
+        //glyphe célestien
+        "/x67/x6c/x79/x70/x68/x65/x20/x63/xe9/x6c/x65/x73/x74/x69/x65/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Vous avez\ndéchiffré un des mots manquants\ndes anciens écrits célestiens!"
+        //! Vous avezdéchiffré un des mots manquantsdes anciens écrits célestiens!
+        "/x21/x20/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x0A/x64/xe9/x63/x68/x69/x66/x66/x72/xe9/x20/x75/x6e/x20/x64/x65/x73/x20/x6d/x6f/x74/x73/x20/x6d/x61/x6e/x71/x75/x61/x6e/x74/x73/x0A/x64/x65/x73/x20/x61/x6e/x63/x69/x65/x6e/x73/x20/xe9/x63/x72/x69/x74/x73/x20/x63/xe9/x6c/x65/x73/x74/x69/x65/x6e/x73/x21"
     MSG_END()
     MSG_BEGIN_ARRAY( fifthCharacterFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous avez trouvé le cinquième\n"
+        //Vous avez trouvé le cinquième
+        "/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x20/x74/x72/x6f/x75/x76/xe9/x20/x6c/x65/x20/x63/x69/x6e/x71/x75/x69/xe8/x6d/x65/x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "glyphe célestien"
+        //glyphe célestien
+        "/x67/x6c/x79/x70/x68/x65/x20/x63/xe9/x6c/x65/x73/x74/x69/x65/x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Vous avez\ndéchiffré un des mots manquants\ndes anciens écrits célestiens!"
+        //! Vous avezdéchiffré un des mots manquantsdes anciens écrits célestiens!
+        "/x21/x20/x56/x6f/x75/x73/x20/x61/x76/x65/x7a/x0A/x64/xe9/x63/x68/x69/x66/x66/x72/xe9/x20/x75/x6e/x20/x64/x65/x73/x20/x6d/x6f/x74/x73/x20/x6d/x61/x6e/x71/x75/x61/x6e/x74/x73/x0A/x64/x65/x73/x20/x61/x6e/x63/x69/x65/x6e/x73/x20/xe9/x63/x72/x69/x74/x73/x20/x63/xe9/x6c/x65/x73/x74/x69/x65/x6e/x73/x21"
     MSG_END()
     MSG_BEGIN_ARRAY( firstFusedShadowFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez un "
+        //Vous obtenez un 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Cristal d'Ombre"
+        //Cristal d'Ombre
+        "/x43/x72/x69/x73/x74/x61/x6c/x20/x64/x27/x4f/x6d/x62/x72/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nSa surface semble être\nrecouverte par "
+        //!Sa surface semble êtrerecouverte par 
+        "/x21/x0A/x53/x61/x20/x73/x75/x72/x66/x61/x63/x65/x20/x73/x65/x6d/x62/x6c/x65/x20/xea/x74/x72/x65/x0A/x72/x65/x63/x6f/x75/x76/x65/x72/x74/x65/x20/x70/x61/x72/x20"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "de la mousse"
+        //de la mousse
+        "/x64/x65/x20/x6c/x61/x20/x6d/x6f/x75/x73/x73/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        ".."
+        //..
+        "/x2e/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( secondFusedShadowFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez un second\n"
+        //Vous obtenez un second
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x75/x6e/x20/x73/x65/x63/x6f/x6e/x64/x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Cristal d'Ombre"
+        //Cristal d'Ombre
+        "/x43/x72/x69/x73/x74/x61/x6c/x20/x64/x27/x4f/x6d/x62/x72/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Il émane "
+        //! Il émane 
+        "/x21/x20/x49/x6c/x20/xe9/x6d/x61/x6e/x65/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "une\ndouce chaleur "
+        //unedouce chaleur 
+        "/x75/x6e/x65/x0A/x64/x6f/x75/x63/x65/x20/x63/x68/x61/x6c/x65/x75/x72/x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "sur vos mains.."
+        //sur vos mains..
+        "/x73/x75/x72/x20/x76/x6f/x73/x20/x6d/x61/x69/x6e/x73/x2e/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( thirdFusedShadowFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez le dernier\n"
+        //Vous obtenez le dernier
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x6c/x65/x20/x64/x65/x72/x6e/x69/x65/x72/x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Cristal d'Ombre"
+        //Cristal d'Ombre
+        "/x43/x72/x69/x73/x74/x61/x6c/x20/x64/x27/x4f/x6d/x62/x72/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Une forte\n"
+        //! Une forte
+        "/x21/x20/x55/x6e/x65/x20/x66/x6f/x72/x74/x65/x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "odeur de poisson "
+        //odeur de poisson 
+        "/x6f/x64/x65/x75/x72/x20/x64/x65/x20/x70/x6f/x69/x73/x73/x6f/x6e/x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "s'en dégage.."
+        //s'en dégage..
+        "/x73/x27/x65/x6e/x20/x64/xe9/x67/x61/x67/x65/x2e/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( secondMirrorShardFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez le second fragment\ndu "
+        //Vous obtenez le second fragmentdu 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x6c/x65/x20/x73/x65/x63/x6f/x6e/x64/x20/x66/x72/x61/x67/x6d/x65/x6e/x74/x0A/x64/x75/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Miroir des Ombres"
+        //Miroir des Ombres
+        "/x4d/x69/x72/x6f/x69/x72/x20/x64/x65/x73/x20/x4f/x6d/x62/x72/x65/x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Il est\n"
+        //! Il est
+        "/x21/x20/x49/x6c/x20/x65/x73/x74/x0A"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "un peu froid "
+        //un peu froid 
+        "/x75/x6e/x20/x70/x65/x75/x20/x66/x72/x6f/x69/x64/x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "et brille de\nmille feux.."
+        //et brille demille feux..
+        "/x65/x74/x20/x62/x72/x69/x6c/x6c/x65/x20/x64/x65/x0A/x6d/x69/x6c/x6c/x65/x20/x66/x65/x75/x78/x2e/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( thirdMirrorShardFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez le troisième\nfragment du "
+        //Vous obtenez le troisièmefragment du 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x6c/x65/x20/x74/x72/x6f/x69/x73/x69/xe8/x6d/x65/x0A/x66/x72/x61/x67/x6d/x65/x6e/x74/x20/x64/x75/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Miroir des Ombres"
+        //Miroir des Ombres
+        "/x4d/x69/x72/x6f/x69/x72/x20/x64/x65/x73/x20/x4f/x6d/x62/x72/x65/x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIl est très sale et "
+        //!Il est très sale et 
+        "/x21/x0A/x49/x6c/x20/x65/x73/x74/x20/x74/x72/xe8/x73/x20/x73/x61/x6c/x65/x20/x65/x74/x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "recouvert\nde toiles"
+        //recouvertde toiles
+        "/x72/x65/x63/x6f/x75/x76/x65/x72/x74/x0A/x64/x65/x20/x74/x6f/x69/x6c/x65/x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        ".."
+        //..
+        "/x2e/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( fourthMirrorShardFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez le dernier\nfragment du "
+        //Vous obtenez le dernierfragment du 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x6c/x65/x20/x64/x65/x72/x6e/x69/x65/x72/x0A/x66/x72/x61/x67/x6d/x65/x6e/x74/x20/x64/x75/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Miroir des Ombres"
+        //Miroir des Ombres
+        "/x4d/x69/x72/x6f/x69/x72/x20/x64/x65/x73/x20/x4f/x6d/x62/x72/x65/x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIl est encore plus\n"
+        //!Il est encore plus
+        "/x21/x0A/x49/x6c/x20/x65/x73/x74/x20/x65/x6e/x63/x6f/x72/x65/x20/x70/x6c/x75/x73/x0A"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "léger que l'air"
+        //léger que l'air
+        "/x6c/xe9/x67/x65/x72/x20/x71/x75/x65/x20/x6c/x27/x61/x69/x72"
         MSG_COLOR(MSG_COLOR_WHITE)
-        ".."
+        //..
+        "/x2e/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( foolishItemFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Le "
+        //Le 
+        "/x4c/x65/x20"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "blizzard "
+        //blizzard 
+        "/x62/x6c/x69/x7a/x7a/x61/x72/x64/x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "souffle.."
+        //souffle..
+        "/x73/x6f/x75/x66/x66/x6c/x65/x2e/x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( talkToMidnaFr )
-        "Qu'est-ce qu'il y a, "
+        //Qu'est-ce qu'il y a, 
+        "/x51/x75/x27/x65/x73/x74/x2d/x63/x65/x20/x71/x75/x27/x69/x6c/x20/x79/x20/x61/x2c/x20"
         MSG_PLYR_NAME
-        "?"
+        //?
+        "/x3f"
         MSG_OPTION_LIST(MSG_OPTION_1)
-        "Je veux me transformer\n"
+        //Je veux me transformer
+        "/x4a/x65/x20/x76/x65/x75/x78/x20/x6d/x65/x20/x74/x72/x61/x6e/x73/x66/x6f/x72/x6d/x65/x72/x0A"
         MSG_OPTION_LIST(MSG_OPTION_2)
-        "Je veux me téléporter\n"
+        //Je veux me téléporter
+        "/x4a/x65/x20/x76/x65/x75/x78/x20/x6d/x65/x20/x74/xe9/x6c/xe9/x70/x6f/x72/x74/x65/x72/x0A"
         MSG_OPTION_LIST(MSG_OPTION_3)
-        "Changer l'heure de la journée"
+        //Changer l'heure de la journée
+        "/x43/x68/x61/x6e/x67/x65/x72/x20/x6c/x27/x68/x65/x75/x72/x65/x20/x64/x65/x20/x6c/x61/x20/x6a/x6f/x75/x72/x6e/xe9/x65"
     MSG_END()
     MSG_BEGIN_ARRAY( bigWalletFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez la "
+        //Vous obtenez la 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x6c/x61/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Grande Bourse"
+        //Grande Bourse
+        "/x47/x72/x61/x6e/x64/x65/x20/x42/x6f/x75/x72/x73/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut contenir jusqu'à\n"
+        //!Elle peut contenir jusqu'à
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/x63/x6f/x6e/x74/x65/x6e/x69/x72/x20/x6a/x75/x73/x71/x75/x27/xe0/x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "5,000 rubis"
+        //5,000 rubis
+        "/x35/x2c/x30/x30/x30/x20/x72/x75/x62/x69/x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "/x21"
     MSG_END()
     MSG_BEGIN_ARRAY( giantWalletFr )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Vous obtenez la "
+        //Vous obtenez la 
+        "/x56/x6f/x75/x73/x20/x6f/x62/x74/x65/x6e/x65/x7a/x20/x6c/x61/x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Bourse Géante"
+        //Bourse Géante
+        "/x42/x6f/x75/x72/x73/x65/x20/x47/xe9/x61/x6e/x74/x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nElle peut contenir jusqu'à\n"
+        //!Elle peut contenir jusqu'à
+        "/x21/x0A/x45/x6c/x6c/x65/x20/x70/x65/x75/x74/x20/x63/x6f/x6e/x74/x65/x6e/x69/x72/x20/x6a/x75/x73/x71/x75/x27/xe0/x0A"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "9,999 rubis"
+        //9,999 rubis
+        "/x39/x2c/x39/x39/x39/x20/x72/x75/x62/x69/x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "/x21"
     MSG_END()
     
     MsgEntry entriesFr[TOTAL_CUSTOM_MESSAGES] = 

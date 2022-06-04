@@ -12,652 +12,906 @@ namespace mod::customMessages
     // clang-format off
     MSG_BEGIN_ARRAY( forestSmallKeyDe )
         MSG_SPEED( MSG_SPEED_FAST )
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "kleinen\nSchlüssel"
+        //kleinenSchlüssel
+        "\x6b\x6c\x65\x69\x6e\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir Türen\nim "
+        //! Er öffnet dir Türenim 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x20\x54\xfc\x72\x65\x6e\x0A\x69\x6d\x20"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "Waldschrein"
+        //Waldschrein
+        "\x57\x61\x6c\x64\x73\x63\x68\x72\x65\x69\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( minesSmallKeyDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "kleinen\nSchlüssel"
+        //kleinenSchlüssel
+        "\x6b\x6c\x65\x69\x6e\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir Türen\nin den "
+        //! Er öffnet dir Türenin den 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x20\x54\xfc\x72\x65\x6e\x0A\x69\x6e\x20\x64\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Minen der Goronen"
+        //Minen der Goronen
+        "\x4d\x69\x6e\x65\x6e\x20\x64\x65\x72\x20\x47\x6f\x72\x6f\x6e\x65\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( lakebedSmallKeyDe )
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "kleinen\nSchlüssel"
+        //kleinenSchlüssel
+        "\x6b\x6c\x65\x69\x6e\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir Türen\nim "
+        //! Er öffnet dir Türenim 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x20\x54\xfc\x72\x65\x6e\x0A\x69\x6d\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Seeschrein"
+        //Seeschrein
+        "\x53\x65\x65\x73\x63\x68\x72\x65\x69\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( arbitersSmallKeyDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "kleinen\nSchlüssel"
+        //kleinenSchlüssel
+        "\x6b\x6c\x65\x69\x6e\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir Türen\nin der "
+        //! Er öffnet dir Türenin der 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x20\x54\xfc\x72\x65\x6e\x0A\x69\x6e\x20\x64\x65\x72\x20"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Wüstenburg"
+        //Wüstenburg
+        "\x57\xfc\x73\x74\x65\x6e\x62\x75\x72\x67"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( snowpeakSmallKeyDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "kleinen\nSchlüssel"
+        //kleinenSchlüssel
+        "\x6b\x6c\x65\x69\x6e\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir Türen\nin der "
+        //! Er öffnet dir Türenin der 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x20\x54\xfc\x72\x65\x6e\x0A\x69\x6e\x20\x64\x65\x72\x20"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "Bergruine"
+        //Bergruine
+        "\x42\x65\x72\x67\x72\x75\x69\x6e\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( timeSmallKeyDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "kleinen\nSchlüssel"
+        //kleinenSchlüssel
+        "\x6b\x6c\x65\x69\x6e\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir\nTüren im "
+        //! Er öffnet dirTüren im 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x0A\x54\xfc\x72\x65\x6e\x20\x69\x6d\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Zeitschrein"
+        //Zeitschrein
+        "\x5a\x65\x69\x74\x73\x63\x68\x72\x65\x69\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( citySmallKeyDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "kleinen\nSchlüssel"
+        //kleinenSchlüssel
+        "\x6b\x6c\x65\x69\x6e\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir\nTüren in "
+        //! Er öffnet dirTüren in 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x0A\x54\xfc\x72\x65\x6e\x20\x69\x6e\x20"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "Kumula"
+        //Kumula
+        "\x4b\x75\x6d\x75\x6c\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( palaceSmallKeyDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "kleinen\nSchlüssel"
+        //kleinenSchlüssel
+        "\x6b\x6c\x65\x69\x6e\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir\nTüren im "
+        //! Er öffnet dirTüren im 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x0A\x54\xfc\x72\x65\x6e\x20\x69\x6d\x20"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "Schattenpalast"
+        //Schattenpalast
+        "\x53\x63\x68\x61\x74\x74\x65\x6e\x70\x61\x6c\x61\x73\x74"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( hyruleSmallKeyDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "kleinen\nSchlüssel"
+        //kleinenSchlüssel
+        "\x6b\x6c\x65\x69\x6e\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir\nTüren auf "
+        //! Er öffnet dirTüren auf 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x0A\x54\xfc\x72\x65\x6e\x20\x61\x75\x66\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Schloss Hyrule"
+        //Schloss Hyrule
+        "\x53\x63\x68\x6c\x6f\x73\x73\x20\x48\x79\x72\x75\x6c\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( campSmallKeyDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "kleinen\nSchlüssel"
+        //kleinenSchlüssel
+        "\x6b\x6c\x65\x69\x6e\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet das\nTor im "
+        //! Er öffnet dasTor im 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x61\x73\x0A\x54\x6f\x72\x20\x69\x6d\x20"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Camp der Bulblins"
+        //Camp der Bulblins
+        "\x43\x61\x6d\x70\x20\x64\x65\x72\x20\x42\x75\x6c\x62\x6c\x69\x6e\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( shadowCrystalDe )
         MSG_SPEED(MSG_SPEED_SLOW)
-        "Du erhältst den "
+        //Du erhältst den 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x64\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Nachtkristall"
+        //Nachtkristall
+        "\x4e\x61\x63\x68\x74\x6b\x72\x69\x73\x74\x61\x6c\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nDiese dunkle Manifestation der\nMacht "
+        //!Diese dunkle Manifestation derMacht 
+        "\x21\x0A\x44\x69\x65\x73\x65\x20\x64\x75\x6e\x6b\x6c\x65\x20\x4d\x61\x6e\x69\x66\x65\x73\x74\x61\x74\x69\x6f\x6e\x20\x64\x65\x72\x0A\x4d\x61\x63\x68\x74\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Zantos "
+        //Zantos 
+        "\x5a\x61\x6e\x74\x6f\x73\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "erlaubt es dir, dich\nnach Belieben zu verwandeln!"
+        //erlaubt es dir, dichnach Belieben zu verwandeln!
+        "\x65\x72\x6c\x61\x75\x62\x74\x20\x65\x73\x20\x64\x69\x72\x2c\x20\x64\x69\x63\x68\x0A\x6e\x61\x63\x68\x20\x42\x65\x6c\x69\x65\x62\x65\x6e\x20\x7a\x75\x20\x76\x65\x72\x77\x61\x6e\x64\x65\x6c\x6e\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( forestDungeonMapDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst eine "
+        //Du erhältst eine 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Dungeon-Karte"
+        //Dungeon-Karte
+        "\x44\x75\x6e\x67\x65\x6f\x6e\x2d\x4b\x61\x72\x74\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nVerwende sie im "
+        //!Verwende sie im 
+        "\x21\x0A\x56\x65\x72\x77\x65\x6e\x64\x65\x20\x73\x69\x65\x20\x69\x6d\x20"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "Waldschrein"
+        //Waldschrein
+        "\x57\x61\x6c\x64\x73\x63\x68\x72\x65\x69\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( minesDungeonMapDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst eine "
+        //Du erhältst eine 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Dungeon-Karte"
+        //Dungeon-Karte
+        "\x44\x75\x6e\x67\x65\x6f\x6e\x2d\x4b\x61\x72\x74\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nVerwende sie in den "
+        //!Verwende sie in den 
+        "\x21\x0A\x56\x65\x72\x77\x65\x6e\x64\x65\x20\x73\x69\x65\x20\x69\x6e\x20\x64\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Minen der\nGoronen"
+        //Minen derGoronen
+        "\x4d\x69\x6e\x65\x6e\x20\x64\x65\x72\x0A\x47\x6f\x72\x6f\x6e\x65\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( lakebedDungeonMapDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst eine "
+        //Du erhältst eine 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Dungeon-Karte"
+        //Dungeon-Karte
+        "\x44\x75\x6e\x67\x65\x6f\x6e\x2d\x4b\x61\x72\x74\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nVerwende sie im "
+        //!Verwende sie im 
+        "\x21\x0A\x56\x65\x72\x77\x65\x6e\x64\x65\x20\x73\x69\x65\x20\x69\x6d\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Seeschrein"
+        //Seeschrein
+        "\x53\x65\x65\x73\x63\x68\x72\x65\x69\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( arbitersDungeonMapDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst eine "
+        //Du erhältst eine 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Dungeon-Karte"
+        //Dungeon-Karte
+        "\x44\x75\x6e\x67\x65\x6f\x6e\x2d\x4b\x61\x72\x74\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nVerwende sie in der "
+        //!Verwende sie in der 
+        "\x21\x0A\x56\x65\x72\x77\x65\x6e\x64\x65\x20\x73\x69\x65\x20\x69\x6e\x20\x64\x65\x72\x20"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Wüstenburg"
+        //Wüstenburg
+        "\x57\xfc\x73\x74\x65\x6e\x62\x75\x72\x67"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( snowpeakDungeonMapDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst eine "
+        //Du erhältst eine 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Dungeon-Karte"
+        //Dungeon-Karte
+        "\x44\x75\x6e\x67\x65\x6f\x6e\x2d\x4b\x61\x72\x74\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nVerwende sie in der "
+        //!Verwende sie in der 
+        "\x21\x0A\x56\x65\x72\x77\x65\x6e\x64\x65\x20\x73\x69\x65\x20\x69\x6e\x20\x64\x65\x72\x20"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "Bergruine"
+        //Bergruine
+        "\x42\x65\x72\x67\x72\x75\x69\x6e\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( timeDungeonMapDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst eine "
+        //Du erhältst eine 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Dungeon-Karte"
+        //Dungeon-Karte
+        "\x44\x75\x6e\x67\x65\x6f\x6e\x2d\x4b\x61\x72\x74\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nVerwende sie im "
+        //!Verwende sie im 
+        "\x21\x0A\x56\x65\x72\x77\x65\x6e\x64\x65\x20\x73\x69\x65\x20\x69\x6d\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Zeitschrein"
+        //Zeitschrein
+        "\x5a\x65\x69\x74\x73\x63\x68\x72\x65\x69\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( cityDungeonMapDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst eine "
+        //Du erhältst eine 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Dungeon-Karte"
+        //Dungeon-Karte
+        "\x44\x75\x6e\x67\x65\x6f\x6e\x2d\x4b\x61\x72\x74\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nVerwende sie in "
+        //!Verwende sie in 
+        "\x21\x0A\x56\x65\x72\x77\x65\x6e\x64\x65\x20\x73\x69\x65\x20\x69\x6e\x20"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "Kumula"
+        //Kumula
+        "\x4b\x75\x6d\x75\x6c\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( palaceDungeonMapDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst eine "
+        //Du erhältst eine 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Dungeon-Karte"
+        //Dungeon-Karte
+        "\x44\x75\x6e\x67\x65\x6f\x6e\x2d\x4b\x61\x72\x74\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nVerwende sie im "
+        //!Verwende sie im 
+        "\x21\x0A\x56\x65\x72\x77\x65\x6e\x64\x65\x20\x73\x69\x65\x20\x69\x6d\x20"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "Schattenpalast"
+        //Schattenpalast
+        "\x53\x63\x68\x61\x74\x74\x65\x6e\x70\x61\x6c\x61\x73\x74"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( hyruleDungeonMapDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst eine "
+        //Du erhältst eine 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Dungeon-Karte"
+        //Dungeon-Karte
+        "\x44\x75\x6e\x67\x65\x6f\x6e\x2d\x4b\x61\x72\x74\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nVerwende sie auf "
+        //!Verwende sie auf 
+        "\x21\x0A\x56\x65\x72\x77\x65\x6e\x64\x65\x20\x73\x69\x65\x20\x61\x75\x66\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Schloss Hyrule"
+        //Schloss Hyrule
+        "\x53\x63\x68\x6c\x6f\x73\x73\x20\x48\x79\x72\x75\x6c\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( forestCompassDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Kompass"
+        //Kompass
+        "\x4b\x6f\x6d\x70\x61\x73\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nEr zeigt dir, wo du die Schätze\nim "
+        //!Er zeigt dir, wo du die Schätzeim 
+        "\x21\x0A\x45\x72\x20\x7a\x65\x69\x67\x74\x20\x64\x69\x72\x2c\x20\x77\x6f\x20\x64\x75\x20\x64\x69\x65\x20\x53\x63\x68\xe4\x74\x7a\x65\x0A\x69\x6d\x20"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "Waldschrein "
+        //Waldschrein 
+        "\x57\x61\x6c\x64\x73\x63\x68\x72\x65\x69\x6e\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "findest."
+        //findest.
+        "\x66\x69\x6e\x64\x65\x73\x74\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( minesCompassDe )
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Kompass"
+        //Kompass
+        "\x4b\x6f\x6d\x70\x61\x73\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nEr zeigt dir, wo du die Schätze\nin den "
+        //!Er zeigt dir, wo du die Schätzein den 
+        "\x21\x0A\x45\x72\x20\x7a\x65\x69\x67\x74\x20\x64\x69\x72\x2c\x20\x77\x6f\x20\x64\x75\x20\x64\x69\x65\x20\x53\x63\x68\xe4\x74\x7a\x65\x0A\x69\x6e\x20\x64\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Minen der Goronen "
+        //Minen der Goronen 
+        "\x4d\x69\x6e\x65\x6e\x20\x64\x65\x72\x20\x47\x6f\x72\x6f\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "findest."
+        //findest.
+        "\x66\x69\x6e\x64\x65\x73\x74\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( lakebedCompassDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Kompass"
+        //Kompass
+        "\x4b\x6f\x6d\x70\x61\x73\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nEr zeigt dir, wo du die Schätze\nim "
+        //!Er zeigt dir, wo du die Schätzeim 
+        "\x21\x0A\x45\x72\x20\x7a\x65\x69\x67\x74\x20\x64\x69\x72\x2c\x20\x77\x6f\x20\x64\x75\x20\x64\x69\x65\x20\x53\x63\x68\xe4\x74\x7a\x65\x0A\x69\x6d\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Seeschrein "
+        //Seeschrein 
+        "\x53\x65\x65\x73\x63\x68\x72\x65\x69\x6e\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "findest."
+        //findest.
+        "\x66\x69\x6e\x64\x65\x73\x74\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( arbitersCompassDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Kompass"
+        //Kompass
+        "\x4b\x6f\x6d\x70\x61\x73\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nEr zeigt dir, wo du die Schätze\nin der "
+        //!Er zeigt dir, wo du die Schätzein der 
+        "\x21\x0A\x45\x72\x20\x7a\x65\x69\x67\x74\x20\x64\x69\x72\x2c\x20\x77\x6f\x20\x64\x75\x20\x64\x69\x65\x20\x53\x63\x68\xe4\x74\x7a\x65\x0A\x69\x6e\x20\x64\x65\x72\x20"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Wüstenburg "
+        //Wüstenburg 
+        "\x57\xfc\x73\x74\x65\x6e\x62\x75\x72\x67\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "findest."
+        //findest.
+        "\x66\x69\x6e\x64\x65\x73\x74\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( snowpeakCompassDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Kompass"
+        //Kompass
+        "\x4b\x6f\x6d\x70\x61\x73\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nEr zeigt dir, wo du die Schätze\nin der "
+        //!Er zeigt dir, wo du die Schätzein der 
+        "\x21\x0A\x45\x72\x20\x7a\x65\x69\x67\x74\x20\x64\x69\x72\x2c\x20\x77\x6f\x20\x64\x75\x20\x64\x69\x65\x20\x53\x63\x68\xe4\x74\x7a\x65\x0A\x69\x6e\x20\x64\x65\x72\x20"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "Bergruine "
+        //Bergruine 
+        "\x42\x65\x72\x67\x72\x75\x69\x6e\x65\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "findest."
+        //findest.
+        "\x66\x69\x6e\x64\x65\x73\x74\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( timeCompassDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Kompass"
+        //Kompass
+        "\x4b\x6f\x6d\x70\x61\x73\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nEr zeigt dir, wo du die Schätze\nim "
+        //!Er zeigt dir, wo du die Schätzeim 
+        "\x21\x0A\x45\x72\x20\x7a\x65\x69\x67\x74\x20\x64\x69\x72\x2c\x20\x77\x6f\x20\x64\x75\x20\x64\x69\x65\x20\x53\x63\x68\xe4\x74\x7a\x65\x0A\x69\x6d\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Zeitschrein "
+        //Zeitschrein 
+        "\x5a\x65\x69\x74\x73\x63\x68\x72\x65\x69\x6e\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "findest."
+        //findest.
+        "\x66\x69\x6e\x64\x65\x73\x74\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( cityCompassDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Kompass"
+        //Kompass
+        "\x4b\x6f\x6d\x70\x61\x73\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nEr zeigt dir, wo du die Schätze\nin "
+        //!Er zeigt dir, wo du die Schätzein 
+        "\x21\x0A\x45\x72\x20\x7a\x65\x69\x67\x74\x20\x64\x69\x72\x2c\x20\x77\x6f\x20\x64\x75\x20\x64\x69\x65\x20\x53\x63\x68\xe4\x74\x7a\x65\x0A\x69\x6e\x20"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "Kumula "
+        //Kumula 
+        "\x4b\x75\x6d\x75\x6c\x61\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "findest."
+        //findest.
+        "\x66\x69\x6e\x64\x65\x73\x74\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( palaceCompassDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Kompass"
+        //Kompass
+        "\x4b\x6f\x6d\x70\x61\x73\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nEr zeigt dir, wo du die Schätze\nim "
+        //!Er zeigt dir, wo du die Schätzeim 
+        "\x21\x0A\x45\x72\x20\x7a\x65\x69\x67\x74\x20\x64\x69\x72\x2c\x20\x77\x6f\x20\x64\x75\x20\x64\x69\x65\x20\x53\x63\x68\xe4\x74\x7a\x65\x0A\x69\x6d\x20"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "Schattenpalast "
+        //Schattenpalast 
+        "\x53\x63\x68\x61\x74\x74\x65\x6e\x70\x61\x6c\x61\x73\x74\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "findest."
+        //findest.
+        "\x66\x69\x6e\x64\x65\x73\x74\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( hyruleCompassDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Kompass"
+        //Kompass
+        "\x4b\x6f\x6d\x70\x61\x73\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nEr zeigt dir, wo du die Schätze\nauf "
+        //!Er zeigt dir, wo du die Schätzeauf 
+        "\x21\x0A\x45\x72\x20\x7a\x65\x69\x67\x74\x20\x64\x69\x72\x2c\x20\x77\x6f\x20\x64\x75\x20\x64\x69\x65\x20\x53\x63\x68\xe4\x74\x7a\x65\x0A\x61\x75\x66\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Schloss Hyrule "
+        //Schloss Hyrule 
+        "\x53\x63\x68\x6c\x6f\x73\x73\x20\x48\x79\x72\x75\x6c\x65\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "findest."
+        //findest.
+        "\x66\x69\x6e\x64\x65\x73\x74\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( forestBigKeyDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "großen\nSchlüssel"
+        //großenSchlüssel
+        "\x67\x72\x6f\xdf\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir den\nWeg zum Boss des "
+        //! Er öffnet dir denWeg zum Boss des 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x20\x64\x65\x6e\x0A\x57\x65\x67\x20\x7a\x75\x6d\x20\x42\x6f\x73\x73\x20\x64\x65\x73\x20"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "Waldschreins"
+        //Waldschreins
+        "\x57\x61\x6c\x64\x73\x63\x68\x72\x65\x69\x6e\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( lakebedBigKeyDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "großen\nSchlüssel"
+        //großenSchlüssel
+        "\x67\x72\x6f\xdf\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir den\nWeg zum Boss der "
+        //! Er öffnet dir denWeg zum Boss der 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x20\x64\x65\x6e\x0A\x57\x65\x67\x20\x7a\x75\x6d\x20\x42\x6f\x73\x73\x20\x64\x65\x72\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Seeschreins"
+        //Seeschreins
+        "\x53\x65\x65\x73\x63\x68\x72\x65\x69\x6e\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( arbitersBigKeyDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "großen\nSchlüssel"
+        //großenSchlüssel
+        "\x67\x72\x6f\xdf\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir den\nWeg zum Boss der "
+        //! Er öffnet dir denWeg zum Boss der 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x20\x64\x65\x6e\x0A\x57\x65\x67\x20\x7a\x75\x6d\x20\x42\x6f\x73\x73\x20\x64\x65\x72\x20"
         MSG_COLOR(MSG_COLOR_ORANGE)
-        "Wüstenburg"
+        //Wüstenburg
+        "\x57\xfc\x73\x74\x65\x6e\x62\x75\x72\x67"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( timeBigKeyDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "großen\nSchlüssel"
+        //großenSchlüssel
+        "\x67\x72\x6f\xdf\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir den\nWeg zum Boss des "
+        //! Er öffnet dir denWeg zum Boss des 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x20\x64\x65\x6e\x0A\x57\x65\x67\x20\x7a\x75\x6d\x20\x42\x6f\x73\x73\x20\x64\x65\x73\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Zeitschreins"
+        //Zeitschreins
+        "\x5a\x65\x69\x74\x73\x63\x68\x72\x65\x69\x6e\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( cityBigKeyDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "großen\nSchlüssel"
+        //großenSchlüssel
+        "\x67\x72\x6f\xdf\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir den\nWeg zum Boss von "
+        //! Er öffnet dir denWeg zum Boss von 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x20\x64\x65\x6e\x0A\x57\x65\x67\x20\x7a\x75\x6d\x20\x42\x6f\x73\x73\x20\x76\x6f\x6e\x20"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "Kumula"
+        //Kumula
+        "\x4b\x75\x6d\x75\x6c\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( palaceBigKeyDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "großen\nSchlüssel"
+        //großenSchlüssel
+        "\x67\x72\x6f\xdf\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir\nden Weg zum Boss\ndes "
+        //! Er öffnet dirden Weg zum Bossdes 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x0A\x64\x65\x6e\x20\x57\x65\x67\x20\x7a\x75\x6d\x20\x42\x6f\x73\x73\x0A\x64\x65\x73\x20"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "Schattenpalasts"
+        //Schattenpalasts
+        "\x53\x63\x68\x61\x74\x74\x65\x6e\x70\x61\x6c\x61\x73\x74\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( hyruleBigKeyDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen "
+        //Du erhältst einen 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "großen\nSchlüssel"
+        //großenSchlüssel
+        "\x67\x72\x6f\xdf\x65\x6e\x0A\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er öffnet dir\nden Weg zum Boss\nvon "
+        //! Er öffnet dirden Weg zum Bossvon 
+        "\x21\x20\x45\x72\x20\xf6\x66\x66\x6e\x65\x74\x20\x64\x69\x72\x0A\x64\x65\x6e\x20\x57\x65\x67\x20\x7a\x75\x6d\x20\x42\x6f\x73\x73\x0A\x76\x6f\x6e\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Schloss Hyrule"
+        //Schloss Hyrule
+        "\x53\x63\x68\x6c\x6f\x73\x73\x20\x48\x79\x72\x75\x6c\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        //.
+        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( endingBlowDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erlernst den "
+        //Du erlernst den 
+        "\x44\x75\x20\x65\x72\x6c\x65\x72\x6e\x73\x74\x20\x64\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Fangstoß"
+        //Fangstoß
+        "\x46\x61\x6e\x67\x73\x74\x6f\xdf"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( shieldAttackDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erlernst die "
+        //Du erlernst die 
+        "\x44\x75\x20\x65\x72\x6c\x65\x72\x6e\x73\x74\x20\x64\x69\x65\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Schildattacke"
+        //Schildattacke
+        "\x53\x63\x68\x69\x6c\x64\x61\x74\x74\x61\x63\x6b\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( backSliceDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erlernst den "
+        //Du erlernst den 
+        "\x44\x75\x20\x65\x72\x6c\x65\x72\x6e\x73\x74\x20\x64\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Rundumhieb"
+        //Rundumhieb
+        "\x52\x75\x6e\x64\x75\x6d\x68\x69\x65\x62"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( helmSplitterDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erlernst den "
+        //Du erlernst den 
+        "\x44\x75\x20\x65\x72\x6c\x65\x72\x6e\x73\x74\x20\x64\x65\x6e\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Helmspalter"
+        //Helmspalter
+        "\x48\x65\x6c\x6d\x73\x70\x61\x6c\x74\x65\x72"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( mortalDrawDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erlernst das "
+        //Du erlernst das 
+        "\x44\x75\x20\x65\x72\x6c\x65\x72\x6e\x73\x74\x20\x64\x61\x73\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Blankziehen"
+        //Blankziehen
+        "\x42\x6c\x61\x6e\x6b\x7a\x69\x65\x68\x65\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( jumpStrikeDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erlernst die\n"
+        //Du erlernst die
+        "\x44\x75\x20\x65\x72\x6c\x65\x72\x6e\x73\x74\x20\x64\x69\x65\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Riesensprungattacke"
+        //Riesensprungattacke
+        "\x52\x69\x65\x73\x65\x6e\x73\x70\x72\x75\x6e\x67\x61\x74\x74\x61\x63\x6b\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( greatSpinDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erlernst die\n"
+        //Du erlernst die
+        "\x44\x75\x20\x65\x72\x6c\x65\x72\x6e\x73\x74\x20\x64\x69\x65\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Riesenwirbelattacke"
+        //Riesenwirbelattacke
+        "\x52\x69\x65\x73\x65\x6e\x77\x69\x72\x62\x65\x6c\x61\x74\x74\x61\x63\x6b\x65"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        //!
+        "\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( poweredRodDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Der "
+        //Der 
+        "\x44\x65\x72\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Kopierstab "
+        //Kopierstab 
+        "\x4b\x6f\x70\x69\x65\x72\x73\x74\x61\x62\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "hat wieder\nmagische Kraft! Verwende ihn,\num den antiken Statuen wieder\nLeben einzuhauchen."
+        //hat wiedermagische Kraft! Verwende ihn,um den antiken Statuen wiederLeben einzuhauchen.
+        "\x68\x61\x74\x20\x77\x69\x65\x64\x65\x72\x0A\x6d\x61\x67\x69\x73\x63\x68\x65\x20\x4b\x72\x61\x66\x74\x21\x20\x56\x65\x72\x77\x65\x6e\x64\x65\x20\x69\x68\x6e\x2c\x0A\x75\x6d\x20\x64\x65\x6e\x20\x61\x6e\x74\x69\x6b\x65\x6e\x20\x53\x74\x61\x74\x75\x65\x6e\x20\x77\x69\x65\x64\x65\x72\x0A\x4c\x65\x62\x65\x6e\x20\x65\x69\x6e\x7a\x75\x68\x61\x75\x63\x68\x65\x6e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( firstCharacterDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst das erste\n"
+        //Du erhältst das erste
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x64\x61\x73\x20\x65\x72\x73\x74\x65\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "kumulanische Zeichen"
+        //kumulanische Zeichen
+        "\x6b\x75\x6d\x75\x6c\x61\x6e\x69\x73\x63\x68\x65\x20\x5a\x65\x69\x63\x68\x65\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Damit\nkannst du einen Teil des\nKumulaner-Dokuments lesen!"
+        //! Damitkannst du einen Teil desKumulaner-Dokuments lesen!
+        "\x21\x20\x44\x61\x6d\x69\x74\x0A\x6b\x61\x6e\x6e\x73\x74\x20\x64\x75\x20\x65\x69\x6e\x65\x6e\x20\x54\x65\x69\x6c\x20\x64\x65\x73\x0A\x4b\x75\x6d\x75\x6c\x61\x6e\x65\x72\x2d\x44\x6f\x6b\x75\x6d\x65\x6e\x74\x73\x20\x6c\x65\x73\x65\x6e\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( secondCharacterDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst das zweite\n"
+        //Du erhältst das zweite
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x64\x61\x73\x20\x7a\x77\x65\x69\x74\x65\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "kumulanische Zeichen"
+        //kumulanische Zeichen
+        "\x6b\x75\x6d\x75\x6c\x61\x6e\x69\x73\x63\x68\x65\x20\x5a\x65\x69\x63\x68\x65\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Damit\nkannst du einen Teil des\nKumulaner-Dokuments lesen!"
+        //! Damitkannst du einen Teil desKumulaner-Dokuments lesen!
+        "\x21\x20\x44\x61\x6d\x69\x74\x0A\x6b\x61\x6e\x6e\x73\x74\x20\x64\x75\x20\x65\x69\x6e\x65\x6e\x20\x54\x65\x69\x6c\x20\x64\x65\x73\x0A\x4b\x75\x6d\x75\x6c\x61\x6e\x65\x72\x2d\x44\x6f\x6b\x75\x6d\x65\x6e\x74\x73\x20\x6c\x65\x73\x65\x6e\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( thirdCharacterDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst das dritte\n"
+        //Du erhältst das dritte
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x64\x61\x73\x20\x64\x72\x69\x74\x74\x65\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "kumulanische Zeichen"
+        //kumulanische Zeichen
+        "\x6b\x75\x6d\x75\x6c\x61\x6e\x69\x73\x63\x68\x65\x20\x5a\x65\x69\x63\x68\x65\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Damit\nkannst du einen Teil des\nKumulaner-Dokuments lesen!"
+        //! Damitkannst du einen Teil desKumulaner-Dokuments lesen!
+        "\x21\x20\x44\x61\x6d\x69\x74\x0A\x6b\x61\x6e\x6e\x73\x74\x20\x64\x75\x20\x65\x69\x6e\x65\x6e\x20\x54\x65\x69\x6c\x20\x64\x65\x73\x0A\x4b\x75\x6d\x75\x6c\x61\x6e\x65\x72\x2d\x44\x6f\x6b\x75\x6d\x65\x6e\x74\x73\x20\x6c\x65\x73\x65\x6e\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( fourthCharacterDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst das vierte\n"
+        //Du erhältst das vierte
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x64\x61\x73\x20\x76\x69\x65\x72\x74\x65\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "kumulanische Zeichen"
+        //kumulanische Zeichen
+        "\x6b\x75\x6d\x75\x6c\x61\x6e\x69\x73\x63\x68\x65\x20\x5a\x65\x69\x63\x68\x65\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Damit\nkannst du einen Teil des\nKumulaner-Dokuments lesen!"
+        //! Damitkannst du einen Teil desKumulaner-Dokuments lesen!
+        "\x21\x20\x44\x61\x6d\x69\x74\x0A\x6b\x61\x6e\x6e\x73\x74\x20\x64\x75\x20\x65\x69\x6e\x65\x6e\x20\x54\x65\x69\x6c\x20\x64\x65\x73\x0A\x4b\x75\x6d\x75\x6c\x61\x6e\x65\x72\x2d\x44\x6f\x6b\x75\x6d\x65\x6e\x74\x73\x20\x6c\x65\x73\x65\x6e\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( fifthCharacterDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst das fünfte\n"
+        //Du erhältst das fünfte
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x64\x61\x73\x20\x66\xfc\x6e\x66\x74\x65\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "kumulanische Zeichen"
+        //kumulanische Zeichen
+        "\x6b\x75\x6d\x75\x6c\x61\x6e\x69\x73\x63\x68\x65\x20\x5a\x65\x69\x63\x68\x65\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Damit\nkannst du einen Teil des\nKumulaner-Dokuments lesen!"
+        //! Damitkannst du einen Teil desKumulaner-Dokuments lesen!
+        "\x21\x20\x44\x61\x6d\x69\x74\x0A\x6b\x61\x6e\x6e\x73\x74\x20\x64\x75\x20\x65\x69\x6e\x65\x6e\x20\x54\x65\x69\x6c\x20\x64\x65\x73\x0A\x4b\x75\x6d\x75\x6c\x61\x6e\x65\x72\x2d\x44\x6f\x6b\x75\x6d\x65\x6e\x74\x73\x20\x6c\x65\x73\x65\x6e\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( firstFusedShadowDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst einen\n"
+        //Du erhältst einen
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x65\x69\x6e\x65\x6e\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Schattenkristall"
+        //Schattenkristall
+        "\x53\x63\x68\x61\x74\x74\x65\x6e\x6b\x72\x69\x73\x74\x61\x6c\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Es scheint,\nals würde etwas "
+        //! Es scheint,als würde etwas 
+        "\x21\x20\x45\x73\x20\x73\x63\x68\x65\x69\x6e\x74\x2c\x0A\x61\x6c\x73\x20\x77\xfc\x72\x64\x65\x20\x65\x74\x77\x61\x73\x20"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "Moos\n"
+        //Moos
+        "\x4d\x6f\x6f\x73\x0A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "darauf wachsen.."
+        //darauf wachsen..
+        "\x64\x61\x72\x61\x75\x66\x20\x77\x61\x63\x68\x73\x65\x6e\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( secondFusedShadowDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst den zweiten\n"
+        //Du erhältst den zweiten
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x64\x65\x6e\x20\x7a\x77\x65\x69\x74\x65\x6e\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Schattenkristall"
+        //Schattenkristall
+        "\x53\x63\x68\x61\x74\x74\x65\x6e\x6b\x72\x69\x73\x74\x61\x6c\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Er fühlt sich\n"
+        //! Er fühlt sich
+        "\x21\x20\x45\x72\x20\x66\xfc\x68\x6c\x74\x20\x73\x69\x63\x68\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "warm "
+        //warm 
+        "\x77\x61\x72\x6d\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "an.."
+        //an..
+        "\x61\x6e\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( thirdFusedShadowDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst den letzten\n"
+        //Du erhältst den letzten
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x64\x65\x6e\x20\x6c\x65\x74\x7a\x74\x65\x6e\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        "Schattenkristall"
+        //Schattenkristall
+        "\x53\x63\x68\x61\x74\x74\x65\x6e\x6b\x72\x69\x73\x74\x61\x6c\x6c"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Ein Geruch\nvon "
+        //! Ein Geruchvon 
+        "\x21\x20\x45\x69\x6e\x20\x47\x65\x72\x75\x63\x68\x0A\x76\x6f\x6e\x20"
         MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Wasser und Fisch "
+        //Wasser und Fisch 
+        "\x57\x61\x73\x73\x65\x72\x20\x75\x6e\x64\x20\x46\x69\x73\x63\x68\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "steigt\ndir in die Nase.."
+        //steigtdir in die Nase..
+        "\x73\x74\x65\x69\x67\x74\x0A\x64\x69\x72\x20\x69\x6e\x20\x64\x69\x65\x20\x4e\x61\x73\x65\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( secondMirrorShardDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst die zweite\nScherbe des "
+        //Du erhältst die zweiteScherbe des 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x64\x69\x65\x20\x7a\x77\x65\x69\x74\x65\x0A\x53\x63\x68\x65\x72\x62\x65\x20\x64\x65\x73\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Schattenspiegels"
+        //Schattenspiegels
+        "\x53\x63\x68\x61\x74\x74\x65\x6e\x73\x70\x69\x65\x67\x65\x6c\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nDie "
+        //!Die 
+        "\x21\x0A\x44\x69\x65\x20"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "vereiste Oberfläche\n"
+        //vereiste Oberfläche
+        "\x76\x65\x72\x65\x69\x73\x74\x65\x20\x4f\x62\x65\x72\x66\x6c\xe4\x63\x68\x65\x0A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "glitzert im Licht um dich herum.."
+        //glitzert im Licht um dich herum..
+        "\x67\x6c\x69\x74\x7a\x65\x72\x74\x20\x69\x6d\x20\x4c\x69\x63\x68\x74\x20\x75\x6d\x20\x64\x69\x63\x68\x20\x68\x65\x72\x75\x6d\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( thirdMirrorShardDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst die dritte\nScherbe des "
+        //Du erhältst die dritteScherbe des 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x64\x69\x65\x20\x64\x72\x69\x74\x74\x65\x0A\x53\x63\x68\x65\x72\x62\x65\x20\x64\x65\x73\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Schattenspiegels"
+        //Schattenspiegels
+        "\x53\x63\x68\x61\x74\x74\x65\x6e\x73\x70\x69\x65\x67\x65\x6c\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nSie ist übersäht mit Staub und\n"
+        //!Sie ist übersäht mit Staub und
+        "\x21\x0A\x53\x69\x65\x20\x69\x73\x74\x20\xfc\x62\x65\x72\x73\xe4\x68\x74\x20\x6d\x69\x74\x20\x53\x74\x61\x75\x62\x20\x75\x6e\x64\x0A"
         MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Spinnweben"
+        //Spinnweben
+        "\x53\x70\x69\x6e\x6e\x77\x65\x62\x65\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
-        ".."
+        //..
+        "\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( fourthMirrorShardDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Du erhältst die letzte\nScherbe des "
+        //Du erhältst die letzteScherbe des 
+        "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x64\x69\x65\x20\x6c\x65\x74\x7a\x74\x65\x0A\x53\x63\x68\x65\x72\x62\x65\x20\x64\x65\x73\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "Schattenspiegels"
+        //Schattenspiegels
+        "\x53\x63\x68\x61\x74\x74\x65\x6e\x73\x70\x69\x65\x67\x65\x6c\x73"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nSie fühlt sich leicht wie eine\n"
+        //!Sie fühlt sich leicht wie eine
+        "\x21\x0A\x53\x69\x65\x20\x66\xfc\x68\x6c\x74\x20\x73\x69\x63\x68\x20\x6c\x65\x69\x63\x68\x74\x20\x77\x69\x65\x20\x65\x69\x6e\x65\x0A"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "Feder "
+        //Feder 
+        "\x46\x65\x64\x65\x72\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "an.."
+        //an..
+        "\x61\x6e\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( foolishItemDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "Ein "
+        //Ein 
+        "\x45\x69\x6e\x20"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "kalter"
+        //kalter
+        "\x6b\x61\x6c\x74\x65\x72"
         MSG_COLOR(MSG_COLOR_WHITE)
-        " wind weht.."
+        // wind weht..
+        "\x20\x77\x69\x6e\x64\x20\x77\x65\x68\x74\x2e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( talkToMidnaDe )
-        "Was ist los, "
+        //Was ist los, 
+        "\x57\x61\x73\x20\x69\x73\x74\x20\x6c\x6f\x73\x2c\x20"
         MSG_PLYR_NAME
-        "?"
+        //?
+        "\x3f"
         MSG_OPTION_LIST(MSG_OPTION_1)
-        "Verwandeln\n"
+        //Verwandeln
+        "\x56\x65\x72\x77\x61\x6e\x64\x65\x6c\x6e\x0A"
         MSG_OPTION_LIST(MSG_OPTION_2)
-        "Teleportieren\n"
+        //Teleportieren
+        "\x54\x65\x6c\x65\x70\x6f\x72\x74\x69\x65\x72\x65\x6e\x0A"
         MSG_OPTION_LIST(MSG_OPTION_3)
-        "Tageszeit ändern"
+        //Tageszeit ändern
+        "\x54\x61\x67\x65\x73\x7a\x65\x69\x74\x20\xe4\x6e\x64\x65\x72\x6e"
     MSG_END()
     MSG_BEGIN_ARRAY( bigWalletDe )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
         MSG_COLOR(MSG_COLOR_RED)
-        "Big Wallet"
+        "\x47\x72\x6f\xdf\x65\x20\x47\x65\x6c\x64\x62\xf6\x72\x73\x65\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! You can now hold "
+        "\x65\x72\x68\x61\x6c\x74\x65\x6e\x2e\x20\x49\x6e\x20\x69\x68\x72\x20\x6b\x61\x6e\x6e\x73\x74\x20\x64\x75\x20\x62\x69\x73\x20\x7a\x75\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        "5,000 Rupees"
+        "\x35\x30\x30\x30\x20\x52\x75\x62\x69\x6e\x65\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        "\x61\x75\x66\x62\x65\x77\x61\x68\x72\x65\x6e\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( giantWalletDe )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
         MSG_COLOR(MSG_COLOR_RED)
-        "Giant Wallet"
+        "\x4d\x61\x78\x69\x2d\x47\x65\x6c\x64\x62\xf6\x72\x73\x65\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! You can now hold "
+        "\x65\x72\x68\x61\x6c\x74\x65\x6e\x2e\x20\x49\x6e\x20\x69\x68\x72\x20\x6b\x61\x6e\x6e\x73\x74\x20\x64\x75\x20\x62\x69\x73\x20\x7a\x75\x20"
         MSG_COLOR(MSG_COLOR_PURPLE)
-        "9,999 Rupees"
+        "\x39\x39\x39\x39\x20\x52\x75\x62\x69\x6e\x65\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!"
+        "\x61\x75\x66\x62\x65\x77\x61\x68\x72\x65\x6e\x2e"
     MSG_END()
     
     MsgEntry entriesDe[TOTAL_CUSTOM_MESSAGES] = 

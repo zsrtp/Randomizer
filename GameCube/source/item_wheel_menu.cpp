@@ -164,7 +164,8 @@ namespace mod::item_wheel_menu
         char buf[32];
 
         // Set up an auto function for getting Yes or No text
-        auto getYesNoText = []( bool flag ) {
+        auto getYesNoText = []( bool flag )
+        {
             if ( flag )
             {
                 return "Yes";
