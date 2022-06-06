@@ -841,6 +841,21 @@ namespace mod
                 break;
             }
 
+            case 0x1C20:     // Has Bo been defeated in wrestling
+            {
+                if ( checkStageName( allStages[stageIDs::Ordon_Village_Interiors] ) )
+                {
+                    if ( dComIfGs_isEventBit( 0x1210 ) )     // Talked to Bo after chest is spawned
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+
             case 0x2320:     // Gave Ilia the charm
             case 0x3E02:     // CiTS Intro CS watched
             {
@@ -1040,7 +1055,7 @@ namespace mod
                 if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x1e08 ) )
                 {
                     if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                             .dark_clear_level_flag == 0x3 )
+                             .dark_clear_level_flag == 0x7 )     // All twilights completed
                     {
                         libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
                             .transform_level_flag |= 0x8;     // Set the flag for the last transformed twilight.
