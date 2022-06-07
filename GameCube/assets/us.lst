@@ -127,6 +127,7 @@
 
 // d_menu_collect.o
 801B3340:setWalletMaxNum
+801b074c:dMenuCollect_screenSet
 
 // JKRExpHeap.o
 802CF128:do_alloc_JKRExpHeap
@@ -295,6 +296,7 @@
 8024b974:query025
 8024bfec:query042
 8024c3fc:event000
+8024ca94:event017
 8024d7c8:event035
 8024c550:event003
 8024da78:event041

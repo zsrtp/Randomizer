@@ -221,7 +221,8 @@ namespace mod::events
                 return_daObjLv5Key_c__Wait =
                     libtp::patch::hookFunction( reinterpret_cast<void ( * )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* )>(
                                                     relPtrRaw + d_a_obj_Lv5Key__Wait_offset ),
-                                                []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr ) {
+                                                []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr )
+                                                {
                                                     float playerPos[3];
                                                     libtp::tp::d_map_path_dmap::getMapPlayerPos( playerPos );
 
@@ -836,6 +837,30 @@ namespace mod::events
         }
 
         return memoryFlags;
+    }
+
+    KEEP_FUNC uint16_t getPauseRupeeMax( libtp::tp::d_save::dSv_player_status_a_c* plyrStatus )
+    {
+        using namespace libtp::data::items;
+        Wallets current_wallet;
+
+        current_wallet = plyrStatus->currentWallet;
+        if ( current_wallet < ( Wallets::BIG_WALLET | Wallets::GIANT_WALLET ) )
+        {
+            if ( current_wallet == Wallets::BIG_WALLET )
+            {
+                return 600;
+            }
+            if ( current_wallet == Wallets::WALLET )
+            {
+                return 300;
+            }
+            if ( current_wallet < ( Wallets::BIG_WALLET | Wallets::GIANT_WALLET ) )
+            {
+                return 1000;
+            }
+        }
+        return 0;
     }
 
 }     // namespace mod::events

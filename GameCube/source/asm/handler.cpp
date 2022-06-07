@@ -7,6 +7,8 @@
 #include "main.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
+#include "tp/d_save.h"
+#include "data/items.h"
 
 namespace mod::assembly
 {
@@ -37,7 +39,7 @@ namespace mod::assembly
 
     void handleAdjustFieldItemParams( void* fopAC, void* daObjLife ) { events::onAdjustFieldItemParams( fopAC, daObjLife ); }
 
-    void handleTransformOokWolf()
+    void handleTransformFromWolf()
     {
         if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm == 1 )
         {

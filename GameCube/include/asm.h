@@ -58,7 +58,7 @@ namespace mod::assembly
 
         // d_a_e_mk.rel
         void asmTransformOokWolf();
-        void handleTransformOokWolf();
+        void handleTransformFromWolf();
     }
 }     // namespace mod::assembly
 

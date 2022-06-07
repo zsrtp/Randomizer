@@ -139,6 +139,7 @@ namespace mod
     KEEP_VAR int32_t ( *return_query004 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR int32_t ( *return_query037 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR uint32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
+    KEEP_VAR int32_t ( *return_event017 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
     KEEP_VAR int32_t ( *return_event003 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
     KEEP_VAR int32_t ( *return_event041 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
 
@@ -745,6 +746,17 @@ namespace mod
             *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 ) = 0x0000;
         }
         return return_event000( messageFlow, nodeEvent, actrPtr );
+    }
+
+    KEEP_FUNC int32_t handle_event017( void* messageFlow, void* nodeEvent, void* actrPtr )
+    {
+        uint16_t messageParam = *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 );
+        // Prevent Gor Liggs from setting the third key shard flag
+        if ( messageParam == 0x00FB )
+        {
+            *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 ) = 0x0000;
+        }
+        return return_event017( messageFlow, nodeEvent, actrPtr );
     }
 
     KEEP_FUNC int32_t handle_event003( void* messageFlow, void* nodeEvent, void* actrPtr )

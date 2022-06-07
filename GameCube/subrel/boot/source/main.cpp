@@ -120,6 +120,7 @@ namespace mod
         return_query037 = patch::hookFunction( libtp::tp::d_msg_flow::query037, mod::handle_query037 );
         return_query042 = patch::hookFunction( libtp::tp::d_msg_flow::query042, mod::handle_query042 );
         return_event000 = patch::hookFunction( libtp::tp::d_msg_flow::event000, mod::handle_event000 );
+        return_event017 = patch::hookFunction( libtp::tp::d_msg_flow::event017, mod::handle_event017 );
         return_event003 = patch::hookFunction( libtp::tp::d_msg_flow::event003, mod::handle_event003 );
         return_event041 = patch::hookFunction( libtp::tp::d_msg_flow::event041, mod::handle_event041 );
 

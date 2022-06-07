@@ -127,6 +127,8 @@ namespace mod::events
     void handleTimeOfDayChange();
     bool checkFoolItemFreeze();
 
+    uint16_t getPauseRupeeMax( libtp::tp::d_save::dSv_player_status_a_c* plyrStatus );
+
     libtp::tp::d_resource::dRes_info_c* getObjectResInfo( const char* arcName );
     bool haveItem( uint8_t item );
     bool checkMembitSaveSwitchFlag( int32_t flag );

@@ -8,7 +8,7 @@ stw %r0,0x14(%sp)
 stw %r3,0x18(%sp)
 stw %r4,0x1C(%sp)
 
-bl handleTransformOokWolf
+bl handleTransformFromWolf
 
 li %r5, 5
 # Pop stack

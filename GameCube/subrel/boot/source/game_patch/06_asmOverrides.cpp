@@ -6,6 +6,9 @@
 #include "tp/d_msg_flow.h"
 #include "tp/d_a_alink.h"
 #include "data/items.h"
+#include "tp/d_menu_collect.h"
+#include "patch.h"
+#include "events.h"
 
 namespace mod::game_patch
 {
@@ -15,6 +18,7 @@ namespace mod::game_patch
         uint32_t woodenSwordFunctionAddress = reinterpret_cast<uint32_t>( libtp::tp::d_item::item_func_WOOD_STICK );
         uint32_t event035MemoAddress = reinterpret_cast<uint32_t>( libtp::tp::d_msg_flow::event035 );
         uint32_t procCoGetItemAddress = reinterpret_cast<uint32_t>( libtp::tp::d_a_alink::procCoGetItem );
+        uint32_t screenSetAddress = reinterpret_cast<uint32_t>( libtp::tp::d_menu_collect::dMenuCollect_screenSet );
 
 #ifdef TP_US
         uint32_t* enableCrashScreen = reinterpret_cast<uint32_t*>( 0x8000B8A4 );
@@ -49,5 +53,8 @@ namespace mod::game_patch
         // this project changes the poe count to increment after the message is displayed instead of before
         *reinterpret_cast<uint32_t*>( procCoGetItemAddress + 0x56C ) = ASM_COMPARE_LOGICAL_WORD_IMMEDIATE( 0, 19 );
         *reinterpret_cast<uint32_t*>( procCoGetItemAddress + 0x580 ) = ASM_COMPARE_LOGICAL_WORD_IMMEDIATE( 0, 59 );
+
+        libtp::patch::writeBranchBL( reinterpret_cast<void*>( screenSetAddress + 0xDCC ),
+                                     reinterpret_cast<void*>( events::getPauseRupeeMax ) );
     }
 }     // namespace mod::game_patch

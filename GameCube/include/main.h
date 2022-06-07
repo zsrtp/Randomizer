@@ -245,6 +245,9 @@ namespace mod
     uint32_t handle_event000( void* messageFlow, void* nodeEvent, void* actrPtr );
     extern uint32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr );
 
+    int32_t handle_event017( void* messageFlow, void* nodeEvent, void* actrPtr );
+    extern int32_t ( *return_event017 )( void* messageFlow, void* nodeEvent, void* actrPtr );
+
     int32_t handle_event003( void* messageFlow, void* nodeEvent, void* actrPtr );
     extern int32_t ( *return_event003 )( void* messageFlow, void* nodeEvent, void* actrPtr );
 
