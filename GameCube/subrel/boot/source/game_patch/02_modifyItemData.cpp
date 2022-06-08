@@ -22,6 +22,8 @@ namespace mod::game_patch
                                                      libtp::data::items::Bomblings_3,
                                                      libtp::data::items::Bombling_1,
                                                      libtp::data::items::Magic_Armor,
+                                                     libtp::data::items::Ordon_Sword,
+                                                     libtp::data::items::Ordon_Shield,
                                                      libtp::data::items::Master_Sword,
                                                      libtp::data::items::Wooden_Shield,
                                                      libtp::data::items::Hylian_Shield,

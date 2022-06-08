@@ -7,6 +7,7 @@
 #include "events.h"
 #include "main.h"
 #include "tp/d_a_alink.h"
+#include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
 #include "tp/d_item_data.h"
 #include "tp/d_meter2_info.h"
@@ -438,6 +439,8 @@ namespace mod::game_patch
     KEEP_FUNC void _02_heartContainerItemFunc()
     {
         libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.maxHealth += 5;
+        float max_life = libtp::tp::d_com_inf_game::dComIfGs_getMaxLifeGauge();
+        libtp::tp::d_a_alink::dComIfGp_setItemLifeCount( max_life, 0 );
         libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentHealth =
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.maxHealth;
     }

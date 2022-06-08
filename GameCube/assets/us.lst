@@ -118,6 +118,7 @@
 801181a0:setGetItemFace
 800d96dc:procCoLargeDamageInit
 8011ac28:procCoGetItem
+800cffa4:dComIfGp_setItemLifeCount
 
 // data
 8038EB8C:climbVars
@@ -242,6 +243,7 @@
 80141264:dComIfGs_isItemFirstBit
 8002f810:dComIfGs_Wolf_Change_Check
 8002f434:dComIfG_getStageRes
+8002dca8:dComIfGs_getMaxLifeGauge
 
 // d_kankyo.o
 // data
