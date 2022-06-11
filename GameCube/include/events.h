@@ -17,6 +17,7 @@
 #include "tp/d_save.h"
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
+#include "tp/f_op_actor.h"
 
 namespace mod::events
 {
@@ -108,7 +109,7 @@ namespace mod::events
      */
     void setSaveFileEventFlag( uint16_t flag );
 
-    void onAdjustFieldItemParams( void* fopAC, void* daObjLife );
+    void onAdjustFieldItemParams( libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife );
 
     void handleDungeonHeartContainer();
 

@@ -111,6 +111,7 @@
 801183ac:setGetItemFace
 801362f8:procWolfDamageInit
 8011ae34:procCoGetItem
+800d01b0:dComIfGp_setItemLifeCount
 
 // data
 8039038C:climbVars
@@ -124,6 +125,7 @@
 
 // d_menu_collect.o
 801B3598:setWalletMaxNum
+801b09a4:dMenuCollect_screenSet
 
 // JKRExpHeap.o
 802CFF28:do_alloc_JKRExpHeap
@@ -237,6 +239,7 @@
 8002b49c:dComIfG_get_timelayer
 8002f8b8:dComIfGs_Wolf_Change_Check
 8002f4dc:dComIfG_getStageRes
+8002dd50:dComIfGs_getMaxLifeGauge
 
 // d_kankyo.o
 // data
@@ -297,6 +300,7 @@
 8024b8f4:query004
 8024cbf4:event003
 8024e11c:event041
+8024d138:event017
 
 
 //d_a_npc.o

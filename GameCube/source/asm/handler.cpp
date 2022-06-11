@@ -37,7 +37,10 @@ namespace mod::assembly
 
     uint8_t handleAdjustSkyCharacter() { return events::onSkyCharacter( mod::randomizer ); }
 
-    void handleAdjustFieldItemParams( void* fopAC, void* daObjLife ) { events::onAdjustFieldItemParams( fopAC, daObjLife ); }
+    void handleAdjustFieldItemParams( libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife )
+    {
+        events::onAdjustFieldItemParams( fopAC, daObjLife );
+    }
 
     void handleTransformFromWolf()
     {

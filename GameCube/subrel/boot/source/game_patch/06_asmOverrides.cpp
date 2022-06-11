@@ -56,5 +56,7 @@ namespace mod::game_patch
 
         libtp::patch::writeBranchBL( reinterpret_cast<void*>( screenSetAddress + 0xDCC ),
                                      reinterpret_cast<void*>( events::getPauseRupeeMax ) );
+        libtp::patch::writeBranchBL( reinterpret_cast<void*>( screenSetAddress + 0xDF0 ),
+                                     reinterpret_cast<void*>( events::getPauseRupeeMax ) );
     }
 }     // namespace mod::game_patch

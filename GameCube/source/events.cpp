@@ -212,6 +212,16 @@ namespace mod::events
                     0x48000058;     // patch instruction to prevent game from removing bulblin camp key.
                 break;
             }
+            // d_a_b_bq.rel
+            // Diababa
+            case 0x8B:
+            {
+                // Transform back into link if you are wolf when defeating Diababa
+                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x21B8 ),
+                                             reinterpret_cast<void*>( assembly::asmTransformDiababaWolf ) );
+
+                break;
+            }
 
                 // d_a_obj_Lv5Key.rel
             // Snowpeak Ruins Small Key Lock
@@ -378,16 +388,21 @@ namespace mod::events
         libtp::tp::d_save::onEventBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags, flag );
     }
 
-    void onAdjustFieldItemParams( void* fopAC, void* daObjLife )
+    void onAdjustFieldItemParams( libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife )
     {
         using namespace libtp::data::stage;
         *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 2.0f;     // scale
-
+        uint32_t relPtrRaw = reinterpret_cast<uint32_t>( fopAC );
+        mod::console << relPtrRaw << "ptr \n";
+        relPtrRaw = reinterpret_cast<uint32_t>( daObjLife );
+        mod::console << relPtrRaw << "lif \n";
         if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Hyrule_Field] ) ||
              libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Upper_Zoras_River] ) ||
              libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Sacred_Grove] ) )
         {
-            *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( fopAC ) + 0x530 ) = 0.0f;     // gravity
+            *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( fopAC ) + 0x962 ) =
+                0x226;                  // Y Rotation Speed modifier. 0x226 is the value used when the item is on the ground.
+            fopAC->mGravity = 0.0f;     // gravity
         }
         /*else if ( !libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Gerudo_Desert] ) )
         {

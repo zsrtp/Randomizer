@@ -11,6 +11,7 @@
 #define RANDO_ASM_H
 
 #include <cstdint>
+#include "tp/f_op_actor.h"
 
 // Original: li 0xE0
 // Normally loads the poesoul item id into r4
@@ -54,11 +55,14 @@ namespace mod::assembly
 
         // d_a_obj_life_container.rel
         void asmAdjustFieldItemParams();
-        void handleAdjustFieldItemParams( void* fopAc_ac_c, void* daObjLife_c );
+        void handleAdjustFieldItemParams( libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife );
 
         // d_a_e_mk.rel
         void asmTransformOokWolf();
         void handleTransformFromWolf();
+
+        // d_a_b_bq.rel
+        void asmTransformDiababaWolf();
     }
 }     // namespace mod::assembly
 

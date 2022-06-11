@@ -157,7 +157,10 @@ namespace mod::game_patch
                                                      libtp::data::items::Key_Shard_2,
                                                      libtp::data::items::Key_Shard_3,
                                                      libtp::data::items::Big_Key_Goron_Mines,
-                                                     libtp::data::items::Coro_Key };
+                                                     libtp::data::items::Coro_Key,
+                                                     libtp::data::items::Mirror_Piece_2,
+                                                     libtp::data::items::Mirror_Piece_3,
+                                                     libtp::data::items::Mirror_Piece_4 };
 
     void modifyItemModels()
     {
@@ -286,6 +289,12 @@ namespace mod::game_patch
                                                 items::Ancient_Sky_Book_Fourth_Character,
                                                 items::Ancient_Sky_Book_Fifth_Character };
 
+        uint8_t customShardsIDs[] = {
+            items::Mirror_Piece_2,
+            items::Mirror_Piece_3,
+            items::Mirror_Piece_4,
+        };
+
         // Set the item info for the custom small keys to that of the current Small Key
         listLength = ( sizeof( customSmallKeyItemIDs ) / sizeof( customSmallKeyItemIDs[0] ) );
         uint32_t smallKeyItemInfo =
@@ -357,6 +366,16 @@ namespace mod::game_patch
             itemResourcePtr[customHiddenSkillItemIDs[i]].brkResIdx = 0xFFFF;
             itemResourcePtr[customHiddenSkillItemIDs[i]].tevFrm = 0x00;
             getSeTypePtr[customHiddenSkillItemIDs[i]] = 0x2;
+        }
+
+        listLength = sizeof( customShardsIDs ) / sizeof( customShardsIDs[0] );
+        for ( uint32_t i = 0; i < listLength; i++ )
+        {
+            itemResourcePtr[customShardsIDs[i]].arcName = _02_mirrorShardArc;
+            itemResourcePtr[customShardsIDs[i]].modelResIdx = 0x0009;
+            itemResourcePtr[customShardsIDs[i]].brkResIdx = 0xFFFF;
+            itemResourcePtr[customShardsIDs[i]].tevFrm = 0x00;
+            getSeTypePtr[customShardsIDs[i]] = 0x2;
         }
     }
 

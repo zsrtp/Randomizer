@@ -38,6 +38,7 @@ namespace mod::game_patch
                                const libtp::data::items::NodeDungeonItemType type );
 
     extern const char* _02_hiddenSkillArc;
+    extern const char* _02_mirrorShardArc;
 
     void _02_forestSmallKeyItemFunc();
     void _02_forestMapItemFunc();
