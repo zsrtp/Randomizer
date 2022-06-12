@@ -1162,8 +1162,8 @@ namespace mod::customMessages
             "\x83\x6E\x83\x43\x83\x89\x83\x8B\x8F\xE9",
 
             // Faron Woods
-            // フィローネ樹海入口
-            "\x83\x74\x83\x42\x83\x8D\x81\x5B\x83\x6C\x82\xCC\x90\x58"
+            // フィローネの森
+            "\x83\x74\x83\x42\x83\x8D\x81\x5B\x83\x6C\x82\xCC\x90\x58",
 
             // Bublin Camp
             // ブルブリンの要塞
