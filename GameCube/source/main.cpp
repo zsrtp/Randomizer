@@ -212,6 +212,7 @@ namespace mod
                 console.setLine( 8 );
                 console << "\r"
                         << "Press X/Y to select a seed\n"
+                        << "Press R + Z to close the console\n"
                         << "[" << seedList->m_selectedSeed + 1 << "/" << static_cast<int32_t>( seedList->m_numSeeds )
                         << "] Seed: " << seedList->m_seedInfo[seedList->m_selectedSeed].header.seed << "\n";
             }
