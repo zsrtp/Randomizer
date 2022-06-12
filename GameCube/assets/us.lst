@@ -358,3 +358,6 @@
 // d_meter_HIO.o
 // data
 8042ebc8:g_drawHIO
+
+// mem.o
+80366130:memmove

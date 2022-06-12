@@ -171,11 +171,8 @@ namespace mod
         // Call the boot REL
         // The seedlist will be generated in the boot REL, so avoid mounting/unmounting the memory card multiple times
         constexpr int32_t chan = CARD_SLOT_A;
-        if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
-        {
-            libtp::tools::callRelPrologMounted( chan, SUBREL_BOOT_ID );
-            libtp::gc_wii::card::CARDUnmount( chan );
-        }
+        libtp::tools::callRelProlog( chan, SUBREL_BOOT_ID, false, true );
+        libtp::gc_wii::card::CARDUnmount( chan );
     }
 
     void exit() {}
@@ -330,24 +327,17 @@ namespace mod
                 constexpr int32_t chan = CARD_SLOT_A;
                 if ( !randomizer )
                 {
+                    seedRelAction = SEED_ACTION_LOAD_SEED;
+
+                    // m_Enabled will be set to true in the seed REL
+                    // The seed REL will set seedRelAction to SEED_ACTION_NONE if it ran successfully
                     // Only mount/unmount the memory card once
-                    if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
-                    {
-                        seedRelAction = SEED_ACTION_LOAD_SEED;
-
-                        // m_Enabled will be set to true in the seed REL
-                        // The seed REL will set seedRelAction to SEED_ACTION_NONE if it ran successfully
-                        if ( !libtp::tools::callRelPrologMounted( chan, SUBREL_SEED_ID ) )
-                        {
-                            currentSeedRelAction = SEED_ACTION_FATAL;
-                        }
-
-                        libtp::gc_wii::card::CARDUnmount( chan );
-                    }
-                    else
+                    if ( !libtp::tools::callRelProlog( chan, SUBREL_SEED_ID, false, true ) )
                     {
                         currentSeedRelAction = SEED_ACTION_FATAL;
                     }
+
+                    libtp::gc_wii::card::CARDUnmount( chan );
                 }
                 else
                 {
@@ -357,24 +347,17 @@ namespace mod
                     // Check if loading a different seed
                     if ( randomizer->m_CurrentSeed != seedList->m_selectedSeed )
                     {
+                        mod::console << "Changing seed:\n";
+                        seedRelAction = SEED_ACTION_CHANGE_SEED;
+
+                        // The seed REL will set seedRelAction to SEED_ACTION_NONE if it ran successfully
                         // Only mount/unmount the memory card once
-                        if ( CARD_RESULT_READY == libtp::tools::mountMemoryCard( chan ) )
-                        {
-                            mod::console << "Changing seed:\n";
-                            seedRelAction = SEED_ACTION_CHANGE_SEED;
-
-                            // The seed REL will set seedRelAction to SEED_ACTION_NONE if it ran successfully
-                            if ( !libtp::tools::callRelPrologMounted( chan, SUBREL_SEED_ID ) )
-                            {
-                                currentSeedRelAction = SEED_ACTION_FATAL;
-                            }
-
-                            libtp::gc_wii::card::CARDUnmount( chan );
-                        }
-                        else
+                        if ( !libtp::tools::callRelProlog( chan, SUBREL_SEED_ID, false, true ) )
                         {
                             currentSeedRelAction = SEED_ACTION_FATAL;
                         }
+
+                        libtp::gc_wii::card::CARDUnmount( chan );
                     }
                     else
                     {
