@@ -227,6 +227,7 @@
 8036995C:strcpy
 80369784:strncmp
 80369a14:strlen
+80369754:strchr
 
 // m_Do_controller_pad.o
 // data

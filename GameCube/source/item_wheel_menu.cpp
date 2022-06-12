@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <cstring>
 #include <cstdio>
 #include <cinttypes>
 
@@ -18,25 +19,13 @@ namespace mod::item_wheel_menu
 {
     using namespace libtp::data::stage;
 
+    ItemWheelMenuData itemWheelMenuData;
     bool ringDrawnThisFrame = false;
     bool displayMenu = false;
 
     KEEP_VAR void ( *return_dMenuRing__create )( void* dMenuRing ) = nullptr;
     KEEP_VAR void ( *return_dMenuRing__delete )( void* dMenuRing ) = nullptr;
     KEEP_VAR void ( *return_dMenuRing__draw )( void* dMenuRing ) = nullptr;
-
-    // Set up an array to hold each area, as they will use different colors
-    const char* areas[] = { "Forest Temple",
-                            "Goron Mines",
-                            "Lakebed Temple",
-                            "Arbiter's Grounds",
-                            "Snowpeak Ruins",
-                            "Temple of Time",
-                            "City in the Sky",
-                            "Palace of Twilight",
-                            "Hyrule Castle",
-                            "Faron Woods",
-                            "Bublin Camp" };
 
     // Set up an array to hold each area's color id
     const uint8_t areaColorIds[] = { MSG_COLOR_GREEN_HEX,
@@ -102,31 +91,14 @@ namespace mod::item_wheel_menu
         using namespace libtp::tp::m_do_controller_pad;
         using namespace libtp::data::items;
 
-        // Get the current position of the ring
-        const float* ringPos = reinterpret_cast<float*>( reinterpret_cast<uint32_t>( dMenuRing ) + 0x568 );
+        ItemWheelMenuData* data = &itemWheelMenuData;
 
-        const int32_t ringPosX = static_cast<int32_t>( ringPos[0] );
-        const int32_t ringPosY = static_cast<int32_t>( ringPos[1] );
-
-        // Get the size of the text
-        constexpr float textSize = 16.f;
-
-        // Get the increment amount for manual newlines
-        constexpr int32_t increment = 16;
-
-        // Draw the help text stating to press Start or Z to show the menu
-        constexpr int32_t helpTextPosXOffset = 465;
-        constexpr int32_t helpTextPosYOffset = 157;
-        constexpr uint32_t mainTextColor = 0xFFFFFFFF;     // White
-
-        events::drawText( "Press Start\nor Z to\ntoggle\nadditional\ndata",
-                          ringPosX + helpTextPosXOffset,
-                          ringPosY + helpTextPosYOffset,
-                          mainTextColor,
-                          textSize );
-
-        // Call the original function now, as everything else should be drawn on top of the vanilla stuff
-        return_dMenuRing__draw( dMenuRing );
+        // Failsafe: If textData is not defined, then none of the strings are loaded
+        if ( !data->textData )
+        {
+            // Call the original function before returning
+            return return_dMenuRing__draw( dMenuRing );
+        }
 
         // Check if the menu should be drawn
         bool shouldDisplayMenu = displayMenu;
@@ -146,6 +118,41 @@ namespace mod::item_wheel_menu
             }
         }
 
+        ItemWheelMenuStrings* strings = &data->strings;
+        ItemWheelMenuOffsets* offsets = &data->offsets;
+
+        // Get the current position of the ring
+        const float* ringPos = reinterpret_cast<float*>( reinterpret_cast<uint32_t>( dMenuRing ) + 0x568 );
+
+        const int32_t ringPosX = static_cast<int32_t>( ringPos[0] );
+        const int32_t ringPosY = static_cast<int32_t>( ringPos[1] );
+
+        // Get the size of the text
+        constexpr float textSize = 16.f;
+
+        // Get the increment amount for manual newlines
+        constexpr int32_t increment = 16;
+
+        // Draw the help text stating to press Start or Z to show the menu
+        constexpr uint32_t mainTextColor = 0xFFFFFFFF;     // White
+
+        // Only draw the help text if the menu is not displayed
+        if ( !shouldDisplayMenu )
+        {
+            constexpr int32_t helpTextPosXOffset = 465;
+            constexpr int32_t helpTextPosYOffset = 157;
+
+            events::drawText( strings->helpText,
+                              ringPosX + helpTextPosXOffset,
+                              ringPosY + helpTextPosYOffset,
+                              mainTextColor,
+                              textSize );
+        }
+
+        // Call the original function now, as everything else should be drawn on top of the vanilla stuff
+        return_dMenuRing__draw( dMenuRing );
+
+        // Everything after this point is only drawn in the menu
         if ( !shouldDisplayMenu )
         {
             return;
@@ -157,22 +164,20 @@ namespace mod::item_wheel_menu
         constexpr int32_t windowWidth = 528;
         constexpr int32_t windowHeight = 380;
         constexpr uint32_t windowColor = 0x000000FF;
-
         events::drawWindow( ringPosX + windowPosXOffset, ringPosY + windowPosYOffset, windowWidth, windowHeight, windowColor );
 
         // Create a generic buffer to use for string formatting
         char buf[32];
 
-        // Set up an auto function for getting Yes or No text
-        auto getYesNoText = []( bool flag )
-        {
+        // Set up an auto function for getting Yes/No text
+        auto getYesNoText = [&]( bool flag ) {
             if ( flag )
             {
-                return "Yes";
+                return strings->yes;
             }
             else
             {
-                return "No";
+                return strings->no;
             }
         };
 
@@ -183,7 +188,7 @@ namespace mod::item_wheel_menu
             rando::SeedInfo* seedInfo = randomizer->m_SeedInfo;
             if ( seedInfo )
             {
-                snprintf( buf, sizeof( buf ), "Seed: 0x%016" PRIx64, seedInfo->header.seed );
+                snprintf( buf, sizeof( buf ), "%s: 0x%016" PRIx64, strings->seedIsLoaded, seedInfo->header.seed );
                 seedIsLoaded = true;
             }
         }
@@ -195,12 +200,12 @@ namespace mod::item_wheel_menu
         }
         else
         {
-            seedText = "No seed is currently loaded";
+            seedText = strings->seedIsNotLoaded;
         }
 
         // Draw the current seed
-        constexpr int32_t currentSeedPosXOffset = windowPosXOffset + 15;
-        constexpr int32_t currentSeedPosYOffset = windowPosYOffset + 28;
+        constexpr int32_t currentSeedPosXOffset = windowPosXOffset + 7;
+        constexpr int32_t currentSeedPosYOffset = windowPosYOffset + 20;
 
         events::drawText( seedText,
                           ringPosX + currentSeedPosXOffset,
@@ -212,7 +217,7 @@ namespace mod::item_wheel_menu
         constexpr int32_t shadowsAndShardsMainPosXOffset = currentSeedPosXOffset;
         constexpr int32_t shadowsAndShardsMainPosYOffset = currentSeedPosYOffset + 40;
 
-        events::drawText( "Fused Shadows\nMirror Shards",
+        events::drawText( strings->shadowsShards,
                           ringPosX + shadowsAndShardsMainPosXOffset,
                           ringPosY + shadowsAndShardsMainPosYOffset,
                           mainTextColor,
@@ -234,6 +239,7 @@ namespace mod::item_wheel_menu
                 shadowsCount++;
             }
         }
+
         for ( uint32_t b = 4; b < 7; b++ )
         {
             if ( ( collectedShards << b ) & 0x80 )
@@ -245,7 +251,7 @@ namespace mod::item_wheel_menu
         snprintf( buf, sizeof( buf ), "%" PRIu32 "/3\n%" PRIu32 "/3", shadowsCount, shardsCount );
 
         // Draw the counts for the fused shadows and mirror shards
-        constexpr int32_t shadowsAndShardsCountsPosXOffset = shadowsAndShardsMainPosXOffset + 135;
+        const int32_t shadowsAndShardsCountsPosXOffset = shadowsAndShardsMainPosXOffset + offsets->shadowsShardsOffset;
         constexpr int32_t shadowsAndShardsCountsPosYOffset = shadowsAndShardsMainPosYOffset;
 
         events::drawText( buf,
@@ -254,75 +260,137 @@ namespace mod::item_wheel_menu
                           mainTextColor,
                           textSize );
 
-        // Get the text for the pumpkin
-        snprintf( buf, sizeof( buf ), "Pumpkin\n%s", getYesNoText( events::haveItem( Item::Ordon_Pumpkin ) ) );
-
         // Draw the text for the pumpkin
-        constexpr int32_t pumpkinPosXOffset = shadowsAndShardsCountsPosXOffset + 60;
+        const int32_t pumpkinPosXOffset = shadowsAndShardsCountsPosXOffset + offsets->pumpkinOffset;
         constexpr int32_t pumpkinPosYOffset = shadowsAndShardsCountsPosYOffset;
 
-        events::drawText( buf, ringPosX + pumpkinPosXOffset, ringPosY + pumpkinPosYOffset, mainTextColor, textSize );
+        events::drawText( strings->pumpkin,
+                          ringPosX + pumpkinPosXOffset,
+                          ringPosY + pumpkinPosYOffset,
+                          mainTextColor,
+                          textSize );
 
-        // Get the text for the cheese
-        snprintf( buf, sizeof( buf ), "Cheese\n%s", getYesNoText( events::haveItem( Item::Ordon_Goat_Cheese ) ) );
+        // Get the offset for the pumpkin value
+        bool hasPumpkin = events::haveItem( Item::Ordon_Pumpkin );
+        uint32_t pumpkinValueOffset;
+
+        if ( hasPumpkin )
+        {
+            pumpkinValueOffset = offsets->pumpkinYesOffset;
+        }
+        else
+        {
+            pumpkinValueOffset = offsets->pumpkinNoOffset;
+        }
+
+        // Draw the value for the pumpkin
+        events::drawText( getYesNoText( hasPumpkin ),
+                          ringPosX + pumpkinPosXOffset + pumpkinValueOffset,
+                          ringPosY + pumpkinPosYOffset + increment,
+                          mainTextColor,
+                          textSize );
 
         // Draw the text for the cheese
-        constexpr int32_t cheesePosXOffset = pumpkinPosXOffset + 90;
+        const int32_t cheesePosXOffset = pumpkinPosXOffset + offsets->cheeseOffset;
         constexpr int32_t cheesePosYOffset = pumpkinPosYOffset;
+        events::drawText( strings->cheese, ringPosX + cheesePosXOffset, ringPosY + cheesePosYOffset, mainTextColor, textSize );
 
-        events::drawText( buf, ringPosX + cheesePosXOffset, ringPosY + cheesePosYOffset, mainTextColor, textSize );
+        // Get the offset for the cheese value
+        bool hasCheese = events::haveItem( Item::Ordon_Goat_Cheese );
+        uint32_t cheeseValueOffset;
 
-        // Get the text for the gate keys
-        snprintf( buf, sizeof( buf ), "Gate Keys\n%s", getYesNoText( libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x810 ) ) );
+        if ( hasCheese )
+        {
+            cheeseValueOffset = offsets->cheeseYesOffset;
+        }
+        else
+        {
+            cheeseValueOffset = offsets->cheeseNoOffset;
+        }
 
-        // Draw the text for the cheese
-        constexpr int32_t gateKeysPosXOffset = cheesePosXOffset + 80;
+        // Draw the value for the cheese
+        events::drawText( getYesNoText( hasCheese ),
+                          ringPosX + cheesePosXOffset + cheeseValueOffset,
+                          ringPosY + cheesePosYOffset + increment,
+                          mainTextColor,
+                          textSize );
+
+        // Draw the text for the gate keys
+        const int32_t gateKeysPosXOffset = cheesePosXOffset + offsets->gateKeysOffset;
         constexpr int32_t gateKeysPosYOffset = cheesePosYOffset;
 
-        events::drawText( buf, ringPosX + gateKeysPosXOffset, ringPosY + gateKeysPosYOffset, mainTextColor, textSize );
+        events::drawText( strings->gateKeys,
+                          ringPosX + gateKeysPosXOffset,
+                          ringPosY + gateKeysPosYOffset,
+                          mainTextColor,
+                          textSize );
 
-        // Draw the header text for the areas being tracked, small keys, big keys, dungeon maps, and compasses
-        // Areas being tracked
+        // Get the offset for the gate keys value
+        bool hasGateKeys = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x810 );
+        uint32_t gateKeysValueOffset;
+
+        if ( hasGateKeys )
+        {
+            gateKeysValueOffset = offsets->gateKeysYesOffset;
+        }
+        else
+        {
+            gateKeysValueOffset = offsets->gateKeysNoOffset;
+        }
+
+        // Draw the value for the gate keys
+        events::drawText( getYesNoText( hasGateKeys ),
+                          ringPosX + gateKeysPosXOffset + gateKeysValueOffset,
+                          ringPosY + gateKeysPosYOffset + increment,
+                          mainTextColor,
+                          textSize );
+
+        // Draw the header text for the areas, small keys, big keys, dungeon maps, and compasses
+        // Areas
         constexpr int32_t areasMainPosXOffset = shadowsAndShardsMainPosXOffset;
         constexpr int32_t areasMainPosYOffset = shadowsAndShardsMainPosYOffset + 60;
 
-        events::drawText( "Areas", ringPosX + areasMainPosXOffset, ringPosY + areasMainPosYOffset, mainTextColor, textSize );
+        events::drawText( strings->areas,
+                          ringPosX + areasMainPosXOffset,
+                          ringPosY + areasMainPosYOffset,
+                          mainTextColor,
+                          textSize );
 
         // Small keys
-        constexpr int32_t smallKeysMainPosXOffset = areasMainPosXOffset + 155;
+        const int32_t smallKeysMainPosXOffset = areasMainPosXOffset + offsets->headerSmallKeysOffset;
         constexpr int32_t smallKeysMainPosYOffset = areasMainPosYOffset;
 
-        events::drawText( "Small\nKeys",
+        events::drawText( strings->smallKeys,
                           ringPosX + smallKeysMainPosXOffset,
                           ringPosY + smallKeysMainPosYOffset,
                           mainTextColor,
                           textSize );
 
         // Big keys
-        constexpr int32_t bigKeysMainPosXOffset = smallKeysMainPosXOffset + 70;
+        const int32_t bigKeysMainPosXOffset = smallKeysMainPosXOffset + offsets->headerBigKeysOffset;
         constexpr int32_t bigKeysMainPosYOffset = smallKeysMainPosYOffset;
 
-        events::drawText( "Big\nKeys",
+        events::drawText( strings->bigKeys,
                           ringPosX + bigKeysMainPosXOffset,
                           ringPosY + bigKeysMainPosYOffset,
                           mainTextColor,
                           textSize );
 
         // Dungeon maps
-        constexpr int32_t dungeonMapsMainPosXOffset = bigKeysMainPosXOffset + 70;
+        const int32_t dungeonMapsMainPosXOffset = bigKeysMainPosXOffset + offsets->headerMapsOffset;
         constexpr int32_t dungeonMapsMainPosYOffset = bigKeysMainPosYOffset;
 
-        events::drawText( "Maps",
+        events::drawText( strings->maps,
                           ringPosX + dungeonMapsMainPosXOffset,
                           ringPosY + dungeonMapsMainPosYOffset,
                           mainTextColor,
                           textSize );
 
         // Compasses
-        constexpr int32_t compassesMainPosXOffset = dungeonMapsMainPosXOffset + 70;
+        const int32_t compassesMainPosXOffset = dungeonMapsMainPosXOffset + offsets->headerCompassesOffset;
         constexpr int32_t compassesMainPosYOffset = dungeonMapsMainPosYOffset;
 
-        events::drawText( "Compasses",
+        events::drawText( strings->compasses,
                           ringPosX + compassesMainPosXOffset,
                           ringPosY + compassesMainPosYOffset,
                           mainTextColor,
@@ -331,22 +399,29 @@ namespace mod::item_wheel_menu
         // Draw the areas, small key counts, big key counts, dungeon map counts, and compass counts
         // Areas position
         constexpr int32_t areasPosXOffset = areasMainPosXOffset;
-        constexpr int32_t areasPosYOffset = areasMainPosYOffset + ( increment * 2 );
+        int32_t areasPosYOffset = areasMainPosYOffset + increment;
+
+        // Check if the small key header text uses two lines, as all languages that use two lines will have two lines for small
+        // keys
+        if ( strchr( strings->smallKeys, '\n' ) )
+        {
+            areasPosYOffset += increment;
+        }
 
         // Small key counts position
-        constexpr int32_t smallKeyCountsPosXOffset = smallKeysMainPosXOffset + 6;
+        const int32_t smallKeyCountsPosXOffset = smallKeysMainPosXOffset + offsets->valuesSmallKeysOffset;
         // constexpr int32_t smallKeyCountsPosYOffset = areasPosYOffset;
 
         // Big key counts position
-        constexpr int32_t bigKeyCountsPosXOffset = bigKeysMainPosXOffset + 5;
+        const int32_t bigKeyCountsPosXOffset = bigKeysMainPosXOffset;
         // constexpr int32_t bigKeyCountsPosYOffset = areasPosYOffset;
 
         // Dungeon map counts position
-        constexpr int32_t dungeonMapCountsPosXOffset = dungeonMapsMainPosXOffset + 6;
+        const int32_t dungeonMapCountsPosXOffset = dungeonMapsMainPosXOffset;
         // constexpr int32_t dungeonMapCountsPosYOffset = areasPosYOffset;
 
         // Compass counts position
-        constexpr int32_t compassCountsPosXOffset = compassesMainPosXOffset + 30;
+        const int32_t compassCountsPosXOffset = compassesMainPosXOffset;
         // constexpr int32_t compassCountsPosYOffset = areasPosYOffset;
 
         // Get the node id for the current area
@@ -355,6 +430,7 @@ namespace mod::item_wheel_menu
         // Temporary variable to keep track of current y coordinate
         int32_t tempPosY = ringPosY + areasPosYOffset;
 
+        const char** areas = strings->areasBeingTracked;
         for ( uint32_t i = 0; i < TrackedAreas::TRACKED_AREAS_END; i++ )
         {
             uint32_t currentColor = libtp::tp::d_msg_class::getFontGCColorTable( areaColorIds[i], 0 );
@@ -380,18 +456,19 @@ namespace mod::item_wheel_menu
                 // Do not show big keys, dungeon maps, or compasses for Faron Woods or Bublin Camp
                 if ( i < TrackedAreas::FARON_WOODS )
                 {
-                    // Draw the big key text
+                    // Get the big key text
                     // Goron Mines has its big key split into 3 parts
-                    int32_t bigKeyPosXIncrement = 0;
+                    bool hasBigKey = dungeonBits & 0x4;
+                    int32_t bigKeyValueOffset;
                     const char* bigKeyText;
 
                     if ( i == TrackedAreas::GORON_MINES )
                     {
-                        bigKeyPosXIncrement = 8;
+                        bigKeyValueOffset = offsets->valuesBigKeysMinesOffset;
                         uint32_t bigKeyCount = 0;
 
                         // If the big key dungeon flag is set, then assume all 3 pieces have been obtained
-                        if ( dungeonBits & 0x4 )
+                        if ( hasBigKey )
                         {
                             bigKeyCount = 3;
                         }
@@ -402,6 +479,7 @@ namespace mod::item_wheel_menu
                             {
                                 bigKeyCount++;
                             }
+
                             if ( events::haveItem( Item::Key_Shard_2 ) )
                             {
                                 bigKeyCount++;
@@ -409,30 +487,65 @@ namespace mod::item_wheel_menu
                         }
 
                         snprintf( buf, sizeof( buf ), "%" PRIu32, bigKeyCount );
-
                         bigKeyText = buf;
                     }
                     else
                     {
-                        bigKeyText = getYesNoText( dungeonBits & 0x4 );
+                        if ( hasBigKey )
+                        {
+                            bigKeyValueOffset = offsets->valuesBigKeysYesOffset;
+                        }
+                        else
+                        {
+                            bigKeyValueOffset = offsets->valuesBigKeysNoOffset;
+                        }
+
+                        bigKeyText = getYesNoText( hasBigKey );
                     }
 
+                    // Draw the big key text
                     events::drawText( bigKeyText,
-                                      ringPosX + bigKeyCountsPosXOffset + bigKeyPosXIncrement,
+                                      ringPosX + bigKeyCountsPosXOffset + bigKeyValueOffset,
                                       tempPosY,
                                       currentColor,
                                       textSize );
+
+                    // Get the value for the dungeon map
+                    bool hasMap = dungeonBits & 0x1;
+                    uint32_t mapValueOffset;
+
+                    if ( hasMap )
+                    {
+                        mapValueOffset = offsets->valuesMapsYesOffset;
+                    }
+                    else
+                    {
+                        mapValueOffset = offsets->valuesMapsNoOffset;
+                    }
 
                     // Draw the dungeon map count
-                    events::drawText( getYesNoText( dungeonBits & 0x1 ),
-                                      ringPosX + dungeonMapCountsPosXOffset,
+                    events::drawText( getYesNoText( hasMap ),
+                                      ringPosX + dungeonMapCountsPosXOffset + mapValueOffset,
                                       tempPosY,
                                       currentColor,
                                       textSize );
 
+                    // Get the value for the compass
+                    bool hasCompass = dungeonBits & 0x2;
+                    uint32_t compassValueOffset;
+
+                    if ( hasCompass )
+                    {
+                        compassValueOffset = offsets->valuesCompassesYesOffset;
+                    }
+                    else
+                    {
+                        compassValueOffset = offsets->valuesCompassesNoOffset;
+                    }
+
                     // Draw the compass count
-                    events::drawText( getYesNoText( dungeonBits & 0x2 ),
-                                      ringPosX + compassCountsPosXOffset,
+                    events::drawText( getYesNoText( hasCompass ),
+                                      ringPosX + compassCountsPosXOffset + compassValueOffset,
                                       tempPosY,
                                       currentColor,
                                       textSize );

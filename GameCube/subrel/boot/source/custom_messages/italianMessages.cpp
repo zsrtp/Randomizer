@@ -8,7 +8,9 @@
 
 namespace mod::customMessages
 {
-    // Disable formatting on this namespace because it makes things look weird.
+    using namespace item_wheel_menu;
+
+    // Disable formatting for the textbox messages because it makes things look weird.
     // clang-format off
     MSG_BEGIN_ARRAY( forestSmallKeyIt )
         MSG_SPEED( MSG_SPEED_FAST )
@@ -661,6 +663,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
     MSG_END()
+    // clang-format on
     
     MsgEntry entriesIt[TOTAL_CUSTOM_MESSAGES] = 
     {
@@ -959,6 +962,172 @@ namespace mod::customMessages
         sizeof(giantWalletIt),
         0x009A,
     };
-    // clang-format on
+
+    const ItemWheelMenuStrings itemWheelMenuStringsIt = {
+        // areasBeingTracked
+        {
+            // Forest Temple
+            // Santuario della foresta
+            "\x53\x61\x6E\x74\x75\x61\x72\x69\x6F\x20\x64\x65\x6C\x6C\x61\x20\x66\x6F\x72\x65\x73\x74\x61",
+
+            // Goron Mines
+            // Miniera dei Goron
+            "\x4D\x69\x6E\x69\x65\x72\x61\x20\x64\x65\x69\x20\x47\x6F\x72\x6F\x6E",
+
+            // Lakebed Temple
+            // Santuario nel lago
+            "\x53\x61\x6E\x74\x75\x61\x72\x69\x6F\x20\x6E\x65\x6C\x20\x6C\x61\x67\x6F",
+
+            // Arbiter's Grounds
+            // Patibolo del deserto
+            "\x50\x61\x74\x69\x62\x6F\x6C\x6F\x20\x64\x65\x6C\x20\x64\x65\x73\x65\x72\x74\x6F",
+
+            // Snowpeak Ruins
+            // Rovine sul ghiacciaio
+            "\x52\x6F\x76\x69\x6E\x65\x20\x73\x75\x6C\x20\x67\x68\x69\x61\x63\x63\x69\x61\x69\x6F",
+
+            // Temple of Time
+            // Santuario del tempo
+            "\x53\x61\x6E\x74\x75\x61\x72\x69\x6F\x20\x64\x65\x6C\x20\x74\x65\x6D\x70\x6F",
+
+            // City in the Sky
+            // Città eterea
+            "\x43\x69\x74\x74\xE0\x20\x65\x74\x65\x72\x65\x61",
+
+            // Palace of Twilight
+            // Palazzo del crepuscolo
+            "\x50\x61\x6C\x61\x7A\x7A\x6F\x20\x64\x65\x6C\x20\x63\x72\x65\x70\x75\x73\x63\x6F\x6C\x6F",
+
+            // Hyrule Castle
+            // Castello di Hyrule
+            "\x43\x61\x73\x74\x65\x6C\x6C\x6F\x20\x64\x69\x20\x48\x79\x72\x75\x6C\x65",
+
+            // Faron Woods
+            // Foresta di Firone
+            "\x46\x6F\x72\x65\x73\x74\x61\x20\x64\x69\x20\x46\x69\x72\x6F\x6E\x65",
+
+            // Bublin Camp
+            // campo dei Bulbin
+            "\x63\x61\x6D\x70\x6F\x20\x64\x65\x69\x20\x42\x75\x6C\x62\x69\x6E",
+        },
+
+        // seedIsLoaded
+        // Seed
+        "\x53\x65\x65\x64",
+
+        // seedIsNotLoaded
+        // Nessun seed é stato caricato
+        "\x4E\x65\x73\x73\x75\x6E\x20\x73\x65\x65\x64\x20\xE9\x20\x73\x74\x61\x74\x6F\x20\x63\x61\x72\x69\x63\x61\x74\x6F",
+
+        // yes/no
+        // Sì
+        "\x53\xEC",
+
+        // No
+        "\x4E\x6F",
+
+        // shadowsShards
+        // Cristalli oscuri\nFrammenti di specchio
+        "\x43\x72\x69\x73\x74\x61\x6C\x6C\x69\x20\x6F\x73\x63\x75\x72\x69\x0A\x46\x72\x61\x6D\x6D\x65\x6E\x74\x69\x20\x64\x69"
+        "\x20\x73\x70\x65\x63\x63\x68\x69\x6F",
+
+        // Pumpkin
+        // Zucca
+        "\x5A\x75\x63\x63\x61",
+
+        // Cheese
+        // Formaggio
+        "\x46\x6F\x72\x6D\x61\x67\x67\x69\x6F",
+
+        // Gate Keys
+        // Chiavi del cancello
+        "\x43\x68\x69\x61\x76\x69\x20\x64\x65\x6C\x20\x63\x61\x6E\x63\x65\x6C\x6C\x6F",
+
+        // Areas
+        // Aree
+        "\x41\x72\x65\x65",
+
+        // Small Keys
+        // Piccole\nChiavi
+        "\x50\x69\x63\x63\x6F\x6C\x65\x0A\x43\x68\x69\x61\x76\x69",
+
+        // Big Keys
+        // Grandi\nChiavi
+        "\x47\x72\x61\x6E\x64\x69\x0A\x43\x68\x69\x61\x76\x69",
+
+        // Maps
+        // Mappe
+        "\x4D\x61\x70\x70\x65",
+
+        // Compasses
+        // Bussole
+        "\x42\x75\x73\x73\x6F\x6C\x65",
+
+        // helpText
+        // Premere Start\no Z per\nattivare\ni dati\naggiuntivi
+        "\x50\x72\x65\x6D\x65\x72\x65\x0A\x53\x74\x61\x72\x74\x0A\x6F\x20\x5A\x20\x70\x65\x72\x0A\x61\x74\x74\x69\x76\x61\x72"
+        "\x65\x0A\x69\x20\x64\x61\x74\x69\x0A\x61\x67\x67\x69\x75\x6E\x74\x69\x76\x69",
+    };
+
+    const ItemWheelMenuOffsets itemWheelMenuOffsetsIt {
+        // Fused Shadows/Mirror Shards
+        185,
+
+        // Pumpkin
+        35,
+
+        // Yes/No
+        15,
+        12,
+
+        // Cheese
+        57,
+
+        // Yes/No
+        32,
+        29,
+
+        // Gate Keys
+        90,
+
+        // Yes/No
+        64,
+        61,
+
+        // Headers
+        // Small Keys
+        200,
+
+        // Big Keys
+        75,
+
+        // Maps
+        73,
+
+        // Compasses
+        74,
+
+        // Header values
+        // Small Keys values
+        23,
+
+        // Big keys values
+        // Yes/No
+        17,
+        14,
+
+        // Goron Mines
+        20,
+
+        // Maps values
+        // Yes/No
+        18,
+        15,
+
+        // Compasses values
+        // Yes/No
+        23,
+        20,
+    };
 }     // namespace mod::customMessages
 #endif

@@ -111,6 +111,7 @@
 800d8f74:procDamageInit
 801412b0:dComIfGs_isItemFirstBit
 8011ac60:procCoGetItem
+800cffdc:dComIfGp_setItemLifeCount
 
 // data
 80388C0C:climbVars
@@ -120,6 +121,7 @@
 
 // d_menu_collect.o
 801B3300:setWalletMaxNum
+801b070c:dMenuCollect_screenSet
 
 // JKRExpHeap.o
 802D15C4:do_alloc_JKRExpHeap
@@ -221,6 +223,7 @@
 8036AFC8:strcpy
 8036b080:strlen
 8036adf0:strncmp
+8036adc0:strchr
 
 // m_Do_controller_pad.o
 // data
@@ -230,6 +233,7 @@
 8002b434:getLayerNo_common_common
 8002f434:dComIfG_getStageRes
 8002b3f4:dComIfG_get_timelayer
+8002dca8:dComIfGs_getMaxLifeGauge
 // data
 80400300:dComIfG_gameInfo
 
@@ -295,6 +299,7 @@
 8024d5e8:query037
 8024d954:query042
 8024dd64:event000
+8024e3fc:event017
 8024deb8:event003
 8024f3e0:event041
 8024f130:event035

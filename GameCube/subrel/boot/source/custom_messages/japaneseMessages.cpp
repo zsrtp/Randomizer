@@ -8,7 +8,9 @@
 
 namespace mod::customMessages
 {
-    // Disable formatting on this namespace because it makes things look weird.
+    using namespace item_wheel_menu;
+
+    // Disable formatting for the textbox messages because it makes things look weird.
     // clang-format off
     MSG_BEGIN_ARRAY( forestSmallKeyJp )
         MSG_SPEED( MSG_SPEED_FAST )
@@ -820,304 +822,470 @@ namespace mod::customMessages
         // まで入れられる！
         "\x82\xDC\x82\xC5\x93\xFC\x82\xEA\x82\xE7\x82\xEA\x82\xE9\x81\x49"
     MSG_END()
-    
-    MsgEntry entriesJp[TOTAL_CUSTOM_MESSAGES] = 
-    {
-        // Forest Temple small key
-        forestSmallKeyJp,
-        sizeof(forestSmallKeyJp),
-        0x00E9,
-        
-        // Goron Mines small key
-        minesSmallKeyJp,
-        sizeof(minesSmallKeyJp),
-        0x00EA,
-        
-        // Lakebed Temple small key
-        lakebedSmallKeyJp,
-        sizeof(lakebedSmallKeyJp),
-        0x00EB,
-        
-        // Arbiter's Grounds small key
-        arbitersSmallKeyJp,
-        sizeof(arbitersSmallKeyJp),
-        0x00EC,
-        
-        // Snowpeak Ruins small key
-        snowpeakSmallKeyJp,
-        sizeof(snowpeakSmallKeyJp),
-        0x00ED,
-        
-        // Temple of Time small key
-        timeSmallKeyJp,
-        sizeof(timeSmallKeyJp),
-        0x00EE,
-        
-        // City in the Sky small key
-        citySmallKeyJp,
-        sizeof(citySmallKeyJp),
-        0x00EF,
-        
-        // Palace of Twilight small key
-        palaceSmallKeyJp,
-        sizeof(palaceSmallKeyJp),
-        0x00F0,
-        
-        // Hyrule Castle small key
-        hyruleSmallKeyJp,
-        sizeof(hyruleSmallKeyJp),
-        0x00F1,
-        
-        // Bublin Camp small key
-        campSmallKeyJp,
-        sizeof(campSmallKeyJp),
-        0x00F2,
-        
-        // Shadow Crystal
-        shadowCrystalJp,
-        sizeof(shadowCrystalJp),
-        0x0096,
-        
-        // Forest Temple dungeon map
-        forestDungeonMapJp,
-        sizeof(forestDungeonMapJp),
-        0x011A,
-        
-        // Goron Mines dungeon map
-        minesDungeonMapJp,
-        sizeof(minesDungeonMapJp),
-        0x011B,
-        
-        // Lakebed Temple dungeon map
-        lakebedDungeonMapJp,
-        sizeof(lakebedDungeonMapJp),
-        0x011C,
-        
-        // Arbiter's Grounds dungeon map
-        arbitersDungeonMapJp,
-        sizeof(arbitersDungeonMapJp),
-        0x011D,
-        
-        // Snowpeak Ruins dungeon map
-        snowpeakDungeonMapJp,
-        sizeof(snowpeakDungeonMapJp),
-        0x011E,
-        
-        // Temple of Time dungeon map
-        timeDungeonMapJp,
-        sizeof(timeDungeonMapJp),
-        0x011F,
-        
-        // City in the Sky dungeon map
-        cityDungeonMapJp,
-        sizeof(cityDungeonMapJp),
-        0x0120,
-        
-        // Palace of Twilight dungeon map
-        palaceDungeonMapJp,
-        sizeof(palaceDungeonMapJp),
-        0x0121,
-        
-        // Hyrule Castle dungeon map
-        hyruleDungeonMapJp,
-        sizeof(hyruleDungeonMapJp),
-        0x0122,
+        // clang-format on
 
-        // Forest Temple compass
-        forestCompassJp,
-        sizeof(forestCompassJp),
-        0x00FD,
+        MsgEntry entriesJp[TOTAL_CUSTOM_MESSAGES] = {
+            // Forest Temple small key
+            forestSmallKeyJp,
+            sizeof( forestSmallKeyJp ),
+            0x00E9,
 
-        // Goron Mines compass
-        minesCompassJp,
-        sizeof(minesCompassJp),
-        0x00FE,
-        
-        // Lakebed Temple compass
-        lakebedCompassJp,
-        sizeof(lakebedCompassJp),
-        0x00FF,
+            // Goron Mines small key
+            minesSmallKeyJp,
+            sizeof( minesSmallKeyJp ),
+            0x00EA,
 
-        // Arbiter's Grounds compass
-        arbitersCompassJp,
-        sizeof(arbitersCompassJp),
-        0x010C,
+            // Lakebed Temple small key
+            lakebedSmallKeyJp,
+            sizeof( lakebedSmallKeyJp ),
+            0x00EB,
 
-        // Snowpeak Ruins compass
-        snowpeakCompassJp,
-        sizeof(snowpeakCompassJp),
-        0x010D,
+            // Arbiter's Grounds small key
+            arbitersSmallKeyJp,
+            sizeof( arbitersSmallKeyJp ),
+            0x00EC,
 
-        // Temple of Time compass
-        timeCompassJp,
-        sizeof(timeCompassJp),
-        0x010E,
+            // Snowpeak Ruins small key
+            snowpeakSmallKeyJp,
+            sizeof( snowpeakSmallKeyJp ),
+            0x00ED,
 
-        // City in the Sky compass
-        cityCompassJp,
-        sizeof(cityCompassJp),
-        0x010F,
+            // Temple of Time small key
+            timeSmallKeyJp,
+            sizeof( timeSmallKeyJp ),
+            0x00EE,
 
-        // Palace of Twilight compass
-        palaceCompassJp,
-        sizeof(palaceCompassJp),
-        0x0110,
+            // City in the Sky small key
+            citySmallKeyJp,
+            sizeof( citySmallKeyJp ),
+            0x00EF,
 
-        // Hyrule Castle compass
-        hyruleCompassJp,
-        sizeof(hyruleCompassJp),
-        0x0111,
+            // Palace of Twilight small key
+            palaceSmallKeyJp,
+            sizeof( palaceSmallKeyJp ),
+            0x00F0,
 
-        // Forest Temple big key
-        forestBigKeyJp,
-        sizeof(forestBigKeyJp),
-        0x00F6,
+            // Hyrule Castle small key
+            hyruleSmallKeyJp,
+            sizeof( hyruleSmallKeyJp ),
+            0x00F1,
 
-        // Lakebed Temple big key
-        lakebedBigKeyJp,
-        sizeof(lakebedBigKeyJp),
-        0x00F7,
+            // Bublin Camp small key
+            campSmallKeyJp,
+            sizeof( campSmallKeyJp ),
+            0x00F2,
 
-        // Arbiter's Grounds big key
-        arbitersBigKeyJp,
-        sizeof(arbitersBigKeyJp),
-        0x00F8,
+            // Shadow Crystal
+            shadowCrystalJp,
+            sizeof( shadowCrystalJp ),
+            0x0096,
 
-        // Temple of Time big key
-        timeBigKeyJp,
-        sizeof(timeBigKeyJp),
-        0x00F9,
+            // Forest Temple dungeon map
+            forestDungeonMapJp,
+            sizeof( forestDungeonMapJp ),
+            0x011A,
 
-        // City in the Sky big key
-        cityBigKeyJp,
-        sizeof(cityBigKeyJp),
-        0x00FA,
+            // Goron Mines dungeon map
+            minesDungeonMapJp,
+            sizeof( minesDungeonMapJp ),
+            0x011B,
 
-        // Palace of Twilight big key
-        palaceBigKeyJp,
-        sizeof(palaceBigKeyJp),
-        0x00FB,
+            // Lakebed Temple dungeon map
+            lakebedDungeonMapJp,
+            sizeof( lakebedDungeonMapJp ),
+            0x011C,
 
-        // Hyrule Castle big key
-        hyruleBigKeyJp,
-        sizeof(hyruleBigKeyJp),
-        0x00FC,
-        
-        // Ending Blow hidden skill
-        endingBlowJp,
-        sizeof(endingBlowJp),
-        0x0145,
+            // Arbiter's Grounds dungeon map
+            arbitersDungeonMapJp,
+            sizeof( arbitersDungeonMapJp ),
+            0x011D,
 
-        // Shield Attack hidden skill
-        shieldAttackJp,
-        sizeof(shieldAttackJp),
-        0x0146,
+            // Snowpeak Ruins dungeon map
+            snowpeakDungeonMapJp,
+            sizeof( snowpeakDungeonMapJp ),
+            0x011E,
 
-        // Back Slice hidden skill
-        backSliceJp,
-        sizeof(backSliceJp),
-        0x0147,
+            // Temple of Time dungeon map
+            timeDungeonMapJp,
+            sizeof( timeDungeonMapJp ),
+            0x011F,
 
-        // Helm Splitter hidden skill
-        helmSplitterJp,
-        sizeof(helmSplitterJp),
-        0x0148,
+            // City in the Sky dungeon map
+            cityDungeonMapJp,
+            sizeof( cityDungeonMapJp ),
+            0x0120,
 
-        // Mortal Draw hidden skill
-        mortalDrawJp,
-        sizeof(mortalDrawJp),
-        0x0149,
+            // Palace of Twilight dungeon map
+            palaceDungeonMapJp,
+            sizeof( palaceDungeonMapJp ),
+            0x0121,
 
-        // Jump Strike hidden skill
-        jumpStrikeJp,
-        sizeof(jumpStrikeJp),
-        0x014A,
+            // Hyrule Castle dungeon map
+            hyruleDungeonMapJp,
+            sizeof( hyruleDungeonMapJp ),
+            0x0122,
 
-        // Great Spin hidden skill
-        greatSpinJp,
-        sizeof(greatSpinJp),
-        0x014B,
+            // Forest Temple compass
+            forestCompassJp,
+            sizeof( forestCompassJp ),
+            0x00FD,
 
-        // Powered up Dominion Rod
-        poweredRodJp,
-        sizeof(poweredRodJp),
-        0x00B0,
+            // Goron Mines compass
+            minesCompassJp,
+            sizeof( minesCompassJp ),
+            0x00FE,
 
-        // First Ancient Sky Book character
-        firstCharacterJp,
-        sizeof(firstCharacterJp),
-        0x013F,
+            // Lakebed Temple compass
+            lakebedCompassJp,
+            sizeof( lakebedCompassJp ),
+            0x00FF,
 
-        // Second Ancient Sky Book character
-        secondCharacterJp,
-        sizeof(secondCharacterJp),
-        0x0140,
+            // Arbiter's Grounds compass
+            arbitersCompassJp,
+            sizeof( arbitersCompassJp ),
+            0x010C,
 
-        // Third Ancient Sky Book character
-        thirdCharacterJp,
-        sizeof(thirdCharacterJp),
-        0x0141,
+            // Snowpeak Ruins compass
+            snowpeakCompassJp,
+            sizeof( snowpeakCompassJp ),
+            0x010D,
 
-        // Fourth Ancient Sky Book character
-        fourthCharacterJp,
-        sizeof(fourthCharacterJp),
-        0x0142,
+            // Temple of Time compass
+            timeCompassJp,
+            sizeof( timeCompassJp ),
+            0x010E,
 
-        // Fifth Ancient Sky Book character
-        fifthCharacterJp,
-        sizeof(fifthCharacterJp),
-        0x0143,
+            // City in the Sky compass
+            cityCompassJp,
+            sizeof( cityCompassJp ),
+            0x010F,
 
-        // Sixth Ancient Sky Book character
-        firstFusedShadowJp,
-        sizeof(firstFusedShadowJp),
-        0x013C,
+            // Palace of Twilight compass
+            palaceCompassJp,
+            sizeof( palaceCompassJp ),
+            0x0110,
 
-        // Second Fused Shadow
-        secondFusedShadowJp,
-        sizeof(secondFusedShadowJp),
-        0x013D,
+            // Hyrule Castle compass
+            hyruleCompassJp,
+            sizeof( hyruleCompassJp ),
+            0x0111,
 
-        // Third Fused Shadow
-        thirdFusedShadowJp,
-        sizeof(thirdFusedShadowJp),
-        0x013E,
+            // Forest Temple big key
+            forestBigKeyJp,
+            sizeof( forestBigKeyJp ),
+            0x00F6,
 
-        // Second Mirror Shard
-        secondMirrorShardJp,
-        sizeof(secondMirrorShardJp),
-        0x0109,
+            // Lakebed Temple big key
+            lakebedBigKeyJp,
+            sizeof( lakebedBigKeyJp ),
+            0x00F7,
 
-        // Third Mirror Shard
-        thirdMirrorShardJp,
-        sizeof(thirdMirrorShardJp),
-        0x010A,
+            // Arbiter's Grounds big key
+            arbitersBigKeyJp,
+            sizeof( arbitersBigKeyJp ),
+            0x00F8,
 
-        // Fourth Mirror Shard
-        fourthMirrorShardJp,
-        sizeof(fourthMirrorShardJp),
-        0x010B,
+            // Temple of Time big key
+            timeBigKeyJp,
+            sizeof( timeBigKeyJp ),
+            0x00F9,
 
-        // Foolish Item
-        foolishItemJp,
-        sizeof(foolishItemJp),
-        0x00F3,
+            // City in the Sky big key
+            cityBigKeyJp,
+            sizeof( cityBigKeyJp ),
+            0x00FA,
 
-        // Talking to Midna
-        talkToMidnaJp,
-        sizeof(talkToMidnaJp),
-        0x0BBB,
+            // Palace of Twilight big key
+            palaceBigKeyJp,
+            sizeof( palaceBigKeyJp ),
+            0x00FB,
 
-        // Big Wallet
-        bigWalletJp,
-        sizeof(bigWalletJp),
-        0x0099,
+            // Hyrule Castle big key
+            hyruleBigKeyJp,
+            sizeof( hyruleBigKeyJp ),
+            0x00FC,
 
-        // Giant Wallet
-        giantWalletJp,
-        sizeof(giantWalletJp),
-        0x009A,
+            // Ending Blow hidden skill
+            endingBlowJp,
+            sizeof( endingBlowJp ),
+            0x0145,
+
+            // Shield Attack hidden skill
+            shieldAttackJp,
+            sizeof( shieldAttackJp ),
+            0x0146,
+
+            // Back Slice hidden skill
+            backSliceJp,
+            sizeof( backSliceJp ),
+            0x0147,
+
+            // Helm Splitter hidden skill
+            helmSplitterJp,
+            sizeof( helmSplitterJp ),
+            0x0148,
+
+            // Mortal Draw hidden skill
+            mortalDrawJp,
+            sizeof( mortalDrawJp ),
+            0x0149,
+
+            // Jump Strike hidden skill
+            jumpStrikeJp,
+            sizeof( jumpStrikeJp ),
+            0x014A,
+
+            // Great Spin hidden skill
+            greatSpinJp,
+            sizeof( greatSpinJp ),
+            0x014B,
+
+            // Powered up Dominion Rod
+            poweredRodJp,
+            sizeof( poweredRodJp ),
+            0x00B0,
+
+            // First Ancient Sky Book character
+            firstCharacterJp,
+            sizeof( firstCharacterJp ),
+            0x013F,
+
+            // Second Ancient Sky Book character
+            secondCharacterJp,
+            sizeof( secondCharacterJp ),
+            0x0140,
+
+            // Third Ancient Sky Book character
+            thirdCharacterJp,
+            sizeof( thirdCharacterJp ),
+            0x0141,
+
+            // Fourth Ancient Sky Book character
+            fourthCharacterJp,
+            sizeof( fourthCharacterJp ),
+            0x0142,
+
+            // Fifth Ancient Sky Book character
+            fifthCharacterJp,
+            sizeof( fifthCharacterJp ),
+            0x0143,
+
+            // Sixth Ancient Sky Book character
+            firstFusedShadowJp,
+            sizeof( firstFusedShadowJp ),
+            0x013C,
+
+            // Second Fused Shadow
+            secondFusedShadowJp,
+            sizeof( secondFusedShadowJp ),
+            0x013D,
+
+            // Third Fused Shadow
+            thirdFusedShadowJp,
+            sizeof( thirdFusedShadowJp ),
+            0x013E,
+
+            // Second Mirror Shard
+            secondMirrorShardJp,
+            sizeof( secondMirrorShardJp ),
+            0x0109,
+
+            // Third Mirror Shard
+            thirdMirrorShardJp,
+            sizeof( thirdMirrorShardJp ),
+            0x010A,
+
+            // Fourth Mirror Shard
+            fourthMirrorShardJp,
+            sizeof( fourthMirrorShardJp ),
+            0x010B,
+
+            // Foolish Item
+            foolishItemJp,
+            sizeof( foolishItemJp ),
+            0x00F3,
+
+            // Talking to Midna
+            talkToMidnaJp,
+            sizeof( talkToMidnaJp ),
+            0x0BBB,
+
+            // Big Wallet
+            bigWalletJp,
+            sizeof( bigWalletJp ),
+            0x0099,
+
+            // Giant Wallet
+            giantWalletJp,
+            sizeof( giantWalletJp ),
+            0x009A,
     };
-    // clang-format on
+
+    const ItemWheelMenuStrings itemWheelMenuStringsJp = {
+        // areasBeingTracked
+        {
+            // Forest Temple
+            // 森の神殿
+            "\x90\x58\x82\xCC\x90\x5F\x93\x61",
+
+            // Goron Mines
+            // ゴロン鉱山
+            "\x83\x53\x83\x8D\x83\x93\x8D\x7A\x8E\x52",
+
+            // Lakebed Temple
+            // 湖底の神殿
+            "\x8C\xCE\x92\xEA\x82\xCC\x90\x5F\x93\x61",
+
+            // Arbiter's Grounds
+            // 砂漠の処刑場
+            "\x8D\xBB\x94\x99\x82\xCC\x8F\x88\x8C\x59\x8F\xEA",
+
+            // Snowpeak Ruins
+            // 雪山の廃墟
+            "\x90\xE1\x8E\x52\x82\xCC\x94\x70\x9A\xD0",
+
+            // Temple of Time
+            // 時の神殿
+            "\x8E\x9E\x82\xCC\x90\x5F\x93\x61",
+
+            // City in the Sky
+            // 天空都市
+            "\x93\x56\x8B\xF3\x93\x73\x8E\x73",
+
+            // Palace of Twilight
+            // 影の宮殿
+            "\x89\x65\x82\xCC\x8B\x7B\x93\x61",
+
+            // Hyrule Castle
+            // ハイラル城
+            "\x83\x6E\x83\x43\x83\x89\x83\x8B\x8F\xE9",
+
+            // Faron Woods
+            // フィローネ樹海入口
+            "\x83\x74\x83\x42\x83\x8D\x81\x5B\x83\x6C\x8E\xF7\x8A\x43\x93\xFC\x8C\xFB",
+
+            // Bublin Camp
+            // ブルブリンの要塞
+            "\x83\x75\x83\x8B\x83\x75\x83\x8A\x83\x93\x82\xCC\x97\x76\x8D\xC7",
+        },
+
+        // seedIsLoaded
+        // シード
+        "\x83\x56\x81\x5B\x83\x68",
+
+        // seedIsNotLoaded
+        // シードは読み込まれません
+        "\x83\x56\x81\x5B\x83\x68\x82\xCD\x93\xC7\x82\xDD\x8D\x9E\x82\xDC\x82\xEA\x82\xDC\x82\xB9\x82\xF1",
+
+        // yes/no
+        // はい
+        "\x82\xCD\x82\xA2",
+
+        // いいえ
+        "\x82\xA2\x82\xA2\x82\xA6",
+
+        // shadowsShards
+        // 影の結晶石\n陰りの鏡
+        "\x89\x65\x82\xCC\x8C\x8B\x8F\xBB\x90\xCE\x0A\x89\x41\x82\xE8\x82\xCC\x8B\xBE",
+
+        // Pumpkin
+        // トアルカボチャ
+        "\x83\x67\x83\x41\x83\x8B\x83\x4A\x83\x7B\x83\x60\x83\x83",
+
+        // Cheese
+        // トアル山羊のチーズ
+        "\x83\x67\x83\x41\x83\x8B\x8E\x52\x97\x72\x82\xCC\x83\x60\x81\x5B\x83\x59",
+
+        // Gate Keys
+        // 門の小さなカギ
+        "\x96\xE5\x82\xCC\x8F\xAC\x82\xB3\x82\xC8\x83\x4A\x83\x4D",
+
+        // Areas
+        // 領域
+        "\x97\xCC\x88\xE6",
+
+        // Small Keys
+        // 小さなカギ
+        "\x8F\xAC\x82\xB3\x82\xC8\x83\x4A\x83\x4D",
+
+        // Big Keys
+        // ボス部屋のカギ
+        "\x83\x7B\x83\x58\x95\x94\x89\xAE\x82\xCC\x83\x4A\x83\x4D",
+
+        // Maps
+        // ダンジョンマップ
+        "\x83\x5F\x83\x93\x83\x57\x83\x87\x83\x93\x83\x7D\x83\x62\x83\x76",
+
+        // Compasses
+        // コンパス
+        "\x83\x52\x83\x93\x83\x70\x83\x58",
+
+        // helpText
+        // スタートボタンまたはZボタンを押すと、追加データが表示されます
+        "\x83\x58\x83\x5E\x81\x5B\x83\x67\x83\x7B\x83\x5E\x83\x93\x82\xDC\x82\xBD\x82\xCD\x5a\x83\x7B\x83\x5E\x83\x93\x82\xF0"
+        "\x89\x9F\x82\xB7\x82\xC6\x81\x41\x92\xC7\x89\xC1\x83\x66\x81\x5B\x83\x5E\x82\xAA\x95\x5C\x8E\xA6\x82\xB3\x82\xEA\x82"
+        "\xDC\x82\xB7",
+    };
+
+    const ItemWheelMenuOffsets itemWheelMenuOffsetsJp {
+        // Fused Shadows/Mirror Shards
+        80,
+
+        // Pumpkin
+        50,
+
+        // Yes/No
+        34,
+        27,
+
+        // Cheese
+        111,
+
+        // Yes/No
+        49,
+        42,
+
+        // Gate Keys
+        143,
+
+        // Yes/No
+        34,
+        27,
+
+        // Headers
+        // Small Keys
+        115,
+
+        // Big Keys
+        90,
+
+        // Maps
+        117,
+
+        // Compasses
+        128,
+
+        // Header values
+        // Small Keys values
+        28,
+
+        // Big keys values
+        // Yes/No
+        33,
+        26,
+
+        // Goron Mines
+        41,
+
+        // Maps values
+        // Yes/No
+        40,
+        33,
+
+        // Compasses values
+        // Yes/No
+        13,
+        7,
+    };
 }     // namespace mod::customMessages
 #endif

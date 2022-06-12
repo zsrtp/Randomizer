@@ -35,6 +35,9 @@ namespace mod
         // Load custom messages
         customMessages::createMsgTable();
 
+        // Load item wheel menu strings
+        customMessages::createItemWheelMenuData();
+
         // Display some info
         console << "Welcome to TPR!\n"
                 << "(C) AECX, Lunar Soap, Zephiles\n\n"

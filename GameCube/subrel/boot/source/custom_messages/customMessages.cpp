@@ -1,16 +1,22 @@
 #include "customMessages.h"
-#include "tp/d_s_logo.h"
 #include "main.h"
+#include "cxx.h"
+
+#ifdef TP_EU
+#include "tp/d_s_logo.h"
+#endif
 
 #include <cstdint>
 #include <cstring>
 
 namespace mod::customMessages
 {
+#ifdef TP_EU
+    using namespace libtp::tp::d_s_logo;
+    Languages currentLanguage = getPalLanguage2( nullptr );
+#endif
     void createMsgTable()
     {
-        using namespace libtp::tp::d_s_logo;
-
         // Get the MsgEntry to use
         const MsgEntry* entries;
 #ifdef TP_US
@@ -18,8 +24,7 @@ namespace mod::customMessages
 #elif defined TP_JP
         entries = entriesJp;
 #elif defined TP_EU
-        Languages lang = getPalLanguage2( nullptr );
-        switch ( lang )
+        switch ( currentLanguage )
         {
             case Languages::uk:
             default:     // The language is invalid/unsupported, so the game defaults to English
@@ -67,7 +72,7 @@ namespace mod::customMessages
         }
 
         // Allocate memory for the table
-        uint8_t* buf = new uint8_t[messageIdsSize + messageOffsetsSize + totalMessagesSize];
+        uint8_t* buf = new ( sizeof( uint32_t ) ) uint8_t[messageIdsSize + messageOffsetsSize + totalMessagesSize];
 
         // Get the address for the ids
         uint16_t* msgIdTable = reinterpret_cast<uint16_t*>( buf );
@@ -79,7 +84,7 @@ namespace mod::customMessages
         // Get the address for the messages
         char* msgTable = reinterpret_cast<char*>( bufRaw + messageIdsSize + messageOffsetsSize );
 
-        // Write the data to the table
+        // Write the dataSrc to the table
         uint32_t msgTableWrittenSize = 0;
         for ( uint32_t i = 0; i < TOTAL_CUSTOM_MESSAGES; i++ )
         {
@@ -99,5 +104,103 @@ namespace mod::customMessages
         // Assign the buffer and total entries
         m_MsgTableInfo = buf;
         m_TotalMsgEntries = TOTAL_CUSTOM_MESSAGES;
+    }
+
+    void createItemWheelMenuData()
+    {
+        using namespace item_wheel_menu;
+
+        // Get the ItemWheelMenuData and itemWheeleStringsSize to use
+        const ItemWheelMenuStrings* stringsSrc;
+        const ItemWheelMenuOffsets* offsetsSrc;
+#ifdef TP_US
+        stringsSrc = &itemWheelMenuStringsUs;
+        offsetsSrc = &itemWheelMenuOffsetsUs;
+#elif defined TP_JP
+        stringsSrc = &itemWheelMenuStringsJp;
+        offsetsSrc = &itemWheelMenuOffsetsJp;
+#elif defined TP_EU
+        switch ( currentLanguage )
+        {
+            case Languages::uk:
+            default:     // The language is invalid/unsupported, so the game defaults to English
+            {
+                stringsSrc = &itemWheelMenuStringsUs;
+                offsetsSrc = &itemWheelMenuOffsetsUs;
+                break;
+            }
+            case Languages::de:
+            {
+                stringsSrc = &itemWheelMenuStringsDe;
+                offsetsSrc = &itemWheelMenuOffsetsDe;
+                break;
+            }
+            case Languages::fr:
+            {
+                stringsSrc = &itemWheelMenuStringsFr;
+                offsetsSrc = &itemWheelMenuOffsetsFr;
+                break;
+            }
+            case Languages::it:
+            {
+                stringsSrc = &itemWheelMenuStringsIt;
+                offsetsSrc = &itemWheelMenuOffsetsIt;
+                break;
+            }
+            case Languages::sp:
+            {
+                stringsSrc = &itemWheelMenuStringsSp;
+                offsetsSrc = &itemWheelMenuOffsetsSp;
+                break;
+            }
+        }
+#endif
+        // Get the total length used for the strings
+        // The menu strings struct should only contain const char* pointers, so can just cast that to an array
+        const char** menuStringsSrc = reinterpret_cast<const char**>( const_cast<ItemWheelMenuStrings*>( stringsSrc ) );
+        constexpr uint32_t menuStringsEntries = sizeof( struct ItemWheelMenuStrings ) / sizeof( const char* );
+
+        uint32_t totalStringsLength = 0;
+        for ( uint32_t i = 0; i < menuStringsEntries; i++ )
+        {
+            totalStringsLength += strlen( menuStringsSrc[i] );
+        }
+
+        // Allocate memory for the strings
+        // Add menuStringsEntries to account for each string being NULL terminated
+        char* textData = new ( sizeof( char ) ) char[totalStringsLength + menuStringsEntries];
+
+        // Set up itemWheelMenuData variables
+        ItemWheelMenuData* dataDest = &itemWheelMenuData;
+
+        // Set up the strings
+        // The menu strings struct should only contain const char* pointers, so can just cast that to an array
+        const char** menuStringsDest = reinterpret_cast<const char**>( &dataDest->strings );
+
+        uint32_t writtenSize = 0;
+        for ( uint32_t i = 0; i < menuStringsEntries; i++ )
+        {
+            // Set the current entry
+            char* currentStringEntry = &textData[writtenSize];
+            menuStringsDest[i] = currentStringEntry;
+
+            // Copy the current string to textData
+            const char* currentSrcEntry = menuStringsSrc[i];
+            uint32_t currentSrcEntryLength = strlen( currentSrcEntry );
+            strncpy( currentStringEntry, currentSrcEntry, currentSrcEntryLength );
+
+            // Make sure the string is properly NULL terminated
+            currentStringEntry[currentSrcEntryLength] = '\0';
+
+            // Increment writtenSize to go to the next string
+            // Add one to account for the NULL terminator
+            writtenSize += currentSrcEntryLength + 1;
+        }
+
+        // Set up the offsets
+        memcpy( &dataDest->offsets, offsetsSrc, sizeof( dataDest->offsets ) );
+
+        // Assign textData
+        dataDest->textData = textData;
     }
 }     // namespace mod::customMessages

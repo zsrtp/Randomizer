@@ -3,12 +3,15 @@
 
 #include "customMessages.h"
 #include "tp/resource.h"
+#include "item_wheel_menu.h"
 
 #include <cstdint>
 
 namespace mod::customMessages
 {
-    // Disable formatting on this namespace because it makes things look weird.
+    using namespace item_wheel_menu;
+
+    // Disable formatting for the textbox messages because it makes things look weird.
     // clang-format off
     MSG_BEGIN_ARRAY( forestSmallKeyEn )
         MSG_SPEED( MSG_SPEED_FAST )
@@ -661,7 +664,8 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
     MSG_END()
-    
+    // clang-format on
+
     MsgEntry entriesUs[TOTAL_CUSTOM_MESSAGES] = 
     {
         // Forest Temple small key
@@ -959,6 +963,123 @@ namespace mod::customMessages
         sizeof(giantWalletEn),
         0x009A,
     };
-    // clang-format on
+
+    const ItemWheelMenuStrings itemWheelMenuStringsUs = {
+        // areasBeingTracked
+        {
+            "Forest Temple",
+            "Goron Mines",
+            "Lakebed Temple",
+            "Arbiter's Grounds",
+            "Snowpeak Ruins",
+            "Temple of Time",
+            "City in the Sky",
+            "Palace of Twilight",
+            "Hyrule Castle",
+            "Faron Woods",
+            "Bublin Camp",
+        },
+
+        // seedIsLoaded
+        "Seed",
+
+        // seedIsNotLoaded
+        "No seed is currently loaded",
+
+        // yes/no
+        "Yes",
+        "No",
+
+        // shadowsShards
+        "Fused Shadows\nMirror Shards",
+
+        // Pumpkin
+        "Pumpkin",
+
+        // Cheese
+        "Cheese",
+
+        // Gate Keys
+        "Gate Keys",
+
+        // Areas
+        "Areas",
+
+        // Small Keys
+        "Small\nKeys",
+
+        // Big Keys
+        "Big\nKeys",
+
+        // Maps
+        "Maps",
+
+        // Compasses
+        "Compasses",
+
+        // helpText
+        "Press Start\nor Z to\ntoggle\nadditional\ndata",
+    };
+
+    const ItemWheelMenuOffsets itemWheelMenuOffsetsUs {
+        // Fused Shadows/Mirror Shards
+        135,
+
+        // Pumpkin
+        60,
+
+        // Yes/No
+        20,
+        22,
+
+        // Cheese
+        90,
+
+        // Yes/No
+        15,
+        17,
+
+        // Gate Keys
+        80,
+
+        // Yes/No
+        25,
+        27,
+
+        // Headers
+        // Small Keys
+        155,
+
+        // Big Keys
+        70,
+
+        // Maps
+        70,
+
+        // Compasses
+        70,
+
+        // Header values
+        // Small Keys values
+        15,
+
+        // Big keys values
+        // Yes/No
+        5,
+        7,
+
+        // Goron Mines
+        13,
+
+        // Maps values
+        // Yes/No
+        7,
+        9,
+
+        // Compasses values
+        // Yes/No
+        30,
+        32,
+    };
 }     // namespace mod::customMessages
 #endif
