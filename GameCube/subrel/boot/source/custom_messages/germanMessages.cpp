@@ -3,6 +3,7 @@
 
 #include "customMessages.h"
 #include "tp/resource.h"
+#include "item_wheel_menu.h"
 
 #include <cstdint>
 
