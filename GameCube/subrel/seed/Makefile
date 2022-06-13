@@ -18,7 +18,7 @@ LIBTP_REL := $(ROOT_DIR)/externals/libtp_rel
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
-	ELF2REL := wine $(abspath $(ROOT_DIR)/bin/elf2rel.exe)
+	ELF2REL := $(abspath $(ROOT_DIR)/bin/elf2rel)
 else
 	ELF2REL := $(abspath $(ROOT_DIR)/bin/elf2rel.exe)
 endif

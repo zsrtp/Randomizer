@@ -192,17 +192,7 @@ class ELFFile():
         e_ident.clss = EIClass(e_ident.clss)
         e_ident.data = EIData(e_ident.data)
 
-        data_format = DataFormat.L32
-        if e_ident.clss == EIClass.C32:
-            if e_ident.data == EIData.LITTLE:
-                data_format = DataFormat.L32
-            if e_ident.data == EIData.BIG:
-                data_format = DataFormat.B32
-        if e_ident.clss == EIClass.C64:
-            if e_ident.data == EIData.LITTLE:
-                data_format = DataFormat.L64
-            if e_ident.data == EIData.BIG:
-                data_format = DataFormat.B64
+        data_format = DataFormat((e_ident.clss - 1) | ((e_ident.data - 1) << 1))
         h_formats = {DataFormat.L32: ELFHeader.FORMAT_L32, DataFormat.L64: ELFHeader.FORMAT_L64,
                      DataFormat.B32: ELFHeader.FORMAT_B32, DataFormat.B64: ELFHeader.FORMAT_B64}
         p_formats = {DataFormat.L32: ELFProgramHeader.FORMAT_L32, DataFormat.L64: ELFProgramHeader.FORMAT_L64,

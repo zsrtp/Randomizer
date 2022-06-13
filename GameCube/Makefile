@@ -36,7 +36,7 @@ export GCIPACK := python3 $(realpath ../bin/gcipack.py)
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
-	export ELF2REL := wine $(realpath ../bin/elf2rel.exe)
+	export ELF2REL := $(realpath ../bin/elf2rel)
 else
 	export ELF2REL := $(realpath ../bin/elf2rel.exe)
 endif
