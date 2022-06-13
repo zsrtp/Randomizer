@@ -63,6 +63,10 @@ namespace mod::assembly
 
         // d_a_b_bq.rel
         void asmTransformDiababaWolf();
+
+        // d_a_npc_hoz.rel
+        void asmAdjustIzaWolf();
+        void handleAdjustIzaWolf();
     }
 }     // namespace mod::assembly
 
