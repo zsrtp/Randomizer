@@ -82,10 +82,10 @@ namespace mod::customMessages
         // を手に入れた！
         "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x20\x0A"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        // 雪山の
-        "\x90\xE1\x8E\x52\x82\xCC"
-        //廃墟
-        MSG_SP_CHAR_HAIKYO
+        // 雪山の廃
+        "\x90\xE1\x8E\x52\x82\xCC\x94\x70"
+        // 墟
+        MSG_SP_CHAR_KYO
         MSG_COLOR(MSG_COLOR_WHITE)
         // で使用できる
         "\x82\xC5\x8E\x67\x97\x70\x82\xC5\x82\xAB\x82\xE9"
@@ -243,10 +243,10 @@ namespace mod::customMessages
         // を手に入れた！
         "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        // 雪山の廃墟
-        "\x90\xE1\x8E\x52\x82\xCC"
-        //廃墟
-        MSG_SP_CHAR_HAIKYO
+        // 雪山の廃
+        "\x90\xE1\x8E\x52\x82\xCC\x94\x70"
+        // 墟
+        MSG_SP_CHAR_KYO
         MSG_COLOR(MSG_COLOR_WHITE)
         // で使用できる
         "\x82\xC5\x8E\x67\x97\x70\x82\xC5\x82\xAB\x82\xE9"
@@ -380,10 +380,10 @@ namespace mod::customMessages
         // を手に入れた！ 
         "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x20\x0A"
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        // 雪山の廃墟
-        "\x90\xE1\x8E\x52\x82\xCC"
-        //廃墟
-        MSG_SP_CHAR_HAIKYO
+        // 雪山の廃
+        "\x90\xE1\x8E\x52\x82\xCC\x94\x70"
+        // 墟
+        MSG_SP_CHAR_KYO
         MSG_COLOR(MSG_COLOR_WHITE)
         // で使用できる
         "\x82\xC5\x8E\x67\x97\x70\x82\xC5\x82\xAB\x82\xE9"
