@@ -11,6 +11,7 @@
 #include "tp/d_kankyo.h"
 #include "tp/processor.h"
 #include "tp/resource.h"
+#include "tp/JKRArchivePub.h"
 
 namespace mod::game_patch
 {
@@ -18,6 +19,7 @@ namespace mod::game_patch
     const char* talkToMidnaText = { "Talk to Midna" };
     const char* smallDonationText = { "30 Rupees" };
 
+    /*
     int32_t getItemIdFromMsgId( const void* TProcessor, uint16_t unk3, uint32_t msgId )
     {
         void* unk = libtp::tp::processor::getResource_groupID( TProcessor, unk3 );
@@ -60,24 +62,48 @@ namespace mod::game_patch
         // Didn't find the index
         return -1;
     }
+    */
+
+    void* getInf1Ptr( uint32_t tag, const char* file )
+    {
+        uint32_t filePtrRaw =
+            reinterpret_cast<uint32_t>( libtp::tp::JKRArchivePub::JKRArchivePub_getGlbResource( tag, file, nullptr ) );
+
+        // getGlbResource gets a pointer to MESGbmg1, but we need a pointer to INF1, which is just past MESGbmg1, and MESGbmg1
+        // has a size of 0x20
+        return reinterpret_cast<void*>( filePtrRaw + 0x20 );
+    }
+
     void _05_setCustomItemMessage( libtp::tp::control::TControl* control,
                                    const void* TProcessor,
                                    uint16_t unk3,
                                    uint16_t msgId,
                                    rando::Randomizer* randomizer )
     {
-        using namespace libtp::data::items;
-        // The current text is for an item
-        auto setMessageText = []( libtp::tp::control::TControl* control, const char* text ) {
-            control->msg = text;
-            control->wMsgRender = text;
-        };
+        // Get a pointer to the current BMG file being used
+        // The pointer is to INF1
+        const void* unk = libtp::tp::processor::getResource_groupID( TProcessor, unk3 );
+        if ( !unk )
+        {
+            return;
+        }
+        const void* currentInf1 = *reinterpret_cast<void**>( reinterpret_cast<uint32_t>( unk ) + 0xC );
+
+        // Make sure the message being checked is in zel_00.bmg
+        // Currently we are not changing text in any other file
+        void* desiredInf1 = getInf1Ptr( /* ROOT */ 0x524F4F54, "zel_00.bmg" );
+        if ( currentInf1 != desiredInf1 )
+        {
+            return;
+        }
 
         const char* newMessage = _05_getMsgById( randomizer, msgId );
+
         // Only replace the message if we get a valid string returned.
         if ( newMessage )
         {
-            setMessageText( control, newMessage );
+            control->msg = newMessage;
+            control->wMsgRender = newMessage;
         }
     }
 

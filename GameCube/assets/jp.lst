@@ -343,6 +343,9 @@
 // JKRArchive.o
 802d8100:JKRArchive_getResource2
 
+// JKRArchivePub.h
+802d7fd4:JKRArchivePub_getGlbResource
+
 // d_meter_HIO.o
 // data
 80428d08:g_drawHIO

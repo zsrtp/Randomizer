@@ -342,6 +342,9 @@
 // JKRArchive.o
 802d6a64:JKRArchive_getResource2
 
+// JKRArchivePub.h
+802d6938:JKRArchivePub_getGlbResource
+
 // J2DPicture.o
 802fd508:J2DPicture_ct4
 802fddf0:J2DPicture_dt
