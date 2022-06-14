@@ -64,14 +64,28 @@ namespace mod::game_patch
     }
     */
 
+    // Most checks will use zel_00.bmg, so use a dedication function for it that specifies the archive, so less code runs per
+    // check
+    void* getZel00BmgInf()
+    {
+        uint32_t infPtrRaw = reinterpret_cast<uint32_t>( libtp::tp::JKRArchivePub::JKRArchivePub_getGlbResource(
+            0x524F4F54,     // ROOT
+            "zel_00.bmg",
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mMsgDtArchive[0] ) );
+
+        // getGlbResource gets a pointer to MESGbmg1, but we need a pointer to INF1, which is just past MESGbmg1, and MESGbmg1
+        // has a size of 0x20
+        return reinterpret_cast<void*>( infPtrRaw + 0x20 );
+    }
+
     void* getInf1Ptr( const char* file )
     {
-        uint32_t filePtrRaw = reinterpret_cast<uint32_t>(
+        uint32_t infPtrRaw = reinterpret_cast<uint32_t>(
             libtp::tp::JKRArchivePub::JKRArchivePub_getGlbResource( /* ROOT */ 0x524F4F54, file, nullptr ) );
 
         // getGlbResource gets a pointer to MESGbmg1, but we need a pointer to INF1, which is just past MESGbmg1, and MESGbmg1
         // has a size of 0x20
-        return reinterpret_cast<void*>( filePtrRaw + 0x20 );
+        return reinterpret_cast<void*>( infPtrRaw + 0x20 );
     }
 
     void _05_setCustomItemMessage( libtp::tp::control::TControl* control,
@@ -91,8 +105,7 @@ namespace mod::game_patch
 
         // Make sure the message being checked is in zel_00.bmg
         // Currently we are not changing text in any other file
-        void* desiredInf1 = getInf1Ptr( "zel_00.bmg" );
-        if ( currentInf1 != desiredInf1 )
+        if ( currentInf1 != getZel00BmgInf() )
         {
             return;
         }
