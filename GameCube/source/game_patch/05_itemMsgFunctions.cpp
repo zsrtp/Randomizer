@@ -64,10 +64,10 @@ namespace mod::game_patch
     }
     */
 
-    void* getInf1Ptr( uint32_t tag, const char* file )
+    void* getInf1Ptr( const char* file )
     {
-        uint32_t filePtrRaw =
-            reinterpret_cast<uint32_t>( libtp::tp::JKRArchivePub::JKRArchivePub_getGlbResource( tag, file, nullptr ) );
+        uint32_t filePtrRaw = reinterpret_cast<uint32_t>(
+            libtp::tp::JKRArchivePub::JKRArchivePub_getGlbResource( /* ROOT */ 0x524F4F54, file, nullptr ) );
 
         // getGlbResource gets a pointer to MESGbmg1, but we need a pointer to INF1, which is just past MESGbmg1, and MESGbmg1
         // has a size of 0x20
@@ -91,7 +91,7 @@ namespace mod::game_patch
 
         // Make sure the message being checked is in zel_00.bmg
         // Currently we are not changing text in any other file
-        void* desiredInf1 = getInf1Ptr( /* ROOT */ 0x524F4F54, "zel_00.bmg" );
+        void* desiredInf1 = getInf1Ptr( "zel_00.bmg" );
         if ( currentInf1 != desiredInf1 )
         {
             return;
