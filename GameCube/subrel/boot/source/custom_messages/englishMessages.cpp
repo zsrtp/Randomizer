@@ -447,7 +447,7 @@ namespace mod::customMessages
     MSG_END()
     MSG_BEGIN_ARRAY( endingBlowEn )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        "You learned the "
         MSG_COLOR(MSG_COLOR_RED)
         "Ending Blow"
         MSG_COLOR(MSG_COLOR_WHITE)
@@ -455,7 +455,7 @@ namespace mod::customMessages
     MSG_END()
     MSG_BEGIN_ARRAY( shieldAttackEn )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        "You learned the "
         MSG_COLOR(MSG_COLOR_RED)
         "Shield Attack"
         MSG_COLOR(MSG_COLOR_WHITE)
@@ -463,7 +463,7 @@ namespace mod::customMessages
     MSG_END()
     MSG_BEGIN_ARRAY( backSliceEn )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        "You learned the "
         MSG_COLOR(MSG_COLOR_RED)
         "Back Slice"
         MSG_COLOR(MSG_COLOR_WHITE)
@@ -471,7 +471,7 @@ namespace mod::customMessages
     MSG_END()
     MSG_BEGIN_ARRAY( helmSplitterEn )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        "You learned the "
         MSG_COLOR(MSG_COLOR_RED)
         "Helm Splitter"
         MSG_COLOR(MSG_COLOR_WHITE)
@@ -479,7 +479,7 @@ namespace mod::customMessages
     MSG_END()
     MSG_BEGIN_ARRAY( mortalDrawEn )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        "You learned the "
         MSG_COLOR(MSG_COLOR_RED)
         "Mortal Draw"
         MSG_COLOR(MSG_COLOR_WHITE)
@@ -487,7 +487,7 @@ namespace mod::customMessages
     MSG_END()
     MSG_BEGIN_ARRAY( jumpStrikeEn )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        "You learned the "
         MSG_COLOR(MSG_COLOR_RED)
         "Jump Strike"
         MSG_COLOR(MSG_COLOR_WHITE)
@@ -495,7 +495,7 @@ namespace mod::customMessages
     MSG_END()
     MSG_BEGIN_ARRAY( greatSpinEn )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the "
+        "You learned the "
         MSG_COLOR(MSG_COLOR_RED)
         "Great Spin"
         MSG_COLOR(MSG_COLOR_WHITE)
