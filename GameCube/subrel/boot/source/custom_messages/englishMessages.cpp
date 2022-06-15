@@ -646,7 +646,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_RED)
         "Big Wallet"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! You can now hold "
+        "!\nYou can now hold\n"
         MSG_COLOR(MSG_COLOR_RED)
         "5,000 Rupees"
         MSG_COLOR(MSG_COLOR_WHITE)
@@ -658,12 +658,42 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_RED)
         "Giant Wallet"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! You can now hold "
+        "!\nYou can now hold\n"
         MSG_COLOR(MSG_COLOR_PURPLE)
         "9,999 Rupees"
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
     MSG_END()
+    MSG_BEGIN_ARRAY( smallWalletPauseEn )
+        MSG_SPEED(MSG_SPEED_FAST)
+        "A wallet from your childhood.\nIt holds up to 1,000 Rupees."
+    MSG_END()
+    MSG_BEGIN_ARRAY( bigWalletPauseEn )
+        MSG_SPEED(MSG_SPEED_FAST)
+        "The wallet given to you by Agitha,\nprincess of the insect kingdom.\nIt can hold 5,000 Rupees."
+    MSG_END()
+    MSG_BEGIN_ARRAY( giantWalletPauseEn )
+        MSG_SPEED(MSG_SPEED_FAST)
+        "The wallet given by Agitha to\nbenefactors of the insect kingdom.\nIt can hold up to 9,999 Rupees."
+    MSG_END()
+    MSG_BEGIN_ARRAY( linkSignEn )
+        MSG_SPEED(MSG_SPEED_FAST)
+        MSG_COLOR(MSG_COLOR_GREEN)
+        "Forest Temple\n"
+        MSG_COLOR(MSG_COLOR_RED)
+        "Goron Mines\n"
+        MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
+        "Lakebed Temple\n"
+        MSG_COLOR(MSG_COLOR_ORANGE)
+        "Arbiters Grounds\n"
+        MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
+        "Snowpeak Ruins\n"
+        MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
+        "Temple of Time\n"
+        MSG_COLOR(MSG_COLOR_YELLOW)
+        "City in The Sky\n"
+        MSG_COLOR(MSG_COLOR_PURPLE)
+        "Palace of Twilight"
     // clang-format on
 
     MsgEntry entriesUs[TOTAL_CUSTOM_MESSAGES] = 
@@ -962,6 +992,26 @@ namespace mod::customMessages
         giantWalletEn,
         sizeof(giantWalletEn),
         0x009A,
+
+        // Small Wallet Menu Text
+        smallWalletPauseEn,
+        sizeof(smallWalletPauseEn),
+        0x0298,
+
+        // Big Wallet Menu Text
+        bigWalletPauseEn,
+        sizeof(bigWalletPauseEn),
+        0x0299,
+
+        // Giant Wallet Menu Text
+        giantWalletPauseEn,
+        sizeof(giantWalletPauseEn),
+        0x029a,
+
+        // Sign outside Link's House. Handled in zel_01.bmg
+        linkSignEn,
+        sizeof(linkSignEn),
+        0x0658,
     };
 
     const ItemWheelMenuStrings itemWheelMenuStringsUs = {
