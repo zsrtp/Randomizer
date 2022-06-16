@@ -283,6 +283,24 @@ namespace mod::link_house_sign
             }
         }
 
+        // It's possible that there will be no required dungeons
+        if ( requiredDungeonsLength == 0 )
+        {
+            // Get the string and size for no dungeons being required
+            const char* noDungeonsString = "No dungeons required";     // Placeholder until translated
+            uint32_t noDungeonsStringLength = strlen( noDungeonsString );
+
+            // Allocate memory for the string and set it up
+            // Add one to account for the NULL terminator
+            char* buf = new ( sizeof( char ) ) char[noDungeonsStringLength + 1];
+            strncpy( buf, noDungeonsString, noDungeonsStringLength );
+            buf[noDungeonsStringLength] = '\0';
+
+            // Assign the buffer
+            seed->m_RequiredDungeons = buf;
+            return;
+        }
+
         // Get the font size command string and it's length
         // Subtract one to remove the NULL terminator since the command is not NULL terminated
         const char* fontSizeString = MSG_FONT_SIZE( "\x45" );
