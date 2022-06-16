@@ -94,6 +94,18 @@ namespace mod::game_patch
                                    uint16_t msgId,
                                    rando::Randomizer* randomizer )
     {
+        auto setMessageText = [&]( const char* text ) {
+            // Only replace the message if a valid string was retrieved
+            if ( text )
+            {
+                control->msg = text;
+                control->wMsgRender = text;
+            }
+        };
+
+        // Get the message id for the sign in front of Link's house
+        constexpr uint16_t linkHouseMsgId = 0x658;
+
         // Get a pointer to the current BMG file being used
         // The pointer is to INF1
         const void* unk = libtp::tp::processor::getResource_groupID( TProcessor, unk3 );
@@ -103,20 +115,27 @@ namespace mod::game_patch
         }
         const void* currentInf1 = *reinterpret_cast<void**>( reinterpret_cast<uint32_t>( unk ) + 0xC );
 
-        // Make sure the message being checked is in zel_00.bmg
-        // Currently we are not changing text in any other file
-        if ( currentInf1 != getZel00BmgInf() )
+        // Most text replacements are for zel_00.bmg, so check that first
+        if ( currentInf1 == getZel00BmgInf() )
         {
-            return;
+            const char* newMessage = _05_getMsgById( randomizer, msgId );
+            setMessageText( newMessage );
         }
-
-        const char* newMessage = _05_getMsgById( randomizer, msgId );
-
-        // Only replace the message if we get a valid string returned.
-        if ( newMessage )
+        else if ( ( msgId == linkHouseMsgId ) && ( libtp::tp::d_kankyo::env_light.currentRoom == 1 ) &&
+                  libtp::tp::d_a_alink::checkStageName(
+                      libtp::data::stage::allStages[libtp::data::stage::stageIDs::Ordon_Village] ) &&
+                  ( currentInf1 == getInf1Ptr( "zel_01.bmg" ) ) )
         {
-            control->msg = newMessage;
-            control->wMsgRender = newMessage;
+            // Make sure the randomizer is loaded/enabled
+            if ( randoIsEnabled( randomizer ) )
+            {
+                // Make sure a seed is loaded
+                rando::Seed* seed = randomizer->m_Seed;
+                if ( seed )
+                {
+                    setMessageText( seed->m_RequiredDungeons );
+                }
+            }
         }
     }
 
@@ -225,8 +244,6 @@ namespace mod::game_patch
         {
             if ( msgIds[i] == msgId )
             {
-                mod::console << reinterpret_cast<void*>( msgTableInfoRaw ) << "\n";
-                mod::console << &messages << "\n";
                 return &messages[msgOffsets[i]];
             }
         }

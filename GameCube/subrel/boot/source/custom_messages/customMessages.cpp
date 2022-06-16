@@ -93,7 +93,7 @@ namespace mod::customMessages
             msgIdTable[i] = entry->id;
             msgOffsetTable[i] = msgTableWrittenSize;
 
-            // Must use memcpy instead of strncpy since message commands have null characters
+            // Must use memcpy instead of strncpy since message commands have NULL characters
             uint32_t entrySize = entry->size;
             memcpy( &msgTable[msgTableWrittenSize], entry->msg, entrySize );
 

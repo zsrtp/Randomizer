@@ -57,6 +57,8 @@ namespace mod::rando
         ObjectArchiveReplacement* m_ObjectArcReplacements = nullptr;
         uint32_t m_numLoadedObjectArcReplacements = 0;
 
+        const char* m_RequiredDungeons = nullptr;     // Displayed when reading the sign in front of Link's house
+
         // Member functions
        public:
         // Main

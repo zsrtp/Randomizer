@@ -18,6 +18,7 @@
 #include "tp/d_a_shop_item_static.h"
 #include "tp/d_item_data.h"
 #include "user_patch/user_patch.h"
+#include "linkHouseSign.h"
 
 namespace mod::rando
 {
@@ -51,6 +52,9 @@ namespace mod::rando
             memcpy( m_GCIData, &data[m_Header->headerSize], dataSize );
         }
         delete[] data;
+
+        // Create the required dungeons text that is displayed when reading the sign in front of Link's house
+        link_house_sign::createRequiredDungeonsString( this, m_Header->requiredDungeons );
     }
 
     Seed::~Seed()
@@ -67,6 +71,9 @@ namespace mod::rando
             // Last clear gcibuffer as other functions before rely on it
             delete[] m_GCIData;
         }
+
+        // Clear the memory used by the required dungeons text that is displayed when reading the sign in front of Link's house
+        delete[] m_RequiredDungeons;
     }
 
     void Seed::applyOneTimePatches( bool set )
