@@ -16,7 +16,7 @@ namespace mod::link_house_sign
     extern const char* dungeonsUs[TOTAL_POSSIBLE_DUNGEONS];
 #else
     // Japanese
-    extern const char* dungeonsJP[TOTAL_POSSIBLE_DUNGEONS];
+    extern const char* dungeonsJp[TOTAL_POSSIBLE_DUNGEONS];
 #endif
 
 #ifdef TP_EU

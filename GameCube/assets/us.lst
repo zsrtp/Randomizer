@@ -289,7 +289,7 @@
 802288fc:getFontCCColorTable
 802289a8:getFontGCColorTable
 
-//processor.o
+// processor.o
 802A7C54:getResource_groupID
 
 //d_msg_flow.o

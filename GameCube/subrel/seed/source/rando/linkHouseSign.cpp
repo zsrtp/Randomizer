@@ -36,7 +36,7 @@ namespace mod::link_house_sign
     };
 #else
     // Japanese
-    const char* dungeonsJP[TOTAL_POSSIBLE_DUNGEONS] = {
+    const char* dungeonsJp[TOTAL_POSSIBLE_DUNGEONS] = {
         // Forest Temple
         // 森の神殿
         "\x90\x58\x82\xCC\x90\x5F\x93\x61",

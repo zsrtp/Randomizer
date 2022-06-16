@@ -288,6 +288,9 @@
 80229048:getFontCCColorTable
 802290f4:getFontGCColorTable
 
+// processor.o
+802AA094:getResource_groupID
+
 // resource.o
 802ab8d0:parseCharacter_1Byte
 
