@@ -126,6 +126,7 @@ namespace mod::game_patch
                       libtp::data::stage::allStages[libtp::data::stage::stageIDs::Ordon_Village] ) &&
                   ( currentInf1 == getInf1Ptr( "zel_01.bmg" ) ) )
         {
+            // Set the new message for the sign in front of Link's house
             // Make sure the randomizer is loaded/enabled
             if ( randoIsEnabled( randomizer ) )
             {

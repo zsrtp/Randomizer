@@ -215,7 +215,7 @@ namespace mod::link_house_sign
 
     void createRequiredDungeonsString( rando::Seed* seed, uint32_t requiredDungeonFlags )
     {
-        // Make sure the seed is actually loaded
+        // Make sure a seed is actually loaded
         if ( !seed )
         {
             return;
