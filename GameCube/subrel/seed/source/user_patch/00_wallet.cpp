@@ -31,6 +31,7 @@ namespace mod::user_patch
             values[1] = 600;
             values[2] = 1000;
         }
+        mod::walletsPatched = set;
 
         // 300 -> 1000
         *reinterpret_cast<uint32_t*>( getRupeeMaxPtr + 0x30 ) = ASM_LOAD_IMMEDIATE( 3, values[0] );

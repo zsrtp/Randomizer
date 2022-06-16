@@ -60,6 +60,7 @@ namespace mod
     extern void* Z2ScenePtr;
     extern bool isFoolishTrapQueued;
     extern uint8_t seedRelAction;
+    extern bool walletsPatched;
 
     void hookFunctions();
     void setScreen( bool state );     // Sets visibility of console

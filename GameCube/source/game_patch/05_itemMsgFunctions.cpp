@@ -173,22 +173,7 @@ namespace mod::game_patch
     const char** _05_replaceMessageString( const char** text )
     {
         const char* replacementText;
-        if ( strncmp( *text, talkToMidnaText, strlen( talkToMidnaText ) ) == 0 )
-        {
-            // If it is day/night set the text to reflect the current time.
-
-            if ( ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle >= 284 ) ||
-                 ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle <= 104 ) )
-            {
-                replacementText = { "Wait until day" };
-            }
-            else
-            {
-                replacementText = { "Wait until night" };
-            }
-            *text = replacementText;
-        }
-        else if ( strncmp( *text, smallDonationText, strlen( smallDonationText ) ) == 0 )
+        if ( strncmp( *text, smallDonationText, strlen( smallDonationText ) ) == 0 )
         {
             if ( libtp::tp::d_a_alink::checkStageName(
                      libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) &&
@@ -212,6 +197,24 @@ namespace mod::game_patch
         if ( !randoIsEnabled( randomizer ) )
         {
             return nullptr;
+        }
+
+        // If there are any special message IDs that require additional logic, we handle them here.
+        switch ( msgId )
+        {
+            case 0x99:      // Big Wallet Item Get Text
+            case 0x9A:      // Giant Wallet Item Get Text
+            case 0x298:     // Small Wallet Pause Menu Text
+            case 0x299:     // Big Wallet Pause Menu Text
+            case 0x29A:     // Giant Wallet Pause Menu Text
+            {
+                if ( !mod::walletsPatched )
+                {
+                    return nullptr;
+                }
+            }
+            default:
+                break;
         }
 
         // Make sure the custom text is loaded

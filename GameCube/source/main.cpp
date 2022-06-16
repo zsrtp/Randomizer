@@ -47,6 +47,7 @@ namespace mod
     uint8_t gameState = GAME_BOOT;
     void* Z2ScenePtr = nullptr;
     bool isFoolishTrapQueued = false;
+    KEEP_VAR bool walletsPatched = false;
     KEEP_VAR uint8_t seedRelAction = SEED_ACTION_NONE;
     uint32_t nextVal = libtp::gc_wii::os_time::OSGetTick();
 
@@ -679,9 +680,15 @@ namespace mod
         return return_parseCharacter_1Byte( text );
     }
 
-    KEEP_FUNC bool handle_query022( void* unk1, void* unk2, int32_t unk3 ) { return events::proc_query022( unk1, unk2, unk3 ); }
+    KEEP_FUNC bool handle_query022( void* unk1, void* unk2, int32_t unk3 )
+    {
+        return events::proc_query022( unk1, unk2, unk3 );
+    }
 
-    KEEP_FUNC bool handle_query023( void* unk1, void* unk2, int32_t unk3 ) { return events::proc_query023( unk1, unk2, unk3 ); }
+    KEEP_FUNC bool handle_query023( void* unk1, void* unk2, int32_t unk3 )
+    {
+        return events::proc_query023( unk1, unk2, unk3 );
+    }
 
     KEEP_FUNC bool handle_query025( void* unk1, void* unk2, int32_t unk3 )
     {
@@ -720,7 +727,10 @@ namespace mod
         return menuType;
     }
 
-    KEEP_FUNC bool handle_query042( void* unk1, void* unk2, int32_t unk3 ) { return events::proc_query042( unk1, unk2, unk3 ); }
+    KEEP_FUNC bool handle_query042( void* unk1, void* unk2, int32_t unk3 )
+    {
+        return events::proc_query042( unk1, unk2, unk3 );
+    }
 
     KEEP_FUNC uint32_t handle_event000( void* messageFlow, void* nodeEvent, void* actrPtr )
     {
@@ -1116,7 +1126,10 @@ namespace mod
         return return_onSwitch_dSv_memBit( memoryBit, flag );
     }
 
-    KEEP_FUNC bool handle_checkTreasureRupeeReturn( void* unk1, int32_t item ) { return false; }
+    KEEP_FUNC bool handle_checkTreasureRupeeReturn( void* unk1, int32_t item )
+    {
+        return false;
+    }
 
     KEEP_FUNC void handle_collect_save_open_init( uint8_t param_1 )
     {
@@ -1245,5 +1258,8 @@ namespace mod
         return ret;
     }
 
-    float __attribute__( ( noinline ) ) intToFloat( int32_t value ) { return static_cast<float>( value ); }
+    float __attribute__( ( noinline ) ) intToFloat( int32_t value )
+    {
+        return static_cast<float>( value );
+    }
 }     // namespace mod
