@@ -9,6 +9,7 @@
 #include <cstring>
 
 #include "rando/seed.h"
+#include "rando/linkHouseSign.h"
 #include "cxx.h"
 #include "game_patch/game_patch.h"
 #include "gc_wii/card.h"
@@ -18,7 +19,6 @@
 #include "tp/d_a_shop_item_static.h"
 #include "tp/d_item_data.h"
 #include "user_patch/user_patch.h"
-#include "linkHouseSign.h"
 
 namespace mod::rando
 {
