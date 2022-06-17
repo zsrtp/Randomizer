@@ -105,7 +105,7 @@ namespace mod::game_patch
             }
         };
 
-        // Get the message id for the sign in front of Link's house
+        // Get message ids for specific checks
         constexpr uint16_t linkHouseMsgId = 0x658;
 
         // Get a pointer to the current BMG file being used
@@ -122,19 +122,21 @@ namespace mod::game_patch
         {
             const char* newMessage = _05_getMsgById( randomizer, msgId );
             setMessageText( newMessage );
+            return;
         }
-        else if ( ( msgId == linkHouseMsgId ) && libtp::tools::playerIsInRoomStage( 1, allStages[stageIDs::Ordon_Village] ) &&
-                  ( currentInf1 == getInf1Ptr( "zel_01.bmg" ) ) )
+
+        // Make sure the randomizer is loaded/enabled and a seed is loaded for seed-specific checks
+        else if ( randoIsEnabled( randomizer ) )
         {
-            // Set the new message for the sign in front of Link's house
-            // Make sure the randomizer is loaded/enabled
-            if ( randoIsEnabled( randomizer ) )
+            rando::Seed* seed = randomizer->m_Seed;
+            if ( seed )
             {
-                // Make sure a seed is loaded
-                rando::Seed* seed = randomizer->m_Seed;
-                if ( seed )
+                if ( ( msgId == linkHouseMsgId ) &&
+                     libtp::tools::playerIsInRoomStage( 1, allStages[stageIDs::Ordon_Village] ) &&
+                     ( currentInf1 == getInf1Ptr( "zel_01.bmg" ) ) )
                 {
                     setMessageText( seed->m_RequiredDungeons );
+                    return;
                 }
             }
         }
