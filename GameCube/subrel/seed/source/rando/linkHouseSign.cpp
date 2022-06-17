@@ -34,6 +34,8 @@ namespace mod::link_house_sign
         "City in the Sky",
         "Palace of Twilight",
     };
+
+    const char* noDungeonsRequiredUs = "No dungeons required";
 #else
     // Japanese
     const char* dungeonsJp[TOTAL_POSSIBLE_DUNGEONS] = {
@@ -69,6 +71,9 @@ namespace mod::link_house_sign
         // 影の宮殿
         "\x89\x65\x82\xCC\x8B\x7B\x93\x61",
     };
+
+    // ダンジョンは必要ない
+    const char* noDungeonsRequiredJp = "\x83\x5F\x83\x93\x83\x57\x83\x87\x83\x93\x82\xCD\x95\x4B\x97\x76\x82\xC8\x82\xA2";
 #endif
 
 #ifdef TP_EU
@@ -107,6 +112,10 @@ namespace mod::link_house_sign
         "\x53\x63\x68\x61\x74\x74\x65\x6e\x70\x61\x6c\x61\x73\x74",
     };
 
+    // Kein Dungeon erforderlich
+    const char* noDungeonsRequiredDe =
+        "\x4B\x65\x69\x6E\x20\x44\x75\x6E\x67\x65\x6F\x6E\x20\x65\x72\x66\x6F\x72\x64\x65\x72\x6C\x69\x63\x68";
+
     // French
     const char* dungeonsFr[TOTAL_POSSIBLE_DUNGEONS] = {
         // Forest Temple
@@ -141,6 +150,9 @@ namespace mod::link_house_sign
         // Palais du Crépuscule
         "\x50\x61\x6c\x61\x69\x73\x20\x64\x75\x20\x43\x72\xe9\x70\x75\x73\x63\x75\x6c\x65",
     };
+
+    // Aucuns donjons requis
+    const char* noDungeonsRequiredFr = "\x41\x75\x63\x75\x6E\x73\x20\x64\x6F\x6E\x6A\x6F\x6E\x73\x20\x72\x65\x71\x75\x69\x73";
 
     // Spanish
     const char* dungeonsSp[TOTAL_POSSIBLE_DUNGEONS] = {
@@ -177,6 +189,8 @@ namespace mod::link_house_sign
         "\x50\x61\x6C\x61\x63\x69\x6F\x20\x64\x65\x6C\x20\x43\x72\x65\x70\xFA\x73\x63\x75\x6C\x6F",
     };
 
+    const char* noDungeonsRequiredSp = "No dungeons required";
+
     // Italian
     const char* dungeonsIt[TOTAL_POSSIBLE_DUNGEONS] = {
         // Forest Temple
@@ -211,6 +225,10 @@ namespace mod::link_house_sign
         // Palazzo del crepuscolo
         "\x50\x61\x6C\x61\x7A\x7A\x6F\x20\x64\x65\x6C\x20\x63\x72\x65\x70\x75\x73\x63\x6F\x6C\x6F",
     };
+
+    // Nessun santuario richiesto
+    const char* noDungeonsRequiredIt =
+        "\x4E\x65\x73\x73\x75\x6E\x20\x73\x61\x6E\x74\x75\x61\x72\x69\x6F\x20\x72\x69\x63\x68\x69\x65\x73\x74\x6F";
 #endif
 
     void createRequiredDungeonsString( rando::Seed* seed, uint32_t requiredDungeonFlags )
@@ -223,10 +241,13 @@ namespace mod::link_house_sign
 
         // Get the dungeon strings array to use
         const char** dungeons;
+        const char* noDungeonsRequired;
 #ifdef TP_US
         dungeons = dungeonsUs;
+        noDungeonsRequired = noDungeonsRequiredUs;
 #elif defined TP_JP
         dungeons = dungeonsJp;
+        noDungeonsRequired = noDungeonsRequiredJp;
 #elif defined TP_EU
         using namespace libtp::tp::d_s_logo;
 
@@ -237,26 +258,31 @@ namespace mod::link_house_sign
             default:     // The language is invalid/unsupported, so the game defaults to English
             {
                 dungeons = dungeonsUs;
+                noDungeonsRequired = noDungeonsRequiredUs;
                 break;
             }
             case Languages::de:
             {
                 dungeons = dungeonsDe;
+                noDungeonsRequired = noDungeonsRequiredDe;
                 break;
             }
             case Languages::fr:
             {
                 dungeons = dungeonsFr;
+                noDungeonsRequired = noDungeonsRequiredFr;
                 break;
             }
             case Languages::it:
             {
                 dungeons = dungeonsIt;
+                noDungeonsRequired = noDungeonsRequiredIt;
                 break;
             }
             case Languages::sp:
             {
                 dungeons = dungeonsSp;
+                noDungeonsRequired = noDungeonsRequiredSp;
                 break;
             }
         }
@@ -269,36 +295,36 @@ namespace mod::link_house_sign
         uint32_t totalStringsLength = 0;
 
         const uint8_t* areaColors = areaColorIds;
-        for ( uint32_t i = 0; i < TOTAL_POSSIBLE_DUNGEONS; i++ )
-        {
-            if ( requiredDungeonFlags & ( 1 << i ) )
-            {
-                const char* currentDungeon = dungeons[i];
-
-                requiredDungeons[requiredDungeonsLength] = currentDungeon;
-                requiredDungeonsColor[requiredDungeonsLength] = static_cast<char>( areaColors[i] );
-                requiredDungeonsLength++;
-
-                totalStringsLength += strlen( currentDungeon );
-            }
-        }
 
         // It's possible that there will be no required dungeons
-        if ( requiredDungeonsLength == 0 )
+        constexpr uint32_t maxBitsValue = ( 1 << TOTAL_POSSIBLE_DUNGEONS ) - 1;
+        if ( ( requiredDungeonFlags & maxBitsValue ) != 0 )
         {
-            // Get the string and size for no dungeons being required
-            const char* noDungeonsString = "No dungeons required";     // Placeholder until translated
-            uint32_t noDungeonsStringLength = strlen( noDungeonsString );
+            // At least one dungeon is required
+            for ( uint32_t i = 0; i < TOTAL_POSSIBLE_DUNGEONS; i++ )
+            {
+                if ( requiredDungeonFlags & ( 1 << i ) )
+                {
+                    const char* currentDungeon = dungeons[i];
 
-            // Allocate memory for the string and set it up
-            // Add one to account for the NULL terminator
-            char* buf = new ( sizeof( char ) ) char[noDungeonsStringLength + 1];
-            strncpy( buf, noDungeonsString, noDungeonsStringLength );
-            buf[noDungeonsStringLength] = '\0';
+                    requiredDungeons[requiredDungeonsLength] = currentDungeon;
+                    requiredDungeonsColor[requiredDungeonsLength] = static_cast<char>( areaColors[i] );
+                    requiredDungeonsLength++;
 
-            // Assign the buffer
-            seed->m_RequiredDungeons = buf;
-            return;
+                    totalStringsLength += strlen( currentDungeon );
+                }
+            }
+        }
+        else
+        {
+            // No dungeons are required
+            const char* currentDungeon = noDungeonsRequired;
+
+            requiredDungeons[0] = currentDungeon;
+            requiredDungeonsColor[0] = MSG_COLOR_WHITE_HEX;
+            requiredDungeonsLength = 1;
+
+            totalStringsLength += strlen( currentDungeon );
         }
 
         // Get the font size command string and it's length

@@ -208,13 +208,16 @@ namespace mod::game_patch
             case 0x299:     // Big Wallet Pause Menu Text
             case 0x29A:     // Giant Wallet Pause Menu Text
             {
-                if ( !mod::walletsPatched )
+                if ( !walletsPatched )
                 {
                     return nullptr;
                 }
+                break;
             }
             default:
+            {
                 break;
+            }
         }
 
         // Make sure the custom text is loaded
