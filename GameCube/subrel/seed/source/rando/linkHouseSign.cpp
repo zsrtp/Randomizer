@@ -318,13 +318,11 @@ namespace mod::link_house_sign
         else
         {
             // No dungeons are required
-            const char* currentDungeon = noDungeonsRequired;
-
-            requiredDungeons[0] = currentDungeon;
+            requiredDungeons[0] = noDungeonsRequired;
             requiredDungeonsColor[0] = MSG_COLOR_WHITE_HEX;
             requiredDungeonsLength = 1;
 
-            totalStringsLength += strlen( currentDungeon );
+            totalStringsLength += strlen( noDungeonsRequired );
         }
 
         // Get the font size command string and it's length
