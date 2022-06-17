@@ -19,7 +19,6 @@
 #include "tp/d_a_alink.h"
 #include "tp/d_a_player.h"
 #include "tp/d_com_inf_game.h"
-#include "tp/d_kankyo.h"
 #include "tp/d_save.h"
 #include "tp/dzx.h"
 #include "tp/f_op_actor_mng.h"
@@ -588,11 +587,12 @@ namespace mod
         {
             using namespace libtp::tp;
             using namespace libtp::data;
+            using namespace libtp::data::stage;
             case items::Hylian_Shield:
             {
                 // Check if we are at Kakariko Malo mart and verify that we have not bought the shield.
-                if ( tp::d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Kakariko_Village_Interiors] ) &&
-                     tp::d_kankyo::env_light.currentRoom == 3 && !tp::d_a_alink::dComIfGs_isEventBit( 0x6102 ) )
+                if ( libtp::tools::playerIsInRoomStage( 3, allStages[stageIDs::Kakariko_Village_Interiors] ) &&
+                     !tp::d_a_alink::dComIfGs_isEventBit( 0x6102 ) )
                 {
                     // Return false so we can buy the shield.
                     return 0;
@@ -602,7 +602,7 @@ namespace mod
             case items::Hawkeye:
             {
                 // Check if we are at Kakariko Village and that the hawkeye is currently not for sale.
-                if ( ( tp::d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Kakariko_Village] ) &&
+                if ( ( tp::d_a_alink::checkStageName( allStages[stageIDs::Kakariko_Village] ) &&
                        !libtp::tp::d_save::isSwitch_dSv_memBit( &d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
                                                                 0x3E ) ) )
                 {
@@ -616,8 +616,7 @@ namespace mod
             case items::Ordon_Goat_Cheese:
             {
                 // Check to see if currently in Snowpeak Ruins
-                if ( libtp::tp::d_a_alink::checkStageName(
-                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) )
+                if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Snowpeak_Ruins] ) )
                 {
                     // Return false so that yeta will give the map item no matter what.
                     return 0;
@@ -697,8 +696,7 @@ namespace mod
 
     KEEP_FUNC int32_t handle_query004( void* unk1, void* unk2, int32_t unk3 )
     {
-        if ( libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) &&
-             libtp::tp::d_kankyo::env_light.currentRoom == 2 )
+        if ( libtp::tools::playerIsInRoomStage( 2, libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) )
         {
             uint16_t donationCheck = *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( unk2 ) + 4 );
             if ( donationCheck == 0x1E )
@@ -747,8 +745,7 @@ namespace mod
     KEEP_FUNC int32_t handle_event003( void* messageFlow, void* nodeEvent, void* actrPtr )
     {
         // If we are donating to charlo, we want to remove 100 rupees instead of the normal 30
-        if ( libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) &&
-             libtp::tp::d_kankyo::env_light.currentRoom == 2 )
+        if ( libtp::tools::playerIsInRoomStage( 2, libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) )
         {
             uint32_t donationAmount = *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 );
             if ( donationAmount == 0x1E )
@@ -764,8 +761,7 @@ namespace mod
     KEEP_FUNC int32_t handle_event041( void* messageFlow, void* nodeEvent, void* actrPtr )
     {
         // If we are donating to Charlo, we want to increase the donated amount by 100 instead of the normal 30.
-        if ( libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) &&
-             libtp::tp::d_kankyo::env_light.currentRoom == 2 )
+        if ( libtp::tools::playerIsInRoomStage( 2, libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) )
         {
             uint32_t donationAmount = *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 );
             if ( donationAmount == 0x1E )
@@ -883,9 +879,10 @@ namespace mod
                     return true;     // If flag isn't set, the player will be thrown into escort when they open the
                                      // door.
                 }
-                else if ( checkStageName( allStages[stageIDs::Kakariko_Village_Interiors] ) &&
-                          ( libtp::tp::d_kankyo::env_light.currentRoom ==
-                            0 ) )     // Return true to prevent Renado/Illia crash after ToT
+                else if ( libtp::tools::playerIsInRoomStage(
+                              0,
+                              allStages[stageIDs::Kakariko_Village_Interiors] ) )     // Return true to prevent Renado/Illia
+                                                                                      // crash after ToT
                 {
                     return true;
                 }

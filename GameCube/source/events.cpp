@@ -93,9 +93,9 @@ namespace mod::events
             case 0x1FA:
                 // Nop out the instruction that stores the new total small key value when the game attempts to
                 // remove a small key from the inventory when opening the boss door
-                if ( libtp::tp::d_a_alink::checkStageName(
-                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Lakebed_Temple] ) &&
-                     libtp::tp::d_kankyo::env_light.currentRoom == 2 )
+                if ( libtp::tools::playerIsInRoomStage(
+                         2,
+                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Lakebed_Temple] ) )
                 {
                     *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1198 ) = 0x60000000;     // Previous: 0x3803ffff
                 }
@@ -231,8 +231,7 @@ namespace mod::events
                 return_daObjLv5Key_c__Wait =
                     libtp::patch::hookFunction( reinterpret_cast<void ( * )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* )>(
                                                     relPtrRaw + d_a_obj_Lv5Key__Wait_offset ),
-                                                []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr )
-                                                {
+                                                []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr ) {
                                                     float playerPos[3];
                                                     libtp::tp::d_map_path_dmap::getMapPlayerPos( playerPos );
 
@@ -463,9 +462,9 @@ namespace mod::events
     bool proc_query023( void* unk1, void* unk2, int32_t unk3 )
     {
         // Check to see if currently in one of the Kakariko interiors
-        if ( libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Village_Interiors] ) &&
-             libtp::tp::d_kankyo::env_light.currentRoom == 1 )
+        if ( libtp::tools::playerIsInRoomStage(
+                 1,
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Village_Interiors] ) )
         {
             // If player has not bought Barnes' Bomb Bag, we want to allow them to be able to get the check.
             if ( ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x908 ) ) )
@@ -537,8 +536,9 @@ namespace mod::events
             {
                 if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Forest_Temple] ) )
                 {
-                    if ( ( ( libtp::tp::d_kankyo::env_light.currentRoom == 3 ) ||
-                           ( libtp::tp::d_kankyo::env_light.currentRoom == 1 ) ) &&
+                    const uint8_t currentRoom = libtp::tp::d_kankyo::env_light.currentRoom;
+
+                    if ( ( ( currentRoom == 3 ) || ( currentRoom == 1 ) ) &&
                          ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mEvtManager.mRoomNo != 0 ) )
                     {
                         return false;

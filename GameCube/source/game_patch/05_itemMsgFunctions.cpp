@@ -94,6 +94,8 @@ namespace mod::game_patch
                                    uint16_t msgId,
                                    rando::Randomizer* randomizer )
     {
+        using namespace libtp::data::stage;
+
         auto setMessageText = [&]( const char* text ) {
             // Only replace the message if a valid string was retrieved
             if ( text )
@@ -121,9 +123,7 @@ namespace mod::game_patch
             const char* newMessage = _05_getMsgById( randomizer, msgId );
             setMessageText( newMessage );
         }
-        else if ( ( msgId == linkHouseMsgId ) && ( libtp::tp::d_kankyo::env_light.currentRoom == 1 ) &&
-                  libtp::tp::d_a_alink::checkStageName(
-                      libtp::data::stage::allStages[libtp::data::stage::stageIDs::Ordon_Village] ) &&
+        else if ( ( msgId == linkHouseMsgId ) && libtp::tools::playerIsInRoomStage( 1, allStages[stageIDs::Ordon_Village] ) &&
                   ( currentInf1 == getInf1Ptr( "zel_01.bmg" ) ) )
         {
             // Set the new message for the sign in front of Link's house
@@ -175,9 +175,8 @@ namespace mod::game_patch
         const char* replacementText;
         if ( strncmp( *text, smallDonationText, strlen( smallDonationText ) ) == 0 )
         {
-            if ( libtp::tp::d_a_alink::checkStageName(
-                     libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) &&
-                 libtp::tp::d_kankyo::env_light.currentRoom == 2 )
+            if ( libtp::tools::playerIsInRoomStage( 2,
+                                                    libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) )
             {
                 replacementText = {
                     "100 Rupees"
