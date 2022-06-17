@@ -61,6 +61,7 @@ namespace mod
     extern bool isFoolishTrapQueued;
     extern uint8_t seedRelAction;
     extern bool walletsPatched;
+    extern const char* m_DonationText;
 
     void hookFunctions();
     void setScreen( bool state );     // Sets visibility of console

@@ -15,9 +15,6 @@
 
 namespace mod::game_patch
 {
-    // Custom strings that are used for text search
-    const char* talkToMidnaText = { "Talk to Midna" };
-    const char* smallDonationText = { "30 Rupees" };
 
     /*
     int32_t getItemIdFromMsgId( const void* TProcessor, uint16_t unk3, uint32_t msgId )
@@ -96,7 +93,8 @@ namespace mod::game_patch
     {
         using namespace libtp::data::stage;
 
-        auto setMessageText = [&]( const char* text ) {
+        auto setMessageText = [&]( const char* text )
+        {
             // Only replace the message if a valid string was retrieved
             if ( text )
             {
@@ -107,6 +105,7 @@ namespace mod::game_patch
 
         // Get message ids for specific checks
         constexpr uint16_t linkHouseMsgId = 0x658;
+        constexpr uint16_t charloDonationMsgId = 0x355;
 
         // Get a pointer to the current BMG file being used
         // The pointer is to INF1
@@ -122,6 +121,13 @@ namespace mod::game_patch
         {
             const char* newMessage = _05_getMsgById( randomizer, msgId );
             setMessageText( newMessage );
+            return;
+        }
+        else if ( ( msgId == charloDonationMsgId ) &&
+                  libtp::tools::playerIsInRoomStage( 2, allStages[stageIDs::Castle_Town] ) &&
+                  ( currentInf1 == getInf1Ptr( "zel_04.bmg" ) ) )
+        {
+            setMessageText( m_DonationText );
             return;
         }
 
@@ -170,26 +176,6 @@ namespace mod::game_patch
             }
         }
         return newColorCode;
-    }
-
-    const char** _05_replaceMessageString( const char** text )
-    {
-        const char* replacementText;
-        if ( strncmp( *text, smallDonationText, strlen( smallDonationText ) ) == 0 )
-        {
-            if ( libtp::tools::playerIsInRoomStage( 2,
-                                                    libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) )
-            {
-                replacementText = {
-                    "100 Rupees"
-                    "\x0A\x1A\x06\x00\x00\x09\x02"
-                    "50 Rupees"
-                    "\x0A\x1A\x06\x00\x00\x09\x03"
-                    "Sorry" };
-                *text = replacementText;
-            }
-        }
-        return text;
     }
 
     const char* _05_getMsgById( rando::Randomizer* randomizer, uint32_t msgId )

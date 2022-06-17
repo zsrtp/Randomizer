@@ -231,7 +231,8 @@ namespace mod::events
                 return_daObjLv5Key_c__Wait =
                     libtp::patch::hookFunction( reinterpret_cast<void ( * )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* )>(
                                                     relPtrRaw + d_a_obj_Lv5Key__Wait_offset ),
-                                                []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr ) {
+                                                []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr )
+                                                {
                                                     float playerPos[3];
                                                     libtp::tp::d_map_path_dmap::getMapPlayerPos( playerPos );
 
@@ -399,10 +400,6 @@ namespace mod::events
     {
         using namespace libtp::data::stage;
         *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 2.0f;     // scale
-        uint32_t relPtrRaw = reinterpret_cast<uint32_t>( fopAC );
-        mod::console << relPtrRaw << "ptr \n";
-        relPtrRaw = reinterpret_cast<uint32_t>( daObjLife );
-        mod::console << relPtrRaw << "lif \n";
         if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Hyrule_Field] ) ||
              libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Upper_Zoras_River] ) ||
              libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Sacred_Grove] ) )
@@ -601,7 +598,10 @@ namespace mod::events
         }
     }
 
-    bool haveItem( uint8_t item ) { return libtp::tp::d_item::checkItemGet( item, 1 ); }
+    bool haveItem( uint8_t item )
+    {
+        return libtp::tp::d_item::checkItemGet( item, 1 );
+    }
 
     void handleQuickTransform()
     {

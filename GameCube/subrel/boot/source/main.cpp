@@ -1,6 +1,7 @@
 #include "main.h"
 #include "item_wheel_menu.h"
 #include "patch.h"
+#include "charloDonationMessage.h"
 
 #include "game_patch/game_patch.h"
 #include "customMessages.h"
@@ -34,6 +35,7 @@ namespace mod
 
         // Load custom messages
         customMessages::createMsgTable();
+        charlo_donation_message::createCharloDonationMessage();
 
         // Load item wheel menu strings
         customMessages::createItemWheelMenuData();
