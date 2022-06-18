@@ -25,7 +25,7 @@ namespace mod::customMessages
 #ifndef TP_JP
     // English
     extern MsgEntry entriesUs[TOTAL_CUSTOM_MESSAGES];
-    extern const MsgEntry charloDonationEntryEn;
+    extern const MsgEntry charloDonationEntryUs;
     extern const ItemWheelMenuStrings itemWheelMenuStringsUs;
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsUs;
 #else

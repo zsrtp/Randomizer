@@ -999,7 +999,7 @@ namespace mod::customMessages
         0x029a,
     };
 
-    const MsgEntry charloDonationEntryEn = { charloDonationEn, sizeof( charloDonationEn ), 0x0355 };
+    const MsgEntry charloDonationEntryUs = { charloDonationEn, sizeof( charloDonationEn ), 0x0355 };
 
     const ItemWheelMenuStrings itemWheelMenuStringsUs = {
         // areasBeingTracked

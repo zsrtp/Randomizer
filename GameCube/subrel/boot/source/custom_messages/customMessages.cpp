@@ -210,19 +210,18 @@ namespace mod::customMessages
         using namespace customMessages;
         const MsgEntry* donationEntry;
 #ifdef TP_US
-        donationEntry = &charloDonationEntryEn;
+        donationEntry = &charloDonationEntryUs;
 #elif defined TP_JP
         donationEntry = &charloDonationEntryJp;
 #elif defined TP_EU
         using namespace libtp::tp::d_s_logo;
 
-        Languages currentLanguage = getPalLanguage2( nullptr );
         switch ( currentLanguage )
         {
             case Languages::uk:
             default:     // The language is invalid/unsupported, so the game defaults to English
             {
-                donationEntry = &charloDonationEntryEn;
+                donationEntry = &charloDonationEntryUs;
                 break;
             }
             case Languages::de:
