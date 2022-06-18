@@ -20,6 +20,7 @@ namespace mod::customMessages
 
     void createMsgTable();
     void createItemWheelMenuData();
+    void createCharloDonationMessage();
 
 #ifndef TP_JP
     // English

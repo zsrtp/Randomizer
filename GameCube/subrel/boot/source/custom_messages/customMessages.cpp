@@ -203,4 +203,56 @@ namespace mod::customMessages
         // Assign textData
         dataDest->textData = textData;
     }
+
+    void createCharloDonationMessage()
+    {
+        // Get the donation string to use
+        using namespace customMessages;
+        const MsgEntry* donationEntry;
+#ifdef TP_US
+        donationEntry = &charloDonationEntryEn;
+#elif defined TP_JP
+        donationEntry = &charloDonationEntryJp;
+#elif defined TP_EU
+        using namespace libtp::tp::d_s_logo;
+
+        Languages currentLanguage = getPalLanguage2( nullptr );
+        switch ( currentLanguage )
+        {
+            case Languages::uk:
+            default:     // The language is invalid/unsupported, so the game defaults to English
+            {
+                donationEntry = &charloDonationEntryEn;
+                break;
+            }
+            case Languages::de:
+            {
+                donationEntry = &charloDonationEntryDe;
+                break;
+            }
+            case Languages::fr:
+            {
+                donationEntry = &charloDonationEntryFr;
+                break;
+            }
+            case Languages::it:
+            {
+                donationEntry = &charloDonationEntryIt;
+                break;
+            }
+            case Languages::sp:
+            {
+                donationEntry = &charloDonationEntrySp;
+                break;
+            }
+        }
+#endif
+        // Allocate memory for the buffer and write the string
+        // Must use memcpy instead of strncpy since message commands have NULL characters
+        char* buf = new ( sizeof( char ) ) char[donationEntry->size];
+        memcpy( buf, donationEntry->msg, donationEntry->size );
+
+        // Assign the buffer
+        m_DonationText = buf;
+    }
 }     // namespace mod::customMessages

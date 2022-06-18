@@ -25,7 +25,6 @@ namespace mod::rando
     Seed::Seed( int32_t chan, SeedInfo* seedInfo ): m_CardSlot( chan )
     {
         m_Header = &seedInfo->header;
-        mod::console << m_Header << "\n";
         // Loading seed rando-dataX '<seed>'...
 
         // Store our filename index
