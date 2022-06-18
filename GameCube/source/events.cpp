@@ -301,6 +301,17 @@ namespace mod::events
                 libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0xC7F8 ),
                                              reinterpret_cast<void*>( assembly::asmAdjustIzaWolf ) );
             }
+            // d_a_obj_drop.rel
+            // Tear of Light
+            case 0x1B7:
+            {
+                // set wait timer to 1
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x0FCC ) = 0x38000001;     // li 0x1
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1038 ) = 0x38000001;     // li 0x1
+
+                // set y_pos of drop to be at ground level
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x2474 ) = 0x00000000;     // 0.0f
+            }
         }
     }
 

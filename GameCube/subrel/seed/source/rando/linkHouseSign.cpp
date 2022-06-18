@@ -189,7 +189,9 @@ namespace mod::link_house_sign
         "\x50\x61\x6C\x61\x63\x69\x6F\x20\x64\x65\x6C\x20\x43\x72\x65\x70\xFA\x73\x63\x75\x6C\x6F",
     };
 
-    const char* noDungeonsRequiredSp = "No dungeons required";
+    // Sin mazmorras requeridas
+    const char* noDungeonsRequiredSp =
+        "\x53\x69\x6E\x20\x6D\x61\x7A\x6D\x6F\x72\x72\x61\x73\x20\x72\x65\x71\x75\x65\x72\x69\x64\x61\x73";
 
     // Italian
     const char* dungeonsIt[TOTAL_POSSIBLE_DUNGEONS] = {

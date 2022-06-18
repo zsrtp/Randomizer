@@ -931,304 +931,319 @@ namespace mod::customMessages
         // !
         "\x21"
     MSG_END()
-        // clang-format on
+    MSG_BEGIN_ARRAY( charloDonationSp )
+        // ¿Darme una limosna por la paz de Hyrule?
+        "\xBF\x44\x61\x72\x6D\x65\x20\x75\x6E\x61\x20\x6C\x69\x6D\x6F\x73\x6E\x61\x20\x70\x6F\x72\x20\x6C\x61\x20\x70\x61\x7A\x0A\x64\x65\x20\x48\x79\x72\x75\x6C\x65\x3F" 
+        MSG_OPTION_LIST( MSG_OPTION_1 ) 
+        // 100 rupias
+        "\x31\x30\x30\x20\x72\x75\x70\x69\x61\x73\x0A" 
+        MSG_OPTION_LIST( MSG_OPTION_2 ) 
+        // 50 rupias
+        "\x35\x30\x20\x72\x75\x70\x69\x61\x73\x0A" 
+        MSG_OPTION_LIST( MSG_OPTION_3 ) 
+        // No
+        "\x4E\x6F";
+    MSG_END()
+    // clang-format on
 
-        MsgEntry entriesSp[TOTAL_CUSTOM_MESSAGES] = {
-            // Forest Temple small key
-            forestSmallKeySp,
-            sizeof( forestSmallKeySp ),
-            0x00E9,
+    MsgEntry entriesSp[TOTAL_CUSTOM_MESSAGES] = {
+        // Forest Temple small key
+        forestSmallKeySp,
+        sizeof( forestSmallKeySp ),
+        0x00E9,
 
-            // Goron Mines small key
-            minesSmallKeySp,
-            sizeof( minesSmallKeySp ),
-            0x00EA,
+        // Goron Mines small key
+        minesSmallKeySp,
+        sizeof( minesSmallKeySp ),
+        0x00EA,
 
-            // Lakebed Temple small key
-            lakebedSmallKeySp,
-            sizeof( lakebedSmallKeySp ),
-            0x00EB,
+        // Lakebed Temple small key
+        lakebedSmallKeySp,
+        sizeof( lakebedSmallKeySp ),
+        0x00EB,
 
-            // Arbiter's Grounds small key
-            arbitersSmallKeySp,
-            sizeof( arbitersSmallKeySp ),
-            0x00EC,
+        // Arbiter's Grounds small key
+        arbitersSmallKeySp,
+        sizeof( arbitersSmallKeySp ),
+        0x00EC,
 
-            // Snowpeak Ruins small key
-            snowpeakSmallKeySp,
-            sizeof( snowpeakSmallKeySp ),
-            0x00ED,
+        // Snowpeak Ruins small key
+        snowpeakSmallKeySp,
+        sizeof( snowpeakSmallKeySp ),
+        0x00ED,
 
-            // Temple of Time small key
-            timeSmallKeySp,
-            sizeof( timeSmallKeySp ),
-            0x00EE,
+        // Temple of Time small key
+        timeSmallKeySp,
+        sizeof( timeSmallKeySp ),
+        0x00EE,
 
-            // City in the Sky small key
-            citySmallKeySp,
-            sizeof( citySmallKeySp ),
-            0x00EF,
+        // City in the Sky small key
+        citySmallKeySp,
+        sizeof( citySmallKeySp ),
+        0x00EF,
 
-            // Palace of Twilight small key
-            palaceSmallKeySp,
-            sizeof( palaceSmallKeySp ),
-            0x00F0,
+        // Palace of Twilight small key
+        palaceSmallKeySp,
+        sizeof( palaceSmallKeySp ),
+        0x00F0,
 
-            // Hyrule Castle small key
-            hyruleSmallKeySp,
-            sizeof( hyruleSmallKeySp ),
-            0x00F1,
+        // Hyrule Castle small key
+        hyruleSmallKeySp,
+        sizeof( hyruleSmallKeySp ),
+        0x00F1,
 
-            // Bublin Camp small key
-            campSmallKeySp,
-            sizeof( campSmallKeySp ),
-            0x00F2,
+        // Bublin Camp small key
+        campSmallKeySp,
+        sizeof( campSmallKeySp ),
+        0x00F2,
 
-            // Shadow Crystal
-            shadowCrystalSp,
-            sizeof( shadowCrystalSp ),
-            0x0096,
+        // Shadow Crystal
+        shadowCrystalSp,
+        sizeof( shadowCrystalSp ),
+        0x0096,
 
-            // Forest Temple dungeon map
-            forestDungeonMapSp,
-            sizeof( forestDungeonMapSp ),
-            0x011A,
+        // Forest Temple dungeon map
+        forestDungeonMapSp,
+        sizeof( forestDungeonMapSp ),
+        0x011A,
 
-            // Goron Mines dungeon map
-            minesDungeonMapSp,
-            sizeof( minesDungeonMapSp ),
-            0x011B,
+        // Goron Mines dungeon map
+        minesDungeonMapSp,
+        sizeof( minesDungeonMapSp ),
+        0x011B,
 
-            // Lakebed Temple dungeon map
-            lakebedDungeonMapSp,
-            sizeof( lakebedDungeonMapSp ),
-            0x011C,
+        // Lakebed Temple dungeon map
+        lakebedDungeonMapSp,
+        sizeof( lakebedDungeonMapSp ),
+        0x011C,
 
-            // Arbiter's Grounds dungeon map
-            arbitersDungeonMapSp,
-            sizeof( arbitersDungeonMapSp ),
-            0x011D,
+        // Arbiter's Grounds dungeon map
+        arbitersDungeonMapSp,
+        sizeof( arbitersDungeonMapSp ),
+        0x011D,
 
-            // Snowpeak Ruins dungeon map
-            snowpeakDungeonMapSp,
-            sizeof( snowpeakDungeonMapSp ),
-            0x011E,
+        // Snowpeak Ruins dungeon map
+        snowpeakDungeonMapSp,
+        sizeof( snowpeakDungeonMapSp ),
+        0x011E,
 
-            // Temple of Time dungeon map
-            timeDungeonMapSp,
-            sizeof( timeDungeonMapSp ),
-            0x011F,
+        // Temple of Time dungeon map
+        timeDungeonMapSp,
+        sizeof( timeDungeonMapSp ),
+        0x011F,
 
-            // City in the Sky dungeon map
-            cityDungeonMapSp,
-            sizeof( cityDungeonMapSp ),
-            0x0120,
+        // City in the Sky dungeon map
+        cityDungeonMapSp,
+        sizeof( cityDungeonMapSp ),
+        0x0120,
 
-            // Palace of Twilight dungeon map
-            palaceDungeonMapSp,
-            sizeof( palaceDungeonMapSp ),
-            0x0121,
+        // Palace of Twilight dungeon map
+        palaceDungeonMapSp,
+        sizeof( palaceDungeonMapSp ),
+        0x0121,
 
-            // Hyrule Castle dungeon map
-            hyruleDungeonMapSp,
-            sizeof( hyruleDungeonMapSp ),
-            0x0122,
+        // Hyrule Castle dungeon map
+        hyruleDungeonMapSp,
+        sizeof( hyruleDungeonMapSp ),
+        0x0122,
 
-            // Forest Temple compass
-            forestCompassSp,
-            sizeof( forestCompassSp ),
-            0x00FD,
+        // Forest Temple compass
+        forestCompassSp,
+        sizeof( forestCompassSp ),
+        0x00FD,
 
-            // Goron Mines compass
-            minesCompassSp,
-            sizeof( minesCompassSp ),
-            0x00FE,
+        // Goron Mines compass
+        minesCompassSp,
+        sizeof( minesCompassSp ),
+        0x00FE,
 
-            // Lakebed Temple compass
-            lakebedCompassSp,
-            sizeof( lakebedCompassSp ),
-            0x00FF,
+        // Lakebed Temple compass
+        lakebedCompassSp,
+        sizeof( lakebedCompassSp ),
+        0x00FF,
 
-            // Arbiter's Grounds compass
-            arbitersCompassSp,
-            sizeof( arbitersCompassSp ),
-            0x010C,
+        // Arbiter's Grounds compass
+        arbitersCompassSp,
+        sizeof( arbitersCompassSp ),
+        0x010C,
 
-            // Snowpeak Ruins compass
-            snowpeakCompassSp,
-            sizeof( snowpeakCompassSp ),
-            0x010D,
+        // Snowpeak Ruins compass
+        snowpeakCompassSp,
+        sizeof( snowpeakCompassSp ),
+        0x010D,
 
-            // Temple of Time compass
-            timeCompassSp,
-            sizeof( timeCompassSp ),
-            0x010E,
+        // Temple of Time compass
+        timeCompassSp,
+        sizeof( timeCompassSp ),
+        0x010E,
 
-            // City in the Sky compass
-            cityCompassSp,
-            sizeof( cityCompassSp ),
-            0x010F,
+        // City in the Sky compass
+        cityCompassSp,
+        sizeof( cityCompassSp ),
+        0x010F,
 
-            // Palace of Twilight compass
-            palaceCompassSp,
-            sizeof( palaceCompassSp ),
-            0x0110,
+        // Palace of Twilight compass
+        palaceCompassSp,
+        sizeof( palaceCompassSp ),
+        0x0110,
 
-            // Hyrule Castle compass
-            hyruleCompassSp,
-            sizeof( hyruleCompassSp ),
-            0x0111,
+        // Hyrule Castle compass
+        hyruleCompassSp,
+        sizeof( hyruleCompassSp ),
+        0x0111,
 
-            // Forest Temple big key
-            forestBigKeySp,
-            sizeof( forestBigKeySp ),
-            0x00F6,
+        // Forest Temple big key
+        forestBigKeySp,
+        sizeof( forestBigKeySp ),
+        0x00F6,
 
-            // Lakebed Temple big key
-            lakebedBigKeySp,
-            sizeof( lakebedBigKeySp ),
-            0x00F7,
+        // Lakebed Temple big key
+        lakebedBigKeySp,
+        sizeof( lakebedBigKeySp ),
+        0x00F7,
 
-            // Arbiter's Grounds big key
-            arbitersBigKeySp,
-            sizeof( arbitersBigKeySp ),
-            0x00F8,
+        // Arbiter's Grounds big key
+        arbitersBigKeySp,
+        sizeof( arbitersBigKeySp ),
+        0x00F8,
 
-            // Temple of Time big key
-            timeBigKeySp,
-            sizeof( timeBigKeySp ),
-            0x00F9,
+        // Temple of Time big key
+        timeBigKeySp,
+        sizeof( timeBigKeySp ),
+        0x00F9,
 
-            // City in the Sky big key
-            cityBigKeySp,
-            sizeof( cityBigKeySp ),
-            0x00FA,
+        // City in the Sky big key
+        cityBigKeySp,
+        sizeof( cityBigKeySp ),
+        0x00FA,
 
-            // Palace of Twilight big key
-            palaceBigKeySp,
-            sizeof( palaceBigKeySp ),
-            0x00FB,
+        // Palace of Twilight big key
+        palaceBigKeySp,
+        sizeof( palaceBigKeySp ),
+        0x00FB,
 
-            // Hyrule Castle big key
-            hyruleBigKeySp,
-            sizeof( hyruleBigKeySp ),
-            0x00FC,
+        // Hyrule Castle big key
+        hyruleBigKeySp,
+        sizeof( hyruleBigKeySp ),
+        0x00FC,
 
-            // Ending Blow hidden skill
-            endingBlowSp,
-            sizeof( endingBlowSp ),
-            0x0145,
+        // Ending Blow hidden skill
+        endingBlowSp,
+        sizeof( endingBlowSp ),
+        0x0145,
 
-            // Shield Attack hidden skill
-            shieldAttackSp,
-            sizeof( shieldAttackSp ),
-            0x0146,
+        // Shield Attack hidden skill
+        shieldAttackSp,
+        sizeof( shieldAttackSp ),
+        0x0146,
 
-            // Back Slice hidden skill
-            backSliceSp,
-            sizeof( backSliceSp ),
-            0x0147,
+        // Back Slice hidden skill
+        backSliceSp,
+        sizeof( backSliceSp ),
+        0x0147,
 
-            // Helm Splitter hidden skill
-            helmSplitterSp,
-            sizeof( helmSplitterSp ),
-            0x0148,
+        // Helm Splitter hidden skill
+        helmSplitterSp,
+        sizeof( helmSplitterSp ),
+        0x0148,
 
-            // Mortal Draw hidden skill
-            mortalDrawSp,
-            sizeof( mortalDrawSp ),
-            0x0149,
+        // Mortal Draw hidden skill
+        mortalDrawSp,
+        sizeof( mortalDrawSp ),
+        0x0149,
 
-            // Jump Strike hidden skill
-            jumpStrikeSp,
-            sizeof( jumpStrikeSp ),
-            0x014A,
+        // Jump Strike hidden skill
+        jumpStrikeSp,
+        sizeof( jumpStrikeSp ),
+        0x014A,
 
-            // Great Spin hidden skill
-            greatSpinSp,
-            sizeof( greatSpinSp ),
-            0x014B,
+        // Great Spin hidden skill
+        greatSpinSp,
+        sizeof( greatSpinSp ),
+        0x014B,
 
-            // Powered up Dominion Rod
-            poweredRodSp,
-            sizeof( poweredRodSp ),
-            0x00B0,
+        // Powered up Dominion Rod
+        poweredRodSp,
+        sizeof( poweredRodSp ),
+        0x00B0,
 
-            // First Ancient Sky Book character
-            firstCharacterSp,
-            sizeof( firstCharacterSp ),
-            0x013F,
+        // First Ancient Sky Book character
+        firstCharacterSp,
+        sizeof( firstCharacterSp ),
+        0x013F,
 
-            // Second Ancient Sky Book character
-            secondCharacterSp,
-            sizeof( secondCharacterSp ),
-            0x0140,
+        // Second Ancient Sky Book character
+        secondCharacterSp,
+        sizeof( secondCharacterSp ),
+        0x0140,
 
-            // Third Ancient Sky Book character
-            thirdCharacterSp,
-            sizeof( thirdCharacterSp ),
-            0x0141,
+        // Third Ancient Sky Book character
+        thirdCharacterSp,
+        sizeof( thirdCharacterSp ),
+        0x0141,
 
-            // Fourth Ancient Sky Book character
-            fourthCharacterSp,
-            sizeof( fourthCharacterSp ),
-            0x0142,
+        // Fourth Ancient Sky Book character
+        fourthCharacterSp,
+        sizeof( fourthCharacterSp ),
+        0x0142,
 
-            // Fifth Ancient Sky Book character
-            fifthCharacterSp,
-            sizeof( fifthCharacterSp ),
-            0x0143,
+        // Fifth Ancient Sky Book character
+        fifthCharacterSp,
+        sizeof( fifthCharacterSp ),
+        0x0143,
 
-            // Sixth Ancient Sky Book character
-            firstFusedShadowSp,
-            sizeof( firstFusedShadowSp ),
-            0x013C,
+        // Sixth Ancient Sky Book character
+        firstFusedShadowSp,
+        sizeof( firstFusedShadowSp ),
+        0x013C,
 
-            // Second Fused Shadow
-            secondFusedShadowSp,
-            sizeof( secondFusedShadowSp ),
-            0x013D,
+        // Second Fused Shadow
+        secondFusedShadowSp,
+        sizeof( secondFusedShadowSp ),
+        0x013D,
 
-            // Third Fused Shadow
-            thirdFusedShadowSp,
-            sizeof( thirdFusedShadowSp ),
-            0x013E,
+        // Third Fused Shadow
+        thirdFusedShadowSp,
+        sizeof( thirdFusedShadowSp ),
+        0x013E,
 
-            // Second Mirror Shard
-            secondMirrorShardSp,
-            sizeof( secondMirrorShardSp ),
-            0x0109,
+        // Second Mirror Shard
+        secondMirrorShardSp,
+        sizeof( secondMirrorShardSp ),
+        0x0109,
 
-            // Third Mirror Shard
-            thirdMirrorShardSp,
-            sizeof( thirdMirrorShardSp ),
-            0x010A,
+        // Third Mirror Shard
+        thirdMirrorShardSp,
+        sizeof( thirdMirrorShardSp ),
+        0x010A,
 
-            // Fourth Mirror Shard
-            fourthMirrorShardSp,
-            sizeof( fourthMirrorShardSp ),
-            0x010B,
+        // Fourth Mirror Shard
+        fourthMirrorShardSp,
+        sizeof( fourthMirrorShardSp ),
+        0x010B,
 
-            // Foolish Item
-            foolishItemSp,
-            sizeof( foolishItemSp ),
-            0x00F3,
+        // Foolish Item
+        foolishItemSp,
+        sizeof( foolishItemSp ),
+        0x00F3,
 
-            // Talking to Midna
-            talkToMidnaSp,
-            sizeof( talkToMidnaSp ),
-            0x0BBB,
+        // Talking to Midna
+        talkToMidnaSp,
+        sizeof( talkToMidnaSp ),
+        0x0BBB,
 
-            // Big Wallet
-            bigWalletSp,
-            sizeof( bigWalletSp ),
-            0x0099,
+        // Big Wallet
+        bigWalletSp,
+        sizeof( bigWalletSp ),
+        0x0099,
 
-            // Giant Wallet
-            giantWalletSp,
-            sizeof( giantWalletSp ),
-            0x009A,
+        // Giant Wallet
+        giantWalletSp,
+        sizeof( giantWalletSp ),
+        0x009A,
     };
+
+    const MsgEntry charloDonationEntrySp = { charloDonationSp, sizeof( charloDonationSp ), 0x0355 };
 
     const ItemWheelMenuStrings itemWheelMenuStringsSp = {
         // areasBeingTracked

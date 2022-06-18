@@ -30,6 +30,7 @@ namespace mod::customMessages
 #else
     // Japanese
     extern MsgEntry entriesJp[TOTAL_CUSTOM_MESSAGES];
+    extern const MsgEntry charloDonationEntryJp;
     extern const ItemWheelMenuStrings itemWheelMenuStringsJp;
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsJp;
 #endif
@@ -37,21 +38,25 @@ namespace mod::customMessages
 #ifdef TP_EU
     // German
     extern MsgEntry entriesDe[TOTAL_CUSTOM_MESSAGES];
+    extern const MsgEntry charloDonationEntryDe;
     extern const ItemWheelMenuStrings itemWheelMenuStringsDe;
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsDe;
 
     // French
     extern MsgEntry entriesFr[TOTAL_CUSTOM_MESSAGES];
+    extern const MsgEntry charloDonationEntryFr;
     extern const ItemWheelMenuStrings itemWheelMenuStringsFr;
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsFr;
 
     // Spanish
     extern MsgEntry entriesSp[TOTAL_CUSTOM_MESSAGES];
+    extern const MsgEntry charloDonationEntrySp;
     extern const ItemWheelMenuStrings itemWheelMenuStringsSp;
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsSp;
 
     // Italian
     extern MsgEntry entriesIt[TOTAL_CUSTOM_MESSAGES];
+    extern const MsgEntry charloDonationEntryIt;
     extern const ItemWheelMenuStrings itemWheelMenuStringsIt;
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsIt;
 #endif

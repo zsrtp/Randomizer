@@ -24,12 +24,15 @@ namespace mod::charlo_donation_message
 #elif defined TP_JP
         donationEntry = &charloDonationEntryJp;
 #elif defined TP_EU
+        using namespace libtp::tp::d_s_logo;
+
+        Languages currentLanguage = getPalLanguage2( nullptr );
         switch ( currentLanguage )
         {
             case Languages::uk:
             default:     // The language is invalid/unsupported, so the game defaults to English
             {
-                donationEntry = &charloDonationEntryUs;
+                donationEntry = &charloDonationEntryEn;
                 break;
             }
             case Languages::de:

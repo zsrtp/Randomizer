@@ -677,14 +677,14 @@ namespace mod::customMessages
         "The wallet given by Agitha to\nbenefactors of the insect kingdom.\nIt can hold up to 9,999 Rupees."
     MSG_END()
     MSG_BEGIN_ARRAY( charloDonationEn )
-    "For the sake of peace in Hyrule...\nWould you please make a donation?\x1A\x05\x00\x00\x20\x00" 
+        "For the sake of peace in Hyrule...\nWould you please make a donation?" 
         MSG_OPTION_LIST( MSG_OPTION_1 ) 
         "100 Rupees\n" 
         MSG_OPTION_LIST( MSG_OPTION_2 ) 
         "50 Rupees\n" 
         MSG_OPTION_LIST( MSG_OPTION_3 ) 
         "Sorry...";
-        MSG_END()
+    MSG_END()
     // clang-format on
 
     MsgEntry entriesUs[TOTAL_CUSTOM_MESSAGES] = {

@@ -829,304 +829,319 @@ namespace mod::customMessages
         // まで入れられる！
         "\x82\xDC\x82\xC5\x93\xFC\x82\xEA\x82\xE7\x82\xEA\x82\xE9\x81\x49"
     MSG_END()
-        // clang-format on
+     MSG_BEGIN_ARRAY( charloDonationJp )
+        // ハイラルのへいわ平和のため・・・ほどこ施しをいただけませんかな・・・？
+        "\x83\x6E\x83\x43\x83\x89\x83\x8B\x82\xCC\x1A\x0C\xFF\x00\x02\x02\x82\xD6\x82\xA2\x82\xED\x95\xBD\x98\x61\x82\xCC\x82\xBD\x82\xDF\x81\x45\x81\x45\x81\x45\x0A\x1A\x0C\xFF\x00\x02\x01\x82\xD9\x82\xC7\x82\xB1\x8E\x7B\x82\xB5\x82\xF0\x82\xA2\x82\xBD\x82\xBE\x82\xAF\x82\xDC\x82\xB9\x82\xF1\x82\xA9\x82\xC8\x81\x45\x81\x45\x81\x45\x81\x48" 
+        MSG_OPTION_LIST( MSG_OPTION_1 ) 
+        // １００ルピー
+        "\x82\x50\x82\x4f\x82\x4F\x83\x8B\x83\x73\x81\x5B\x0A" 
+        MSG_OPTION_LIST( MSG_OPTION_2 ) 
+        // ５０ルピー
+        "\x82\x54\x82\x4F\x83\x8B\x83\x73\x81\x5B\x0A" 
+        MSG_OPTION_LIST( MSG_OPTION_3 ) 
+        // 断る
+        "\x1A\x0C\xFF\x00\x02\x01\x82\xB1\x82\xC6\x82\xED\x92\x66\x82\xE9";
+    MSG_END()
+    // clang-format on
 
-        MsgEntry entriesJp[TOTAL_CUSTOM_MESSAGES] = {
-            // Forest Temple small key
-            forestSmallKeyJp,
-            sizeof( forestSmallKeyJp ),
-            0x00E9,
+    MsgEntry entriesJp[TOTAL_CUSTOM_MESSAGES] = {
+        // Forest Temple small key
+        forestSmallKeyJp,
+        sizeof( forestSmallKeyJp ),
+        0x00E9,
 
-            // Goron Mines small key
-            minesSmallKeyJp,
-            sizeof( minesSmallKeyJp ),
-            0x00EA,
+        // Goron Mines small key
+        minesSmallKeyJp,
+        sizeof( minesSmallKeyJp ),
+        0x00EA,
 
-            // Lakebed Temple small key
-            lakebedSmallKeyJp,
-            sizeof( lakebedSmallKeyJp ),
-            0x00EB,
+        // Lakebed Temple small key
+        lakebedSmallKeyJp,
+        sizeof( lakebedSmallKeyJp ),
+        0x00EB,
 
-            // Arbiter's Grounds small key
-            arbitersSmallKeyJp,
-            sizeof( arbitersSmallKeyJp ),
-            0x00EC,
+        // Arbiter's Grounds small key
+        arbitersSmallKeyJp,
+        sizeof( arbitersSmallKeyJp ),
+        0x00EC,
 
-            // Snowpeak Ruins small key
-            snowpeakSmallKeyJp,
-            sizeof( snowpeakSmallKeyJp ),
-            0x00ED,
+        // Snowpeak Ruins small key
+        snowpeakSmallKeyJp,
+        sizeof( snowpeakSmallKeyJp ),
+        0x00ED,
 
-            // Temple of Time small key
-            timeSmallKeyJp,
-            sizeof( timeSmallKeyJp ),
-            0x00EE,
+        // Temple of Time small key
+        timeSmallKeyJp,
+        sizeof( timeSmallKeyJp ),
+        0x00EE,
 
-            // City in the Sky small key
-            citySmallKeyJp,
-            sizeof( citySmallKeyJp ),
-            0x00EF,
+        // City in the Sky small key
+        citySmallKeyJp,
+        sizeof( citySmallKeyJp ),
+        0x00EF,
 
-            // Palace of Twilight small key
-            palaceSmallKeyJp,
-            sizeof( palaceSmallKeyJp ),
-            0x00F0,
+        // Palace of Twilight small key
+        palaceSmallKeyJp,
+        sizeof( palaceSmallKeyJp ),
+        0x00F0,
 
-            // Hyrule Castle small key
-            hyruleSmallKeyJp,
-            sizeof( hyruleSmallKeyJp ),
-            0x00F1,
+        // Hyrule Castle small key
+        hyruleSmallKeyJp,
+        sizeof( hyruleSmallKeyJp ),
+        0x00F1,
 
-            // Bublin Camp small key
-            campSmallKeyJp,
-            sizeof( campSmallKeyJp ),
-            0x00F2,
+        // Bublin Camp small key
+        campSmallKeyJp,
+        sizeof( campSmallKeyJp ),
+        0x00F2,
 
-            // Shadow Crystal
-            shadowCrystalJp,
-            sizeof( shadowCrystalJp ),
-            0x0096,
+        // Shadow Crystal
+        shadowCrystalJp,
+        sizeof( shadowCrystalJp ),
+        0x0096,
 
-            // Forest Temple dungeon map
-            forestDungeonMapJp,
-            sizeof( forestDungeonMapJp ),
-            0x011A,
+        // Forest Temple dungeon map
+        forestDungeonMapJp,
+        sizeof( forestDungeonMapJp ),
+        0x011A,
 
-            // Goron Mines dungeon map
-            minesDungeonMapJp,
-            sizeof( minesDungeonMapJp ),
-            0x011B,
+        // Goron Mines dungeon map
+        minesDungeonMapJp,
+        sizeof( minesDungeonMapJp ),
+        0x011B,
 
-            // Lakebed Temple dungeon map
-            lakebedDungeonMapJp,
-            sizeof( lakebedDungeonMapJp ),
-            0x011C,
+        // Lakebed Temple dungeon map
+        lakebedDungeonMapJp,
+        sizeof( lakebedDungeonMapJp ),
+        0x011C,
 
-            // Arbiter's Grounds dungeon map
-            arbitersDungeonMapJp,
-            sizeof( arbitersDungeonMapJp ),
-            0x011D,
+        // Arbiter's Grounds dungeon map
+        arbitersDungeonMapJp,
+        sizeof( arbitersDungeonMapJp ),
+        0x011D,
 
-            // Snowpeak Ruins dungeon map
-            snowpeakDungeonMapJp,
-            sizeof( snowpeakDungeonMapJp ),
-            0x011E,
+        // Snowpeak Ruins dungeon map
+        snowpeakDungeonMapJp,
+        sizeof( snowpeakDungeonMapJp ),
+        0x011E,
 
-            // Temple of Time dungeon map
-            timeDungeonMapJp,
-            sizeof( timeDungeonMapJp ),
-            0x011F,
+        // Temple of Time dungeon map
+        timeDungeonMapJp,
+        sizeof( timeDungeonMapJp ),
+        0x011F,
 
-            // City in the Sky dungeon map
-            cityDungeonMapJp,
-            sizeof( cityDungeonMapJp ),
-            0x0120,
+        // City in the Sky dungeon map
+        cityDungeonMapJp,
+        sizeof( cityDungeonMapJp ),
+        0x0120,
 
-            // Palace of Twilight dungeon map
-            palaceDungeonMapJp,
-            sizeof( palaceDungeonMapJp ),
-            0x0121,
+        // Palace of Twilight dungeon map
+        palaceDungeonMapJp,
+        sizeof( palaceDungeonMapJp ),
+        0x0121,
 
-            // Hyrule Castle dungeon map
-            hyruleDungeonMapJp,
-            sizeof( hyruleDungeonMapJp ),
-            0x0122,
+        // Hyrule Castle dungeon map
+        hyruleDungeonMapJp,
+        sizeof( hyruleDungeonMapJp ),
+        0x0122,
 
-            // Forest Temple compass
-            forestCompassJp,
-            sizeof( forestCompassJp ),
-            0x00FD,
+        // Forest Temple compass
+        forestCompassJp,
+        sizeof( forestCompassJp ),
+        0x00FD,
 
-            // Goron Mines compass
-            minesCompassJp,
-            sizeof( minesCompassJp ),
-            0x00FE,
+        // Goron Mines compass
+        minesCompassJp,
+        sizeof( minesCompassJp ),
+        0x00FE,
 
-            // Lakebed Temple compass
-            lakebedCompassJp,
-            sizeof( lakebedCompassJp ),
-            0x00FF,
+        // Lakebed Temple compass
+        lakebedCompassJp,
+        sizeof( lakebedCompassJp ),
+        0x00FF,
 
-            // Arbiter's Grounds compass
-            arbitersCompassJp,
-            sizeof( arbitersCompassJp ),
-            0x010C,
+        // Arbiter's Grounds compass
+        arbitersCompassJp,
+        sizeof( arbitersCompassJp ),
+        0x010C,
 
-            // Snowpeak Ruins compass
-            snowpeakCompassJp,
-            sizeof( snowpeakCompassJp ),
-            0x010D,
+        // Snowpeak Ruins compass
+        snowpeakCompassJp,
+        sizeof( snowpeakCompassJp ),
+        0x010D,
 
-            // Temple of Time compass
-            timeCompassJp,
-            sizeof( timeCompassJp ),
-            0x010E,
+        // Temple of Time compass
+        timeCompassJp,
+        sizeof( timeCompassJp ),
+        0x010E,
 
-            // City in the Sky compass
-            cityCompassJp,
-            sizeof( cityCompassJp ),
-            0x010F,
+        // City in the Sky compass
+        cityCompassJp,
+        sizeof( cityCompassJp ),
+        0x010F,
 
-            // Palace of Twilight compass
-            palaceCompassJp,
-            sizeof( palaceCompassJp ),
-            0x0110,
+        // Palace of Twilight compass
+        palaceCompassJp,
+        sizeof( palaceCompassJp ),
+        0x0110,
 
-            // Hyrule Castle compass
-            hyruleCompassJp,
-            sizeof( hyruleCompassJp ),
-            0x0111,
+        // Hyrule Castle compass
+        hyruleCompassJp,
+        sizeof( hyruleCompassJp ),
+        0x0111,
 
-            // Forest Temple big key
-            forestBigKeyJp,
-            sizeof( forestBigKeyJp ),
-            0x00F6,
+        // Forest Temple big key
+        forestBigKeyJp,
+        sizeof( forestBigKeyJp ),
+        0x00F6,
 
-            // Lakebed Temple big key
-            lakebedBigKeyJp,
-            sizeof( lakebedBigKeyJp ),
-            0x00F7,
+        // Lakebed Temple big key
+        lakebedBigKeyJp,
+        sizeof( lakebedBigKeyJp ),
+        0x00F7,
 
-            // Arbiter's Grounds big key
-            arbitersBigKeyJp,
-            sizeof( arbitersBigKeyJp ),
-            0x00F8,
+        // Arbiter's Grounds big key
+        arbitersBigKeyJp,
+        sizeof( arbitersBigKeyJp ),
+        0x00F8,
 
-            // Temple of Time big key
-            timeBigKeyJp,
-            sizeof( timeBigKeyJp ),
-            0x00F9,
+        // Temple of Time big key
+        timeBigKeyJp,
+        sizeof( timeBigKeyJp ),
+        0x00F9,
 
-            // City in the Sky big key
-            cityBigKeyJp,
-            sizeof( cityBigKeyJp ),
-            0x00FA,
+        // City in the Sky big key
+        cityBigKeyJp,
+        sizeof( cityBigKeyJp ),
+        0x00FA,
 
-            // Palace of Twilight big key
-            palaceBigKeyJp,
-            sizeof( palaceBigKeyJp ),
-            0x00FB,
+        // Palace of Twilight big key
+        palaceBigKeyJp,
+        sizeof( palaceBigKeyJp ),
+        0x00FB,
 
-            // Hyrule Castle big key
-            hyruleBigKeyJp,
-            sizeof( hyruleBigKeyJp ),
-            0x00FC,
+        // Hyrule Castle big key
+        hyruleBigKeyJp,
+        sizeof( hyruleBigKeyJp ),
+        0x00FC,
 
-            // Ending Blow hidden skill
-            endingBlowJp,
-            sizeof( endingBlowJp ),
-            0x0145,
+        // Ending Blow hidden skill
+        endingBlowJp,
+        sizeof( endingBlowJp ),
+        0x0145,
 
-            // Shield Attack hidden skill
-            shieldAttackJp,
-            sizeof( shieldAttackJp ),
-            0x0146,
+        // Shield Attack hidden skill
+        shieldAttackJp,
+        sizeof( shieldAttackJp ),
+        0x0146,
 
-            // Back Slice hidden skill
-            backSliceJp,
-            sizeof( backSliceJp ),
-            0x0147,
+        // Back Slice hidden skill
+        backSliceJp,
+        sizeof( backSliceJp ),
+        0x0147,
 
-            // Helm Splitter hidden skill
-            helmSplitterJp,
-            sizeof( helmSplitterJp ),
-            0x0148,
+        // Helm Splitter hidden skill
+        helmSplitterJp,
+        sizeof( helmSplitterJp ),
+        0x0148,
 
-            // Mortal Draw hidden skill
-            mortalDrawJp,
-            sizeof( mortalDrawJp ),
-            0x0149,
+        // Mortal Draw hidden skill
+        mortalDrawJp,
+        sizeof( mortalDrawJp ),
+        0x0149,
 
-            // Jump Strike hidden skill
-            jumpStrikeJp,
-            sizeof( jumpStrikeJp ),
-            0x014A,
+        // Jump Strike hidden skill
+        jumpStrikeJp,
+        sizeof( jumpStrikeJp ),
+        0x014A,
 
-            // Great Spin hidden skill
-            greatSpinJp,
-            sizeof( greatSpinJp ),
-            0x014B,
+        // Great Spin hidden skill
+        greatSpinJp,
+        sizeof( greatSpinJp ),
+        0x014B,
 
-            // Powered up Dominion Rod
-            poweredRodJp,
-            sizeof( poweredRodJp ),
-            0x00B0,
+        // Powered up Dominion Rod
+        poweredRodJp,
+        sizeof( poweredRodJp ),
+        0x00B0,
 
-            // First Ancient Sky Book character
-            firstCharacterJp,
-            sizeof( firstCharacterJp ),
-            0x013F,
+        // First Ancient Sky Book character
+        firstCharacterJp,
+        sizeof( firstCharacterJp ),
+        0x013F,
 
-            // Second Ancient Sky Book character
-            secondCharacterJp,
-            sizeof( secondCharacterJp ),
-            0x0140,
+        // Second Ancient Sky Book character
+        secondCharacterJp,
+        sizeof( secondCharacterJp ),
+        0x0140,
 
-            // Third Ancient Sky Book character
-            thirdCharacterJp,
-            sizeof( thirdCharacterJp ),
-            0x0141,
+        // Third Ancient Sky Book character
+        thirdCharacterJp,
+        sizeof( thirdCharacterJp ),
+        0x0141,
 
-            // Fourth Ancient Sky Book character
-            fourthCharacterJp,
-            sizeof( fourthCharacterJp ),
-            0x0142,
+        // Fourth Ancient Sky Book character
+        fourthCharacterJp,
+        sizeof( fourthCharacterJp ),
+        0x0142,
 
-            // Fifth Ancient Sky Book character
-            fifthCharacterJp,
-            sizeof( fifthCharacterJp ),
-            0x0143,
+        // Fifth Ancient Sky Book character
+        fifthCharacterJp,
+        sizeof( fifthCharacterJp ),
+        0x0143,
 
-            // Sixth Ancient Sky Book character
-            firstFusedShadowJp,
-            sizeof( firstFusedShadowJp ),
-            0x013C,
+        // Sixth Ancient Sky Book character
+        firstFusedShadowJp,
+        sizeof( firstFusedShadowJp ),
+        0x013C,
 
-            // Second Fused Shadow
-            secondFusedShadowJp,
-            sizeof( secondFusedShadowJp ),
-            0x013D,
+        // Second Fused Shadow
+        secondFusedShadowJp,
+        sizeof( secondFusedShadowJp ),
+        0x013D,
 
-            // Third Fused Shadow
-            thirdFusedShadowJp,
-            sizeof( thirdFusedShadowJp ),
-            0x013E,
+        // Third Fused Shadow
+        thirdFusedShadowJp,
+        sizeof( thirdFusedShadowJp ),
+        0x013E,
 
-            // Second Mirror Shard
-            secondMirrorShardJp,
-            sizeof( secondMirrorShardJp ),
-            0x0109,
+        // Second Mirror Shard
+        secondMirrorShardJp,
+        sizeof( secondMirrorShardJp ),
+        0x0109,
 
-            // Third Mirror Shard
-            thirdMirrorShardJp,
-            sizeof( thirdMirrorShardJp ),
-            0x010A,
+        // Third Mirror Shard
+        thirdMirrorShardJp,
+        sizeof( thirdMirrorShardJp ),
+        0x010A,
 
-            // Fourth Mirror Shard
-            fourthMirrorShardJp,
-            sizeof( fourthMirrorShardJp ),
-            0x010B,
+        // Fourth Mirror Shard
+        fourthMirrorShardJp,
+        sizeof( fourthMirrorShardJp ),
+        0x010B,
 
-            // Foolish Item
-            foolishItemJp,
-            sizeof( foolishItemJp ),
-            0x00F3,
+        // Foolish Item
+        foolishItemJp,
+        sizeof( foolishItemJp ),
+        0x00F3,
 
-            // Talking to Midna
-            talkToMidnaJp,
-            sizeof( talkToMidnaJp ),
-            0x0BBB,
+        // Talking to Midna
+        talkToMidnaJp,
+        sizeof( talkToMidnaJp ),
+        0x0BBB,
 
-            // Big Wallet
-            bigWalletJp,
-            sizeof( bigWalletJp ),
-            0x0099,
+        // Big Wallet
+        bigWalletJp,
+        sizeof( bigWalletJp ),
+        0x0099,
 
-            // Giant Wallet
-            giantWalletJp,
-            sizeof( giantWalletJp ),
-            0x009A,
+        // Giant Wallet
+        giantWalletJp,
+        sizeof( giantWalletJp ),
+        0x009A,
     };
+
+    const MsgEntry charloDonationEntryJp = { charloDonationJp, sizeof( charloDonationJp ), 0x0355 };
 
     const ItemWheelMenuStrings itemWheelMenuStringsJp = {
         // areasBeingTracked

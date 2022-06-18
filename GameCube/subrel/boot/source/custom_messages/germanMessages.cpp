@@ -916,305 +916,319 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "\x61\x75\x66\x62\x65\x77\x61\x68\x72\x65\x6e\x2e"
     MSG_END()
+    MSG_BEGIN_ARRAY( charloDonationDe )
+        // ...eine kleine Spende? Für den Frieden in Hyrule?
+        "\x2E\x2E\x2E\x65\x69\x6E\x65\x20\x6B\x6C\x65\x69\x6E\x65\x20\x53\x70\x65\x6E\x64\x65\x3F\x0A\x46\xFC\x72\x20\x64\x65\x6E\x20\x46\x72\x69\x65\x64\x65\x6E\x20\x69\x6E\x20\x48\x79\x72\x75\x6C\x65\x3F"
+        MSG_OPTION_LIST( MSG_OPTION_1 ) 
+        // 100 Rubine
+        "\x31\x30\x30\x20\x52\x75\x62\x69\x6E\x65\x0A" 
+        MSG_OPTION_LIST( MSG_OPTION_2 ) 
+        // 50 Rubine
+        "\x35\x30\x20\x52\x75\x62\x69\x6E\x65\x0A" 
+        MSG_OPTION_LIST( MSG_OPTION_3 ) 
+        // Nein danke!
+        "\x4E\x65\x69\x6E\x20\x64\x61\x6E\x6B\x65\x21";
+    MSG_END()
     // clang-format on
-    
-    MsgEntry entriesDe[TOTAL_CUSTOM_MESSAGES] = 
-    {
+
+    MsgEntry entriesDe[TOTAL_CUSTOM_MESSAGES] = {
         // Forest Temple small key
         forestSmallKeyDe,
-        sizeof(forestSmallKeyDe),
+        sizeof( forestSmallKeyDe ),
         0x00E9,
-        
+
         // Goron Mines small key
         minesSmallKeyDe,
-        sizeof(minesSmallKeyDe),
+        sizeof( minesSmallKeyDe ),
         0x00EA,
-        
+
         // Lakebed Temple small key
         lakebedSmallKeyDe,
-        sizeof(lakebedSmallKeyDe),
+        sizeof( lakebedSmallKeyDe ),
         0x00EB,
-        
+
         // Arbiter's Grounds small key
         arbitersSmallKeyDe,
-        sizeof(arbitersSmallKeyDe),
+        sizeof( arbitersSmallKeyDe ),
         0x00EC,
-        
+
         // Snowpeak Ruins small key
         snowpeakSmallKeyDe,
-        sizeof(snowpeakSmallKeyDe),
+        sizeof( snowpeakSmallKeyDe ),
         0x00ED,
-        
+
         // Temple of Time small key
         timeSmallKeyDe,
-        sizeof(timeSmallKeyDe),
+        sizeof( timeSmallKeyDe ),
         0x00EE,
-        
+
         // City in the Sky small key
         citySmallKeyDe,
-        sizeof(citySmallKeyDe),
+        sizeof( citySmallKeyDe ),
         0x00EF,
-        
+
         // Palace of Twilight small key
         palaceSmallKeyDe,
-        sizeof(palaceSmallKeyDe),
+        sizeof( palaceSmallKeyDe ),
         0x00F0,
-        
+
         // Hyrule Castle small key
         hyruleSmallKeyDe,
-        sizeof(hyruleSmallKeyDe),
+        sizeof( hyruleSmallKeyDe ),
         0x00F1,
-        
+
         // Bublin Camp small key
         campSmallKeyDe,
-        sizeof(campSmallKeyDe),
+        sizeof( campSmallKeyDe ),
         0x00F2,
-        
+
         // Shadow Crystal
         shadowCrystalDe,
-        sizeof(shadowCrystalDe),
+        sizeof( shadowCrystalDe ),
         0x0096,
-        
+
         // Forest Temple dungeon map
         forestDungeonMapDe,
-        sizeof(forestDungeonMapDe),
+        sizeof( forestDungeonMapDe ),
         0x011A,
-        
+
         // Goron Mines dungeon map
         minesDungeonMapDe,
-        sizeof(minesDungeonMapDe),
+        sizeof( minesDungeonMapDe ),
         0x011B,
-        
+
         // Lakebed Temple dungeon map
         lakebedDungeonMapDe,
-        sizeof(lakebedDungeonMapDe),
+        sizeof( lakebedDungeonMapDe ),
         0x011C,
-        
+
         // Arbiter's Grounds dungeon map
         arbitersDungeonMapDe,
-        sizeof(arbitersDungeonMapDe),
+        sizeof( arbitersDungeonMapDe ),
         0x011D,
-        
+
         // Snowpeak Ruins dungeon map
         snowpeakDungeonMapDe,
-        sizeof(snowpeakDungeonMapDe),
+        sizeof( snowpeakDungeonMapDe ),
         0x011E,
-        
+
         // Temple of Time dungeon map
         timeDungeonMapDe,
-        sizeof(timeDungeonMapDe),
+        sizeof( timeDungeonMapDe ),
         0x011F,
-        
+
         // City in the Sky dungeon map
         cityDungeonMapDe,
-        sizeof(cityDungeonMapDe),
+        sizeof( cityDungeonMapDe ),
         0x0120,
-        
+
         // Palace of Twilight dungeon map
         palaceDungeonMapDe,
-        sizeof(palaceDungeonMapDe),
+        sizeof( palaceDungeonMapDe ),
         0x0121,
-        
+
         // Hyrule Castle dungeon map
         hyruleDungeonMapDe,
-        sizeof(hyruleDungeonMapDe),
+        sizeof( hyruleDungeonMapDe ),
         0x0122,
 
         // Forest Temple compass
         forestCompassDe,
-        sizeof(forestCompassDe),
+        sizeof( forestCompassDe ),
         0x00FD,
 
         // Goron Mines compass
         minesCompassDe,
-        sizeof(minesCompassDe),
+        sizeof( minesCompassDe ),
         0x00FE,
-        
+
         // Lakebed Temple compass
         lakebedCompassDe,
-        sizeof(lakebedCompassDe),
+        sizeof( lakebedCompassDe ),
         0x00FF,
 
         // Arbiter's Grounds compass
         arbitersCompassDe,
-        sizeof(arbitersCompassDe),
+        sizeof( arbitersCompassDe ),
         0x010C,
 
         // Snowpeak Ruins compass
         snowpeakCompassDe,
-        sizeof(snowpeakCompassDe),
+        sizeof( snowpeakCompassDe ),
         0x010D,
 
         // Temple of Time compass
         timeCompassDe,
-        sizeof(timeCompassDe),
+        sizeof( timeCompassDe ),
         0x010E,
 
         // City in the Sky compass
         cityCompassDe,
-        sizeof(cityCompassDe),
+        sizeof( cityCompassDe ),
         0x010F,
 
         // Palace of Twilight compass
         palaceCompassDe,
-        sizeof(palaceCompassDe),
+        sizeof( palaceCompassDe ),
         0x0110,
 
         // Hyrule Castle compass
         hyruleCompassDe,
-        sizeof(hyruleCompassDe),
+        sizeof( hyruleCompassDe ),
         0x0111,
 
         // Forest Temple big key
         forestBigKeyDe,
-        sizeof(forestBigKeyDe),
+        sizeof( forestBigKeyDe ),
         0x00F6,
 
         // Lakebed Temple big key
         lakebedBigKeyDe,
-        sizeof(lakebedBigKeyDe),
+        sizeof( lakebedBigKeyDe ),
         0x00F7,
 
         // Arbiter's Grounds big key
         arbitersBigKeyDe,
-        sizeof(arbitersBigKeyDe),
+        sizeof( arbitersBigKeyDe ),
         0x00F8,
 
         // Temple of Time big key
         timeBigKeyDe,
-        sizeof(timeBigKeyDe),
+        sizeof( timeBigKeyDe ),
         0x00F9,
 
         // City in the Sky big key
         cityBigKeyDe,
-        sizeof(cityBigKeyDe),
+        sizeof( cityBigKeyDe ),
         0x00FA,
 
         // Palace of Twilight big key
         palaceBigKeyDe,
-        sizeof(palaceBigKeyDe),
+        sizeof( palaceBigKeyDe ),
         0x00FB,
 
         // Hyrule Castle big key
         hyruleBigKeyDe,
-        sizeof(hyruleBigKeyDe),
+        sizeof( hyruleBigKeyDe ),
         0x00FC,
-        
+
         // Ending Blow hidden skill
         endingBlowDe,
-        sizeof(endingBlowDe),
+        sizeof( endingBlowDe ),
         0x0145,
 
         // Shield Attack hidden skill
         shieldAttackDe,
-        sizeof(shieldAttackDe),
+        sizeof( shieldAttackDe ),
         0x0146,
 
         // Back Slice hidden skill
         backSliceDe,
-        sizeof(backSliceDe),
+        sizeof( backSliceDe ),
         0x0147,
 
         // Helm Splitter hidden skill
         helmSplitterDe,
-        sizeof(helmSplitterDe),
+        sizeof( helmSplitterDe ),
         0x0148,
 
         // Mortal Draw hidden skill
         mortalDrawDe,
-        sizeof(mortalDrawDe),
+        sizeof( mortalDrawDe ),
         0x0149,
 
         // Jump Strike hidden skill
         jumpStrikeDe,
-        sizeof(jumpStrikeDe),
+        sizeof( jumpStrikeDe ),
         0x014A,
 
         // Great Spin hidden skill
         greatSpinDe,
-        sizeof(greatSpinDe),
+        sizeof( greatSpinDe ),
         0x014B,
 
         // Powered up Dominion Rod
         poweredRodDe,
-        sizeof(poweredRodDe),
+        sizeof( poweredRodDe ),
         0x00B0,
 
         // First Ancient Sky Book character
         firstCharacterDe,
-        sizeof(firstCharacterDe),
+        sizeof( firstCharacterDe ),
         0x013F,
 
         // Second Ancient Sky Book character
         secondCharacterDe,
-        sizeof(secondCharacterDe),
+        sizeof( secondCharacterDe ),
         0x0140,
 
         // Third Ancient Sky Book character
         thirdCharacterDe,
-        sizeof(thirdCharacterDe),
+        sizeof( thirdCharacterDe ),
         0x0141,
 
         // Fourth Ancient Sky Book character
         fourthCharacterDe,
-        sizeof(fourthCharacterDe),
+        sizeof( fourthCharacterDe ),
         0x0142,
 
         // Fifth Ancient Sky Book character
         fifthCharacterDe,
-        sizeof(fifthCharacterDe),
+        sizeof( fifthCharacterDe ),
         0x0143,
 
         // Sixth Ancient Sky Book character
         firstFusedShadowDe,
-        sizeof(firstFusedShadowDe),
+        sizeof( firstFusedShadowDe ),
         0x013C,
 
         // Second Fused Shadow
         secondFusedShadowDe,
-        sizeof(secondFusedShadowDe),
+        sizeof( secondFusedShadowDe ),
         0x013D,
 
         // Third Fused Shadow
         thirdFusedShadowDe,
-        sizeof(thirdFusedShadowDe),
+        sizeof( thirdFusedShadowDe ),
         0x013E,
 
         // Second Mirror Shard
         secondMirrorShardDe,
-        sizeof(secondMirrorShardDe),
+        sizeof( secondMirrorShardDe ),
         0x0109,
 
         // Third Mirror Shard
         thirdMirrorShardDe,
-        sizeof(thirdMirrorShardDe),
+        sizeof( thirdMirrorShardDe ),
         0x010A,
 
         // Fourth Mirror Shard
         fourthMirrorShardDe,
-        sizeof(fourthMirrorShardDe),
+        sizeof( fourthMirrorShardDe ),
         0x010B,
 
         // Foolish Item
         foolishItemDe,
-        sizeof(foolishItemDe),
+        sizeof( foolishItemDe ),
         0x00F3,
 
         // Talking to Midna
         talkToMidnaDe,
-        sizeof(talkToMidnaDe),
+        sizeof( talkToMidnaDe ),
         0x0BBB,
 
         // Big Wallet
         bigWalletDe,
-        sizeof(bigWalletDe),
+        sizeof( bigWalletDe ),
         0x0099,
 
         // Giant Wallet
         giantWalletDe,
-        sizeof(giantWalletDe),
+        sizeof( giantWalletDe ),
         0x009A,
     };
+
+    const MsgEntry charloDonationEntryDe = { charloDonationDe, sizeof( charloDonationDe ), 0x0355 };
 
     const ItemWheelMenuStrings itemWheelMenuStringsDe = {
         // areasBeingTracked
