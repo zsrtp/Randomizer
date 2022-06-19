@@ -133,7 +133,6 @@ namespace mod::game_patch
     uint32_t _04_getProgressiveBow();
     uint32_t _04_getProgressiveSkill();
     uint32_t _04_getProgressiveSkyBook();
-    uint32_t _04_getProgressiveBombBag();
     uint32_t _04_getProgressiveKeyShard();
     uint32_t _04_getProgressiveMirrorShard();
     uint32_t _04_getProgressiveFusedShadow();

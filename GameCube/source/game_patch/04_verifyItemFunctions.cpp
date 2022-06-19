@@ -88,25 +88,6 @@ namespace mod::game_patch
         return static_cast<uint32_t>( Ancient_Sky_Book_Completed );
     };
 
-    uint32_t _04_getProgressiveBombBag()
-    {
-        using namespace libtp::data::items;
-        const uint8_t progressiveBombBagsList[] = { Empty_Bomb_Bag, Goron_Bomb_Bag, Bomb_Bag_Regular_Bombs };
-
-        const uint32_t listLength = sizeof( progressiveBombBagsList ) / sizeof( progressiveBombBagsList[0] );
-        for ( uint32_t i = 0; i < listLength; i++ )
-        {
-            uint32_t item = progressiveBombBagsList[i];
-            if ( !events::haveItem( item ) )
-            {
-                return item;
-            }
-        }
-
-        // All previous obtained, so return last upgrade
-        return static_cast<uint32_t>( Giant_Bomb_Bag );
-    };
-
     uint32_t _04_getProgressiveKeyShard()
     {
         using namespace libtp::data::items;
@@ -237,14 +218,6 @@ namespace mod::game_patch
                 case Ancient_Sky_Book_Completed:
                 {
                     itemID = _04_getProgressiveSkyBook();
-                    break;
-                }
-
-                case Empty_Bomb_Bag:
-                case Goron_Bomb_Bag:
-                case Giant_Bomb_Bag:
-                {
-                    itemID = _04_getProgressiveBombBag();
                     break;
                 }
 
