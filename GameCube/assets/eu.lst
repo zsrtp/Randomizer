@@ -91,6 +91,7 @@
 803B0E58:item_func_ptr
 803B1258:item_getcheck_func_ptr
 800987f4:item_func_WOOD_STICK
+800983e4:item_func_UTUWA_HEART
 
 // d_a_alink.h
 800B2928:setStickData

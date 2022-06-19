@@ -91,6 +91,7 @@
 803A92D8:item_func_ptr
 803A96D8:item_getcheck_func_ptr
 80098704:item_func_WOOD_STICK
+800982f4:item_func_UTUWA_HEART
 
 // d_a_alink.h
 8009da98:checkStageName

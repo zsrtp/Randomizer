@@ -16,6 +16,7 @@ namespace mod::game_patch
     {
         // Get the addresses to overwrite
         uint32_t woodenSwordFunctionAddress = reinterpret_cast<uint32_t>( libtp::tp::d_item::item_func_WOOD_STICK );
+        uint32_t heartContainerFunctionAddress = reinterpret_cast<uint32_t>( libtp::tp::d_item::item_func_UTUWA_HEART );
         uint32_t event035MemoAddress = reinterpret_cast<uint32_t>( libtp::tp::d_msg_flow::event035 );
         uint32_t procCoGetItemAddress = reinterpret_cast<uint32_t>( libtp::tp::d_a_alink::procCoGetItem );
         uint32_t screenSetAddress = reinterpret_cast<uint32_t>( libtp::tp::d_menu_collect::dMenuCollect_screenSet );
@@ -44,6 +45,9 @@ namespace mod::game_patch
 
         // Modify the Wooden Sword function to not set a region flag by default by nopping out the function call to isSwitch
         *reinterpret_cast<uint32_t*>( woodenSwordFunctionAddress + 0x40 ) = ASM_NOP;     // Previous 0x4bf9cafd
+
+        // Modify the Heart Container function to not set the dungeon flag for the heart container upon collection
+        *reinterpret_cast<uint32_t*>( heartContainerFunctionAddress + 0x7C ) = ASM_NOP;     // Previous 0x4bf9c5e9
 
         // Modify event035 to not remove Auru's Memo from inventory after talking to Fyer.
         *reinterpret_cast<uint32_t*>( event035MemoAddress + 0x40 ) =

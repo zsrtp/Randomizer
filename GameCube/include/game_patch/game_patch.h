@@ -87,7 +87,6 @@ namespace mod::game_patch
     void _02_bigWalletItemFunc();
     void _02_giantWalletItemFunc();
     void _02_gateKeysItemFunc();
-    void _02_heartContainerItemFunc();
     void _02_firstFusedShadowItemFunc();
     void _02_secondFusedShadowItemFunc();
     void _02_thirdFusedShadowItemFunc();

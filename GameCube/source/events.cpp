@@ -458,6 +458,7 @@ namespace mod::events
             if ( libtp::tp::d_a_alink::checkStageName( bossStages[i] ) )
             {
                 libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x1D] |= 0x10;
+                break;
             }
         }
     }

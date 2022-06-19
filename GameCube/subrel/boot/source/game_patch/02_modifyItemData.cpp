@@ -458,7 +458,6 @@ namespace mod::game_patch
         itemFuncPtr[items::Big_Wallet] = _02_bigWalletItemFunc;
         itemFuncPtr[items::Giant_Wallet] = _02_giantWalletItemFunc;
         itemFuncPtr[items::Gate_Keys] = _02_gateKeysItemFunc;
-        itemFuncPtr[items::Heart_Container] = _02_heartContainerItemFunc;
         itemFuncPtr[items::Ending_Blow] = _02_endingBlowItemFunc;
         itemFuncPtr[items::Shield_Attack] = _02_shieldAttackItemFunc;
         itemFuncPtr[items::Back_Slice] = _02_backSliceItemFunc;
