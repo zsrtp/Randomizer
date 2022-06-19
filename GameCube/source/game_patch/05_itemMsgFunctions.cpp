@@ -15,7 +15,6 @@
 
 namespace mod::game_patch
 {
-
     /*
     int32_t getItemIdFromMsgId( const void* TProcessor, uint16_t unk3, uint32_t msgId )
     {
@@ -93,7 +92,7 @@ namespace mod::game_patch
     {
         using namespace libtp::data::stage;
 
-        auto setMessageText = [&]( const char* text )
+        auto setMessageText = [=]( const char* text )
         {
             // Only replace the message if a valid string was retrieved
             if ( text )
@@ -102,6 +101,26 @@ namespace mod::game_patch
                 control->wMsgRender = text;
             }
         };
+
+        auto checkForSpecificMsg =
+            [=]( uint16_t desiredMsgId, int32_t room, const char* stage, const void* currentInf1, const char* desiredFile )
+            {
+                // Check if the message ids are the same
+                if ( msgId != desiredMsgId )
+                {
+                    return false;
+                }
+
+                // Check if the stage and room are correct
+                // Either or can be omitted
+                if ( !libtp::tools::playerIsInRoomStage( room, stage ) )
+                {
+                    return false;
+                }
+
+                // Check if the desired file is being used
+                return currentInf1 == getInf1Ptr( desiredFile );
+            };
 
         // Get message ids for specific checks
         constexpr uint16_t linkHouseMsgId = 0x658;
@@ -123,9 +142,7 @@ namespace mod::game_patch
             setMessageText( newMessage );
             return;
         }
-        else if ( ( msgId == charloDonationMsgId ) &&
-                  libtp::tools::playerIsInRoomStage( 2, allStages[stageIDs::Castle_Town] ) &&
-                  ( currentInf1 == getInf1Ptr( "zel_04.bmg" ) ) )
+        else if ( checkForSpecificMsg( charloDonationMsgId, 2, allStages[stageIDs::Castle_Town], currentInf1, "zel_04.bmg" ) )
         {
             setMessageText( m_DonationText );
             return;
@@ -137,9 +154,7 @@ namespace mod::game_patch
             rando::Seed* seed = randomizer->m_Seed;
             if ( seed )
             {
-                if ( ( msgId == linkHouseMsgId ) &&
-                     libtp::tools::playerIsInRoomStage( 1, allStages[stageIDs::Ordon_Village] ) &&
-                     ( currentInf1 == getInf1Ptr( "zel_01.bmg" ) ) )
+                if ( checkForSpecificMsg( linkHouseMsgId, 1, allStages[stageIDs::Ordon_Village], currentInf1, "zel_01.bmg" ) )
                 {
                     setMessageText( seed->m_RequiredDungeons );
                     return;
