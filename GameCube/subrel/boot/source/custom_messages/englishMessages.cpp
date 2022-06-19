@@ -93,7 +93,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!\nIt can be used in the\n"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "City in The Sky"
+        "City in the Sky"
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
@@ -225,7 +225,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!\nIt can be used in the\n"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "City in The Sky"
+        "City in the Sky"
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
@@ -333,7 +333,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!\nIt can be used in the\n"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "City in The Sky"
+        "City in the Sky"
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
@@ -417,7 +417,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!\nIt can be used in the\n"
         MSG_COLOR(MSG_COLOR_YELLOW)
-        "City in The Sky"
+        "City in the Sky"
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
@@ -563,7 +563,7 @@ namespace mod::customMessages
     MSG_END()
     MSG_BEGIN_ARRAY( secondFusedShadowEn )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You got the second"
+        "You got the second "
         MSG_COLOR(MSG_COLOR_RED)
         "Fused\nShadow"
         MSG_COLOR(MSG_COLOR_WHITE)

@@ -410,7 +410,8 @@ namespace mod::events
     void onAdjustFieldItemParams( libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife )
     {
         using namespace libtp::data::stage;
-        *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 2.0f;     // scale
+        using namespace libtp::data::items;
+
         if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Hyrule_Field] ) ||
              libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Upper_Zoras_River] ) ||
              libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Sacred_Grove] ) )
@@ -419,10 +420,23 @@ namespace mod::events
                 0x226;                  // Y Rotation Speed modifier. 0x226 is the value used when the item is on the ground.
             fopAC->mGravity = 0.0f;     // gravity
         }
-        /*else if ( !libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Gerudo_Desert] ) )
+        uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( fopAC ) + 0x92A );
+        switch ( itemID )
         {
-            *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x61C ) = 2.0f;     // height
-        }  Causes crashing in some areas*/
+            case Ordon_Shield:
+            case Heart_Container:
+            case Piece_of_Heart:
+            case Zora_Armor:
+            {
+                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 1.0f;     // scale
+                break;
+            }
+            default:
+            {
+                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 2.0f;     // scale
+                break;
+            }
+        }
     }
 
     void handleDungeonHeartContainer()
@@ -762,13 +776,6 @@ namespace mod::events
 
             zButtonAlphaPtr = *reinterpret_cast<uint32_t*>( zButtonAlphaPtr + 0x10C );
             if ( !zButtonAlphaPtr )
-            {
-                return false;
-            }
-
-            // Ensure that the Z Button is not dimmed
-            float zButtonAlpha = *reinterpret_cast<float*>( zButtonAlphaPtr + 0x720 );
-            if ( zButtonAlpha != 1.f )
             {
                 return false;
             }

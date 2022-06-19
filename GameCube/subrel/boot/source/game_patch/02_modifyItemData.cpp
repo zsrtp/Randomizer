@@ -22,8 +22,6 @@ namespace mod::game_patch
                                                      libtp::data::items::Bomblings_3,
                                                      libtp::data::items::Bombling_1,
                                                      libtp::data::items::Magic_Armor,
-                                                     libtp::data::items::Ordon_Sword,
-                                                     libtp::data::items::Ordon_Shield,
                                                      libtp::data::items::Master_Sword,
                                                      libtp::data::items::Wooden_Shield,
                                                      libtp::data::items::Hylian_Shield,
@@ -37,7 +35,7 @@ namespace mod::game_patch
                                                      libtp::data::items::Ball_and_Chain,
                                                      libtp::data::items::Heros_Bow,
                                                      libtp::data::items::Clawshot,
-                                                     libtp::data::items::Ordon_Shield,
+                                                     libtp::data::items::Ordon_Sword,
                                                      libtp::data::items::Iron_Boots,
                                                      libtp::data::items::Dominion_Rod,
                                                      libtp::data::items::Double_Clawshots,
@@ -422,7 +420,7 @@ namespace mod::game_patch
         itemFuncPtr[items::Temple_of_Time_Compass] = _02_totCompassItemFunc;
         itemFuncPtr[items::Temple_of_Time_Big_Key] = _02_totBigKeyItemFunc;
 
-        // City in The Sky
+        // City in the Sky
         itemFuncPtr[items::City_in_The_Sky_Small_Key] = _02_citySmallKeyItemFunc;
         itemFuncPtr[items::City_in_The_Sky_Dungeon_Map] = _02_cityMapItemFunc;
         itemFuncPtr[items::City_in_The_Sky_Compass] = _02_cityCompassItemFunc;

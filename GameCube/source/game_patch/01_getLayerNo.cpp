@@ -491,16 +491,6 @@ namespace mod::game_patch
                             {
                                 chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
                             }
-                            /* This is the original code, which updates the state of the shop once you've cleared Faron
-                            Twilight.
-                            * We modify this in rando to instead update once you've bought the Slingshot as to not lose the
-                            check and to
-                            * help prevent logical linearity/softlocks in the early game.
-                            uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                            if ( uVar2 != 0 )
-                            {
-                                chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
-                            }*/
                         }
                         else
                         {
