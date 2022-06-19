@@ -1273,7 +1273,7 @@ namespace mod::customMessages
         "\x83\x52\x83\x93\x83\x70\x83\x58",
 
         // helpText
-        // SかZボタン押すと情報が表示される
+        // SかZボタン押すと\n情報が表示される
         "\x53\x82\xA9\x5a\x83\x7B\x83\x5E\x83\x93\x89\x9F\x82\xB7\x82\xC6\x0A"
         "\x8F\xEE\x95\xF1\x82\xAA\x95\x5C\x8E\xA6\x82\xB3\x82\xEA\x82\xE9",
     };
@@ -1287,21 +1287,21 @@ namespace mod::customMessages
 
         // Yes/No
         34,
-        27,
+        34,
 
         // Cheese
         111,
 
         // Yes/No
         49,
-        42,
+        49,
 
         // Gate Keys
         143,
 
         // Yes/No
         34,
-        27,
+        34,
 
         // Headers
         // Small Keys
@@ -1323,7 +1323,7 @@ namespace mod::customMessages
         // Big keys values
         // Yes/No
         33,
-        26,
+        33,
 
         // Goron Mines
         41,
@@ -1331,12 +1331,12 @@ namespace mod::customMessages
         // Maps values
         // Yes/No
         40,
-        33,
+        40,
 
         // Compasses values
         // Yes/No
         13,
-        7,
+        13,
     };
 }     // namespace mod::customMessages
 #endif

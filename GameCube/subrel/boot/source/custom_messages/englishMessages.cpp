@@ -1098,7 +1098,7 @@ namespace mod::customMessages
 
         // Header values
         // Small Keys values
-        15,
+        16,
 
         // Big keys values
         // Yes/No
