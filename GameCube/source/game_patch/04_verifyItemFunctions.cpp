@@ -1,15 +1,12 @@
-#include <cstring>
-
+#include "game_patch/game_patch.h"
 #include "main.h"
 #include "data/items.h"
 #include "events.h"
-#include "game_patch/game_patch.h"
-#include "tp/d_a_alink.h"
 #include "tp/d_item.h"
 
 namespace mod::game_patch
 {
-    auto getProgressiveSword = []()
+    uint32_t _04_getProgressiveSword()
     {
         using namespace libtp::data::items;
         const uint8_t progressiveSwordsList[] = { Wooden_Sword, Ordon_Sword, Master_Sword };
@@ -28,7 +25,7 @@ namespace mod::game_patch
         return static_cast<uint32_t>( Master_Sword_Light );
     };
 
-    auto getProgressiveBow = []()
+    uint32_t _04_getProgressiveBow()
     {
         using namespace libtp::data::items;
         const uint8_t progressiveBowsList[] = { Heros_Bow, Big_Quiver };
@@ -47,7 +44,7 @@ namespace mod::game_patch
         return static_cast<uint32_t>( Giant_Quiver );
     };
 
-    auto getProgressiveSkill = []()
+    uint32_t _04_getProgressiveSkill()
     {
         using namespace libtp::data::items;
         const uint8_t progressiveSkillsList[] =
@@ -67,7 +64,7 @@ namespace mod::game_patch
         return static_cast<uint32_t>( Great_Spin );
     };
 
-    auto getProgressiveSkyBook = []()
+    uint32_t _04_getProgressiveSkyBook()
     {
         using namespace libtp::data::items;
         const uint8_t progressiveSkyBooksList[] = { Ancient_Sky_Book_Empty,
@@ -91,7 +88,7 @@ namespace mod::game_patch
         return static_cast<uint32_t>( Ancient_Sky_Book_Completed );
     };
 
-    auto getProgressiveBombBag = []()
+    uint32_t _04_getProgressiveBombBag()
     {
         using namespace libtp::data::items;
         const uint8_t progressiveBombBagsList[] = { Empty_Bomb_Bag, Goron_Bomb_Bag, Bomb_Bag_Regular_Bombs };
@@ -110,7 +107,7 @@ namespace mod::game_patch
         return static_cast<uint32_t>( Giant_Bomb_Bag );
     };
 
-    auto getProgressiveKeyShard = []()
+    uint32_t _04_getProgressiveKeyShard()
     {
         using namespace libtp::data::items;
         const uint8_t progressiveKeyShardsList[] { Key_Shard_1, Key_Shard_2 };
@@ -129,7 +126,7 @@ namespace mod::game_patch
         return static_cast<uint32_t>( Big_Key_Goron_Mines );
     };
 
-    auto getProgressiveMirrorShard = []()
+    uint32_t _04_getProgressiveMirrorShard()
     {
         using namespace libtp::data::items;
         const uint8_t progressiveMirrorShardsList[] { Mirror_Piece_2, Mirror_Piece_3, Mirror_Piece_4 };
@@ -148,7 +145,7 @@ namespace mod::game_patch
         return static_cast<uint32_t>( Mirror_Piece_4 );
     };
 
-    auto getProgressiveFusedShadow = []()
+    uint32_t _04_getProgressiveFusedShadow()
     {
         using namespace libtp::data::items;
         const uint8_t progressiveFusedShadowList[] { Fused_Shadow_1, Fused_Shadow_2, Fused_Shadow_3 };
@@ -167,7 +164,7 @@ namespace mod::game_patch
         return static_cast<uint32_t>( Fused_Shadow_3 );
     };
 
-    uint32_t _04_verifyProgressiveItem( rando::Randomizer* randomizer, uint32_t itemID )
+    KEEP_FUNC uint32_t _04_verifyProgressiveItem( rando::Randomizer* randomizer, uint32_t itemID )
     {
         using namespace libtp::data::items;
         if ( randoIsEnabled( randomizer ) )
@@ -179,7 +176,7 @@ namespace mod::game_patch
                 case Master_Sword:
                 case Master_Sword_Light:
                 {
-                    itemID = getProgressiveSword();
+                    itemID = _04_getProgressiveSword();
                     break;
                 }
 
@@ -187,7 +184,7 @@ namespace mod::game_patch
                 case Big_Quiver:
                 case Giant_Quiver:
                 {
-                    itemID = getProgressiveBow();
+                    itemID = _04_getProgressiveBow();
                     break;
                 }
 
@@ -213,7 +210,7 @@ namespace mod::game_patch
                 case Jump_Strike:
                 case Great_Spin:
                 {
-                    itemID = getProgressiveSkill();
+                    itemID = _04_getProgressiveSkill();
                     break;
                 }
 
@@ -239,7 +236,7 @@ namespace mod::game_patch
                 case Ancient_Sky_Book_Fifth_Character:
                 case Ancient_Sky_Book_Completed:
                 {
-                    itemID = getProgressiveSkyBook();
+                    itemID = _04_getProgressiveSkyBook();
                     break;
                 }
 
@@ -247,7 +244,7 @@ namespace mod::game_patch
                 case Goron_Bomb_Bag:
                 case Giant_Bomb_Bag:
                 {
-                    itemID = getProgressiveBombBag();
+                    itemID = _04_getProgressiveBombBag();
                     break;
                 }
 
@@ -255,7 +252,7 @@ namespace mod::game_patch
                 case Key_Shard_2:
                 case Big_Key_Goron_Mines:
                 {
-                    itemID = getProgressiveKeyShard();
+                    itemID = _04_getProgressiveKeyShard();
                     break;
                 }
 
@@ -291,7 +288,7 @@ namespace mod::game_patch
                 case Mirror_Piece_3:
                 case Mirror_Piece_4:
                 {
-                    itemID = getProgressiveMirrorShard();
+                    itemID = _04_getProgressiveMirrorShard();
                     break;
                 }
 
@@ -299,7 +296,7 @@ namespace mod::game_patch
                 case Fused_Shadow_2:
                 case Fused_Shadow_3:
                 {
-                    itemID = getProgressiveFusedShadow();
+                    itemID = _04_getProgressiveFusedShadow();
                     break;
                 }
 

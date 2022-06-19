@@ -11,7 +11,6 @@
 
 #include "Z2AudioLib/Z2SceneMgr.h"
 #include "main.h"
-#include "patch.h"
 #include "tools.h"
 
 namespace mod::user_patch
@@ -138,29 +137,32 @@ namespace mod::user_patch
 
         static uint8_t randomizedBgms[bgmSourceLength];
 
-        void ( *return_sceneChange )( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
-                                      libtp::z2audiolib::z2scenemgr::JAISoundID id,
-                                      uint8_t SeWave1,
-                                      uint8_t SeWave2,
-                                      uint8_t BgmWave1,
-                                      uint8_t BgmWave2,
-                                      uint8_t DemoWave,
-                                      bool param_7 ) = nullptr;
+        KEEP_VAR void ( *return_sceneChange )( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
+                                               libtp::z2audiolib::z2scenemgr::JAISoundID id,
+                                               uint8_t SeWave1,
+                                               uint8_t SeWave2,
+                                               uint8_t BgmWave1,
+                                               uint8_t BgmWave2,
+                                               uint8_t DemoWave,
+                                               bool param_7 ) = nullptr;
 
     }     // namespace bgm::bgmrando
 
-    void patchRandomBgm( rando::Randomizer* randomizer, bool set )
+    // Temporary bool used to check if random BGM should be used
+    // May be removed when the code is rewritten
+    bool randomBgm = false;
+
+    void enableRandomBgm( rando::Randomizer* randomizer, bool set )
     {
-        uint64_t seed = randomizer->getSeed();
+        randomBgm = set;
         mod::console << "[2] EnemyBgmDisabled [" << ( set ? "x" : " " ) << "]\n";
+
         if ( !set )
         {
-            if ( bgm::bgmrando::return_sceneChange != nullptr )
-            {
-                libtp::patch::unhookFunction( bgm::bgmrando::return_sceneChange );
-            }
             return;
         }
+
+        uint64_t seed = randomizer->getSeed();
 
         /**
          * @todo Find a better way to assign a random track to each source track
@@ -195,72 +197,67 @@ namespace mod::user_patch
                 }
             }
         }
+    }
 
-        bgm::bgmrando::return_sceneChange = libtp::patch::hookFunction(
-            libtp::z2audiolib::z2scenemgr::sceneChange,
-            []( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
-                libtp::z2audiolib::z2scenemgr::JAISoundID BGMid,
-                uint8_t SeWave1,
-                uint8_t SeWave2,
-                uint8_t BgmWave1,
-                uint8_t BgmWave2,
-                uint8_t DemoWave,
-                bool param_7 )
+    KEEP_FUNC void handle_sceneChange( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
+                                       libtp::z2audiolib::z2scenemgr::JAISoundID BGMid,
+                                       uint8_t SeWave1,
+                                       uint8_t SeWave2,
+                                       uint8_t BgmWave1,
+                                       uint8_t BgmWave2,
+                                       uint8_t DemoWave,
+                                       bool param_7 )
+    {
+        if ( !randomBgm )
+        {
+            return bgm::bgmrando::return_sceneChange( sceneMgr,
+                                                      BGMid,
+                                                      SeWave1,
+                                                      SeWave2,
+                                                      BgmWave1,
+                                                      BgmWave2,
+                                                      DemoWave,
+                                                      param_7 );
+        }
+        uint32_t id = BGMid.id;
+        if ( id >= 0x1000000 && id < 0x2000000 )
+        {
+            // Only Sequences are applied here
+            id = id - 0x1000000;
+            uint8_t index_of_id = 0;
+            bool found = false;
+
+            for ( uint8_t i = 0; i < bgm::bgmrando::bgmSourceLength; i++ )
             {
-                uint32_t id = BGMid.id;
-                if ( id >= 0x1000000 && id < 0x2000000 )
+                if ( bgm::bgmrando::randomizedBgms[i] == id )
                 {
-                    // Only Sequences are applied here
-                    id = id - 0x1000000;
-                    uint8_t index_of_id = 0;
-                    bool found = false;
-
-                    for ( uint8_t i = 0; i < bgm::bgmrando::bgmSourceLength; i++ )
-                    {
-                        if ( bgm::bgmrando::randomizedBgms[i] == id )
-                        {
-                            index_of_id = i;
-                            found = true;
-                            break;
-                        }
-                    }
-
-                    if ( found )
-                    {
-                        libtp::z2audiolib::z2scenemgr::JAISoundID new_id;
-                        new_id.id = bgm::bgmrando::bgmSource[index_of_id].id + 0x1000000;
-                        bgm::bgmrando::return_sceneChange( sceneMgr,
-                                                           new_id,
-                                                           SeWave1,
-                                                           SeWave2,
-                                                           bgm::bgmrando::bgmSource[index_of_id].bgmWave1,
-                                                           bgm::bgmrando::bgmSource[index_of_id].bgmWave2,
-                                                           DemoWave,
-                                                           param_7 );
-                    }
-                    else
-                    {
-                        bgm::bgmrando::return_sceneChange( sceneMgr,
-                                                           BGMid,
-                                                           SeWave1,
-                                                           SeWave2,
-                                                           BgmWave1,
-                                                           BgmWave2,
-                                                           DemoWave,
-                                                           param_7 );
-                    }
+                    index_of_id = i;
+                    found = true;
+                    break;
                 }
-                else
-                {
-                    bgm::bgmrando::return_sceneChange( sceneMgr,
-                                                       BGMid,
-                                                       SeWave1,
-                                                       SeWave2,
-                                                       BgmWave1,
-                                                       BgmWave2,
-                                                       DemoWave,
-                                                       param_7 );
-                }
-            } );
+            }
+
+            if ( found )
+            {
+                libtp::z2audiolib::z2scenemgr::JAISoundID new_id;
+                new_id.id = bgm::bgmrando::bgmSource[index_of_id].id + 0x1000000;
+                bgm::bgmrando::return_sceneChange( sceneMgr,
+                                                   new_id,
+                                                   SeWave1,
+                                                   SeWave2,
+                                                   bgm::bgmrando::bgmSource[index_of_id].bgmWave1,
+                                                   bgm::bgmrando::bgmSource[index_of_id].bgmWave2,
+                                                   DemoWave,
+                                                   param_7 );
+            }
+            else
+            {
+                bgm::bgmrando::return_sceneChange( sceneMgr, BGMid, SeWave1, SeWave2, BgmWave1, BgmWave2, DemoWave, param_7 );
+            }
+        }
+        else
+        {
+            bgm::bgmrando::return_sceneChange( sceneMgr, BGMid, SeWave1, SeWave2, BgmWave1, BgmWave2, DemoWave, param_7 );
+        }
     }
 }     // namespace mod::user_patch

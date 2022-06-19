@@ -17,10 +17,10 @@
 #include "tp/d_save.h"
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
+#include "tp/f_op_actor.h"
 
 namespace mod::events
 {
-
     typedef bool ( *CMEB )( void* );
     extern CMEB checkNpcTransform;
     /**
@@ -109,7 +109,7 @@ namespace mod::events
      */
     void setSaveFileEventFlag( uint16_t flag );
 
-    void onAdjustFieldItemParams( void* fopAC, void* daObjLife );
+    void onAdjustFieldItemParams( libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife );
 
     void handleDungeonHeartContainer();
 
@@ -127,6 +127,8 @@ namespace mod::events
     void handleQuickTransform();
     void handleTimeOfDayChange();
     bool checkFoolItemFreeze();
+
+    uint16_t getPauseRupeeMax( libtp::tp::d_save::dSv_player_status_a_c* plyrStatus );
 
     libtp::tp::d_resource::dRes_info_c* getObjectResInfo( const char* arcName );
     bool haveItem( uint8_t item );

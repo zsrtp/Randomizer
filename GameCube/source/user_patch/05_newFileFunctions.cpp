@@ -1,17 +1,8 @@
-/** @file 05_clearRegionTwilights.cpp
- * @author Lunar Soap
- * @brief Clears the Twilight for each region based on user settings.
- *
- * @bug No known bugs
- */
-
 #include "main.h"
-#include "events.h"
 #include "rando/data.h"
 #include "rando/randomizer.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
-#include "tp/d_item_data.h"
 #include "user_patch/user_patch.h"
 
 namespace mod::user_patch
@@ -50,14 +41,6 @@ namespace mod::user_patch
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag |=
                 0x4;     // Set the flag for having completed Lanayru Twilight.
             libtp::tp::d_item::execItemGet( libtp::data::items::Vessel_Of_Light_Lanayru );
-        }
-    }
-
-    void loadShopModels( rando::Randomizer* randomizer, bool set )
-    {
-        if ( set && randoIsEnabled( randomizer ) )
-        {
-            randomizer->m_Seed->loadShopModels();
         }
     }
 

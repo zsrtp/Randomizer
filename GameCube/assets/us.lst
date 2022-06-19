@@ -3,6 +3,10 @@
 80003540:memcpy
 
 // OSModule.o
+// text
+8033e510:OSLink
+8033e7a8:OSUnlink
+// data
 800030C8:osModuleList
 
 // OSTime.o
@@ -87,6 +91,7 @@
 803AF578:item_getcheck_func_ptr
 80097e8c:execItemGet
 800986c4:item_func_WOOD_STICK
+800982b4:item_func_UTUWA_HEART
 
 // d_item_data.o
 803AC5A0:item_resource
@@ -113,6 +118,8 @@
 800d7c40:checkDamageAction
 801181a0:setGetItemFace
 800d96dc:procCoLargeDamageInit
+8011ac28:procCoGetItem
+800cffa4:dComIfGp_setItemLifeCount
 
 // data
 8038EB8C:climbVars
@@ -122,6 +129,7 @@
 
 // d_menu_collect.o
 801B3340:setWalletMaxNum
+801b074c:dMenuCollect_screenSet
 
 // JKRExpHeap.o
 802CF128:do_alloc_JKRExpHeap
@@ -223,6 +231,7 @@
 80368B2C:strcpy
 80368954:strncmp
 80368be4:strlen
+80368924:strchr
 
 // m_Do_controller_pad.o
 // data
@@ -236,6 +245,7 @@
 80141264:dComIfGs_isItemFirstBit
 8002f810:dComIfGs_Wolf_Change_Check
 8002f434:dComIfG_getStageRes
+8002dca8:dComIfGs_getMaxLifeGauge
 
 // d_kankyo.o
 // data
@@ -280,7 +290,7 @@
 802288fc:getFontCCColorTable
 802289a8:getFontGCColorTable
 
-//processor.o
+// processor.o
 802A7C54:getResource_groupID
 
 //d_msg_flow.o
@@ -290,6 +300,7 @@
 8024b974:query025
 8024bfec:query042
 8024c3fc:event000
+8024ca94:event017
 8024d7c8:event035
 8024c550:event003
 8024da78:event041
@@ -334,6 +345,9 @@
 // JKRArchive.o
 802D5C64:JKRArchive_getResource2
 
+// JKRArchivePub.h
+802d5b38:JKRArchivePub_getGlbResource
+
 // J2DPicture.o
 802FC708:J2DPicture_ct4
 802FCFF0:J2DPicture_dt
@@ -341,3 +355,13 @@
 
 // d_s_logo.o
 802572B8:dScnLogo_c_dt
+
+// m_Do_Audio.o
+8014113c:mDoAud_seStartLevel
+
+// d_meter_HIO.o
+// data
+8042ebc8:g_drawHIO
+
+// mem.o
+80366130:memmove

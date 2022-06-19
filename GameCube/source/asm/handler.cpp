@@ -6,9 +6,9 @@
 #include "events.h"
 #include "main.h"
 #include "tp/d_a_alink.h"
-#include "tp/d_meter2_info.h"
-#include "tp/d_msg_object.h"
-#include "tp/f_op_msg_mng.h"
+#include "tp/d_com_inf_game.h"
+#include "tp/d_save.h"
+#include "data/items.h"
 
 namespace mod::assembly
 {
@@ -37,13 +37,24 @@ namespace mod::assembly
 
     uint8_t handleAdjustSkyCharacter() { return events::onSkyCharacter( mod::randomizer ); }
 
-    void handleAdjustFieldItemParams( void* fopAC, void* daObjLife ) { events::onAdjustFieldItemParams( fopAC, daObjLife ); }
+    void handleAdjustFieldItemParams( libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife )
+    {
+        events::onAdjustFieldItemParams( fopAC, daObjLife );
+    }
 
-    void handleTransformOokWolf()
+    void handleTransformFromWolf()
     {
         if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm == 1 )
         {
             libtp::tp::d_a_alink::procCoMetamorphoseInit( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer );
+        }
+    }
+
+    void handleAdjustIzaWolf()
+    {
+        if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm == 1 )
+        {
+            events::setSaveFileEventFlag( 0xB02 );
         }
     }
 }     // namespace mod::assembly

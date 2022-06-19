@@ -1,8 +1,7 @@
-#include <string.h>
-
+#include "game_patch/game_patch.h"
+#include "main.h"
 #include "data/stages.h"
 #include "events.h"
-#include "game_patch/game_patch.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_kankyo.h"
@@ -23,7 +22,7 @@ namespace mod::game_patch
         // Didn't find the current stage for some reason
         return -1;
     }
-    int32_t _01_getLayerNo( const char* stageName, int roomId, int layerOverride )
+    KEEP_FUNC int32_t _01_getLayerNo( const char* stageName, int roomId, int layerOverride )
     {
         int chosenLayer;
         bool condition;
@@ -77,15 +76,7 @@ namespace mod::game_patch
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4510 );     // Talo Saved
                             if ( condition )
                             {
-                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xD04 );     // Can Transform at Will
-                                if ( condition )
-                                {
-                                    chosenLayer = stage::faronStateIDs::Faron_Snowpeak_Completed;
-                                }
-                                else
-                                {
-                                    chosenLayer = stage::faronStateIDs::Faron_Forest_Temple_Completed;
-                                }
+                                chosenLayer = stage::faronStateIDs::Faron_MDH_Completed;
                             }
                             else
                             {
@@ -500,16 +491,6 @@ namespace mod::game_patch
                             {
                                 chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
                             }
-                            /* This is the original code, which updates the state of the shop once you've cleared Faron
-                            Twilight.
-                            * We modify this in rando to instead update once you've bought the Slingshot as to not lose the
-                            check and to
-                            * help prevent logical linearity/softlocks in the early game.
-                            uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                            if ( uVar2 != 0 )
-                            {
-                                chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
-                            }*/
                         }
                         else
                         {

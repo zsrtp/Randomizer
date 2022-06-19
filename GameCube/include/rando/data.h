@@ -24,14 +24,21 @@ namespace mod::rando
 
     struct Header
     {
-        uint16_t minVersion;     // minimal required REL version, u8 Major and u8 Minor
-        uint16_t maxVersion;     // maximum supported REL version, u8 Major and u8 Minor
-        uint16_t headerSize;     // Total size of the header in bytes
-        uint16_t dataSize;       // Total number of bytes of seed data
-        uint64_t seed;           // Current seed
-        uint32_t totalSize;      // Total number of bytes in the gci.
+        uint16_t minVersion;           // minimal required REL version, u8 Major and u8 Minor
+        uint16_t maxVersion;           // maximum supported REL version, u8 Major and u8 Minor
+        uint16_t headerSize;           // Total size of the header in bytes
+        uint16_t dataSize;             // Total number of bytes of seed data
+        uint64_t seed;                 // Current seed
+        uint32_t totalSize;            // Total number of bytes in the GCI
+        uint32_t requiredDungeons;     // Bitfield containing which dungeons are required to beat the seed. Only 8 bits are
+                                       // used, while the rest are reserved for future updates
 
-        entryInfo patchInfo;     // bitArray where each bit represents a patch/modification to be applied for this playthrough
+        entryInfo volatilePatchInfo;     // BitArray where each bit represents a patch/modification to be applied for this
+                                         // playthrough; these patchs/modifications must be applied every time a file is loaded
+
+        entryInfo oneTimePatchInfo;     // BitArray where each bit represents a patch/modification to be applied for this
+                                        // playthrough; these patchs/modifications must be applied only when a seed is loaded
+
         entryInfo eventFlagsInfo;      // eventFlags that need to be set for this seed
         entryInfo regionFlagsInfo;     // regionFlags that need to be set, alternating
 
@@ -46,8 +53,6 @@ namespace mod::rando
         entryInfo skyCharacterCheckInfo;
         entryInfo shopItemCheckInfo;
         entryInfo startingItemInfo;
-        uint16_t customTextHeaderSize;
-        uint16_t customTextHeaderOffset;
         uint8_t heartColor;
         uint8_t aButtonColor;
         uint8_t bButtonColor;

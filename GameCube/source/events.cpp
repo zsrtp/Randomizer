@@ -1,7 +1,6 @@
-#include "events.h"
-
 #include <cstring>
 
+#include "events.h"
 #include "asm.h"
 #include "data/items.h"
 #include "data/stages.h"
@@ -94,9 +93,9 @@ namespace mod::events
             case 0x1FA:
                 // Nop out the instruction that stores the new total small key value when the game attempts to
                 // remove a small key from the inventory when opening the boss door
-                if ( libtp::tp::d_a_alink::checkStageName(
-                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Lakebed_Temple] ) &&
-                     libtp::tp::d_kankyo::env_light.currentRoom == 2 )
+                if ( libtp::tools::playerIsInRoomStage(
+                         2,
+                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Lakebed_Temple] ) )
                 {
                     *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1198 ) = 0x60000000;     // Previous: 0x3803ffff
                 }
@@ -213,6 +212,16 @@ namespace mod::events
                     0x48000058;     // patch instruction to prevent game from removing bulblin camp key.
                 break;
             }
+            // d_a_b_bq.rel
+            // Diababa
+            case 0x8B:
+            {
+                // Transform back into link if you are wolf when defeating Diababa
+                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x21B8 ),
+                                             reinterpret_cast<void*>( assembly::asmTransformDiababaWolf ) );
+
+                break;
+            }
 
                 // d_a_obj_Lv5Key.rel
             // Snowpeak Ruins Small Key Lock
@@ -283,6 +292,25 @@ namespace mod::events
             {
                 checkNpcTransform = reinterpret_cast<CMEB>( relPtrRaw + 0x8A0C );
                 break;
+            }
+            // d_a_npc_hoz.rel
+            // Iza
+            case 0x13E:
+            {
+                // Transform Info Human After Defeating Shadow Beasts By Iza
+                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0xC7F8 ),
+                                             reinterpret_cast<void*>( assembly::asmAdjustIzaWolf ) );
+            }
+            // d_a_obj_drop.rel
+            // Tear of Light
+            case 0x1B7:
+            {
+                // set wait timer to 1
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x0FCC ) = 0x38000001;     // li 0x1
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1038 ) = 0x38000001;     // li 0x1
+
+                // set y_pos of drop to be at ground level
+                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x2474 ) = 0x00000000;     // 0.0f
             }
         }
     }
@@ -379,21 +407,36 @@ namespace mod::events
         libtp::tp::d_save::onEventBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags, flag );
     }
 
-    void onAdjustFieldItemParams( void* fopAC, void* daObjLife )
+    void onAdjustFieldItemParams( libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife )
     {
         using namespace libtp::data::stage;
-        *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 2.0f;     // scale
+        using namespace libtp::data::items;
 
         if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Hyrule_Field] ) ||
              libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Upper_Zoras_River] ) ||
              libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Sacred_Grove] ) )
         {
-            *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( fopAC ) + 0x530 ) = 0.0f;     // gravity
+            *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( fopAC ) + 0x962 ) =
+                0x226;                  // Y Rotation Speed modifier. 0x226 is the value used when the item is on the ground.
+            fopAC->mGravity = 0.0f;     // gravity
         }
-        /*else if ( !libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Gerudo_Desert] ) )
+        uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( fopAC ) + 0x92A );
+        switch ( itemID )
         {
-            *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x61C ) = 2.0f;     // height
-        }  Causes crashing in some areas*/
+            case Ordon_Shield:
+            case Heart_Container:
+            case Piece_of_Heart:
+            case Zora_Armor:
+            {
+                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 1.0f;     // scale
+                break;
+            }
+            default:
+            {
+                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 2.0f;     // scale
+                break;
+            }
+        }
     }
 
     void handleDungeonHeartContainer()
@@ -415,6 +458,7 @@ namespace mod::events
             if ( libtp::tp::d_a_alink::checkStageName( bossStages[i] ) )
             {
                 libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x1D] |= 0x10;
+                break;
             }
         }
     }
@@ -441,9 +485,9 @@ namespace mod::events
     bool proc_query023( void* unk1, void* unk2, int32_t unk3 )
     {
         // Check to see if currently in one of the Kakariko interiors
-        if ( libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Village_Interiors] ) &&
-             libtp::tp::d_kankyo::env_light.currentRoom == 1 )
+        if ( libtp::tools::playerIsInRoomStage(
+                 1,
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Village_Interiors] ) )
         {
             // If player has not bought Barnes' Bomb Bag, we want to allow them to be able to get the check.
             if ( ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x908 ) ) )
@@ -515,8 +559,9 @@ namespace mod::events
             {
                 if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Forest_Temple] ) )
                 {
-                    if ( ( ( libtp::tp::d_kankyo::env_light.currentRoom == 3 ) ||
-                           ( libtp::tp::d_kankyo::env_light.currentRoom == 1 ) ) &&
+                    const uint8_t currentRoom = libtp::tp::d_kankyo::env_light.currentRoom;
+
+                    if ( ( ( currentRoom == 3 ) || ( currentRoom == 1 ) ) &&
                          ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mEvtManager.mRoomNo != 0 ) )
                     {
                         return false;
@@ -579,7 +624,10 @@ namespace mod::events
         }
     }
 
-    bool haveItem( uint8_t item ) { return libtp::tp::d_item::checkItemGet( item, 1 ); }
+    bool haveItem( uint8_t item )
+    {
+        return libtp::tp::d_item::checkItemGet( item, 1 );
+    }
 
     void handleQuickTransform()
     {
@@ -705,8 +753,12 @@ namespace mod::events
 
     bool checkFoolItemFreeze()
     {
-        uint32_t zButtonAlphaPtr = reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::wZButtonPtr );
         libtp::tp::d_a_alink::daAlink* linkMapPtr = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer;
+
+        if ( !linkMapPtr )
+        {
+            return false;
+        }
 
         // Ensure that link is not in a cutscene.
         if ( libtp::tp::d_a_alink::checkEventRun( linkMapPtr ) )
@@ -717,28 +769,6 @@ namespace mod::events
         if ( libtp::tp::d_camera::checkRide( linkMapPtr ) )
         {
             return false;
-        }
-
-        if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xC10 ) )
-        {
-            // Ensure there is a proper pointer to the Z Button Alpha.
-            if ( !zButtonAlphaPtr )
-            {
-                return false;
-            }
-
-            zButtonAlphaPtr = *reinterpret_cast<uint32_t*>( zButtonAlphaPtr + 0x10C );
-            if ( !zButtonAlphaPtr )
-            {
-                return false;
-            }
-
-            // Ensure that the Z Button is not dimmed
-            float zButtonAlpha = *reinterpret_cast<float*>( zButtonAlphaPtr + 0x720 );
-            if ( zButtonAlpha != 1.f )
-            {
-                return false;
-            }
         }
 
         // Make sure Link is not underwater or talking to someone.
@@ -761,6 +791,7 @@ namespace mod::events
 
         // Set the window color
         tempBgWindow->setWhiteColor( color );
+        tempBgWindow->setBlackColor( color );
 
         // Convert x, y, width, and height to floats
         constexpr int32_t numValues = 4;
@@ -837,6 +868,30 @@ namespace mod::events
         }
 
         return memoryFlags;
+    }
+
+    KEEP_FUNC uint16_t getPauseRupeeMax( libtp::tp::d_save::dSv_player_status_a_c* plyrStatus )
+    {
+        using namespace libtp::data::items;
+        Wallets current_wallet;
+
+        current_wallet = plyrStatus->currentWallet;
+        if ( current_wallet < ( Wallets::BIG_WALLET | Wallets::GIANT_WALLET ) )
+        {
+            if ( current_wallet == Wallets::BIG_WALLET )
+            {
+                return 600;
+            }
+            if ( current_wallet == Wallets::WALLET )
+            {
+                return 300;
+            }
+            if ( current_wallet < ( Wallets::BIG_WALLET | Wallets::GIANT_WALLET ) )
+            {
+                return 1000;
+            }
+        }
+        return 0;
     }
 
 }     // namespace mod::events

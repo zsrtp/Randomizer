@@ -3,6 +3,10 @@
 80003540:memcpy
 
 // OSModule.o
+// text
+8033f310:OSLink
+8033f5a8:OSUnlink
+// data
 800030C8:osModuleList
 
 // OSTime.o
@@ -11,6 +15,7 @@
 // m_Do_ext.o
 // text
 8000EDA8:getArchiveHeapPtr
+800149a4:mDoExt_getMesgFont
 
 // m_Do_MemCard.o
 // data
@@ -86,6 +91,7 @@
 803B0E58:item_func_ptr
 803B1258:item_getcheck_func_ptr
 800987f4:item_func_WOOD_STICK
+800983e4:item_func_UTUWA_HEART
 
 // d_a_alink.h
 800B2928:setStickData
@@ -105,6 +111,8 @@
 800d7e4c:checkDamageAction
 801183ac:setGetItemFace
 801362f8:procWolfDamageInit
+8011ae34:procCoGetItem
+800d01b0:dComIfGp_setItemLifeCount
 
 // data
 8039038C:climbVars
@@ -118,6 +126,7 @@
 
 // d_menu_collect.o
 801B3598:setWalletMaxNum
+801b09a4:dMenuCollect_screenSet
 
 // JKRExpHeap.o
 802CFF28:do_alloc_JKRExpHeap
@@ -219,6 +228,7 @@
 8036995C:strcpy
 80369784:strncmp
 80369a14:strlen
+80369754:strchr
 
 // m_Do_controller_pad.o
 // data
@@ -231,6 +241,7 @@
 8002b49c:dComIfG_get_timelayer
 8002f8b8:dComIfGs_Wolf_Change_Check
 8002f4dc:dComIfG_getStageRes
+8002dd50:dComIfGs_getMaxLifeGauge
 
 // d_kankyo.o
 // data
@@ -291,6 +302,7 @@
 8024b8f4:query004
 8024cbf4:event003
 8024e11c:event041
+8024d138:event017
 
 
 //d_a_npc.o
@@ -315,3 +327,39 @@
 // m_Do_Audio.o
 803ddeec:g_mDoAud_zelAudio
 
+// J2DTextBox.h
+80300460:J2DTextBox_ct1
+80300fe0:J2DTextBox_dt
+80301078:J2DTextBox_setFont
+803010e8:J2DTextBox_draw1
+80301290:J2DTextBox_draw2
+80301460:J2DTextBox_setString1
+
+// d_menu_ring.o
+801eae40:dMenuRing__create
+801eaeac:dMenuRing__delete
+801eaf8c:dMenuRing__draw
+
+// JKRArchive.o
+802d6a64:JKRArchive_getResource2
+
+// JKRArchivePub.h
+802d6938:JKRArchivePub_getGlbResource
+
+// J2DPicture.o
+802fd508:J2DPicture_ct4
+802fddf0:J2DPicture_dt
+802fea70:J2DPicture_draw
+
+// d_s_logo.o
+80257d28:dScnLogo_c_dt
+
+// m_Do_Audio.o
+80141348:mDoAud_seStartLevel
+
+// d_meter_HIO.o
+// data
+80430b88:g_drawHIO
+
+// mem.o
+80366f60:memmove

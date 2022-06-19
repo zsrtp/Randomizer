@@ -57,23 +57,11 @@ namespace mod::rando
         ObjectArchiveReplacement* m_ObjectArcReplacements = nullptr;
         uint32_t m_numLoadedObjectArcReplacements = 0;
 
-        uint8_t* m_MsgTableInfo = nullptr; // Custom message string data
-        uint32_t m_TotalMsgEntries = 0; // Number of currently loaded custom string
+        const char* m_RequiredDungeons = nullptr;     // Displayed when reading the sign in front of Link's house
 
         // Member functions
        public:
-        /**
-         *  @brief Class to dynamically load required data from a given seed
-         *
-         *  @param seedInfo Pointer to the seedinfo that we intend to load
-         */
-        Seed( int32_t chan, SeedInfo* seedInfo );
-
-        /**
-         *  @brief Deletes all allocated members and unpatches all the previously applied patches
-         */
-        ~Seed();
-
+        // Main
         /**
          *  @brief Applies patches, event & region flags according to this seed to the current savefile
          *
@@ -91,9 +79,34 @@ namespace mod::rando
 
         void LoadObjectARCChecks();
 
-        void loadShopModels();
+        /**
+         *  @brief Manages game_patches from the seed that must occur every time a file is loaded
+         *
+         *  @param set If true it will set the patches, otherwise restore the original
+         */
+        void applyVolatilePatches( bool set );
 
-        void applyPatches( bool set );
+        // Subrel
+        /**
+         *  @brief Class to dynamically load required data from a given seed
+         *
+         *  @param seedInfo Pointer to the seedinfo that we intend to load
+         */
+        Seed( int32_t chan, SeedInfo* seedInfo );
+
+        /**
+         *  @brief Deletes all allocated members and unpatches all the previously applied patches
+         */
+        ~Seed();
+
+        /**
+         *  @brief Manages one-time game_patches from the seed
+         *
+         *  @param set If true it will set the patches, otherwise restore the original
+         */
+        void applyOneTimePatches( bool set );
+
+        void loadShopModels();
 
        private:
         uint8_t* m_GCIData = nullptr;     // GCI Data including header
@@ -101,12 +114,7 @@ namespace mod::rando
         int32_t m_CardSlot = 0;           // Selected Card slot
         void ClearChecks( void );
 
-        /**
-         *  @brief Manages game_patches from the seed
-         *
-         *  @param set If true it will set the patches, otherwise restore the original
-         */
-
+        // Main
         void applyEventFlags( void );
         void applyRegionFlags( void );
         void giveStartingItems( void );
@@ -118,7 +126,6 @@ namespace mod::rando
         void LoadSkyCharacter( uint8_t stageIDX );
         void LoadHiddenSkill();
         void LoadBugReward();
-        bool loadCustomText( uint8_t* data );
     };
 }     // namespace mod::rando
 #endif
