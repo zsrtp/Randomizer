@@ -19,7 +19,7 @@ namespace mod::customMessages
         "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x75\x6E\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
         // llave pequeña
-        "\x6C\x6C\x61\x76\x65\x20\x70\x65\x71\x75\x65\xF1\x61"                         
+        "\x6C\x6C\x61\x76\x65\x20\x70\x65\x71\x75\x65\xF1\x61"
         MSG_COLOR(MSG_COLOR_WHITE)
         // ! Puede ser utilizada en el
         "\x21\x0A\x50\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x61\x20\x65\x6E\x20\x65\x6C\x0A"    
@@ -1278,119 +1278,168 @@ namespace mod::customMessages
     const ItemWheelMenuStrings itemWheelMenuStringsSp = {
         // areasBeingTracked
         {
-            "Forest Temple",
-            "Goron Mines",
-            "Lakebed Temple",
-            "Arbiter's Grounds",
-            "Snowpeak Ruins",
-            "Temple of Time",
-            "City in the Sky",
-            "Palace of Twilight",
-            "Hyrule Castle",
-            "Faron Woods",
-            "Bublin Camp",
+            // Forest Temple
+            // Templo del Bosque
+            "\x54\x65\x6D\x70\x6C\x6F\x20\x64\x65\x6C\x20\x42\x6F\x73\x71\x75\x65",
+
+            // Goron Mines
+            // Minas de los Goron
+            "\x4D\x69\x6E\x61\x73\x20\x64\x65\x20\x6C\x6F\x73\x20\x47\x6F\x72\x6F\x6E",
+
+            // Lakebed Temple
+            // Santuario del Lago
+            "\x53\x61\x6E\x74\x75\x61\x72\x69\x6F\x20\x64\x65\x6C\x20\x4C\x61\x67\x6F",
+
+            // Arbiter's Grounds
+            // Patíbulo del Desierto
+            "\x50\x61\x74\xED\x62\x75\x6C\x6F\x20\x64\x65\x6C\x20\x44\x65\x73\x69\x65\x72\x74\x6F",
+
+            // Snowpeak Ruins
+            // Ruinas del Pico Nevado
+            "\x52\x75\x69\x6E\x61\x73\x20\x64\x65\x6C\x20\x50\x69\x63\x6F\x20\x4E\x65\x76\x61\x64\x6F",
+
+            // Temple of Time
+            // Templo del Tiempo
+            "\x54\x65\x6D\x70\x6C\x6F\x20\x64\x65\x6C\x20\x54\x69\x65\x6D\x70\x6F",
+
+            // City in the Sky
+            // Celestia
+            "\x43\x65\x6C\x65\x73\x74\x69\x61",
+
+            // Palace of Twilight
+            // Palacio del Crepúsculo
+            "\x50\x61\x6C\x61\x63\x69\x6F\x20\x64\x65\x6C\x20\x43\x72\x65\x70\xFA\x73\x63\x75\x6C\x6F",
+
+            // Hyrule Castle
+            // Castillo de Hyrule
+            "\x43\x61\x73\x74\x69\x6C\x6C\x6F\x20\x64\x65\x20\x48\x79\x72\x75\x6C\x65",
+
+            // Faron Woods
+            // Bosque de Farone
+            "\x42\x6F\x73\x71\x75\x65\x20\x64\x65\x20\x46\x61\x72\x6F\x6E\x65",
+
+            // Bublin Camp
+            // Campo Bulbin
+            "\x43\x61\x6D\x70\x6F\x20\x42\x75\x6C\x62\x69\x6E",
         },
 
         // seedIsLoaded
         "Seed",
 
         // seedIsNotLoaded
-        "No seed is currently loaded",
+        // Ninguna seed está cargada actualmente
+        "\x4E\x69\x6E\x67\x75\x6E\x61\x20\x73\x65\x65\x64\x20\x65\x73\x74\xE1\x20\x63\x61\x72\x67\x61\x64\x61\x20\x61\x63\x74"
+        "\x75\x61\x6C\x6D\x65\x6E\x74\x65",
 
         // yes/no
-        "Yes",
-        "No",
+        // Sí
+        "\x53\xED",
+
+        // No
+        "\x4E\x6F",
 
         // shadowsShards
-        "Fused Shadows\nMirror Shards",
+        // Sombras Fundidas\nFragmentos de espejo
+        "\x53\x6F\x6D\x62\x72\x61\x73\x20\x46\x75\x6E\x64\x69\x64\x61\x73\x0A\x46\x72\x61\x67\x6D\x65\x6E\x74\x6F\x73\x20\x64"
+        "\x65\x20\x65\x73\x70\x65\x6A\x6F",
 
         // Pumpkin
-        "Pumpkin",
+        // Calabaza
+        "\x43\x61\x6C\x61\x62\x61\x7A\x61",
 
         // Cheese
-        "Cheese",
+        // Queso
+        "\x51\x75\x65\x73\x6F",
 
         // Gate Keys
-        "Gate Keys",
+        // Llaves de portón
+        "\x4C\x6C\x61\x76\x65\x73\x20\x64\x65\x20\x70\x6F\x72\x74\xF3\x6E",
 
         // Areas
-        "Areas",
+        // Áreas
+        "\xC1\x72\x65\x61\x73",
 
         // Small Keys
-        "Small\nKeys",
+        // Llaves\npequeñas
+        "\x4C\x6C\x61\x76\x65\x73\x0A\x70\x65\x71\x75\x65\xF1\x61\x73",
 
         // Big Keys
-        "Big\nKeys",
+        // Llaves\ngrandes
+        "\x4C\x6C\x61\x76\x65\x73\x0A\x67\x72\x61\x6E\x64\x65\x73",
 
         // Maps
-        "Maps",
+        // Mapas
+        "\x4D\x61\x70\x61\x73",
 
         // Compasses
-        "Compasses",
+        // Brújulas
+        "\x42\x72\xFA\x6A\x75\x6C\x61\x73",
 
         // helpText
-        "Press Start\nor Z to\ntoggle\nadditional\ndata",
+        // Presiona\nInicio o Z\npara alternar\ninformación\nadicional
+        "\x50\x72\x65\x73\x69\x6F\x6E\x61\x0A\x49\x6E\x69\x63\x69\x6F\x20\x6F\x20\x5A\x0A\x70\x61\x72\x61\x20\x61\x6C\x74\x65"
+        "\x72\x6E\x61\x72\x0A\x69\x6E\x66\x6F\x72\x6D\x61\x63\x69\xF3\x6E\x0A\x61\x64\x69\x63\x69\x6F\x6E\x61\x6C",
     };
 
     const ItemWheelMenuOffsets itemWheelMenuOffsetsSp {
         // Fused Shadows/Mirror Shards
-        135,
+        187,
 
         // Pumpkin
-        60,
+        40,
 
         // Yes/No
-        20,
-        22,
+        27,
+        23,
 
         // Cheese
-        90,
+        83,
 
         // Yes/No
-        15,
-        17,
+        18,
+        14,
 
         // Gate Keys
-        80,
+        64,
 
         // Yes/No
-        25,
-        27,
+        58,
+        54,
 
         // Headers
         // Small Keys
-        155,
+        185,
 
         // Big Keys
-        70,
+        95,
 
         // Maps
-        70,
+        82,
 
         // Compasses
-        70,
+        69,
 
         // Header values
         // Small Keys values
-        15,
+        33,
 
         // Big keys values
         // Yes/No
-        5,
-        7,
+        23,
+        20,
 
         // Goron Mines
-        13,
+        26,
 
         // Maps values
         // Yes/No
-        7,
-        9,
+        17,
+        14,
 
         // Compasses values
         // Yes/No
-        30,
-        32,
+        24,
+        21,
     };
 }     // namespace mod::customMessages
 #endif
