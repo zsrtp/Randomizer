@@ -752,8 +752,12 @@ namespace mod::events
 
     bool checkFoolItemFreeze()
     {
-        uint32_t zButtonAlphaPtr = reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::wZButtonPtr );
         libtp::tp::d_a_alink::daAlink* linkMapPtr = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer;
+
+        if ( !linkMapPtr )
+        {
+            return false;
+        }
 
         // Ensure that link is not in a cutscene.
         if ( libtp::tp::d_a_alink::checkEventRun( linkMapPtr ) )
@@ -764,21 +768,6 @@ namespace mod::events
         if ( libtp::tp::d_camera::checkRide( linkMapPtr ) )
         {
             return false;
-        }
-
-        if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xC10 ) )
-        {
-            // Ensure there is a proper pointer to the Z Button Alpha.
-            if ( !zButtonAlphaPtr )
-            {
-                return false;
-            }
-
-            zButtonAlphaPtr = *reinterpret_cast<uint32_t*>( zButtonAlphaPtr + 0x10C );
-            if ( !zButtonAlphaPtr )
-            {
-                return false;
-            }
         }
 
         // Make sure Link is not underwater or talking to someone.
