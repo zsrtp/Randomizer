@@ -214,8 +214,6 @@ namespace mod::customMessages
 #elif defined TP_JP
         donationEntry = &charloDonationEntryJp;
 #elif defined TP_EU
-        using namespace libtp::tp::d_s_logo;
-
         switch ( currentLanguage )
         {
             case Languages::uk:
@@ -248,8 +246,9 @@ namespace mod::customMessages
 #endif
         // Allocate memory for the buffer and write the string
         // Must use memcpy instead of strncpy since message commands have NULL characters
-        char* buf = new ( sizeof( char ) ) char[donationEntry->size];
-        memcpy( buf, donationEntry->msg, donationEntry->size );
+        uint32_t donationEntrySize = donationEntry->size;
+        char* buf = new ( sizeof( char ) ) char[donationEntrySize];
+        memcpy( buf, donationEntry->msg, donationEntrySize );
 
         // Assign the buffer
         m_DonationText = buf;
