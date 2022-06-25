@@ -31,29 +31,48 @@ namespace mod::events
 
     void onLoad( rando::Randomizer* randomizer )
     {
-        if ( randoIsEnabled( randomizer ) )
+        // Make sure the randomizer is loaded/enabled and a seed is loaded
+        if ( !randoIsEnabled( randomizer ) )
         {
-            randomizer->onStageLoad();
+            return;
         }
+
+        rando::Seed* seed = randomizer->m_Seed;
+        if ( !seed )
+        {
+            return;
+        }
+
+        randomizer->onStageLoad();
     }
 
     void offLoad( rando::Randomizer* randomizer )
     {
-        if ( randoIsEnabled( randomizer ) )
+        // Make sure the randomizer is loaded/enabled and a seed is loaded
+        if ( !randoIsEnabled( randomizer ) )
         {
-            // Check if the seed is already applied to the save-file (flags etc.)
-            // Try to do it otherwise
-            if ( !randomizer->m_SeedInit &&
-                 ( strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage, "F_SP108" ) == 0 ) &&
-                 ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo == 1 ) &&
-                 ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mPoint == 0x15 ) )
-            {
-                randomizer->initSave();
-            }
-            randomizer->overrideObjectARC();
-            randomizer->overrideEventARC();
-            user_patch::setLanternColor( randomizer );
+            return;
         }
+
+        rando::Seed* seed = randomizer->m_Seed;
+        if ( !seed )
+        {
+            return;
+        }
+
+        // Check if the seed is already applied to the save-file (flags etc.)
+        // Try to do it otherwise
+        if ( !randomizer->m_SeedInit &&
+             ( strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage, "F_SP108" ) == 0 ) &&
+             ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo == 1 ) &&
+             ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mPoint == 0x15 ) )
+        {
+            randomizer->initSave();
+        }
+
+        randomizer->overrideObjectARC();
+        randomizer->overrideEventARC();
+        user_patch::setLanternColor( randomizer );
     }
 
     void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
