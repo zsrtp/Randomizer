@@ -41,7 +41,7 @@ namespace mod::customMessages
         //!Elle peut être utilisée dansla 
         "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x64\x61\x6e\x73\x0A\x6c\x61\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        //Mines Goron
+        //Mine Goron
         "\x4d\x69\x6e\x65\x20\x47\x6f\x72\x6f\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
         //.
@@ -222,7 +222,7 @@ namespace mod::customMessages
         //! Elle appartient aux
         "\x21\x20\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\x61\x75\x78\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        //MineGoron
+        //Mine Goron
         "\x4d\x69\x6e\x65\x20\x47\x6f\x72\x6f\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
         //.
@@ -375,7 +375,7 @@ namespace mod::customMessages
         //!Elle appartient aux 
         "\x21\x0A\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\x61\x75\x78\x20\x0A"
         MSG_COLOR(MSG_COLOR_RED)
-        //MineGoron
+        //Mine Goron
         "\x4d\x69\x6e\x65\x20\x47\x6f\x72\x6f\x6e"
         MSG_COLOR(MSG_COLOR_WHITE)
         //.
@@ -1277,7 +1277,7 @@ namespace mod::customMessages
             "\x54\x65\x6d\x70\x6c\x65\x20\x53\x79\x6c\x76\x65\x73\x74\x72\x65",
 
             // Goron Mines
-            // Mines Goron
+            // Mine Goron
             "\x4d\x69\x6e\x65\x20\x47\x6f\x72\x6f\x6e",
 
             // Lakebed Temple
