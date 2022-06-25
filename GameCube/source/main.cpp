@@ -604,6 +604,7 @@ namespace mod
             using namespace libtp::tp;
             using namespace libtp::data;
             using namespace libtp::data::stage;
+
             case items::Hylian_Shield:
             {
                 // Check if we are at Kakariko Malo mart and verify that we have not bought the shield.
@@ -627,7 +628,6 @@ namespace mod
                 }
                 break;
             }
-
             case items::Ordon_Pumpkin:
             case items::Ordon_Goat_Cheese:
             {
@@ -641,10 +641,10 @@ namespace mod
             }
             default:
             {
-                // Call original function if the conditions are not met.
-                return return_checkItemGet( item, defaultValue );
+                break;
             }
         }
+
         return return_checkItemGet( item, defaultValue );
     }
 

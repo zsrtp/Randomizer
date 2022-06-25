@@ -22,7 +22,7 @@ namespace mod::game_patch
         }
 
         // All previous obtained, so return last upgrade
-        return static_cast<uint32_t>( Master_Sword_Light );
+        return Master_Sword_Light;
     };
 
     uint32_t _04_getProgressiveBow()
@@ -41,7 +41,7 @@ namespace mod::game_patch
         }
 
         // All previous obtained, so return last upgrade
-        return static_cast<uint32_t>( Giant_Quiver );
+        return Giant_Quiver;
     };
 
     uint32_t _04_getProgressiveSkill()
@@ -61,7 +61,7 @@ namespace mod::game_patch
         }
 
         // All previous obtained, so return last upgrade
-        return static_cast<uint32_t>( Great_Spin );
+        return Great_Spin;
     };
 
     uint32_t _04_getProgressiveSkyBook()
@@ -85,7 +85,7 @@ namespace mod::game_patch
         }
 
         // All previous obtained, so return last upgrade
-        return static_cast<uint32_t>( Ancient_Sky_Book_Completed );
+        return Ancient_Sky_Book_Completed;
     };
 
     uint32_t _04_getProgressiveKeyShard()
@@ -104,7 +104,7 @@ namespace mod::game_patch
         }
 
         // All previous obtained, so return last upgrade
-        return static_cast<uint32_t>( Big_Key_Goron_Mines );
+        return Big_Key_Goron_Mines;
     };
 
     uint32_t _04_getProgressiveMirrorShard()
@@ -123,7 +123,7 @@ namespace mod::game_patch
         }
 
         // All previous obtained, so return last upgrade
-        return static_cast<uint32_t>( Mirror_Piece_4 );
+        return Mirror_Piece_4;
     };
 
     uint32_t _04_getProgressiveFusedShadow()
@@ -172,7 +172,7 @@ namespace mod::game_patch
                 case Big_Wallet:
                 case Giant_Wallet:
                 {
-                    if ( libtp::tp::d_item::checkItemGet( Big_Wallet, 1 ) )
+                    if ( events::haveItem( Big_Wallet ) )
                     {
                         itemID = Giant_Wallet;
                     }
@@ -198,7 +198,7 @@ namespace mod::game_patch
                 case Clawshot:
                 case Double_Clawshots:
                 {
-                    if ( libtp::tp::d_item::checkItemGet( Clawshot, 1 ) )
+                    if ( events::haveItem( Clawshot ) )
                     {
                         itemID = Double_Clawshots;
                     }
@@ -232,7 +232,7 @@ namespace mod::game_patch
                 case Dominion_Rod_Uncharged:
                 case Dominion_Rod:
                 {
-                    if ( libtp::tp::d_item::checkItemGet( Dominion_Rod_Uncharged, 1 ) )
+                    if ( events::haveItem( Dominion_Rod_Uncharged ) )
                     {
                         itemID = Dominion_Rod;
                     }
@@ -246,7 +246,7 @@ namespace mod::game_patch
                 case Fishing_Rod:
                 case Coral_Earring:
                 {
-                    if ( libtp::tp::d_item::checkItemGet( Fishing_Rod, 1 ) )
+                    if ( events::haveItem( Fishing_Rod ) )
                     {
                         itemID = Coral_Earring;
                     }
