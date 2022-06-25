@@ -232,15 +232,15 @@ namespace mod::user_patch
         uint32_t currentWallet;
         uint32_t rupeeColor;
 
-        if ( events::haveItem( Item::Big_Wallet ) )
-        {
-            currentWallet = Wallets::BIG_WALLET;
-            rupeeColor = 0xff0000ff;
-        }
-        else if ( events::haveItem( Item::Giant_Wallet ) )
+        if ( events::haveItem( Item::Giant_Wallet ) )
         {
             currentWallet = Wallets::GIANT_WALLET;
             rupeeColor = 0xaf00ffff;
+        }
+        else if ( events::haveItem( Item::Big_Wallet ) )
+        {
+            currentWallet = Wallets::BIG_WALLET;
+            rupeeColor = 0xff0000ff;
         }
         else
         {
