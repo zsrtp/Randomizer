@@ -35,7 +35,10 @@ namespace mod::assembly
         events::onBugReward( mod::randomizer, msgEventAddress, bugID );
     }
 
-    uint8_t handleAdjustSkyCharacter() { return events::onSkyCharacter( mod::randomizer ); }
+    uint8_t handleAdjustSkyCharacter()
+    {
+        return events::onSkyCharacter( mod::randomizer );
+    }
 
     void handleAdjustFieldItemParams( libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife )
     {
@@ -55,6 +58,7 @@ namespace mod::assembly
         if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm == 1 )
         {
             events::setSaveFileEventFlag( 0xB02 );
+            libtp::tp::d_save::onSwitch_dSv_memBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x37 );
         }
     }
 }     // namespace mod::assembly

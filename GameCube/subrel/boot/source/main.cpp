@@ -76,6 +76,7 @@ namespace mod
         return_actorCommonLayerInit = patch::hookFunction( actorCommonLayerInit, mod::handle_actorCommonLayerInit );
         return_tgscInfoInit = patch::hookFunction( tgscInfoInit, mod::handle_tgscInfoInit );
         return_roomLoader = patch::hookFunction( libtp::tp::d_stage::roomLoader, mod::handle_roomLoader );
+        return_stageLoader = patch::hookFunction( libtp::tp::d_stage::stageLoader, mod::handle_stageLoader );
 
         // Custom States
         return_getLayerNo_common_common = patch::hookFunction( getLayerNo_common_common, game_patch::_01_getLayerNo );

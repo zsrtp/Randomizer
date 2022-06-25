@@ -170,7 +170,8 @@ namespace mod::item_wheel_menu
         char buf[32];
 
         // Set up an auto function for getting Yes/No text
-        auto getYesNoText = [&]( bool flag ) {
+        auto getYesNoText = [&]( bool flag )
+        {
             if ( flag )
             {
                 return strings->yes;
@@ -271,7 +272,7 @@ namespace mod::item_wheel_menu
                           textSize );
 
         // Get the offset for the pumpkin value
-        bool hasPumpkin = events::haveItem( Item::Ordon_Pumpkin );
+        bool hasPumpkin = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x480 );
         uint32_t pumpkinValueOffset;
 
         if ( hasPumpkin )
@@ -296,7 +297,7 @@ namespace mod::item_wheel_menu
         events::drawText( strings->cheese, ringPosX + cheesePosXOffset, ringPosY + cheesePosYOffset, mainTextColor, textSize );
 
         // Get the offset for the cheese value
-        bool hasCheese = events::haveItem( Item::Ordon_Goat_Cheese );
+        bool hasCheese = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x120 );
         uint32_t cheeseValueOffset;
 
         if ( hasCheese )

@@ -115,7 +115,7 @@ namespace mod::events
 
     bool proc_query022( void* unk1, void* unk2, int32_t unk3 );
 
-    bool proc_query023( void* unk1, void* unk2, int32_t unk3 );
+    int32_t proc_query023( void* unk1, void* unk2, int32_t unk3 );
 
     bool proc_query042( void* unk1, void* unk2, int32_t unk3 );
 

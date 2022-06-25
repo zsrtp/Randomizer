@@ -30,6 +30,7 @@
 8002586C:actorCommonLayerInit
 80025bfc:tgscInfoInit
 80026bbc:roomLoader
+80026b58:stageLoader
 
 // data
 8044AD74:archiveHeap

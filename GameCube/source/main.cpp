@@ -28,6 +28,7 @@
 #include "gc_wii/card.h"
 #include "tp/m_do_audio.h"
 #include "item_wheel_menu.h"
+#include "user_patch/03_customCosmetics.h"
 
 namespace mod
 {
@@ -76,6 +77,8 @@ namespace mod
     KEEP_VAR int32_t ( *return_tgscInfoInit )( void* stageDt, void* i_data, int32_t entryNum, void* param_3 ) = nullptr;
 
     KEEP_VAR void ( *return_roomLoader )( void* data, void* stageDt, int32_t roomNo ) = nullptr;
+
+    KEEP_VAR void ( *return_stageLoader )( void* data, void* stageDt ) = nullptr;
 
     // GetLayerNo trampoline
     KEEP_VAR int32_t ( *return_getLayerNo_common_common )( const char* stageName,
@@ -134,7 +137,7 @@ namespace mod
 
     // Query/Event functions.
     KEEP_VAR bool ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
-    KEEP_VAR bool ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    KEEP_VAR int32_t ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR bool ( *return_query025 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR bool ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR int32_t ( *return_query004 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
@@ -412,6 +415,14 @@ namespace mod
             handleFoolishItem();
         }
 
+        if ( !tp::f_op_scene_req::isLoading )
+        {
+            if ( randoIsEnabled( randomizer ) )
+            {
+                user_patch::setHUDCosmetics( randomizer );
+            }
+        }
+
         lastLoadingState = tp::f_op_scene_req::isLoading;
         rand( &nextVal );
         // End of custom events
@@ -490,6 +501,13 @@ namespace mod
                            rando::FileDirectory::Stage );     // Replace stage based checks.
         }
         return return_roomLoader( data, stageDt, roomNo );
+    }
+
+    KEEP_FUNC void handle_stageLoader( void* data, void* stageDt )
+    {
+        // This function is a placeholder for now. May work with Taka on getting some ARC checks converted over to use this
+        // function instead of roomLoader
+        return return_stageLoader( data, stageDt );
     }
 
     KEEP_FUNC int32_t handle_createItemForBoss( const float pos[3],
@@ -684,7 +702,7 @@ namespace mod
         return events::proc_query022( unk1, unk2, unk3 );
     }
 
-    KEEP_FUNC bool handle_query023( void* unk1, void* unk2, int32_t unk3 )
+    KEEP_FUNC int32_t handle_query023( void* unk1, void* unk2, int32_t unk3 )
     {
         return events::proc_query023( unk1, unk2, unk3 );
     }

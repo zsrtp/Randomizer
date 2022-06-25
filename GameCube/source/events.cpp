@@ -50,9 +50,8 @@ namespace mod::events
             {
                 randomizer->initSave();
             }
-            randomizer->overrideEventARC();
             randomizer->overrideObjectARC();
-            user_patch::setHUDCosmetics( randomizer );
+            randomizer->overrideEventARC();
             user_patch::setLanternColor( randomizer );
         }
     }
@@ -427,6 +426,9 @@ namespace mod::events
             case Heart_Container:
             case Piece_of_Heart:
             case Zora_Armor:
+            case Arrows_10:
+            case Arrows_20:
+            case Arrows_30:
             {
                 *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 1.0f;     // scale
                 break;
@@ -482,8 +484,10 @@ namespace mod::events
         return mod::return_query022( unk1, unk2, unk3 );
     }
 
-    bool proc_query023( void* unk1, void* unk2, int32_t unk3 )
+    int32_t proc_query023( void* unk1, void* unk2, int32_t unk3 )
     {
+        // return the original function as we need its value
+        int32_t numBombs = mod::return_query023( unk1, unk2, unk3 );
         // Check to see if currently in one of the Kakariko interiors
         if ( libtp::tools::playerIsInRoomStage(
                  1,
@@ -498,7 +502,14 @@ namespace mod::events
             // have bombs or not
             else
             {
-                return true;
+                if ( numBombs == 0 )
+                {
+                    return 1;
+                }
+                else
+                {
+                    return mod::return_query023( unk1, unk2, unk3 );
+                }
             }
         }
 

@@ -98,6 +98,7 @@ namespace mod::user_patch
         uint8_t yButtonColorIndex = randomizer->m_SeedInfo->header.yButtonColor;
         uint8_t zButtonColorIndex = randomizer->m_SeedInfo->header.zButtonColor;
         uint32_t heartListSize = sizeof( heartColorRGBA ) / sizeof( heartColorRGBA[0] );
+        uint32_t bigHeartColor = 0;
 
         for ( uint16_t i = 0x248; i <= 0x254; i += 0x4 )
         {
@@ -142,8 +143,41 @@ namespace mod::user_patch
             }
         }
 
-        // get random color for big heart
-        uint32_t randomHeartIndex = mod::ulRand( heartListSize );
+        // Patch Heart Color
+        for ( uint8_t i = 0, heartIndex = 0; i < 20; i++, heartIndex++ )
+        {
+            if ( g_meter2_info.mMeterClass->mpMeterDraw->mpLifeTexture[i][1] != nullptr )
+            {
+                if ( heartColorIndex == 8 )
+                {
+                    for ( uint16_t j = 0x138; j <= 0x144; j += 0x4 )
+                    {
+                        ( *reinterpret_cast<uint32_t*>(
+                            reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpLifeTexture[i][1]->mWindow ) +
+                            j ) ) = heartColorRGBA[heartIndex];
+                    }
+                    if ( i ==
+                         ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.maxHealth / 5 ) )
+                    {
+                        bigHeartColor = heartColorRGBA[( heartIndex - 1 )];
+                    }
+                    if ( heartIndex == heartListSize )
+                    {
+                        heartIndex = 0;
+                    }
+                }
+                else
+                {
+                    for ( uint16_t j = 0x138; j <= 0x144; j += 0x4 )
+                    {
+                        ( *reinterpret_cast<uint32_t*>(
+                            reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpLifeTexture[i][1]->mWindow ) +
+                            j ) ) = heartColorRGBA[heartColorIndex];
+                    }
+                }
+            }
+        }
+
         for ( uint16_t i = 0x3F8, rupee = 0x1038; i <= 0x404; i += 0x4, rupee += 0x4 )
         {
             // Patch the Big Heart color
@@ -153,16 +187,16 @@ namespace mod::user_patch
                 {
                     ( *reinterpret_cast<uint32_t*>(
                         reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + i ) ) =
-                        heartColorRGBA[randomHeartIndex];
+                        bigHeartColor;
                     ( *reinterpret_cast<uint32_t*>(
                         reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
-                        ( i + ( 0x1B0 ) ) ) ) = heartColorRGBA[randomHeartIndex];
+                        ( i + ( 0x1B0 ) ) ) ) = bigHeartColor;
                     ( *reinterpret_cast<uint32_t*>(
                         reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
-                        ( i + ( 0x1B0 * 2 ) ) ) ) = heartColorRGBA[randomHeartIndex];
+                        ( i + ( 0x1B0 * 2 ) ) ) ) = bigHeartColor;
                     ( *reinterpret_cast<uint32_t*>(
                         reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
-                        ( i + ( 0x1B0 * 3 ) ) ) ) = heartColorRGBA[randomHeartIndex];
+                        ( i + ( 0x1B0 * 3 ) ) ) ) = bigHeartColor;
                 }
                 else
                 {
@@ -191,36 +225,6 @@ namespace mod::user_patch
                     ( *reinterpret_cast<uint32_t*>(
                         reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) + rupee ) ) =
                         0xff0000ff;
-                }
-            }
-        }
-
-        // Patch Heart Color
-        for ( uint8_t i = 0, heartIndex = 0; i < 20; i++, heartIndex++ )
-        {
-            if ( g_meter2_info.mMeterClass->mpMeterDraw->mpLifeTexture[i][1] != nullptr )
-            {
-                if ( heartColorIndex == 8 )
-                {
-                    for ( uint16_t j = 0x138; j <= 0x144; j += 0x4 )
-                    {
-                        ( *reinterpret_cast<uint32_t*>(
-                            reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpLifeTexture[i][1]->mWindow ) +
-                            j ) ) = heartColorRGBA[heartIndex];
-                    }
-                    if ( heartIndex == heartListSize )
-                    {
-                        heartIndex = 0;
-                    }
-                }
-                else
-                {
-                    for ( uint16_t j = 0x138; j <= 0x144; j += 0x4 )
-                    {
-                        ( *reinterpret_cast<uint32_t*>(
-                            reinterpret_cast<uint32_t>( g_meter2_info.mMeterClass->mpMeterDraw->mpLifeTexture[i][1]->mWindow ) +
-                            j ) ) = heartColorRGBA[heartColorIndex];
-                    }
                 }
             }
         }

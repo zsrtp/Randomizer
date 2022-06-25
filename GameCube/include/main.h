@@ -127,6 +127,9 @@ namespace mod
     void handle_roomLoader( void* data, void* stageDt, int32_t roomNo );
     extern void ( *return_roomLoader )( void* data, void* stageDt, int32_t roomNo );
 
+    void handle_stageLoader( void* data, void* stageDt );
+    extern void ( *return_stageLoader )( void* data, void* stageDt );
+
     // State functions
     extern int32_t ( *return_getLayerNo_common_common )( const char* stageName, int32_t roomId, int32_t layerOverride );
 
@@ -229,8 +232,8 @@ namespace mod
     bool handle_query022( void* unk1, void* unk2, int32_t unk3 );
     extern bool ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 );
 
-    bool handle_query023( void* unk1, void* unk2, int32_t unk3 );
-    extern bool ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 );
+    int32_t handle_query023( void* unk1, void* unk2, int32_t unk3 );
+    extern int32_t ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 );
 
     bool handle_query025( void* unk1, void* unk2, int32_t unk3 );
     extern bool ( *return_query025 )( void* unk1, void* unk2, int32_t unk3 );
