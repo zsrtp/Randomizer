@@ -397,17 +397,22 @@ namespace mod
             }
         }
 
+        int32_t currentLoadingState = tp::f_op_scene_req::isLoading;
+
         // Custom events
-        if ( !lastLoadingState && tp::f_op_scene_req::isLoading )
+        if ( !lastLoadingState && currentLoadingState )
         {
             // OnLoad
             events::onLoad( randomizer );
         }
 
-        if ( lastLoadingState && !tp::f_op_scene_req::isLoading )
+        if ( lastLoadingState && !currentLoadingState )
         {
             // OffLoad
             events::offLoad( randomizer );
+
+            // setHUDCosmetics
+            user_patch::setHUDCosmetics( randomizer );
         }
 
         if ( isFoolishTrapQueued )
@@ -415,15 +420,7 @@ namespace mod
             handleFoolishItem();
         }
 
-        if ( !tp::f_op_scene_req::isLoading )
-        {
-            if ( randoIsEnabled( randomizer ) )
-            {
-                user_patch::setHUDCosmetics( randomizer );
-            }
-        }
-
-        lastLoadingState = tp::f_op_scene_req::isLoading;
+        lastLoadingState = currentLoadingState;
         rand( &nextVal );
         // End of custom events
 
@@ -692,15 +689,9 @@ namespace mod
         }
     }
 
-    KEEP_FUNC char handle_parseCharacter_1Byte( const char** text )
-    {
-        return return_parseCharacter_1Byte( text );
-    }
+    KEEP_FUNC char handle_parseCharacter_1Byte( const char** text ) { return return_parseCharacter_1Byte( text ); }
 
-    KEEP_FUNC bool handle_query022( void* unk1, void* unk2, int32_t unk3 )
-    {
-        return events::proc_query022( unk1, unk2, unk3 );
-    }
+    KEEP_FUNC bool handle_query022( void* unk1, void* unk2, int32_t unk3 ) { return events::proc_query022( unk1, unk2, unk3 ); }
 
     KEEP_FUNC int32_t handle_query023( void* unk1, void* unk2, int32_t unk3 )
     {
@@ -743,10 +734,7 @@ namespace mod
         return menuType;
     }
 
-    KEEP_FUNC bool handle_query042( void* unk1, void* unk2, int32_t unk3 )
-    {
-        return events::proc_query042( unk1, unk2, unk3 );
-    }
+    KEEP_FUNC bool handle_query042( void* unk1, void* unk2, int32_t unk3 ) { return events::proc_query042( unk1, unk2, unk3 ); }
 
     KEEP_FUNC uint32_t handle_event000( void* messageFlow, void* nodeEvent, void* actrPtr )
     {
@@ -1141,10 +1129,7 @@ namespace mod
         return return_onSwitch_dSv_memBit( memoryBit, flag );
     }
 
-    KEEP_FUNC bool handle_checkTreasureRupeeReturn( void* unk1, int32_t item )
-    {
-        return false;
-    }
+    KEEP_FUNC bool handle_checkTreasureRupeeReturn( void* unk1, int32_t item ) { return false; }
 
     KEEP_FUNC void handle_collect_save_open_init( uint8_t param_1 )
     {
@@ -1256,13 +1241,13 @@ namespace mod
         return val;
     }
 
-    uint32_t ulRand( uint32_t range )
+    uint32_t ulRand( uint32_t* seed, uint32_t range )
     {
         uint32_t ret;
 
         if ( range > 0 )
         {
-            ret = rand( &nextVal );
+            ret = rand( seed );
             ret -= ( ret / range ) * range;
         }
         else
@@ -1273,8 +1258,5 @@ namespace mod
         return ret;
     }
 
-    float __attribute__( ( noinline ) ) intToFloat( int32_t value )
-    {
-        return static_cast<float>( value );
-    }
+    float __attribute__( ( noinline ) ) intToFloat( int32_t value ) { return static_cast<float>( value ); }
 }     // namespace mod

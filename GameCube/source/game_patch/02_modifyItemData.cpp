@@ -81,8 +81,8 @@ namespace mod::game_patch
     {
         // Set the field model of the Foolish Item ID to the model of a random important item.
         libtp::tp::d_item_data::FieldItemRes* fieldItemResPtr = &libtp::tp::d_item_data::field_item_res[0];
-        uint32_t modelListSize = sizeof( foolishModelItemList ) / sizeof( foolishModelItemList[0] );
-        uint32_t randomIndex = mod::ulRand( modelListSize );
+        constexpr uint32_t modelListSize = sizeof( foolishModelItemList ) / sizeof( foolishModelItemList[0] );
+        uint32_t randomIndex = ulRand( &nextVal, modelListSize );
         uint32_t fieldModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
         memcpy( &fieldItemResPtr[libtp::data::items::Foolish_Item],
                 &fieldItemResPtr[fieldModelItemID],
@@ -326,10 +326,7 @@ namespace mod::game_patch
         events::setSaveFileEventFlag( 0xD04 );     // Can transform at will
     }
 
-    KEEP_FUNC void _02_poweredDominionRodItemFunc()
-    {
-        events::setSaveFileEventFlag( 0x2580 );
-    }     // Dominion Rod powered up.
+    KEEP_FUNC void _02_poweredDominionRodItemFunc() { events::setSaveFileEventFlag( 0x2580 ); }     // Dominion Rod powered up.
 
     KEEP_FUNC void _02_auruMemoItemFunc()
     {
@@ -508,40 +505,19 @@ namespace mod::game_patch
         }
     }     // Give player fourth mirror shard.
 
-    KEEP_FUNC void _02_endingBlowItemFunc()
-    {
-        events::setSaveFileEventFlag( 0x2904 );
-    }     // Learned Ending Blow.
+    KEEP_FUNC void _02_endingBlowItemFunc() { events::setSaveFileEventFlag( 0x2904 ); }     // Learned Ending Blow.
 
-    KEEP_FUNC void _02_shieldAttackItemFunc()
-    {
-        events::setSaveFileEventFlag( 0x2908 );
-    }     // Learned Shield Attack.
+    KEEP_FUNC void _02_shieldAttackItemFunc() { events::setSaveFileEventFlag( 0x2908 ); }     // Learned Shield Attack.
 
-    KEEP_FUNC void _02_backSliceItemFunc()
-    {
-        events::setSaveFileEventFlag( 0x2902 );
-    }     // Learned Back Slice.
+    KEEP_FUNC void _02_backSliceItemFunc() { events::setSaveFileEventFlag( 0x2902 ); }     // Learned Back Slice.
 
-    KEEP_FUNC void _02_helmSplitterItemFunc()
-    {
-        events::setSaveFileEventFlag( 0x2901 );
-    }     // Learned Helm Splitter.
+    KEEP_FUNC void _02_helmSplitterItemFunc() { events::setSaveFileEventFlag( 0x2901 ); }     // Learned Helm Splitter.
 
-    KEEP_FUNC void _02_mortalDrawItemFunc()
-    {
-        events::setSaveFileEventFlag( 0x2A80 );
-    }     // Learned Mortal Draw.
+    KEEP_FUNC void _02_mortalDrawItemFunc() { events::setSaveFileEventFlag( 0x2A80 ); }     // Learned Mortal Draw.
 
-    KEEP_FUNC void _02_jumpStrikeItemFunc()
-    {
-        events::setSaveFileEventFlag( 0x2A40 );
-    }     // Learned Jump Strike.
+    KEEP_FUNC void _02_jumpStrikeItemFunc() { events::setSaveFileEventFlag( 0x2A40 ); }     // Learned Jump Strike.
 
-    KEEP_FUNC void _02_greatSpinItemFunc()
-    {
-        events::setSaveFileEventFlag( 0x2A20 );
-    }     // Learned Great Spin.
+    KEEP_FUNC void _02_greatSpinItemFunc() { events::setSaveFileEventFlag( 0x2A20 ); }     // Learned Great Spin.
 
     KEEP_FUNC void _02_lanayruVesselItemFunc()
     {
@@ -551,10 +527,7 @@ namespace mod::game_patch
         events::setSaveFileEventFlag( 0x1E80 );     // Enable Malo Mart Donation
     }
 
-    KEEP_FUNC void _02_foolishItemFunc()
-    {
-        mod::isFoolishTrapQueued = true;
-    }
+    KEEP_FUNC void _02_foolishItemFunc() { mod::isFoolishTrapQueued = true; }
 
     KEEP_FUNC int32_t _02_firstSkybookItemGetCheck()
     {

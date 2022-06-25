@@ -66,7 +66,7 @@ namespace mod
     void hookFunctions();
     void setScreen( bool state );     // Sets visibility of console
     uint32_t rand( uint32_t* seed );
-    uint32_t ulRand( uint32_t range );
+    uint32_t ulRand( uint32_t* seed, uint32_t range );
     float intToFloat( int32_t value );
     void handleInput( uint32_t inputs );
     void handleFoolishItem();
