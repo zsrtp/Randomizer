@@ -42,7 +42,7 @@ namespace mod
     KEEP_VAR uint32_t m_TotalMsgEntries = 0;
     libtp::tp::J2DPicture::J2DPicture* bgWindow = nullptr;
     uint32_t lastButtonInput = 0;
-    int32_t lastLoadingState = 0;
+    bool roomReloadingState = false;
     bool consoleState = true;
     uint8_t gameState = GAME_BOOT;
     void* Z2ScenePtr = nullptr;
@@ -397,22 +397,42 @@ namespace mod
             }
         }
 
-        int32_t currentLoadingState = tp::f_op_scene_req::isLoading;
-
         // Custom events
-        if ( !lastLoadingState && currentLoadingState )
+        bool currentReloadingState;
+        libtp::tp::d_a_alink::daAlink* linkMapPtr = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer;
+        if ( linkMapPtr )
         {
-            // OnLoad
-            events::onLoad( randomizer );
+            // checkRestartRoom is needed for voiding
+            currentReloadingState = libtp::tp::d_a_alink::checkRestartRoom( linkMapPtr );
+        }
+        else
+        {
+            // If linkMapPtr is not set, then assume a room is being loaded
+            // In most cases this will be used for triggering onLoad
+            currentReloadingState = true;
         }
 
-        if ( lastLoadingState && !currentLoadingState )
-        {
-            // OffLoad
-            events::offLoad( randomizer );
+        bool prevReloadingState = roomReloadingState;
 
-            // setHUDCosmetics
-            user_patch::setHUDCosmetics( randomizer );
+        // Custom events
+        if ( currentReloadingState )
+        {
+            if ( !prevReloadingState )
+            {
+                // OnLoad
+                events::onLoad( randomizer );
+            }
+        }
+        else
+        {
+            if ( prevReloadingState )
+            {
+                // OffLoad
+                events::offLoad( randomizer );
+
+                // SetHUDCosmetics
+                user_patch::setHUDCosmetics( randomizer );
+            }
         }
 
         if ( isFoolishTrapQueued )
@@ -420,7 +440,7 @@ namespace mod
             handleFoolishItem();
         }
 
-        lastLoadingState = currentLoadingState;
+        roomReloadingState = currentReloadingState;
         rand( &nextVal );
         // End of custom events
 

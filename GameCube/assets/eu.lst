@@ -114,6 +114,7 @@
 801362f8:procWolfDamageInit
 8011ae34:procCoGetItem
 800d01b0:dComIfGp_setItemLifeCount
+800be5f0:checkRestartRoom
 
 // data
 8039038C:climbVars

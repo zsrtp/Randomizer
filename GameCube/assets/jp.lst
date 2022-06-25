@@ -114,6 +114,7 @@
 801412b0:dComIfGs_isItemFirstBit
 8011ac60:procCoGetItem
 800cffdc:dComIfGp_setItemLifeCount
+800be41c:checkRestartRoom
 
 // data
 80388C0C:climbVars

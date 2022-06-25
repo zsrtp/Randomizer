@@ -53,7 +53,7 @@ namespace mod
     extern uint32_t m_TotalMsgEntries;     // Number of currently loaded custom string
     extern libtp::tp::J2DPicture::J2DPicture* bgWindow;
     extern uint32_t lastButtonInput;
-    extern int32_t lastLoadingState;
+    extern bool roomReloadingState;
     extern uint32_t nextVal;
     extern bool consoleState;
     extern uint8_t gameState;
