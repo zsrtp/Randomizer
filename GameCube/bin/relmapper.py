@@ -192,7 +192,8 @@ class ELFFile():
         e_ident.clss = EIClass(e_ident.clss)
         e_ident.data = EIData(e_ident.data)
 
-        data_format = DataFormat((e_ident.clss - 1) | ((e_ident.data - 1) << 1))
+        data_format = DataFormat(
+            (e_ident.clss - 1) | ((e_ident.data - 1) << 1))
         h_formats = {DataFormat.L32: ELFHeader.FORMAT_L32, DataFormat.L64: ELFHeader.FORMAT_L64,
                      DataFormat.B32: ELFHeader.FORMAT_B32, DataFormat.B64: ELFHeader.FORMAT_B64}
         p_formats = {DataFormat.L32: ELFProgramHeader.FORMAT_L32, DataFormat.L64: ELFProgramHeader.FORMAT_L64,
@@ -281,8 +282,12 @@ class ELFFile():
 
 
 def main():
-    EXCLUDED_ENTRIES = ["_prolog", "_epilog", "_unresolved",
-                        "_ZN3mod4mainEv", "_ZN3mod4exitEv"]
+    EXCLUDED_ENTRIES = ["^_prolog$", "^_epilog$", "^_unresolved$",
+                        "^_ZN3mod4mainEv$", "^_ZN3mod4exitEv$",
+                        r"^_rest(?:g|f)pr_[a-zA-Z0-9_]*_x$",
+                        r"^_(?:c|d)tors_(?:start|end)$",
+                        r"^_(?:s?bss|stack)_(?:start|end)$",
+                        r"^_e(?:data|nd)$"]
 
     # Parsing functions
     def parseInputLstFile(string):
@@ -334,6 +339,17 @@ def main():
 
     curr_id = args.start_id
 
+    def skip_symbol_predicate(symbol: ELFSymbol):
+        if any(not re.search(excluded, str(symbol.st_name, encoding="utf-8")) is None for excluded in EXCLUDED_ENTRIES):
+            return True
+        if symbol.st_shndx == SHID.UND or symbol.st_shndx >= len(elf.sections):
+            return True
+        if symbol.st_size == 0 and symbol.get_type() is SymbolType.NOTYPE and symbol.st_name:
+            return False
+        if symbol.st_size == 0:
+            return True
+        return False
+
     for elf_file in args.elf:
         with open(elf_file, "rb") as f:
             elf = ELFFile(f)
@@ -345,7 +361,7 @@ def main():
                 module_ids.setdefault(file_name, curr_id)
                 curr_id += 1
             for symbol in elf.symbols:
-                if symbol.st_shndx == SHID.UND or symbol.st_shndx >= len(elf.sections) or symbol.st_size == 0 or str(symbol.st_name, encoding="utf-8") in EXCLUDED_ENTRIES:
+                if skip_symbol_predicate(symbol):
                     continue
                 provided_lst.setdefault(str(symbol.st_name, encoding="utf-8"),
                                         (module_ids[file_name], symbol.st_shndx, symbol.st_value))
