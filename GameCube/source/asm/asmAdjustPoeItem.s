@@ -1,4 +1,5 @@
 .global asmAdjustPoeItem
+.hidden asmAdjustPoeItem
 
 asmAdjustPoeItem:
 # Push stack

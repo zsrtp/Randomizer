@@ -1,4 +1,5 @@
 .global asmAdjustIzaWolf
+.hidden asmAdjustIzaWolf
 
 asmAdjustIzaWolf:
 # Restore the original instruction immediately

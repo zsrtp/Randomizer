@@ -1,4 +1,5 @@
 .global asmAdjustBugReward
+.hidden asmAdjustBugReward
 
 asmAdjustBugReward:
 stwu %sp,-0x10(%sp)

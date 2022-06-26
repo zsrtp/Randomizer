@@ -1,4 +1,5 @@
 .global asmTransformOokWolf
+.hidden asmTransformOokWolf
 
 asmTransformOokWolf:
 # Push stack

@@ -1,4 +1,5 @@
 .global asmTransformDiababaWolf
+.hidden asmTransformDiababaWolf
 
 asmTransformDiababaWolf:
 # Push stack

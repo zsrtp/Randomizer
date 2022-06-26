@@ -1,4 +1,5 @@
 .global asmAdjustSkyCharacter
+.hidden asmAdjustSkyCharacter
 
 asmAdjustSkyCharacter:
 # Push stack

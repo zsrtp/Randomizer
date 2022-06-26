@@ -1,4 +1,5 @@
 .global asmAdjustHiddenSkillItem
+.hidden asmAdjustHiddenSkillItem
 
 asmAdjustHiddenSkillItem:
 stwu %sp,-0x20(%sp)

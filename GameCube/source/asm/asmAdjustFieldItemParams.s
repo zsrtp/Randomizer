@@ -1,4 +1,5 @@
 .global asmAdjustFieldItemParams
+.hidden asmAdjustFieldItemParams
 
 asmAdjustFieldItemParams:
 stwu %sp,-0x20(%sp)

@@ -1,4 +1,5 @@
 .global asmAdjustAGPoeItem
+.hidden asmAdjustAGPoeItem
 
 asmAdjustAGPoeItem:
 # Push stack
