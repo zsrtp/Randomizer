@@ -135,6 +135,8 @@ namespace mod::game_patch
         }
         const void* currentInf1 = *reinterpret_cast<void**>( reinterpret_cast<uint32_t>( unk ) + 0xC );
 
+        rando::Seed* seed;
+
         // Most text replacements are for zel_00.bmg, so check that first
         if ( currentInf1 == getZel00BmgInf() )
         {
@@ -149,16 +151,12 @@ namespace mod::game_patch
         }
 
         // Make sure the randomizer is loaded/enabled and a seed is loaded for seed-specific checks
-        else if ( randoIsEnabled( randomizer ) )
+        else if ( seed = getCurrentSeed( randomizer ), seed )
         {
-            rando::Seed* seed = randomizer->m_Seed;
-            if ( seed )
+            if ( checkForSpecificMsg( linkHouseMsgId, 1, allStages[stageIDs::Ordon_Village], currentInf1, "zel_01.bmg" ) )
             {
-                if ( checkForSpecificMsg( linkHouseMsgId, 1, allStages[stageIDs::Ordon_Village], currentInf1, "zel_01.bmg" ) )
-                {
-                    setMessageText( seed->m_RequiredDungeons );
-                    return;
-                }
+                setMessageText( seed->m_RequiredDungeons );
+                return;
             }
         }
     }

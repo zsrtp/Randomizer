@@ -82,6 +82,16 @@ namespace mod
         return rando->m_Enabled;
     }
 
+    inline rando::Seed* getCurrentSeed( rando::Randomizer* rando )
+    {
+        if ( !randoIsEnabled( rando ) )
+        {
+            return nullptr;
+        }
+
+        return rando->m_Seed;
+    }
+
     // Function hook handlers & trampolines
     void handle_fapGm_Execute( void );
     extern void ( *return_fapGm_Execute )( void );

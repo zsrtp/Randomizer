@@ -372,15 +372,12 @@ namespace mod
                 }
 
                 // Make sure no errors occurred
-                if ( randoIsEnabled( randomizer ) && ( currentSeedRelAction == SEED_ACTION_NONE ) )
+                rando::Seed* seed = getCurrentSeed( randomizer );
+                if ( seed && ( currentSeedRelAction == SEED_ACTION_NONE ) )
                 {
-                    rando::Seed* seed = randomizer->m_Seed;
-                    if ( seed )
-                    {
-                        // Volatile patches need to be applied whenever a file is loaded
-                        mod::console << "Applying volatile patches:\n";
-                        seed->applyVolatilePatches( true );
-                    }
+                    // Volatile patches need to be applied whenever a file is loaded
+                    mod::console << "Applying volatile patches:\n";
+                    seed->applyVolatilePatches( true );
                 }
 
                 seedRelAction = currentSeedRelAction;

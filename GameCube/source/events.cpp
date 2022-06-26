@@ -32,13 +32,7 @@ namespace mod::events
     void onLoad( rando::Randomizer* randomizer )
     {
         // Make sure the randomizer is loaded/enabled and a seed is loaded
-        if ( !randoIsEnabled( randomizer ) )
-        {
-            return;
-        }
-
-        rando::Seed* seed = randomizer->m_Seed;
-        if ( !seed )
+        if ( !getCurrentSeed( randomizer ) )
         {
             return;
         }
@@ -49,13 +43,7 @@ namespace mod::events
     void offLoad( rando::Randomizer* randomizer )
     {
         // Make sure the randomizer is loaded/enabled and a seed is loaded
-        if ( !randoIsEnabled( randomizer ) )
-        {
-            return;
-        }
-
-        rando::Seed* seed = randomizer->m_Seed;
-        if ( !seed )
+        if ( !getCurrentSeed( randomizer ) )
         {
             return;
         }
