@@ -286,7 +286,7 @@ def main():
                         "^_ZN3mod4mainEv$", "^_ZN3mod4exitEv$",
                         r"^_rest(?:g|f)pr_[a-zA-Z0-9_]*_x$",
                         r"^_(?:c|d)tors_(?:start|end)$",
-                        r"^_(?:s?bss|stack)_(?:start|end)$",
+                        r"^__(?:s?bss|stack)_(?:start|end)$",
                         r"^_e(?:data|nd)$"]
 
     # Parsing functions
