@@ -1,4 +1,5 @@
 .global asmShowReekfishPath
+# asmShowReekfishPath needs to be used in at least one subrel, so it cannot be set to hidden
 
 asmShowReekfishPath:
 # Push stack

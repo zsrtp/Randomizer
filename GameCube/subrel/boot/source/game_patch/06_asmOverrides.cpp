@@ -11,7 +11,6 @@
 #include "events.h"
 #include "tp/d_kankyo_rain.h"
 #include "asm.h"
-#include "main.h"
 
 namespace mod::game_patch
 {
