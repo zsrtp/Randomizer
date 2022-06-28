@@ -67,6 +67,10 @@ namespace mod::assembly
         // d_a_npc_hoz.rel
         void asmAdjustIzaWolf();
         void handleAdjustIzaWolf();
+
+        // d_kankyo_rain.o
+        void asmShowReekfishPath();
+        uint8_t handleShowReekfishPath( uint8_t scent );
     }
 }     // namespace mod::assembly
 

@@ -254,6 +254,9 @@
 8042CA54:env_light
 801ac70c:dKy_darkworld_stage_check
 
+// d_kankyo_rain.o
+8006be0c:dKyr_odour_draw
+
 // JFWSystem.o
 // data
 804511B8:systemConsole

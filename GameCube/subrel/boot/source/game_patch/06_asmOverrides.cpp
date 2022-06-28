@@ -9,6 +9,9 @@
 #include "tp/d_menu_collect.h"
 #include "patch.h"
 #include "events.h"
+#include "tp/d_kankyo_rain.h"
+#include "asm.h"
+#include "main.h"
 
 namespace mod::game_patch
 {
@@ -20,6 +23,7 @@ namespace mod::game_patch
         uint32_t event035MemoAddress = reinterpret_cast<uint32_t>( libtp::tp::d_msg_flow::event035 );
         uint32_t procCoGetItemAddress = reinterpret_cast<uint32_t>( libtp::tp::d_a_alink::procCoGetItem );
         uint32_t screenSetAddress = reinterpret_cast<uint32_t>( libtp::tp::d_menu_collect::dMenuCollect_screenSet );
+        uint32_t odourDrawAddress = reinterpret_cast<uint32_t>( libtp::tp::d_kankyo_rain::dKyr_odour_draw );
 
 #ifdef TP_US
         uint32_t* enableCrashScreen = reinterpret_cast<uint32_t*>( 0x8000B8A4 );
@@ -45,6 +49,10 @@ namespace mod::game_patch
 
         // Modify the Wooden Sword function to not set a region flag by default by nopping out the function call to isSwitch
         *reinterpret_cast<uint32_t*>( woodenSwordFunctionAddress + 0x40 ) = ASM_NOP;     // Previous 0x4bf9cafd
+
+        // Modify dKyr_odour_draw to draw the Reekfish path so long as we have smelled the fish once.
+        libtp::patch::writeBranchBL( reinterpret_cast<void*>( odourDrawAddress + 0xBC ),
+                                     reinterpret_cast<void*>( assembly::asmShowReekfishPath ) );
 
         // Modify the Heart Container function to not set the dungeon flag for the heart container upon collection
         *reinterpret_cast<uint32_t*>( heartContainerFunctionAddress + 0x7C ) = ASM_NOP;     // Previous 0x4bf9c5e9
