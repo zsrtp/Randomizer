@@ -22,6 +22,7 @@
 #include "tp/rel/d_a_obj_Lv5Key.h"
 #include "user_patch/03_customCosmetics.h"
 #include "tp/J2DPicture.h"
+#include "data/flags.h"
 
 namespace mod::events
 {
@@ -509,7 +510,7 @@ namespace mod::events
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Village_Interiors] ) )
         {
             // If player has not bought Barnes' Bomb Bag, we want to allow them to be able to get the check.
-            if ( ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x908 ) ) )
+            if ( ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::BOUGHT_BARNES_BOMB_BAG ) ) )
             {
                 return false;
             }
@@ -619,7 +620,7 @@ namespace mod::events
     {
         using namespace libtp;
         if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Lake_Hylia] ) &&
-             libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x3b08 ) )
+             libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::SKY_CANNON_REPAIRED ) )
         {
             libtp::tp::dzx::ACTR AuruActr =
                 { "Rafrel", 0x00001D01, -116486.945f, -13860.f, 58533.0078f, 0, static_cast<int16_t>( 0xCCCD ), 0, 0xFFFF };
@@ -631,7 +632,7 @@ namespace mod::events
     {
         using namespace libtp;
         if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Hyrule_Field] ) &&
-             libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x1E08 ) )
+             libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::MIDNAS_DESPERATE_HOUR_COMPLETED ) )
         {
             libtp::tp::dzx::SCOB HJumpActr = { "Hjump",
                                                0x044FFF02,
@@ -672,7 +673,7 @@ namespace mod::events
         }
 
         // Check to see if Link has the ability to transform.
-        if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xD04 ) )
+        if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::TRANSFORMING_UNLOCKED ) )
         {
             return;
         }
@@ -807,7 +808,7 @@ namespace mod::events
 
         // Check if Midna has actually been unlocked and is on the Z button
         // This is needed because the Z button will always be dimmed if she has not been unlocked
-        if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( 0xC10 ) )
+        if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::MIDNA_ACCOMPANIES_WOLF ) )
         {
             // Ensure there is a proper pointer to the Z Button Alpha.
             uint32_t zButtonAlphaPtr = reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::wZButtonPtr );

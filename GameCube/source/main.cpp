@@ -34,6 +34,7 @@
 #include "tp/m_do_audio.h"
 #include "item_wheel_menu.h"
 #include "user_patch/03_customCosmetics.h"
+#include "data/flags.h"
 
 namespace mod
 {
@@ -648,7 +649,7 @@ namespace mod
             {
                 // Check if we are at Kakariko Malo mart and verify that we have not bought the shield.
                 if ( libtp::tools::playerIsInRoomStage( 3, allStages[stageIDs::Kakariko_Village_Interiors] ) &&
-                     !tp::d_a_alink::dComIfGs_isEventBit( 0x6102 ) )
+                     !tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::BOUGHT_HYLIAN_SHIELD_AT_MALO_MART ) )
                 {
                     // Return false so we can buy the shield.
                     return 0;
@@ -728,9 +729,15 @@ namespace mod
         }
     }
 
-    KEEP_FUNC char handle_parseCharacter_1Byte( const char** text ) { return return_parseCharacter_1Byte( text ); }
+    KEEP_FUNC char handle_parseCharacter_1Byte( const char** text )
+    {
+        return return_parseCharacter_1Byte( text );
+    }
 
-    KEEP_FUNC bool handle_query022( void* unk1, void* unk2, int32_t unk3 ) { return events::proc_query022( unk1, unk2, unk3 ); }
+    KEEP_FUNC bool handle_query022( void* unk1, void* unk2, int32_t unk3 )
+    {
+        return events::proc_query022( unk1, unk2, unk3 );
+    }
 
     KEEP_FUNC int32_t handle_query023( void* unk1, void* unk2, int32_t unk3 )
     {
@@ -773,7 +780,10 @@ namespace mod
         return menuType;
     }
 
-    KEEP_FUNC bool handle_query042( void* unk1, void* unk2, int32_t unk3 ) { return events::proc_query042( unk1, unk2, unk3 ); }
+    KEEP_FUNC bool handle_query042( void* unk1, void* unk2, int32_t unk3 )
+    {
+        return events::proc_query042( unk1, unk2, unk3 );
+    }
 
     KEEP_FUNC uint32_t handle_event000( void* messageFlow, void* nodeEvent, void* actrPtr )
     {
@@ -866,9 +876,10 @@ namespace mod
     {
         using namespace libtp::tp::d_a_alink;
         using namespace libtp::data::stage;
+        using namespace libtp::data::flags;
         switch ( flag )
         {
-            case 0x2904:     // Checking for ending blow.
+            case ENDING_BLOW_UNLOCKED:     // Checking for ending blow.
             {
                 if ( checkStageName( allStages[stageIDs::Hidden_Skill] ) )
                 {
@@ -878,7 +889,7 @@ namespace mod
                 break;
             }
 
-            case 0x2A20:
+            case GREAT_SPIN_UNLOCKED:
             {
                 if ( checkStageName( allStages[stageIDs::Hidden_Skill] ) )
                 {
@@ -888,11 +899,12 @@ namespace mod
                 break;
             }
 
-            case 0x1C20:     // Has Bo been defeated in wrestling
+            case BO_TALKED_TO_YOU_AFTER_OPENING_IRON_BOOTS_CHEST:     // Has Bo been defeated in wrestling
             {
                 if ( checkStageName( allStages[stageIDs::Ordon_Village_Interiors] ) )
                 {
-                    if ( dComIfGs_isEventBit( 0x1210 ) )     // Talked to Bo after chest is spawned
+                    if ( dComIfGs_isEventBit(
+                             libtp::data::flags::HEARD_BO_TEXT_AFTER_SUMO_FIGHT ) )     // Talked to Bo after chest is spawned
                     {
                         return true;
                     }
@@ -903,12 +915,12 @@ namespace mod
                 }
             }
 
-            case 0x2320:     // Gave Ilia the charm
-            case 0x3E02:     // CiTS Intro CS watched
+            case GAVE_ILIA_HER_CHARM:        // Gave Ilia the charm
+            case CITY_OOCCOO_CS_WATCHED:     // CiTS Intro CS watched
             {
                 if ( checkStageName( allStages[stageIDs::Hidden_Village] ) )
                 {
-                    if ( !dComIfGs_isEventBit( 0x2280 ) )
+                    if ( !dComIfGs_isEventBit( libtp::data::flags::GOT_ILIAS_CHARM ) )
                     {
                         return false;     // If we haven't gotten the item from Impaz then we need to return false or it
                                           // will break her dialogue.
@@ -917,7 +929,7 @@ namespace mod
                 break;
             }
 
-            case 0x701:     // Goron Mines Story Flag
+            case GORON_MINES_CLEARED:     // Goron Mines Story Flag
             {
                 if ( checkStageName( allStages[stageIDs::Goron_Mines] ) )
                 {
@@ -926,7 +938,7 @@ namespace mod
                 break;
             }
 
-            case 0x810:     // Escort Completed
+            case ZORA_ESCORT_CLEARED:     // Escort Completed
             {
                 if ( checkStageName( allStages[stageIDs::Castle_Town] ) )
                 {
@@ -943,7 +955,7 @@ namespace mod
                 break;
             }
 
-            case 0x2010:     // AG story flag.
+            case ARBITERS_GROUNDS_CLEARED:     // AG story flag.
             {
                 if ( checkStageName( allStages[stageIDs::Stallord] ) )
                 {
@@ -952,7 +964,7 @@ namespace mod
                 break;
             }
 
-            case 0x2008:     // Snowpeak Ruins Story flag
+            case SNOWPEAK_RUINS_CLEARED:     // Snowpeak Ruins Story flag
             {
                 if ( checkStageName( allStages[stageIDs::Kakariko_Graveyard] ) )
                 {
@@ -961,7 +973,7 @@ namespace mod
                 break;
             }
 
-            case 0x602:     // Forest Temple Story Flag
+            case FOREST_TEMPLE_CLEARED:     // Forest Temple Story Flag
             {
                 if ( checkStageName( allStages[stageIDs::Diababa] ) )
                 {
@@ -970,11 +982,11 @@ namespace mod
                 break;
             }
 
-            case 0x5410:     // Zant Defeated (PoT Story Flag)
+            case PALACE_OF_TWILIGHT_CLEARED:     // Zant Defeated (PoT Story Flag)
             {
                 if ( checkStageName( allStages[stageIDs::Castle_Town] ) )
                 {
-                    if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x4208 ) )
+                    if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::BARRIER_GONE ) )
                     {
                         using namespace libtp::data;
                         if ( randoIsEnabled( randomizer ) )
@@ -999,7 +1011,7 @@ namespace mod
                                         libtp::tp::d_save::onSwitch_dSv_memBit(
                                             &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
                                             0x0F );
-                                        events::setSaveFileEventFlag( 0x4208 );
+                                        events::setSaveFileEventFlag( libtp::data::flags::BARRIER_GONE );
                                         break;
                                     }
                                     else
@@ -1023,11 +1035,11 @@ namespace mod
                 break;
             }
 
-            case 0x2002:     // City in the Sky Story flag
+            case CITY_IN_THE_SKY_CLEARED:     // City in the Sky Story flag
             {
                 if ( checkStageName( allStages[stageIDs::Mirror_Chamber] ) )
                 {
-                    if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x2B08 ) )
+                    if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT ) )
                     {
                         using namespace libtp::data;
                         if ( randoIsEnabled( randomizer ) )
@@ -1055,17 +1067,18 @@ namespace mod
     {
         using namespace libtp::tp::d_a_alink;
         using namespace libtp::data::stage;
+        using namespace libtp::data::flags;
         switch ( flag )
         {
-            case 0x1E08:     // MDH Completed
+            case MIDNAS_DESPERATE_HOUR_COMPLETED:     // MDH Completed
             {
                 libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag |= 0x8;
                 break;
             }
 
-            case 0x610:     // Cleared Faron Twilight
+            case CLEARED_FARON_TWILIGHT:     // Cleared Faron Twilight
             {
-                if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x1e08 ) )
+                if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_COMPLETED ) )
                 {
                     if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
                              .dark_clear_level_flag == 0x6 )
@@ -1080,9 +1093,9 @@ namespace mod
                 break;
             }
 
-            case 0x708:     // Cleared Eldin Twilight
+            case CLEARED_ELDIN_TWILIGHT:     // Cleared Eldin Twilight
             {
-                if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x1e08 ) )
+                if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_COMPLETED ) )
                 {
                     if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
                              .dark_clear_level_flag == 0x5 )
@@ -1098,9 +1111,9 @@ namespace mod
                 break;
             }
 
-            case 0xC02:     // Cleared Lanayru Twilight
+            case CLEARED_LANAYRU_TWILIGHT:     // Cleared Lanayru Twilight
             {
-                if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x1e08 ) )
+                if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_COMPLETED ) )
                 {
                     if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
                              .dark_clear_level_flag == 0x7 )     // All twilights completed
@@ -1133,7 +1146,8 @@ namespace mod
             if ( flag == 0x66 )     // Check for escort completed flag
             {
                 if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit(
-                         0x804 ) )     // return false if we haven't gotten the item from Rutella.
+                         libtp::data::flags::GOT_ZORA_ARMOR_FROM_RUTELA ) )     // return false if we haven't gotten the item
+                                                                                // from Rutella.
                 {
                     return false;
                 }
@@ -1168,7 +1182,10 @@ namespace mod
         return return_onSwitch_dSv_memBit( memoryBit, flag );
     }
 
-    KEEP_FUNC bool handle_checkTreasureRupeeReturn( void* unk1, int32_t item ) { return false; }
+    KEEP_FUNC bool handle_checkTreasureRupeeReturn( void* unk1, int32_t item )
+    {
+        return false;
+    }
 
     KEEP_FUNC void handle_collect_save_open_init( uint8_t param_1 )
     {
@@ -1239,35 +1256,43 @@ namespace mod
     {
         if ( events::checkFoolItemFreeze() )
         {
-            libtp::tp::d_a_alink::daAlink* linkMapPtr = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer;
+            using namespace libtp::z2audiolib;
+            using namespace libtp::z2audiolib::z2scenemgr;
+            using namespace libtp::tp;
+            int32_t newHealthValue;
+            d_com_inf_game::dComIfG_inf_c* gameInfoPtr = &d_com_inf_game::dComIfG_gameInfo;
+            d_a_alink::daAlink* linkMapPtr = d_com_inf_game::dComIfG_gameInfo.play.mPlayer;
             /* Store the currently loaded sound wave to local variables as we will need to load them back later.
              * We use this method because if we just loaded the sound waves every time the item was gotten, we'd
              * eventually run out of memory so it is safer to unload everything and load it back in.*/
-            uint8_t seWave1 = libtp::z2audiolib::z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_1;
-            uint8_t seWave2 = libtp::z2audiolib::z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2;
+            uint8_t seWave1 = z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_1;
+            uint8_t seWave2 = z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2;
             isFoolishTrapQueued = false;
-            libtp::z2audiolib::z2scenemgr::eraseSeWave(
-                Z2ScenePtr,
-                libtp::z2audiolib::z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_1 );
-            libtp::z2audiolib::z2scenemgr::eraseSeWave(
-                Z2ScenePtr,
-                libtp::z2audiolib::z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2 );
-            libtp::z2audiolib::z2scenemgr::loadSeWave( Z2ScenePtr, 0x46 );
-            libtp::tp::m_Do_Audio::mDoAud_seStartLevel( 0x10040, nullptr, 0, 0 );
-            libtp::z2audiolib::z2scenemgr::loadSeWave( Z2ScenePtr, seWave1 );
-            libtp::z2audiolib::z2scenemgr::loadSeWave( Z2ScenePtr, seWave2 );
+            eraseSeWave( Z2ScenePtr, z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_1 );
+            eraseSeWave( Z2ScenePtr, z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2 );
+            loadSeWave( Z2ScenePtr, 0x46 );
+            m_Do_Audio::mDoAud_seStartLevel( 0x10040, nullptr, 0, 0 );
+            loadSeWave( Z2ScenePtr, seWave1 );
+            loadSeWave( Z2ScenePtr, seWave2 );
 
-            if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm == 1 )
+            if ( gameInfoPtr->save.save_file.player.player_status_a.currentForm == 1 )
             {
-                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentHealth =
-                    libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentHealth - 2;
-                libtp::tp::d_a_alink::procWolfDamageInit( linkMapPtr, nullptr );
+                newHealthValue = gameInfoPtr->save.save_file.player.player_status_a.currentHealth - 2;
+                d_a_alink::procWolfDamageInit( linkMapPtr, nullptr );
             }
             else
             {
-                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentHealth =
-                    libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentHealth - 1;
-                libtp::tp::d_a_alink::procDamageInit( linkMapPtr, nullptr, 0 );
+                newHealthValue = gameInfoPtr->save.save_file.player.player_status_a.currentHealth - 1;
+                d_a_alink::procDamageInit( linkMapPtr, nullptr, 0 );
+            }
+
+            if ( newHealthValue < 0 )
+            {
+                gameInfoPtr->save.save_file.player.player_status_a.currentHealth = 0;
+            }
+            else
+            {
+                gameInfoPtr->save.save_file.player.player_status_a.currentHealth = static_cast<uint16_t>( newHealthValue );
             }
         }
     }
@@ -1297,5 +1322,8 @@ namespace mod
         return ret;
     }
 
-    float __attribute__( ( noinline ) ) intToFloat( int32_t value ) { return static_cast<float>( value ); }
+    float __attribute__( ( noinline ) ) intToFloat( int32_t value )
+    {
+        return static_cast<float>( value );
+    }
 }     // namespace mod

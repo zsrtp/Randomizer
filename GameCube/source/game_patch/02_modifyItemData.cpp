@@ -12,6 +12,7 @@
 #include "tp/d_item_data.h"
 #include "tp/d_meter2_info.h"
 #include "tp/d_save.h"
+#include "data/flags.h"
 
 namespace mod::game_patch
 {
@@ -323,10 +324,13 @@ namespace mod::game_patch
 
     KEEP_FUNC void _02_shadowCrystalItemFunc()
     {
-        events::setSaveFileEventFlag( 0xD04 );     // Can transform at will
+        events::setSaveFileEventFlag( libtp::data::flags::TRANSFORMING_UNLOCKED );     // Can transform at will
     }
 
-    KEEP_FUNC void _02_poweredDominionRodItemFunc() { events::setSaveFileEventFlag( 0x2580 ); }     // Dominion Rod powered up.
+    KEEP_FUNC void _02_poweredDominionRodItemFunc()
+    {
+        events::setSaveFileEventFlag( libtp::data::flags::SHAD_CASTS_UNFINISHED_SPELL_ON_STATUE );
+    }     // Dominion Rod powered up.
 
     KEEP_FUNC void _02_auruMemoItemFunc()
     {
@@ -337,9 +341,10 @@ namespace mod::game_patch
 
     KEEP_FUNC void _02_ordonPumpkinItemFunc()
     {
-        events::setSaveFileEventFlag( 0x480 );      // Told Yeta about Pumpkin
-        events::setSaveFileEventFlag( 0x002 );      // Yeto put Pumpkin in soup
-        events::setSaveFileEventFlag( 0x1440 );     // SPR Lobby Door Unlocked
+        events::setSaveFileEventFlag( libtp::data::flags::TOLD_YETA_ABOUT_PUMPKIN );     // Told Yeta about Pumpkin
+        events::setSaveFileEventFlag( libtp::data::flags::PUMPKIN_PUT_IN_SOUP );         // Yeto put Pumpkin in soup
+        events::setSaveFileEventFlag(
+            libtp::data::flags::TALKED_WITH_YETA_AFTER_GIVING_PUMPKIN );     // SPR Lobby Door Unlocked
         if ( libtp::tp::d_a_alink::checkStageName(
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) ||
              libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Darkhammer] ) ||
@@ -355,9 +360,10 @@ namespace mod::game_patch
 
     KEEP_FUNC void _02_ordonGoatCheeseItemFunc()
     {
-        events::setSaveFileEventFlag( 0x120 );      // Told Yeta about Cheese
-        events::setSaveFileEventFlag( 0x01 );       // Yeto put cheese in soup
-        events::setSaveFileEventFlag( 0x1420 );     // SPR Lobby West Door Unlocked
+        events::setSaveFileEventFlag( libtp::data::flags::TOLD_YETA_ABOUT_CHEESE );     // Told Yeta about Cheese
+        events::setSaveFileEventFlag( libtp::data::flags::CHEESE_PUT_IN_SOUP );         // Yeto put cheese in soup
+        events::setSaveFileEventFlag(
+            libtp::data::flags::TALKED_WITH_YETA_AFTER_GIVING_CHEESE );     // SPR Lobby West Door Unlocked
         if ( libtp::tp::d_a_alink::checkStageName(
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) ||
              libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Darkhammer] ) ||
@@ -373,7 +379,7 @@ namespace mod::game_patch
 
     KEEP_FUNC void _02_filledSkybookItemFunc()
     {
-        events::setSaveFileEventFlag( 0x3B08 );     // Repaired Cannon at Lake
+        events::setSaveFileEventFlag( libtp::data::flags::SKY_CANNON_REPAIRED );     // Repaired Cannon at Lake
     }
 
     KEEP_FUNC void _02_bigWalletItemFunc()
@@ -410,8 +416,8 @@ namespace mod::game_patch
 
     KEEP_FUNC void _02_gateKeysItemFunc()
     {
-        events::setSaveFileEventFlag( 0x840 );     // Started Zora Escort
-        events::setSaveFileEventFlag( 0x810 );     // Completed Zora Escort
+        events::setSaveFileEventFlag( libtp::data::flags::WAGON_ESCORT_STARTED );     // Started Zora Escort
+        events::setSaveFileEventFlag( libtp::data::flags::ZORA_ESCORT_CLEARED );      // Completed Zora Escort
         if ( libtp::tp::d_a_alink::checkStageName(
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Village] ) ||
              libtp::tp::d_a_alink::checkStageName(
@@ -461,12 +467,12 @@ namespace mod::game_patch
                 libtp::tp::d_save::onSwitch_dSv_memBit(
                     &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[9].temp_flags,
                     0x0F );
-                events::setSaveFileEventFlag( 0x4208 );
+                events::setSaveFileEventFlag( libtp::data::flags::BARRIER_GONE );
             }
             // If the player has the palace requirement set to Fused Shadows.
             if ( randomizer->m_Seed->m_Header->palaceRequirements == 1 )
             {
-                events::setSaveFileEventFlag( 0x2B08 );
+                events::setSaveFileEventFlag( libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT );
             }
         }
     }     // Give player third fused shadow.
@@ -495,39 +501,63 @@ namespace mod::game_patch
                 libtp::tp::d_save::onSwitch_dSv_memBit(
                     &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[9].temp_flags,
                     0x0F );
-                events::setSaveFileEventFlag( 0x4208 );
+                events::setSaveFileEventFlag( libtp::data::flags::BARRIER_GONE );
             }
             // If the player has the palace requirement set to Mirror Shards.
             if ( randomizer->m_Seed->m_Header->palaceRequirements == 2 )
             {
-                events::setSaveFileEventFlag( 0x2B08 );
+                events::setSaveFileEventFlag( libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT );
             }
         }
     }     // Give player fourth mirror shard.
 
-    KEEP_FUNC void _02_endingBlowItemFunc() { events::setSaveFileEventFlag( 0x2904 ); }     // Learned Ending Blow.
+    KEEP_FUNC void _02_endingBlowItemFunc()
+    {
+        events::setSaveFileEventFlag( libtp::data::flags::ENDING_BLOW_UNLOCKED );
+    }     // Learned Ending Blow.
 
-    KEEP_FUNC void _02_shieldAttackItemFunc() { events::setSaveFileEventFlag( 0x2908 ); }     // Learned Shield Attack.
+    KEEP_FUNC void _02_shieldAttackItemFunc()
+    {
+        events::setSaveFileEventFlag( libtp::data::flags::SHIELD_ATTACK_UNLOCKED );
+    }     // Learned Shield Attack.
 
-    KEEP_FUNC void _02_backSliceItemFunc() { events::setSaveFileEventFlag( 0x2902 ); }     // Learned Back Slice.
+    KEEP_FUNC void _02_backSliceItemFunc()
+    {
+        events::setSaveFileEventFlag( libtp::data::flags::BACKSLICE_UNLOCKED );
+    }     // Learned Back Slice.
 
-    KEEP_FUNC void _02_helmSplitterItemFunc() { events::setSaveFileEventFlag( 0x2901 ); }     // Learned Helm Splitter.
+    KEEP_FUNC void _02_helmSplitterItemFunc()
+    {
+        events::setSaveFileEventFlag( libtp::data::flags::HELM_SPLITTER_UNLOCKED );
+    }     // Learned Helm Splitter.
 
-    KEEP_FUNC void _02_mortalDrawItemFunc() { events::setSaveFileEventFlag( 0x2A80 ); }     // Learned Mortal Draw.
+    KEEP_FUNC void _02_mortalDrawItemFunc()
+    {
+        events::setSaveFileEventFlag( libtp::data::flags::MORTAL_DRAW_UNLOCKED );
+    }     // Learned Mortal Draw.
 
-    KEEP_FUNC void _02_jumpStrikeItemFunc() { events::setSaveFileEventFlag( 0x2A40 ); }     // Learned Jump Strike.
+    KEEP_FUNC void _02_jumpStrikeItemFunc()
+    {
+        events::setSaveFileEventFlag( libtp::data::flags::JUMP_STRIKE_UNLOCKED );
+    }     // Learned Jump Strike.
 
-    KEEP_FUNC void _02_greatSpinItemFunc() { events::setSaveFileEventFlag( 0x2A20 ); }     // Learned Great Spin.
+    KEEP_FUNC void _02_greatSpinItemFunc()
+    {
+        events::setSaveFileEventFlag( libtp::data::flags::GREAT_SPIN_UNLOCKED );
+    }     // Learned Great Spin.
 
     KEEP_FUNC void _02_lanayruVesselItemFunc()
     {
         // Set the flag for lanayru twilight to be cleared.
         libtp::tp::d_save::onLightDropGetFlag( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.light_drop,
                                                '\x02' );
-        events::setSaveFileEventFlag( 0x1E80 );     // Enable Malo Mart Donation
+        events::setSaveFileEventFlag( libtp::data::flags::MALO_MART_FUNDRAISING_STARTS );     // Enable Malo Mart Donation
     }
 
-    KEEP_FUNC void _02_foolishItemFunc() { mod::isFoolishTrapQueued = true; }
+    KEEP_FUNC void _02_foolishItemFunc()
+    {
+        mod::isFoolishTrapQueued = true;
+    }
 
     KEEP_FUNC int32_t _02_firstSkybookItemGetCheck()
     {

@@ -53,6 +53,7 @@ namespace mod::rando
         entryInfo skyCharacterCheckInfo;
         entryInfo shopItemCheckInfo;
         entryInfo startingItemInfo;
+        uint16_t bgmHeaderOffset;
         uint8_t heartColor;
         uint8_t aButtonColor;
         uint8_t bButtonColor;
@@ -64,7 +65,7 @@ namespace mod::rando
         uint8_t quickTransform;
         uint8_t castleRequirements;
         uint8_t palaceRequirements;
-        uint8_t padding[0x3];
+        uint8_t padding;
     } __attribute__( ( __packed__ ) );
 
     // Seed with index
@@ -72,6 +73,24 @@ namespace mod::rando
     {
         Header header;
         uint8_t fileIndex;     // (0-9) rando-dataX
+    };
+
+    struct bgmHeader
+    {
+        uint16_t bgmTableSize;
+        uint16_t fanfareTableSize;
+        uint16_t bgmTableOffset;
+        uint16_t fanfareTableOffset;
+        uint8_t bgmTableNumEntries;
+        uint8_t fanfareTableNumEntries;
+    } __attribute__( ( __packed__ ) );
+
+    struct bgmReplacement
+    {
+        uint8_t originalBgmTrack;
+        uint8_t replacementBgmTrack;
+        uint8_t replacementBgmWave;
+        uint8_t padding;
     };
 
     struct regionFlag

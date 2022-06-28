@@ -14,6 +14,7 @@
 #include "tp/d_com_inf_game.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_msg_class.h"
+#include "data/flags.h"
 
 namespace mod::item_wheel_menu
 {
@@ -272,7 +273,7 @@ namespace mod::item_wheel_menu
                           textSize );
 
         // Get the offset for the pumpkin value
-        bool hasPumpkin = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x480 );
+        bool hasPumpkin = libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::TOLD_YETA_ABOUT_PUMPKIN );
         uint32_t pumpkinValueOffset;
 
         if ( hasPumpkin )
@@ -297,7 +298,7 @@ namespace mod::item_wheel_menu
         events::drawText( strings->cheese, ringPosX + cheesePosXOffset, ringPosY + cheesePosYOffset, mainTextColor, textSize );
 
         // Get the offset for the cheese value
-        bool hasCheese = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x120 );
+        bool hasCheese = libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::TOLD_YETA_ABOUT_CHEESE );
         uint32_t cheeseValueOffset;
 
         if ( hasCheese )
@@ -327,7 +328,7 @@ namespace mod::item_wheel_menu
                           textSize );
 
         // Get the offset for the gate keys value
-        bool hasGateKeys = libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x810 );
+        bool hasGateKeys = libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::ZORA_ESCORT_CLEARED );
         uint32_t gateKeysValueOffset;
 
         if ( hasGateKeys )

@@ -9,6 +9,7 @@
 #include "tp/d_com_inf_game.h"
 #include "tp/d_save.h"
 #include "data/items.h"
+#include "data/flags.h"
 
 namespace mod::assembly
 {
@@ -69,7 +70,8 @@ namespace mod::assembly
         if ( ( libtp::tp::d_a_alink::checkStageName(
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak] ) ) &&
              libtp::tp::d_a_alink::dComIfGs_isEventBit(
-                 0x6120 ) )     // If we are currently at Snowpeak and the flag for having smelled a Reekfish is set
+                 libtp::data::flags::GOT_REEKFISH_SCENT ) )     // If we are currently at Snowpeak and the flag for having
+                                                                // smelled a Reekfish is set
         {
             return libtp::data::items::Item::Reekfish_Scent;
         }
