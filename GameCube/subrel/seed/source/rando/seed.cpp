@@ -7,12 +7,19 @@
 
 #include <cstdint>
 #include <cstring>
+#include <cstdio>
+#include <cinttypes>
+
+#ifdef DVD
+#include "gc_wii/dvd.h"
+#else
+#include "gc_wii/card.h"
+#endif
 
 #include "rando/seed.h"
 #include "rando/linkHouseSign.h"
 #include "cxx.h"
 #include "game_patch/game_patch.h"
-#include "gc_wii/card.h"
 #include "main.h"
 #include "rando/data.h"
 #include "tools.h"
@@ -33,17 +40,23 @@ namespace mod::rando
         mod::console << "Loading seed " << m_fileIndex << ": '" << m_Header->seed << "'...\n";
 
         // Load the whole GCI locally to reduce number of reads (memcard)
-        char fileName[12] = "rando-data\0";
-
-        fileName[10] = static_cast<char>( '0' + m_fileIndex );
-
+        char fileName[32];
+#ifdef DVD
+        snprintf( fileName, sizeof( fileName ), "/mod/rando-data%c", static_cast<char>( '0' + m_fileIndex ) );
+#else
+        snprintf( fileName, sizeof( fileName ), "rando-data%c", static_cast<char>( '0' + m_fileIndex ) );
+#endif
         // Allocate the buffer to the back of the heap to prevent fragmentation
         uint32_t totalSize = m_Header->totalSize;
         uint8_t* data = new ( -0x4 ) uint8_t[totalSize];
-
+#ifdef DVD
+        m_CARDResult = libtp::tools::ReadFile( fileName, totalSize, 0, data );
+        if ( m_CARDResult == DVD_STATE_END )
+#else
         // The memory card should already be mounted
         m_CARDResult = libtp::tools::ReadGCIMounted( m_CardSlot, fileName, totalSize, 0, data, true );
         if ( m_CARDResult == CARD_RESULT_READY )
+#endif
         {
             // Get the main seed data
             uint32_t dataSize = m_Header->dataSize;

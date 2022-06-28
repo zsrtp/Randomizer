@@ -280,6 +280,9 @@
 
 //dvdfs.o
 80348528:DVDConvertPathToEntrynum
+80348890:DVDOpen
+80348958:DVDClose
+80348e44:DVDReadPrio
 
 //d_meter2_info.o
 80430188:g_meter2_info

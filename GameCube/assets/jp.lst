@@ -262,6 +262,9 @@
 
 //dvdfs.o
 8034a9c4:DVDConvertPathToEntrynum
+8034ad2c:DVDOpen
+8034adf4:DVDClose
+8034b2e0:DVDReadPrio
 
 // m_Do_MemCard.o
 // data

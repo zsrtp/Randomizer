@@ -4,14 +4,23 @@
  *	@author AECX
  *	@bug No known bugs.
  */
+#include <cstdint>
 #include <cstring>
+#include <cstdio>
+#include <cinttypes>
+
+#ifdef DVD
+#include "gc_wii/dvd.h"
+#else
+#include "gc_wii/card.h"
+#endif
 
 #include "rando/seedlist.h"
-#include "gc_wii/card.h"
 #include "main.h"
 #include "rando/data.h"
 #include "rando/seed.h"
 #include "tools.h"
+#include "memory.h"
 #include "cxx.h"
 
 namespace mod::rando
@@ -21,8 +30,15 @@ namespace mod::rando
         using namespace libtp;
 
         // Loop through possible seed-data-GCIs until we don't read anything
-        char filename[12] = "rando-data\0";
+        char fileName[32];
+        libtp::memory::clearMemory( fileName, sizeof( fileName ) );
 
+        // Use snprintf to get the index of the end of the string
+#ifdef DVD
+        const int32_t fileNumIndex = snprintf( fileName, sizeof( fileName ), "/mod/rando-data" );
+#else
+        const int32_t fileNumIndex = snprintf( fileName, sizeof( fileName ), "rando-data" );
+#endif
         // Bitwise representation of the seeds available
         uint16_t seedIDX = 0;
 
@@ -31,19 +47,23 @@ namespace mod::rando
         Header* headerBuffer = new ( -0x4 ) Header[SEED_MAX_ENTRIES];
 
         m_numSeeds = 0;
-
+#ifndef DVD
         // The memory card should already be mounted
         constexpr int32_t memCardChan = CARD_SLOT_A;
+#endif
         for ( uint8_t i = 0; i < SEED_MAX_ENTRIES; i++ )
         {
             // Check next filename depending on i
             // rando-data0, rando-data1, ...
-            filename[10] = static_cast<char>( '0' + i );
+            fileName[fileNumIndex] = static_cast<char>( '0' + i );
 
             Header header;
-
+#ifdef DVD
+            if ( DVD_STATE_END == libtp::tools::ReadFile( fileName, sizeof( header ), 0, &header ) )
+#else
             if ( CARD_RESULT_READY ==
-                 libtp::tools::ReadGCIMounted( memCardChan, filename, sizeof( header ), 0, &header, true ) )
+                 libtp::tools::ReadGCIMounted( memCardChan, fileName, sizeof( header ), 0, &header, true ) )
+#endif
             {
                 uint16_t minVersion = header.minVersion;
                 uint16_t maxVersion = header.maxVersion;

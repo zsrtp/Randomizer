@@ -268,6 +268,9 @@
 
 //dvdfs.o
 80349394:DVDConvertPathToEntrynum
+803496fc:DVDOpen
+803497c4:DVDClose
+80349cb0:DVDReadPrio
 
 //d_s_logo.o
 802591F8:getPalLanguage2

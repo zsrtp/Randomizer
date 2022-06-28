@@ -3,6 +3,12 @@
 #include <cstdint>
 #include <cstring>
 
+#ifdef DVD
+#include "gc_wii/dvd.h"
+#else
+#include "gc_wii/card.h"
+#endif
+
 #include "Z2AudioLib/Z2AudioMgr.h"
 #include "data/items.h"
 #include "data/stages.h"
@@ -25,7 +31,6 @@
 #include "tp/f_op_scene_req.h"
 #include "tp/f_pc_node_req.h"
 #include "tp/m_do_controller_pad.h"
-#include "gc_wii/card.h"
 #include "tp/m_do_audio.h"
 #include "item_wheel_menu.h"
 #include "user_patch/03_customCosmetics.h"
@@ -173,10 +178,15 @@ namespace mod
     void main()
     {
         // Call the boot REL
+#ifdef DVD
+        // The seedlist will be generated in the boot REL
+        libtp::tools::callRelProlog( "/mod/boot.rel" );
+#else
         // The seedlist will be generated in the boot REL, so avoid mounting/unmounting the memory card multiple times
         constexpr int32_t chan = CARD_SLOT_A;
         libtp::tools::callRelProlog( chan, SUBREL_BOOT_ID, false, true );
         libtp::gc_wii::card::CARDUnmount( chan );
+#endif
     }
 
     void exit() {}
@@ -329,20 +339,27 @@ namespace mod
             uint8_t currentSeedRelAction = seedRelAction;
             if ( !randoIsEnabled( randomizer ) && ( seedList->m_numSeeds > 0 ) && ( currentSeedRelAction == SEED_ACTION_NONE ) )
             {
+#ifndef DVD
                 constexpr int32_t chan = CARD_SLOT_A;
+#endif
                 if ( !randomizer )
                 {
                     seedRelAction = SEED_ACTION_LOAD_SEED;
 
                     // m_Enabled will be set to true in the seed REL
                     // The seed REL will set seedRelAction to SEED_ACTION_NONE if it ran successfully
+#ifdef DVD
+                    if ( !libtp::tools::callRelProlog( "/mod/seed.rel" ) )
+#else
                     // Only mount/unmount the memory card once
                     if ( !libtp::tools::callRelProlog( chan, SUBREL_SEED_ID, false, true ) )
+#endif
                     {
                         currentSeedRelAction = SEED_ACTION_FATAL;
                     }
-
+#ifndef DVD
                     libtp::gc_wii::card::CARDUnmount( chan );
+#endif
                 }
                 else
                 {
@@ -356,13 +373,18 @@ namespace mod
                         seedRelAction = SEED_ACTION_CHANGE_SEED;
 
                         // The seed REL will set seedRelAction to SEED_ACTION_NONE if it ran successfully
+#ifdef DVD
+                        if ( !libtp::tools::callRelProlog( "/mod/seed.rel" ) )
+#else
                         // Only mount/unmount the memory card once
                         if ( !libtp::tools::callRelProlog( chan, SUBREL_SEED_ID, false, true ) )
+#endif
                         {
                             currentSeedRelAction = SEED_ACTION_FATAL;
                         }
-
+#ifndef DVD
                         libtp::gc_wii::card::CARDUnmount( chan );
+#endif
                     }
                     else
                     {
