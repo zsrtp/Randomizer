@@ -133,26 +133,25 @@ namespace mod::rando
 
     void Seed::loadBgmData( uint8_t* data )
     {
+        uint32_t headerOffset = m_Header->headerSize + m_Header->bgmHeaderOffset;
         // Get the Bgm Header
-        bgmHeader* customBgmHeader = reinterpret_cast<bgmHeader*>( data+m_Header->bgmHeaderOffset );
+        bgmHeader* customBgmHeader = reinterpret_cast<bgmHeader*>( &data[headerOffset] );
 
         // Initialize the pointers and size values to be stored in the seed variables
         m_BgmTableEntries = customBgmHeader->bgmTableNumEntries;
         m_FanfareTableEntries = customBgmHeader->fanfareTableNumEntries;
         uint32_t offset;
         if (m_BgmTableEntries!=0) {
-            offset = m_Header->bgmHeaderOffset + customBgmHeader->bgmTableOffset;     // retrieve the offset to the bgm table
+            offset = offset = headerOffset + customBgmHeader->bgmTableOffset;;     // retrieve the offset to the bgm table
             console << "Offset is: " << offset << "\n";
             m_BgmTable = new uint8_t[customBgmHeader->bgmTableSize];
             memcpy( m_BgmTable, data+offset, customBgmHeader->bgmTableSize );
         }
         if (m_FanfareTableEntries!=0) { 
             m_FanfareTable = new uint8_t[customBgmHeader->fanfareTableSize];
-            offset = m_Header->bgmHeaderOffset + customBgmHeader->fanfareTableOffset;     // retrieve the offset to the bgm table
+            offset = headerOffset + customBgmHeader->fanfareTableOffset;     // retrieve the offset to the bgm table
             memcpy( m_FanfareTable, &data[offset], customBgmHeader->fanfareTableSize );
         }
-
-
     }
 
     void Seed::loadShopModels()
