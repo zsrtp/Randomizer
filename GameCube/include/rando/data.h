@@ -83,6 +83,7 @@ namespace mod::rando
         uint16_t fanfareTableOffset;
         uint8_t bgmTableNumEntries;
         uint8_t fanfareTableNumEntries;
+        uint8_t padding[2];
     } __attribute__( ( __packed__ ) );
 
     struct bgmReplacement

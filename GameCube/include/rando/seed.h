@@ -59,6 +59,11 @@ namespace mod::rando
 
         const char* m_RequiredDungeons = nullptr;     // Displayed when reading the sign in front of Link's house
 
+        uint8_t* m_BgmTable = nullptr;         // Bgm replacement data
+        uint8_t* m_FanfareTable = nullptr;     // Fanfare replacement data
+        uint8_t m_BgmTableEntries;
+        uint8_t m_FanfareTableEntries;
+
         // Member functions
        public:
         // Main
@@ -113,6 +118,7 @@ namespace mod::rando
         uint8_t m_fileIndex = 0xFF;       // GCI Fileindex
         int32_t m_CardSlot = 0;           // Selected Card slot
         void ClearChecks( void );
+        void loadBgmData( uint8_t* data );
 
         // Main
         void applyEventFlags( void );
