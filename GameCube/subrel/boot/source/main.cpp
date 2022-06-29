@@ -152,13 +152,10 @@ namespace mod
 
         // Audio functions
         return_loadSeWave = patch::hookFunction( libtp::z2audiolib::z2scenemgr::loadSeWave, mod::handle_loadSeWave );
+        return_sceneChange = patch::hookFunction( libtp::z2audiolib::z2scenemgr::sceneChange, mod::handle_sceneChange );
 
         // Title Screen functions
         return_dScnLogo_c_dt = patch::hookFunction( libtp::tp::d_s_logo::dScnLogo_c_dt, mod::handle_dScnLogo_c_dt );
-
-        // Random BGM
-        user_patch::bgm::bgmrando::return_sceneChange =
-            patch::hookFunction( libtp::z2audiolib::z2scenemgr::sceneChange, user_patch::handle_sceneChange );
 
         // Enemy BGM
         user_patch::bgm::enemybgm::return_startBattleBgm =

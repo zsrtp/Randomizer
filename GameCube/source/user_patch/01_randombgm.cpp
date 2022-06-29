@@ -137,7 +137,7 @@ namespace mod::user_patch
 
         static uint8_t randomizedBgms[bgmSourceLength];
 
-        KEEP_VAR void ( *return_sceneChange )( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
+        KEEP_VAR void ( *return_sceneChangeold )( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
                                                libtp::z2audiolib::z2scenemgr::JAISoundID id,
                                                uint8_t SeWave1,
                                                uint8_t SeWave2,
@@ -199,7 +199,7 @@ namespace mod::user_patch
         }
     }
 
-    KEEP_FUNC void handle_sceneChange( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
+    KEEP_FUNC void handle_sceneChangeold( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
                                        libtp::z2audiolib::z2scenemgr::JAISoundID BGMid,
                                        uint8_t SeWave1,
                                        uint8_t SeWave2,
@@ -210,7 +210,7 @@ namespace mod::user_patch
     {
         if ( !randomBgm )
         {
-            return bgm::bgmrando::return_sceneChange( sceneMgr,
+            return bgm::bgmrando::return_sceneChangeold( sceneMgr,
                                                       BGMid,
                                                       SeWave1,
                                                       SeWave2,
@@ -241,7 +241,7 @@ namespace mod::user_patch
             {
                 libtp::z2audiolib::z2scenemgr::JAISoundID new_id;
                 new_id.id = bgm::bgmrando::bgmSource[index_of_id].id + 0x1000000;
-                bgm::bgmrando::return_sceneChange( sceneMgr,
+                bgm::bgmrando::return_sceneChangeold( sceneMgr,
                                                    new_id,
                                                    SeWave1,
                                                    SeWave2,
@@ -252,12 +252,12 @@ namespace mod::user_patch
             }
             else
             {
-                bgm::bgmrando::return_sceneChange( sceneMgr, BGMid, SeWave1, SeWave2, BgmWave1, BgmWave2, DemoWave, param_7 );
+                bgm::bgmrando::return_sceneChangeold( sceneMgr, BGMid, SeWave1, SeWave2, BgmWave1, BgmWave2, DemoWave, param_7 );
             }
         }
         else
         {
-            bgm::bgmrando::return_sceneChange( sceneMgr, BGMid, SeWave1, SeWave2, BgmWave1, BgmWave2, DemoWave, param_7 );
+            bgm::bgmrando::return_sceneChangeold( sceneMgr, BGMid, SeWave1, SeWave2, BgmWave1, BgmWave2, DemoWave, param_7 );
         }
     }
 }     // namespace mod::user_patch

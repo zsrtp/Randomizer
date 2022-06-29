@@ -18,7 +18,7 @@ namespace mod::user_patch
         /**
          * @brief sceneChange function hook handler
          */
-        extern void ( *return_sceneChange )( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
+        extern void ( *return_sceneChangeold )( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
                                              libtp::z2audiolib::z2scenemgr::JAISoundID id,
                                              uint8_t SeWave1,
                                              uint8_t SeWave2,
@@ -36,7 +36,7 @@ namespace mod::user_patch
     /**
      * @brief Handles Random Background Music
      */
-    void handle_sceneChange( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
+    void handle_sceneChangeold( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
                              libtp::z2audiolib::z2scenemgr::JAISoundID BGMid,
                              uint8_t SeWave1,
                              uint8_t SeWave2,
