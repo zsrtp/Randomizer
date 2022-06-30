@@ -245,6 +245,9 @@
 // data
 80426B94:env_light
 
+// d_kankyo_rain.o
+8006be4c:dKyr_odour_draw
+
 // JFWSystem.o
 // data
 8044B2F8:systemConsole

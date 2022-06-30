@@ -14,10 +14,6 @@ mr %r31, %r6
 
 addi %r3, %r30, 490
 rlwinm %r3, %r3, 1, 0, 30
-lis %r4, 0x803A
-addi %r4, %r4, 29320
-lhzx %r4, %r4, %r3
-mr %r3, %r4
 bl handleAdjustHiddenSkillItem
 
 mr %r3, %r27
