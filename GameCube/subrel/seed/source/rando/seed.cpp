@@ -142,8 +142,7 @@ namespace mod::rando
         m_FanfareTableEntries = customBgmHeader->fanfareTableNumEntries;
         uint32_t offset;
         if (m_BgmTableEntries!=0) {
-            offset = offset = headerOffset + customBgmHeader->bgmTableOffset;;     // retrieve the offset to the bgm table
-            console << "Offset is: " << offset << "\n";
+            offset = headerOffset + customBgmHeader->bgmTableOffset;;     // retrieve the offset to the bgm table
             m_BgmTable = new uint8_t[customBgmHeader->bgmTableSize];
             memcpy( m_BgmTable, data+offset, customBgmHeader->bgmTableSize );
         }

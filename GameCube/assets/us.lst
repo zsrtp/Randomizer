@@ -275,6 +275,9 @@
 // Z2SeqMgr.o
 802B4EB0:startBattleBgm
 
+// Z2SoundMgr.o
+802A9EE8:startSound
+
 //control.o 
 802A7A20:setMessageCode_inSequence
 
