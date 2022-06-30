@@ -78,7 +78,9 @@ namespace mod::rando
 
         // Clear the bgm table buffers
         delete[] m_BgmTable;
+        m_BgmTable = nullptr;
         delete[] m_FanfareTable;
+        m_FanfareTable = nullptr;
 
         // Only work with m_GCIData if the buffer is populated
         if ( m_GCIData )
@@ -136,16 +138,19 @@ namespace mod::rando
         bgmHeader* customBgmHeader = reinterpret_cast<bgmHeader*>( &data[headerOffset] );
 
         // Initialize the pointers and size values to be stored in the seed variables
-        m_BgmTable = new uint8_t[customBgmHeader->bgmTableSize];
-        m_FanfareTable = new uint8_t[customBgmHeader->fanfareTableSize];
         m_BgmTableEntries = customBgmHeader->bgmTableNumEntries;
         m_FanfareTableEntries = customBgmHeader->fanfareTableNumEntries;
-
-        // Calculate the offsets and apply the
-        uint32_t offset = headerOffset + customBgmHeader->bgmTableOffset;     // retrieve the offset to the bgm table
-        memcpy( m_BgmTable, &data[offset], customBgmHeader->bgmTableSize );
-        offset = headerOffset + customBgmHeader->fanfareTableOffset;     // retrieve the offset to the bgm table
-        memcpy( m_FanfareTable, &data[offset], customBgmHeader->fanfareTableSize );
+        uint32_t offset;
+        if (m_BgmTableEntries!=0) {
+            offset = headerOffset + customBgmHeader->bgmTableOffset;;     // retrieve the offset to the bgm table
+            m_BgmTable = new uint8_t[customBgmHeader->bgmTableSize];
+            memcpy( m_BgmTable, data+offset, customBgmHeader->bgmTableSize );
+        }
+        if (m_FanfareTableEntries!=0) { 
+            m_FanfareTable = new uint8_t[customBgmHeader->fanfareTableSize];
+            offset = headerOffset + customBgmHeader->fanfareTableOffset;     // retrieve the offset to the bgm table
+            memcpy( m_FanfareTable, &data[offset], customBgmHeader->fanfareTableSize );
+        }
     }
 
     void Seed::loadShopModels()

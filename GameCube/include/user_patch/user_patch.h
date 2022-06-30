@@ -29,7 +29,7 @@ namespace mod::user_patch
     typedef void ( *GamePatch )( rando::Randomizer* randomizer, bool set );
 
     // Available Game patches accessible by index
-    extern GamePatch volatilePatches[7];
+    extern GamePatch volatilePatches[6];
     extern GamePatch oneTimePatches[3];
 
 }     // namespace mod::user_patch

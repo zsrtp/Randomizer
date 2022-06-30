@@ -260,6 +260,9 @@
 // Z2SeqMgr.o
 802B72F0:startBattleBgm
 
+// Z2SoundMgr.o
+802AC328:startSound
+
 //JKRDvdRipper.o
 802dc0f0:loadToMainRAM2
 

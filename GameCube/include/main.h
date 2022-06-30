@@ -19,6 +19,7 @@
 #include "tp/J2DPicture.h"
 #include "tp/d_a_alink.h"
 #include "tp/control.h"
+#include "Z2AudioLib/Z2SceneMgr.h"
 #include "events.h"
 
 // Game States
@@ -307,6 +308,12 @@ namespace mod
     // Audio functions
     void handle_loadSeWave( void* Z2SceneMgr, uint32_t waveID );
     extern void ( *return_loadSeWave )( void* Z2SceneMgr, uint32_t waveID );
+
+    void handle_sceneChange( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,libtp::z2audiolib::z2scenemgr::JAISoundID BGMid,uint8_t SeWave1,uint8_t SeWave2,uint8_t BgmWave1,uint8_t BgmWave2,uint8_t DemoWave,bool param_7 );
+    extern void ( *return_sceneChange )( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,libtp::z2audiolib::z2scenemgr::JAISoundID BGMid,uint8_t SeWave1,uint8_t SeWave2,uint8_t BgmWave1,uint8_t BgmWave2,uint8_t DemoWave,bool param_7 );
+
+    void handle_startSound( void* soungMgr, libtp::z2audiolib::z2scenemgr::JAISoundID soundId, void* soundHandle, void* pos);
+    extern void ( *return_startSound )(void* soundMgr, libtp::z2audiolib::z2scenemgr::JAISoundID soundId, void* soundHandle, void* pos);
 
     // Title Screen functions
     void* handle_dScnLogo_c_dt( void* dScnLogo_c, int16_t bFreeThis );

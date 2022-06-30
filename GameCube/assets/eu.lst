@@ -266,6 +266,9 @@
 802B5CB0:startBattleBgm
 802ad30c:seStartLevel
 
+// Z2SoundMgr.o
+802AACE8:startSound
+
 //JKRDvdRipper.o
 802daa54:loadToMainRAM2
 
