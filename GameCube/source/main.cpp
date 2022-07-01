@@ -172,8 +172,18 @@ namespace mod
 
     // Audio functions
     KEEP_VAR void ( *return_loadSeWave )( void* Z2SceneMgr, uint32_t waveID ) = nullptr;
-    KEEP_VAR void ( *return_sceneChange )( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,libtp::z2audiolib::z2scenemgr::JAISoundID BGMid,uint8_t SeWave1,uint8_t SeWave2,uint8_t BgmWave1,uint8_t BgmWave2,uint8_t DemoWave,bool param_7 ) = nullptr;
-    KEEP_VAR void ( *return_startSound )(void* soungMgr, libtp::z2audiolib::z2scenemgr::JAISoundID soundId, void* soundHandle, void* pos);
+    KEEP_VAR void ( *return_sceneChange )( libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
+                                           libtp::z2audiolib::z2scenemgr::JAISoundID BGMid,
+                                           uint8_t SeWave1,
+                                           uint8_t SeWave2,
+                                           uint8_t BgmWave1,
+                                           uint8_t BgmWave2,
+                                           uint8_t DemoWave,
+                                           bool param_7 ) = nullptr;
+    KEEP_VAR void ( *return_startSound )( void* soungMgr,
+                                          libtp::z2audiolib::z2scenemgr::JAISoundID soundId,
+                                          void* soundHandle,
+                                          void* pos );
 
     // Title Screen functions
     KEEP_VAR void* ( *return_dScnLogo_c_dt )( void* dScnLogo_c, int16_t bFreeThis ) = nullptr;
@@ -562,6 +572,11 @@ namespace mod
         uint8_t itemID = randomizer->getBossItem();
         itemID = game_patch::_04_verifyProgressiveItem( mod::randomizer, itemID );
         uint32_t params = 0xFF0000 | ( parameters & 0xFF ) << 0x8 | ( itemID & 0xFF );
+
+        if ( libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hyrule_Field] ) )
+        {
+            *const_cast<float*>( &pos[1] ) = -190.f;
+        }
         return libtp::tp::f_op_actor_mng::fopAcM_create( 539, params, pos, roomNo, rot, scale, -1 );
     }
 

@@ -29,7 +29,7 @@ namespace mod::user_patch
 
     KEEP_FUNC void handle_startBattleBgm( libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1 )
     {
-        if ( !enemyBgm )
+        if ( enemyBgm )
         {
             return;
         }
