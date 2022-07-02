@@ -374,3 +374,7 @@
 
 // mem.o
 80366f60:memmove
+
+// OSInterrupt.o
+8033E4F4:OSDisableInterrupts
+8033E51C:OSRestoreInterrupts
