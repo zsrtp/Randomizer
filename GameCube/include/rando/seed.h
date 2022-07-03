@@ -59,8 +59,8 @@ namespace mod::rando
 
         const char* m_RequiredDungeons = nullptr;     // Displayed when reading the sign in front of Link's house
 
-        uint8_t* m_BgmTable = nullptr;         // Bgm replacement data
-        uint8_t* m_FanfareTable = nullptr;     // Fanfare replacement data
+        bgmReplacement* m_BgmTable = nullptr;         // Bgm replacement data
+        bgmReplacement* m_FanfareTable = nullptr;     // Fanfare replacement data
         uint8_t m_BgmTableEntries;
         uint8_t m_FanfareTableEntries;
 

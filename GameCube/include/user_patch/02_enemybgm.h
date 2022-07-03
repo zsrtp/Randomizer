@@ -23,9 +23,14 @@ namespace mod::user_patch
     }     // namespace bgm::enemybgm
 
     /**
+     * @brief Handles if enemy BGM should be enabled
+     */
+    extern bool disableEnemyBgm;
+
+    /**
      * @brief Patches the game to allow for optional enemy BGM
      */
-    void enableBattleMusic( rando::Randomizer* randomizer, bool set );
+    void disableBattleMusic( rando::Randomizer* randomizer, bool set );
 
     /**
      * @brief Handles Enemy Background Music

@@ -487,7 +487,7 @@ namespace mod::rando
         }
     }
 
-    KEEP_FUNC void Seed::applyVolatilePatches( bool set )
+    void Seed::applyVolatilePatches( bool set )
     {
         using namespace libtp;
 

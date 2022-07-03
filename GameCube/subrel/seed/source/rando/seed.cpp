@@ -62,13 +62,14 @@ namespace mod::rando
             uint32_t dataSize = m_Header->dataSize;
             m_GCIData = new uint8_t[dataSize];
             memcpy( m_GCIData, &data[m_Header->headerSize], dataSize );
+
+            // Create the required dungeons text that is displayed when reading the sign in front of Link's house
+            link_house_sign::createRequiredDungeonsString( this, m_Header->requiredDungeons );
+
             // Generate the BGM/Fanfare table data
             this->loadBgmData( data );
         }
         delete[] data;
-
-        // Create the required dungeons text that is displayed when reading the sign in front of Link's house
-        link_house_sign::createRequiredDungeonsString( this, m_Header->requiredDungeons );
     }
 
     Seed::~Seed()
@@ -76,17 +77,10 @@ namespace mod::rando
         // Make sure to delete tempcheck buffers
         this->ClearChecks();
 
-        // Clear the bgm table buffers
-        delete[] m_BgmTable;
-        m_BgmTable = nullptr;
-        delete[] m_FanfareTable;
-        m_FanfareTable = nullptr;
-
         // Only work with m_GCIData if the buffer is populated
         if ( m_GCIData )
         {
             this->applyOneTimePatches( false );
-            this->applyVolatilePatches( false );     // Should be unnecessary once the BGM code is rewritten
 
             // Last clear gcibuffer as other functions before rely on it
             delete[] m_GCIData;
@@ -94,6 +88,10 @@ namespace mod::rando
 
         // Clear the memory used by the required dungeons text that is displayed when reading the sign in front of Link's house
         delete[] m_RequiredDungeons;
+
+        // Clear the bgm table buffers
+        delete[] m_BgmTable;
+        delete[] m_FanfareTable;
     }
 
     void Seed::applyOneTimePatches( bool set )
@@ -134,22 +132,36 @@ namespace mod::rando
     void Seed::loadBgmData( uint8_t* data )
     {
         uint32_t headerOffset = m_Header->headerSize + m_Header->bgmHeaderOffset;
+
         // Get the Bgm Header
         bgmHeader* customBgmHeader = reinterpret_cast<bgmHeader*>( &data[headerOffset] );
 
-        // Initialize the pointers and size values to be stored in the seed variables
-        m_BgmTableEntries = customBgmHeader->bgmTableNumEntries;
-        m_FanfareTableEntries = customBgmHeader->fanfareTableNumEntries;
-        uint32_t offset;
-        if (m_BgmTableEntries!=0) {
-            offset = headerOffset + customBgmHeader->bgmTableOffset;;     // retrieve the offset to the bgm table
-            m_BgmTable = new uint8_t[customBgmHeader->bgmTableSize];
-            memcpy( m_BgmTable, data+offset, customBgmHeader->bgmTableSize );
+        // Handle any bgm entries
+        uint32_t bgmTableEntries = customBgmHeader->bgmTableNumEntries;
+        if ( bgmTableEntries > 0 )
+        {
+            uint32_t bgmTableSize = customBgmHeader->bgmTableSize;
+            uint8_t* buf = new uint8_t[bgmTableSize];
+            uint32_t offset = headerOffset + customBgmHeader->bgmTableOffset;
+            memcpy( buf, &data[offset], bgmTableSize );
+
+            // Assign the entry count and buffer
+            m_BgmTableEntries = static_cast<uint8_t>( bgmTableEntries );
+            m_BgmTable = reinterpret_cast<bgmReplacement*>( buf );
         }
-        if (m_FanfareTableEntries!=0) { 
-            m_FanfareTable = new uint8_t[customBgmHeader->fanfareTableSize];
-            offset = headerOffset + customBgmHeader->fanfareTableOffset;     // retrieve the offset to the bgm table
-            memcpy( m_FanfareTable, &data[offset], customBgmHeader->fanfareTableSize );
+
+        // Handle any fanfare entries
+        uint32_t fanfareTableEntries = customBgmHeader->fanfareTableNumEntries;
+        if ( fanfareTableEntries > 0 )
+        {
+            uint32_t fanfareTableSize = customBgmHeader->fanfareTableSize;
+            uint8_t* buf = new uint8_t[fanfareTableSize];
+            uint32_t offset = headerOffset + customBgmHeader->fanfareTableOffset;
+            memcpy( buf, &data[offset], fanfareTableSize );
+
+            // Assign the entry count and buffer
+            m_FanfareTableEntries = static_cast<uint8_t>( fanfareTableEntries );
+            m_FanfareTable = reinterpret_cast<bgmReplacement*>( buf );
         }
     }
 

@@ -7,16 +7,16 @@
 
 #include "user_patch/user_patch.h"
 
-#include "user_patch/02_enemybgm.h"
 #include "user_patch/03_customCosmetics.h"
 #include "user_patch/05_newFileFunctions.h"
 
 namespace mod::user_patch
 {
-    GamePatch volatilePatches[6] = { clearFaronTwilight,
-                                     clearEldinTwilight,
-                                     clearLanayruTwilight,
-                                     setMinorCutsceneValues,
-                                     clearMDH,
-                                     enableBattleMusic };
+    GamePatch volatilePatches[5] = {
+        clearFaronTwilight,
+        clearEldinTwilight,
+        clearLanayruTwilight,
+        setMinorCutsceneValues,
+        clearMDH,
+    };
 }

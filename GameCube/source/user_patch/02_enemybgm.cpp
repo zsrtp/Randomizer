@@ -17,23 +17,17 @@ namespace mod::user_patch
         KEEP_VAR void ( *return_startBattleBgm )( libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1 ) = nullptr;
     }     // namespace bgm::enemybgm
 
-    // Temporary bool used to check if enemy BGM should be enabled
-    // May be removed when the code is rewritten
-    bool enemyBgm = false;
-
-    void enableBattleMusic( rando::Randomizer* randomizer, bool set )
-    {
-        enemyBgm = set;
-        mod::console << "[2] EnemyBgmDisabled [" << ( set ? "x" : " " ) << "]\n";
-    }
+    // Handles if enemy BGM should be enabled
+    KEEP_VAR bool disableEnemyBgm = false;
 
     KEEP_FUNC void handle_startBattleBgm( libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1 )
     {
-        if ( enemyBgm )
+        if ( disableEnemyBgm )
         {
             return;
         }
 
+        // Call the original function
         bgm::enemybgm::return_startBattleBgm( seqMgr, param_1 );
     }
 }     // namespace mod::user_patch
