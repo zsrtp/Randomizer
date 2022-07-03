@@ -92,7 +92,7 @@ namespace mod::user_patch
     void setHUDCosmetics( rando::Randomizer* randomizer )
     {
         // Make sure the randomizer is loaded/enabled and a seed is loaded
-        if ( !seedIsLoaded( randomizer ) )
+        if ( !getCurrentSeed( randomizer ) )
         {
             return;
         }
@@ -282,7 +282,7 @@ namespace mod::user_patch
     void setLanternColor( rando::Randomizer* randomizer )
     {
         // Make sure the randomizer is loaded/enabled and a seed is loaded
-        if ( !seedIsLoaded( randomizer ) )
+        if ( !getCurrentSeed( randomizer ) )
         {
             return;
         }

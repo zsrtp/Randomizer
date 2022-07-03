@@ -35,13 +35,14 @@ namespace mod::rando
     KEEP_FUNC void Randomizer::onStageLoad( void )
     {
         // Make sure the randomizer is loaded/enabled and a seed is loaded
-        if ( !seedIsLoaded( this ) )
+        Seed* seed;
+        if ( seed = getCurrentSeed( this ), !seed )
         {
             return;
         }
 
         const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mStage;
-        m_Seed->LoadChecks( stage );
+        seed->LoadChecks( stage );
     }
 
     void Randomizer::initSave( void ) { m_SeedInit = m_Seed->InitSeed(); }
@@ -49,14 +50,15 @@ namespace mod::rando
     void Randomizer::overrideREL()
     {
         // Make sure the randomizer is loaded/enabled and a seed is loaded
-        if ( !seedIsLoaded( this ) )
+        Seed* seed;
+        if ( seed = getCurrentSeed( this ), !seed )
         {
             return;
         }
 
         // Local vars
-        uint32_t numReplacements = m_Seed->m_numLoadedRELChecks;
-        RELCheck* relReplacements = m_Seed->m_RELChecks;
+        uint32_t numReplacements = seed->m_numLoadedRELChecks;
+        RELCheck* relReplacements = seed->m_RELChecks;
 
         // If we don't have replacements just leave
         if ( !numReplacements )
@@ -80,14 +82,15 @@ namespace mod::rando
     void Randomizer::overrideDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo )
     {
         // Make sure the randomizer is loaded/enabled and a seed is loaded
-        if ( !seedIsLoaded( this ) )
+        Seed* seed;
+        if ( seed = getCurrentSeed( this ), !seed )
         {
             return;
         }
 
         // Local vars
-        uint32_t numReplacements = m_Seed->m_numLoadedDZXChecks;
-        dzxCheck* dzxReplacements = m_Seed->m_DZXChecks;
+        uint32_t numReplacements = seed->m_numLoadedDZXChecks;
+        dzxCheck* dzxReplacements = seed->m_DZXChecks;
 
         uint32_t numChunks = chunkTypeInfo->numChunks;
         libtp::tp::dzx::ACTR* dzxData = reinterpret_cast<libtp::tp::dzx::ACTR*>( chunkTypeInfo->chunkDataPtr );
@@ -162,7 +165,8 @@ namespace mod::rando
     uint8_t Randomizer::getBossItem( int32_t originalItem )
     {
         // Make sure the randomizer is loaded/enabled and a seed is loaded
-        if ( !seedIsLoaded( this ) )
+        Seed* seed;
+        if ( seed = getCurrentSeed( this ), !seed )
         {
             return static_cast<uint8_t>( originalItem );
         }
@@ -170,30 +174,31 @@ namespace mod::rando
         {
             // There is (currently) never a situation where there are multiple boss checks on the same stage, so just return the
             // item
-            return m_Seed->m_BossChecks[0].item;
+            return seed->m_BossChecks[0].item;
         }
     }
 
     void Randomizer::overrideARC( uint32_t fileAddr, FileDirectory fileDirectory, int roomNo )
     {
         // Make sure the randomizer is loaded/enabled and a seed is loaded
-        if ( !seedIsLoaded( this ) )
+        rando::Seed* seed;
+        if ( seed = getCurrentSeed( this ), !seed )
         {
             return;
         }
 
-        m_Seed->LoadARCChecks( m_Seed->m_StageIDX, fileDirectory, roomNo );
-        uint32_t numReplacements = m_Seed->m_numLoadedArcReplacements;
+        seed->LoadARCChecks( seed->m_StageIDX, fileDirectory, roomNo );
+        uint32_t numReplacements = seed->m_numLoadedArcReplacements;
         // Loop through all ArcChecks and replace the item at an offset given the fileIndex.
         for ( uint32_t i = 0; i < numReplacements; i++ )
         {
-            switch ( m_Seed->m_ArcReplacements[i].replacementType )
+            switch ( seed->m_ArcReplacements[i].replacementType )
             {
                 case rando::ArcReplacementType::Item:
                 {
                     uint32_t replacementValue =
-                        game_patch::_04_verifyProgressiveItem( mod::randomizer, m_Seed->m_ArcReplacements[i].replacementValue );
-                    *reinterpret_cast<uint8_t*>( ( fileAddr + m_Seed->m_ArcReplacements[i].offset ) ) = replacementValue;
+                        game_patch::_04_verifyProgressiveItem( randomizer, seed->m_ArcReplacements[i].replacementValue );
+                    *reinterpret_cast<uint8_t*>( ( fileAddr + seed->m_ArcReplacements[i].offset ) ) = replacementValue;
                     if ( replacementValue == libtp::data::items::Foolish_Item )
                     {
                         game_patch::_02_modifyFoolishFieldModel();
@@ -217,17 +222,15 @@ namespace mod::rando
                         }
                     }
 
-                    for ( uint32_t j = 0; j < m_Seed->m_numHiddenSkillChecks; j++ )
+                    for ( uint32_t j = 0; j < seed->m_numHiddenSkillChecks; j++ )
                     {
-                        if ( ( m_Seed->m_HiddenSkillChecks[j].stageIDX == stageIDX ) &&
-                             ( m_Seed->m_HiddenSkillChecks[j].roomID ==
-                               libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_return_place
-                                   .link_room_id ) )
+                        if ( ( seed->m_HiddenSkillChecks[j].stageIDX == stageIDX ) &&
+                             ( seed->m_HiddenSkillChecks[j].roomID == libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file
+                                                                          .player.player_return_place.link_room_id ) )
                         {
                             uint16_t msgID =
-                                game_patch::_04_verifyProgressiveItem( mod::randomizer, m_Seed->m_HiddenSkillChecks[j].itemID );
-                            *reinterpret_cast<uint16_t*>( adjustedFilePtr + m_Seed->m_ArcReplacements[i].offset ) =
-                                msgID + 0x65;
+                                game_patch::_04_verifyProgressiveItem( randomizer, seed->m_HiddenSkillChecks[j].itemID );
+                            *reinterpret_cast<uint16_t*>( adjustedFilePtr + seed->m_ArcReplacements[i].offset ) = msgID + 0x65;
                         }
                     }
                     break;
@@ -235,9 +238,8 @@ namespace mod::rando
                 case rando::ArcReplacementType::ItemMessage:
                 {
                     uint32_t replacementValue =
-                        game_patch::_04_verifyProgressiveItem( mod::randomizer, m_Seed->m_ArcReplacements[i].replacementValue );
-                    *reinterpret_cast<uint16_t*>( ( fileAddr + m_Seed->m_ArcReplacements[i].offset ) ) =
-                        replacementValue + 0x65;
+                        game_patch::_04_verifyProgressiveItem( randomizer, seed->m_ArcReplacements[i].replacementValue );
+                    *reinterpret_cast<uint16_t*>( ( fileAddr + seed->m_ArcReplacements[i].offset ) ) = replacementValue + 0x65;
                 }
 
                 case rando::ArcReplacementType::AlwaysLoaded:
@@ -245,8 +247,8 @@ namespace mod::rando
                     uint32_t adjustedFilePtr =
                         reinterpret_cast<uint32_t>( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mMsgDtArchive[0] );
                     uint32_t replacementValue =
-                        game_patch::_04_verifyProgressiveItem( mod::randomizer, m_Seed->m_ArcReplacements[i].replacementValue );
-                    *reinterpret_cast<uint16_t*>( ( adjustedFilePtr + m_Seed->m_ArcReplacements[i].offset ) ) =
+                        game_patch::_04_verifyProgressiveItem( mod::randomizer, seed->m_ArcReplacements[i].replacementValue );
+                    *reinterpret_cast<uint16_t*>( ( adjustedFilePtr + seed->m_ArcReplacements[i].offset ) ) =
                         replacementValue + 0x65;
                     break;
                 }
@@ -257,8 +259,8 @@ namespace mod::rando
                         reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
 
                     uint32_t replacementValue =
-                        game_patch::_04_verifyProgressiveItem( mod::randomizer, m_Seed->m_ArcReplacements[i].replacementValue );
-                    *reinterpret_cast<uint16_t*>( ( adjustedFilePtr + m_Seed->m_ArcReplacements[i].offset ) ) =
+                        game_patch::_04_verifyProgressiveItem( mod::randomizer, seed->m_ArcReplacements[i].replacementValue );
+                    *reinterpret_cast<uint16_t*>( ( adjustedFilePtr + seed->m_ArcReplacements[i].offset ) ) =
                         replacementValue + 0x65;
                 }
 

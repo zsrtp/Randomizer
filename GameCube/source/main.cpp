@@ -204,15 +204,14 @@ namespace mod
 
     void exit() {}
 
-    bool seedIsLoaded( rando::Randomizer* rando )
+    KEEP_FUNC rando::Seed* getCurrentSeed( rando::Randomizer* rando )
     {
-        rando::Seed* seed;
-        if ( seed = getCurrentSeed( rando ), !seed )
+        if ( !randoIsEnabled( rando ) )
         {
-            return false;
+            return nullptr;
         }
 
-        return seed->checkIfSeedLoaded();
+        return rando->m_Seed;
     }
 
     void setScreen( bool state )
@@ -247,12 +246,12 @@ namespace mod
                 }
 
                 // 8 is the line it typically appears
-                console.setLine( 8 );
-                console << "\r"
-                        << "Press X/Y to select a seed\n"
-                        << "Press R + Z to close the console\n"
-                        << "[" << seedList->m_selectedSeed + 1 << "/" << static_cast<int32_t>( seedList->m_numSeeds )
-                        << "] Seed: " << seedList->m_seedInfo[seedList->m_selectedSeed].header.seed << "\n";
+                mod::console.setLine( 8 );
+                mod::console << "\r"
+                             << "Press X/Y to select a seed\n"
+                             << "Press R + Z to close the console\n"
+                             << "[" << seedList->m_selectedSeed + 1 << "/" << static_cast<int32_t>( seedList->m_numSeeds )
+                             << "] Seed: " << seedList->m_seedInfo[seedList->m_selectedSeed].header.seed << "\n";
             }
         }
         // End of handling title screen inputs
@@ -300,13 +299,13 @@ namespace mod
                     {
                         case 0:
                             // Err, no seeds
-                            console << "No seeds available! Please check your memory card and region!\n";
+                            mod::console << "No seeds available! Please check your memory card and region!\n";
                             setScreen( true );
                             break;
 
                         case 1:
                             // Only one seed present, auto-select it and disable console for convenience
-                            console << "First and only seed automatically applied...\n";
+                            mod::console << "First and only seed automatically applied...\n";
                             setScreen( false );
                             break;
 
@@ -360,13 +359,12 @@ namespace mod
         // Handle rando state
         if ( gameState == GAME_ACTIVE )
         {
-            uint8_t currentSeedRelAction = seedRelAction;
-            if ( !randoIsEnabled( randomizer ) && ( seedList->m_numSeeds > 0 ) && ( currentSeedRelAction == SEED_ACTION_NONE ) )
+            if ( !getCurrentSeed( randomizer ) && ( seedList->m_numSeeds > 0 ) && ( seedRelAction == SEED_ACTION_NONE ) )
             {
 #ifndef DVD
                 constexpr int32_t chan = CARD_SLOT_A;
 #endif
-                if ( !randomizer )
+                if ( !randomizer || !randomizer->m_Seed )
                 {
                     seedRelAction = SEED_ACTION_LOAD_SEED;
 
@@ -379,7 +377,7 @@ namespace mod
                     if ( !libtp::tools::callRelProlog( chan, SUBREL_SEED_ID, false, true ) )
 #endif
                     {
-                        currentSeedRelAction = SEED_ACTION_FATAL;
+                        seedRelAction = SEED_ACTION_FATAL;
                     }
 #ifndef DVD
                     libtp::gc_wii::card::CARDUnmount( chan );
@@ -404,7 +402,7 @@ namespace mod
                         if ( !libtp::tools::callRelProlog( chan, SUBREL_SEED_ID, false, true ) )
 #endif
                         {
-                            currentSeedRelAction = SEED_ACTION_FATAL;
+                            seedRelAction = SEED_ACTION_FATAL;
                         }
 #ifndef DVD
                         libtp::gc_wii::card::CARDUnmount( chan );
@@ -419,14 +417,12 @@ namespace mod
 
                 // Make sure no errors occurred
                 rando::Seed* seed = getCurrentSeed( randomizer );
-                if ( seed && ( currentSeedRelAction == SEED_ACTION_NONE ) )
+                if ( seed && ( seedRelAction == SEED_ACTION_NONE ) )
                 {
                     // Volatile patches need to be applied whenever a file is loaded
                     mod::console << "Applying volatile patches:\n";
                     seed->applyVolatilePatches( true );
                 }
-
-                seedRelAction = currentSeedRelAction;
             }
         }
         else

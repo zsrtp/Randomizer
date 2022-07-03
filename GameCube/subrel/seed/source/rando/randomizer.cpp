@@ -39,8 +39,18 @@ namespace mod::rando
             m_SeedInfo = seedInfo;
             m_CurrentSeed = selectedSeed;
             m_Seed = new Seed( CARD_SLOT_A, seedInfo );
-            // Load checks for first load
-            onStageLoad();
+
+            if ( m_Seed->checkIfSeedLoaded() )
+            {
+                // Load checks for first load
+                onStageLoad();
+            }
+            else
+            {
+                // The seed failed to load, so clear the seed
+                delete m_Seed;
+                m_Seed = nullptr;
+            }
         }
     }
 

@@ -6,15 +6,16 @@ namespace mod
 {
     void handleSeedPatches( rando::Randomizer* rando )
     {
-        if ( seedIsLoaded( rando ) )
+        rando::Seed* seed;
+        if ( seed = getCurrentSeed( rando ), seed )
         {
-            console << "Applying one-time patches:\n";
-            rando->m_Seed->applyOneTimePatches( true );
+            mod::console << "Applying one-time patches:\n";
+            seed->applyOneTimePatches( true );
             seedRelAction = SEED_ACTION_NONE;
         }
         else
         {
-            console << "FATAL: Seed failed to load\n";
+            mod::console << "FATAL: Seed failed to load\n";
             seedRelAction = SEED_ACTION_FATAL;
         }
     }

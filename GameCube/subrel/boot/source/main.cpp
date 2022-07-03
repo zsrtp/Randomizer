@@ -40,13 +40,13 @@ namespace mod
         customMessages::createItemWheelMenuData();
 
         // Display some info
-        console << "Welcome to TPR!\n"
-                << "(C) AECX, Lunar Soap, Zephiles\n\n"
-                << "Note:\n"
-                << "Please avoid [re]starting rando unnecessarily\n"
-                << "on ORIGINAL HARDWARE as it wears down your\n"
-                << "Memory Card!\n"
-                << "Press R + Z to close the console.\n\n";
+        mod::console << "Welcome to TPR!\n"
+                     << "(C) AECX, Lunar Soap, Zephiles\n\n"
+                     << "Note:\n"
+                     << "Please avoid [re]starting rando unnecessarily\n"
+                     << "on ORIGINAL HARDWARE as it wears down your\n"
+                     << "Memory Card!\n"
+                     << "Press R + Z to close the console.\n\n";
 
         // Generate our seedList
         seedList = new rando::SeedList();

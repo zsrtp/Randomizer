@@ -35,7 +35,7 @@ namespace mod::events
     void offLoad( rando::Randomizer* randomizer )
     {
         // Make sure the randomizer is loaded/enabled and a seed is loaded
-        if ( !seedIsLoaded( randomizer ) )
+        if ( !getCurrentSeed( randomizer ) )
         {
             return;
         }
@@ -345,7 +345,7 @@ namespace mod::events
 
     int32_t onPoe( rando::Randomizer* randomizer, uint8_t flag )
     {
-        if ( seedIsLoaded( randomizer ) )
+        if ( getCurrentSeed( randomizer ) )
         {
             return randomizer->getPoeItem( flag );
         }
@@ -358,7 +358,7 @@ namespace mod::events
 
     uint8_t onSkyCharacter( rando::Randomizer* randomizer )
     {
-        if ( seedIsLoaded( randomizer ) )
+        if ( getCurrentSeed( randomizer ) )
         {
             return randomizer->getSkyCharacter();
         }
@@ -376,7 +376,7 @@ namespace mod::events
 
     void onBugReward( rando::Randomizer* randomizer, uint32_t msgEventAddress, uint8_t bugID )
     {
-        if ( seedIsLoaded( randomizer ) )
+        if ( getCurrentSeed( randomizer ) )
         {
             uint8_t itemID = randomizer->overrideBugReward( bugID );
             *reinterpret_cast<uint16_t*>( ( *reinterpret_cast<uint32_t*>( msgEventAddress + 0xA04 ) + 0x3580 ) + 0x6 ) =
@@ -392,7 +392,7 @@ namespace mod::events
 
     void onHiddenSkill( rando::Randomizer* randomizer, uint16_t eventIndex )
     {
-        if ( seedIsLoaded( randomizer ) )
+        if ( getCurrentSeed( randomizer ) )
         {
             libtp::tp::d_item::execItemGet( randomizer->getHiddenSkillItem( eventIndex ) );
         }
@@ -405,7 +405,7 @@ namespace mod::events
 
     void onAdjustFieldItemParams( libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife )
     {
-        if ( !seedIsLoaded( randomizer ) )
+        if ( !getCurrentSeed( randomizer ) )
         {
             return;
         }
@@ -445,7 +445,7 @@ namespace mod::events
 
     void handleDungeonHeartContainer()
     {
-        if ( !seedIsLoaded( randomizer ) )
+        if ( !getCurrentSeed( randomizer ) )
         {
             return;
         }
@@ -527,9 +527,10 @@ namespace mod::events
     bool proc_query042( void* unk1, void* unk2, int32_t unk3 )
     {
         // Check to see if currently in one of the Ordon interiors
-        if ( seedIsLoaded( randomizer ) )
+        rando::Seed* seed;
+        if ( seed = getCurrentSeed( randomizer ), seed )
         {
-            if ( randomizer->m_Seed->m_Header->transformAnywhere )
+            if ( seed->m_Header->transformAnywhere )
             {
                 return 0;
             }
