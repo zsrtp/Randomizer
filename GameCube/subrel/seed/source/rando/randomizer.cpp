@@ -49,7 +49,9 @@ namespace mod::rando
             {
                 // The seed failed to load, so clear the seed
                 delete m_Seed;
+                m_SeedInfo = nullptr;
                 m_Seed = nullptr;
+                m_CurrentSeed = 0xFF;
             }
         }
     }
