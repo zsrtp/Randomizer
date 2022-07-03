@@ -299,7 +299,7 @@ namespace mod
                     {
                         case 0:
                             // Err, no seeds
-                            mod::console << "No seeds available! Please check your memory card and region!\n";
+                            mod::console << "No seeds available! Please check your memory\ncard and region!\n";
                             setScreen( true );
                             break;
 
