@@ -30,21 +30,12 @@ namespace mod::events
     void ( *return_daObjLv5Key_c__Wait )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* _this ) = nullptr;
     CMEB checkNpcTransform = nullptr;
 
-    void onLoad( rando::Randomizer* randomizer )
-    {
-        // Make sure the randomizer is loaded/enabled and a seed is loaded
-        if ( !getCurrentSeed( randomizer ) )
-        {
-            return;
-        }
-
-        randomizer->onStageLoad();
-    }
+    void onLoad( rando::Randomizer* randomizer ) { randomizer->onStageLoad(); }
 
     void offLoad( rando::Randomizer* randomizer )
     {
         // Make sure the randomizer is loaded/enabled and a seed is loaded
-        if ( !getCurrentSeed( randomizer ) )
+        if ( !seedIsLoaded( randomizer ) )
         {
             return;
         }
@@ -66,10 +57,7 @@ namespace mod::events
 
     void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
     {
-        if ( randoIsEnabled( randomizer ) )
-        {
-            randomizer->overrideREL();
-        }
+        randomizer->overrideREL();
 
         // Static REL overrides and patches
         uint32_t relPtrRaw = reinterpret_cast<uint32_t>( dmc->moduleInfo );
@@ -238,8 +226,7 @@ namespace mod::events
                 return_daObjLv5Key_c__Wait =
                     libtp::patch::hookFunction( reinterpret_cast<void ( * )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* )>(
                                                     relPtrRaw + d_a_obj_Lv5Key__Wait_offset ),
-                                                []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr )
-                                                {
+                                                []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr ) {
                                                     float playerPos[3];
                                                     libtp::tp::d_map_path_dmap::getMapPlayerPos( playerPos );
 
@@ -352,16 +339,13 @@ namespace mod::events
 
     void onDZX( rando::Randomizer* randomizer, libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo )
     {
-        if ( randoIsEnabled( randomizer ) )
-        {
-            randomizer->overrideDZX( chunkTypeInfo );
-        }
+        randomizer->overrideDZX( chunkTypeInfo );
         loadCustomActors();
     }
 
     int32_t onPoe( rando::Randomizer* randomizer, uint8_t flag )
     {
-        if ( randoIsEnabled( randomizer ) )
+        if ( seedIsLoaded( randomizer ) )
         {
             return randomizer->getPoeItem( flag );
         }
@@ -374,7 +358,7 @@ namespace mod::events
 
     uint8_t onSkyCharacter( rando::Randomizer* randomizer )
     {
-        if ( randoIsEnabled( randomizer ) )
+        if ( seedIsLoaded( randomizer ) )
         {
             return randomizer->getSkyCharacter();
         }
@@ -387,15 +371,12 @@ namespace mod::events
 
     void onARC( rando::Randomizer* randomizer, void* data, int roomNo, rando::FileDirectory fileDirectory )
     {
-        if ( randoIsEnabled( randomizer ) )
-        {
-            randomizer->overrideARC( reinterpret_cast<uint32_t>( data ), fileDirectory, roomNo );
-        }
+        randomizer->overrideARC( reinterpret_cast<uint32_t>( data ), fileDirectory, roomNo );
     }
 
     void onBugReward( rando::Randomizer* randomizer, uint32_t msgEventAddress, uint8_t bugID )
     {
-        if ( randoIsEnabled( randomizer ) )
+        if ( seedIsLoaded( randomizer ) )
         {
             uint8_t itemID = randomizer->overrideBugReward( bugID );
             *reinterpret_cast<uint16_t*>( ( *reinterpret_cast<uint32_t*>( msgEventAddress + 0xA04 ) + 0x3580 ) + 0x6 ) =
@@ -411,7 +392,7 @@ namespace mod::events
 
     void onHiddenSkill( rando::Randomizer* randomizer, uint16_t eventIndex )
     {
-        if ( randoIsEnabled( randomizer ) )
+        if ( seedIsLoaded( randomizer ) )
         {
             libtp::tp::d_item::execItemGet( randomizer->getHiddenSkillItem( eventIndex ) );
         }
@@ -424,6 +405,11 @@ namespace mod::events
 
     void onAdjustFieldItemParams( libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife )
     {
+        if ( !seedIsLoaded( randomizer ) )
+        {
+            return;
+        }
+
         using namespace libtp::data::stage;
         using namespace libtp::data::items;
 
@@ -459,6 +445,11 @@ namespace mod::events
 
     void handleDungeonHeartContainer()
     {
+        if ( !seedIsLoaded( randomizer ) )
+        {
+            return;
+        }
+
         using namespace libtp::data::stage;
         const char* bossStages[8] = { allStages[stageIDs::Morpheel],
                                       allStages[stageIDs::Fyrus],
@@ -536,7 +527,7 @@ namespace mod::events
     bool proc_query042( void* unk1, void* unk2, int32_t unk3 )
     {
         // Check to see if currently in one of the Ordon interiors
-        if ( randoIsEnabled( randomizer ) )
+        if ( seedIsLoaded( randomizer ) )
         {
             if ( randomizer->m_Seed->m_Header->transformAnywhere )
             {
@@ -651,10 +642,7 @@ namespace mod::events
         }
     }
 
-    bool haveItem( uint8_t item )
-    {
-        return libtp::tp::d_item::checkItemGet( item, 1 );
-    }
+    bool haveItem( uint8_t item ) { return libtp::tp::d_item::checkItemGet( item, 1 ); }
 
     void handleQuickTransform()
     {

@@ -34,20 +34,26 @@ namespace mod::rando
 
     KEEP_FUNC void Randomizer::onStageLoad( void )
     {
+        // Make sure the randomizer is loaded/enabled and a seed is loaded
+        if ( !seedIsLoaded( this ) )
+        {
+            return;
+        }
+
         const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mStage;
         m_Seed->LoadChecks( stage );
     }
 
-    void Randomizer::initSave( void )
-    {
-        if ( m_Seed )
-        {
-            m_SeedInit = m_Seed->InitSeed();
-        }
-    }
+    void Randomizer::initSave( void ) { m_SeedInit = m_Seed->InitSeed(); }
 
     void Randomizer::overrideREL()
     {
+        // Make sure the randomizer is loaded/enabled and a seed is loaded
+        if ( !seedIsLoaded( this ) )
+        {
+            return;
+        }
+
         // Local vars
         uint32_t numReplacements = m_Seed->m_numLoadedRELChecks;
         RELCheck* relReplacements = m_Seed->m_RELChecks;
@@ -73,6 +79,12 @@ namespace mod::rando
 
     void Randomizer::overrideDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo )
     {
+        // Make sure the randomizer is loaded/enabled and a seed is loaded
+        if ( !seedIsLoaded( this ) )
+        {
+            return;
+        }
+
         // Local vars
         uint32_t numReplacements = m_Seed->m_numLoadedDZXChecks;
         dzxCheck* dzxReplacements = m_Seed->m_DZXChecks;
@@ -147,11 +159,29 @@ namespace mod::rando
         return libtp::data::items::Ancient_Sky_Book_Partly_Filled;
     }
 
-    // There is (currently) never a situation where there are multiple boss checks on the same stage, so just return the item.
-    uint8_t Randomizer::getBossItem() { return m_Seed->m_BossChecks[0].item; }
+    uint8_t Randomizer::getBossItem( int32_t originalItem )
+    {
+        // Make sure the randomizer is loaded/enabled and a seed is loaded
+        if ( !seedIsLoaded( this ) )
+        {
+            return static_cast<uint8_t>( originalItem );
+        }
+        else
+        {
+            // There is (currently) never a situation where there are multiple boss checks on the same stage, so just return the
+            // item
+            return m_Seed->m_BossChecks[0].item;
+        }
+    }
 
     void Randomizer::overrideARC( uint32_t fileAddr, FileDirectory fileDirectory, int roomNo )
     {
+        // Make sure the randomizer is loaded/enabled and a seed is loaded
+        if ( !seedIsLoaded( this ) )
+        {
+            return;
+        }
+
         m_Seed->LoadARCChecks( m_Seed->m_StageIDX, fileDirectory, roomNo );
         uint32_t numReplacements = m_Seed->m_numLoadedArcReplacements;
         // Loop through all ArcChecks and replace the item at an offset given the fileIndex.

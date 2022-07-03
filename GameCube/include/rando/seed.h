@@ -9,6 +9,12 @@
 
 #include <cstdint>
 
+#ifdef DVD
+#include "gc_wii/dvd.h"
+#else
+#include "gc_wii/card.h"
+#endif
+
 #include "rando/data.h"
 #include "tools.h"
 
@@ -67,6 +73,20 @@ namespace mod::rando
         // Member functions
        public:
         // Main
+        bool checkIfSeedLoaded()
+        {
+#ifdef DVD
+            bool result = m_CARDResult == DVD_STATE_END;
+#else
+            bool result = m_CARDResult == CARD_RESULT_READY;
+#endif
+            if ( result )
+            {
+                return m_GCIData;
+            }
+            return result;
+        }
+
         /**
          *  @brief Applies patches, event & region flags according to this seed to the current savefile
          *

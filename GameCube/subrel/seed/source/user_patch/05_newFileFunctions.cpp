@@ -7,7 +7,7 @@ namespace mod::user_patch
 {
     void loadShopModels( rando::Randomizer* randomizer, bool set )
     {
-        if ( set && getCurrentSeed( randomizer ) )
+        if ( set && seedIsLoaded( randomizer ) )
         {
             randomizer->m_Seed->loadShopModels();
         }

@@ -28,7 +28,7 @@ namespace mod::rando
         m_EventFlagsModified = 0;
         m_PatchesApplied = 0;
 
-        if ( m_CARDResult == CARD_RESULT_READY )
+        if ( checkIfSeedLoaded() )
         {
             mod::console << "Setting Event Flags... \n";
             this->applyEventFlags();
@@ -489,6 +489,11 @@ namespace mod::rando
 
     void Seed::applyVolatilePatches( bool set )
     {
+        if ( !checkIfSeedLoaded() )
+        {
+            return;
+        }
+
         using namespace libtp;
 
         uint32_t num_bytes = m_Header->volatilePatchInfo.numEntries;

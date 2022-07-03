@@ -67,6 +67,7 @@ namespace mod
     extern const char* m_DonationText;
 
     void hookFunctions();
+    bool seedIsLoaded( rando::Randomizer* rando );
     void setScreen( bool state );     // Sets visibility of console
     uint32_t rand( uint32_t* seed );
     uint32_t ulRand( uint32_t* seed, uint32_t range );
@@ -85,6 +86,7 @@ namespace mod
         return rando->m_Enabled;
     }
 
+    // Inline getCurrentSeed, as it's short enough to use less memory when inlined
     inline rando::Seed* getCurrentSeed( rando::Randomizer* rando )
     {
         if ( !randoIsEnabled( rando ) )

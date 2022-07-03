@@ -18,7 +18,6 @@ namespace mod::rando
         loadSeed( seedInfo, selectedSeed );
     }
 
-    // Currrently unused, so will leave here
     Randomizer::~Randomizer( void )
     {
         mod::console << "Rando unloading...\n";

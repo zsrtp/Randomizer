@@ -29,7 +29,7 @@ namespace mod::rando
         void overrideDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo );
         int32_t getPoeItem( uint8_t flag );
         uint8_t getSkyCharacter();
-        uint8_t getBossItem();
+        uint8_t getBossItem( int32_t originalItem );
         void overrideARC( uint32_t fileAddr, FileDirectory fileDirectory, int roomNo );
         void overrideObjectARC();
         void overrideEventARC();
