@@ -16,6 +16,8 @@ namespace mod::user_patch
 {
     void patchWallet( rando::Randomizer* randomizer, bool set )
     {
+        (void)randomizer;
+
         using namespace libtp;
 
         mod::console << "[0] WalletPatch [" << ( set ? "x" : " " ) << "]\n";

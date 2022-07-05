@@ -8,7 +8,8 @@
 
 namespace mod::rando
 {
-    // Currently unused, so will leave in for now
+    // Needs work and is currently unused
+    /*
     SeedInfo SeedList::FindSeed( uint64_t seed )
     {
         for ( uint8_t i = 0; i < SEED_MAX_ENTRIES && i < m_numSeeds; i++ )
@@ -22,6 +23,7 @@ namespace mod::rando
         // No seed found; Return one with index FF as error indicator (max is 9)
         return { 0x00, 0xFF };
     }
+    */
 
     SeedList::~SeedList() { delete[] m_seedInfo; }
 

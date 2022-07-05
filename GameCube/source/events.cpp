@@ -294,6 +294,7 @@ namespace mod::events
                 // Transform Info Human After Defeating Shadow Beasts By Iza
                 libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0xC7F8 ),
                                              reinterpret_cast<void*>( assembly::asmAdjustIzaWolf ) );
+                break;
             }
             // d_a_obj_drop.rel
             // Tear of Light
@@ -305,6 +306,7 @@ namespace mod::events
 
                 // set y_pos of drop to be at ground level
                 *reinterpret_cast<uint32_t*>( relPtrRaw + 0x2474 ) = 0x00000000;     // 0.0f
+                break;
             }
 
             // d_a_kytag03.rel
@@ -313,12 +315,15 @@ namespace mod::events
                 // Modify draw function to draw the Reekfish path so long as we have smelled the fish once.
                 libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x66C ),
                                              reinterpret_cast<void*>( assembly::asmShowReekfishPath ) );
+                break;
             }
         }
     }
 
     void onRELUnlink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
     {
+        (void)randomizer;
+
         switch ( dmc->moduleInfo->id )
         {
             // d_a_obj_Lv5Key.rel

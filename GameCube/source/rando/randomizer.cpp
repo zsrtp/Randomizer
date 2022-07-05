@@ -240,6 +240,7 @@ namespace mod::rando
                     uint32_t replacementValue =
                         game_patch::_04_verifyProgressiveItem( randomizer, seed->m_ArcReplacements[i].replacementValue );
                     *reinterpret_cast<uint16_t*>( ( fileAddr + seed->m_ArcReplacements[i].offset ) ) = replacementValue + 0x65;
+                    break;
                 }
 
                 case rando::ArcReplacementType::AlwaysLoaded:
@@ -262,6 +263,7 @@ namespace mod::rando
                         game_patch::_04_verifyProgressiveItem( mod::randomizer, seed->m_ArcReplacements[i].replacementValue );
                     *reinterpret_cast<uint16_t*>( ( adjustedFilePtr + seed->m_ArcReplacements[i].offset ) ) =
                         replacementValue + 0x65;
+                    break;
                 }
 
                 default:

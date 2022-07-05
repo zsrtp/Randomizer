@@ -9,6 +9,8 @@ namespace mod::user_patch
 {
     void clearFaronTwilight( rando::Randomizer* randomizer, bool set )
     {
+        (void)randomizer;
+
         if ( set )
         {
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.light_drop.faron_tear_count =
@@ -22,6 +24,8 @@ namespace mod::user_patch
 
     void clearEldinTwilight( rando::Randomizer* randomizer, bool set )
     {
+        (void)randomizer;
+
         if ( set )
         {
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.light_drop.eldin_tear_count =
@@ -34,6 +38,8 @@ namespace mod::user_patch
 
     void clearLanayruTwilight( rando::Randomizer* randomizer, bool set )
     {
+        (void)randomizer;
+
         if ( set )
         {
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.light_drop.lanayru_tear_count =
@@ -46,6 +52,8 @@ namespace mod::user_patch
 
     void setMinorCutsceneValues( rando::Randomizer* randomizer, bool set )
     {
+        (void)randomizer;
+
         if ( set )
         {
             // Set the flag for rupee cutscenes.
@@ -59,6 +67,8 @@ namespace mod::user_patch
 
     void clearMDH( rando::Randomizer* randomizer, bool set )
     {
+        (void)randomizer;
+
         if ( set &&
              libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag == 0x7 )
         {

@@ -80,6 +80,8 @@ namespace mod::item_wheel_menu
 
     KEEP_FUNC void handle_dMenuRing__delete( void* dMenuRing )
     {
+        (void)dMenuRing;
+
         // Handle whether the controller buttons should be displayed or not
         // Hardcode false since the ring isn't being drawn anymore
         setHUDButtonsAlpha( false );

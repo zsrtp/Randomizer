@@ -15,6 +15,8 @@ namespace mod::user_patch
 {
     void removeIBLimit( rando::Randomizer* randomizer, bool set )
     {
+        (void)randomizer;
+
         float* heavyStateSpeed = &libtp::tp::d_a_alink::ironBootsVars.heavyStateSpeed;
         if ( set )
         {

@@ -575,6 +575,9 @@ namespace mod
                                                 float unk7,
                                                 int32_t parameters )
     {
+        (void)unk6;
+        (void)unk7;
+
         // Spawn the appropriate item with model
         uint8_t itemID = randomizer->getBossItem( item );
         itemID = game_patch::_04_verifyProgressiveItem( mod::randomizer, itemID );
@@ -633,6 +636,8 @@ namespace mod
 
     KEEP_FUNC void handle_setLineUpItem( libtp::tp::d_save::dSv_player_item_c* unk1 )
     {
+        (void)unk1;
+
         using namespace libtp::tp::d_com_inf_game;
         static const uint8_t i_item_lst[24] = { 0x0A, 0x08, 0x06, 0x02, 0x09, 0x04, 0x03, 0x00, 0x01, 0x17, 0x14, 0x05,
                                                 0x0F, 0x10, 0x11, 0x0B, 0x0C, 0x0D, 0x0E, 0x13, 0x12, 0x16, 0x15, 0x7 };
@@ -928,6 +933,7 @@ namespace mod
                         return false;
                     }
                 }
+                break;
             }
 
             case GAVE_ILIA_HER_CHARM:        // Gave Ilia the charm
@@ -1197,7 +1203,13 @@ namespace mod
         return return_onSwitch_dSv_memBit( memoryBit, flag );
     }
 
-    KEEP_FUNC bool handle_checkTreasureRupeeReturn( void* unk1, int32_t item ) { return false; }
+    KEEP_FUNC bool handle_checkTreasureRupeeReturn( void* unk1, int32_t item )
+    {
+        (void)unk1;
+        (void)item;
+
+        return false;
+    }
 
     KEEP_FUNC void handle_collect_save_open_init( uint8_t param_1 )
     {

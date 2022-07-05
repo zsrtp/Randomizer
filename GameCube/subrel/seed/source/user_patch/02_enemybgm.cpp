@@ -13,6 +13,8 @@ namespace mod::user_patch
 {
     void disableBattleMusic( rando::Randomizer* randomizer, bool set )
     {
+        (void)randomizer;
+
         disableEnemyBgm = set;
         mod::console << "[2] EnemyBgmDisabled [" << ( set ? "x" : " " ) << "]\n";
     }
