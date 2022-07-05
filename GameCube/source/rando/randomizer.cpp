@@ -45,7 +45,10 @@ namespace mod::rando
         seed->LoadChecks( stage );
     }
 
-    void Randomizer::initSave( void ) { m_SeedInit = m_Seed->InitSeed(); }
+    void Randomizer::initSave( void )
+    {
+        m_SeedInit = m_Seed->InitSeed();
+    }
 
     void Randomizer::overrideREL()
     {

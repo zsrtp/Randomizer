@@ -107,6 +107,9 @@ namespace mod::rando
         delete[] headerBuffer;
     }
 
-    SeedList::~SeedList() { delete[] m_seedInfo; }
+    SeedList::~SeedList()
+    {
+        delete[] m_seedInfo;
+    }
 
 }     // namespace mod::rando

@@ -30,7 +30,7 @@ namespace mod::game_patch
         else if ( libtp::tp::d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Lake_Hylia] ) )
         {
             if ( events::haveItem( items::Shadow_Crystal ) ||
-                 libtp::tp::d_save::isTransformLV(
+                 libtp::tp::d_save::isDarkClearLV(
                      &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b,
                      2 ) )
             {

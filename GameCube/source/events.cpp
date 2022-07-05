@@ -30,7 +30,10 @@ namespace mod::events
     void ( *return_daObjLv5Key_c__Wait )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* _this ) = nullptr;
     CMEB checkNpcTransform = nullptr;
 
-    void onLoad( rando::Randomizer* randomizer ) { randomizer->onStageLoad(); }
+    void onLoad( rando::Randomizer* randomizer )
+    {
+        randomizer->onStageLoad();
+    }
 
     void offLoad( rando::Randomizer* randomizer )
     {
@@ -218,7 +221,7 @@ namespace mod::events
                 break;
             }
 
-                // d_a_obj_Lv5Key.rel
+            // d_a_obj_Lv5Key.rel
             // Snowpeak Ruins Small Key Lock
             case 0x189:
             {
@@ -226,7 +229,8 @@ namespace mod::events
                 return_daObjLv5Key_c__Wait =
                     libtp::patch::hookFunction( reinterpret_cast<void ( * )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* )>(
                                                     relPtrRaw + d_a_obj_Lv5Key__Wait_offset ),
-                                                []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr ) {
+                                                []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr )
+                                                {
                                                     float playerPos[3];
                                                     libtp::tp::d_map_path_dmap::getMapPlayerPos( playerPos );
 
@@ -291,7 +295,7 @@ namespace mod::events
             // Iza
             case 0x13E:
             {
-                // Transform Info Human After Defeating Shadow Beasts By Iza
+                // Set human flags After Defeating Shadow Beasts By Iza
                 libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0xC7F8 ),
                                              reinterpret_cast<void*>( assembly::asmAdjustIzaWolf ) );
                 break;
@@ -648,7 +652,10 @@ namespace mod::events
         }
     }
 
-    bool haveItem( uint8_t item ) { return libtp::tp::d_item::checkItemGet( item, 1 ); }
+    bool haveItem( uint8_t item )
+    {
+        return libtp::tp::d_item::checkItemGet( item, 1 );
+    }
 
     void handleQuickTransform()
     {

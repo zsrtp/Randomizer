@@ -104,23 +104,23 @@ namespace mod::game_patch
 
         auto checkForSpecificMsg =
             [=]( uint16_t desiredMsgId, int32_t room, const char* stage, const void* currentInf1, const char* desiredFile )
+        {
+            // Check if the message ids are the same
+            if ( msgId != desiredMsgId )
             {
-                // Check if the message ids are the same
-                if ( msgId != desiredMsgId )
-                {
-                    return false;
-                }
+                return false;
+            }
 
-                // Check if the stage and room are correct
-                // Either or can be omitted
-                if ( !libtp::tools::playerIsInRoomStage( room, stage ) )
-                {
-                    return false;
-                }
+            // Check if the stage and room are correct
+            // Either or can be omitted
+            if ( !libtp::tools::playerIsInRoomStage( room, stage ) )
+            {
+                return false;
+            }
 
-                // Check if the desired file is being used
-                return currentInf1 == getInf1Ptr( desiredFile );
-            };
+            // Check if the desired file is being used
+            return currentInf1 == getInf1Ptr( desiredFile );
+        };
 
         // Get message ids for specific checks
         constexpr uint16_t linkHouseMsgId = 0x658;

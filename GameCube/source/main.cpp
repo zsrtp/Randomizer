@@ -758,9 +758,15 @@ namespace mod
         }
     }
 
-    KEEP_FUNC char handle_parseCharacter_1Byte( const char** text ) { return return_parseCharacter_1Byte( text ); }
+    KEEP_FUNC char handle_parseCharacter_1Byte( const char** text )
+    {
+        return return_parseCharacter_1Byte( text );
+    }
 
-    KEEP_FUNC bool handle_query022( void* unk1, void* unk2, int32_t unk3 ) { return events::proc_query022( unk1, unk2, unk3 ); }
+    KEEP_FUNC bool handle_query022( void* unk1, void* unk2, int32_t unk3 )
+    {
+        return events::proc_query022( unk1, unk2, unk3 );
+    }
 
     KEEP_FUNC int32_t handle_query023( void* unk1, void* unk2, int32_t unk3 )
     {
@@ -803,7 +809,10 @@ namespace mod
         return menuType;
     }
 
-    KEEP_FUNC bool handle_query042( void* unk1, void* unk2, int32_t unk3 ) { return events::proc_query042( unk1, unk2, unk3 ); }
+    KEEP_FUNC bool handle_query042( void* unk1, void* unk2, int32_t unk3 )
+    {
+        return events::proc_query042( unk1, unk2, unk3 );
+    }
 
     KEEP_FUNC uint32_t handle_event000( void* messageFlow, void* nodeEvent, void* actrPtr )
     {
@@ -1346,5 +1355,8 @@ namespace mod
         return ret;
     }
 
-    float __attribute__( ( noinline ) ) intToFloat( int32_t value ) { return static_cast<float>( value ); }
+    float __attribute__( ( noinline ) ) intToFloat( int32_t value )
+    {
+        return static_cast<float>( value );
+    }
 }     // namespace mod
