@@ -5,6 +5,7 @@
  *	@bug No known bugs.
  */
 #include "rando/randomizer.h"
+#include "cxx.h"
 #include "gc_wii/card.h"
 #include "main.h"
 #include "rando/data.h"
@@ -38,7 +39,9 @@ namespace mod::rando
             // Load the seed
             m_SeedInfo = seedInfo;
             m_CurrentSeed = selectedSeed;
-            m_Seed = new Seed( CARD_SLOT_A, seedInfo );
+
+            // Align to void*, as pointers use the largest variable type in the Seed class
+            m_Seed = new ( sizeof( void* ) ) Seed( CARD_SLOT_A, seedInfo );
 
             if ( m_Seed->checkIfSeedLoaded() )
             {

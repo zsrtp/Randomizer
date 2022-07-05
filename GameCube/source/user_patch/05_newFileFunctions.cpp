@@ -9,7 +9,7 @@ namespace mod::user_patch
 {
     void clearFaronTwilight( rando::Randomizer* randomizer, bool set )
     {
-        (void)randomizer;
+        (void) randomizer;
 
         if ( set )
         {
@@ -24,7 +24,7 @@ namespace mod::user_patch
 
     void clearEldinTwilight( rando::Randomizer* randomizer, bool set )
     {
-        (void)randomizer;
+        (void) randomizer;
 
         if ( set )
         {
@@ -38,7 +38,7 @@ namespace mod::user_patch
 
     void clearLanayruTwilight( rando::Randomizer* randomizer, bool set )
     {
-        (void)randomizer;
+        (void) randomizer;
 
         if ( set )
         {
@@ -52,7 +52,7 @@ namespace mod::user_patch
 
     void setMinorCutsceneValues( rando::Randomizer* randomizer, bool set )
     {
-        (void)randomizer;
+        (void) randomizer;
 
         if ( set )
         {
@@ -67,7 +67,7 @@ namespace mod::user_patch
 
     void clearMDH( rando::Randomizer* randomizer, bool set )
     {
-        (void)randomizer;
+        (void) randomizer;
 
         if ( set &&
              libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag == 0x7 )

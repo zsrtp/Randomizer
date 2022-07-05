@@ -48,7 +48,9 @@ namespace mod::rando
 #endif
         // Allocate the buffer to the back of the heap to prevent fragmentation
         uint32_t totalSize = m_Header->totalSize;
-        uint8_t* data = new ( -0x4 ) uint8_t[totalSize];
+
+        // Align to 0x20 for safety, since some functions may cast parts of it to classes/structs/arrays/etc.
+        uint8_t* data = new ( -0x20 ) uint8_t[totalSize];
 #ifdef DVD
         m_CARDResult = libtp::tools::ReadFile( fileName, totalSize, 0, data );
         if ( m_CARDResult == DVD_STATE_END )
@@ -59,8 +61,9 @@ namespace mod::rando
 #endif
         {
             // Get the main seed data
+            // Align to 0x20 for safety, since some functions cast parts of it to classes/structs/arrays/etc.
             uint32_t dataSize = m_Header->dataSize;
-            m_GCIData = new uint8_t[dataSize];
+            m_GCIData = new ( 0x20 ) uint8_t[dataSize];
             memcpy( m_GCIData, &data[m_Header->headerSize], dataSize );
 
             // Create the required dungeons text that is displayed when reading the sign in front of Link's house
@@ -140,8 +143,9 @@ namespace mod::rando
         uint32_t bgmTableEntries = customBgmHeader->bgmTableNumEntries;
         if ( bgmTableEntries > 0 )
         {
+            // Align to uint32_t, as the table is an array of structs with a size of 0x4 each
             uint32_t bgmTableSize = customBgmHeader->bgmTableSize;
-            uint8_t* buf = new uint8_t[bgmTableSize];
+            uint8_t* buf = new ( sizeof( uint32_t ) ) uint8_t[bgmTableSize];
             uint32_t offset = headerOffset + customBgmHeader->bgmTableOffset;
             memcpy( buf, &data[offset], bgmTableSize );
 
@@ -154,8 +158,9 @@ namespace mod::rando
         uint32_t fanfareTableEntries = customBgmHeader->fanfareTableNumEntries;
         if ( fanfareTableEntries > 0 )
         {
+            // Align to uint32_t, as the table is an array of structs with a size of 0x4 each
             uint32_t fanfareTableSize = customBgmHeader->fanfareTableSize;
-            uint8_t* buf = new uint8_t[fanfareTableSize];
+            uint8_t* buf = new ( sizeof( uint32_t ) ) uint8_t[fanfareTableSize];
             uint32_t offset = headerOffset + customBgmHeader->fanfareTableOffset;
             memcpy( buf, &data[offset], fanfareTableSize );
 

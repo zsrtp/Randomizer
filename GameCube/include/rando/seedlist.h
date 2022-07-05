@@ -23,7 +23,7 @@ namespace mod::rando
         SeedList( void );
         ~SeedList( void );
 
-        SeedInfo FindSeed( uint64_t seed );
+        // SeedInfo FindSeed( uint64_t seed );
 
         uint8_t m_numSeeds;
         uint8_t m_selectedSeed;

@@ -347,6 +347,7 @@ namespace mod::link_house_sign
 
         // Allocate memory for the strings
         // Add one to account for the NULL terminator
+        // Align to char, as strings don't have specific alignment requirements
         char* buf = new ( sizeof( char ) ) char[totalStringsLength + 1];
 
         // Set up a variable to keep track of how many characters were written to the buffer

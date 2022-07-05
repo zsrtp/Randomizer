@@ -575,8 +575,8 @@ namespace mod
                                                 float unk7,
                                                 int32_t parameters )
     {
-        (void)unk6;
-        (void)unk7;
+        (void) unk6;
+        (void) unk7;
 
         // Spawn the appropriate item with model
         uint8_t itemID = randomizer->getBossItem( item );
@@ -636,7 +636,7 @@ namespace mod
 
     KEEP_FUNC void handle_setLineUpItem( libtp::tp::d_save::dSv_player_item_c* unk1 )
     {
-        (void)unk1;
+        (void) unk1;
 
         using namespace libtp::tp::d_com_inf_game;
         static const uint8_t i_item_lst[24] = { 0x0A, 0x08, 0x06, 0x02, 0x09, 0x04, 0x03, 0x00, 0x01, 0x17, 0x14, 0x05,
@@ -1205,8 +1205,8 @@ namespace mod
 
     KEEP_FUNC bool handle_checkTreasureRupeeReturn( void* unk1, int32_t item )
     {
-        (void)unk1;
-        (void)item;
+        (void) unk1;
+        (void) item;
 
         return false;
     }

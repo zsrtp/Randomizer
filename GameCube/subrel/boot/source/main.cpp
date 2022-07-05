@@ -4,6 +4,7 @@
 
 #include "game_patch/game_patch.h"
 #include "customMessages.h"
+#include "cxx.h"
 #include "tp/d_stage.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/f_ap_game.h"
@@ -49,7 +50,8 @@ namespace mod
                      << "Press R + Z to close the console.\n\n";
 
         // Generate our seedList
-        seedList = new rando::SeedList();
+        // Align to void*, as pointers use the largest variable type in the SeedList class
+        seedList = new ( sizeof( void* ) ) rando::SeedList();
 
         // Just hook functions for now
         hookFunctions();

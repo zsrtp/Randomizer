@@ -44,7 +44,8 @@ namespace mod::rando
 
         // Store header data so we don't have to open the files again later
         // Allocate the memory to the back of the heap to avoid fragmentation
-        Header* headerBuffer = new ( -0x4 ) Header[SEED_MAX_ENTRIES];
+        // Align to uint64_t, as it is the largest variable type used in the Header struct
+        Header* headerBuffer = new ( -sizeof( uint64_t ) ) Header[SEED_MAX_ENTRIES];
 
         m_numSeeds = 0;
 #ifndef DVD
@@ -84,7 +85,8 @@ namespace mod::rando
 
         if ( m_numSeeds > 0 )
         {
-            m_seedInfo = new SeedInfo[m_numSeeds];
+            // Align to uint64_t, as it is the largest variable type used in the Header struct
+            m_seedInfo = new ( sizeof( uint64_t ) ) SeedInfo[m_numSeeds];
 
             uint8_t j = 0;     // seedInfo index
 

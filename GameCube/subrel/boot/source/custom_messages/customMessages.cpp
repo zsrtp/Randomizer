@@ -72,6 +72,7 @@ namespace mod::customMessages
         }
 
         // Allocate memory for the table
+        // Align to uint32_t, as it is the largest variable type used in the table
         uint8_t* buf = new ( sizeof( uint32_t ) ) uint8_t[messageIdsSize + messageOffsetsSize + totalMessagesSize];
 
         // Get the address for the ids
@@ -168,6 +169,7 @@ namespace mod::customMessages
 
         // Allocate memory for the strings
         // Add menuStringsEntries to account for each string being NULL terminated
+        // Align to char, as strings don't have specific alignment requirements
         char* textData = new ( sizeof( char ) ) char[totalStringsLength + menuStringsEntries];
 
         // Set up itemWheelMenuData variables
@@ -246,6 +248,7 @@ namespace mod::customMessages
 #endif
         // Allocate memory for the buffer and write the string
         // Must use memcpy instead of strncpy since message commands have NULL characters
+        // Align to char, as strings don't have specific alignment requirements
         uint32_t donationEntrySize = donationEntry->size;
         char* buf = new ( sizeof( char ) ) char[donationEntrySize];
         memcpy( buf, donationEntry->msg, donationEntrySize );

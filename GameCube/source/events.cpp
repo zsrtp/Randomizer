@@ -322,7 +322,7 @@ namespace mod::events
 
     void onRELUnlink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
     {
-        (void)randomizer;
+        (void) randomizer;
 
         switch ( dmc->moduleInfo->id )
         {
