@@ -291,13 +291,17 @@ namespace mod::events
                 checkNpcTransform = reinterpret_cast<CMEB>( relPtrRaw + 0x8A0C );
                 break;
             }
-            // d_a_npc_hoz.rel
-            // Iza
-            case 0x13E:
+            // d_a_e_s1.rel
+            // Shadow Beast
+            case 0xE2:
             {
-                // Set human flags After Defeating Shadow Beasts By Iza
-                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0xC7FC ),
-                                             reinterpret_cast<void*>( assembly::asmAdjustIzaWolf ) );
+                if ( libtp::tp::d_a_alink::checkStageName(
+                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Upper_Zoras_River] ) )
+                {
+                    // Set human flags After Defeating Shadow Beasts By Iza
+                    libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x407C ),
+                                                 reinterpret_cast<void*>( assembly::asmAdjustIzaWolf ) );
+                }
                 break;
             }
             // d_a_obj_drop.rel
