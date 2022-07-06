@@ -16,6 +16,15 @@
 // text
 8000EDF4:getArchiveHeapPtr
 800149f0:mDoExt_getMesgFont
+// data
+80450C20:AssertHeap
+80450C24:DbPrintHeap
+80450C28:gameHeap
+80450C2C:zeldaHeap
+80450C30:commandHeap
+80450C34:archiveHeap
+80450C38:j2dHeap
+80450C3C:HostIOHeap
 
 // m_Do_MemCard.o
 // data
@@ -31,9 +40,6 @@
 80025bfc:tgscInfoInit
 80026bbc:roomLoader
 80026b58:stageLoader
-
-// data
-80450C34:archiveHeap
 
 // d_save.o
 80032AA8:getRupeeMax
@@ -136,6 +142,7 @@
 // JKRExpHeap.o
 802CF128:do_alloc_JKRExpHeap
 802CF7AC:do_free_JKRExpHeap
+802CFBA4:do_getFreeSize_JKRExpHeap
 
 // Card 
 80353AC8:CARDInit

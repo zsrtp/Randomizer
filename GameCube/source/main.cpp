@@ -2,6 +2,8 @@
 
 #include <cstdint>
 #include <cstring>
+#include <cstdio>
+#include <cinttypes>
 
 #ifdef DVD
 #include "gc_wii/dvd.h"
@@ -35,6 +37,8 @@
 #include "item_wheel_menu.h"
 #include "user_patch/03_customCosmetics.h"
 #include "data/flags.h"
+#include "tp/JKRExpHeap.h"
+#include "tp/m_do_ext.h"
 
 namespace mod
 {
@@ -204,6 +208,55 @@ namespace mod
 
     void exit() {}
 
+    void drawHeapDebugInfo()
+    {
+        static uint32_t archiveHeapLowestFreeSize = 0xFFFFFFFF;
+        static uint32_t zeldaHeapLowestFreeSize = 0xFFFFFFFF;
+
+        // Get the current maximum free size from any given block in the heaps
+        // Archive heap
+        void* heapPtr = libtp::tp::m_Do_ext::archiveHeap;
+        if ( heapPtr )
+        {
+            uint32_t archiveHeapCurrentFreeSize = libtp::tp::jkr_exp_heap::do_getFreeSize_JKRExpHeap( heapPtr );
+            if ( archiveHeapCurrentFreeSize < archiveHeapLowestFreeSize )
+            {
+                archiveHeapLowestFreeSize = archiveHeapCurrentFreeSize;
+            }
+        }
+
+        // Zelda heap
+        heapPtr = libtp::tp::m_Do_ext::zeldaHeap;
+        if ( heapPtr )
+        {
+            uint32_t zeldaHeapCurrentFreeSize = libtp::tp::jkr_exp_heap::do_getFreeSize_JKRExpHeap( heapPtr );
+            if ( zeldaHeapCurrentFreeSize < zeldaHeapLowestFreeSize )
+            {
+                zeldaHeapLowestFreeSize = zeldaHeapCurrentFreeSize;
+            }
+        }
+
+        constexpr int32_t textPosX = 161;
+        constexpr int32_t textPosY = 430;
+
+        // Get the values to draw
+        char buf[96];
+        const int32_t len = snprintf( buf,
+                                      sizeof( buf ),
+                                      "Archive: %.2fkb, Zelda: %.2fkb",
+                                      intToFloat( archiveHeapLowestFreeSize ) / 1024.f,
+                                      intToFloat( zeldaHeapLowestFreeSize ) / 1024.f );
+
+        // Get a rough estimate for the window width
+        const int32_t width = len * 8;
+
+        // Draw the window
+        events::drawWindow( textPosX - 11, textPosY - 15, width, 20, 0x000000B0 );
+
+        // Draw the values
+        events::drawText( buf, textPosX, textPosY, 0xFFFFFFB0, 14.f );
+    }
+
     KEEP_FUNC rando::Seed* getCurrentSeed( rando::Randomizer* rando )
     {
         if ( !randoIsEnabled( rando ) )
@@ -262,6 +315,13 @@ namespace mod
         using namespace libtp;
         using namespace tp::m_do_controller_pad;
         using namespace tp::d_com_inf_game;
+
+// Comment out the next line to not display debug heap info
+#define DRAW_DEBUG_HEAP_INFO
+#ifdef DRAW_DEBUG_HEAP_INFO
+        drawHeapDebugInfo();
+#undef DRAW_DEBUG_HEAP_INFO
+#endif
 
         // New frame, so the ring will be redrawn
         item_wheel_menu::ringDrawnThisFrame = false;
