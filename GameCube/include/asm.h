@@ -66,7 +66,7 @@ namespace mod::assembly
 
         // d_a_npc_hoz.rel
         void asmAdjustIzaWolf();
-        void handleAdjustIzaWolf();
+        void handleAdjustIzaWolf( int32_t flag );
 
         // d_kankyo_rain.o
         void asmShowReekfishPath();

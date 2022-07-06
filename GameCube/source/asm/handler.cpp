@@ -54,9 +54,10 @@ namespace mod::assembly
         }
     }
 
-    void handleAdjustIzaWolf()
+    void handleAdjustIzaWolf( int32_t flag )
     {
-        if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm == 1 )
+        if ( ( flag == 0x15 ) &&
+             ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm == 1 ) )
         {
             // Set the event flag to make Iza 1 available and set the memory bit for having talked to her after opening the
             // portal as human.

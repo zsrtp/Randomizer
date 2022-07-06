@@ -296,7 +296,7 @@ namespace mod::events
             case 0x13E:
             {
                 // Set human flags After Defeating Shadow Beasts By Iza
-                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0xC7F8 ),
+                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0xC7FC ),
                                              reinterpret_cast<void*>( assembly::asmAdjustIzaWolf ) );
                 break;
             }

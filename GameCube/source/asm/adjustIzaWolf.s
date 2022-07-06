@@ -13,6 +13,7 @@ stw %r3,0x10(%sp)
 stw %r4,0xC(%sp)
 stw %r5,0x8(%sp)
 
+mr %r3,%r4 # flag
 bl handleAdjustIzaWolf
 
 # Pop stack
