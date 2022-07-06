@@ -218,10 +218,10 @@ namespace mod
         void* heapPtr = libtp::tp::m_Do_ext::archiveHeap;
         if ( heapPtr )
         {
-            uint32_t archiveHeapCurrentFreeSize = libtp::tp::jkr_exp_heap::do_getFreeSize_JKRExpHeap( heapPtr );
-            if ( archiveHeapCurrentFreeSize < archiveHeapLowestFreeSize )
+            uint32_t currentFreeSize = libtp::tp::jkr_exp_heap::do_getFreeSize_JKRExpHeap( heapPtr );
+            if ( currentFreeSize < archiveHeapLowestFreeSize )
             {
-                archiveHeapLowestFreeSize = archiveHeapCurrentFreeSize;
+                archiveHeapLowestFreeSize = currentFreeSize;
             }
         }
 
@@ -229,15 +229,12 @@ namespace mod
         heapPtr = libtp::tp::m_Do_ext::zeldaHeap;
         if ( heapPtr )
         {
-            uint32_t zeldaHeapCurrentFreeSize = libtp::tp::jkr_exp_heap::do_getFreeSize_JKRExpHeap( heapPtr );
-            if ( zeldaHeapCurrentFreeSize < zeldaHeapLowestFreeSize )
+            uint32_t currentFreeSize = libtp::tp::jkr_exp_heap::do_getFreeSize_JKRExpHeap( heapPtr );
+            if ( currentFreeSize < zeldaHeapLowestFreeSize )
             {
-                zeldaHeapLowestFreeSize = zeldaHeapCurrentFreeSize;
+                zeldaHeapLowestFreeSize = currentFreeSize;
             }
         }
-
-        constexpr int32_t textPosX = 161;
-        constexpr int32_t textPosY = 430;
 
         // Get the values to draw
         char buf[96];
@@ -249,6 +246,9 @@ namespace mod
 
         // Get a rough estimate for the window width
         const int32_t width = len * 8;
+
+        constexpr int32_t textPosX = 161;
+        constexpr int32_t textPosY = 430;
 
         // Draw the window
         events::drawWindow( textPosX - 11, textPosY - 15, width, 20, 0x000000B0 );
