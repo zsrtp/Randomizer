@@ -56,6 +56,8 @@ namespace mod::assembly
 
     void handleAdjustIzaWolf( int32_t flag )
     {
+        // We check to see if the flag being set is for the Upper Zora's River Portal as a safety precaution since we don't want
+        // to set the flags too early.
         if ( ( flag == 0x15 ) &&
              ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm == 1 ) )
         {

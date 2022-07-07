@@ -624,12 +624,22 @@ namespace mod::events
     void loadCustomRoomActors()
     {
         using namespace libtp;
-        if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Lake_Hylia] ) &&
-             libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::SKY_CANNON_REPAIRED ) )
+        if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Lake_Hylia] ) )
         {
-            libtp::tp::dzx::ACTR AuruActr =
-                { "Rafrel", 0x00001D01, -116486.945f, -13860.f, 58533.0078f, 0, static_cast<int16_t>( 0xCCCD ), 0, 0xFFFF };
-            tools::SpawnActor( 0, AuruActr );
+            if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::SKY_CANNON_REPAIRED ) )
+            {
+                // Manually spawn Auru if the Lake is in the Repaired Cannon state as his actor is not in the DZX for that
+                // layer.
+                libtp::tp::dzx::ACTR AuruActr =
+                    { "Rafrel", 0x00001D01, -116486.945f, -13860.f, 58533.0078f, 0, static_cast<int16_t>( 0xCCCD ), 0, 0xFFFF };
+                tools::SpawnActor( 0, AuruActr );
+            }
+
+            // Spawn a red rupee behind Fyer's house that allows the player to use his cannon to leave the lake which prevents a
+            // softlock.
+            libtp::tp::dzx::ACTR RupeeActr =
+                { "item", 0xF3FFFF04, -108290.086f, -18654.748f, 45935.2969f, 0, static_cast<int16_t>( 0x1 ), 0x3F, 0xFFFF };
+            tools::SpawnActor( 0, RupeeActr );
         }
     }
 
