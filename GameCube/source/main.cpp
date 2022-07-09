@@ -643,6 +643,8 @@ namespace mod
         itemID = game_patch::_04_verifyProgressiveItem( mod::randomizer, itemID );
         uint32_t params = 0xFF0000 | ( parameters & 0xFF ) << 0x8 | ( itemID & 0xFF );
 
+        // If we are in hyrule field then the function is running to give us the Hot Springwater heart piece and we want it to
+        // spawn on the ground.
         if ( libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hyrule_Field] ) )
         {
             *const_cast<float*>( &pos[1] ) = -190.f;

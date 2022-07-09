@@ -92,6 +92,7 @@ namespace mod::game_patch
 
     KEEP_VAR const char* _02_hiddenSkillArc = "O_gD_memo";
     KEEP_VAR const char* _02_mirrorShardArc = "MirrorB";
+    KEEP_VAR const char* _02_masterSwordArc = "MstrSword";
 
     KEEP_FUNC void _02_forestSmallKeyItemFunc()
     {

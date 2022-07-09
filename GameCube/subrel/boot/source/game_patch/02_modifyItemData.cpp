@@ -178,12 +178,18 @@ namespace mod::game_patch
 
         itemResourcePtr[items::Bomb_Bag_Regular_Bombs].ringTexResIdx = bombBagIcon;
 
+        // First we copy over the Ordon Sword data to the Master/Light Sword as a base and then modify the model appropriately
         memcpy( &itemResourcePtr[items::Master_Sword],
                 &itemResourcePtr[items::Ordon_Sword],
                 sizeof( d_item_data::ItemResource ) );
         memcpy( &itemResourcePtr[items::Master_Sword_Light],
                 &itemResourcePtr[items::Ordon_Sword],
                 sizeof( d_item_data::ItemResource ) );
+        itemResourcePtr[items::Master_Sword].arcName = _02_masterSwordArc;
+        itemResourcePtr[items::Master_Sword_Light].arcName = _02_masterSwordArc;
+        itemResourcePtr[items::Master_Sword].modelResIdx = 0x5;
+        itemResourcePtr[items::Master_Sword_Light].modelResIdx = 0x5;
+
         memcpy( &itemResourcePtr[items::Horse_Call],
                 &itemResourcePtr[items::Ilias_Charm],
                 sizeof( d_item_data::ItemResource ) );

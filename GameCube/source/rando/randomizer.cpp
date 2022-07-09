@@ -43,6 +43,7 @@ namespace mod::rando
 
         const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mStage;
         seed->LoadChecks( stage );
+        game_patch::_02_modifyFoolishFieldModel();
     }
 
     void Randomizer::initSave( void )
@@ -202,10 +203,6 @@ namespace mod::rando
                     uint32_t replacementValue =
                         game_patch::_04_verifyProgressiveItem( randomizer, seed->m_ArcReplacements[i].replacementValue );
                     *reinterpret_cast<uint8_t*>( ( fileAddr + seed->m_ArcReplacements[i].offset ) ) = replacementValue;
-                    if ( replacementValue == libtp::data::items::Foolish_Item )
-                    {
-                        game_patch::_02_modifyFoolishFieldModel();
-                    }
                     break;
                 }
                 case rando::ArcReplacementType::HiddenSkill:
@@ -248,12 +245,16 @@ namespace mod::rando
 
                 case rando::ArcReplacementType::AlwaysLoaded:
                 {
-                    uint32_t adjustedFilePtr =
-                        reinterpret_cast<uint32_t>( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mMsgDtArchive[0] );
+                    // The pointer to the start of bmgres.arc is located at the value stored in mMsgDtArchive[0] + an offset of
+                    // 0x64
+                    uint32_t adjustedFilePtr = *reinterpret_cast<uint32_t*>(
+                        reinterpret_cast<uint32_t>( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mMsgDtArchive[0] ) +
+                        0x64 );
                     uint32_t replacementValue =
                         game_patch::_04_verifyProgressiveItem( mod::randomizer, seed->m_ArcReplacements[i].replacementValue );
                     *reinterpret_cast<uint16_t*>( ( adjustedFilePtr + seed->m_ArcReplacements[i].offset ) ) =
                         replacementValue + 0x65;
+
                     break;
                 }
 
