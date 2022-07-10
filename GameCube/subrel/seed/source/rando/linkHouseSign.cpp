@@ -38,6 +38,10 @@ namespace mod::link_house_sign
     const char* noDungeonsRequiredUs = "No dungeons required";
 #else
     // Japanese
+    // Snowpeak Ruins
+    // 雪山の廃
+    const char* snowpeakRuinsText = "\x90\xE1\x8E\x52\x82\xCC\x94\x70";
+
     const char* dungeonsJp[TOTAL_POSSIBLE_DUNGEONS] = {
         // Forest Temple
         // 森の神殿
@@ -57,7 +61,7 @@ namespace mod::link_house_sign
 
         // Snowpeak Ruins
         // 雪山の廃
-        "\x90\xE1\x8E\x52\x82\xCC\x94\x70",
+        snowpeakRuinsText,
 
         // Temple of Time
         // 時の神殿
@@ -297,7 +301,13 @@ namespace mod::link_house_sign
         uint32_t totalStringsLength = 0;
 
         const uint8_t* areaColors = areaColorIds;
+#ifdef TP_JP
+        constexpr uint32_t snowpeakRuinsSpecialCharLength = sizeof( MSG_SP_CHAR_KYO ) - 1;
+        const char* tempSnowpeakRuinsText = snowpeakRuinsText;
 
+        auto isCurrentTextSnowpeakRuins = [=]( const char* currentArea )
+        { return strncmp( currentArea, tempSnowpeakRuinsText, snowpeakRuinsSpecialCharLength ) == 0; };
+#endif
         // It's possible that there will be no required dungeons
         constexpr uint32_t maxBitsValue = ( 1 << TOTAL_POSSIBLE_DUNGEONS ) - 1;
         if ( ( requiredDungeonFlags & maxBitsValue ) != 0 )
@@ -314,6 +324,13 @@ namespace mod::link_house_sign
                     requiredDungeonsLength++;
 
                     totalStringsLength += strlen( currentDungeon );
+#ifdef TP_JP
+                    // If the current text is for Snowpeak Ruins, then add the length of the special character for it
+                    if ( isCurrentTextSnowpeakRuins( currentDungeon ) )
+                    {
+                        totalStringsLength += snowpeakRuinsSpecialCharLength;
+                    }
+#endif
                 }
             }
         }
@@ -385,7 +402,17 @@ namespace mod::link_house_sign
             // Copy the current string to the buffer
             // Must use memcpy instead of strncpy since message commands have NULL characters
             memcpy( &buf[writtenSize], currentString, currentStringLength );
+#ifdef TP_JP
+            // If the current text is for Snowpeak Ruins, then add the special character to the end of it
+            if ( isCurrentTextSnowpeakRuins( currentString ) )
+            {
+                // Must use memcpy instead of strncpy since message commands have NULL characters
+                memcpy( &buf[writtenSize + currentStringLength], MSG_SP_CHAR_KYO, snowpeakRuinsSpecialCharLength );
 
+                // Increment currentStringLength to account for the new length
+                currentStringLength += snowpeakRuinsSpecialCharLength;
+            }
+#endif
             // Increment writtenSize to go to the next string
             writtenSize += currentStringLength;
 
