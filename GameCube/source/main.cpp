@@ -1402,7 +1402,7 @@ namespace mod
                                                                      int size )
     {
         libtp::tp::d_resource::dRes_info_c* resourcePtr = return_getResInfo( arcName, objectInfo, size );
-        if ( randoIsEnabled( randomizer ) && resourcePtr )
+        if ( getCurrentSeed( randomizer ) && resourcePtr )
         {
             randomizer->overrideObjectARC( resourcePtr, arcName );
         }
