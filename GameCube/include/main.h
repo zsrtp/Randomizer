@@ -21,6 +21,7 @@
 #include "tp/control.h"
 #include "Z2AudioLib/Z2SceneMgr.h"
 #include "events.h"
+#include "tp/d_resource.h"
 
 // Game States
 #define GAME_BOOT 0       // Default; At startup (should only ever be active once)
@@ -329,6 +330,14 @@ namespace mod
     // Title Screen functions
     void* handle_dScnLogo_c_dt( void* dScnLogo_c, int16_t bFreeThis );
     extern void* ( *return_dScnLogo_c_dt )( void* dScnLogo_c, int16_t bFreeThis );
+
+    // Archive/Resource functions
+    libtp::tp::d_resource::dRes_info_c* handle_getResInfo( const char* arcName,
+                                                           libtp::tp::d_resource::dRes_info_c* objectInfo,
+                                                           int size );
+    extern libtp::tp::d_resource::dRes_info_c* ( *return_getResInfo )( const char* arcName,
+                                                                       libtp::tp::d_resource::dRes_info_c* objectInfo,
+                                                                       int size );
 
 }     // namespace mod
 #endif

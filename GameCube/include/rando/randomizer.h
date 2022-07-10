@@ -13,6 +13,7 @@
 #include "tools.h"
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
+#include "tp/d_resource.h"
 
 namespace mod::rando
 {
@@ -31,7 +32,7 @@ namespace mod::rando
         uint8_t getSkyCharacter();
         uint8_t getBossItem( int32_t originalItem );
         void overrideARC( uint32_t fileAddr, FileDirectory fileDirectory, int roomNo );
-        void overrideObjectARC();
+        void overrideObjectARC( libtp::tp::d_resource::dRes_info_c* resourcePtr, const char* fileName );
         void overrideEventARC();
         uint8_t overrideBugReward( uint8_t bugID );
         uint8_t getHiddenSkillItem( uint16_t eventIndex );

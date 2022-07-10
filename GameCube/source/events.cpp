@@ -28,6 +28,7 @@ namespace mod::events
 {
     // REL patching trampolines
     void ( *return_daObjLv5Key_c__Wait )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* _this ) = nullptr;
+    void ( *return_daObjLifeContainer_c__Create )( void* _this ) = nullptr;
     CMEB checkNpcTransform = nullptr;
 
     void onLoad( rando::Randomizer* randomizer )
@@ -52,8 +53,6 @@ namespace mod::events
         {
             randomizer->initSave();
         }
-
-        randomizer->overrideObjectARC();
         randomizer->overrideEventARC();
         user_patch::setLanternColor( randomizer );
     }
@@ -137,6 +136,30 @@ namespace mod::events
             // Heart Pieces/Containers
             case 0x35:
             {
+                // Adjust freestanding heart field model height based on the current item being created
+                return_daObjLifeContainer_c__Create = libtp::patch::hookFunction(
+                    reinterpret_cast<void ( * )( void* )>( relPtrRaw + 0x5D0 ),
+                    []( void* daObjLifePtr )
+                    {
+                        uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x92A );
+                        switch ( itemID )
+                        {
+                            case libtp::data::items::Master_Sword:
+                            case libtp::data::items::Master_Sword_Light:
+                            case libtp::data::items::Mirror_Piece_2:
+                            {
+                                mod::console << "heart rel " << daObjLifePtr << "\n";
+                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 40.f;
+                                break;
+                            }
+                            default:
+                            {
+                                break;
+                            }
+                        }
+                        return_daObjLifeContainer_c__Create( daObjLifePtr );
+                    } );
+
                 libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x1804 ),
                                              reinterpret_cast<void*>( assembly::asmAdjustFieldItemParams ) );
                 break;
@@ -346,6 +369,14 @@ namespace mod::events
             case 0x33:
             {
                 checkNpcTransform = nullptr;
+                break;
+            }
+            // d_a_obj_life_container.rel
+            // Heart Pieces/Containers
+            case 0x35:
+            {
+                return_daObjLifeContainer_c__Create = libtp::patch::unhookFunction( return_daObjLifeContainer_c__Create );
+                break;
             }
         }
     }
@@ -455,7 +486,7 @@ namespace mod::events
             case Mirror_Piece_3:
             case Mirror_Piece_4:
             {
-                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 0.8;     // scale
+                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 0.7;     // scale
                 break;
             }
             default:

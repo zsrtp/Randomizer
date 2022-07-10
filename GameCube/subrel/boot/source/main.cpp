@@ -163,5 +163,8 @@ namespace mod
         // Enemy BGM
         user_patch::bgm::enemybgm::return_startBattleBgm =
             patch::hookFunction( libtp::z2audiolib::z2seqmgr::startBattleBgm, user_patch::handle_startBattleBgm );
+
+        // Archive/Resource functions
+        return_getResInfo = patch::hookFunction( libtp::tp::d_resource::getResInfo, mod::handle_getResInfo );
     }
 }     // namespace mod

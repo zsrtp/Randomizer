@@ -192,6 +192,11 @@ namespace mod
     // Title Screen functions
     KEEP_VAR void* ( *return_dScnLogo_c_dt )( void* dScnLogo_c, int16_t bFreeThis ) = nullptr;
 
+    // Archive/resource functions
+    KEEP_VAR libtp::tp::d_resource::dRes_info_c* ( *return_getResInfo )( const char* arcName,
+                                                                         libtp::tp::d_resource::dRes_info_c* objectInfo,
+                                                                         int size ) = nullptr;
+
     void main()
     {
         // Call the boot REL
@@ -1390,6 +1395,18 @@ namespace mod
                 gameInfoPtr->save.save_file.player.player_status_a.currentHealth = static_cast<uint16_t>( newHealthValue );
             }
         }
+    }
+
+    KEEP_FUNC libtp::tp::d_resource::dRes_info_c* handle_getResInfo( const char* arcName,
+                                                                     libtp::tp::d_resource::dRes_info_c* objectInfo,
+                                                                     int size )
+    {
+        libtp::tp::d_resource::dRes_info_c* resourcePtr = return_getResInfo( arcName, objectInfo, size );
+        if ( randoIsEnabled( randomizer ) && resourcePtr )
+        {
+            randomizer->overrideObjectARC( resourcePtr, arcName );
+        }
+        return resourcePtr;
     }
 
     uint32_t rand( uint32_t* seed )

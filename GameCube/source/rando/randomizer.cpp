@@ -18,7 +18,6 @@
 #include "tp/d_com_inf_game.h"
 #include "tp/d_kankyo.h"
 #include "tp/d_meter2_info.h"
-#include "tp/d_resource.h"
 #include "tp/dzx.h"
 
 namespace mod::rando
@@ -278,24 +277,30 @@ namespace mod::rando
         }
     }
 
-    void Randomizer::overrideObjectARC()
+    void Randomizer::overrideObjectARC( libtp::tp::d_resource::dRes_info_c* resourcePtr, const char* fileName )
     {
         m_Seed->LoadObjectARCChecks();
         uint32_t numReplacements = m_Seed->m_numLoadedObjectArcReplacements;
-        // Loop through all ArcChecks and replace the item at an offset given the fileIndex.
-        for ( uint32_t i = 0; i < numReplacements; i++ )
-        {
-            libtp::tp::d_resource::dRes_info_c* resourcePtr =
-                events::getObjectResInfo( m_Seed->m_ObjectArcReplacements[i].fileName );
-            if ( resourcePtr )
-            {
-                uint32_t replacementValue =
-                    game_patch::_04_verifyProgressiveItem( mod::randomizer,
-                                                           m_Seed->m_ObjectArcReplacements[i].replacementValue );
+        uint8_t fileSize = strlen( fileName );
 
-                uint32_t archiveData =
-                    *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( resourcePtr->mArchive ) + 0x28 );
-                *reinterpret_cast<uint8_t*>( ( archiveData + m_Seed->m_ObjectArcReplacements[i].offset ) ) = replacementValue;
+        // Just because the game fetches the resource info doesn't mean that it got a match.
+        if ( resourcePtr->mArchive )
+        {
+            // Loop through all ArcChecks and replace the item at an offset given the fileIndex.
+            for ( uint32_t i = 0; i < numReplacements; i++ )
+            {
+                if ( strncmp( fileName, m_Seed->m_ObjectArcReplacements[i].fileName, fileSize ) == 0 )
+                {
+                    uint32_t replacementValue =
+                        game_patch::_04_verifyProgressiveItem( mod::randomizer,
+                                                               m_Seed->m_ObjectArcReplacements[i].replacementValue );
+
+                    uint32_t archiveData =
+                        *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( resourcePtr->mArchive ) + 0x28 );
+                    mod::console << archiveData << "\n";
+                    *reinterpret_cast<uint8_t*>( ( archiveData + m_Seed->m_ObjectArcReplacements[i].offset ) ) =
+                        replacementValue;
+                }
             }
         }
     }
