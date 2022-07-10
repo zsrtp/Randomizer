@@ -40,7 +40,7 @@ namespace mod::link_house_sign
     // Japanese
     // Snowpeak Ruins
     // 雪山の廃
-    const char* snowpeakRuinsJP = "\x90\xE1\x8E\x52\x82\xCC\x94\x70";
+    const char* snowpeakRuinsJp = "\x90\xE1\x8E\x52\x82\xCC\x94\x70";
 
     const char* dungeonsJp[TOTAL_POSSIBLE_DUNGEONS] = {
         // Forest Temple
@@ -61,7 +61,7 @@ namespace mod::link_house_sign
 
         // Snowpeak Ruins
         // 雪山の廃
-        snowpeakRuinsJP,
+        snowpeakRuinsJp,
 
         // Temple of Time
         // 時の神殿
@@ -303,7 +303,7 @@ namespace mod::link_house_sign
         const uint8_t* areaColors = areaColorIds;
 #ifdef TP_JP
         constexpr uint32_t snowpeakRuinsSpecialCharLength = sizeof( MSG_SP_CHAR_KYO ) - 1;
-        const char* snowpeakRuinsText = snowpeakRuinsJP;
+        const char* snowpeakRuinsText = snowpeakRuinsJp;
 
         auto isCurrentTextSnowpeakRuins = [=]( const char* currentArea )
         { return strncmp( currentArea, snowpeakRuinsText, snowpeakRuinsSpecialCharLength ) == 0; };

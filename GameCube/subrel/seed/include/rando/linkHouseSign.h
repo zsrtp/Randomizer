@@ -17,7 +17,7 @@ namespace mod::link_house_sign
     extern const char* noDungeonsRequiredUs;
 #else
     // Japanese
-    extern const char* snowpeakRuinsJP;
+    extern const char* snowpeakRuinsJp;
     extern const char* dungeonsJp[TOTAL_POSSIBLE_DUNGEONS];
     extern const char* noDungeonsRequiredJp;
 #endif
