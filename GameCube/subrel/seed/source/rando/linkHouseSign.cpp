@@ -40,7 +40,7 @@ namespace mod::link_house_sign
     // Japanese
     // Snowpeak Ruins
     // 雪山の廃
-    const char* snowpeakRuinsText = "\x90\xE1\x8E\x52\x82\xCC\x94\x70";
+    const char* snowpeakRuinsJP = "\x90\xE1\x8E\x52\x82\xCC\x94\x70";
 
     const char* dungeonsJp[TOTAL_POSSIBLE_DUNGEONS] = {
         // Forest Temple
@@ -61,7 +61,7 @@ namespace mod::link_house_sign
 
         // Snowpeak Ruins
         // 雪山の廃
-        snowpeakRuinsText,
+        snowpeakRuinsJP,
 
         // Temple of Time
         // 時の神殿
@@ -303,10 +303,10 @@ namespace mod::link_house_sign
         const uint8_t* areaColors = areaColorIds;
 #ifdef TP_JP
         constexpr uint32_t snowpeakRuinsSpecialCharLength = sizeof( MSG_SP_CHAR_KYO ) - 1;
-        const char* tempSnowpeakRuinsText = snowpeakRuinsText;
+        const char* snowpeakRuinsText = snowpeakRuinsJP;
 
         auto isCurrentTextSnowpeakRuins = [=]( const char* currentArea )
-        { return strncmp( currentArea, tempSnowpeakRuinsText, snowpeakRuinsSpecialCharLength ) == 0; };
+        { return strncmp( currentArea, snowpeakRuinsText, snowpeakRuinsSpecialCharLength ) == 0; };
 #endif
         // It's possible that there will be no required dungeons
         constexpr uint32_t maxBitsValue = ( 1 << TOTAL_POSSIBLE_DUNGEONS ) - 1;
