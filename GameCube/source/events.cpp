@@ -146,6 +146,10 @@ namespace mod::events
                         {
                             case libtp::data::items::Master_Sword:
                             case libtp::data::items::Master_Sword_Light:
+                            {
+                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 20.f;
+                                break;
+                            }
                             case libtp::data::items::Mirror_Piece_2:
                             case libtp::data::items::Mirror_Piece_3:
                             case libtp::data::items::Mirror_Piece_4:
@@ -527,6 +531,13 @@ namespace mod::events
             case Mirror_Piece_4:
             {
                 *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daDitem ) + 0x4EC ) = 0.05f;     // scale
+                break;
+            }
+
+            case Master_Sword:
+            case Master_Sword_Light:
+            {
+                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daDitem ) + 0x4EC ) = 0.001f;     // scale
                 break;
             }
             default:
