@@ -71,6 +71,10 @@ namespace mod::assembly
         // d_kankyo_rain.o
         void asmShowReekfishPath();
         uint8_t handleShowReekfishPath( uint8_t scent );
+
+        // d_a_demo_item.o
+        void asmAdjustCreateItemParams();
+        void handleAdjustCreateItemParams( void* daDitem );
     }
 }     // namespace mod::assembly
 

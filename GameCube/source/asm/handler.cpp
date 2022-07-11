@@ -83,4 +83,9 @@ namespace mod::assembly
             return scent;
         }
     }
+
+    void handleAdjustCreateItemParams( void* daDitem )
+    {
+        events::onAdjustCreateItemParams( daDitem );
+    }
 }     // namespace mod::assembly

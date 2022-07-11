@@ -148,7 +148,6 @@ namespace mod::events
                             case libtp::data::items::Master_Sword_Light:
                             case libtp::data::items::Mirror_Piece_2:
                             {
-                                mod::console << "heart rel " << daObjLifePtr << "\n";
                                 *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 40.f;
                                 break;
                             }
@@ -162,6 +161,15 @@ namespace mod::events
 
                 libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x1804 ),
                                              reinterpret_cast<void*>( assembly::asmAdjustFieldItemParams ) );
+                break;
+            }
+
+            // d_a_demo_item.rel
+            // Item held in Link's hand upon giving/recieving it
+            case 0x3F:
+            {
+                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x1E50 ),
+                                             reinterpret_cast<void*>( assembly::asmAdjustCreateItemParams ) );
                 break;
             }
             // d_a_obj_bosswarp.rel
@@ -492,6 +500,32 @@ namespace mod::events
             default:
             {
                 *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 2.0f;     // scale
+                break;
+            }
+        }
+    }
+
+    void onAdjustCreateItemParams( void* daDitem )
+    {
+        if ( !getCurrentSeed( randomizer ) )
+        {
+            return;
+        }
+
+        using namespace libtp::data::items;
+
+        uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daDitem ) + 0x92A );
+        switch ( itemID )
+        {
+            case Mirror_Piece_2:
+            case Mirror_Piece_3:
+            case Mirror_Piece_4:
+            {
+                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daDitem ) + 0x4EC ) = 0.05f;     // scale
+                break;
+            }
+            default:
+            {
                 break;
             }
         }

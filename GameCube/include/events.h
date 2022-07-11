@@ -111,6 +111,8 @@ namespace mod::events
 
     void onAdjustFieldItemParams( libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife );
 
+    void onAdjustCreateItemParams( void* daDitem );
+
     void handleDungeonHeartContainer();
 
     bool proc_query022( void* unk1, void* unk2, int32_t unk3 );
