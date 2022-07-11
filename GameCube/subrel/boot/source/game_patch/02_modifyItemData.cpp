@@ -158,7 +158,10 @@ namespace mod::game_patch
                                                      libtp::data::items::Coro_Key,
                                                      libtp::data::items::Mirror_Piece_2,
                                                      libtp::data::items::Mirror_Piece_3,
-                                                     libtp::data::items::Mirror_Piece_4 };
+                                                     libtp::data::items::Mirror_Piece_4,
+                                                     libtp::data::items::Fused_Shadow_1,
+                                                     libtp::data::items::Fused_Shadow_2,
+                                                     libtp::data::items::Fused_Shadow_3 };
 
     void modifyItemModels()
     {
@@ -299,6 +302,12 @@ namespace mod::game_patch
             items::Mirror_Piece_4,
         };
 
+        uint8_t customShadowsIDs[] = {
+            items::Fused_Shadow_1,
+            items::Fused_Shadow_2,
+            items::Fused_Shadow_3,
+        };
+
         // Set the item info for the custom small keys to that of the current Small Key
         listLength = ( sizeof( customSmallKeyItemIDs ) / sizeof( customSmallKeyItemIDs[0] ) );
         uint32_t smallKeyItemInfo =
@@ -381,6 +390,18 @@ namespace mod::game_patch
             itemResourcePtr[customShardsIDs[i]].tevFrm = 0x00;
             getSeTypePtr[customShardsIDs[i]] = 0x2;
         }
+
+        listLength = sizeof( customShadowsIDs ) / sizeof( customShadowsIDs[0] );
+        for ( uint32_t i = 0; i < listLength; i++ )
+        {
+            itemResourcePtr[customShadowsIDs[i]].brkResIdx = 0xFFFF;
+            itemResourcePtr[customShadowsIDs[i]].tevFrm = 0x00;
+            getSeTypePtr[customShadowsIDs[i]] = 0x2;
+        }
+
+        itemResourcePtr[libtp::data::items::Fused_Shadow_1].arcName = _02_firstShadowArc;
+        itemResourcePtr[libtp::data::items::Fused_Shadow_2].arcName = _02_secondShadowArc;
+        itemResourcePtr[libtp::data::items::Fused_Shadow_3].arcName = _02_thirdShadowArc;
     }
 
     void setCustomItemFunctions()

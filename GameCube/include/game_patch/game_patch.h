@@ -39,6 +39,9 @@ namespace mod::game_patch
 
     extern const char* _02_hiddenSkillArc;
     extern const char* _02_mirrorShardArc;
+    extern const char* _02_firstShadowArc;
+    extern const char* _02_secondShadowArc;
+    extern const char* _02_thirdShadowArc;
     extern const char* _02_masterSwordArc;
 
     void _02_forestSmallKeyItemFunc();

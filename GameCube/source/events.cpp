@@ -147,6 +147,11 @@ namespace mod::events
                             case libtp::data::items::Master_Sword:
                             case libtp::data::items::Master_Sword_Light:
                             case libtp::data::items::Mirror_Piece_2:
+                            case libtp::data::items::Mirror_Piece_3:
+                            case libtp::data::items::Mirror_Piece_4:
+                            case libtp::data::items::Fused_Shadow_1:
+                            case libtp::data::items::Fused_Shadow_2:
+                            case libtp::data::items::Fused_Shadow_3:
                             {
                                 *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 40.f;
                                 break;
