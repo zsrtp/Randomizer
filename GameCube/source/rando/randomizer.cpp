@@ -91,38 +91,88 @@ namespace mod::rando
             return;
         }
 
+        using namespace libtp::tp::dzx;
+
         // Local vars
         uint32_t numReplacements = seed->m_numLoadedDZXChecks;
         dzxCheck* dzxReplacements = seed->m_DZXChecks;
 
         uint32_t numChunks = chunkTypeInfo->numChunks;
-        libtp::tp::dzx::ACTR* dzxData = reinterpret_cast<libtp::tp::dzx::ACTR*>( chunkTypeInfo->chunkDataPtr );
+        ACTR* dzxData = reinterpret_cast<ACTR*>( chunkTypeInfo->chunkDataPtr );
 
         // Check if we have DZX checks to work with
-        if ( !numReplacements )
+        if ( numReplacements == 0 )
+        {
             return;
+        }
+
         // Loop through all chunks the game is currently loading/setting
         for ( uint32_t i = 0; i < numChunks; i++ )
         {
             // The hash in RAM right now
-            uint16_t actorHash =
-                libtp::tools::fletcher16( reinterpret_cast<uint8_t*>( &dzxData[i] ), sizeof( libtp::tp::dzx::ACTR ) );
+            uint16_t actorHash = libtp::tools::fletcher16( reinterpret_cast<uint8_t*>( &dzxData[i] ), sizeof( ACTR ) );
+
             // Compare to all available replacements
             for ( uint32_t j = 0; j < numReplacements; j++ )
             {
                 if ( dzxReplacements[j].hash == actorHash )
                 {
+                    // Temporary enum for actor types
+                    enum ActorTypes
+                    {
+                        NONE = 0,
+                        HEART_PIECE,
+                        TBOX,
+                    };
+
                     // Bytearray of target ACTR struct
                     uint8_t* target = reinterpret_cast<uint8_t*>( &dzxData[i] );
 
                     // Replace target Actor with replacement values if != FF
-                    for ( uint8_t b = 0; b < sizeof( libtp::tp::dzx::ACTR ); b++ )
+                    for ( uint8_t b = 0; b < sizeof( ACTR ); b++ )
                     {
                         // Fetch replacement byte
                         uint8_t newByte = dzxReplacements[j].data[b];
 
                         if ( newByte != dzxReplacements[j].magicByte )
+                        {
                             target[b] = newByte;
+                        }
+                    }
+
+                    // Placeholders for item replacements
+                    int32_t actortype = ActorTypes::NONE;
+                    uint32_t item = 0xFF;
+
+                    // Check if there is an item replacement to perform
+                    if ( strncmp( dzxData[i].objectName, "htPiece", 7 ) == 0 )
+                    {
+                        actortype = ActorTypes::HEART_PIECE;
+                        item = reinterpret_cast<ITEM*>( target )->item;
+                    }
+                    else if ( strncmp( dzxData[i].objectName, "tbox", 4 ) == 0 )
+                    {
+                        actortype = ActorTypes::TBOX;
+                        item = reinterpret_cast<TRES*>( target )->item;
+                    }
+
+                    // Perform the item replacement
+                    switch ( actortype )
+                    {
+                        case ActorTypes::HEART_PIECE:
+                        {
+                            reinterpret_cast<ITEM*>( target )->item = game_patch::_04_verifyProgressiveItem( this, item );
+                            break;
+                        }
+                        case ActorTypes::TBOX:
+                        {
+                            reinterpret_cast<TRES*>( target )->item = game_patch::_04_verifyProgressiveItem( this, item );
+                            break;
+                        }
+                        default:
+                        {
+                            break;
+                        }
                     }
                 }
             }
@@ -175,8 +225,8 @@ namespace mod::rando
         }
         else
         {
-            // There is (currently) never a situation where there are multiple boss checks on the same stage, so just return the
-            // item
+            // There is (currently) never a situation where there are multiple boss checks on the same stage, so just return
+            // the item
             return seed->m_BossChecks[0].item;
         }
     }
@@ -200,7 +250,7 @@ namespace mod::rando
                 case rando::ArcReplacementType::Item:
                 {
                     uint32_t replacementValue =
-                        game_patch::_04_verifyProgressiveItem( randomizer, seed->m_ArcReplacements[i].replacementValue );
+                        game_patch::_04_verifyProgressiveItem( this, seed->m_ArcReplacements[i].replacementValue );
                     *reinterpret_cast<uint8_t*>( ( fileAddr + seed->m_ArcReplacements[i].offset ) ) = replacementValue;
                     break;
                 }
@@ -227,8 +277,7 @@ namespace mod::rando
                              ( seed->m_HiddenSkillChecks[j].roomID == libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file
                                                                           .player.player_return_place.link_room_id ) )
                         {
-                            uint16_t msgID =
-                                game_patch::_04_verifyProgressiveItem( randomizer, seed->m_HiddenSkillChecks[j].itemID );
+                            uint16_t msgID = game_patch::_04_verifyProgressiveItem( this, seed->m_HiddenSkillChecks[j].itemID );
                             *reinterpret_cast<uint16_t*>( adjustedFilePtr + seed->m_ArcReplacements[i].offset ) = msgID + 0x65;
                         }
                     }
@@ -237,20 +286,20 @@ namespace mod::rando
                 case rando::ArcReplacementType::ItemMessage:
                 {
                     uint32_t replacementValue =
-                        game_patch::_04_verifyProgressiveItem( randomizer, seed->m_ArcReplacements[i].replacementValue );
+                        game_patch::_04_verifyProgressiveItem( this, seed->m_ArcReplacements[i].replacementValue );
                     *reinterpret_cast<uint16_t*>( ( fileAddr + seed->m_ArcReplacements[i].offset ) ) = replacementValue + 0x65;
                     break;
                 }
 
                 case rando::ArcReplacementType::AlwaysLoaded:
                 {
-                    // The pointer to the start of bmgres.arc is located at the value stored in mMsgDtArchive[0] + an offset of
-                    // 0x64
+                    // The pointer to the start of bmgres.arc is located at the value stored in mMsgDtArchive[0] + an offset
+                    // of 0x64
                     uint32_t adjustedFilePtr = *reinterpret_cast<uint32_t*>(
                         reinterpret_cast<uint32_t>( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mMsgDtArchive[0] ) +
                         0x64 );
                     uint32_t replacementValue =
-                        game_patch::_04_verifyProgressiveItem( mod::randomizer, seed->m_ArcReplacements[i].replacementValue );
+                        game_patch::_04_verifyProgressiveItem( this, seed->m_ArcReplacements[i].replacementValue );
                     *reinterpret_cast<uint16_t*>( ( adjustedFilePtr + seed->m_ArcReplacements[i].offset ) ) =
                         replacementValue + 0x65;
 
@@ -263,7 +312,7 @@ namespace mod::rando
                         reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
 
                     uint32_t replacementValue =
-                        game_patch::_04_verifyProgressiveItem( mod::randomizer, seed->m_ArcReplacements[i].replacementValue );
+                        game_patch::_04_verifyProgressiveItem( this, seed->m_ArcReplacements[i].replacementValue );
                     *reinterpret_cast<uint16_t*>( ( adjustedFilePtr + seed->m_ArcReplacements[i].offset ) ) =
                         replacementValue + 0x65;
                     break;
@@ -292,8 +341,7 @@ namespace mod::rando
                 if ( strncmp( fileName, m_Seed->m_ObjectArcReplacements[i].fileName, fileSize ) == 0 )
                 {
                     uint32_t replacementValue =
-                        game_patch::_04_verifyProgressiveItem( mod::randomizer,
-                                                               m_Seed->m_ObjectArcReplacements[i].replacementValue );
+                        game_patch::_04_verifyProgressiveItem( this, m_Seed->m_ObjectArcReplacements[i].replacementValue );
 
                     uint32_t archiveData =
                         *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( resourcePtr->mArchive ) + 0x28 );
