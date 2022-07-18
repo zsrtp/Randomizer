@@ -56,7 +56,7 @@ namespace mod
     bool consoleState = true;
     uint8_t gameState = GAME_BOOT;
     void* Z2ScenePtr = nullptr;
-    bool isFoolishTrapQueued = false;
+    uint8_t foolishTrapCount = 0;
     KEEP_VAR bool walletsPatched = false;
     KEEP_VAR uint8_t seedRelAction = SEED_ACTION_NONE;
     uint32_t nextVal = libtp::gc_wii::os_time::OSGetTick();
@@ -539,7 +539,7 @@ namespace mod
             }
         }
 
-        if ( isFoolishTrapQueued )
+        if ( foolishTrapCount > 0 )
         {
             handleFoolishItem();
         }
@@ -1354,47 +1354,60 @@ namespace mod
 
     KEEP_FUNC void handleFoolishItem()
     {
-        if ( events::checkFoolItemFreeze() )
+        if ( !events::checkFoolItemFreeze() )
         {
-            using namespace libtp::z2audiolib;
-            using namespace libtp::z2audiolib::z2scenemgr;
-            using namespace libtp::tp;
-            int32_t newHealthValue;
-            d_com_inf_game::dComIfG_inf_c* gameInfoPtr = &d_com_inf_game::dComIfG_gameInfo;
-            d_a_alink::daAlink* linkMapPtr = d_com_inf_game::dComIfG_gameInfo.play.mPlayer;
-            /* Store the currently loaded sound wave to local variables as we will need to load them back later.
-             * We use this method because if we just loaded the sound waves every time the item was gotten, we'd
-             * eventually run out of memory so it is safer to unload everything and load it back in.*/
-            uint8_t seWave1 = z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_1;
-            uint8_t seWave2 = z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2;
-            isFoolishTrapQueued = false;
-            eraseSeWave( Z2ScenePtr, z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_1 );
-            eraseSeWave( Z2ScenePtr, z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2 );
-            loadSeWave( Z2ScenePtr, 0x46 );
-            m_Do_Audio::mDoAud_seStartLevel( 0x10040, nullptr, 0, 0 );
-            loadSeWave( Z2ScenePtr, seWave1 );
-            loadSeWave( Z2ScenePtr, seWave2 );
-
-            if ( gameInfoPtr->save.save_file.player.player_status_a.currentForm == 1 )
-            {
-                newHealthValue = gameInfoPtr->save.save_file.player.player_status_a.currentHealth - 2;
-                d_a_alink::procWolfDamageInit( linkMapPtr, nullptr );
-            }
-            else
-            {
-                newHealthValue = gameInfoPtr->save.save_file.player.player_status_a.currentHealth - 1;
-                d_a_alink::procDamageInit( linkMapPtr, nullptr, 0 );
-            }
-
-            if ( newHealthValue < 0 )
-            {
-                gameInfoPtr->save.save_file.player.player_status_a.currentHealth = 0;
-            }
-            else
-            {
-                gameInfoPtr->save.save_file.player.player_status_a.currentHealth = static_cast<uint16_t>( newHealthValue );
-            }
+            return;
         }
+
+        using namespace libtp::z2audiolib;
+        using namespace libtp::z2audiolib::z2scenemgr;
+        using namespace libtp::tp;
+
+        /* Store the currently loaded sound wave to local variables as we will need to load them back later.
+         * We use this method because if we just loaded the sound waves every time the item was gotten, we'd
+         * eventually run out of memory so it is safer to unload everything and load it back in. */
+        uint32_t seWave1 = z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_1;
+        uint32_t seWave2 = z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2;
+
+        eraseSeWave( Z2ScenePtr, z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_1 );
+        eraseSeWave( Z2ScenePtr, z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2 );
+        loadSeWave( Z2ScenePtr, 0x46 );
+        m_Do_Audio::mDoAud_seStartLevel( 0x10040, nullptr, 0, 0 );
+        loadSeWave( Z2ScenePtr, seWave1 );
+        loadSeWave( Z2ScenePtr, seWave2 );
+
+        uint32_t count = foolishTrapCount;
+        foolishTrapCount = 0;
+
+        // Failsafe: Make sure the count does not somehow exceed 100
+        if ( count > 100 )
+        {
+            count = 100;
+        }
+
+        d_com_inf_game::dComIfG_inf_c* gameInfoPtr = &d_com_inf_game::dComIfG_gameInfo;
+        libtp::tp::d_save::dSv_player_status_a_c* playerStatusPtr = &gameInfoPtr->save.save_file.player.player_status_a;
+        d_a_alink::daAlink* linkMapPtr = gameInfoPtr->play.mPlayer;
+        int32_t newHealthValue;
+
+        if ( playerStatusPtr->currentForm == 1 )
+        {
+            newHealthValue = playerStatusPtr->currentHealth - ( 2 * count );
+            d_a_alink::procWolfDamageInit( linkMapPtr, nullptr );
+        }
+        else
+        {
+            newHealthValue = playerStatusPtr->currentHealth - count;
+            d_a_alink::procDamageInit( linkMapPtr, nullptr, 0 );
+        }
+
+        // Make sure an underflow doesn't occur
+        if ( newHealthValue < 0 )
+        {
+            newHealthValue = 0;
+        }
+
+        playerStatusPtr->currentHealth = static_cast<uint16_t>( newHealthValue );
     }
 
     KEEP_FUNC libtp::tp::d_resource::dRes_info_c* handle_getResInfo( const char* arcName,

@@ -560,7 +560,12 @@ namespace mod::game_patch
 
     KEEP_FUNC void _02_foolishItemFunc()
     {
-        mod::isFoolishTrapQueued = true;
+        // Failsafe: Make sure the count does not somehow exceed 100
+        uint32_t count = foolishTrapCount;
+        if ( count < 100 )
+        {
+            foolishTrapCount = count + 1;
+        }
     }
 
     KEEP_FUNC int32_t _02_firstSkybookItemGetCheck()

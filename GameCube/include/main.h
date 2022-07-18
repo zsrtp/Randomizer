@@ -62,7 +62,7 @@ namespace mod
     extern bool consoleState;
     extern uint8_t gameState;
     extern void* Z2ScenePtr;
-    extern bool isFoolishTrapQueued;
+    extern uint8_t foolishTrapCount;
     extern uint8_t seedRelAction;
     extern bool walletsPatched;
     extern const char* m_DonationText;
