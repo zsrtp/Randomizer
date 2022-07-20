@@ -12,8 +12,19 @@
 #include "rando/seedlist.h"
 
 #define SEED_MAX_ENTRIES 10
-#define _VERSION_MAJOR 1
-#define _VERSION_MINOR 0
+// Earliest SeedData version (Major.Minor) which this version of the Randomizer
+// supports.
+#define MIN_SUPPORTED_SEED_DATA_VER_MAJOR 1
+#define MIN_SUPPORTED_SEED_DATA_VER_MINOR 0
+// Final SeedData version (Major.Minor) for which this version of the Randomizer
+// is guaranteed to support 100% of the features. This will change more often
+// than the minSupportedVersion. Generally speaking, this should be set to the
+// version of the SeedData that the website will output when this version of the
+// Randomizer is released. This maxFullySupportedVersion will be used in a
+// future update (pre-1.0 release) to determine if a SeedData can be played even
+// if some of its non-critical features are not supported.
+#define MAX_FULLY_SUPPORTED_SEED_DATA_VER_MAJOR 1
+#define MAX_FULLY_SUPPORTED_SEED_DATA_VER_MINOR 0
 
 namespace mod::rando
 {

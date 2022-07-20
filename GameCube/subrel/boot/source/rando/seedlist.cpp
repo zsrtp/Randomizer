@@ -66,19 +66,19 @@ namespace mod::rando
                  libtp::tools::ReadGCIMounted( memCardChan, fileName, sizeof( header ), 0, &header, true ) )
 #endif
             {
-                uint16_t minVersion = header.minVersion;
-                uint16_t maxVersion = header.maxVersion;
-
-                uint16_t version = static_cast<uint16_t>( _VERSION_MAJOR << 8 | _VERSION_MINOR );
-                if ( minVersion <= version )
+                if ( header.versionMajor >= MIN_SUPPORTED_SEED_DATA_VER_MAJOR &&
+#if MIN_SUPPORTED_SEED_DATA_VER_MINOR > 0
+                     // We get: "error: comparison is always true due to limited
+                     // range of data type [-Werror=type-limits]" when the macro
+                     // value is 0.
+                     header.versionMinor >= MIN_SUPPORTED_SEED_DATA_VER_MINOR &&
+#endif
+                     header.versionMajor <= MAX_FULLY_SUPPORTED_SEED_DATA_VER_MAJOR )
                 {
-                    if ( maxVersion >= version )
-                    {
-                        seedIDX = seedIDX | ( 1 << i );
-                        memcpy( &headerBuffer[i], &header, sizeof( Header ) );
+                    seedIDX = seedIDX | ( 1 << i );
+                    memcpy( &headerBuffer[i], &header, sizeof( Header ) );
 
-                        m_numSeeds++;
-                    }
+                    m_numSeeds++;
                 }
             }
         }
