@@ -24,48 +24,50 @@ namespace mod::rando
 
     struct Header
     {
-        uint16_t minVersion;           // minimal required REL version, u8 Major and u8 Minor
-        uint16_t maxVersion;           // maximum supported REL version, u8 Major and u8 Minor
-        uint16_t headerSize;           // Total size of the header in bytes
-        uint16_t dataSize;             // Total number of bytes of seed data
-        uint64_t seed;                 // Current seed
-        uint32_t totalSize;            // Total number of bytes in the GCI
-        uint32_t requiredDungeons;     // Bitfield containing which dungeons are required to beat the seed. Only 8 bits are
-                                       // used, while the rest are reserved for future updates
+        /* 0x00 */ uint16_t versionMajor;         // SeedData version major
+        /* 0x02 */ uint16_t versionMinor;         // SeedData version minor
+        /* 0x04 */ uint16_t headerSize;           // Total size of the header in bytes
+        /* 0x06 */ uint16_t dataSize;             // Total number of bytes of seed data
+        /* 0x08 */ uint64_t seed;                 // Current seed
+        /* 0x10 */ uint32_t totalSize;            // Total number of bytes in the GCI
+        /* 0x14 */ uint32_t requiredDungeons;     // Bitfield containing which dungeons are required to beat the seed. Only 8
+                                                  // bits are used, while the rest are reserved for future updates
 
-        entryInfo volatilePatchInfo;     // BitArray where each bit represents a patch/modification to be applied for this
-                                         // playthrough; these patchs/modifications must be applied every time a file is loaded
+        // BitArray where each bit represents a patch/modification to be applied for this
+        // playthrough; these patchs/modifications must be applied every time a file is loaded
+        /* 0x18 */ entryInfo volatilePatchInfo;
 
-        entryInfo oneTimePatchInfo;     // BitArray where each bit represents a patch/modification to be applied for this
-                                        // playthrough; these patchs/modifications must be applied only when a seed is loaded
+        // BitArray where each bit represents a patch/modification to be applied for this
+        // playthrough; these patchs/modifications must be applied only when a seed is loaded
+        /* 0x1C */ entryInfo oneTimePatchInfo;
 
-        entryInfo eventFlagsInfo;      // eventFlags that need to be set for this seed
-        entryInfo regionFlagsInfo;     // regionFlags that need to be set, alternating
+        /* 0x20 */ entryInfo eventFlagsInfo;      // eventFlags that need to be set for this seed
+        /* 0x24 */ entryInfo regionFlagsInfo;     // regionFlags that need to be set, alternating
 
-        entryInfo dzxCheckInfo;
-        entryInfo relCheckInfo;
-        entryInfo poeCheckInfo;
-        entryInfo arcCheckInfo;
-        entryInfo objectArcCheckInfo;
-        entryInfo bossCheckInfo;
-        entryInfo hiddenSkillCheckInfo;
-        entryInfo bugRewardCheckInfo;
-        entryInfo skyCharacterCheckInfo;
-        entryInfo shopItemCheckInfo;
-        entryInfo startingItemInfo;
-        uint16_t bgmHeaderOffset;
-        uint8_t heartColor;
-        uint8_t aButtonColor;
-        uint8_t bButtonColor;
-        uint8_t xButtonColor;
-        uint8_t yButtonColor;
-        uint8_t zButtonColor;
-        uint8_t lanternColor;
-        uint8_t transformAnywhere;
-        uint8_t quickTransform;
-        uint8_t castleRequirements;
-        uint8_t palaceRequirements;
-        uint8_t padding;
+        /* 0x28 */ entryInfo dzxCheckInfo;
+        /* 0x2C */ entryInfo relCheckInfo;
+        /* 0x30 */ entryInfo poeCheckInfo;
+        /* 0x34 */ entryInfo arcCheckInfo;
+        /* 0x38 */ entryInfo objectArcCheckInfo;
+        /* 0x3C */ entryInfo bossCheckInfo;
+        /* 0x40 */ entryInfo hiddenSkillCheckInfo;
+        /* 0x44 */ entryInfo bugRewardCheckInfo;
+        /* 0x48 */ entryInfo skyCharacterCheckInfo;
+        /* 0x4C */ entryInfo shopItemCheckInfo;
+        /* 0x50 */ entryInfo startingItemInfo;
+        /* 0x54 */ uint16_t bgmHeaderOffset;
+        /* 0x56 */ uint8_t heartColor;
+        /* 0x57 */ uint8_t aButtonColor;
+        /* 0x58 */ uint8_t bButtonColor;
+        /* 0x59 */ uint8_t xButtonColor;
+        /* 0x5A */ uint8_t yButtonColor;
+        /* 0x5B */ uint8_t zButtonColor;
+        /* 0x5C */ uint8_t lanternColor;
+        /* 0x5D */ uint8_t transformAnywhere;
+        /* 0x5E */ uint8_t quickTransform;
+        /* 0x5F */ uint8_t castleRequirements;
+        /* 0x60 */ uint8_t palaceRequirements;
+        /* 0x61 */ uint8_t padding;
     } __attribute__( ( __packed__ ) );
 
     // Seed with index
