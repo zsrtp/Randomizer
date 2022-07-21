@@ -345,7 +345,6 @@ namespace mod::rando
 
                     uint32_t archiveData =
                         *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( resourcePtr->mArchive ) + 0x28 );
-                    mod::console << archiveData << "\n";
                     *reinterpret_cast<uint8_t*>( ( archiveData + m_Seed->m_ObjectArcReplacements[i].offset ) ) =
                         replacementValue;
                 }

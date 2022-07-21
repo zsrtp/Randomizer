@@ -329,6 +329,7 @@ namespace mod::game_patch
     KEEP_FUNC void _02_shadowCrystalItemFunc()
     {
         events::setSaveFileEventFlag( libtp::data::flags::TRANSFORMING_UNLOCKED );     // Can transform at will
+        events::setSaveFileEventFlag( libtp::data::flags::MIDNA_CHARGE_UNLOCKED );     // Midna Charge Unlocked
     }
 
     KEEP_FUNC void _02_poweredDominionRodItemFunc()

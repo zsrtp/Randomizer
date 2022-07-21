@@ -1014,7 +1014,7 @@ namespace mod::customMessages
             "Palace of Twilight",
             "Hyrule Castle",
             "Faron Woods",
-            "Bublin Camp",
+            "Bulblin Camp",
         },
 
         // seedIsLoaded
