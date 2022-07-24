@@ -8,6 +8,7 @@
 #include "patch.h"
 #include "rando/randomizer.h"
 #include "tp/J2DTextBox.h"
+#include "cxx.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_a_player.h"
 #include "tp/d_camera.h"
@@ -1007,18 +1008,22 @@ namespace mod::events
         }
 
         using namespace libtp::tp::J2DTextBox;
-        J2DTextBox tempTextBox;
 
-        tempTextBox.setSolidColor( color );
-        tempTextBox.setLineSpacing( textSize );
-        tempTextBox.setFontSize( textSize, textSize );
-        J2DTextBox_setFont( &tempTextBox, font );
-        J2DTextBox_setString1( &tempTextBox, text );
+        // Allocate the memory to the back of the heap to avoid possible fragmentation
+        // Align to uint64_t, as it is the largest variable type used in the J2DPane class
+        J2DTextBox* tempTextBox = new ( -sizeof( uint64_t ) ) J2DTextBox;
 
-        J2DTextBox_draw1( &tempTextBox, intToFloat( x ), intToFloat( y ) );
+        tempTextBox->setSolidColor( color );
+        tempTextBox->setLineSpacing( textSize );
+        tempTextBox->setFontSize( textSize, textSize );
+        J2DTextBox_setFont( tempTextBox, font );
+        J2DTextBox_setString1( tempTextBox, text );
+
+        J2DTextBox_draw1( tempTextBox, intToFloat( x ), intToFloat( y ) );
 
         // Must manually call the destructor, as it takes auto-generated parameters
-        J2DTextBox_dt( &tempTextBox, static_cast<int16_t>( false ) );
+        // The destructor clears the memory used by tempTextBox if true is passed in
+        J2DTextBox_dt( tempTextBox, static_cast<int16_t>( true ) );
     }
 
     void drawText( const char* text, int32_t x, int32_t y, uint32_t color, float textSize )
