@@ -981,7 +981,7 @@ namespace mod::events
                                                 false );
     }
 
-    void drawText( const char* text, int32_t x, int32_t y, uint32_t color, bool drawShadow, float textSize )
+    void drawText( const char* text, int32_t x, int32_t y, uint32_t color, bool drawBorder, float textSize )
     {
         // The font takes a bit to load, so it won't be loaded immediately at boot
         void* font = libtp::tp::m_Do_ext::mDoExt_getMesgFont();
@@ -990,21 +990,28 @@ namespace mod::events
             return;
         }
 
-        if ( drawShadow )
+        if ( drawBorder )
         {
             uint8_t alpha = color & 0xFF;
-            uint32_t shadowColor;
+            uint32_t borderColor;
 
             if ( color < 0x80000000 )
             {
-                shadowColor = 0xFFFFFF00 | alpha;     // White
+                borderColor = 0xFFFFFF00 | alpha;     // White
             }
             else
             {
-                shadowColor = 0x00000000 | alpha;     // Black
+                borderColor = 0x00000000 | alpha;     // Black
             }
 
-            drawText( text, x + 1, y + 1, shadowColor, textSize );
+            // Could try to shorten this more
+            for ( int32_t i = -1; i <= 1; i += 2 )
+            {
+                for ( int32_t j = -1; j <= 1; j++ )
+                {
+                    drawText( text, x + i, y + j, borderColor, textSize );
+                }
+            }
         }
 
         using namespace libtp::tp::J2DTextBox;
