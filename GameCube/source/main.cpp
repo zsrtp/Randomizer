@@ -250,7 +250,7 @@ namespace mod
                   intToFloat( zeldaHeapLowestFreeSize ) / 1024.f );
 
         // Draw the values
-        events::drawText( buf, 161, 430, 0xFFFFFFB0, true, 14.f );
+        events::drawText( buf, 161, 430, 0xFFFFFFFF, true, 14.f );
     }
 
     KEEP_FUNC rando::Seed* getCurrentSeed( rando::Randomizer* rando )
