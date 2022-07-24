@@ -132,6 +132,9 @@
 801B3300:setWalletMaxNum
 801b070c:dMenuCollect_screenSet
 
+// JKRHeap.o
+802D11D8:__dl_JKRHeap
+
 // JKRExpHeap.o
 802D15C4:do_alloc_JKRExpHeap
 802D1C48:do_free_JKRExpHeap
