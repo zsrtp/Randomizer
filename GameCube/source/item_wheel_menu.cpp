@@ -149,6 +149,7 @@ namespace mod::item_wheel_menu
                               ringPosX + helpTextPosXOffset,
                               ringPosY + helpTextPosYOffset,
                               mainTextColor,
+                              true,
                               textSize );
         }
 
