@@ -1004,7 +1004,7 @@ namespace mod::events
                 shadowColor = 0x00000000 | alpha;     // Black
             }
 
-            drawText( text, x + 1, y + 1, shadowColor, false, textSize );
+            drawText( text, x + 1, y + 1, shadowColor, textSize );
         }
 
         using namespace libtp::tp::J2DTextBox;
@@ -1016,8 +1016,8 @@ namespace mod::events
         tempTextBox->setSolidColor( color );
         tempTextBox->setLineSpacing( textSize );
         tempTextBox->setFontSize( textSize, textSize );
+        tempTextBox->setString( text );
         J2DTextBox_setFont( tempTextBox, font );
-        J2DTextBox_setString1( tempTextBox, text );
 
         J2DTextBox_draw1( tempTextBox, intToFloat( x ), intToFloat( y ) );
 
