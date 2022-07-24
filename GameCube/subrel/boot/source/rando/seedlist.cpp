@@ -66,18 +66,14 @@ namespace mod::rando
                  libtp::tools::ReadGCIMounted( memCardChan, fileName, sizeof( header ), 0, &header, true ) )
 #endif
             {
-                if ( header.versionMajor >= MIN_SUPPORTED_SEED_DATA_VER_MAJOR &&
-#if MIN_SUPPORTED_SEED_DATA_VER_MINOR > 0
-                     // We get: "error: comparison is always true due to limited
-                     // range of data type [-Werror=type-limits]" when the macro
-                     // value is 0.
-                     header.versionMinor >= MIN_SUPPORTED_SEED_DATA_VER_MINOR &&
-#endif
-                     header.versionMajor <= MAX_FULLY_SUPPORTED_SEED_DATA_VER_MAJOR )
+                const uint16_t versionMajor = header.versionMajor;
+
+                if ( CHECK_MIN_SUPPORTED_SEED_DATA_VER_MAJOR( versionMajor ) &&
+                     CHECK_MIN_SUPPORTED_SEED_DATA_VER_MINOR( header.versionMinor ) &&
+                     CHECK_MAX_FULLY_SUPPORTED_SEED_DATA_VER_MAJOR( versionMajor ) )
                 {
                     seedIDX = seedIDX | ( 1 << i );
                     memcpy( &headerBuffer[i], &header, sizeof( Header ) );
-
                     m_numSeeds++;
                 }
             }
@@ -87,7 +83,6 @@ namespace mod::rando
         {
             // Align to uint64_t, as it is the largest variable type used in the Header struct
             m_seedInfo = new ( sizeof( uint64_t ) ) SeedInfo[m_numSeeds];
-
             uint8_t j = 0;     // seedInfo index
 
             // Loop through all possible seeds and load them into our seedInfo
@@ -103,7 +98,6 @@ namespace mod::rando
         }
 
         mod::console << static_cast<int32_t>( m_numSeeds ) << " seed(s) available.\n";
-
         delete[] headerBuffer;
     }
 
