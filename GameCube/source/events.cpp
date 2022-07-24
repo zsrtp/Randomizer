@@ -1004,12 +1004,13 @@ namespace mod::events
                 borderColor = 0x00000000 | alpha;     // Black
             }
 
-            // Could try to shorten this more
-            for ( int32_t i = -1; i <= 1; i += 2 )
+            for ( int32_t i = -1, j = -1; i <= 1; j++ )
             {
-                for ( int32_t j = -1; j <= 1; j++ )
+                drawText( text, x + i, y + j, borderColor, textSize );
+                if ( j == 1 )
                 {
-                    drawText( text, x + i, y + j, borderColor, textSize );
+                    i += 2;
+                    j = -2;
                 }
             }
         }
