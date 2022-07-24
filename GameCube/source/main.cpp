@@ -243,23 +243,14 @@ namespace mod
 
         // Get the values to draw
         char buf[96];
-        const int32_t len = snprintf( buf,
-                                      sizeof( buf ),
-                                      "Archive: %.2fkb, Zelda: %.2fkb",
-                                      intToFloat( archiveHeapLowestFreeSize ) / 1024.f,
-                                      intToFloat( zeldaHeapLowestFreeSize ) / 1024.f );
-
-        // Get a rough estimate for the window width
-        const int32_t width = len * 8;
-
-        constexpr int32_t textPosX = 161;
-        constexpr int32_t textPosY = 430;
-
-        // Draw the window
-        events::drawWindow( textPosX - 11, textPosY - 15, width, 20, 0x000000B0 );
+        snprintf( buf,
+                  sizeof( buf ),
+                  "Archive: %.2fkb, Zelda: %.2fkb",
+                  intToFloat( archiveHeapLowestFreeSize ) / 1024.f,
+                  intToFloat( zeldaHeapLowestFreeSize ) / 1024.f );
 
         // Draw the values
-        events::drawText( buf, textPosX, textPosY, 0xFFFFFFB0, 14.f );
+        events::drawText( buf, 161, 430, 0xFFFFFFB0, true, 14.f );
     }
 
     KEEP_FUNC rando::Seed* getCurrentSeed( rando::Randomizer* rando )

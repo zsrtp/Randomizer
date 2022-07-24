@@ -980,13 +980,30 @@ namespace mod::events
                                                 false );
     }
 
-    void drawText( const char* text, int32_t x, int32_t y, uint32_t color, float textSize )
+    void drawText( const char* text, int32_t x, int32_t y, uint32_t color, bool drawShadow, float textSize )
     {
         // The font takes a bit to load, so it won't be loaded immediately at boot
         void* font = libtp::tp::m_Do_ext::mDoExt_getMesgFont();
         if ( !font )
         {
             return;
+        }
+
+        if ( drawShadow )
+        {
+            uint8_t alpha = color & 0xFF;
+            uint32_t shadowColor;
+
+            if ( color < 0x80000000 )
+            {
+                shadowColor = 0xFFFFFF00 | alpha;     // White
+            }
+            else
+            {
+                shadowColor = 0x00000000 | alpha;     // Black
+            }
+
+            drawText( text, x + 1, y + 1, shadowColor, false, textSize );
         }
 
         using namespace libtp::tp::J2DTextBox;
@@ -1002,6 +1019,11 @@ namespace mod::events
 
         // Must manually call the destructor, as it takes auto-generated parameters
         J2DTextBox_dt( &tempTextBox, static_cast<int16_t>( false ) );
+    }
+
+    void drawText( const char* text, int32_t x, int32_t y, uint32_t color, float textSize )
+    {
+        drawText( text, x, y, color, false, textSize );
     }
 
     int32_t getCurrentAreaNodeId()
