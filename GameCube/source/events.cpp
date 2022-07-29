@@ -74,7 +74,7 @@ namespace mod::events
                                              reinterpret_cast<void*>( assembly::asmAdjustPoeItem ) );
 
                 // Disable Poe increment (handled through item_get_func; see game_patches)
-                *reinterpret_cast<uint32_t*>( relPtrRaw + e_hp_ExecDead_incOffset ) = 0x60000000;
+                performStaticASMReplacement( relPtrRaw + e_hp_ExecDead_incOffset, 0x60000000 );
 
                 break;
             // d_a_e_po.rel
@@ -84,7 +84,7 @@ namespace mod::events
                                              reinterpret_cast<void*>( assembly::asmAdjustAGPoeItem ) );
 
                 // Disable Poe increment (handled through item_get_func; see game_patches)
-                *reinterpret_cast<uint32_t*>( relPtrRaw + e_po_ExecDead_incOffset ) = 0x60000000;
+                performStaticASMReplacement( relPtrRaw + e_po_ExecDead_incOffset, 0x60000000 );
                 break;
             // d_a_obj_kshutter.rel
             // Lakebed Temple Boss Door
@@ -95,7 +95,7 @@ namespace mod::events
                          2,
                          libtp::data::stage::allStages[libtp::data::stage::stageIDs::Lakebed_Temple] ) )
                 {
-                    *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1198 ) = 0x60000000;     // Previous: 0x3803ffff
+                    performStaticASMReplacement( relPtrRaw + 0x1198, 0x60000000 );     // Previous: 0x3803ffff
                 }
                 break;
             // d_a_npc_kn.rel
@@ -127,7 +127,7 @@ namespace mod::events
             case 0x85:     // d_a_Tag_Statue - Owl Statues
             {
                 // replace sky character
-                *reinterpret_cast<uint32_t*>( relPtrRaw + 0xB7C ) = 0x48000020;     // b 0x20
+                performStaticASMReplacement( relPtrRaw + 0xB7C, 0x48000020 );     // b 0x20
                 libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0xB9C ),
                                              reinterpret_cast<void*>( assembly::asmAdjustSkyCharacter ) );
 
@@ -188,7 +188,7 @@ namespace mod::events
             {
                 libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x1884 ),
                                              reinterpret_cast<void*>( libtp::tp::d_item::execItemGet ) );
-                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1888 ) = 0x480000A8;     // b 0xA8
+                performStaticASMReplacement( relPtrRaw + 0x1888, 0x480000A8 );     // b 0xA8
                 // Replace dungeon reward that is given after beating a boss and show the appropriate text.
                 break;
             }
@@ -197,7 +197,7 @@ namespace mod::events
             case 0x121:
             {
                 // Prevent Bo from talking after the chest has been opened
-                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1A44 ) = 0x48000028;     // b 0x28
+                performStaticASMReplacement( relPtrRaw + 0x1A44, 0x48000028 );     // b 0x28
                 break;
             }
             // d_a_npc_ykm.rel
@@ -205,7 +205,7 @@ namespace mod::events
             case 0x17F:
             {
                 // Prevent Yeto from leaving the dungeon if the player has the boss key
-                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1524 ) = 0x38600000;     // li r3,0
+                performStaticASMReplacement( relPtrRaw + 0x1524, 0x38600000 );     // li r3,0
                 break;
             }
             // d_a_npc_ykw.rel
@@ -213,7 +213,7 @@ namespace mod::events
             case 0x180:
             {
                 // Prevent Yeta from leaving the dungeon if the player has the boss key
-                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1038 ) = 0x38600000;     // li r3,0
+                performStaticASMReplacement( relPtrRaw + 0x1038, 0x38600000 );
                 break;
             }
             // d_a_e_mk.rel
@@ -231,24 +231,25 @@ namespace mod::events
             case 0x280:
             {
                 // The cutscene gives link the MS during the cutscene by default, so we just nop out the link to the function.
-                *reinterpret_cast<uint32_t*>( relPtrRaw + 0xB50 ) = 0x60000000;
+                performStaticASMReplacement( relPtrRaw + 0xB50, 0x60000000 );
                 break;
             }
             // d_a_npc_rafrel.rel
             // Auru
             case 0x15F:
             {
-                // Allow Auru to spawn, even if you have raised the Mirror.
-                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x6C4 ) =
-                    0x38600131;     // set auru to check for whether he gave the player the item to spawn.
+                performStaticASMReplacement(
+                    relPtrRaw + 0x6C4,
+                    0x38600131 );     // set auru to check for whether he gave the player the item to spawn.
                 break;
             }
             // d_a_obj_smallkey.rel
             // Freestanding Small Keys
             case 0x26D:
             {
-                *reinterpret_cast<uint32_t*>( relPtrRaw + 0xC88 ) =
-                    0x48000058;     // patch instruction to prevent game from removing bulblin camp key.
+                performStaticASMReplacement(
+                    relPtrRaw + 0xC88,
+                    0x48000058 );     // patch instruction to prevent game from removing bulblin camp key.
                 break;
             }
             // d_a_b_bq.rel
@@ -350,11 +351,11 @@ namespace mod::events
             case 0x1B7:
             {
                 // set wait timer to 1
-                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x0FCC ) = 0x38000001;     // li 0x1
-                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x1038 ) = 0x38000001;     // li 0x1
+                performStaticASMReplacement( relPtrRaw + 0x0FCC, 0x38000001 );     // li r4, 1
+                performStaticASMReplacement( relPtrRaw + 0x1038, 0x38000001 );     // li r4, 1
 
                 // set y_pos of drop to be at ground level
-                *reinterpret_cast<uint32_t*>( relPtrRaw + 0x2474 ) = 0x00000000;     // 0.0f
+                performStaticASMReplacement( relPtrRaw + 0x2474, 0x00000000 );
                 break;
             }
 
@@ -1093,6 +1094,14 @@ namespace mod::events
             }
         }
         return 0;
+    }
+
+    KEEP_FUNC void performStaticASMReplacement( uint32_t memoryOffset, uint32_t value )
+    {
+        *reinterpret_cast<uint32_t*>( memoryOffset ) = value;
+
+        // Clear the cache for the replaced instruction
+        libtp::memory::clear_DC_IC_Cache( reinterpret_cast<uint32_t*>( memoryOffset ), sizeof( uint32_t ) );
     }
 
 }     // namespace mod::events

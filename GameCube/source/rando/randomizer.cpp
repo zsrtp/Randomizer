@@ -19,6 +19,7 @@
 #include "tp/d_kankyo.h"
 #include "tp/d_meter2_info.h"
 #include "tp/dzx.h"
+#include "memory.h"
 
 namespace mod::rando
 {
@@ -75,8 +76,8 @@ namespace mod::rando
             {
                 if ( rel->id == relReplacements[i].moduleID )
                 {
-                    *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( rel ) + relReplacements[i].offset ) =
-                        relReplacements[i].override;
+                    uint32_t offset = reinterpret_cast<uint32_t>( rel ) + relReplacements[i].offset;
+                    events::performStaticASMReplacement( offset, relReplacements[i].override );
                 }
             }
         }
