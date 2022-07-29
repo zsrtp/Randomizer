@@ -92,9 +92,6 @@ namespace mod
     extern void ( *return_fapGm_Execute )( void );
 
     // DMC (REL) Hook
-    bool handle_do_link( libtp::tp::dynamic_link::DynamicModuleControl* dmc );
-    extern bool ( *return_do_Link )( libtp::tp::dynamic_link::DynamicModuleControl* dmc );
-
     bool handle_do_unlink( libtp::tp::dynamic_link::DynamicModuleControl* dmc );
     extern bool ( *return_do_unlink )( libtp::tp::dynamic_link::DynamicModuleControl* dmc );
 

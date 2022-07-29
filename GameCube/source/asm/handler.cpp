@@ -3,6 +3,7 @@
  */
 
 #include "asm.h"
+#include "tp/dynamic_link.h"
 #include "events.h"
 #include "main.h"
 #include "tp/d_a_alink.h"
@@ -13,6 +14,14 @@
 
 namespace mod::assembly
 {
+    void handleDoLinkHook( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
+    {
+        if ( dmc->moduleInfo )
+        {
+            events::onRELLink( mod::randomizer, dmc );
+        }
+    }
+
     int32_t handleAdjustPoeItem( void* e_hp_class )
     {
         uint8_t flag = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( e_hp_class ) + 0x77B );

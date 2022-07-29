@@ -11,6 +11,7 @@
 #define RANDO_ASM_H
 
 #include <cstdint>
+#include "tp/dynamic_link.h"
 #include "tp/f_op_actor.h"
 
 // Original: li 0xE0
@@ -34,6 +35,9 @@ namespace mod::assembly
 {
     extern "C"
     {
+        void asmDoLinkHook( void );
+        void handleDoLinkHook( libtp::tp::dynamic_link::DynamicModuleControl* dmc );
+
         // d_e_hp.rel
         void asmAdjustPoeItem( void );
         int32_t handleAdjustPoeItem( void* );

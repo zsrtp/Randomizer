@@ -65,8 +65,10 @@ namespace mod::game_patch
         *reinterpret_cast<uint32_t*>( procCoGetItemAddress + 0x56C ) = ASM_COMPARE_LOGICAL_WORD_IMMEDIATE( 0, 19 );
         *reinterpret_cast<uint32_t*>( procCoGetItemAddress + 0x580 ) = ASM_COMPARE_LOGICAL_WORD_IMMEDIATE( 0, 59 );
 
+        // Modify getRupeeMax calls in screenSet to display the proper wallet in the pause menu
         libtp::patch::writeBranchBL( reinterpret_cast<void*>( screenSetAddress + 0xDCC ),
                                      reinterpret_cast<void*>( events::getPauseRupeeMax ) );
+
         libtp::patch::writeBranchBL( reinterpret_cast<void*>( screenSetAddress + 0xDF0 ),
                                      reinterpret_cast<void*>( events::getPauseRupeeMax ) );
     }

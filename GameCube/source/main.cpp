@@ -39,6 +39,8 @@
 #include "data/flags.h"
 #include "tp/JKRExpHeap.h"
 #include "tp/m_do_ext.h"
+#include "patch.h"
+#include "asm.h"
 
 namespace mod
 {
@@ -65,7 +67,6 @@ namespace mod
     // Function hook return trampolines
     KEEP_VAR void ( *return_fapGm_Execute )( void ) = nullptr;
     // DMC (REL) Hook
-    KEEP_VAR bool ( *return_do_Link )( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) = nullptr;
     KEEP_VAR bool ( *return_do_unlink )( libtp::tp::dynamic_link::DynamicModuleControl* dmc ) = nullptr;
 
     // DZX trampolines
@@ -199,6 +200,14 @@ namespace mod
 
     void main()
     {
+        // do_link needs to be hooked immediately, as otherwise we may not be able to modify f_pc_profile_lst.rel, which gets
+        // linked via a callback function that gets called at boot, and this may occur before the boot REL's prolog function
+        // gets called
+        uint32_t do_link_address = reinterpret_cast<uint32_t>( libtp::tp::dynamic_link::do_link );
+
+        libtp::patch::writeBranchBL( reinterpret_cast<void*>( do_link_address + 0x250 ),
+                                     reinterpret_cast<void*>( assembly::asmDoLinkHook ) );
+
         // Call the boot REL
 #ifdef DVD
         // The seedlist will be generated in the boot REL
@@ -543,24 +552,9 @@ namespace mod
         return return_fapGm_Execute();
     }
 
-    KEEP_FUNC bool handle_do_link( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
-    {
-        // Call the original function immediately, as the REL file needs to be linked
-        // before applying patches
-        const bool result = return_do_Link( dmc );
-
-        if ( result && dmc->moduleInfo )
-        {
-            events::onRELLink( randomizer, dmc );
-        }
-
-        return result;
-    }
-
     KEEP_FUNC bool handle_do_unlink( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
     {
         events::onRELUnlink( randomizer, dmc );
-
         return return_do_unlink( dmc );
     }
 

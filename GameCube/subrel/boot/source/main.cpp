@@ -20,6 +20,7 @@
 #include "user_patch/02_enemybgm.h"
 #include "Z2AudioLib/Z2SeqMgr.h"
 #include "Z2AudioLib/Z2SoundMgr.h"
+#include "tp/dynamic_link.h"
 
 #include <cstdint>
 
@@ -69,7 +70,6 @@ namespace mod
         return_fapGm_Execute = patch::hookFunction( libtp::tp::f_ap_game::fapGm_Execute, mod::handle_fapGm_Execute );
 
         // DMC
-        return_do_Link = patch::hookFunction( libtp::tp::dynamic_link::do_link, mod::handle_do_link );
         return_do_unlink = patch::hookFunction( libtp::tp::dynamic_link::do_unlink, mod::handle_do_unlink );
 
         // DZX
