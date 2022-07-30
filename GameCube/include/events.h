@@ -132,6 +132,8 @@ namespace mod::events
 
     uint16_t getPauseRupeeMax( libtp::tp::d_save::dSv_player_status_a_c* plyrStatus );
 
+    void performStaticASMReplacement( uint32_t memoryOffset, uint32_t value );
+
     libtp::tp::d_resource::dRes_info_c* getObjectResInfo( const char* arcName );
     bool haveItem( uint8_t item );
     bool checkMembitSaveSwitchFlag( int32_t flag );
