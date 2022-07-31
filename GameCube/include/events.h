@@ -23,6 +23,13 @@ namespace mod::events
 {
     typedef bool ( *CMEB )( void* );
     extern CMEB checkNpcTransform;
+
+    extern libtp::tp::dzx::ACTR GanonBarrierActor;
+    extern libtp::tp::dzx::ACTR EponaActor;
+    extern libtp::tp::dzx::ACTR AuruActr;
+    extern libtp::tp::dzx::ACTR ItemActr;
+    extern libtp::tp::dzx::ACTR EponaActr;
+    extern libtp::tp::dzx::SCOB HorseJumpScob;
     /**
      * @brief Runs when loading just started
      *

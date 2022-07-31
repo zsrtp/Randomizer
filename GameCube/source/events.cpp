@@ -32,6 +32,17 @@ namespace mod::events
     void ( *return_daObjLifeContainer_c__Create )( void* _this ) = nullptr;
     CMEB checkNpcTransform = nullptr;
 
+    libtp::tp::dzx::ACTR GanonBarrierActor =
+        { "Obj_gb", 0x800F0601, 10778.207f, 3096.82666f, -62651.0078f, static_cast<int16_t>( -164.7121 ), 0x4000, 0, 0xFFFF };
+
+    libtp::tp::dzx::ACTR AuruActr =
+        { "Rafrel", 0x00001D01, -116486.945f, -13860.f, 58533.0078f, 0, static_cast<int16_t>( 0xCCCD ), 0, 0xFFFF };
+    libtp::tp::dzx::ACTR ItemActr =
+        { "item", 0xF3FFFF04, -108290.086f, -18654.748f, 45935.2969f, 0, static_cast<int16_t>( 0x1 ), 0x3F, 0xFFFF };
+    libtp::tp::dzx::ACTR EponaActr = { "Horse", 0x00000F0D, 0.f, 0.f, 0.f, 0, -180, 0, 0xFFFF };
+    libtp::tp::dzx::SCOB HorseJumpScob =
+        { "Hjump", 0x044FFF02, 5600.f, -5680.f, 52055.f, 0, static_cast<int16_t>( 0x4000 ), 0, 0xFFFF, 0x20, 0x2D, 0x2D, 0xFF };
+
     void onLoad( rando::Randomizer* randomizer )
     {
         randomizer->onStageLoad();
@@ -709,7 +720,6 @@ namespace mod::events
         using namespace libtp;
         if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) )
         {
-            libtp::tp::dzx::ACTR EponaActr = { "Horse", 0x00000F0D, 0.f, 0.f, 0.f, 0, -180, 0, 0xFFFF };
             tools::SpawnActor( 0, EponaActr );
         }
     }
@@ -723,16 +733,23 @@ namespace mod::events
             {
                 // Manually spawn Auru if the Lake is in the Repaired Cannon state as his actor is not in the DZX for that
                 // layer.
-                libtp::tp::dzx::ACTR AuruActr =
-                    { "Rafrel", 0x00001D01, -116486.945f, -13860.f, 58533.0078f, 0, static_cast<int16_t>( 0xCCCD ), 0, 0xFFFF };
                 tools::SpawnActor( 0, AuruActr );
             }
 
             // Spawn a red rupee behind Fyer's house that allows the player to use his cannon to leave the lake which prevents a
             // softlock.
-            libtp::tp::dzx::ACTR RupeeActr =
-                { "item", 0xF3FFFF04, -108290.086f, -18654.748f, 45935.2969f, 0, static_cast<int16_t>( 0x1 ), 0x3F, 0xFFFF };
-            tools::SpawnActor( 0, RupeeActr );
+            tools::SpawnActor( 0, ItemActr );
+        }
+        else if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Hyrule_Field] ) &&
+                  ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mLayer == 0xE ) )
+        {
+            libtp::tp::dzx::ACTR localGanonBarrierActor;
+            memcpy( &localGanonBarrierActor, &GanonBarrierActor, sizeof( libtp::tp::dzx::ACTR ) );
+            tools::SpawnActor( 7, localGanonBarrierActor );
+            localGanonBarrierActor.pos[2] -= 270.f;
+            tools::SpawnActor( 7, localGanonBarrierActor );
+            localGanonBarrierActor.pos[2] -= 270.f;
+            tools::SpawnActor( 7, localGanonBarrierActor );
         }
     }
 
@@ -742,20 +759,7 @@ namespace mod::events
         if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Hyrule_Field] ) &&
              libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::MIDNAS_DESPERATE_HOUR_COMPLETED ) )
         {
-            libtp::tp::dzx::SCOB HJumpActr = { "Hjump",
-                                               0x044FFF02,
-                                               5600.f,
-                                               -5680.f,
-                                               52055.f,
-                                               0,
-                                               static_cast<int16_t>( 0x4000 ),
-                                               0,
-                                               0xFFFF,
-                                               0x20,
-                                               0x2D,
-                                               0x2D,
-                                               0xFF };
-            tools::SpawnSCOB( 3, HJumpActr );
+            tools::SpawnSCOB( 3, HorseJumpScob );
         }
     }
 
