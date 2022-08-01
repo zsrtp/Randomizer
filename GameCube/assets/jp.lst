@@ -127,6 +127,7 @@
 80388260:wallMoveVars
 803887fc:lanternVars
 80388874:ironBootsVars
+803887e0:huLightVars
 
 // d_menu_collect.o
 801B3300:setWalletMaxNum

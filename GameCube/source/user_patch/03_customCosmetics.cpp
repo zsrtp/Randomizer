@@ -292,6 +292,7 @@ namespace mod::user_patch
         // Set lantern variables
         daAlinkHIO_kandelaar_c0* tempLanternVars = &lanternVars;
         const uint8_t* lanternColor = &lanternColors[randomizer->m_SeedInfo->header.lanternColor][0];
+        daAlinkHIO_huLight_c0* tempHuLightVars = &huLightVars;
 
         tempLanternVars->innerSphereR = lanternColor[0];
         tempLanternVars->innerSphereG = lanternColor[1];
@@ -299,5 +300,8 @@ namespace mod::user_patch
         tempLanternVars->outerSphereR = lanternColor[3];
         tempLanternVars->outerSphereG = lanternColor[4];
         tempLanternVars->outerSphereB = lanternColor[5];
+        tempHuLightVars->lanternAmbienceR = lanternColor[0];
+        tempHuLightVars->lanternAmbienceG = lanternColor[1];
+        tempHuLightVars->lanternAmbienceB = lanternColor[2];
     }
 }     // namespace mod::user_patch

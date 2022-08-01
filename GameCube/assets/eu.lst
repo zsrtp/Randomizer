@@ -127,6 +127,7 @@
 8038f9e0:wallMoveVars
 8038ff7c:lanternVars
 8038fff4:ironBootsVars
+8038ff60:huLightVars
 
 //d_meter2_info.o
 80432148:g_meter2_info
