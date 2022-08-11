@@ -15,7 +15,6 @@
 #include "data/items.h"
 #include "data/stages.h"
 #include "game_patch/game_patch.h"
-#include "gc_wii/OSTime.h"
 #include "memory.h"
 #include "rando/data.h"
 #include "rando/randomizer.h"
@@ -61,7 +60,7 @@ namespace mod
     uint8_t foolishTrapCount = 0;
     KEEP_VAR bool walletsPatched = false;
     KEEP_VAR uint8_t seedRelAction = SEED_ACTION_NONE;
-    uint32_t nextVal = libtp::gc_wii::os_time::OSGetTick();
+    uint32_t randNext = 0;
     KEEP_VAR const char* m_DonationText = nullptr;
 
     // Function hook return trampolines
@@ -545,7 +544,8 @@ namespace mod
         }
 
         roomReloadingState = currentReloadingState;
-        rand( &nextVal );
+
+        rand( &randNext );
         // End of custom events
 
         // Call the original function

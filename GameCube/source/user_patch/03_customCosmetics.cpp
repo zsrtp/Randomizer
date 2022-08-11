@@ -252,7 +252,7 @@ namespace mod::user_patch
         if ( heartColorIsRainbow )
         {
             // tempBigHeartColor = bigHeartColor;
-            tempBigHeartColor = tempHeartColorRGBA[ulRand( &nextVal, heartListSize )];
+            tempBigHeartColor = tempHeartColorRGBA[ulRand( &randNext, heartListSize )];
         }
         else
         {

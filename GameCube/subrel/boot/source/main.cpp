@@ -21,6 +21,7 @@
 #include "Z2AudioLib/Z2SeqMgr.h"
 #include "Z2AudioLib/Z2SoundMgr.h"
 #include "tp/dynamic_link.h"
+#include "gc_wii/OSTime.h"
 
 #include <cstdint>
 
@@ -28,6 +29,9 @@ namespace mod
 {
     void main()
     {
+        // Initialize randNext
+        initRandNext();
+
         // Run game patches
         game_patch::_00_poe();
         game_patch::_02_modifyItemData();
@@ -54,7 +58,7 @@ namespace mod
         // Align to void*, as pointers use the largest variable type in the SeedList class
         seedList = new ( sizeof( void* ) ) rando::SeedList();
 
-        // Just hook functions for now
+        // Handle the main function hooks
         hookFunctions();
     }
 
@@ -166,5 +170,18 @@ namespace mod
 
         // Archive/Resource functions
         return_getResInfo = patch::hookFunction( libtp::tp::d_resource::getResInfo, mod::handle_getResInfo );
+    }
+
+    void initRandNext()
+    {
+        uint32_t next;
+
+        // OSGetTick may return 0, and using that would make randNext have a predictable value, so don't allow 0 to be used
+        do
+        {
+            next = libtp::gc_wii::os_time::OSGetTick();
+        } while ( next == 0 );
+
+        randNext = next;
     }
 }     // namespace mod

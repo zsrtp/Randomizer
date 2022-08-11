@@ -58,7 +58,7 @@ namespace mod
     extern libtp::tp::J2DPicture::J2DPicture* bgWindow;
     extern uint32_t lastButtonInput;
     extern bool roomReloadingState;
-    extern uint32_t nextVal;
+    extern uint32_t randNext;
     extern bool consoleState;
     extern uint8_t gameState;
     extern void* Z2ScenePtr;
@@ -68,6 +68,7 @@ namespace mod
     extern const char* m_DonationText;
 
     void hookFunctions();
+    void initRandNext();
     rando::Seed* getCurrentSeed( rando::Randomizer* rando );
     void setScreen( bool state );     // Sets visibility of console
     uint32_t rand( uint32_t* seed );

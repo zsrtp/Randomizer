@@ -83,7 +83,7 @@ namespace mod::game_patch
         // Set the field model of the Foolish Item ID to the model of a random important item.
         libtp::tp::d_item_data::FieldItemRes* fieldItemResPtr = &libtp::tp::d_item_data::field_item_res[0];
         constexpr uint32_t modelListSize = sizeof( foolishModelItemList ) / sizeof( foolishModelItemList[0] );
-        uint32_t randomIndex = ulRand( &nextVal, modelListSize );
+        uint32_t randomIndex = ulRand( &randNext, modelListSize );
         uint32_t fieldModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
         memcpy( &fieldItemResPtr[libtp::data::items::Foolish_Item],
                 &fieldItemResPtr[fieldModelItemID],
