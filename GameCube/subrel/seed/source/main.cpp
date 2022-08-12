@@ -10,13 +10,13 @@ namespace mod
         rando::Seed* seed;
         if ( seed = getCurrentSeed( rando ), seed )
         {
-            mod::console << "Applying one-time patches:\n";
+            getConsole() << "Applying one-time patches:\n";
             seed->applyOneTimePatches( true );
             seedRelAction = SEED_ACTION_NONE;
         }
         else
         {
-            mod::console << "FATAL: Seed failed to load\n";
+            getConsole() << "FATAL: Seed failed to load\n";
             seedRelAction = SEED_ACTION_FATAL;
         }
     }

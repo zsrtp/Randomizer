@@ -30,10 +30,10 @@ namespace mod::rando
 
         if ( checkIfSeedLoaded() )
         {
-            mod::console << "Setting Event Flags... \n";
+            getConsole() << "Setting Event Flags... \n";
             this->applyEventFlags();
 
-            mod::console << "Setting Region Flags... \n";
+            getConsole() << "Setting Region Flags... \n";
             this->applyRegionFlags();
 
             this->giveStartingItems();
@@ -41,8 +41,8 @@ namespace mod::rando
         }
         else
         {
-            mod::console << "FATAL: Couldn't read Seed #" << m_fileIndex << "\n";
-            mod::console << "ERROR: " << m_CARDResult << "\n";
+            getConsole() << "FATAL: Couldn't read Seed #" << m_fileIndex << "\n";
+            getConsole() << "ERROR: " << m_CARDResult << "\n";
             return false;
         }
     }

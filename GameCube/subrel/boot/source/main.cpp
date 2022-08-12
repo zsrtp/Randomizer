@@ -29,6 +29,10 @@ namespace mod
 {
     void main()
     {
+        // Set up the console
+        // Align to uint8_t, as that's the largest variable type in the Console class
+        mod::console = new ( sizeof( uint8_t ) ) libtp::display::Console( 9 );
+
         // Initialize randNext
         initRandNext();
 
@@ -46,7 +50,7 @@ namespace mod
         customMessages::createItemWheelMenuData();
 
         // Display some info
-        mod::console << "Welcome to TPR!\n"
+        getConsole() << "Welcome to TPR!\n"
                      << "(C) AECX, Lunar Soap, Zephiles\n\n"
                      << "Note:\n"
                      << "Please avoid [re]starting rando unnecessarily\n"

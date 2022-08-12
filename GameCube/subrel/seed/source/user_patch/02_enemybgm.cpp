@@ -16,6 +16,6 @@ namespace mod::user_patch
         (void) randomizer;
 
         disableEnemyBgm = set;
-        mod::console << "[2] EnemyBgmDisabled [" << ( set ? "x" : " " ) << "]\n";
+        getConsole() << "[2] EnemyBgmDisabled [" << ( set ? "x" : " " ) << "]\n";
     }
 }     // namespace mod::user_patch

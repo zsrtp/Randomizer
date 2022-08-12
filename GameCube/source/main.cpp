@@ -44,7 +44,7 @@
 namespace mod
 {
     // Bind extern global variables
-    KEEP_VAR libtp::display::Console console( 9 );
+    KEEP_VAR libtp::display::Console* console = nullptr;
     KEEP_VAR rando::Randomizer* randomizer = nullptr;
     KEEP_VAR rando::SeedList* seedList = nullptr;
 
@@ -303,8 +303,8 @@ namespace mod
                 }
 
                 // 8 is the line it typically appears
-                mod::console.setLine( 8 );
-                mod::console << "\r"
+                getConsole().setLine( 8 );
+                getConsole() << "\r"
                              << "Press X/Y to select a seed\n"
                              << "Press R + Z to close the console\n"
                              << "[" << seedList->m_selectedSeed + 1 << "/" << static_cast<int32_t>( seedList->m_numSeeds )
@@ -363,13 +363,13 @@ namespace mod
                     {
                         case 0:
                             // Err, no seeds
-                            mod::console << "No seeds available! Please check your memory\ncard and region!\n";
+                            getConsole() << "No seeds available! Please check your memory\ncard and region!\n";
                             setScreen( true );
                             break;
 
                         case 1:
                             // Only one seed present, auto-select it and disable console for convenience
-                            mod::console << "First and only seed automatically applied...\n";
+                            getConsole() << "First and only seed automatically applied...\n";
                             setScreen( false );
                             break;
 
@@ -455,7 +455,7 @@ namespace mod
                     // Check if loading a different seed
                     if ( randomizer->m_CurrentSeed != seedList->m_selectedSeed )
                     {
-                        mod::console << "Changing seed:\n";
+                        getConsole() << "Changing seed:\n";
                         seedRelAction = SEED_ACTION_CHANGE_SEED;
 
                         // The seed REL will set seedRelAction to SEED_ACTION_NONE if it ran successfully
@@ -484,7 +484,7 @@ namespace mod
                 if ( seed && ( seedRelAction == SEED_ACTION_NONE ) )
                 {
                     // Volatile patches need to be applied whenever a file is loaded
-                    mod::console << "Applying volatile patches:\n";
+                    getConsole() << "Applying volatile patches:\n";
                     seed->applyVolatilePatches( true );
                 }
             }

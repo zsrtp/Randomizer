@@ -48,7 +48,7 @@
 namespace mod
 {
     // General public objects
-    extern libtp::display::Console console;
+    extern libtp::display::Console* console;
     extern rando::Randomizer* randomizer;
     extern rando::SeedList* seedList;
 
@@ -76,6 +76,12 @@ namespace mod
     float intToFloat( int32_t value );
     void handleInput( uint32_t inputs );
     void handleFoolishItem();
+
+    // Inline getConsole, as it's just a shortcut to get a reference to the console variable
+    inline libtp::display::Console& getConsole()
+    {
+        return *mod::console;
+    }
 
     // Inline randoIsEnabled, as it's short enough to use less memory when inlined
     inline bool randoIsEnabled( rando::Randomizer* rando )

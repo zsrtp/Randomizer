@@ -37,7 +37,7 @@ namespace mod::rando
         // Store our filename index
         m_fileIndex = seedInfo->fileIndex;
 
-        mod::console << "Loading seed " << m_fileIndex << ": '" << m_Header->seed << "'...\n";
+        getConsole() << "Loading seed " << m_fileIndex << ": '" << m_Header->seed << "'...\n";
 
         // Load the whole GCI locally to reduce number of reads (memcard)
         char fileName[32];

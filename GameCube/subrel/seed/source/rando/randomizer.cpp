@@ -15,13 +15,13 @@ namespace mod::rando
 {
     Randomizer::Randomizer( SeedInfo* seedInfo, uint8_t selectedSeed )
     {
-        mod::console << "Rando loading...\n";
+        getConsole() << "Rando loading...\n";
         loadSeed( seedInfo, selectedSeed );
     }
 
     Randomizer::~Randomizer( void )
     {
-        mod::console << "Rando unloading...\n";
+        getConsole() << "Rando unloading...\n";
 
         // Clear Seed
         delete m_Seed;
@@ -31,11 +31,11 @@ namespace mod::rando
     {
         if ( seedInfo->fileIndex == 0xFF )
         {
-            mod::console << "<Randomizer> Error: No such seed (0xFF)\n";
+            getConsole() << "<Randomizer> Error: No such seed (0xFF)\n";
         }
         else
         {
-            mod::console << "Seed: " << seedInfo->header.seed << "\n";
+            getConsole() << "Seed: " << seedInfo->header.seed << "\n";
             // Load the seed
             m_SeedInfo = seedInfo;
             m_CurrentSeed = selectedSeed;
@@ -61,14 +61,14 @@ namespace mod::rando
 
     void Randomizer::changeSeed( SeedInfo* seedInfo, uint8_t newSeed )
     {
-        mod::console << "Seed unloading...\n";
+        getConsole() << "Seed unloading...\n";
         delete m_Seed;
         m_SeedInfo = nullptr;
         m_Seed = nullptr;
         m_SeedInit = false;
         m_CurrentSeed = 0xFF;
 
-        mod::console << "Seed Loading...\n";
+        getConsole() << "Seed Loading...\n";
         loadSeed( seedInfo, newSeed );
     }
 }     // namespace mod::rando
