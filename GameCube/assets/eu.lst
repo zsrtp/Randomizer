@@ -256,6 +256,7 @@
 8002f8b8:dComIfGs_Wolf_Change_Check
 8002f4dc:dComIfG_getStageRes
 8002dd50:dComIfGs_getMaxLifeGauge
+8002d3a4:dComIfGp_setNextStage
 
 // d_kankyo.o
 // data

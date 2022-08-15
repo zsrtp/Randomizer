@@ -87,6 +87,8 @@ namespace mod
         return_tgscInfoInit = patch::hookFunction( tgscInfoInit, mod::handle_tgscInfoInit );
         return_roomLoader = patch::hookFunction( libtp::tp::d_stage::roomLoader, mod::handle_roomLoader );
         return_stageLoader = patch::hookFunction( libtp::tp::d_stage::stageLoader, mod::handle_stageLoader );
+        return_dComIfGp_setNextStage =
+            patch::hookFunction( libtp::tp::d_com_inf_game::dComIfGp_setNextStage, mod::handle_dComIfGp_setNextStage );
 
         // Custom States
         return_getLayerNo_common_common = patch::hookFunction( getLayerNo_common_common, game_patch::_01_getLayerNo );

@@ -42,6 +42,7 @@ namespace mod::events
     libtp::tp::dzx::ACTR EponaActr = { "Horse", 0x00000F0D, 0.f, 0.f, 0.f, 0, -180, 0, 0xFFFF };
     libtp::tp::dzx::SCOB HorseJumpScob =
         { "Hjump", 0x044FFF02, 5600.f, -5680.f, 52055.f, 0, static_cast<int16_t>( 0x4000 ), 0, 0xFFFF, 0x20, 0x2D, 0x2D, 0xFF };
+    libtp::tp::dzx::ACTR ForestGWolfActr = { "GWolf", 0x05FF01FF, -35178.f, 430.21f, -21503.6f, 0, -0x4000, 0xFF, 0xFFFF };
 
     void onLoad( rando::Randomizer* randomizer )
     {
@@ -376,6 +377,23 @@ namespace mod::events
                 // Modify draw function to draw the Reekfish path so long as we have smelled the fish once.
                 libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x66C ),
                                              reinterpret_cast<void*>( assembly::asmShowReekfishPath ) );
+                break;
+            }
+            // d_a_npc_ks.rel
+            // Red Bow Monkey
+            case 0x14A:
+            {
+                // Prevent the game from triggering the 4 monkeys cutscene in the lobby.
+                performStaticASMReplacement( relPtrRaw + 0x9CE8, 0x2c030001 );     // cmpwi r3,1
+                break;
+            }
+            // d_a_npc_gwolf.rel
+            // Golden Wolf
+            case 0x13B:
+            {
+                // Change the flag that the faron wolf checks for when it spawns.
+                performStaticASMReplacement( relPtrRaw + 0x5B80,
+                                             0x01EB01EC );     // static values. 0x01EB for faron wolf and 0x01EC for ordon wolf
                 break;
             }
         }
@@ -721,6 +739,7 @@ namespace mod::events
         if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) )
         {
             tools::SpawnActor( 0, EponaActr );
+            tools::SpawnActor( 6, ForestGWolfActr );
         }
     }
 
@@ -741,7 +760,8 @@ namespace mod::events
             tools::SpawnActor( 0, ItemActr );
         }
         else if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Hyrule_Field] ) &&
-                  ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mLayer == 0xE ) )
+                  ( !tp::d_save::isEventBit( &tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags,
+                                             data::flags::CLEARED_ELDIN_TWILIGHT ) ) )
         {
             libtp::tp::dzx::ACTR localGanonBarrierActor;
             memcpy( &localGanonBarrierActor, &GanonBarrierActor, sizeof( libtp::tp::dzx::ACTR ) );
@@ -750,6 +770,12 @@ namespace mod::events
             tools::SpawnActor( 7, localGanonBarrierActor );
             localGanonBarrierActor.pos[2] -= 270.f;
             tools::SpawnActor( 7, localGanonBarrierActor );
+        }
+        else if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) &&
+                  ( !tp::d_save::isEventBit( &tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags,
+                                             data::flags::ORDON_DAY_2_OVER ) ) )
+        {
+            tools::SpawnActor( 6, ForestGWolfActr );
         }
     }
 

@@ -30,6 +30,7 @@ namespace mod::events
     extern libtp::tp::dzx::ACTR ItemActr;
     extern libtp::tp::dzx::ACTR EponaActr;
     extern libtp::tp::dzx::SCOB HorseJumpScob;
+    extern libtp::tp::dzx::ACTR ForestGWolfActr;
     /**
      * @brief Runs when loading just started
      *

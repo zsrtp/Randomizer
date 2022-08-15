@@ -90,6 +90,18 @@ namespace mod
 
     KEEP_VAR void ( *return_stageLoader )( void* data, void* stageDt ) = nullptr;
 
+    KEEP_VAR void ( *return_dComIfGp_setNextStage )( const char* stage,
+                                                     int16_t point,
+                                                     int8_t roomNo,
+                                                     int8_t layer,
+                                                     float lastSpeed,
+                                                     uint32_t lastMode,
+                                                     int32_t setPoint,
+                                                     int8_t wipe,
+                                                     int16_t lastAngle,
+                                                     int32_t param_9,
+                                                     int32_t wipSpeedT ) = nullptr;
+
     // GetLayerNo trampoline
     KEEP_VAR int32_t ( *return_getLayerNo_common_common )( const char* stageName,
                                                            int32_t roomId,
@@ -593,6 +605,41 @@ namespace mod
     {
         events::loadCustomRoomSCOBs();
         return return_tgscInfoInit( stageDt, i_data, entryNum, param_3 );
+    }
+
+    KEEP_FUNC void handle_dComIfGp_setNextStage( const char* stage,
+                                                 int16_t point,
+                                                 int8_t roomNo,
+                                                 int8_t layer,
+                                                 float lastSpeed,
+                                                 uint32_t lastMode,
+                                                 int32_t setPoint,
+                                                 int8_t wipe,
+                                                 int16_t lastAngle,
+                                                 int32_t param_9,
+                                                 int32_t wipSpeedT )
+    {
+        if ( libtp::tp::d_a_alink::checkStageName(
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Skill] ) &&
+             ( roomNo == 6 ) )
+        {
+            // If we are in the hidden skill area and the wolf is trying to force load room 6, we know that we are trying to go
+            // back to faron so we want to use the default state instead of forcing 0.
+            layer = 0xff;
+            events::setSaveFileEventFlag( 0x3C10 );         // a vanilla unused bit that is now checked for the faron wolf
+            events::onHiddenSkill( randomizer, 0x3D6 );     // give the item for the faron golden wolf
+        }
+        return return_dComIfGp_setNextStage( stage,
+                                             point,
+                                             roomNo,
+                                             layer,
+                                             lastSpeed,
+                                             lastMode,
+                                             setPoint,
+                                             wipe,
+                                             lastAngle,
+                                             param_9,
+                                             wipSpeedT );
     }
 
     KEEP_FUNC void handle_roomLoader( void* data, void* stageDt, int32_t roomNo )
@@ -1247,16 +1294,6 @@ namespace mod
                 {
                     return false;
                 }
-            }
-        }
-
-        if ( libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Forest_Temple] ) )
-        {
-            if ( flag == 0x3E && libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mEvtManager.mRoomNo == 0 )
-            {
-                return false;     // Don't check for the flag for the 4th monkey freed as it locks the player out of the west
-                                  // wing if true.
             }
         }
         return return_isSwitch_dSv_memBit( memoryBit, flag );
