@@ -623,11 +623,9 @@ namespace mod
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Skill] ) &&
              ( roomNo == 6 ) )
         {
-            // If we are in the hidden skill area and the wolf is trying to force load room 6, we know that we are trying to go
-            // back to faron so we want to use the default state instead of forcing 0.
+            // If we are in the hidden skill area and the wolf is trying to force load room 6, we know that we are trying to
+            // go back to faron so we want to use the default state instead of forcing 0.
             layer = 0xff;
-            events::setSaveFileEventFlag( 0x3C10 );         // a vanilla unused bit that is now checked for the faron wolf
-            events::onHiddenSkill( randomizer, 0x3D6 );     // give the item for the faron golden wolf
         }
         return return_dComIfGp_setNextStage( stage,
                                              point,
@@ -1211,71 +1209,105 @@ namespace mod
         using namespace libtp::tp::d_a_alink;
         using namespace libtp::data::stage;
         using namespace libtp::data::flags;
-        switch ( flag )
+        if ( eventPtr == &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags )
         {
-            case MIDNAS_DESPERATE_HOUR_COMPLETED:     // MDH Completed
+            switch ( flag )
             {
-                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag |= 0x8;
-                break;
-            }
-
-            case CLEARED_FARON_TWILIGHT:     // Cleared Faron Twilight
-            {
-                if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_COMPLETED ) )
+                case MIDNAS_DESPERATE_HOUR_COMPLETED:     // MDH Completed
                 {
-                    if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                             .dark_clear_level_flag == 0x6 )
-                    {
-                        libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.transform_level_flag =
-                            0x8;     // Set the flag for the last transformed twilight.
-                                     // Also puts Midna on the player's back
-                        libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                            .dark_clear_level_flag |= 0x8;
-                    }
-                }
-                break;
-            }
-
-            case CLEARED_ELDIN_TWILIGHT:     // Cleared Eldin Twilight
-            {
-                if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_COMPLETED ) )
-                {
-                    if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                             .dark_clear_level_flag == 0x5 )
-                    {
-                        libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                            .transform_level_flag |= 0x8;     // Set the flag for the last transformed twilight.
-                        // Also puts Midna on the player's back
-                        libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                            .dark_clear_level_flag |= 0x8;
-                    }
+                    libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag |=
+                        0x8;
+                    break;
                 }
 
-                break;
-            }
-
-            case CLEARED_LANAYRU_TWILIGHT:     // Cleared Lanayru Twilight
-            {
-                if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_COMPLETED ) )
+                case CLEARED_FARON_TWILIGHT:     // Cleared Faron Twilight
                 {
-                    if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                             .dark_clear_level_flag == 0x7 )     // All twilights completed
+                    if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_COMPLETED ) )
                     {
-                        libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                            .transform_level_flag |= 0x8;     // Set the flag for the last transformed twilight.
-                        // Also puts Midna on the player's back
-                        libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                            .dark_clear_level_flag |= 0x8;
+                        if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                 .dark_clear_level_flag == 0x6 )
+                        {
+                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                .transform_level_flag = 0x8;     // Set the flag for the last transformed twilight.
+                                                                 // Also puts Midna on the player's back
+                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                .dark_clear_level_flag |= 0x8;
+                        }
                     }
+                    break;
                 }
 
-                break;
-            }
+                case CLEARED_ELDIN_TWILIGHT:     // Cleared Eldin Twilight
+                {
+                    if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_COMPLETED ) )
+                    {
+                        if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                 .dark_clear_level_flag == 0x5 )
+                        {
+                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                .transform_level_flag |= 0x8;     // Set the flag for the last transformed twilight.
+                            // Also puts Midna on the player's back
+                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                .dark_clear_level_flag |= 0x8;
+                        }
+                    }
 
-            default:
+                    break;
+                }
+
+                case CLEARED_LANAYRU_TWILIGHT:     // Cleared Lanayru Twilight
+                {
+                    if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_COMPLETED ) )
+                    {
+                        if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                 .dark_clear_level_flag == 0x7 )     // All twilights completed
+                        {
+                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                .transform_level_flag |= 0x8;     // Set the flag for the last transformed twilight.
+                            // Also puts Midna on the player's back
+                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                .dark_clear_level_flag |= 0x8;
+                        }
+                    }
+
+                    break;
+                }
+
+                default:
+                {
+                    return return_onEventBit( eventPtr, flag );
+                    break;
+                }
+            }
+        }
+
+        else if ( eventPtr == &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.events )
+        {
+            switch ( flag )
             {
-                return return_onEventBit( eventPtr, flag );
-                break;
+                case 0x2:
+                {
+                    if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Hidden_Skill] ) )
+                    {
+                        if ( !strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info
+                                          .player_last_stage,
+                                      allStages[stageIDs::Faron_Woods] ) &&
+                             !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x3C10 ) )
+                        {
+                            // If we are in the hidden skill area and the wolf is trying to force load room 6, we know that we
+                            // are trying to go back to faron so we want to use the default state instead of forcing 0.
+                            events::setSaveFileEventFlag(
+                                0x3C10 );     // a vanilla unused bit that is now checked for the faron wolf
+                            events::onHiddenSkill( randomizer, 0x3D6 );     // give the item for the faron golden wolf
+                        }
+                    }
+                    break;
+                }
+                default:
+                {
+                    return return_onEventBit( eventPtr, flag );
+                    break;
+                }
             }
         }
         return return_onEventBit( eventPtr, flag );

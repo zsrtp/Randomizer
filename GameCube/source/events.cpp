@@ -122,8 +122,14 @@ namespace mod::events
             // Agitha
             case 0x141:
             {
-                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x21B8 ),
-                                             reinterpret_cast<void*>( assembly::asmAdjustBugReward ) );
+                if ( getCurrentSeed( randomizer ) )
+                {
+                    if ( randomizer->m_Seed->m_numBugRewardChecks > 0 )
+                    {
+                        libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x21B8 ),
+                                                     reinterpret_cast<void*>( assembly::asmAdjustBugReward ) );
+                    }
+                }
                 break;
             }
             // d_a_mg_rod.rel
@@ -740,7 +746,10 @@ namespace mod::events
         if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) )
         {
             tools::SpawnActor( 0, EponaActr );
-            tools::SpawnActor( 6, ForestGWolfActr );
+            if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::CLEARED_FARON_TWILIGHT ) )
+            {
+                tools::SpawnActor( 6, ForestGWolfActr );
+            }
         }
     }
 
