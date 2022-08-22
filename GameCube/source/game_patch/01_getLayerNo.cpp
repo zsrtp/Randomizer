@@ -744,15 +744,16 @@ namespace mod::game_patch
                     {
                         if ( roomId == 5 )
                         {
-                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
-                                MIDNAS_DESPERATE_HOUR_COMPLETED );     // MDH Completed
-                            if ( condition == false )
+                            chosenLayer = stage::castleTownShopsStateIDs::Castle_Town_Int_Jovani_MDH_Completed;
+                            condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_STARTED );
+                            if ( condition )
                             {
                                 chosenLayer = stage::castleTownShopsStateIDs::Castle_Town_Int_Jovani_New_Game;
-                            }
-                            else
-                            {
-                                chosenLayer = stage::castleTownShopsStateIDs::Castle_Town_Int_Jovani_MDH_Completed;
+                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_COMPLETED );
+                                if ( condition )
+                                {
+                                    chosenLayer = stage::castleTownShopsStateIDs::Castle_Town_Int_Jovani_MDH_Completed;
+                                }
                             }
                         }
                         else
