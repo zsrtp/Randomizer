@@ -746,11 +746,6 @@ namespace mod::events
         if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) )
         {
             tools::SpawnActor( 0, EponaActr );
-            if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::CLEARED_FARON_TWILIGHT ) &&
-                 ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo == 6 ) )
-            {
-                tools::SpawnActor( 6, ForestGWolfActr );
-            }
         }
     }
 
@@ -783,8 +778,8 @@ namespace mod::events
             tools::SpawnActor( 7, localGanonBarrierActor );
         }
         else if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) &&
-                  ( !tp::d_save::isEventBit( &tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags,
-                                             data::flags::ORDON_DAY_2_OVER ) ) )
+                  ( tp::d_save::isEventBit( &tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags,
+                                            data::flags::ORDON_DAY_2_OVER ) ) )
         {
             tools::SpawnActor( 6, ForestGWolfActr );
         }
