@@ -315,7 +315,7 @@ namespace mod
                 }
 
                 // 8 is the line it typically appears
-                getConsole().setLine( 8 );
+                getConsole().setLine( 4 );
                 getConsole() << "\r"
                              << "Press X/Y to select a seed\n"
                              << "Press R + Z to close the console\n"
