@@ -314,8 +314,7 @@ namespace mod
                     seedList->m_selectedSeed--;
                 }
 
-                // 8 is the line it typically appears
-                getConsole().setLine( 4 );
+                getConsole().setLine( CONSOLE_PROTECTED_LINES - 1 );
                 getConsole() << "\r"
                              << "Press X/Y to select a seed\n"
                              << "Press R + Z to close the console\n"

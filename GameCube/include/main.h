@@ -23,6 +23,9 @@
 #include "events.h"
 #include "tp/d_resource.h"
 
+// Number of lines that should not be cleared when flushing the screen
+#define CONSOLE_PROTECTED_LINES 5
+
 // Game States
 #define GAME_BOOT 0       // Default; At startup (should only ever be active once)
 #define GAME_TITLE 1      // When user is on title screen; let them choose their seed etc.

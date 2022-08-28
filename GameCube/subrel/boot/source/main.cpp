@@ -31,7 +31,7 @@ namespace mod
     {
         // Set up the console
         // Align to uint8_t, as that's the largest variable type in the Console class
-        mod::console = new ( sizeof( uint8_t ) ) libtp::display::Console( 5 );
+        mod::console = new ( sizeof( uint8_t ) ) libtp::display::Console( CONSOLE_PROTECTED_LINES );
 
         // Initialize randNext
         initRandNext();
