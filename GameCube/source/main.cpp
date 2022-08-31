@@ -417,9 +417,12 @@ namespace mod
             {
                 doInput( padInfo->buttonInput );
 
-                // Disable input so game doesn't notice
-                padInfo->buttonInput = 0;
-                padInfo->buttonInputTrg = 0;
+                if ( gameState != GAME_BOOT )
+                {
+                    // Disable input so game doesn't notice
+                    padInfo->buttonInput = 0;
+                    padInfo->buttonInputTrg = 0;
+                }
             }
 
             else if ( ( padInfo->buttonInput & ( PadInputs::Button_R | PadInputs::Button_Y ) ) ==

@@ -903,7 +903,7 @@ namespace mod::events
     void handleTimeOfDayChange()
     {
         uint8_t todStages[] = { 43, 44, 41, 45, 47, 48, 46, 49, 50, 61, 52, 57, 56, 54, 55, 59, 63, 62 };
-        uint8_t nonFlowStages[] = { 43, 44, 41, 48, 46, 54, 63 };
+        uint8_t nonFlowStages[] = { 43, 44, 41, 48, 46, 63 };
         uint32_t totaltodStages = sizeof( todStages ) / sizeof( todStages[0] );
         uint32_t totalnonFlowStages = sizeof( nonFlowStages ) / sizeof( nonFlowStages[0] );
         int32_t stageIndex = libtp::tools::getStageIndex( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage );
