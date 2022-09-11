@@ -38,7 +38,7 @@ namespace mod::rando
         m_fileIndex = seedInfo->fileIndex;
 
         char* fileName = seedInfo->fileName;
-        getConsole() << "Loading seed " << static_cast<int32_t>( m_fileIndex ) << ": '" << fileName << "'...\n";
+        getConsole() << "Loading seed " << static_cast<int32_t>( m_fileIndex + 1 ) << ": '" << fileName << "'...\n";
 
         // Allocate the buffer to the back of the heap to prevent fragmentation
         uint32_t totalSize = m_Header->totalSize;

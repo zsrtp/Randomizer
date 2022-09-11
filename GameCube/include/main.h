@@ -24,7 +24,7 @@
 #include "tp/d_resource.h"
 
 // Number of lines that should not be cleared when flushing the screen
-#define CONSOLE_PROTECTED_LINES 5
+#define CONSOLE_PROTECTED_LINES 4
 
 // Game States
 #define GAME_BOOT 0       // Default; At startup (should only ever be active once)
