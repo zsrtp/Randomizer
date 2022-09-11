@@ -45,5 +45,16 @@ namespace mod::game_patch
                 dComIfG_gameInfo.save.save_file.player.player_return_place.link_room_id = 0x6;
             }
         }
+        else if ( libtp::tp::d_a_alink::checkStageName( stage::allStages[stage::stageIDs::Sacred_Grove] ) )
+        {
+            if ( !events::haveItem( items::Shadow_Crystal ) )
+            {
+                strncpy( dComIfG_gameInfo.save.save_file.player.player_return_place.link_current_stage,
+                         stage::allStages[stage::stageIDs::Faron_Woods],
+                         sizeof( dComIfG_gameInfo.save.save_file.player.player_return_place.link_current_stage ) - 1 );
+                dComIfG_gameInfo.save.save_file.player.player_return_place.link_spawn_point_id = 0xFE;
+                dComIfG_gameInfo.save.save_file.player.player_return_place.link_room_id = 0x6;
+            }
+        }
     }
 }     // namespace mod::game_patch

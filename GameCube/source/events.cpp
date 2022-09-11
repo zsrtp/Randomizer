@@ -235,6 +235,19 @@ namespace mod::events
                 performStaticASMReplacement( relPtrRaw + 0x1038, 0x38600000 );
                 break;
             }
+            // d_a_e_md.rel
+            // SPR Suit of Armor
+            case 0xD0:
+            {
+                if ( libtp::tp::d_a_alink::checkStageName(
+                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) )
+                {
+                    // Branch to code to create actor if we are in snowpeak ruins, regardless of BossFlags value.
+                    performStaticASMReplacement( relPtrRaw + 0x14B8, 0x4800001c );     // b 0x1C
+                }
+
+                break;
+            }
             // d_a_e_mk.rel
             // Ook
             case 0xD2:

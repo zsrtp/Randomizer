@@ -1196,6 +1196,14 @@ namespace mod
                 }
                 break;
             }
+            case HOWLED_AT_SNOWPEAK_STONE:
+            {
+                if ( checkStageName( allStages[stageIDs::Snowpeak] ) )
+                {
+                    return false;     // Return false so the player can howl at the stone multiple times to remove map glitch
+                }
+                break;
+            }
 
             default:
             {
@@ -1241,6 +1249,8 @@ namespace mod
 
                 case CLEARED_ELDIN_TWILIGHT:     // Cleared Eldin Twilight
                 {
+                    events::setSaveFileEventFlag(
+                        MAP_WARPING_UNLOCKED );     // in glitched Logic, you can skip the gorge bridge.
                     if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_COMPLETED ) )
                     {
                         if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
