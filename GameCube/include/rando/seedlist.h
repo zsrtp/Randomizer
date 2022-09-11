@@ -9,11 +9,12 @@
 
 #include <cstdint>
 
+#include "gc_wii/card.h"
 #include "rando/data.h"
 #include "rando/seed.h"
 #include "rando/seedlist.h"
 
-#define SEED_MAX_ENTRIES 10
+#define SEED_MAX_ENTRIES CARD_MAX_FILE
 
 // Earliest SeedData version (Major.Minor) which this version of the Randomizer
 // supports.
@@ -67,6 +68,11 @@ namespace mod::rando
         SeedList( void );
         ~SeedList( void );
 
+#ifdef DVD
+        void GetSeedFiles( const char* seedDirectory, Header* headerBuffer, char* namesOut );
+#else
+        void GetSeedFiles( int32_t chan, Header* headerBuffer, char* namesOut );
+#endif
         // SeedInfo FindSeed( uint64_t seed );
 
         uint8_t m_numSeeds;

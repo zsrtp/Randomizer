@@ -35,7 +35,8 @@ namespace mod::rando
         }
         else
         {
-            getConsole() << "Seed: " << seedInfo->header.seed << "\n";
+            getConsole() << "Seed: " << seedInfo->fileName << "\n";
+
             // Load the seed
             m_SeedInfo = seedInfo;
             m_CurrentSeed = selectedSeed;

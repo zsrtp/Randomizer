@@ -45,7 +45,7 @@ namespace mod::rando
         /**
          * @brief Returns the seed
          */
-        inline uint64_t getSeed() { return m_SeedInfo->header.seed; }
+        inline const char* getSeed() { return m_SeedInfo->fileName; }
 
        public:
         SeedInfo* m_SeedInfo = nullptr;     // SeedInfo associated with this randomizer instance

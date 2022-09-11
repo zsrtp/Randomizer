@@ -9,6 +9,7 @@
 #ifndef RANDO_DATA_H
 #define RANDO_DATA_H
 
+#include "gc_wii/card.h"
 #include <cstdint>
 
 namespace mod::rando
@@ -28,53 +29,53 @@ namespace mod::rando
         /* 0x02 */ uint16_t versionMinor;         // SeedData version minor
         /* 0x04 */ uint16_t headerSize;           // Total size of the header in bytes
         /* 0x06 */ uint16_t dataSize;             // Total number of bytes of seed data
-        /* 0x08 */ uint64_t seed;                 // Current seed
-        /* 0x10 */ uint32_t totalSize;            // Total number of bytes in the GCI
-        /* 0x14 */ uint32_t requiredDungeons;     // Bitfield containing which dungeons are required to beat the seed. Only 8
+        /* 0x08 */ uint32_t totalSize;            // Total number of bytes in the GCI
+        /* 0x0C */ uint32_t requiredDungeons;     // Bitfield containing which dungeons are required to beat the seed. Only 8
                                                   // bits are used, while the rest are reserved for future updates
 
         // BitArray where each bit represents a patch/modification to be applied for this
         // playthrough; these patchs/modifications must be applied every time a file is loaded
-        /* 0x18 */ entryInfo volatilePatchInfo;
+        /* 0x10 */ entryInfo volatilePatchInfo;
 
         // BitArray where each bit represents a patch/modification to be applied for this
         // playthrough; these patchs/modifications must be applied only when a seed is loaded
-        /* 0x1C */ entryInfo oneTimePatchInfo;
+        /* 0x14 */ entryInfo oneTimePatchInfo;
 
-        /* 0x20 */ entryInfo eventFlagsInfo;      // eventFlags that need to be set for this seed
-        /* 0x24 */ entryInfo regionFlagsInfo;     // regionFlags that need to be set, alternating
+        /* 0x18 */ entryInfo eventFlagsInfo;      // eventFlags that need to be set for this seed
+        /* 0x1C */ entryInfo regionFlagsInfo;     // regionFlags that need to be set, alternating
 
-        /* 0x28 */ entryInfo dzxCheckInfo;
-        /* 0x2C */ entryInfo relCheckInfo;
-        /* 0x30 */ entryInfo poeCheckInfo;
-        /* 0x34 */ entryInfo arcCheckInfo;
-        /* 0x38 */ entryInfo objectArcCheckInfo;
-        /* 0x3C */ entryInfo bossCheckInfo;
-        /* 0x40 */ entryInfo hiddenSkillCheckInfo;
-        /* 0x44 */ entryInfo bugRewardCheckInfo;
-        /* 0x48 */ entryInfo skyCharacterCheckInfo;
-        /* 0x4C */ entryInfo shopItemCheckInfo;
-        /* 0x50 */ entryInfo startingItemInfo;
-        /* 0x54 */ uint16_t bgmHeaderOffset;
-        /* 0x56 */ uint8_t heartColor;
-        /* 0x57 */ uint8_t aButtonColor;
-        /* 0x58 */ uint8_t bButtonColor;
-        /* 0x59 */ uint8_t xButtonColor;
-        /* 0x5A */ uint8_t yButtonColor;
-        /* 0x5B */ uint8_t zButtonColor;
-        /* 0x5C */ uint8_t lanternColor;
-        /* 0x5D */ uint8_t transformAnywhere;
-        /* 0x5E */ uint8_t quickTransform;
-        /* 0x5F */ uint8_t castleRequirements;
-        /* 0x60 */ uint8_t palaceRequirements;
-        /* 0x61 */ uint8_t padding;
+        /* 0x20 */ entryInfo dzxCheckInfo;
+        /* 0x24 */ entryInfo relCheckInfo;
+        /* 0x28 */ entryInfo poeCheckInfo;
+        /* 0x2C */ entryInfo arcCheckInfo;
+        /* 0x30 */ entryInfo objectArcCheckInfo;
+        /* 0x34 */ entryInfo bossCheckInfo;
+        /* 0x38 */ entryInfo hiddenSkillCheckInfo;
+        /* 0x3C */ entryInfo bugRewardCheckInfo;
+        /* 0x40 */ entryInfo skyCharacterCheckInfo;
+        /* 0x44 */ entryInfo shopItemCheckInfo;
+        /* 0x48 */ entryInfo startingItemInfo;
+        /* 0x4C */ uint16_t bgmHeaderOffset;
+        /* 0x4E */ uint8_t heartColor;
+        /* 0x4F */ uint8_t aButtonColor;
+        /* 0x50 */ uint8_t bButtonColor;
+        /* 0x51 */ uint8_t xButtonColor;
+        /* 0x52 */ uint8_t yButtonColor;
+        /* 0x53 */ uint8_t zButtonColor;
+        /* 0x54 */ uint8_t lanternColor;
+        /* 0x55 */ uint8_t transformAnywhere;
+        /* 0x56 */ uint8_t quickTransform;
+        /* 0x57 */ uint8_t castleRequirements;
+        /* 0x58 */ uint8_t palaceRequirements;
+        /* 0x59 */ uint8_t padding[3];
     } __attribute__( ( __packed__ ) );
 
     // Seed with index
     struct SeedInfo
     {
         Header header;
-        uint8_t fileIndex;     // (0-9) rando-dataX
+        uint8_t fileIndex;     // (0-126)
+        char fileName[CARD_FILENAME_MAX + 1];
     };
 
     struct bgmHeader

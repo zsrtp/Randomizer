@@ -37,22 +37,20 @@ namespace mod::rando
         // Store our filename index
         m_fileIndex = seedInfo->fileIndex;
 
-        getConsole() << "Loading seed " << m_fileIndex << ": '" << m_Header->seed << "'...\n";
+        char* fileName = seedInfo->fileName;
+        getConsole() << "Loading seed " << static_cast<int32_t>( m_fileIndex ) << ": '" << fileName << "'...\n";
 
-        // Load the whole GCI locally to reduce number of reads (memcard)
-        char fileName[32];
-#ifdef DVD
-        snprintf( fileName, sizeof( fileName ), "/mod/rando-data%c", static_cast<char>( '0' + m_fileIndex ) );
-#else
-        snprintf( fileName, sizeof( fileName ), "rando-data%c", static_cast<char>( '0' + m_fileIndex ) );
-#endif
         // Allocate the buffer to the back of the heap to prevent fragmentation
         uint32_t totalSize = m_Header->totalSize;
 
         // Align to 0x20 for safety, since some functions may cast parts of it to classes/structs/arrays/etc.
         uint8_t* data = new ( -0x20 ) uint8_t[totalSize];
 #ifdef DVD
-        m_CARDResult = libtp::tools::ReadFile( fileName, totalSize, 0, data );
+        // fileName does not contain the full file path
+        char filePath[96];
+        snprintf( filePath, sizeof( filePath ), "/mod/seed/%s", fileName );
+
+        m_CARDResult = libtp::tools::ReadFile( filePath, totalSize, 0, data );
         if ( m_CARDResult == DVD_STATE_END )
 #else
         // The memory card should already be mounted

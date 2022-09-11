@@ -290,6 +290,9 @@
 803496fc:DVDOpen
 803497c4:DVDClose
 80349cb0:DVDReadPrio
+80349dec:DVDOpenDir
+80349eac:DVDReadDir
+80349f50:DVDCloseDir
 
 //d_s_logo.o
 802591F8:getPalLanguage2

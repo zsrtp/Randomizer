@@ -171,7 +171,7 @@ namespace mod::item_wheel_menu
         events::drawWindow( ringPosX + windowPosXOffset, ringPosY + windowPosYOffset, windowWidth, windowHeight, windowColor );
 
         // Create a generic buffer to use for string formatting
-        char buf[32];
+        char buf[64];
 
         // Set up an auto function for getting Yes/No text
         auto getYesNoText = [&]( bool flag )
@@ -193,7 +193,7 @@ namespace mod::item_wheel_menu
             rando::SeedInfo* seedInfo = randomizer->m_SeedInfo;
             if ( seedInfo )
             {
-                snprintf( buf, sizeof( buf ), "%s: 0x%016" PRIx64, strings->seedIsLoaded, seedInfo->header.seed );
+                snprintf( buf, sizeof( buf ), "%s: %s", strings->seedIsLoaded, seedInfo->fileName );
                 seedIsLoaded = true;
             }
         }

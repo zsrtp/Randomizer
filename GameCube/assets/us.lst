@@ -302,6 +302,9 @@
 80348890:DVDOpen
 80348958:DVDClose
 80348e44:DVDReadPrio
+80348f80:DVDOpenDir
+80349040:DVDReadDir
+803490e4:DVDCloseDir
 
 //d_meter2_info.o
 80430188:g_meter2_info
