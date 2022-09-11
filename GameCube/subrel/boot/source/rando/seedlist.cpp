@@ -108,6 +108,8 @@ namespace mod::rando
         // Try to open the directory that has the seeds
         if ( !DVDOpenDir( seedDirectory, &dir ) )
         {
+            // Make sure m_numSeeds is set to 0
+            m_numSeeds = 0;
             return;
         }
 
