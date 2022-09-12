@@ -39,6 +39,9 @@ namespace mod::rando
         // The filenames are not NULL terminated
         char* fileNameArray = new ( -sizeof( char ) ) char[SEED_MAX_ENTRIES * CARD_FILENAME_MAX];
 
+        // Make sure m_numSeeds is set to 0 before checking for seeds
+        m_numSeeds = 0;
+
         // Get a list of all seeds available
 #ifdef DVD
         GetSeedFiles( "/mod/seed", headerBuffer, fileNameArray );
@@ -108,8 +111,6 @@ namespace mod::rando
         // Try to open the directory that has the seeds
         if ( !DVDOpenDir( seedDirectory, &dir ) )
         {
-            // Make sure m_numSeeds is set to 0
-            m_numSeeds = 0;
             return;
         }
 
