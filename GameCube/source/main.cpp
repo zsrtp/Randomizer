@@ -90,6 +90,11 @@ namespace mod
 
     KEEP_VAR void ( *return_stageLoader )( void* data, void* stageDt ) = nullptr;
 
+    KEEP_VAR int ( *return_dStage_playerInit )( void* stageDt,
+                                                libtp::tp::d_stage::stage_dzr_header_entry* i_data,
+                                                int num,
+                                                void* raw_data ) = nullptr;
+
     KEEP_VAR void ( *return_dComIfGp_setNextStage )( const char* stage,
                                                      int16_t point,
                                                      int8_t roomNo,
@@ -661,6 +666,38 @@ namespace mod
         // This function is a placeholder for now. May work with Taka on getting some ARC checks converted over to use this
         // function instead of roomLoader
         return return_stageLoader( data, stageDt );
+    }
+
+    KEEP_FUNC int handle_dStage_playerInit( void* stageDt,
+                                            libtp::tp::d_stage::stage_dzr_header_entry* i_data,
+                                            int num,
+                                            void* raw_data )
+    {
+        libtp::tp::d_save::dSv_player_status_a_c* playerStatusPtr =
+            &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a;
+
+        if ( playerStatusPtr->currentForm == 1 )
+        {
+            libtp::tp::d_stage::stage_actor_data_class* allPLYR = i_data->mDzrDataPointer;
+
+            for ( int32_t i = 0; i < num; i++ )
+            {
+                uint8_t* mParameter = reinterpret_cast<uint8_t*>( &allPLYR[i].mParameter );
+                switch ( mParameter[2] )
+                {
+                    case 0x80:
+                    case 0xA0:
+                    case 0xB0:
+                    {
+                        mParameter[2] = 0x50;
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
+        }
+        return return_dStage_playerInit( stageDt, i_data, num, raw_data );
     }
 
     KEEP_FUNC int32_t handle_createItemForBoss( const float pos[3],

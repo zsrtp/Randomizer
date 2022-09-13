@@ -18,6 +18,7 @@
 #include "tp/dzx.h"
 #include "tp/J2DPicture.h"
 #include "tp/d_a_alink.h"
+#include "tp/d_stage.h"
 #include "tp/control.h"
 #include "Z2AudioLib/Z2SceneMgr.h"
 #include "events.h"
@@ -165,6 +166,11 @@ namespace mod
 
     void handle_stageLoader( void* data, void* stageDt );
     extern void ( *return_stageLoader )( void* data, void* stageDt );
+    int handle_dStage_playerInit( void* stageDt, libtp::tp::d_stage::stage_dzr_header_entry* i_data, int num, void* raw_data );
+    extern int ( *return_dStage_playerInit )( void* stageDt,
+                                              libtp::tp::d_stage::stage_dzr_header_entry* i_data,
+                                              int num,
+                                              void* raw_data );
 
     // State functions
     extern int32_t ( *return_getLayerNo_common_common )( const char* stageName, int32_t roomId, int32_t layerOverride );

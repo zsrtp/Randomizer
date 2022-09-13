@@ -40,6 +40,7 @@
 80025bfc:tgscInfoInit
 80026bbc:roomLoader
 80026b58:stageLoader
+80025014:dStage_playerInit
 
 // d_save.o
 80032AA8:getRupeeMax
