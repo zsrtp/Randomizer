@@ -90,7 +90,7 @@ namespace mod::rando
         using namespace libtp::gc_wii::dvd;
 
         DVDDir dir;
-        DVDDirEntry dirEnt;
+        DVDDirEntry dirEntry;
         char filePath[96];
 #else
     // This function assumes that the memory card is already mounted
@@ -113,30 +113,34 @@ namespace mod::rando
         {
             return;
         }
-
-        // Loop through all of the files in the directory
-        // DVDReadDir will return false once all files have been looped through
-        while ( DVDReadDir( &dir, &dirEnt ) )
+#endif
+        // Loop through all possible files
+        for ( int32_t i = 0; i < SEED_MAX_ENTRIES; i++ )
         {
+#ifdef DVD
+            // Loop through the files in the directory
+            // DVDReadDir will return false once all files have been looped through
+            if ( !DVDReadDir( &dir, &dirEntry ) )
+            {
+                break;
+            }
+
             // Currently only supporting a single folder
-            if ( dirEnt.bIsDir )
+            if ( dirEntry.bIsDir )
             {
                 // Entry is a directory
                 continue;
             }
 
             // Try to open the file and get the header data
-            // dirEnt does not contain the full file path
-            fileName = dirEnt.fileName;
+            // dirEntry does not contain the full file path
+            fileName = dirEntry.fileName;
             snprintf( filePath, sizeof( filePath ), "/mod/seed/%s", fileName );
 
             // Try to open the file and get the header data
-            if ( DVD_STATE_END == libtp::tools::ReadFile( filePath, sizeof( header ), 0, &header ) )
+            if ( DVD_STATE_END != libtp::tools::ReadFile( filePath, sizeof( header ), 0, &header ) )
             {
 #else
-        // Loop through all possible files on the memory card
-        for ( int32_t i = 0; i < SEED_MAX_ENTRIES; i++ )
-        {
             // Try to get the status of an arbitrary file slot
             result = CARDGetStatus( chan, i, &stat );
             if ( result != CARD_RESULT_READY )
@@ -153,26 +157,29 @@ namespace mod::rando
             }
 
             // Try to open the file and get the header data
-            if ( CARD_RESULT_READY == libtp::tools::ReadGCIMounted( chan, fileName, sizeof( header ), 0, &header, true ) )
+            if ( CARD_RESULT_READY != libtp::tools::ReadGCIMounted( chan, fileName, sizeof( header ), 0, &header, true ) )
             {
 #endif
-                // Make sure the seed version is supported
-                const uint16_t versionMajor = header.versionMajor;
+                // The file could not be opened
+                continue;
+            }
 
-                if ( CHECK_MIN_SUPPORTED_SEED_DATA_VER_MAJOR( versionMajor ) &&
-                     CHECK_MIN_SUPPORTED_SEED_DATA_VER_MINOR( header.versionMinor ) &&
-                     CHECK_MAX_FULLY_SUPPORTED_SEED_DATA_VER_MAJOR( versionMajor ) )
-                {
-                    // Copy the filename to the buffer
-                    // The filenames are not NULL terminated
-                    strncpy( &namesOut[index * CARD_FILENAME_MAX], fileName, CARD_FILENAME_MAX );
+            // Make sure the seed version is supported
+            const uint16_t versionMajor = header.versionMajor;
 
-                    // Copy the header to the main buffer
-                    memcpy( &headerBuffer[index], &header, sizeof( Header ) );
+            if ( CHECK_MIN_SUPPORTED_SEED_DATA_VER_MAJOR( versionMajor ) &&
+                 CHECK_MIN_SUPPORTED_SEED_DATA_VER_MINOR( header.versionMinor ) &&
+                 CHECK_MAX_FULLY_SUPPORTED_SEED_DATA_VER_MAJOR( versionMajor ) )
+            {
+                // Copy the filename to the buffer
+                // The filenames are not NULL terminated
+                strncpy( &namesOut[index * CARD_FILENAME_MAX], fileName, CARD_FILENAME_MAX );
 
-                    // Done with the current file, so increment the index
-                    index++;
-                }
+                // Copy the header to the main buffer
+                memcpy( &headerBuffer[index], &header, sizeof( Header ) );
+
+                // Done with the current file, so increment the index
+                index++;
             }
         }
 
