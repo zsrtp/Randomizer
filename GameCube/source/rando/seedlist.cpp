@@ -27,7 +27,7 @@ namespace mod::rando
 
     SeedList::~SeedList()
     {
-        delete[] m_seedInfo;
+        delete[] m_minSeedInfo;
     }
 
 }     // namespace mod::rando

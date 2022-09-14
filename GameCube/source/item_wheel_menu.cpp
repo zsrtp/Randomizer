@@ -190,10 +190,10 @@ namespace mod::item_wheel_menu
         bool seedIsLoaded = false;
         if ( randoIsEnabled( randomizer ) )
         {
-            rando::SeedInfo* seedInfo = randomizer->m_SeedInfo;
-            if ( seedInfo )
+            rando::MinSeedInfo* minSeedInfo = randomizer->m_SeedInfo->minSeedInfo;
+            if ( minSeedInfo )
             {
-                snprintf( buf, sizeof( buf ), "%s: %s", strings->seedIsLoaded, seedInfo->fileName );
+                snprintf( buf, sizeof( buf ), "%s: %s", strings->seedIsLoaded, minSeedInfo->fileName );
                 seedIsLoaded = true;
             }
         }

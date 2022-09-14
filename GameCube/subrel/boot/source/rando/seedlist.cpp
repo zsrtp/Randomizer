@@ -29,63 +29,44 @@ namespace mod::rando
     {
         using namespace libtp;
 
-        // Store header data so we don't have to open the files again later
+        // Store minimal data so we don't have to open the files again later
         // Allocate the memory to the back of the heap to avoid fragmentation
-        // Align to uint32_t, as it is the largest variable type used in the Header struct
-        Header* headerBuffer = new ( -sizeof( uint32_t ) ) Header[SEED_MAX_ENTRIES];
-
-        // Allocate the memory to the back of the heap to avoid fragmentation
-        // Align to char, as strings don't have specific alignment requirements
-        // The filenames are not NULL terminated
-        char* fileNameArray = new ( -sizeof( char ) ) char[SEED_MAX_ENTRIES * CARD_FILENAME_MAX];
+        // Align to uint8_t, as it is the largest variable type used in the MinSeedInfo struct
+        MinSeedInfo* minSeedInfoBuffer = new ( -sizeof( uint8_t ) ) MinSeedInfo[SEED_MAX_ENTRIES];
 
         // Make sure m_numSeeds is set to 0 before checking for seeds
         m_numSeeds = 0;
 
         // Get a list of all seeds available
 #ifdef DVD
-        GetSeedFiles( "/mod/seed", headerBuffer, fileNameArray );
+        GetSeedFiles( "/mod/seed", minSeedInfoBuffer );
 #else
         // The memory card should already be mounted
-        GetSeedFiles( CARD_SLOT_A, headerBuffer, fileNameArray );
+        GetSeedFiles( CARD_SLOT_A, minSeedInfoBuffer );
 #endif
         uint32_t numSeeds = m_numSeeds;
         if ( numSeeds > 0 )
         {
-            // Align to uint32_t, as it is the largest variable type used in the Header struct
-            m_seedInfo = new ( sizeof( uint32_t ) ) SeedInfo[numSeeds];
+            // Align to uint8_t, as it is the largest variable type used in the MinSeedInfo struct
+            m_minSeedInfo = new ( sizeof( uint8_t ) ) MinSeedInfo[numSeeds];
 
-            for ( uint32_t i = 0; i < numSeeds; i++ )
-            {
-                SeedInfo* currentSeedInfo = &m_seedInfo[i];
-
-                // Copy the main header data
-                memcpy( &currentSeedInfo->header, &headerBuffer[i], sizeof( Header ) );
-
-                // Copy the file index
-                currentSeedInfo->fileIndex = i;
-
-                // Copy the filename and make sure it is NULL terminated
-                char* fileName = currentSeedInfo->fileName;
-                strncpy( fileName, &fileNameArray[i * CARD_FILENAME_MAX], CARD_FILENAME_MAX );
-                fileName[CARD_FILENAME_MAX] = '\0';
-            }
+            // Copy all of the seeds' data to the main buffer
+            memcpy( m_minSeedInfo, minSeedInfoBuffer, sizeof( MinSeedInfo ) * numSeeds );
         }
 
         getConsole() << static_cast<int32_t>( numSeeds ) << " seed(s) available.\n";
 
         // Cleanup
-        delete[] headerBuffer;
-        delete[] fileNameArray;
+        delete[] minSeedInfoBuffer;
     }
 
     SeedList::~SeedList()
     {
-        delete[] m_seedInfo;
+        delete[] m_minSeedInfo;
     }
 
 #ifdef DVD
-    void SeedList::GetSeedFiles( const char* seedDirectory, Header* headerBuffer, char* namesOut )
+    void SeedList::GetSeedFiles( const char* seedDirectory, MinSeedInfo* minSeedInfoBuffer )
     {
         using namespace libtp::gc_wii::dvd;
 
@@ -94,7 +75,7 @@ namespace mod::rando
         char filePath[96];
 #else
     // This function assumes that the memory card is already mounted
-    void SeedList::GetSeedFiles( int32_t chan, Header* headerBuffer, char* namesOut )
+    void SeedList::GetSeedFiles( int32_t chan, MinSeedInfo* minSeedInfoBuffer )
     {
         using namespace libtp::gc_wii::card;
 
@@ -102,7 +83,7 @@ namespace mod::rando
         int32_t result;
 #endif
         Header header;
-        const char* fileName;
+        const char* currentFileName;
 
         // Starting index
         uint32_t index = 0;
@@ -134,8 +115,8 @@ namespace mod::rando
 
             // Try to open the file and get the header data
             // dirEntry does not contain the full file path
-            fileName = dirEntry.fileName;
-            snprintf( filePath, sizeof( filePath ), "/mod/seed/%s", fileName );
+            currentFileName = dirEntry.fileName;
+            snprintf( filePath, sizeof( filePath ), "/mod/seed/%s", currentFileName );
 
             // Try to open the file and get the header data
             if ( DVD_STATE_END != libtp::tools::ReadFile( filePath, sizeof( header ), 0, &header ) )
@@ -150,14 +131,15 @@ namespace mod::rando
             }
 
             // If the file is for the vanilla game save or the rando's REL save, then skip it
-            fileName = stat.fileName;
-            if ( ( strcmp( fileName, "gczelda2" ) == 0 ) || ( strcmp( fileName, "Custom REL File" ) == 0 ) )
+            currentFileName = stat.fileName;
+            if ( ( strcmp( currentFileName, "gczelda2" ) == 0 ) || ( strcmp( currentFileName, "Custom REL File" ) == 0 ) )
             {
                 continue;
             }
 
             // Try to open the file and get the header data
-            if ( CARD_RESULT_READY != libtp::tools::ReadGCIMounted( chan, fileName, sizeof( header ), 0, &header, true ) )
+            if ( CARD_RESULT_READY !=
+                 libtp::tools::ReadGCIMounted( chan, currentFileName, sizeof( header ), 0, &header, true ) )
             {
 #endif
                 // The file could not be opened
@@ -166,17 +148,28 @@ namespace mod::rando
 
             // Make sure the seed version is supported
             const uint16_t versionMajor = header.versionMajor;
+            const uint16_t versionMinor = header.versionMinor;
 
             if ( CHECK_MIN_SUPPORTED_SEED_DATA_VER_MAJOR( versionMajor ) &&
-                 CHECK_MIN_SUPPORTED_SEED_DATA_VER_MINOR( header.versionMinor ) &&
+                 CHECK_MIN_SUPPORTED_SEED_DATA_VER_MINOR( versionMinor ) &&
                  CHECK_MAX_FULLY_SUPPORTED_SEED_DATA_VER_MAJOR( versionMajor ) )
             {
-                // Copy the filename to the buffer
-                // The filenames are not NULL terminated
-                strncpy( &namesOut[index * CARD_FILENAME_MAX], fileName, CARD_FILENAME_MAX );
+                MinSeedInfo* currentMinSeedInfo = &minSeedInfoBuffer[index];
 
-                // Copy the header to the main buffer
-                memcpy( &headerBuffer[index], &header, sizeof( Header ) );
+                // Copy the seed version
+                currentMinSeedInfo->versionMajor = versionMajor;
+                currentMinSeedInfo->versionMinor = versionMinor;
+
+                // Copy the total number of bytes in the GCI
+                currentMinSeedInfo->totalSize = header.totalSize;
+
+                // Copy the file index
+                currentMinSeedInfo->fileIndex = static_cast<uint8_t>( index );
+
+                // Copy the filename to the buffer and make sure it is NULL terminated
+                char* fileName = currentMinSeedInfo->fileName;
+                strncpy( fileName, currentFileName, CARD_FILENAME_MAX );
+                fileName[CARD_FILENAME_MAX] = '\0';
 
                 // Done with the current file, so increment the index
                 index++;

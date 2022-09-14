@@ -38,14 +38,14 @@ namespace mod::rando
         uint8_t getHiddenSkillItem( uint16_t eventIndex );
 
         // Subrel
-        Randomizer( SeedInfo* seedInfo, uint8_t selectedSeed );
-        void loadSeed( SeedInfo* seedInfo, uint8_t selectedSeed );
-        void changeSeed( SeedInfo* seedInfo, uint8_t newSeed );
+        Randomizer( MinSeedInfo* minSeedInfo, uint8_t selectedSeed );
+        void loadSeed( MinSeedInfo* minSeedInfo, uint8_t selectedSeed );
+        void changeSeed( MinSeedInfo* minSeedInfo, uint8_t newSeed );
 
         /**
          * @brief Returns the seed
          */
-        inline const char* getSeed() { return m_SeedInfo->fileName; }
+        // inline const char* getSeed() { return m_SeedInfo->minSeedInfo->fileName; }
 
        public:
         SeedInfo* m_SeedInfo = nullptr;     // SeedInfo associated with this randomizer instance

@@ -35,13 +35,14 @@ namespace mod::rando
         // Loading seed rando-dataX '<seed>'...
 
         // Store our filename index
-        m_fileIndex = seedInfo->fileIndex;
+        MinSeedInfo* minSeedInfo = seedInfo->minSeedInfo;
+        m_fileIndex = minSeedInfo->fileIndex;
 
-        char* fileName = seedInfo->fileName;
+        const char* fileName = minSeedInfo->fileName;
         getConsole() << "Loading seed " << static_cast<int32_t>( m_fileIndex + 1 ) << ": '" << fileName << "'...\n";
 
         // Allocate the buffer to the back of the heap to prevent fragmentation
-        uint32_t totalSize = m_Header->totalSize;
+        uint32_t totalSize = minSeedInfo->totalSize;
 
         // Align to 0x20 for safety, since some functions may cast parts of it to classes/structs/arrays/etc.
         uint8_t* data = new ( -0x20 ) uint8_t[totalSize];
@@ -58,14 +59,19 @@ namespace mod::rando
         if ( m_CARDResult == CARD_RESULT_READY )
 #endif
         {
+            Header* headerPtr = m_Header;
+
+            // Get the header data
+            memcpy( headerPtr, data, sizeof( Header ) );
+
             // Get the main seed data
             // Align to 0x20 for safety, since some functions cast parts of it to classes/structs/arrays/etc.
-            uint32_t dataSize = m_Header->dataSize;
+            uint32_t dataSize = headerPtr->dataSize;
             m_GCIData = new ( 0x20 ) uint8_t[dataSize];
-            memcpy( m_GCIData, &data[m_Header->headerSize], dataSize );
+            memcpy( m_GCIData, &data[headerPtr->headerSize], dataSize );
 
             // Create the required dungeons text that is displayed when reading the sign in front of Link's house
-            link_house_sign::createRequiredDungeonsString( this, m_Header->requiredDungeons );
+            link_house_sign::createRequiredDungeonsString( this, headerPtr->requiredDungeons );
 
             // Generate the BGM/Fanfare table data
             this->loadBgmData( data );

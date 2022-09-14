@@ -70,12 +70,21 @@ namespace mod::rando
         /* 0x59 */ uint8_t padding[3];
     } __attribute__( ( __packed__ ) );
 
-    // Seed with index
+    // Minimum amount of data needed for keeping track of a seed
+    struct MinSeedInfo
+    {
+        uint16_t versionMajor;     // SeedData version major
+        uint16_t versionMinor;     // SeedData version minor
+        uint32_t totalSize;        // Total number of bytes in the GCI
+        uint8_t fileIndex;         // (0-126)
+        char fileName[CARD_FILENAME_MAX + 1];
+        uint8_t padding[2];
+    } __attribute__( ( __packed__ ) );
+
     struct SeedInfo
     {
         Header header;
-        uint8_t fileIndex;     // (0-126)
-        char fileName[CARD_FILENAME_MAX + 1];
+        MinSeedInfo* minSeedInfo;
     };
 
     struct bgmHeader
