@@ -93,7 +93,7 @@ namespace mod::events
      * @param filePtr Pointer to the file being read.
      * @param fileIndex Index of the file being read.
      */
-    void onARC( rando::Randomizer* randomizer, void* data, int roomNo, rando::FileDirectory fileDirectory );
+    void onARC( rando::Randomizer* randomizer, void* data, int32_t roomNo, rando::FileDirectory fileDirectory );
 
     /**
      * @brief Runs when the player selects a bug to give to Agitha
@@ -130,7 +130,7 @@ namespace mod::events
 
     bool proc_query042( void* unk1, void* unk2, int32_t unk3 );
 
-    bool proc_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int memBit );
+    bool proc_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit );
 
     void loadCustomActors();
     void loadCustomRoomActors();

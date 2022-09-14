@@ -100,7 +100,7 @@ namespace mod::rando
          *  @return True if checks have been updated (new stage) otherwise we are still on the same stage
          */
         bool LoadChecks( const char* stage );
-        void LoadARCChecks( uint8_t stageIDX, FileDirectory fileDirectory, int roomNo );
+        void LoadARCChecks( uint8_t stageIDX, FileDirectory fileDirectory, int32_t roomNo );
 
         void LoadObjectARCChecks();
 

@@ -232,7 +232,7 @@ namespace mod::rando
         }
     }
 
-    void Randomizer::overrideARC( uint32_t fileAddr, FileDirectory fileDirectory, int roomNo )
+    void Randomizer::overrideARC( uint32_t fileAddr, FileDirectory fileDirectory, int32_t roomNo )
     {
         // Make sure the randomizer is loaded/enabled and a seed is loaded
         rando::Seed* seed;

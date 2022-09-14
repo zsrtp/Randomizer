@@ -481,7 +481,7 @@ namespace mod::events
         }
     }
 
-    void onARC( rando::Randomizer* randomizer, void* data, int roomNo, rando::FileDirectory fileDirectory )
+    void onARC( rando::Randomizer* randomizer, void* data, int32_t roomNo, rando::FileDirectory fileDirectory )
     {
         randomizer->overrideARC( reinterpret_cast<uint32_t>( data ), fileDirectory, roomNo );
     }
@@ -693,7 +693,7 @@ namespace mod::events
         return mod::return_query042( unk1, unk2, unk3 );
     }
 
-    bool proc_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int memBit )
+    bool proc_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit )
     {
         using namespace libtp::data::stage;
 

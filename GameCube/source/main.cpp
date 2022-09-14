@@ -90,10 +90,10 @@ namespace mod
 
     KEEP_VAR void ( *return_stageLoader )( void* data, void* stageDt ) = nullptr;
 
-    KEEP_VAR int ( *return_dStage_playerInit )( void* stageDt,
-                                                libtp::tp::d_stage::stage_dzr_header_entry* i_data,
-                                                int num,
-                                                void* raw_data ) = nullptr;
+    KEEP_VAR int32_t ( *return_dStage_playerInit )( void* stageDt,
+                                                    libtp::tp::d_stage::stage_dzr_header_entry* i_data,
+                                                    int32_t num,
+                                                    void* raw_data ) = nullptr;
 
     KEEP_VAR void ( *return_dComIfGp_setNextStage )( const char* stage,
                                                      int16_t point,
@@ -212,7 +212,7 @@ namespace mod
     // Archive/resource functions
     KEEP_VAR libtp::tp::d_resource::dRes_info_c* ( *return_getResInfo )( const char* arcName,
                                                                          libtp::tp::d_resource::dRes_info_c* objectInfo,
-                                                                         int size ) = nullptr;
+                                                                         int32_t size ) = nullptr;
 
     void main()
     {
@@ -668,10 +668,10 @@ namespace mod
         return return_stageLoader( data, stageDt );
     }
 
-    KEEP_FUNC int handle_dStage_playerInit( void* stageDt,
-                                            libtp::tp::d_stage::stage_dzr_header_entry* i_data,
-                                            int num,
-                                            void* raw_data )
+    KEEP_FUNC int32_t handle_dStage_playerInit( void* stageDt,
+                                                libtp::tp::d_stage::stage_dzr_header_entry* i_data,
+                                                int32_t num,
+                                                void* raw_data )
     {
         libtp::tp::d_save::dSv_player_status_a_c* playerStatusPtr =
             &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a;
@@ -1529,7 +1529,7 @@ namespace mod
 
     KEEP_FUNC libtp::tp::d_resource::dRes_info_c* handle_getResInfo( const char* arcName,
                                                                      libtp::tp::d_resource::dRes_info_c* objectInfo,
-                                                                     int size )
+                                                                     int32_t size )
     {
         libtp::tp::d_resource::dRes_info_c* resourcePtr = return_getResInfo( arcName, objectInfo, size );
         if ( getCurrentSeed( randomizer ) && resourcePtr )

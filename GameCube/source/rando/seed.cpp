@@ -395,7 +395,7 @@ namespace mod::rando
         }
     }
 
-    void Seed::LoadARCChecks( uint8_t stageIDX, FileDirectory fileDirectory, int roomNo )
+    void Seed::LoadARCChecks( uint8_t stageIDX, FileDirectory fileDirectory, int32_t roomNo )
     {
         using namespace libtp;
 

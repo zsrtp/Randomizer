@@ -166,11 +166,14 @@ namespace mod
 
     void handle_stageLoader( void* data, void* stageDt );
     extern void ( *return_stageLoader )( void* data, void* stageDt );
-    int handle_dStage_playerInit( void* stageDt, libtp::tp::d_stage::stage_dzr_header_entry* i_data, int num, void* raw_data );
-    extern int ( *return_dStage_playerInit )( void* stageDt,
-                                              libtp::tp::d_stage::stage_dzr_header_entry* i_data,
-                                              int num,
-                                              void* raw_data );
+    int32_t handle_dStage_playerInit( void* stageDt,
+                                      libtp::tp::d_stage::stage_dzr_header_entry* i_data,
+                                      int32_t num,
+                                      void* raw_data );
+    extern int32_t ( *return_dStage_playerInit )( void* stageDt,
+                                                  libtp::tp::d_stage::stage_dzr_header_entry* i_data,
+                                                  int32_t num,
+                                                  void* raw_data );
 
     // State functions
     extern int32_t ( *return_getLayerNo_common_common )( const char* stageName, int32_t roomId, int32_t layerOverride );
@@ -371,10 +374,10 @@ namespace mod
     // Archive/Resource functions
     libtp::tp::d_resource::dRes_info_c* handle_getResInfo( const char* arcName,
                                                            libtp::tp::d_resource::dRes_info_c* objectInfo,
-                                                           int size );
+                                                           int32_t size );
     extern libtp::tp::d_resource::dRes_info_c* ( *return_getResInfo )( const char* arcName,
                                                                        libtp::tp::d_resource::dRes_info_c* objectInfo,
-                                                                       int size );
+                                                                       int32_t size );
 
 }     // namespace mod
 #endif
