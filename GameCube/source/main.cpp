@@ -673,9 +673,11 @@ namespace mod
                                                 int32_t num,
                                                 void* raw_data )
     {
+        // If Link is in wolf form, then prevent him from exiting a door via his human animation
         libtp::tp::d_save::dSv_player_status_a_c* playerStatusPtr =
             &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a;
 
+        // Only run if in wolf form
         if ( playerStatusPtr->currentForm == 1 )
         {
             libtp::tp::d_stage::stage_actor_data_class* allPLYR = i_data->mDzrDataPointer;
@@ -683,13 +685,16 @@ namespace mod
             for ( int32_t i = 0; i < num; i++ )
             {
                 uint8_t* mParameter = reinterpret_cast<uint8_t*>( &allPLYR[i].mParameter );
-                switch ( mParameter[2] )
+                uint8_t* entranceType = &mParameter[2];
+
+                switch ( *entranceType )
                 {
                     case 0x80:
                     case 0xA0:
                     case 0xB0:
                     {
-                        mParameter[2] = 0x50;
+                        // Force the entrance type to just be exiting the loading zone without opening/closing the door
+                        *entranceType = 0x50;
                         break;
                     }
                     default:
