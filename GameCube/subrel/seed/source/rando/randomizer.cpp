@@ -10,26 +10,19 @@
 #include "main.h"
 #include "rando/data.h"
 #include "rando/seed.h"
+#include "memory.h"
 
 namespace mod::rando
 {
     Randomizer::Randomizer( MinSeedInfo* minSeedInfo, uint8_t selectedSeed )
     {
         getConsole() << "Rando loading...\n";
-
-        // Create m_SeedInfo
-        // Align to uint32_t, as it is the largest variable type used in the Header struct
-        m_SeedInfo = new ( sizeof( uint32_t ) ) SeedInfo;
-
         loadSeed( minSeedInfo, selectedSeed );
     }
 
     Randomizer::~Randomizer( void )
     {
         getConsole() << "Rando unloading...\n";
-
-        // Clear m_SeedInfo
-        delete m_SeedInfo;
 
         // Clear Seed
         delete m_Seed;
@@ -46,11 +39,11 @@ namespace mod::rando
             getConsole() << "Seed: " << minSeedInfo->fileName << "\n";
 
             // Load the seed
-            m_SeedInfo->minSeedInfo = minSeedInfo;
+            m_SeedInfo.minSeedInfo = minSeedInfo;
             m_CurrentSeed = selectedSeed;
 
             // Align to void*, as pointers use the largest variable type in the Seed class
-            m_Seed = new ( sizeof( void* ) ) Seed( CARD_SLOT_A, m_SeedInfo );
+            m_Seed = new ( sizeof( void* ) ) Seed( CARD_SLOT_A, &m_SeedInfo );
 
             if ( m_Seed->checkIfSeedLoaded() )
             {
@@ -60,8 +53,8 @@ namespace mod::rando
             else
             {
                 // The seed failed to load, so clear the seed
+                libtp::memory::clearMemory( &m_SeedInfo, sizeof( m_SeedInfo ) );
                 delete m_Seed;
-                m_SeedInfo->minSeedInfo = nullptr;
                 m_Seed = nullptr;
                 m_CurrentSeed = 0xFF;
             }
@@ -71,8 +64,9 @@ namespace mod::rando
     void Randomizer::changeSeed( MinSeedInfo* minSeedInfo, uint8_t newSeed )
     {
         getConsole() << "Seed unloading...\n";
+
+        libtp::memory::clearMemory( &m_SeedInfo, sizeof( m_SeedInfo ) );
         delete m_Seed;
-        m_SeedInfo->minSeedInfo = nullptr;
         m_Seed = nullptr;
         m_SeedInit = false;
         m_CurrentSeed = 0xFF;

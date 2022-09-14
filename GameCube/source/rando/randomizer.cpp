@@ -28,9 +28,6 @@ namespace mod::rando
     {
         getConsole() << "Rando unloading...\n";
 
-        // Clear m_SeedInfo
-        delete m_SeedInfo;
-
         // Clear Seed
         delete m_Seed;
     }

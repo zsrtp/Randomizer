@@ -45,11 +45,11 @@ namespace mod::rando
         /**
          * @brief Returns the seed
          */
-        // inline const char* getSeed() { return m_SeedInfo->minSeedInfo->fileName; }
+        // inline const char* getSeed() { return m_SeedInfo.minSeedInfo->fileName; }
 
        public:
-        SeedInfo* m_SeedInfo = nullptr;     // SeedInfo associated with this randomizer instance
         Seed* m_Seed;
+        SeedInfo m_SeedInfo;              // SeedInfo associated with this randomizer instance
         bool m_Enabled = true;            // True if the randomizer is currently enabled
         bool m_SeedInit = false;          // True if seed-specific patches, flags, etc. have been applied to the save-file
         uint8_t m_CurrentSeed = 0xFF;     // The seed that is currently loaded
