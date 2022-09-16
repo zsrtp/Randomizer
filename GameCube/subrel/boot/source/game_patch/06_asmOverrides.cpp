@@ -11,6 +11,7 @@
 #include "events.h"
 #include "tp/d_kankyo_rain.h"
 #include "asm.h"
+#include "tp/d_event.h"
 
 namespace mod::game_patch
 {
@@ -23,6 +24,7 @@ namespace mod::game_patch
         uint32_t procCoGetItemAddress = reinterpret_cast<uint32_t>( libtp::tp::d_a_alink::procCoGetItem );
         uint32_t screenSetAddress = reinterpret_cast<uint32_t>( libtp::tp::d_menu_collect::dMenuCollect_screenSet );
         uint32_t odourDrawAddress = reinterpret_cast<uint32_t>( libtp::tp::d_kankyo_rain::dKyr_odour_draw );
+        uint32_t skipperFunctionAddress = reinterpret_cast<uint32_t>( libtp::tp::d_event::skipper );
 
 #ifdef TP_US
         uint32_t* enableCrashScreen = reinterpret_cast<uint32_t*>( 0x8000B8A4 );
@@ -45,6 +47,10 @@ namespace mod::game_patch
 
         // Nop out the instruction that causes a miscalculation in message resources.
         *patchMessageCalculation = ASM_NOP;
+
+        // Modify the skipper function to check whether or not a cutscene is skippable instead of whether the player skips the
+        // CS. This effectively auto-skips all skippable cutscenes.
+        *reinterpret_cast<uint32_t*>( skipperFunctionAddress + 0x54 ) = 0x281e0000;     // Previous 0x4540004e7
 
         // Modify the Wooden Sword function to not set a region flag by default by nopping out the function call to isSwitch
         *reinterpret_cast<uint32_t*>( woodenSwordFunctionAddress + 0x40 ) = ASM_NOP;     // Previous 0x4bf9cafd
