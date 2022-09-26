@@ -161,23 +161,86 @@ namespace mod::events
                     reinterpret_cast<void ( * )( void* )>( relPtrRaw + 0x5D0 ),
                     []( void* daObjLifePtr )
                     {
+                        using namespace libtp::data;
                         uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x92A );
                         switch ( itemID )
                         {
-                            case libtp::data::items::Master_Sword:
-                            case libtp::data::items::Master_Sword_Light:
+                            case items::Master_Sword:
+                            case items::Master_Sword_Light:
+                            case items::Wooden_Shield:
+                            case items::Hylian_Shield:
+                            case items::Ordon_Shield:
+                            case items::Spinner:
+                            {
+                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 30.f;
+                                break;
+                            }
+                            case items::Wooden_Sword:
+                            {
+                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 60.f;
+                                break;
+                            }
+                            case items::Ordon_Sword:
+                            case items::Mirror_Piece_2:
+                            case items::Mirror_Piece_3:
+                            case items::Mirror_Piece_4:
+                            case items::Fused_Shadow_1:
+                            case items::Fused_Shadow_2:
+                            case items::Fused_Shadow_3:
+                            case items::Dominion_Rod_Uncharged:
+                            case items::Dominion_Rod:
+                            {
+                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 50.f;
+                                break;
+                            }
+
+                            case items::Heros_Bow:
+                            {
+                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 55.f;
+                                break;
+                            }
+                            case items::Boomerang:
+                            case items::Fishing_Rod:
+                            case items::Big_Quiver:
+                            case items::Giant_Quiver:
+                            {
+                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 40.f;
+                                break;
+                            }
+                            case items::Forest_Temple_Small_Key:
+                            case items::Goron_Mines_Small_Key:
+                            case items::Lakebed_Temple_Small_Key:
+                            case items::Arbiters_Grounds_Small_Key:
+                            case items::Snowpeak_Ruins_Small_Key:
+                            case items::Temple_of_Time_Small_Key:
+                            case items::City_in_The_Sky_Small_Key:
+                            case items::Palace_of_Twilight_Small_Key:
+                            case items::Hyrule_Castle_Small_Key:
+                            case items::Forest_Temple_Big_Key:
+                            case items::Lakebed_Temple_Big_Key:
+                            case items::Arbiters_Grounds_Big_Key:
+                            case items::Temple_of_Time_Big_Key:
+                            case items::City_in_The_Sky_Big_Key:
+                            case items::Palace_of_Twilight_Big_Key:
+                            case items::Hyrule_Castle_Big_Key:
+                            case items::Small_Key_N_Faron_Gate:
+                            case items::Bed_Key:
+                            case items::Bulblin_Camp_Key:
+                            case items::Gate_Keys:
+                            case items::Slingshot:
+                            case items::Giant_Bomb_Bag:
+                            case items::Empty_Bomb_Bag:
+                            case items::Goron_Bomb_Bag:
+                            case items::Bomb_Bag_Regular_Bombs:
+                            case items::Poe_Soul:
                             {
                                 *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 20.f;
                                 break;
                             }
-                            case libtp::data::items::Mirror_Piece_2:
-                            case libtp::data::items::Mirror_Piece_3:
-                            case libtp::data::items::Mirror_Piece_4:
-                            case libtp::data::items::Fused_Shadow_1:
-                            case libtp::data::items::Fused_Shadow_2:
-                            case libtp::data::items::Fused_Shadow_3:
+
+                            case items::Magic_Armor:
                             {
-                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 40.f;
+                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 25.f;
                                 break;
                             }
                             default:
@@ -536,15 +599,19 @@ namespace mod::events
         uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( fopAC ) + 0x92A );
         switch ( itemID )
         {
-            case Ordon_Shield:
             case Heart_Container:
             case Piece_of_Heart:
-            case Zora_Armor:
             case Arrows_10:
             case Arrows_20:
             case Arrows_30:
             {
                 *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 1.0f;     // scale
+                break;
+            }
+
+            case Heros_Bow:
+            {
+                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 1.5f;     // scale
                 break;
             }
 
@@ -593,35 +660,6 @@ namespace mod::events
             }
             default:
             {
-                break;
-            }
-        }
-    }
-
-    void handleDungeonHeartContainer()
-    {
-        if ( !getCurrentSeed( randomizer ) )
-        {
-            return;
-        }
-
-        using namespace libtp::data::stage;
-        const char* bossStages[8] = { allStages[stageIDs::Morpheel],
-                                      allStages[stageIDs::Fyrus],
-                                      allStages[stageIDs::Diababa],
-                                      allStages[stageIDs::Armogohma],
-                                      allStages[stageIDs::Argorok],
-                                      allStages[stageIDs::Zant_Main_Room],
-                                      allStages[stageIDs::Stallord],
-                                      allStages[stageIDs::Blizzeta] };
-        // Set the flag for the dungeon heart container if we are on a boss stage since this is the function that gets
-        // called when the player picks up a heart container.
-        uint32_t totalDungeonStages = sizeof( bossStages ) / sizeof( bossStages[0] );
-        for ( uint32_t i = 0; i < totalDungeonStages; i++ )
-        {
-            if ( libtp::tp::d_a_alink::checkStageName( bossStages[i] ) )
-            {
-                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x1D] |= 0x10;
                 break;
             }
         }
@@ -727,6 +765,11 @@ namespace mod::events
                     }
                 }
                 break;
+            }
+
+            case 4:
+            {
+                return false;
             }
 
             case 7:

@@ -76,8 +76,38 @@ namespace mod::rando
             {
                 if ( rel->id == relReplacements[i].moduleID )
                 {
+                    uint32_t relOverride = relReplacements[i].override;
+                    switch ( static_cast<rando::ReplacementType>( relReplacements[i].replacementType ) )
+                    {
+                        case rando::ReplacementType::Item:
+                        {
+                            uint8_t itemID = relOverride & 0xFF;
+                            itemID = game_patch::_04_verifyProgressiveItem( this, itemID );
+                            relOverride = ( relOverride & 0xFFFFFF00 ) | itemID;
+                            break;
+                        }
+                        case rando::ReplacementType::ItemMessage:
+                        {
+                            const uint16_t msgId = relOverride & 0xFFFF;
+                            int32_t itemID = msgId - 0x65;
+                            if ( ( itemID < 0 ) || ( itemID > 0xFF ) )
+                            {
+                                itemID = 0;
+                            }
+
+                            itemID = static_cast<int32_t>(
+                                game_patch::_04_verifyProgressiveItem( this, static_cast<uint8_t>( itemID ) ) );
+
+                            relOverride = ( relOverride & 0xFFFF0000 ) | ( itemID + 0x65 );
+                            break;
+                        }
+                        default:
+                        {
+                            break;
+                        }
+                    }
                     uint32_t offset = reinterpret_cast<uint32_t>( rel ) + relReplacements[i].offset;
-                    events::performStaticASMReplacement( offset, relReplacements[i].override );
+                    events::performStaticASMReplacement( offset, relOverride );
                 }
             }
         }
@@ -248,14 +278,14 @@ namespace mod::rando
         {
             switch ( seed->m_ArcReplacements[i].replacementType )
             {
-                case rando::ArcReplacementType::Item:
+                case rando::ReplacementType::Item:
                 {
                     uint32_t replacementValue =
                         game_patch::_04_verifyProgressiveItem( this, seed->m_ArcReplacements[i].replacementValue );
                     *reinterpret_cast<uint8_t*>( ( fileAddr + seed->m_ArcReplacements[i].offset ) ) = replacementValue;
                     break;
                 }
-                case rando::ArcReplacementType::HiddenSkill:
+                case rando::ReplacementType::HiddenSkill:
                 {
                     uint32_t adjustedFilePtr =
                         reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
@@ -284,7 +314,7 @@ namespace mod::rando
                     }
                     break;
                 }
-                case rando::ArcReplacementType::ItemMessage:
+                case rando::ReplacementType::ItemMessage:
                 {
                     uint32_t replacementValue =
                         game_patch::_04_verifyProgressiveItem( this, seed->m_ArcReplacements[i].replacementValue );
@@ -292,7 +322,7 @@ namespace mod::rando
                     break;
                 }
 
-                case rando::ArcReplacementType::AlwaysLoaded:
+                case rando::ReplacementType::AlwaysLoaded:
                 {
                     // The pointer to the start of bmgres.arc is located at the value stored in mMsgDtArchive[0] + an offset
                     // of 0x64
@@ -307,7 +337,7 @@ namespace mod::rando
                     break;
                 }
 
-                case rando::ArcReplacementType::MessageResource:
+                case rando::ReplacementType::MessageResource:
                 {
                     uint32_t adjustedFilePtr =
                         reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );

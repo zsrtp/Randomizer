@@ -122,8 +122,6 @@ namespace mod::events
 
     void onAdjustCreateItemParams( void* daDitem );
 
-    void handleDungeonHeartContainer();
-
     bool proc_query022( void* unk1, void* unk2, int32_t unk3 );
 
     int32_t proc_query023( void* unk1, void* unk2, int32_t unk3 );

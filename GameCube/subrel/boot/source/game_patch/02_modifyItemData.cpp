@@ -22,7 +22,9 @@ namespace mod::game_patch
                                                      libtp::data::items::Bomblings_3,
                                                      libtp::data::items::Bombling_1,
                                                      libtp::data::items::Magic_Armor,
+                                                     libtp::data::items::Zora_Armor,
                                                      libtp::data::items::Master_Sword,
+                                                     libtp::data::items::Ordon_Shield,
                                                      libtp::data::items::Wooden_Shield,
                                                      libtp::data::items::Hylian_Shield,
                                                      libtp::data::items::Shadow_Crystal,
@@ -196,9 +198,9 @@ namespace mod::game_patch
         memcpy( &itemResourcePtr[items::Horse_Call],
                 &itemResourcePtr[items::Ilias_Charm],
                 sizeof( d_item_data::ItemResource ) );
-        memcpy( &itemResourcePtr[items::Purple_Rupee_Links_House],
-                &itemResourcePtr[items::Purple_Rupee],
-                sizeof( d_item_data::ItemResource ) );
+        memcpy( &fieldItemResPtr[items::Purple_Rupee_Links_House],
+                &fieldItemResPtr[items::Purple_Rupee],
+                sizeof( d_item_data::FieldItemRes ) );
 
         uint32_t loopCount = sizeof( itemsWithNoFieldModel ) / sizeof( itemsWithNoFieldModel[0] );
         for ( uint32_t i = 0; i < loopCount; i++ )

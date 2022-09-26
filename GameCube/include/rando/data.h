@@ -134,7 +134,8 @@ namespace mod::rando
 
     struct RELCheck
     {
-        uint32_t stageIDX;
+        uint16_t replacementType;
+        uint16_t stageIDX;
         uint32_t moduleID;
         uint32_t offset;
         uint32_t override;
@@ -155,7 +156,7 @@ namespace mod::rando
         Stage = 0x3,
     };
 
-    enum class ArcReplacementType : uint8_t
+    enum class ReplacementType : uint8_t
     {
         Item = 0x0,                // Standard item replacement
         HiddenSkill = 0x1,         // Hidden Skill checks check for the room last loaded into.
@@ -167,12 +168,12 @@ namespace mod::rando
 
     struct ARCReplacement
     {
-        int32_t offset;                         // The offset where the item is stored from the message flow header.
-        uint32_t replacementValue;              // Used to be item, but can be more now.
-        FileDirectory directory;                // The type of directory where the check is stored.
-        ArcReplacementType replacementType;     // The type of replacement that is taking place.
-        uint8_t stageIDX;                       // The name of the file where the check is stored
-        uint8_t roomID;                         // The room number for chests/room based dzr checks.
+        int32_t offset;                      // The offset where the item is stored from the message flow header.
+        uint32_t replacementValue;           // Used to be item, but can be more now.
+        FileDirectory directory;             // The type of directory where the check is stored.
+        ReplacementType replacementType;     // The type of replacement that is taking place.
+        uint8_t stageIDX;                    // The name of the file where the check is stored
+        uint8_t roomID;                      // The room number for chests/room based dzr checks.
     } __attribute__( ( __packed__ ) );
 
     struct ObjectArchiveReplacement

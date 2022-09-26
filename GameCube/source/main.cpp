@@ -722,6 +722,10 @@ namespace mod
         // Spawn the appropriate item with model
         uint8_t itemID = randomizer->getBossItem( item );
         itemID = game_patch::_04_verifyProgressiveItem( mod::randomizer, itemID );
+        if ( item == libtp::data::items::Heart_Container )     // used for Dungeon Heart Containers
+        {
+            parameters = 0x9F;
+        }
         uint32_t params = 0xFF0000 | ( parameters & 0xFF ) << 0x8 | ( itemID & 0xFF );
 
         // If we are in hyrule field then the function is running to give us the Hot Springwater heart piece and we want it to
@@ -771,8 +775,6 @@ namespace mod
                                                      const int16_t rot[3],
                                                      const float scale[3] )
     {
-        events::handleDungeonHeartContainer();     // Set the flag for the dungeon heart container
-                                                   // if this item replaces it.
         item = game_patch::_04_verifyProgressiveItem( mod::randomizer, item );
         return return_createItemForTrBoxDemo( pos, item, itemPickupFlag, roomNo, rot, scale );
     }
@@ -1000,8 +1002,7 @@ namespace mod
             uint32_t donationAmount = *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 );
             if ( donationAmount == 0x1E )
             {
-                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentRupees =
-                    libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentRupees - 100;
+                *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 ) = 100;
                 return 1;
             }
         }
