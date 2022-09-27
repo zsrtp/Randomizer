@@ -528,6 +528,7 @@ namespace mod::events
             case 0x35:
             {
                 return_daObjLifeContainer_c__Create = libtp::patch::unhookFunction( return_daObjLifeContainer_c__Create );
+                return_daObjLifeContainer_c__setEffect = libtp::patch::unhookFunction( return_daObjLifeContainer_c__setEffect );
                 break;
             }
         }
