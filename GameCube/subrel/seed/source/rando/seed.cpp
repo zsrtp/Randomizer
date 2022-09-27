@@ -197,6 +197,8 @@ namespace mod::rando
                     itemResourcePtr[allSHOP[i].replacementItemID].arcName;
                 d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].modelResIdx =
                     itemResourcePtr[allSHOP[i].replacementItemID].modelResIdx;
+                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBtkResIdx =
+                    itemResourcePtr[allSHOP[i].replacementItemID].btkResIdx;
                 d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBckResIdx =
                     itemResourcePtr[allSHOP[i].replacementItemID].bckResIdx;
                 d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBrkResIdx =

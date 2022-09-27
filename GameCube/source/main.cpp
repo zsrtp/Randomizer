@@ -40,6 +40,7 @@
 #include "tp/m_do_ext.h"
 #include "patch.h"
 #include "asm.h"
+#include "tp/d_a_itembase.h"
 
 namespace mod
 {
@@ -144,6 +145,8 @@ namespace mod
                                                        const float scale[3],
                                                        int32_t unk6,
                                                        int32_t itemPickupFlag ) = nullptr;
+
+    KEEP_VAR void ( *return_CheckFieldItemCreateHeap )( libtp::tp::f_op_actor::fopAc_ac_c* actor ) = nullptr;
 
     // Item Wheel trampoline
     KEEP_VAR void ( *return_setLineUpItem )( libtp::tp::d_save::dSv_player_item_c* ) = nullptr;
@@ -777,6 +780,29 @@ namespace mod
     {
         item = game_patch::_04_verifyProgressiveItem( mod::randomizer, item );
         return return_createItemForTrBoxDemo( pos, item, itemPickupFlag, roomNo, rot, scale );
+    }
+
+    KEEP_FUNC void handle_CheckFieldItemCreateHeap( libtp::tp::f_op_actor::fopAc_ac_c* actor )
+    {
+        libtp::tp::d_a_itembase::ItemBase* item = static_cast<libtp::tp::d_a_itembase::ItemBase*>( actor );
+        // We determine whether to use the item_resource or the field_item_resource structs to spawn an item based on the item
+        // being created.
+        switch ( item->m_itemNo )
+        {
+            case libtp::data::items::Empty_Bottle:
+            case libtp::data::items::Sera_Bottle:
+            case libtp::data::items::Jovani_Bottle:
+            case libtp::data::items::Coro_Bottle:
+            case libtp::data::items::Purple_Rupee_Links_House:
+            case libtp::data::items::Poe_Soul:
+            {
+                return libtp::tp::d_a_itembase::CheckItemCreateHeap( actor );
+            }
+            default:
+            {
+                return return_CheckFieldItemCreateHeap( actor );
+            }
+        }
     }
 
     KEEP_FUNC void handle_setLineUpItem( libtp::tp::d_save::dSv_player_item_c* unk1 )

@@ -30,6 +30,7 @@ namespace mod::events
     // REL patching trampolines
     void ( *return_daObjLv5Key_c__Wait )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* _this ) = nullptr;
     void ( *return_daObjLifeContainer_c__Create )( void* _this ) = nullptr;
+    void ( *return_daObjLifeContainer_c__setEffect )( void* _this ) = nullptr;
     CMEB checkNpcTransform = nullptr;
 
     libtp::tp::dzx::ACTR GanonBarrierActor =
@@ -251,6 +252,26 @@ namespace mod::events
                         return_daObjLifeContainer_c__Create( daObjLifePtr );
                     } );
 
+                // Remove glow and sparkle from all non-heart piece/container items
+                return_daObjLifeContainer_c__setEffect = libtp::patch::hookFunction(
+                    reinterpret_cast<void ( * )( void* )>( relPtrRaw + 0x764 ),
+                    []( void* daObjLifePtr )
+                    {
+                        using namespace libtp::data;
+                        uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x92A );
+                        switch ( itemID )
+                        {
+                            case items::Piece_of_Heart:
+                            case items::Heart_Container:
+                            {
+                                return return_daObjLifeContainer_c__setEffect( daObjLifePtr );
+                            }
+                            default:
+                            {
+                                return;
+                            }
+                        }
+                    } );
                 libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x1804 ),
                                              reinterpret_cast<void*>( assembly::asmAdjustFieldItemParams ) );
                 break;

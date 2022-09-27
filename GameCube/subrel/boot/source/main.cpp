@@ -22,6 +22,7 @@
 #include "Z2AudioLib/Z2SoundMgr.h"
 #include "tp/dynamic_link.h"
 #include "gc_wii/OSTime.h"
+#include "tp/d_a_itembase.h"
 
 #include <cstdint>
 
@@ -101,6 +102,8 @@ namespace mod
             patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForPresentDemo, mod::handle_createItemForPresentDemo );
         return_createItemForTrBoxDemo =
             patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForTrBoxDemo, mod::handle_createItemForTrBoxDemo );
+        return_CheckFieldItemCreateHeap =
+            patch::hookFunction( libtp::tp::d_a_itembase::CheckFieldItemCreateHeap, mod::handle_CheckFieldItemCreateHeap );
 
         // Item Wheel functions
         return_setLineUpItem = patch::hookFunction( tp::d_save::setLineUpItem, mod::handle_setLineUpItem );

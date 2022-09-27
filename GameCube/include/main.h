@@ -243,6 +243,9 @@ namespace mod
                                                      int32_t unk6,
                                                      int32_t itemPickupFlag );
 
+    void handle_CheckFieldItemCreateHeap( libtp::tp::f_op_actor::fopAc_ac_c* actor );
+    extern void ( *return_CheckFieldItemCreateHeap )( libtp::tp::f_op_actor::fopAc_ac_c* actor );
+
     // Item Wheel functions
     void handle_setLineUpItem( libtp::tp::d_save::dSv_player_item_c* );
     extern void ( *return_setLineUpItem )( libtp::tp::d_save::dSv_player_item_c* );

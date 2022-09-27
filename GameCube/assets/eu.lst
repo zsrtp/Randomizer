@@ -395,3 +395,7 @@
 // OSInterrupt.o
 8033E4F4:OSDisableInterrupts
 8033E51C:OSRestoreInterrupts
+
+// d_a_itembase.o
+80037ca8:CheckFieldItemCreateHeap
+80037c3c:CheckItemCreateHeap
