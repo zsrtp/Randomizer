@@ -262,6 +262,7 @@
 8002f434:dComIfG_getStageRes
 8002dca8:dComIfGs_getMaxLifeGauge
 8002d2fc:dComIfGp_setNextStage
+8002d7d0:dComIfGs_onStageBossEnemy
 
 // d_kankyo.o
 // data

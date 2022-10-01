@@ -348,6 +348,12 @@ namespace mod::rando
                         replacementValue + 0x65;
                     break;
                 }
+                case rando::ReplacementType::Instruction:
+                {
+                    *reinterpret_cast<uint32_t*>( ( fileAddr + seed->m_ArcReplacements[i].offset ) ) =
+                        seed->m_ArcReplacements[i].replacementValue;
+                    break;
+                }
 
                 default:
                 {

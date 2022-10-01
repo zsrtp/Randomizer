@@ -81,9 +81,23 @@ namespace mod::events
 
         switch ( dmc->moduleInfo->id )
         {
+            // d_a_door_shutter.rel
+            // Door - Shutter
+            case 0x8:
+            {
+                if ( libtp::tp::d_a_alink::checkStageName(
+                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) )
+                {
+                    // Set the call to checkOpenDoor to always return true when in SPR
+                    performStaticASMReplacement( relPtrRaw + 0xD68, 0x38600001 );     // li r3, 1
+                }
+
+                break;
+            }
             // d_a_e_hp.rel
             // Generic Poe
             case 0x00C8:
+            {
                 libtp::patch::writeBranchLR( reinterpret_cast<void*>( relPtrRaw + e_hp_ExecDead_liOffset ),
                                              reinterpret_cast<void*>( assembly::asmAdjustPoeItem ) );
 
@@ -91,18 +105,22 @@ namespace mod::events
                 performStaticASMReplacement( relPtrRaw + e_hp_ExecDead_incOffset, 0x60000000 );
 
                 break;
+            }
             // d_a_e_po.rel
             // Arbiter's Poe
             case 0x00DD:
+            {
                 libtp::patch::writeBranchLR( reinterpret_cast<void*>( relPtrRaw + e_po_ExecDead_liOffset ),
                                              reinterpret_cast<void*>( assembly::asmAdjustAGPoeItem ) );
 
                 // Disable Poe increment (handled through item_get_func; see game_patches)
                 performStaticASMReplacement( relPtrRaw + e_po_ExecDead_incOffset, 0x60000000 );
                 break;
+            }
             // d_a_obj_kshutter.rel
             // Lakebed Temple Boss Door
             case 0x1FA:
+            {
                 // Nop out the instruction that stores the new total small key value when the game attempts to
                 // remove a small key from the inventory when opening the boss door
                 if ( libtp::tools::playerIsInRoomStage(
@@ -112,13 +130,16 @@ namespace mod::events
                     performStaticASMReplacement( relPtrRaw + 0x1198, 0x60000000 );     // Previous: 0x3803ffff
                 }
                 break;
+            }
             // d_a_npc_kn.rel
             // Hero's Shade
             case 0x147:
+            {
                 libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x34D0 ),
                                              reinterpret_cast<void*>( assembly::asmAdjustHiddenSkillItem ) );
                 // Give a an item based on which Golden Wolf you learned a skill from.
                 break;
+            }
             // d_a_npc_ins.rel
             // Agitha
             case 0x141:
@@ -263,6 +284,30 @@ namespace mod::events
                         {
                             case items::Piece_of_Heart:
                             case items::Heart_Container:
+                            case items::Male_Beetle:
+                            case items::Female_Beetle:
+                            case items::Male_Butterfly:
+                            case items::Female_Butterfly:
+                            case items::Male_Stag_Beetle:
+                            case items::Female_Stag_Beetle:
+                            case items::Male_Grasshopper:
+                            case items::Female_Grasshopper:
+                            case items::Male_Phasmid:
+                            case items::Female_Phasmid:
+                            case items::Male_Pill_Bug:
+                            case items::Female_Pill_Bug:
+                            case items::Male_Mantis:
+                            case items::Female_Mantis:
+                            case items::Male_Ladybug:
+                            case items::Female_Ladybug:
+                            case items::Male_Snail:
+                            case items::Female_Snail:
+                            case items::Male_Dragonfly:
+                            case items::Female_Dragonfly:
+                            case items::Male_Ant:
+                            case items::Female_Ant:
+                            case items::Male_Dayfly:
+                            case items::Female_Dayfly:
                             {
                                 return return_daObjLifeContainer_c__setEffect( daObjLifePtr );
                             }
@@ -317,6 +362,8 @@ namespace mod::events
             {
                 // Prevent Yeta from leaving the dungeon if the player has the boss key
                 performStaticASMReplacement( relPtrRaw + 0x1038, 0x38600000 );
+
+                performStaticASMReplacement( relPtrRaw + 0x1000, 0x386000ED );     // li r3,0
                 break;
             }
             // d_a_e_md.rel

@@ -11,7 +11,7 @@
 #include "events.h"
 #include "tp/d_kankyo_rain.h"
 #include "asm.h"
-#include "tp/d_event.h"
+#include "tp/d_com_inf_game.h"
 
 namespace mod::game_patch
 {
@@ -25,6 +25,7 @@ namespace mod::game_patch
         uint32_t screenSetAddress = reinterpret_cast<uint32_t>( libtp::tp::d_menu_collect::dMenuCollect_screenSet );
         uint32_t odourDrawAddress = reinterpret_cast<uint32_t>( libtp::tp::d_kankyo_rain::dKyr_odour_draw );
         uint32_t skipperFunctionAddress = reinterpret_cast<uint32_t>( libtp::tp::d_event::skipper );
+        uint32_t onStageBossEnemyAddress = reinterpret_cast<uint32_t>( libtp::tp::d_com_inf_game::dComIfGs_onStageBossEnemy );
 
 #ifdef TP_US
         uint32_t* enableCrashScreen = reinterpret_cast<uint32_t*>( 0x8000B8A4 );
@@ -70,6 +71,10 @@ namespace mod::game_patch
         // this project changes the poe count to increment after the message is displayed instead of before
         *reinterpret_cast<uint32_t*>( procCoGetItemAddress + 0x56C ) = ASM_COMPARE_LOGICAL_WORD_IMMEDIATE( 0, 19 );
         *reinterpret_cast<uint32_t*>( procCoGetItemAddress + 0x580 ) = ASM_COMPARE_LOGICAL_WORD_IMMEDIATE( 0, 59 );
+
+        // Prevent onStageBossEnemyAddress from setting the Ooccoo flag when defeating a boss.
+        *reinterpret_cast<uint32_t*>( onStageBossEnemyAddress + 0x60 ) = ASM_NOP;     // Previous 480070e9
+        *reinterpret_cast<uint32_t*>( onStageBossEnemyAddress + 0x8C ) = ASM_NOP;     // Previous 480070bd
 
         // Modify getRupeeMax calls in screenSet to display the proper wallet in the pause menu
         libtp::patch::writeBranchBL( reinterpret_cast<void*>( screenSetAddress + 0xDCC ),

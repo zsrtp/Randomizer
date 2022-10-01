@@ -251,6 +251,7 @@
 8002b3f4:dComIfG_get_timelayer
 8002dca8:dComIfGs_getMaxLifeGauge
 8002d2fc:dComIfGp_setNextStage
+8002d7d0:dComIfGs_onStageBossEnemy
 
 // data
 80400300:dComIfG_gameInfo
