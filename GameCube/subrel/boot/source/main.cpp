@@ -23,6 +23,9 @@
 #include "tp/dynamic_link.h"
 #include "gc_wii/OSTime.h"
 #include "tp/d_a_itembase.h"
+#include "tp/JKRMemArchive.h"
+#include "tp/m_Do_dvd_thread.h"
+#include "gc_wii/dvdfs.h"
 
 #include <cstdint>
 
@@ -60,6 +63,9 @@ namespace mod
         // Generate our seedList
         // Align to void*, as pointers use the largest variable type in the SeedList class
         seedList = new ( sizeof( void* ) ) rando::SeedList();
+
+        // Initialize the table of archive file entries that are used for texture recoloring.
+        initArcLookupTable();
 
         // Handle the main function hooks
         hookFunctions();
@@ -135,12 +141,10 @@ namespace mod
         return_query022 = patch::hookFunction( libtp::tp::d_msg_flow::query022, mod::handle_query022 );
         return_query023 = patch::hookFunction( libtp::tp::d_msg_flow::query023, mod::handle_query023 );
         return_query025 = patch::hookFunction( libtp::tp::d_msg_flow::query025, mod::handle_query025 );
-        return_query004 = patch::hookFunction( libtp::tp::d_msg_flow::query004, mod::handle_query004 );
         return_query037 = patch::hookFunction( libtp::tp::d_msg_flow::query037, mod::handle_query037 );
         return_query042 = patch::hookFunction( libtp::tp::d_msg_flow::query042, mod::handle_query042 );
         return_event000 = patch::hookFunction( libtp::tp::d_msg_flow::event000, mod::handle_event000 );
         return_event017 = patch::hookFunction( libtp::tp::d_msg_flow::event017, mod::handle_event017 );
-        return_event003 = patch::hookFunction( libtp::tp::d_msg_flow::event003, mod::handle_event003 );
         return_event041 = patch::hookFunction( libtp::tp::d_msg_flow::event041, mod::handle_event041 );
 
         // Save flag functions
@@ -178,6 +182,9 @@ namespace mod
 
         // Archive/Resource functions
         return_getResInfo = patch::hookFunction( libtp::tp::d_resource::getResInfo, mod::handle_getResInfo );
+
+        return_mountArchive__execute =
+            patch::hookFunction( libtp::tp::m_Do_dvd_thread::mountArchive__execute, mod::handle_mountArchive__execute );
     }
 
     void initRandNext()
@@ -191,5 +198,17 @@ namespace mod
         } while ( next == 0 );
 
         randNext = next;
+    }
+
+    void initArcLookupTable()
+    {
+        using libtp::gc_wii::dvdfs::DVDConvertPathToEntrynum;
+
+        rando::lookupTable[rando::ResObjectKmdl] = DVDConvertPathToEntrynum( "/res/Object/Kmdl.arc" );     // Hero's Clothes
+        rando::lookupTable[rando::ResObjectZmdl] = DVDConvertPathToEntrynum( "/res/Object/Zmdl.arc" );     // Zora Armor
+        // lookupTable[ResObjectWmdl] = DVDConvertPathToEntrynum( "/res/Object/Wmdl.arc" );
+        // lookupTable[ResObjectCWShd] = DVDConvertPathToEntrynum( "/res/Object/CWShd.arc" );
+        // lookupTable[ResObjectSWShd] = DVDConvertPathToEntrynum( "/res/Object/SWShd.arc" );
+        // lookupTable[ResObjectHyShd] = DVDConvertPathToEntrynum( "/res/Object/HyShd.arc" );
     }
 }     // namespace mod

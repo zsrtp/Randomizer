@@ -14,6 +14,7 @@
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
 #include "tp/d_resource.h"
+#include "tp/m_Do_dvd_thread.h"
 
 namespace mod::rando
 {
@@ -37,10 +38,32 @@ namespace mod::rando
         uint8_t overrideBugReward( uint8_t bugID );
         uint8_t getHiddenSkillItem( uint16_t eventIndex );
 
+        // NOTE: This function returns dynamic memory
+        BmdEntry* generateBmdEntries( mod::rando::DvdEntryNumId arcIndex, uint32_t numEntries );
+
+        void recolorArchiveTextures( libtp::tp::m_Do_dvd_thread::mDoDvdThd_mountArchive_c* mountArchive );
+
         // Subrel
         Randomizer( MinSeedInfo* minSeedInfo, uint8_t selectedSeed );
         void loadSeed( MinSeedInfo* minSeedInfo, uint8_t selectedSeed );
         void changeSeed( MinSeedInfo* minSeedInfo, uint8_t newSeed );
+
+        /**
+         * @brief Essentially call dvd::DVDConvertPathToEntrynum in very few
+         * assembly instructions using results cached during startup.
+         *
+         * @param dvdEntryNumId Enum of the dvd filepath for which you want the
+         * entryNum.
+         * @return int32_t dvdEntryNum Result from dvd::DVDConvertPathToEntrynum
+         */
+        inline int32_t getDvdEntryNum( DvdEntryNumId dvdEntryNumId )
+        {
+            if ( dvdEntryNumId >= DvdEntryNumId::DvdEntryNumIdSize )
+            {
+                return -1;
+            }
+            return lookupTable[dvdEntryNumId];
+        }
 
         /**
          * @brief Returns the seed
@@ -54,5 +77,6 @@ namespace mod::rando
         bool m_SeedInit = false;          // True if seed-specific patches, flags, etc. have been applied to the save-file
         uint8_t m_CurrentSeed = 0xFF;     // The seed that is currently loaded
     };
+
 }     // namespace mod::rando
 #endif

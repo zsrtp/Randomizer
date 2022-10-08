@@ -402,3 +402,8 @@
 // d_a_itembase.o
 80037b78:CheckFieldItemCreateHeap
 80037b0c:CheckItemCreateHeap
+
+// m_Do_dvd_thread.o
+80015edc:mountArchive__execute
+// JKRArchivePri.o
+802D65A4:JKRArchive_findFsResource

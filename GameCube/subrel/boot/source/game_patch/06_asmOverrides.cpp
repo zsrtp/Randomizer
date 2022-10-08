@@ -12,6 +12,7 @@
 #include "tp/d_kankyo_rain.h"
 #include "asm.h"
 #include "tp/d_com_inf_game.h"
+#include "tp/m_Do_dvd_thread.h"
 
 namespace mod::game_patch
 {
@@ -26,6 +27,8 @@ namespace mod::game_patch
         uint32_t odourDrawAddress = reinterpret_cast<uint32_t>( libtp::tp::d_kankyo_rain::dKyr_odour_draw );
         uint32_t skipperFunctionAddress = reinterpret_cast<uint32_t>( libtp::tp::d_event::skipper );
         uint32_t onStageBossEnemyAddress = reinterpret_cast<uint32_t>( libtp::tp::d_com_inf_game::dComIfGs_onStageBossEnemy );
+        uint32_t mDoDvdThd_mountArchive_c__execute =
+            reinterpret_cast<uint32_t>( libtp::tp::m_Do_dvd_thread::mountArchive__execute );
 
 #ifdef TP_US
         uint32_t* enableCrashScreen = reinterpret_cast<uint32_t*>( 0x8000B8A4 );
@@ -82,5 +85,7 @@ namespace mod::game_patch
 
         libtp::patch::writeBranchBL( reinterpret_cast<void*>( screenSetAddress + 0xDF0 ),
                                      reinterpret_cast<void*>( events::getPauseRupeeMax ) );
+
+        events::performStaticASMReplacement( mDoDvdThd_mountArchive_c__execute + 0x200, ASM_NOP );
     }
 }     // namespace mod::game_patch

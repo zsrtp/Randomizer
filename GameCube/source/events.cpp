@@ -69,7 +69,6 @@ namespace mod::events
             randomizer->initSave();
         }
         randomizer->overrideEventARC();
-        user_patch::setLanternColor( randomizer );
     }
 
     void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )

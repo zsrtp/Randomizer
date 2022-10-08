@@ -74,7 +74,10 @@ namespace mod::rando
             link_house_sign::createRequiredDungeonsString( this, headerPtr->requiredDungeons );
 
             // Generate the BGM/Fanfare table data
-            this->loadBgmData( data );
+            loadBgmData( data );
+            m_CLR0 = reinterpret_cast<CLR0Header*>( m_GCIData + headerPtr->clr0Offset );
+            m_RawRGBTable = reinterpret_cast<RawRGBTable*>( m_GCIData + headerPtr->clr0Offset + m_CLR0->rawRGBOffset );
+            m_BmdEntries = reinterpret_cast<BmdEntry*>( m_GCIData + headerPtr->clr0Offset + m_CLR0->bmdEntriesOffset );
         }
         delete[] data;
     }

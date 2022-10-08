@@ -23,6 +23,8 @@
 #include "Z2AudioLib/Z2SceneMgr.h"
 #include "events.h"
 #include "tp/d_resource.h"
+#include "tp/JKRMemArchive.h"
+#include "tp/m_Do_dvd_thread.h"
 
 // Number of lines that should not be cleared when flushing the screen
 #define CONSOLE_PROTECTED_LINES 4
@@ -80,6 +82,7 @@ namespace mod
     float intToFloat( int32_t value );
     void handleInput( uint32_t inputs );
     void handleFoolishItem();
+    void initArcLookupTable();
 
     // Inline getConsole, as it's just a shortcut to get a reference to the console variable
     inline libtp::display::Console& getConsole()
@@ -290,9 +293,6 @@ namespace mod
     bool handle_query042( void* unk1, void* unk2, int32_t unk3 );
     extern bool ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 );
 
-    int32_t handle_query004( void* unk1, void* unk2, int32_t unk3 );
-    extern int32_t ( *return_query004 )( void* unk1, void* unk2, int32_t unk3 );
-
     int32_t handle_query037( void* unk1, void* unk2, int32_t unk3 );
     extern int32_t ( *return_query037 )( void* unk1, void* unk2, int32_t unk3 );
 
@@ -301,9 +301,6 @@ namespace mod
 
     int32_t handle_event017( void* messageFlow, void* nodeEvent, void* actrPtr );
     extern int32_t ( *return_event017 )( void* messageFlow, void* nodeEvent, void* actrPtr );
-
-    int32_t handle_event003( void* messageFlow, void* nodeEvent, void* actrPtr );
-    extern int32_t ( *return_event003 )( void* messageFlow, void* nodeEvent, void* actrPtr );
 
     int32_t handle_event041( void* messageFlow, void* nodeEvent, void* actrPtr );
     extern int32_t ( *return_event041 )( void* messageFlow, void* nodeEvent, void* actrPtr );
@@ -381,6 +378,9 @@ namespace mod
     extern libtp::tp::d_resource::dRes_info_c* ( *return_getResInfo )( const char* arcName,
                                                                        libtp::tp::d_resource::dRes_info_c* objectInfo,
                                                                        int32_t size );
+
+    bool handle_mountArchive__execute( libtp::tp::m_Do_dvd_thread::mDoDvdThd_mountArchive_c* mountArchive );
+    extern bool ( *return_mountArchive__execute )( libtp::tp::m_Do_dvd_thread::mDoDvdThd_mountArchive_c* mountArchive );
 
 }     // namespace mod
 #endif

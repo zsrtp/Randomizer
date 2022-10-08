@@ -17,11 +17,6 @@ namespace mod::user_patch
      * @brief Updates the cosmetics for the user interface (Buttons, Hearts, etc.)
      */
     void setHUDCosmetics( rando::Randomizer* randomizer );
-
-    /**
-     * @brief Updates the cosmetics for the Lantern colors
-     */
-    void setLanternColor( rando::Randomizer* randomizer );
 }     // namespace mod::user_patch
 
 #endif

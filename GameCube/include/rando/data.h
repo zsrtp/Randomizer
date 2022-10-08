@@ -56,18 +56,11 @@ namespace mod::rando
         /* 0x44 */ entryInfo shopItemCheckInfo;
         /* 0x48 */ entryInfo startingItemInfo;
         /* 0x4C */ uint16_t bgmHeaderOffset;
-        /* 0x4E */ uint8_t heartColor;
-        /* 0x4F */ uint8_t aButtonColor;
-        /* 0x50 */ uint8_t bButtonColor;
-        /* 0x51 */ uint8_t xButtonColor;
-        /* 0x52 */ uint8_t yButtonColor;
-        /* 0x53 */ uint8_t zButtonColor;
-        /* 0x54 */ uint8_t lanternColor;
-        /* 0x55 */ uint8_t transformAnywhere;
-        /* 0x56 */ uint8_t quickTransform;
-        /* 0x57 */ uint8_t castleRequirements;
-        /* 0x58 */ uint8_t palaceRequirements;
-        /* 0x59 */ uint8_t padding[3];
+        /* 0x4E */ uint16_t clr0Offset;
+        /* 0x50 */ uint8_t transformAnywhere;
+        /* 0x51 */ uint8_t quickTransform;
+        /* 0x52 */ uint8_t castleRequirements;
+        /* 0x53 */ uint8_t palaceRequirements;
     } __attribute__( ( __packed__ ) );
 
     // Minimum amount of data needed for keeping track of a seed
@@ -228,6 +221,78 @@ namespace mod::rando
         uint8_t padding[1];
         CustomMessageEntryInfo entry[];     // Size is totalLanguages
     } __attribute__( ( __packed__ ) );
+
+    struct CLR0Header
+    {
+        /* 0x00 */ uint32_t totalByteLength;      // Total byte size of the entire CLR0 chunk
+        /* 0x04 */ uint32_t numBmdEntries;        // Total number of bmd replacement entries.
+        /* 0x08 */ uint16_t bmdEntriesOffset;     // Offset to the list of bmd entries
+        /* 0x0A */ uint16_t rawRGBOffset;         // Offset to the list of raw RGB entries
+    } __attribute__( ( __packed__ ) );
+
+    struct BmdEntry
+    {
+        /* 0x00 */ uint8_t recolorType;            // 0: CMPR, 1: MAT, etc.
+        /* 0x01 */ uint8_t archiveIndex;           // The index of the archive used to load the texture replacement.
+        /* 0x02 */ uint16_t numTextures;           // number of textures that are being recolored in this bmd file.
+        /* 0x04 */ uint16_t textureListOffset;     // offset to the list of textures being recolored.
+        /* 0x06 */ char bmdRes[0x12];              // names are of varying size, but I haven't seen one over 0x10 yet.
+    } __attribute__( ( __packed__ ) );
+
+    struct CMPRTextureEntry
+    {
+        /* 0x00 */ uint32_t rgba;
+        /* 0x04 */ char textureName[0xC];
+    } __attribute__( ( __packed__ ) );
+
+    enum RecolorType : uint8_t
+    {
+        CMPR = 0,
+        MAT = 1,
+        Invalid = 0xFF,
+    };
+
+    enum RawRGBId : uint8_t
+    {
+        LanternGlow,
+        Hearts,
+        ABtn,
+        BBtn,
+        XBtn,
+        YBtn,
+        ZBtn
+    };
+
+    struct RawRGBTable
+    {
+        uint32_t lanternColor;
+        uint32_t heartColor;
+        uint32_t aButtonColor;
+        uint32_t bButtonColor;
+        uint32_t xButtonColor;
+        uint32_t yButtonColor;
+        uint32_t zButtonColor;
+    } __attribute__( ( __packed__ ) );
+
+    enum DvdEntryNumId : uint8_t
+    {
+        // DO NOT set any of these enums to a specific value. The exact values
+        // and the order are irrelevant (other than `DvdEntryNumIdSize` which
+        // must go last).
+        ResObjectKmdl,     // Link wearing Hero's Clothes
+        ResObjectZmdl,     // Link wearing Zora Armor
+                           // ResObjectWmdl,      // Wolf Link and Midna on back
+                           // ResObjectCWShd,     // Ordon Shield
+                           // ResObjectSWShd,     // Wooden Shield
+                           // ResObjectHyShd,     // Hylian Shield
+
+        DvdEntryNumIdSize,
+        // DvdEntryNumIdSize MUST GO LAST. When adding a new enum, put it above
+        // this one and don't forget to actually add the lookup in the
+        // `dvdentrynum.cpp` file!
+    };
+
+    extern int32_t lookupTable[DvdEntryNumIdSize];
 
 }     // namespace mod::rando
 #endif

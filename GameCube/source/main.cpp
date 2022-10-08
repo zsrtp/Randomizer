@@ -41,6 +41,10 @@
 #include "patch.h"
 #include "asm.h"
 #include "tp/d_a_itembase.h"
+#include "tp/JKRMemArchive.h"
+#include "tp/m_Do_dvd_thread.h"
+#include "util/texture_utils.h"
+#include "rando/data.h"
 
 namespace mod
 {
@@ -216,6 +220,8 @@ namespace mod
     KEEP_VAR libtp::tp::d_resource::dRes_info_c* ( *return_getResInfo )( const char* arcName,
                                                                          libtp::tp::d_resource::dRes_info_c* objectInfo,
                                                                          int32_t size ) = nullptr;
+    KEEP_VAR bool ( *return_mountArchive__execute )( libtp::tp::m_Do_dvd_thread::mDoDvdThd_mountArchive_c* mountArchive ) =
+        nullptr;
 
     void main()
     {
@@ -969,19 +975,6 @@ namespace mod
         return return_query025( unk1, unk2, unk3 );
     }
 
-    KEEP_FUNC int32_t handle_query004( void* unk1, void* unk2, int32_t unk3 )
-    {
-        if ( libtp::tools::playerIsInRoomStage( 2, libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) )
-        {
-            uint16_t donationCheck = *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( unk2 ) + 4 );
-            if ( donationCheck == 0x1E )
-            {
-                *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( unk2 ) + 4 ) = 100;
-            }
-        }
-        return return_query004( unk1, unk2, unk3 );
-    }
-
     KEEP_FUNC int32_t handle_query037( void* unk1, void* unk2, int32_t unk3 )
     {
         // Return the original function immediately as we need its output
@@ -1018,21 +1011,6 @@ namespace mod
             *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 ) = 0x0000;
         }
         return return_event017( messageFlow, nodeEvent, actrPtr );
-    }
-
-    KEEP_FUNC int32_t handle_event003( void* messageFlow, void* nodeEvent, void* actrPtr )
-    {
-        // If we are donating to charlo, we want to remove 100 rupees instead of the normal 30
-        if ( libtp::tools::playerIsInRoomStage( 2, libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) )
-        {
-            uint32_t donationAmount = *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 );
-            if ( donationAmount == 0x1E )
-            {
-                *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 ) = 100;
-                return 1;
-            }
-        }
-        return return_event003( messageFlow, nodeEvent, actrPtr );
     }
 
     KEEP_FUNC int32_t handle_event041( void* messageFlow, void* nodeEvent, void* actrPtr )
@@ -1572,6 +1550,34 @@ namespace mod
         }
         return resourcePtr;
     }
+
+    // This is called in the NON-MAIN thread which is loading the archive where
+    // `mountArchive->mIsDone = true;` would be called normally (this is the
+    // last thing that gets called before the archive is considered loaded). The
+    // archive is no longer automatically marked as loaded, so we need to do
+    // this ourselves when we are done. (This indicates that the archive is
+    // loaded, and whatever was waiting on it will see this byte change the next
+    // time it polls the completion status (polling happens once per frame?))
+    KEEP_FUNC bool handle_mountArchive__execute( libtp::tp::m_Do_dvd_thread::mDoDvdThd_mountArchive_c* mountArchive )
+    {
+        const bool ret = return_mountArchive__execute( mountArchive );
+
+        if ( ret )
+        {
+            // Make sure the randomizer is loaded/enabled and a seed is loaded
+            rando::Seed* seed;
+            if ( seed = getCurrentSeed( randomizer ), seed )
+            {
+                randomizer->recolorArchiveTextures( mountArchive );
+            }
+        }
+
+        // Need to mark the archive as loaded once we are done modifying its
+        // contents.
+        mountArchive->mIsDone = true;
+
+        return ret;
+    };
 
     uint32_t rand( uint32_t* seed )
     {
