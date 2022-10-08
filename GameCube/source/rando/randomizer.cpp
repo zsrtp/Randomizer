@@ -487,14 +487,12 @@ namespace mod::rando
                 JKRArchive::SDIFileEntry* alBmdFileEntry = JKRArchive_findFsResource( mountArchive->mArchive, buf, 0 );
                 if ( !alBmdFileEntry )
                 {
-                    delete[] loadedBmdEntries;
                     continue;
                 }
 
                 uint8_t* tex1Addr = findTex1InBmd( mountArchive->mArchive->mArchiveData + alBmdFileEntry->data_offset );
                 if ( !tex1Addr )
                 {
-                    delete[] loadedBmdEntries;
                     continue;
                 }
 
