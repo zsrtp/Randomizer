@@ -483,7 +483,20 @@ namespace mod::rando
             {
                 BmdEntry* currentBmdEntry = &loadedBmdEntries[i];
                 char buf[64];     // a little extra to be safe
-                snprintf( buf, sizeof( buf ), "bmwr/%s", currentBmdEntry->bmdRes );
+                switch ( currentBmdEntry->archiveIndex )
+                {
+                    case DvdEntryNumId::ResObjectOgZORA:
+                    {
+                        snprintf( buf, sizeof( buf ), "bmdr/%s", currentBmdEntry->bmdRes );
+                        break;
+                    }
+                    default:
+                    {
+                        snprintf( buf, sizeof( buf ), "bmwr/%s", currentBmdEntry->bmdRes );
+                        break;
+                    }
+                }
+
                 JKRArchive::SDIFileEntry* alBmdFileEntry = JKRArchive_findFsResource( mountArchive->mArchive, buf, 0 );
                 if ( !alBmdFileEntry )
                 {
