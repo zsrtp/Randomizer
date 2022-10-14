@@ -63,6 +63,7 @@ namespace mod
     uint8_t gameState = GAME_BOOT;
     void* Z2ScenePtr = nullptr;
     uint8_t foolishTrapCount = 0;
+    uint8_t foolishTrapSpawnCount = 0;
     KEEP_VAR bool walletsPatched = false;
     KEEP_VAR uint8_t seedRelAction = SEED_ACTION_NONE;
     uint32_t randNext = 0;
@@ -1436,7 +1437,10 @@ namespace mod
     {
         switch ( itemID )
         {
-            case libtp::data::items::Foolish_Item:
+            // Only the first foolish item should need to be checked, but check all to be safe
+            case libtp::data::items::Foolish_Item_1:
+            case libtp::data::items::Foolish_Item_2:
+            case libtp::data::items::Foolish_Item_3:
             {
                 itemID = libtp::data::items::Ordon_Pumpkin;
                 break;

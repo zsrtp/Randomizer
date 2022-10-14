@@ -76,7 +76,9 @@ namespace mod::game_patch
                                                      libtp::data::items::Palace_of_Twilight_Small_Key,
                                                      libtp::data::items::Hyrule_Castle_Small_Key,
                                                      libtp::data::items::Bulblin_Camp_Key,
-                                                     libtp::data::items::Foolish_Item,
+                                                     libtp::data::items::Foolish_Item_1,
+                                                     libtp::data::items::Foolish_Item_2,
+                                                     libtp::data::items::Foolish_Item_3,
                                                      libtp::data::items::Aurus_Memo,
                                                      libtp::data::items::Asheis_Sketch,
                                                      libtp::data::items::Forest_Temple_Big_Key,
@@ -507,7 +509,9 @@ namespace mod::game_patch
         itemFuncPtr[items::Jump_Strike] = _02_jumpStrikeItemFunc;
         itemFuncPtr[items::Great_Spin] = _02_greatSpinItemFunc;
         itemFuncPtr[items::Vessel_Of_Light_Lanayru] = _02_lanayruVesselItemFunc;
-        itemFuncPtr[items::Foolish_Item] = _02_foolishItemFunc;
+        itemFuncPtr[items::Foolish_Item_1] = _02_foolishItemFunc;
+        itemFuncPtr[items::Foolish_Item_2] = _02_foolishItemFunc;
+        itemFuncPtr[items::Foolish_Item_3] = _02_foolishItemFunc;
 
         // Some items need a valid getCheckFunc definition.
         itemGetCheckFuncPtr[items::Ancient_Sky_Book_First_Character] = _02_firstSkybookItemGetCheck;

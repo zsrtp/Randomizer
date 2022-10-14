@@ -273,9 +273,36 @@ namespace mod::game_patch
                     break;
                 }
 
+                // Only the first foolish item should need to be checked, but check all to be safe
+                case Foolish_Item_1:
+                case Foolish_Item_2:
+                case Foolish_Item_3:
+                {
+                    constexpr uint32_t maxFoolishTraps = 3;
+                    uint32_t count = foolishTrapSpawnCount;
+
+                    // Make sure the current count is valid before using
+                    if ( count >= maxFoolishTraps )
+                    {
+                        count = 0;
+                    }
+
+                    itemID = Foolish_Item_1 + count;
+                    count++;
+
+                    // Make sure the new count is valid before saving
+                    if ( count >= maxFoolishTraps )
+                    {
+                        count = 0;
+                    }
+
+                    foolishTrapSpawnCount = static_cast<uint8_t>( count );
+                    break;
+                }
+
                 default:
                 {
-                    return itemID;
+                    break;
                 }
             }
         }

@@ -80,14 +80,22 @@ namespace mod::game_patch
 
     void _02_modifyFoolishFieldModel()
     {
+        // Make sure foolishTrapSpawnCount is reset
+        foolishTrapSpawnCount = 0;
+
         // Set the field model of the Foolish Item ID to the model of a random important item.
         libtp::tp::d_item_data::FieldItemRes* fieldItemResPtr = &libtp::tp::d_item_data::field_item_res[0];
         constexpr uint32_t modelListSize = sizeof( foolishModelItemList ) / sizeof( foolishModelItemList[0] );
-        uint32_t randomIndex = ulRand( &randNext, modelListSize );
-        uint32_t fieldModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
-        memcpy( &fieldItemResPtr[libtp::data::items::Foolish_Item],
-                &fieldItemResPtr[fieldModelItemID],
-                sizeof( libtp::tp::d_item_data::FieldItemRes ) );
+
+        for ( uint32_t i = 0; i < 3; i++ )
+        {
+            uint32_t randomIndex = ulRand( &randNext, modelListSize );
+            uint32_t fieldModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
+
+            memcpy( &fieldItemResPtr[libtp::data::items::Foolish_Item_1 + i],
+                    &fieldItemResPtr[fieldModelItemID],
+                    sizeof( libtp::tp::d_item_data::FieldItemRes ) );
+        }
     }
 
     KEEP_VAR const char* _02_hiddenSkillArc = "O_gD_memo";

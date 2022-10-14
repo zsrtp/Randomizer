@@ -190,31 +190,35 @@ namespace mod::rando
         d_item_data::ItemResource* itemResourcePtr = &d_item_data::item_resource[0];
         for ( uint32_t i = 0; i < num_shopItems; i++ )
         {
-            if ( allSHOP[i].replacementItemID == libtp::data::items::Foolish_Item )
+            uint32_t replacementItem = allSHOP[i].replacementItemID;
+            uint32_t shopItem = allSHOP[i].shopItemID;
+
+            switch ( replacementItem )
             {
-                game_patch::_02_modifyFoolishShopModel( allSHOP[i].shopItemID );
+                // Only the first foolish item should need to be checked, but check all to be safe
+                case libtp::data::items::Foolish_Item_1:
+                case libtp::data::items::Foolish_Item_2:
+                case libtp::data::items::Foolish_Item_3:
+                {
+                    game_patch::_02_modifyFoolishShopModel( static_cast<uint16_t>( shopItem ) );
+                    break;
+                }
+                default:
+                {
+                    d_a_shop_item_static::shopItemData[shopItem].arcName = itemResourcePtr[replacementItem].arcName;
+                    d_a_shop_item_static::shopItemData[shopItem].modelResIdx = itemResourcePtr[replacementItem].modelResIdx;
+                    d_a_shop_item_static::shopItemData[shopItem].wBtkResIdx = itemResourcePtr[replacementItem].btkResIdx;
+                    d_a_shop_item_static::shopItemData[shopItem].wBckResIdx = itemResourcePtr[replacementItem].bckResIdx;
+                    d_a_shop_item_static::shopItemData[shopItem].wBrkResIdx = itemResourcePtr[replacementItem].brkResIdx;
+                    d_a_shop_item_static::shopItemData[shopItem].wBtpResIdx = itemResourcePtr[replacementItem].btpResIdx;
+                    d_a_shop_item_static::shopItemData[shopItem].tevFrm = itemResourcePtr[replacementItem].tevFrm;
+                    break;
+                }
             }
-            else
-            {
-                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].arcName =
-                    itemResourcePtr[allSHOP[i].replacementItemID].arcName;
-                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].modelResIdx =
-                    itemResourcePtr[allSHOP[i].replacementItemID].modelResIdx;
-                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBtkResIdx =
-                    itemResourcePtr[allSHOP[i].replacementItemID].btkResIdx;
-                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBckResIdx =
-                    itemResourcePtr[allSHOP[i].replacementItemID].bckResIdx;
-                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBrkResIdx =
-                    itemResourcePtr[allSHOP[i].replacementItemID].brkResIdx;
-                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].wBtpResIdx =
-                    itemResourcePtr[allSHOP[i].replacementItemID].btpResIdx;
-                d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].tevFrm =
-                    itemResourcePtr[allSHOP[i].replacementItemID].tevFrm;
-            }
-            d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].btpFrm = 0xFF;
-            d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].posY = 15.0f;
-            d_a_shop_item_static::shopItemData[allSHOP[i].shopItemID].mFlags = 0xFFFFFFFF;
+
+            d_a_shop_item_static::shopItemData[shopItem].btpFrm = 0xFF;
+            d_a_shop_item_static::shopItemData[shopItem].posY = 15.0f;
+            d_a_shop_item_static::shopItemData[shopItem].mFlags = 0xFFFFFFFF;
         }
     }
-
 }     // namespace mod::rando
