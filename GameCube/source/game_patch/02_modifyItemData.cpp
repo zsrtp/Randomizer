@@ -95,6 +95,10 @@ namespace mod::game_patch
             memcpy( &fieldItemResPtr[libtp::data::items::Foolish_Item_1 + i],
                     &fieldItemResPtr[fieldModelItemID],
                     sizeof( libtp::tp::d_item_data::FieldItemRes ) );
+
+            libtp::gc_wii::os_cache::DCFlushRange(
+                reinterpret_cast<void*>( &fieldItemResPtr[libtp::data::items::Foolish_Item_1 + i] ),
+                sizeof( libtp::tp::d_item_data::FieldItemRes ) );
         }
     }
 

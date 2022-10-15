@@ -14,6 +14,7 @@
 #include "tp/control.h"
 #include "data/stages.h"
 #include "data/items.h"
+#include "gc_wii/OSCache.h"
 
 namespace mod::game_patch
 {

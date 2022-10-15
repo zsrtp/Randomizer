@@ -25,5 +25,8 @@ namespace mod::game_patch
         shopItemData[shopID].wBrkResIdx = itemResourcePtr[shopModelItemID].brkResIdx;
         shopItemData[shopID].wBtpResIdx = itemResourcePtr[shopModelItemID].btpResIdx;
         shopItemData[shopID].tevFrm = itemResourcePtr[shopModelItemID].tevFrm;
+
+        libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( &shopItemData[shopID] ),
+                                               sizeof( libtp::tp::d_a_shop_item_static::ShopItemData ) );
     }
 }     // namespace mod::game_patch
