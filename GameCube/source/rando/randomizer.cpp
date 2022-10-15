@@ -49,6 +49,10 @@ namespace mod::rando
 
         const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mStage;
         seed->LoadChecks( stage );
+
+        // Make sure foolishTrapSpawnCount is reset before randomizing foolish item models
+        foolishTrapSpawnCount = 0;
+
         game_patch::_02_modifyFoolishFieldModel();
     }
 

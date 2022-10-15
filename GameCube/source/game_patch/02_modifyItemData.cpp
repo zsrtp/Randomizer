@@ -80,25 +80,23 @@ namespace mod::game_patch
 
     void _02_modifyFoolishFieldModel()
     {
-        // Make sure foolishTrapSpawnCount is reset
-        foolishTrapSpawnCount = 0;
-
         // Set the field model of the Foolish Item ID to the model of a random important item.
         libtp::tp::d_item_data::FieldItemRes* fieldItemResPtr = &libtp::tp::d_item_data::field_item_res[0];
         constexpr uint32_t modelListSize = sizeof( foolishModelItemList ) / sizeof( foolishModelItemList[0] );
 
-        for ( uint32_t i = 0; i < 3; i++ )
+        constexpr uint32_t maxFoolishTraps = 3;
+        for ( uint32_t i = 0; i < maxFoolishTraps; i++ )
         {
             uint32_t randomIndex = ulRand( &randNext, modelListSize );
             uint32_t fieldModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
 
-            memcpy( &fieldItemResPtr[libtp::data::items::Foolish_Item_1 + i],
-                    &fieldItemResPtr[fieldModelItemID],
-                    sizeof( libtp::tp::d_item_data::FieldItemRes ) );
+            libtp::tp::d_item_data::FieldItemRes* currentFieldItemPtr =
+                &fieldItemResPtr[libtp::data::items::Foolish_Item_1 + i];
 
-            libtp::gc_wii::os_cache::DCFlushRange(
-                reinterpret_cast<void*>( &fieldItemResPtr[libtp::data::items::Foolish_Item_1 + i] ),
-                sizeof( libtp::tp::d_item_data::FieldItemRes ) );
+            memcpy( currentFieldItemPtr, &fieldItemResPtr[fieldModelItemID], sizeof( libtp::tp::d_item_data::FieldItemRes ) );
+
+            libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( currentFieldItemPtr ),
+                                                   sizeof( libtp::tp::d_item_data::FieldItemRes ) );
         }
     }
 
