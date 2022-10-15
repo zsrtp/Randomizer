@@ -1138,7 +1138,17 @@ namespace mod::customMessages
         // Foolish Item
         foolishItemJp,
         sizeof( foolishItemJp ),
-        0x00F3,
+        0x0077,
+
+        // Foolish Item
+        foolishItemJp,
+        sizeof( foolishItemJp ),
+        0x0078,
+
+        // Foolish Item
+        foolishItemJp,
+        sizeof( foolishItemJp ),
+        0x0079,
 
         // Talking to Midna
         talkToMidnaJp,

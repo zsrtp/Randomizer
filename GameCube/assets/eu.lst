@@ -402,6 +402,6 @@
 80037c3c:CheckItemCreateHeap
 
 // m_Do_dvd_thread.o
-80015e90:mountArchive_execute
+80015e90:mountArchive__execute
 // JKRArchivePri.o
 802D73A4:JKRArchive_findFsResource

@@ -806,7 +806,7 @@ namespace mod::events
 
         switch ( memBit )
         {
-            case 3:
+            case 3:     // Boss Defeated
             {
                 const char* dungeonStages[] = { allStages[stageIDs::Forest_Temple],
                                                 allStages[stageIDs::Ook],
@@ -836,12 +836,12 @@ namespace mod::events
                 break;
             }
 
-            case 4:
+            case 4:     // Heart Container Collected
             {
                 return false;
             }
 
-            case 7:
+            case 7:     // Miniboss defeated
             {
                 if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Forest_Temple] ) )
                 {

@@ -1240,7 +1240,17 @@ namespace mod::customMessages
         // Foolish Item
         foolishItemIt,
         sizeof( foolishItemIt ),
-        0x00F3,
+        0x0077,
+
+        // Foolish Item
+        foolishItemIt,
+        sizeof( foolishItemIt ),
+        0x0078,
+
+        // Foolish Item
+        foolishItemIt,
+        sizeof( foolishItemIt ),
+        0x0079,
 
         // Talking to Midna
         talkToMidnaIt,
