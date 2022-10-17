@@ -303,6 +303,9 @@ namespace mod::rando
                     uint32_t replacementValue =
                         game_patch::_04_verifyProgressiveItem( this, seed->m_ArcReplacements[i].replacementValue );
                     *reinterpret_cast<uint8_t*>( ( fileAddr + seed->m_ArcReplacements[i].offset ) ) = replacementValue;
+                    libtp::gc_wii::os_cache::DCFlushRange(
+                        reinterpret_cast<void*>( fileAddr + seed->m_ArcReplacements[i].offset ),
+                        sizeof( uint8_t ) );
                     break;
                 }
                 case rando::ReplacementType::HiddenSkill:
@@ -330,6 +333,9 @@ namespace mod::rando
                         {
                             uint16_t msgID = game_patch::_04_verifyProgressiveItem( this, seed->m_HiddenSkillChecks[j].itemID );
                             *reinterpret_cast<uint16_t*>( adjustedFilePtr + seed->m_ArcReplacements[i].offset ) = msgID + 0x65;
+                            libtp::gc_wii::os_cache::DCFlushRange(
+                                reinterpret_cast<void*>( adjustedFilePtr + seed->m_ArcReplacements[i].offset ),
+                                sizeof( uint16_t ) );
                         }
                     }
                     break;
@@ -339,6 +345,9 @@ namespace mod::rando
                     uint32_t replacementValue =
                         game_patch::_04_verifyProgressiveItem( this, seed->m_ArcReplacements[i].replacementValue );
                     *reinterpret_cast<uint16_t*>( ( fileAddr + seed->m_ArcReplacements[i].offset ) ) = replacementValue + 0x65;
+                    libtp::gc_wii::os_cache::DCFlushRange(
+                        reinterpret_cast<void*>( fileAddr + seed->m_ArcReplacements[i].offset ),
+                        sizeof( uint16_t ) );
                     break;
                 }
 
@@ -354,6 +363,10 @@ namespace mod::rando
                     *reinterpret_cast<uint16_t*>( ( adjustedFilePtr + seed->m_ArcReplacements[i].offset ) ) =
                         replacementValue + 0x65;
 
+                    libtp::gc_wii::os_cache::DCFlushRange(
+                        reinterpret_cast<void*>( adjustedFilePtr + seed->m_ArcReplacements[i].offset ),
+                        sizeof( uint16_t ) );
+
                     break;
                 }
 
@@ -366,12 +379,19 @@ namespace mod::rando
                         game_patch::_04_verifyProgressiveItem( this, seed->m_ArcReplacements[i].replacementValue );
                     *reinterpret_cast<uint16_t*>( ( adjustedFilePtr + seed->m_ArcReplacements[i].offset ) ) =
                         replacementValue + 0x65;
+
+                    libtp::gc_wii::os_cache::DCFlushRange(
+                        reinterpret_cast<void*>( adjustedFilePtr + seed->m_ArcReplacements[i].offset ),
+                        sizeof( uint16_t ) );
                     break;
                 }
                 case rando::ReplacementType::Instruction:
                 {
                     *reinterpret_cast<uint32_t*>( ( fileAddr + seed->m_ArcReplacements[i].offset ) ) =
                         seed->m_ArcReplacements[i].replacementValue;
+                    libtp::gc_wii::os_cache::DCFlushRange(
+                        reinterpret_cast<void*>( fileAddr + seed->m_ArcReplacements[i].offset ),
+                        sizeof( uint16_t ) );
                     break;
                 }
 
