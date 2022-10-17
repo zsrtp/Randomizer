@@ -199,6 +199,9 @@ namespace mod::rando
                 case libtp::data::items::Foolish_Item_1:
                 case libtp::data::items::Foolish_Item_2:
                 case libtp::data::items::Foolish_Item_3:
+                case libtp::data::items::Foolish_Item_4:
+                case libtp::data::items::Foolish_Item_5:
+                case libtp::data::items::Foolish_Item_6:
                 {
                     game_patch::_02_modifyFoolishShopModel( static_cast<uint16_t>( shopItem ) );
                     break;

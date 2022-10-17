@@ -79,6 +79,9 @@ namespace mod::game_patch
                                                      libtp::data::items::Foolish_Item_1,
                                                      libtp::data::items::Foolish_Item_2,
                                                      libtp::data::items::Foolish_Item_3,
+                                                     libtp::data::items::Foolish_Item_4,
+                                                     libtp::data::items::Foolish_Item_5,
+                                                     libtp::data::items::Foolish_Item_6,
                                                      libtp::data::items::Aurus_Memo,
                                                      libtp::data::items::Asheis_Sketch,
                                                      libtp::data::items::Forest_Temple_Big_Key,
@@ -512,6 +515,9 @@ namespace mod::game_patch
         itemFuncPtr[items::Foolish_Item_1] = _02_foolishItemFunc;
         itemFuncPtr[items::Foolish_Item_2] = _02_foolishItemFunc;
         itemFuncPtr[items::Foolish_Item_3] = _02_foolishItemFunc;
+        itemFuncPtr[items::Foolish_Item_4] = _02_foolishItemFunc;
+        itemFuncPtr[items::Foolish_Item_5] = _02_foolishItemFunc;
+        itemFuncPtr[items::Foolish_Item_6] = _02_foolishItemFunc;
 
         // Some items need a valid getCheckFunc definition.
         itemGetCheckFuncPtr[items::Ancient_Sky_Book_First_Character] = _02_firstSkybookItemGetCheck;

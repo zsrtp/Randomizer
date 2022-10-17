@@ -62,7 +62,7 @@ namespace mod
     bool consoleState = true;
     uint8_t gameState = GAME_BOOT;
     void* Z2ScenePtr = nullptr;
-    uint8_t foolishTrapCount = 0;
+    uint8_t foolishTrapTriggerCount = 0;
     uint8_t foolishTrapSpawnCount = 0;
     KEEP_VAR bool walletsPatched = false;
     KEEP_VAR uint8_t seedRelAction = SEED_ACTION_NONE;
@@ -567,7 +567,7 @@ namespace mod
             }
         }
 
-        if ( foolishTrapCount > 0 )
+        if ( foolishTrapTriggerCount > 0 )
         {
             handleFoolishItem();
         }
@@ -1441,6 +1441,9 @@ namespace mod
             case libtp::data::items::Foolish_Item_1:
             case libtp::data::items::Foolish_Item_2:
             case libtp::data::items::Foolish_Item_3:
+            case libtp::data::items::Foolish_Item_4:
+            case libtp::data::items::Foolish_Item_5:
+            case libtp::data::items::Foolish_Item_6:
             {
                 itemID = libtp::data::items::Ordon_Pumpkin;
                 break;
@@ -1509,8 +1512,8 @@ namespace mod
         loadSeWave( Z2ScenePtr, seWave1 );
         loadSeWave( Z2ScenePtr, seWave2 );
 
-        uint32_t count = foolishTrapCount;
-        foolishTrapCount = 0;
+        uint32_t count = foolishTrapTriggerCount;
+        foolishTrapTriggerCount = 0;
 
         // Failsafe: Make sure the count does not somehow exceed 100
         if ( count > 100 )

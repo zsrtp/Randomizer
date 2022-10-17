@@ -69,7 +69,7 @@ namespace mod
     extern uint8_t gameState;
     extern void* Z2ScenePtr;
     extern uint8_t foolishTrapSpawnCount;
-    extern uint8_t foolishTrapCount;
+    extern uint8_t foolishTrapTriggerCount;
     extern uint8_t seedRelAction;
     extern bool walletsPatched;
     extern const char* m_DonationText;

@@ -28,7 +28,17 @@
 
 namespace mod::rando
 {
+    const uint8_t foolishItemIds[MAX_SPAWNED_FOOLISH_ITEMS] = {
+        libtp::data::items::Foolish_Item_1,
+        libtp::data::items::Foolish_Item_2,
+        libtp::data::items::Foolish_Item_3,
+        libtp::data::items::Foolish_Item_4,
+        libtp::data::items::Foolish_Item_5,
+        libtp::data::items::Foolish_Item_6,
+    };
+
     int32_t lookupTable[DvdEntryNumIdSize];
+
     // Currrently unused, so will leave here
     Randomizer::~Randomizer( void )
     {

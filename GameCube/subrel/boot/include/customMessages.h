@@ -9,7 +9,7 @@ namespace mod::customMessages
 {
     using namespace item_wheel_menu;
 
-#define TOTAL_CUSTOM_MESSAGES 64
+#define TOTAL_CUSTOM_MESSAGES 67
 
     struct MsgEntry
     {

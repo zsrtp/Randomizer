@@ -12,6 +12,9 @@
 #include "gc_wii/card.h"
 #include <cstdint>
 
+// Maximum expected number of spawned ice traps in any given area
+#define MAX_SPAWNED_FOOLISH_ITEMS 6
+
 namespace mod::rando
 {
     /**
@@ -293,6 +296,7 @@ namespace mod::rando
         // `dvdentrynum.cpp` file!
     };
 
+    extern const uint8_t foolishItemIds[MAX_SPAWNED_FOOLISH_ITEMS];
     extern int32_t lookupTable[DvdEntryNumIdSize];
 
 }     // namespace mod::rando
