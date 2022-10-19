@@ -1148,6 +1148,15 @@ namespace mod
                 break;
             }
 
+            case LAKEBED_TEMPLE_CLEARED:     // LBT story flag.
+            {
+                if ( checkStageName( allStages[stageIDs::Morpheel] ) )
+                {
+                    return false;     // If the flag is set, the post boss music plays during the boss fight.
+                }
+                break;
+            }
+
             case ARBITERS_GROUNDS_CLEARED:     // AG story flag.
             {
                 if ( checkStageName( allStages[stageIDs::Stallord] ) )
