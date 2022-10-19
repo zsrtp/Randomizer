@@ -94,6 +94,7 @@ namespace mod::game_patch
 
             memcpy( currentFieldItemPtr, &fieldItemResPtr[fieldModelItemID], sizeof( libtp::tp::d_item_data::FieldItemRes ) );
 
+            // Clear the cache for the modified values
             libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( currentFieldItemPtr ),
                                                    sizeof( libtp::tp::d_item_data::FieldItemRes ) );
         }

@@ -310,6 +310,7 @@ namespace mod::rando
                     uint32_t replacementAddress = fileAddr + replacementOffset;
                     *reinterpret_cast<uint8_t*>( ( replacementAddress ) ) = replacementValue;
 
+                    // Clear the cache for the modified value
                     libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint8_t ) );
                     break;
                 }
@@ -342,6 +343,7 @@ namespace mod::rando
                             uint32_t replacementAddress = adjustedFilePtr + replacementOffset;
                             *reinterpret_cast<uint16_t*>( replacementAddress ) = msgID + 0x65;
 
+                            // Clear the cache for the modified value
                             libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ),
                                                                    sizeof( uint16_t ) );
                         }
@@ -355,6 +357,7 @@ namespace mod::rando
                     uint32_t replacementAddress = fileAddr + replacementOffset;
                     *reinterpret_cast<uint16_t*>( ( replacementAddress ) ) = replacementValue + 0x65;
 
+                    // Clear the cache for the modified value
                     libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint16_t ) );
                     break;
                 }
@@ -371,6 +374,7 @@ namespace mod::rando
                     uint32_t replacementAddress = adjustedFilePtr + replacementOffset;
                     *reinterpret_cast<uint16_t*>( ( replacementAddress ) ) = replacementValue + 0x65;
 
+                    // Clear the cache for the modified value
                     libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint16_t ) );
 
                     break;
@@ -385,6 +389,7 @@ namespace mod::rando
                     uint32_t replacementAddress = adjustedFilePtr + replacementOffset;
                     *reinterpret_cast<uint16_t*>( ( replacementAddress ) ) = replacementValue + 0x65;
 
+                    // Clear the cache for the modified value
                     libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint16_t ) );
                     break;
                 }
@@ -393,7 +398,9 @@ namespace mod::rando
                     uint32_t replacementAddress = fileAddr + replacementOffset;
                     *reinterpret_cast<uint32_t*>( ( replacementAddress ) ) = static_cast<uint8_t>( replacementValue );
 
-                    libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint32_t ) );
+                    // Clear the cache for the modified value
+                    // Assembly instructions need to clear the instruction cache as well
+                    libtp::memory::clear_DC_IC_Cache( reinterpret_cast<void*>( replacementAddress ), sizeof( uint32_t ) );
                     break;
                 }
 

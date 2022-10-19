@@ -9,7 +9,7 @@
 #include "rando/randomizer.h"
 #include "tp/d_a_alink.h"
 #include "user_patch/user_patch.h"
-#include "memory.h"
+#include "gc_wii/OSCache.h"
 
 namespace mod::user_patch
 {
@@ -28,7 +28,7 @@ namespace mod::user_patch
             *heavyStateSpeed = 0.4f;
         }
 
-        // Update the cache
-        libtp::memory::clear_DC_IC_Cache( heavyStateSpeed, sizeof( float ) );
+        // Clear the cache for the modified value
+        libtp::gc_wii::os_cache::DCFlushRange( heavyStateSpeed, sizeof( float ) );
     }
 }     // namespace mod::user_patch

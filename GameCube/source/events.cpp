@@ -1265,7 +1265,8 @@ namespace mod::events
     {
         *reinterpret_cast<uint32_t*>( memoryOffset ) = value;
 
-        // Clear the cache for the replaced instruction
+        // Clear the cache for the modified value
+        // Assembly instructions need to clear the instruction cache as well
         libtp::memory::clear_DC_IC_Cache( reinterpret_cast<uint32_t*>( memoryOffset ), sizeof( uint32_t ) );
     }
 

@@ -27,6 +27,7 @@ namespace mod::game_patch
         shopItemDataPtr->wBtpResIdx = fieldItemResPtr->btpResIdx;
         shopItemDataPtr->tevFrm = fieldItemResPtr->tevFrm;
 
+        // Clear the cache for the modified values
         libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( shopItemDataPtr ),
                                                sizeof( libtp::tp::d_a_shop_item_static::ShopItemData ) );
     }
