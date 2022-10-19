@@ -293,25 +293,31 @@ namespace mod::rando
 
         seed->LoadARCChecks( seed->m_StageIDX, fileDirectory, roomNo );
         uint32_t numReplacements = seed->m_numLoadedArcReplacements;
+
         // Loop through all ArcChecks and replace the item at an offset given the fileIndex.
         for ( uint32_t i = 0; i < numReplacements; i++ )
         {
+            ARCReplacement* arcReplacement = &seed->m_ArcReplacements[i];
+            uint32_t replacementValue = arcReplacement->replacementValue;
+            uint32_t replacementOffset = arcReplacement->offset;
+
             switch ( seed->m_ArcReplacements[i].replacementType )
             {
                 case rando::ReplacementType::Item:
                 {
-                    uint32_t replacementValue =
-                        game_patch::_04_verifyProgressiveItem( this, seed->m_ArcReplacements[i].replacementValue );
-                    *reinterpret_cast<uint8_t*>( ( fileAddr + seed->m_ArcReplacements[i].offset ) ) = replacementValue;
-                    libtp::gc_wii::os_cache::DCFlushRange(
-                        reinterpret_cast<void*>( fileAddr + seed->m_ArcReplacements[i].offset ),
-                        sizeof( uint8_t ) );
+                    replacementValue = game_patch::_04_verifyProgressiveItem( this, static_cast<uint8_t>( replacementValue ) );
+
+                    uint32_t replacementAddress = fileAddr + replacementOffset;
+                    *reinterpret_cast<uint8_t*>( ( replacementAddress ) ) = replacementValue;
+
+                    libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint8_t ) );
                     break;
                 }
                 case rando::ReplacementType::HiddenSkill:
                 {
                     uint32_t adjustedFilePtr =
                         reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
+
                     uint8_t stageIDX;
                     for ( stageIDX = 0;
                           stageIDX < sizeof( libtp::data::stage::allStages ) / sizeof( libtp::data::stage::allStages[0] );
@@ -332,22 +338,24 @@ namespace mod::rando
                                                                           .player.player_return_place.link_room_id ) )
                         {
                             uint16_t msgID = game_patch::_04_verifyProgressiveItem( this, seed->m_HiddenSkillChecks[j].itemID );
-                            *reinterpret_cast<uint16_t*>( adjustedFilePtr + seed->m_ArcReplacements[i].offset ) = msgID + 0x65;
-                            libtp::gc_wii::os_cache::DCFlushRange(
-                                reinterpret_cast<void*>( adjustedFilePtr + seed->m_ArcReplacements[i].offset ),
-                                sizeof( uint16_t ) );
+
+                            uint32_t replacementAddress = adjustedFilePtr + replacementOffset;
+                            *reinterpret_cast<uint16_t*>( replacementAddress ) = msgID + 0x65;
+
+                            libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ),
+                                                                   sizeof( uint16_t ) );
                         }
                     }
                     break;
                 }
                 case rando::ReplacementType::ItemMessage:
                 {
-                    uint32_t replacementValue =
-                        game_patch::_04_verifyProgressiveItem( this, seed->m_ArcReplacements[i].replacementValue );
-                    *reinterpret_cast<uint16_t*>( ( fileAddr + seed->m_ArcReplacements[i].offset ) ) = replacementValue + 0x65;
-                    libtp::gc_wii::os_cache::DCFlushRange(
-                        reinterpret_cast<void*>( fileAddr + seed->m_ArcReplacements[i].offset ),
-                        sizeof( uint16_t ) );
+                    replacementValue = game_patch::_04_verifyProgressiveItem( this, static_cast<uint8_t>( replacementValue ) );
+
+                    uint32_t replacementAddress = fileAddr + replacementOffset;
+                    *reinterpret_cast<uint16_t*>( ( replacementAddress ) ) = replacementValue + 0x65;
+
+                    libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint16_t ) );
                     break;
                 }
 
@@ -358,14 +366,12 @@ namespace mod::rando
                     uint32_t adjustedFilePtr = *reinterpret_cast<uint32_t*>(
                         reinterpret_cast<uint32_t>( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mMsgDtArchive[0] ) +
                         0x64 );
-                    uint32_t replacementValue =
-                        game_patch::_04_verifyProgressiveItem( this, seed->m_ArcReplacements[i].replacementValue );
-                    *reinterpret_cast<uint16_t*>( ( adjustedFilePtr + seed->m_ArcReplacements[i].offset ) ) =
-                        replacementValue + 0x65;
 
-                    libtp::gc_wii::os_cache::DCFlushRange(
-                        reinterpret_cast<void*>( adjustedFilePtr + seed->m_ArcReplacements[i].offset ),
-                        sizeof( uint16_t ) );
+                    replacementValue = game_patch::_04_verifyProgressiveItem( this, static_cast<uint8_t>( replacementValue ) );
+                    uint32_t replacementAddress = adjustedFilePtr + replacementOffset;
+                    *reinterpret_cast<uint16_t*>( ( replacementAddress ) ) = replacementValue + 0x65;
+
+                    libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint16_t ) );
 
                     break;
                 }
@@ -375,23 +381,19 @@ namespace mod::rando
                     uint32_t adjustedFilePtr =
                         reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
 
-                    uint32_t replacementValue =
-                        game_patch::_04_verifyProgressiveItem( this, seed->m_ArcReplacements[i].replacementValue );
-                    *reinterpret_cast<uint16_t*>( ( adjustedFilePtr + seed->m_ArcReplacements[i].offset ) ) =
-                        replacementValue + 0x65;
+                    replacementValue = game_patch::_04_verifyProgressiveItem( this, static_cast<uint8_t>( replacementValue ) );
+                    uint32_t replacementAddress = adjustedFilePtr + replacementOffset;
+                    *reinterpret_cast<uint16_t*>( ( replacementAddress ) ) = replacementValue + 0x65;
 
-                    libtp::gc_wii::os_cache::DCFlushRange(
-                        reinterpret_cast<void*>( adjustedFilePtr + seed->m_ArcReplacements[i].offset ),
-                        sizeof( uint16_t ) );
+                    libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint16_t ) );
                     break;
                 }
                 case rando::ReplacementType::Instruction:
                 {
-                    *reinterpret_cast<uint32_t*>( ( fileAddr + seed->m_ArcReplacements[i].offset ) ) =
-                        seed->m_ArcReplacements[i].replacementValue;
-                    libtp::gc_wii::os_cache::DCFlushRange(
-                        reinterpret_cast<void*>( fileAddr + seed->m_ArcReplacements[i].offset ),
-                        sizeof( uint16_t ) );
+                    uint32_t replacementAddress = fileAddr + replacementOffset;
+                    *reinterpret_cast<uint32_t*>( ( replacementAddress ) ) = static_cast<uint8_t>( replacementValue );
+
+                    libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint32_t ) );
                     break;
                 }
 
