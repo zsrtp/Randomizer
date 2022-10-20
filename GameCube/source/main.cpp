@@ -346,8 +346,8 @@ namespace mod
         using namespace tp::m_do_controller_pad;
         using namespace tp::d_com_inf_game;
 
-// Comment out the next line to not display debug heap info
-#define DRAW_DEBUG_HEAP_INFO
+// Uncomment out the next line to display debug heap info
+//#define DRAW_DEBUG_HEAP_INFO
 #ifdef DRAW_DEBUG_HEAP_INFO
         drawHeapDebugInfo();
 #undef DRAW_DEBUG_HEAP_INFO
