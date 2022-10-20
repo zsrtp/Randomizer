@@ -78,6 +78,11 @@ namespace mod::rando
             m_CLR0 = reinterpret_cast<CLR0Header*>( m_GCIData + headerPtr->clr0Offset );
             m_RawRGBTable = reinterpret_cast<RawRGBTable*>( m_GCIData + headerPtr->clr0Offset + m_CLR0->rawRGBOffset );
             m_BmdEntries = reinterpret_cast<BmdEntry*>( m_GCIData + headerPtr->clr0Offset + m_CLR0->bmdEntriesOffset );
+
+            // Set the static pointers for the Seed Header and Data
+            void** ptrTable = reinterpret_cast<void**>( 0x800042BC );
+            ptrTable[0] = m_Header;
+            ptrTable[1] = m_GCIData;
         }
         delete[] data;
     }
@@ -86,6 +91,11 @@ namespace mod::rando
     {
         // Make sure to delete tempcheck buffers
         this->ClearChecks();
+
+        // Clear the static pointers for the Seed Header and Data
+        void** ptrTable = reinterpret_cast<void**>( 0x800042BC );
+        ptrTable[0] = nullptr;
+        ptrTable[1] = nullptr;
 
         // Only work with m_GCIData if the buffer is populated
         if ( m_GCIData )
