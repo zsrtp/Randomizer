@@ -272,6 +272,7 @@
 802BBFA8:sceneChange
 802bcb44:loadSeWave
 802bca08:eraseSeWave
+802b8f38:setSceneName
 
 // Z2SeqMgr.o
 802B72F0:startBattleBgm

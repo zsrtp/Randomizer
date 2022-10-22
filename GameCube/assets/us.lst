@@ -280,6 +280,7 @@
 802B9B68:sceneChange
 802ba704:loadSeWave
 802ba5c8:eraseSeWave
+802b6af8:setSceneName
 
 // Z2AudioMgr.o
 803dbf4c:g_mDoAud_zelAudio

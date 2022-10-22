@@ -13,6 +13,7 @@
 #include "asm.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/m_Do_dvd_thread.h"
+#include "Z2AudioLib/Z2SceneMgr.h"
 
 namespace mod::game_patch
 {
@@ -29,6 +30,8 @@ namespace mod::game_patch
         uint32_t onStageBossEnemyAddress = reinterpret_cast<uint32_t>( libtp::tp::d_com_inf_game::dComIfGs_onStageBossEnemy );
         uint32_t mDoDvdThd_mountArchive_c__execute =
             reinterpret_cast<uint32_t>( libtp::tp::m_Do_dvd_thread::mountArchive__execute );
+
+        uint32_t setSceneNameAddress = reinterpret_cast<uint32_t>( libtp::z2audiolib::z2scenemgr::setSceneName );
 
 #ifdef TP_US
         uint32_t* enableCrashScreen = reinterpret_cast<uint32_t*>( 0x8000B8A4 );
@@ -85,6 +88,9 @@ namespace mod::game_patch
 
         libtp::patch::writeBranchBL( reinterpret_cast<void*>( screenSetAddress + 0xDF0 ),
                                      reinterpret_cast<void*>( events::getPauseRupeeMax ) );
+
+        // Patch setSceneName so that the Morpheel Boss Music plays even if MDH is skipped.
+        *reinterpret_cast<uint32_t*>( setSceneNameAddress + 0x216C ) = 0x48000028;     // Previous 0x41820028
 
         events::performStaticASMReplacement( mDoDvdThd_mountArchive_c__execute + 0x200, ASM_NOP );
     }
