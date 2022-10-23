@@ -225,6 +225,7 @@ namespace mod::rando
                             break;
                         }
                     }
+                    libtp::gc_wii::os_cache::DCFlushRange( &dzxData[i], sizeof( ACTR ) );
                 }
             }
         }
@@ -431,8 +432,11 @@ namespace mod::rando
 
                     uint32_t archiveData =
                         *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( resourcePtr->mArchive ) + 0x28 );
-                    *reinterpret_cast<uint8_t*>( ( archiveData + m_Seed->m_ObjectArcReplacements[i].offset ) ) =
-                        replacementValue;
+
+                    uint32_t replacementAddress = archiveData + m_Seed->m_ObjectArcReplacements[i].offset;
+                    *reinterpret_cast<uint8_t*>( ( replacementAddress ) ) = replacementValue;
+
+                    libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint8_t ) );
                 }
             }
         }
