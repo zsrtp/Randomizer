@@ -659,7 +659,8 @@ namespace mod::events
         if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Hyrule_Field] ) ||
              libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Upper_Zoras_River] ) ||
              libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Sacred_Grove] ) ||
-             libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Stallord] ) )
+             libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Stallord] ) ||
+             libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Zant_Main_Room] ) )
         {
             *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( fopAC ) + 0x962 ) =
                 0x226;                  // Y Rotation Speed modifier. 0x226 is the value used when the item is on the ground.
