@@ -173,7 +173,7 @@ namespace mod
     // Query/Event functions.
     KEEP_VAR bool ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR int32_t ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
-    KEEP_VAR bool ( *return_query025 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    KEEP_VAR uint8_t ( *return_checkEmptyBottle )( libtp::tp::d_save::dSv_player_item_c* playerItem ) = nullptr;
     KEEP_VAR bool ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR int32_t ( *return_query004 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR int32_t ( *return_query037 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
@@ -965,15 +965,15 @@ namespace mod
         return events::proc_query023( unk1, unk2, unk3 );
     }
 
-    KEEP_FUNC bool handle_query025( void* unk1, void* unk2, int32_t unk3 )
+    KEEP_FUNC uint8_t handle_checkEmptyBottle( libtp::tp::d_save::dSv_player_item_c* playerItem )
     {
         if ( libtp::tp::d_a_alink::checkStageName(
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Cave_of_Ordeals] ) )
         {
             // Return False to allow us to collect the item from the floor 50 reward.
-            return false;
+            return 1;
         }
-        return return_query025( unk1, unk2, unk3 );
+        return return_checkEmptyBottle( playerItem );
     }
 
     KEEP_FUNC int32_t handle_query037( void* unk1, void* unk2, int32_t unk3 )

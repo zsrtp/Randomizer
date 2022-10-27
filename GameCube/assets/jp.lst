@@ -60,6 +60,7 @@
 80034270:onCollectMirror
 80034368:onLightDropGetFlag
 80032bec:isTransformLV
+800337ec:checkEmptyBottle
 
 // d_event.o
 80042778:defaultSkipStb
