@@ -397,7 +397,7 @@ namespace mod::rando
                 case rando::ReplacementType::Instruction:
                 {
                     uint32_t replacementAddress = fileAddr + replacementOffset;
-                    *reinterpret_cast<uint32_t*>( ( replacementAddress ) ) = static_cast<uint8_t>( replacementValue );
+                    *reinterpret_cast<uint32_t*>( ( replacementAddress ) ) = replacementValue;
 
                     // Clear the cache for the modified value
                     // Assembly instructions need to clear the instruction cache as well
