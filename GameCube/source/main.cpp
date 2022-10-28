@@ -970,7 +970,8 @@ namespace mod
         if ( libtp::tp::d_a_alink::checkStageName(
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Cave_of_Ordeals] ) )
         {
-            // Return False to allow us to collect the item from the floor 50 reward.
+            // Return 1 to allow the player to collect the item from the floor 50 reward, as this will make the game think that
+            // the player has an empty bottle.
             return 1;
         }
         return return_checkEmptyBottle( playerItem );
