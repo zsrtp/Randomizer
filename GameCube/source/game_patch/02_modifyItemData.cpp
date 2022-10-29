@@ -59,21 +59,37 @@ namespace mod::game_patch
                     uint8_t smallKeyCount = memoryFlags[0x1C];
                     if ( smallKeyCount < 100 )
                     {
-                        memoryFlags[0x1C] = smallKeyCount + 1;
+                        uint8_t* memoryFlagAddress = &memoryFlags[0x1C];
+                        *memoryFlagAddress = smallKeyCount + 1;
+                        libtp::gc_wii::os_cache::DCFlushRange( memoryFlagAddress, sizeof( uint8_t ) );
                     }
                     break;
                 }
                 case NodeDungeonItemType::Dungeon_Map:
-                    memoryFlags[0x1D] |= 0x1;
+                {
+                    uint8_t* memoryFlagAddress = &memoryFlags[0x1D];
+                    *memoryFlagAddress |= 0x1;
+                    libtp::gc_wii::os_cache::DCFlushRange( memoryFlagAddress, sizeof( uint8_t ) );
                     break;
+                }
                 case NodeDungeonItemType::Compass:
-                    memoryFlags[0x1D] |= 0x2;
+                {
+                    uint8_t* memoryFlagAddress = &memoryFlags[0x1D];
+                    *memoryFlagAddress |= 0x2;
+                    libtp::gc_wii::os_cache::DCFlushRange( memoryFlagAddress, sizeof( uint8_t ) );
                     break;
+                }
                 case NodeDungeonItemType::Big_Key:
-                    memoryFlags[0x1D] |= 0x4;
+                {
+                    uint8_t* memoryFlagAddress = &memoryFlags[0x1D];
+                    *memoryFlagAddress |= 0x4;
+                    libtp::gc_wii::os_cache::DCFlushRange( memoryFlagAddress, sizeof( uint8_t ) );
                     break;
+                }
                 default:
+                {
                     break;
+                }
             }
         }
     }
