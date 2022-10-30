@@ -56,10 +56,11 @@ namespace mod::game_patch
                 case NodeDungeonItemType::Small_Key:
                 {
                     // The vanilla code caps the key count at 100
-                    uint8_t smallKeyCount = memoryFlags[0x1C];
+                    uint8_t* memoryFlagAddress = &memoryFlags[0x1C];
+                    uint8_t smallKeyCount = *memoryFlagAddress;
+
                     if ( smallKeyCount < 100 )
                     {
-                        uint8_t* memoryFlagAddress = &memoryFlags[0x1C];
                         *memoryFlagAddress = smallKeyCount + 1;
                         libtp::gc_wii::os_cache::DCFlushRange( memoryFlagAddress, sizeof( uint8_t ) );
                     }
