@@ -69,6 +69,14 @@ namespace mod::events
         {
             randomizer->initSave();
         }
+
+        if ( ( strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mStage, "F_SP103" ) == 0 ) &&
+             ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo == 1 ) &&
+             ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mPoint == 0x1 ) )
+        {
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle = 180;
+        }
+
         randomizer->overrideEventARC();
     }
 

@@ -10,7 +10,8 @@ endif
 include $(DEVKITPPC)/gamecube_rules
 
 # Format: YYYYMMDDHHmm + 2 char Game Region
-export BUILDID:='"$(shell date +'%Y%m%d%H%M')"'
+#export BUILDID:='"$(shell date +'%Y%m%d%H%M')"'
+export BUILDID:='"$(shell git rev-parse --short HEAD)"'
 
 # Version
 export _VERSION_MAJOR:=1
