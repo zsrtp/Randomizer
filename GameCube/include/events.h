@@ -32,6 +32,7 @@ namespace mod::events
     extern libtp::tp::dzx::SCOB HorseJumpScob;
     extern libtp::tp::dzx::ACTR ForestGWolfActr;
     extern libtp::tp::dzx::ACTR ImpPoeActr;
+    extern uint8_t timeChange;
     /**
      * @brief Runs when loading just started
      *
@@ -150,5 +151,6 @@ namespace mod::events
     int32_t getCurrentAreaNodeId();
     uint8_t* getNodeMemoryFlags( const libtp::data::stage::AreaNodesID nodeId,
                                  const libtp::data::stage::AreaNodesID currentAreaNodeId );
+    void handleTimeSpeed();
 }     // namespace mod::events
 #endif

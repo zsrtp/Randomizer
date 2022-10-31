@@ -575,6 +575,11 @@ namespace mod
         roomReloadingState = currentReloadingState;
 
         rand( &randNext );
+
+        if ( events::timeChange != 0 )
+        {
+            events::handleTimeSpeed();
+        }
         // End of custom events
 
         // Call the original function
@@ -1389,6 +1394,14 @@ namespace mod
                 {
                     return false;
                 }
+            }
+        }
+        else if ( libtp::tp::d_a_alink::checkStageName(
+                      libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Village_Interiors] ) )
+        {
+            if ( flag == 0x61 )     // Is Impaz in her house
+            {
+                return true;
             }
         }
         return return_isSwitch_dSv_memBit( memoryBit, flag );

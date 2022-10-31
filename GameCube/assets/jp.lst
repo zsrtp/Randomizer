@@ -259,6 +259,9 @@
 
 // d_kankyo.o
 801ac6cc:dKy_darkworld_stage_check
+8019f740:getTimePass
+8019fa78:dayNight_check
+
 // data
 80426B94:env_light
 

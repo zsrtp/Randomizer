@@ -32,6 +32,7 @@ namespace mod::events
     void ( *return_daObjLifeContainer_c__Create )( void* _this ) = nullptr;
     void ( *return_daObjLifeContainer_c__setEffect )( void* _this ) = nullptr;
     CMEB checkNpcTransform = nullptr;
+    uint8_t timeChange = 0;
 
     libtp::tp::dzx::ACTR GanonBarrierActor =
         { "Obj_gb", 0x800F0601, 10778.207f, 3096.82666f, -62651.0078f, static_cast<int16_t>( -164.7121 ), 0x4000, 0, 0xFFFF };
@@ -89,6 +90,19 @@ namespace mod::events
                 {
                     // Set the call to checkOpenDoor to always return true when in SPR
                     performStaticASMReplacement( relPtrRaw + 0xD68, 0x38600001 );     // li r3, 1
+                }
+
+                break;
+            }
+            // d_a_kytag11.rel
+            // d_kankyo tag 11
+            case 0x4c:
+            {
+                if ( libtp::tp::d_a_alink::checkStageName(
+                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hyrule_Field] ) )
+                {
+                    // Nop out the instruction that causes the time flow to not consider the mTimeSpeed variable in Field.
+                    performStaticASMReplacement( relPtrRaw + 0x2CC, 0x60000000 );     // nop
                 }
 
                 break;
@@ -1028,32 +1042,54 @@ namespace mod::events
 
     void handleTimeOfDayChange()
     {
-        uint8_t todStages[] = { 43, 44, 41, 45, 47, 48, 46, 49, 50, 61, 52, 57, 56, 54, 55, 59, 63, 62 };
-        uint8_t nonFlowStages[] = { 43, 44, 41, 48, 46, 63 };
-        uint32_t totaltodStages = sizeof( todStages ) / sizeof( todStages[0] );
-        uint32_t totalnonFlowStages = sizeof( nonFlowStages ) / sizeof( nonFlowStages[0] );
-        int32_t stageIndex = libtp::tools::getStageIndex( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage );
-
-        for ( uint32_t i = 0; i < totaltodStages; i++ )
+        using namespace libtp::tp::d_com_inf_game;
+        if ( libtp::tp::d_kankyo::getTimePass() >= 1 )
         {
-            if ( todStages[i] == stageIndex )
+            if ( timeChange == 0 )     // No point in changing the values if we are already changing the time
             {
-                if ( ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle >= 284 ) ||
-                     ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle <= 104 ) )
+                if ( libtp::tp::d_kankyo::dayNight_check() == 0 )     // Day time
                 {
-                    libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle = 105;
+                    timeChange = 1;                                      // Changing to night
+                    libtp::tp::d_kankyo::env_light.mTimeSpeed = 1.f;     // Increase time speed
                 }
                 else
                 {
-                    libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle = 285;
+                    timeChange = 2;                                      // Changing to day
+                    libtp::tp::d_kankyo::env_light.mTimeSpeed = 1.f;     // Increase time speed
                 }
-                for ( uint32_t j = 0; j < totalnonFlowStages; j++ )
-                {
-                    if ( nonFlowStages[j] == stageIndex )
-                    {
-                        libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.enabled |= 0x1;
-                    }
-                }
+            }
+        }
+        else
+        {
+            if ( libtp::tp::d_kankyo::dayNight_check() == 0 )     // Day time
+            {
+                dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle = 285;
+            }
+            else
+            {
+                dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle = 105;
+            }
+            dComIfG_gameInfo.play.mNextStage.enabled |= 0x1;
+        }
+    }
+
+    void handleTimeSpeed()
+    {
+        using namespace libtp::tp::d_com_inf_game;
+        if ( libtp::tp::d_kankyo::dayNight_check() == 0 )     // Day time
+        {
+            if ( timeChange == 2 )     // We want it to be day time
+            {
+                libtp::tp::d_kankyo::env_light.mTimeSpeed = 0.012f;     // Set time speed to normal
+                timeChange = 0;
+            }
+        }
+        else
+        {
+            if ( timeChange == 1 )     // We want it to be night time
+            {
+                libtp::tp::d_kankyo::env_light.mTimeSpeed = 0.012f;     // Set time speed to normal
+                timeChange = 0;
             }
         }
     }

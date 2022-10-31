@@ -838,21 +838,21 @@ namespace mod::game_patch
                     case stage::stageIDs::Fishing_Pond:
                     case stage::stageIDs::Fishing_Pond_Interiors:
                     {
-                        if ( libtp::tp::d_kankyo::env_light.unk_1051[0x2AD] == 3 )
+                        if ( libtp::tp::d_kankyo::env_light.unk_1250[0xAE] == 3 )
                         {
                             chosenLayer = stage::fishingHoleStateIDs::Fishing_Hole_Autumn;
                         }
                         else
                         {
-                            if ( libtp::tp::d_kankyo::env_light.unk_1051[0x2AD] < 3 )
+                            if ( libtp::tp::d_kankyo::env_light.unk_1250[0xAE] < 3 )
                             {
-                                if ( libtp::tp::d_kankyo::env_light.unk_1051[0x2AD] == 1 )
+                                if ( libtp::tp::d_kankyo::env_light.unk_1250[0xAE] == 1 )
                                 {
                                     chosenLayer = stage::fishingHoleStateIDs::Fishing_Hole_Spring;
                                 }
                                 else
                                 {
-                                    if ( libtp::tp::d_kankyo::env_light.unk_1051[0x2AD] != 0 )
+                                    if ( libtp::tp::d_kankyo::env_light.unk_1250[0xAE] != 0 )
                                     {
                                         chosenLayer = stage::fishingHoleStateIDs::Fishing_Hole_Summer;
                                     }
@@ -860,7 +860,7 @@ namespace mod::game_patch
                             }
                             else
                             {
-                                if ( libtp::tp::d_kankyo::env_light.unk_1051[0x2AD] < 5 )
+                                if ( libtp::tp::d_kankyo::env_light.unk_1250[0xAE] < 5 )
                                 {
                                     chosenLayer = stage::fishingHoleStateIDs::Fishing_Hole_Winter;
                                 }
