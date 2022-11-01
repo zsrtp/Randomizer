@@ -10,16 +10,15 @@ endif
 include $(DEVKITPPC)/gamecube_rules
 
 # Format: YYYYMMDDHHmm + 2 char Game Region
-#export BUILDID:='"$(shell date +'%Y%m%d%H%M')"'
-export BUILDID:='"$(shell git rev-parse --short HEAD)"'
+export BUILDID:='"$(shell date +'%Y%m%d%H%M')"'
 
 # Version
 export _VERSION_MAJOR:=1
 export _VERSION_MINOR:=0
 export _VERSION_PATCH:=0
-export _VERSION:='"$(_VERSION_MAJOR).$(_VERSION_MINOR).$(_VERSION_PATCH)"'
+export _VERSION:='"$(_VERSION_MAJOR).$(_VERSION_MINOR).$(_VERSION_PATCH)-b2"'
 # Variant: i.e. Public, NoLogic, Race, etc.
-export _VARIANT:=public
+#export _VARIANT:= public
 
 # This shows up in the memory card (manager) and can contain spaces
 export PROJECT_NAME := Randomizer
