@@ -23,7 +23,7 @@ There is no specific order to this implementation, these are just a number of fe
 |Texture/Color mods|Change things like tunic color|✔️Implemented|
 |Custom Models|e.g. Toon Link from ww, different clothing, etc.|❌Not going to be implemented|
 |Entrance Randomizer|Being able to travel through entrances to unexpected areas.|🔧Planned|
-|Custom Midna Colors|Hair Color, charge cirle color, etc.|🔧Planned|
+|Custom Midna Colors|Hair Color, charge circle color, etc.|🔧Planned|
 |Logical Tricks List|A list of toggleable tricks and techniques to add more dynamic logic to your seed.|🔧Planned|
 
 # Features
