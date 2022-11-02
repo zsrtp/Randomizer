@@ -54,11 +54,13 @@ namespace mod
         customMessages::createItemWheelMenuData();
 
         // Display some info
+#ifndef DVD
         getConsole() << "Note:\n"
                      << "Please avoid [re]starting rando unnecessarily\n"
                      << "on ORIGINAL HARDWARE as it wears down your\n"
-                     << "Memory Card!\n"
-                     << "Press R + Z to close the console.\n\n";
+                     << "Memory Card!\n";
+#endif
+        getConsole() << "Press R + Z to close the console.\n\n";
 
         // Generate our seedList
         // Align to void*, as pointers use the largest variable type in the SeedList class

@@ -269,8 +269,8 @@
 // data
 8042CA54:env_light
 801ac70c:dKy_darkworld_stage_check
-8019f780:getTimePass
-8019fab8:dayNight_check
+8019f780:GetTimePass
+8019fab8:dKy_daynight_check
 
 // d_kankyo_rain.o
 8006be0c:dKyr_odour_draw

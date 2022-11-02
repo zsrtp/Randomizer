@@ -1449,19 +1449,29 @@ namespace mod
 
     KEEP_FUNC void handle_setGetItemFace( libtp::tp::d_a_alink::daAlink* linkMapPtr, uint16_t itemID )
     {
+        using namespace libtp::data::items;
         switch ( itemID )
         {
             // Only the first foolish item should need to be checked, but check all to be safe
-            case libtp::data::items::Foolish_Item_1:
-            case libtp::data::items::Foolish_Item_2:
-            case libtp::data::items::Foolish_Item_3:
-            case libtp::data::items::Foolish_Item_4:
-            case libtp::data::items::Foolish_Item_5:
-            case libtp::data::items::Foolish_Item_6:
+            case Foolish_Item_1:
+            case Foolish_Item_2:
+            case Foolish_Item_3:
+            case Foolish_Item_4:
+            case Foolish_Item_5:
+            case Foolish_Item_6:
             {
-                itemID = libtp::data::items::Ordon_Pumpkin;
+                itemID = Ordon_Pumpkin;
                 break;
             }
+
+            case Master_Sword:
+            case Master_Sword_Light:
+            case Shadow_Crystal:
+            {
+                itemID = Clawshot;
+                break;
+            }
+
             default:
             {
                 break;

@@ -60,19 +60,23 @@ namespace mod::events
             return;
         }
 
+        libtp::tp::d_com_inf_game::dComIfG_play* playPtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.play;
+        libtp::tp::d_stage::dStage_startStage* startStagePtr = &playPtr->mStartStage;
+
+        const char* currentStage = startStagePtr->mStage;
+        int32_t currentRoom = startStagePtr->mRoomNo;
+        int32_t currentPoint = startStagePtr->mPoint;
+
         // Check if the seed is already applied to the save-file (flags etc.)
         // Try to do it otherwise
-        if ( !randomizer->m_SeedInit &&
-             ( strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mStage, "F_SP108" ) == 0 ) &&
-             ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo == 1 ) &&
-             ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mPoint == 0x15 ) )
+        if ( !randomizer->m_SeedInit && ( strcmp( currentStage, "F_SP108" ) == 0 ) && ( currentRoom == 1 ) &&
+             ( currentPoint == 0x15 ) )
         {
             randomizer->initSave();
         }
 
-        if ( ( strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mStage, "F_SP103" ) == 0 ) &&
-             ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo == 1 ) &&
-             ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mPoint == 0x1 ) )
+        if ( ( strcmp( playPtr->mNextStage.stageValues.mStage, "F_SP103" ) == 0 ) && ( currentRoom == 1 ) &&
+             ( currentPoint == 0x1 ) )
         {
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle = 180;
         }
@@ -303,38 +307,25 @@ namespace mod::events
                         uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x92A );
                         switch ( itemID )
                         {
-                            case items::Piece_of_Heart:
-                            case items::Heart_Container:
-                            case items::Male_Beetle:
-                            case items::Female_Beetle:
-                            case items::Male_Butterfly:
-                            case items::Female_Butterfly:
-                            case items::Male_Stag_Beetle:
-                            case items::Female_Stag_Beetle:
-                            case items::Male_Grasshopper:
-                            case items::Female_Grasshopper:
-                            case items::Male_Phasmid:
-                            case items::Female_Phasmid:
-                            case items::Male_Pill_Bug:
-                            case items::Female_Pill_Bug:
-                            case items::Male_Mantis:
-                            case items::Female_Mantis:
-                            case items::Male_Ladybug:
-                            case items::Female_Ladybug:
-                            case items::Male_Snail:
-                            case items::Female_Snail:
-                            case items::Male_Dragonfly:
-                            case items::Female_Dragonfly:
-                            case items::Male_Ant:
-                            case items::Female_Ant:
-                            case items::Male_Dayfly:
-                            case items::Female_Dayfly:
+                            case items::Green_Rupee:
+                            case items::Red_Rupee:
+                            case items::Blue_Rupee:
+                            case items::Yellow_Rupee:
+                            case items::Purple_Rupee:
+                            case items::Purple_Rupee_Links_House:
+                            case items::Orange_Rupee:
+                            case items::Silver_Rupee:
+                            case items::Coro_Bottle:
+                            case items::Sera_Bottle:
+                            case items::Empty_Bottle:
+                            case items::Jovani_Bottle:
+                            case items::Poe_Soul:
                             {
-                                return return_daObjLifeContainer_c__setEffect( daObjLifePtr );
+                                return;
                             }
                             default:
                             {
-                                return;
+                                return return_daObjLifeContainer_c__setEffect( daObjLifePtr );
                             }
                         }
                     } );
@@ -875,6 +866,10 @@ namespace mod::events
                     {
                         return false;
                     }
+                    else if ( currentRoom == 2 )
+                    {
+                        return false;
+                    }
                 }
                 break;
             }
@@ -1051,11 +1046,11 @@ namespace mod::events
     void handleTimeOfDayChange()
     {
         using namespace libtp::tp::d_com_inf_game;
-        if ( libtp::tp::d_kankyo::getTimePass() >= 1 )
+        if ( libtp::tp::d_stage::GetTimePass() )
         {
             if ( timeChange == 0 )     // No point in changing the values if we are already changing the time
             {
-                if ( libtp::tp::d_kankyo::dayNight_check() == 0 )     // Day time
+                if ( !libtp::tp::d_kankyo::dKy_daynight_check() )     // Day time
                 {
                     timeChange = 1;                                      // Changing to night
                     libtp::tp::d_kankyo::env_light.mTimeSpeed = 1.f;     // Increase time speed
@@ -1069,7 +1064,7 @@ namespace mod::events
         }
         else
         {
-            if ( libtp::tp::d_kankyo::dayNight_check() == 0 )     // Day time
+            if ( !libtp::tp::d_kankyo::dKy_daynight_check() )     // Day time
             {
                 dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle = 285;
             }
@@ -1084,7 +1079,7 @@ namespace mod::events
     void handleTimeSpeed()
     {
         using namespace libtp::tp::d_com_inf_game;
-        if ( libtp::tp::d_kankyo::dayNight_check() == 0 )     // Day time
+        if ( !libtp::tp::d_kankyo::dKy_daynight_check() )     // Day time
         {
             if ( timeChange == 2 )     // We want it to be day time
             {
