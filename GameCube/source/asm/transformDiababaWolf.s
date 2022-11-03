@@ -1,17 +1,14 @@
-.global asmTransformDiababaWolf
-.hidden asmTransformDiababaWolf
+.global asmTransformDiababaWolfStart
+.global asmTransformDiababaWolfEnd
 
-asmTransformDiababaWolf:
-# Push stack
-stwu %sp,-0x10(%sp)
-mflr %r0
-stw %r0,0x14(%sp)
+.hidden asmTransformDiababaWolfStart
+.hidden asmTransformDiababaWolfEnd
 
+asmTransformDiababaWolfStart:
 bl handleTransformFromWolf
 
-#Pop stack
-lwz %r0,0x14(%sp)
-mtlr %r0
-li %r0, 1
-addi %sp,%sp,0x10
-blr
+# Restore the original instruction
+li %r0,1
+
+asmTransformDiababaWolfEnd:
+b 0

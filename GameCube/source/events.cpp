@@ -123,8 +123,9 @@ namespace mod::events
             // Generic Poe
             case 0x00C8:
             {
-                libtp::patch::writeBranchLR( reinterpret_cast<void*>( relPtrRaw + e_hp_ExecDead_liOffset ),
-                                             reinterpret_cast<void*>( assembly::asmAdjustPoeItem ) );
+                libtp::patch::writeStandardBranches( reinterpret_cast<void*>( relPtrRaw + e_hp_ExecDead_liOffset ),
+                                                     reinterpret_cast<void*>( assembly::asmAdjustPoeItemStart ),
+                                                     reinterpret_cast<void*>( assembly::asmAdjustPoeItemEnd ) );
 
                 // Disable Poe increment (handled through item_get_func; see game_patches)
                 performStaticASMReplacement( relPtrRaw + e_hp_ExecDead_incOffset, 0x60000000 );
@@ -135,8 +136,9 @@ namespace mod::events
             // Arbiter's Poe
             case 0x00DD:
             {
-                libtp::patch::writeBranchLR( reinterpret_cast<void*>( relPtrRaw + e_po_ExecDead_liOffset ),
-                                             reinterpret_cast<void*>( assembly::asmAdjustAGPoeItem ) );
+                libtp::patch::writeStandardBranches( reinterpret_cast<void*>( relPtrRaw + e_po_ExecDead_liOffset ),
+                                                     reinterpret_cast<void*>( assembly::asmAdjustAGPoeItemStart ),
+                                                     reinterpret_cast<void*>( assembly::asmAdjustAGPoeItemEnd ) );
 
                 // Disable Poe increment (handled through item_get_func; see game_patches)
                 performStaticASMReplacement( relPtrRaw + e_po_ExecDead_incOffset, 0x60000000 );
@@ -160,21 +162,24 @@ namespace mod::events
             // Hero's Shade
             case 0x147:
             {
-                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x34D0 ),
-                                             reinterpret_cast<void*>( assembly::asmAdjustHiddenSkillItem ) );
                 // Give a an item based on which Golden Wolf you learned a skill from.
+                libtp::patch::writeStandardBranches( reinterpret_cast<void*>( relPtrRaw + 0x34D0 ),
+                                                     reinterpret_cast<void*>( assembly::asmAdjustHiddenSkillItemStart ),
+                                                     reinterpret_cast<void*>( assembly::asmAdjustHiddenSkillItemEnd ) );
                 break;
             }
             // d_a_npc_ins.rel
             // Agitha
             case 0x141:
             {
-                if ( getCurrentSeed( randomizer ) )
+                mod::rando::Seed* seed;
+                if ( seed = getCurrentSeed( randomizer ), seed )
                 {
-                    if ( randomizer->m_Seed->m_numBugRewardChecks > 0 )
+                    if ( seed->m_numBugRewardChecks > 0 )
                     {
-                        libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x21B8 ),
-                                                     reinterpret_cast<void*>( assembly::asmAdjustBugReward ) );
+                        libtp::patch::writeStandardBranches( reinterpret_cast<void*>( relPtrRaw + 0x21B8 ),
+                                                             reinterpret_cast<void*>( assembly::asmAdjustBugRewardStart ),
+                                                             reinterpret_cast<void*>( assembly::asmAdjustBugRewardEnd ) );
                     }
                 }
                 break;
@@ -192,10 +197,12 @@ namespace mod::events
             // Owl Statues
             case 0x85:     // d_a_Tag_Statue - Owl Statues
             {
-                // replace sky character
+                // Replace sky character
                 performStaticASMReplacement( relPtrRaw + 0xB7C, 0x48000020 );     // b 0x20
-                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0xB9C ),
-                                             reinterpret_cast<void*>( assembly::asmAdjustSkyCharacter ) );
+
+                libtp::patch::writeStandardBranches( reinterpret_cast<void*>( relPtrRaw + 0xB9C ),
+                                                     reinterpret_cast<void*>( assembly::asmAdjustSkyCharacterStart ),
+                                                     reinterpret_cast<void*>( assembly::asmAdjustSkyCharacterEnd ) );
 
                 break;
             }
@@ -338,8 +345,9 @@ namespace mod::events
             // Item held in Link's hand upon giving/recieving it
             case 0x3F:
             {
-                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x1E50 ),
-                                             reinterpret_cast<void*>( assembly::asmAdjustCreateItemParams ) );
+                libtp::patch::writeStandardBranches( reinterpret_cast<void*>( relPtrRaw + 0x1E50 ),
+                                                     reinterpret_cast<void*>( assembly::asmAdjustCreateItemParamsStart ),
+                                                     reinterpret_cast<void*>( assembly::asmAdjustCreateItemParamsEnd ) );
                 break;
             }
             // d_a_obj_bosswarp.rel
@@ -432,8 +440,9 @@ namespace mod::events
             case 0x8B:
             {
                 // Transform back into link if you are wolf when defeating Diababa
-                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x21B8 ),
-                                             reinterpret_cast<void*>( assembly::asmTransformDiababaWolf ) );
+                libtp::patch::writeStandardBranches( reinterpret_cast<void*>( relPtrRaw + 0x21B8 ),
+                                                     reinterpret_cast<void*>( assembly::asmTransformDiababaWolfStart ),
+                                                     reinterpret_cast<void*>( assembly::asmTransformDiababaWolfEnd ) );
 
                 break;
             }

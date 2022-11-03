@@ -1,20 +1,17 @@
-.global asmAdjustBugReward
-.hidden asmAdjustBugReward
+.global asmAdjustBugRewardStart
+.global asmAdjustBugRewardEnd
 
-asmAdjustBugReward:
-stwu %sp,-0x10(%sp)
-stw %r20,0x8(%sp)
-mr %r20, %r0
-mflr %r0
-stw %r0,0x14(%sp)
+.hidden asmAdjustBugRewardStart
+.hidden asmAdjustBugRewardEnd
 
-mr %r4, %r29
+asmAdjustBugRewardStart:
+# r3 already contains msgEventAddress
+mr %r4,%r29 # bugID
 bl handleAdjustBugReward
 
-lwz %r0,0x14(%sp)
-mtlr %r0
-lwz %r20,0x8(%sp)
-mr %r0, %r20
-mr %r4, %r29
-addi %sp,%sp,0x10
-blr
+# The value previously in r3 goes unused in the function that it gets passed to, so it does not need to be restored
+# Restore the original instruction
+mr %r4,%r29
+
+asmAdjustBugRewardEnd:
+b 0

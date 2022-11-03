@@ -1,18 +1,15 @@
-.global asmAdjustCreateItemParams
-.hidden asmAdjustCreateItemParams
+.global asmAdjustCreateItemParamsStart
+.global asmAdjustCreateItemParamsEnd
 
-asmAdjustCreateItemParams:
-# Push stack
-stwu %sp,-0x10(%sp)
-mflr %r0
-stw %r0,0x14(%sp)
+.hidden asmAdjustCreateItemParamsStart
+.hidden asmAdjustCreateItemParamsEnd
 
-mr %r3, %r30
+asmAdjustCreateItemParamsStart:
+mr %r3,%r30 # daDitem
 bl handleAdjustCreateItemParams
 
-# Pop stack
-lwz %r0,0x14(%sp)
-mtlr %r0
-li %r3, 1
-addi %sp,%sp,0x10
-blr
+# Restore the original instruction
+li %r3,1
+
+asmAdjustCreateItemParamsEnd:
+b 0

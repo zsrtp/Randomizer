@@ -13,6 +13,7 @@
 #include <cstdint>
 #include "tp/dynamic_link.h"
 #include "tp/f_op_actor.h"
+#include "tp/d_a_alink.h"
 
 // Original: li 0xE0
 // Normally loads the poesoul item id into r4
@@ -35,26 +36,32 @@ namespace mod::assembly
 {
     extern "C"
     {
-        void asmDoLinkHook( void );
+        void asmDoLinkHookStart( void );
+        void asmDoLinkHookEnd( void );
         void handleDoLinkHook( libtp::tp::dynamic_link::DynamicModuleControl* dmc );
 
         // d_e_hp.rel
-        void asmAdjustPoeItem( void );
+        void asmAdjustPoeItemStart( void );
+        void asmAdjustPoeItemEnd( void );
         int32_t handleAdjustPoeItem( void* );
 
         // d_e_po.rel
-        void asmAdjustAGPoeItem( void );
+        void asmAdjustAGPoeItemStart( void );
+        void asmAdjustAGPoeItemEnd( void );
         int32_t handleAdjustAGPoeItem( void* );
 
         // d_a_npc_kn.rel
-        void asmAdjustHiddenSkillItem();
+        void asmAdjustHiddenSkillItemStart();
+        void asmAdjustHiddenSkillItemEnd();
         void handleAdjustHiddenSkillItem( uint16_t eventIndex );
 
         // d_a_npc_ins.rel
-        void asmAdjustBugReward();
+        void asmAdjustBugRewardStart();
+        void asmAdjustBugRewardEnd();
         void handleAdjustBugReward( uint32_t msgEventAddress, uint8_t bugID );
 
-        void asmAdjustSkyCharacter();
+        void asmAdjustSkyCharacterStart();
+        void asmAdjustSkyCharacterEnd();
         uint8_t handleAdjustSkyCharacter();
 
         // d_a_obj_life_container.rel
@@ -66,7 +73,8 @@ namespace mod::assembly
         void handleTransformFromWolf();
 
         // d_a_b_bq.rel
-        void asmTransformDiababaWolf();
+        void asmTransformDiababaWolfStart();
+        void asmTransformDiababaWolfEnd();
 
         // d_a_npc_hoz.rel
         void asmAdjustIzaWolf();
@@ -77,8 +85,16 @@ namespace mod::assembly
         uint8_t handleShowReekfishPath( uint8_t scent );
 
         // d_a_demo_item.o
-        void asmAdjustCreateItemParams();
+        void asmAdjustCreateItemParamsStart();
+        void asmAdjustCreateItemParamsEnd();
         void handleAdjustCreateItemParams( void* daDitem );
+
+        // d_a_alink.o
+#ifdef TP_JP
+        void asmUnpatchMapGlitchStart();
+        void asmUnpatchMapGlitchEnd();
+        void unpatchMapGlitch( libtp::tp::d_a_alink::daAlink* d_a_alink );
+#endif
     }
 }     // namespace mod::assembly
 

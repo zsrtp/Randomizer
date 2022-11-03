@@ -1,21 +1,16 @@
-.global asmAdjustPoeItem
-.hidden asmAdjustPoeItem
+.global asmAdjustPoeItemStart
+.global asmAdjustPoeItemEnd
 
-asmAdjustPoeItem:
-# Push stack
-stwu %sp,-0x10(%sp)
-mflr %r0
-stw %r0,0x14(%sp)
+.hidden asmAdjustPoeItemStart
+.hidden asmAdjustPoeItemEnd
 
-mr %r3,%r31
+asmAdjustPoeItemStart:
+mr %r3,%r31 # e_hp_class
 bl handleAdjustPoeItem
 mr %r4,%r3
 
-# Restore value to r3
+# Restore important register values
 addi %r3,%r31,0x4D0
 
-# Pop stack
-lwz %r0,0x14(%sp)
-mtlr %r0
-addi %sp,%sp,0x10
-blr
+asmAdjustPoeItemEnd:
+b 0

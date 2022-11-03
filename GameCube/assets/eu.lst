@@ -123,6 +123,7 @@
 8011ae34:procCoGetItem
 800d01b0:dComIfGp_setItemLifeCount
 800be5f0:checkRestartRoom
+8011fbf8:checkWarpStart
 
 // data
 8039038C:climbVars

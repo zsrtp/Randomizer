@@ -97,4 +97,9 @@ namespace mod::assembly
     {
         events::onAdjustCreateItemParams( daDitem );
     }
+
+    void unpatchMapGlitch( libtp::tp::d_a_alink::daAlink* d_a_alink )
+    {
+        d_a_alink->mNoResetFlg0 |= 0x4000;
+    }
 }     // namespace mod::assembly
