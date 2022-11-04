@@ -973,31 +973,6 @@ namespace mod::customMessages
             sizeof( foolishItemEn ),
             0x0077,
 
-            // Foolish Item
-            foolishItemEn,
-            sizeof( foolishItemEn ),
-            0x0078,
-
-            // Foolish Item
-            foolishItemEn,
-            sizeof( foolishItemEn ),
-            0x0079,
-
-            // Foolish Item
-            foolishItemEn,
-            sizeof( foolishItemEn ),
-            0x00B1,
-
-            // Foolish Item
-            foolishItemEn,
-            sizeof( foolishItemEn ),
-            0x00B2,
-
-            // Foolish Item
-            foolishItemEn,
-            sizeof( foolishItemEn ),
-            0x00BB,
-
             // Talking to Midna
             talkToMidnaEn,
             sizeof( talkToMidnaEn ),

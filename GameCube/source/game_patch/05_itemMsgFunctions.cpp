@@ -140,6 +140,24 @@ namespace mod::game_patch
         // Most text replacements are for zel_00.bmg, so check that first
         if ( currentInf1 == getZel00BmgInf() )
         {
+            // If msgId is for a foolish item, then only use the value from the first one to avoid duplicate entries
+            switch ( msgId )
+            {
+                case 0x78:     // Foolish Item 2
+                case 0x79:     // Foolish Item 3
+                case 0xB1:     // Foolish Item 4
+                case 0xB2:     // Foolish Item 5
+                case 0xBB:     // Foolish Item 6
+                {
+                    msgId = 0x77;     // Foolish Item 1
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+
             const char* newMessage = _05_getMsgById( randomizer, msgId );
             setMessageText( newMessage );
             return;

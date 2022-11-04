@@ -6,7 +6,7 @@
 
 asmAdjustSkyCharacterStart:
 bl handleAdjustSkyCharacter
-mr %r27,%r3
+mr %r27,%r3 #The item to give
 
 asmAdjustSkyCharacterEnd:
 b 0

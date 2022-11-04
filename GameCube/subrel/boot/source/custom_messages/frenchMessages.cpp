@@ -1242,31 +1242,6 @@ namespace mod::customMessages
             sizeof( foolishItemFr ),
             0x0077,
 
-            // Foolish Item
-            foolishItemFr,
-            sizeof( foolishItemFr ),
-            0x0078,
-
-            // Foolish Item
-            foolishItemFr,
-            sizeof( foolishItemFr ),
-            0x0079,
-
-            // Foolish Item
-            foolishItemFr,
-            sizeof( foolishItemFr ),
-            0x00B1,
-
-            // Foolish Item
-            foolishItemFr,
-            sizeof( foolishItemFr ),
-            0x00B2,
-
-            // Foolish Item
-            foolishItemFr,
-            sizeof( foolishItemFr ),
-            0x00BB,
-
             // Talking to Midna
             talkToMidnaFr,
             sizeof( talkToMidnaFr ),
