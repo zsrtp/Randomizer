@@ -60,7 +60,7 @@ namespace mod::game_patch
     }
     */
 
-    // Most checks will use zel_00.bmg, so use a dedication function for it that specifies the archive, so less code runs per
+    // Most checks will use zel_00.bmg, so use a dedicated function for it that specifies the archive, so less code runs per
     // check
     void* getZel00BmgInf()
     {
