@@ -305,7 +305,7 @@ namespace mod::events
                         return_daObjLifeContainer_c__Create( daObjLifePtr );
                     } );
 
-                // Remove glow and sparkle from all non-heart piece/container items
+                // Remove glow and sparkle from rupees and Poe Souls
                 return_daObjLifeContainer_c__setEffect = libtp::patch::hookFunction(
                     reinterpret_cast<void ( * )( void* )>( relPtrRaw + 0x764 ),
                     []( void* daObjLifePtr )
@@ -322,10 +322,6 @@ namespace mod::events
                             case items::Purple_Rupee_Links_House:
                             case items::Orange_Rupee:
                             case items::Silver_Rupee:
-                            case items::Coro_Bottle:
-                            case items::Sera_Bottle:
-                            case items::Empty_Bottle:
-                            case items::Jovani_Bottle:
                             case items::Poe_Soul:
                             {
                                 return;
