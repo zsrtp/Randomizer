@@ -50,6 +50,7 @@ namespace mod::events
     void onLoad( rando::Randomizer* randomizer )
     {
         randomizer->onStageLoad();
+        timeChange = 0;
     }
 
     void offLoad( rando::Randomizer* randomizer )
