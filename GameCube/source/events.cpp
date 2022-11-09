@@ -46,6 +46,8 @@ namespace mod::events
         { "Hjump", 0x044FFF02, 5600.f, -5680.f, 52055.f, 0, static_cast<int16_t>( 0x4000 ), 0, 0xFFFF, 0x20, 0x2D, 0x2D, 0xFF };
     libtp::tp::dzx::ACTR ForestGWolfActr = { "GWolf", 0x05FF01FF, -35178.f, 430.21f, -21503.6f, 0, -0x4000, 0xFF, 0xFFFF };
     libtp::tp::dzx::ACTR ImpPoeActr = { "E_hp", 0xFF031E00, 4531.19f, -30.f, 2631.961f, 0, 0, 0x0, 0xFFFF };
+    libtp::tp::dzx::ACTR CampBoarActr =
+        { "E_wb", 0xFFFFFFFF, 1650.f, 0.f, 1250.f, 0, static_cast<int16_t>( 0xA000 ), 0x0, 0xFFFF };
 
     void onLoad( rando::Randomizer* randomizer )
     {
@@ -935,6 +937,11 @@ namespace mod::events
         else if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Castle_Town_Shops] ) )
         {
             tools::SpawnActor( 6, ImpPoeActr );
+        }
+        else if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Bulblin_Camp] ) &&
+                  !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::ESCAPED_BURNING_TENT_IN_BUBLIN_CAMP ) )
+        {
+            tools::SpawnActor( 1, CampBoarActr );
         }
     }
 
