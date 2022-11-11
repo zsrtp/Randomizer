@@ -1,5 +1,6 @@
 .global asmShowReekfishPath
 # asmShowReekfishPath needs to be used in at least one subrel, so it cannot be set to hidden
+# This assembly is used for more than one hook, so be careful when handling registers
 
 asmShowReekfishPath:
 # Push stack

@@ -13,6 +13,7 @@
 #include "tp/d_meter2_info.h"
 #include "tp/d_save.h"
 #include "data/flags.h"
+#include "rando/data.h"
 
 namespace mod::game_patch
 {
@@ -100,14 +101,18 @@ namespace mod::game_patch
         // Set the field model of the Foolish Item ID to the model of a random important item.
         constexpr uint32_t modelListSize = sizeof( foolishModelItemList ) / sizeof( foolishModelItemList[0] );
         libtp::tp::d_item_data::FieldItemRes* fieldItemResPtr = &libtp::tp::d_item_data::field_item_res[0];
-        const uint8_t* foolishItems = rando::foolishItemIds;
+
+        rando::FoolishItems* foolishItemsPtr = &rando::foolishItems;
+        const uint8_t* foolishItemIds = foolishItemsPtr->itemIds;
+        uint8_t* itemModelIds = foolishItemsPtr->itemModelId;
 
         for ( uint32_t i = 0; i < MAX_SPAWNED_FOOLISH_ITEMS; i++ )
         {
             uint32_t randomIndex = ulRand( &randNext, modelListSize );
             uint32_t fieldModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
+            itemModelIds[i] = static_cast<uint8_t>( fieldModelItemID );
 
-            libtp::tp::d_item_data::FieldItemRes* currentFieldItemPtr = &fieldItemResPtr[foolishItems[i]];
+            libtp::tp::d_item_data::FieldItemRes* currentFieldItemPtr = &fieldItemResPtr[foolishItemIds[i]];
 
             memcpy( currentFieldItemPtr, &fieldItemResPtr[fieldModelItemID], sizeof( libtp::tp::d_item_data::FieldItemRes ) );
 
@@ -589,10 +594,11 @@ namespace mod::game_patch
     KEEP_FUNC void _02_foolishItemFunc()
     {
         // Failsafe: Make sure the count does not somehow exceed 100
-        uint32_t count = foolishTrapTriggerCount;
+        uint8_t* triggerCount = &rando::foolishItems.triggerCount;
+        uint32_t count = *triggerCount;
         if ( count < 100 )
         {
-            foolishTrapTriggerCount = count + 1;
+            *triggerCount = count + 1;
         }
     }
 

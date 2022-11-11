@@ -68,8 +68,6 @@ namespace mod
     extern bool consoleState;
     extern uint8_t gameState;
     extern void* Z2ScenePtr;
-    extern uint8_t foolishTrapSpawnCount;
-    extern uint8_t foolishTrapTriggerCount;
     extern uint8_t seedRelAction;
     extern bool walletsPatched;
     extern const char* m_DonationText;
@@ -82,7 +80,7 @@ namespace mod
     uint32_t ulRand( uint32_t* seed, uint32_t range );
     float intToFloat( int32_t value );
     void handleInput( uint32_t inputs );
-    void handleFoolishItem();
+    void handleFoolishItem( uint8_t count );
     void initArcLookupTable();
 
     // Inline getConsole, as it's just a shortcut to get a reference to the console variable

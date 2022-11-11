@@ -10,6 +10,7 @@
 #define RANDO_DATA_H
 
 #include "gc_wii/card.h"
+#include "data/items.h"
 #include <cstdint>
 
 // Maximum expected number of spawned ice traps in any given area
@@ -296,7 +297,22 @@ namespace mod::rando
         // `dvdentrynum.cpp` file!
     };
 
-    extern const uint8_t foolishItemIds[MAX_SPAWNED_FOOLISH_ITEMS];
+    struct FoolishItems
+    {
+        const uint8_t itemIds[MAX_SPAWNED_FOOLISH_ITEMS] = {
+            libtp::data::items::Foolish_Item_1,
+            libtp::data::items::Foolish_Item_2,
+            libtp::data::items::Foolish_Item_3,
+            libtp::data::items::Foolish_Item_4,
+            libtp::data::items::Foolish_Item_5,
+            libtp::data::items::Foolish_Item_6 };     // Array holding the IDs of all the ice traps
+
+        uint8_t itemModelId[MAX_SPAWNED_FOOLISH_ITEMS];     // Array holding the IDs of the item that the ice trap is copying
+
+        uint8_t spawnCount;       // How many ice teaps are currently spawned
+        uint8_t triggerCount;     // How many ice traps have been triggered and have yet to occur
+    };
+
     extern int32_t lookupTable[DvdEntryNumIdSize];
 
 }     // namespace mod::rando

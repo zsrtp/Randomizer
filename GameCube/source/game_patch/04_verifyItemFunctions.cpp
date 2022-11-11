@@ -281,7 +281,8 @@ namespace mod::game_patch
                 case Foolish_Item_5:
                 case Foolish_Item_6:
                 {
-                    uint32_t count = foolishTrapSpawnCount;
+                    rando::FoolishItems* foolishItemsPtr = &rando::foolishItems;
+                    uint32_t count = foolishItemsPtr->spawnCount;
 
                     // Make sure the current count is valid before using
                     if ( count >= MAX_SPAWNED_FOOLISH_ITEMS )
@@ -289,7 +290,7 @@ namespace mod::game_patch
                         count = 0;
                     }
 
-                    itemID = rando::foolishItemIds[count];
+                    itemID = foolishItemsPtr->itemIds[count];
                     count++;
 
                     // Make sure the new count is valid before saving
@@ -298,7 +299,7 @@ namespace mod::game_patch
                         count = 0;
                     }
 
-                    foolishTrapSpawnCount = static_cast<uint8_t>( count );
+                    foolishItemsPtr->spawnCount = static_cast<uint8_t>( count );
                     break;
                 }
 

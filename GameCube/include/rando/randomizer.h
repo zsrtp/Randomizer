@@ -78,5 +78,9 @@ namespace mod::rando
         uint8_t m_CurrentSeed = 0xFF;     // The seed that is currently loaded
     };
 
+    uint8_t getFoolishItemModelId( uint8_t originalItem );
+
+    extern FoolishItems foolishItems;
+
 }     // namespace mod::rando
 #endif

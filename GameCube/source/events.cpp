@@ -220,6 +220,10 @@ namespace mod::events
                     {
                         using namespace libtp::data;
                         uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x92A );
+
+                        // Must check for foolish items first, as they will use the item id of the item they are copying
+                        itemID = rando::getFoolishItemModelId( itemID );
+
                         switch ( itemID )
                         {
                             case items::Master_Sword:
@@ -688,6 +692,10 @@ namespace mod::events
             fopAC->mGravity = 0.0f;     // gravity
         }
         uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( fopAC ) + 0x92A );
+
+        // Must check for foolish items first, as they will use the item id of the item they are copying
+        itemID = rando::getFoolishItemModelId( itemID );
+
         switch ( itemID )
         {
             case Heart_Container:

@@ -62,8 +62,6 @@ namespace mod
     bool consoleState = true;
     uint8_t gameState = GAME_BOOT;
     void* Z2ScenePtr = nullptr;
-    uint8_t foolishTrapTriggerCount = 0;
-    uint8_t foolishTrapSpawnCount = 0;
     KEEP_VAR bool walletsPatched = false;
     KEEP_VAR uint8_t seedRelAction = SEED_ACTION_NONE;
     uint32_t randNext = 0;
@@ -568,9 +566,12 @@ namespace mod
             }
         }
 
-        if ( foolishTrapTriggerCount > 0 )
+        uint8_t* triggerCount = &rando::foolishItems.triggerCount;
+        uint8_t foolishTrapCount = *triggerCount;
+        if ( foolishTrapCount > 0 )
         {
-            handleFoolishItem();
+            *triggerCount = 0;
+            handleFoolishItem( foolishTrapCount );
         }
 
         roomReloadingState = currentReloadingState;
@@ -1440,8 +1441,7 @@ namespace mod
 
     KEEP_FUNC bool handle_checkBootsMoveAnime( libtp::tp::d_a_alink::daAlink* d_a_alink, int32_t param_1 )
     {
-        uint32_t ironBootsVars = reinterpret_cast<uint32_t>( &libtp::tp::d_a_alink::ironBootsVars );
-        if ( *reinterpret_cast<float*>( ironBootsVars + 0x14 ) == 1.f )
+        if ( libtp::tp::d_a_alink::ironBootsVars.heavyStateSpeed == 1.f )
         {
             return false;
         }
@@ -1513,7 +1513,7 @@ namespace mod
         return ret;
     }
 
-    KEEP_FUNC void handleFoolishItem()
+    KEEP_FUNC void handleFoolishItem( uint8_t count )
     {
         if ( !events::checkFoolItemFreeze() )
         {
@@ -1536,9 +1536,6 @@ namespace mod
         m_Do_Audio::mDoAud_seStartLevel( 0x10040, nullptr, 0, 0 );
         loadSeWave( Z2ScenePtr, seWave1 );
         loadSeWave( Z2ScenePtr, seWave2 );
-
-        uint32_t count = foolishTrapTriggerCount;
-        foolishTrapTriggerCount = 0;
 
         // Failsafe: Make sure the count does not somehow exceed 100
         if ( count > 100 )

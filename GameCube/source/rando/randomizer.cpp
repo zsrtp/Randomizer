@@ -28,16 +28,23 @@
 
 namespace mod::rando
 {
-    const uint8_t foolishItemIds[MAX_SPAWNED_FOOLISH_ITEMS] = {
-        libtp::data::items::Foolish_Item_1,
-        libtp::data::items::Foolish_Item_2,
-        libtp::data::items::Foolish_Item_3,
-        libtp::data::items::Foolish_Item_4,
-        libtp::data::items::Foolish_Item_5,
-        libtp::data::items::Foolish_Item_6,
-    };
-
     int32_t lookupTable[DvdEntryNumIdSize];
+
+    FoolishItems foolishItems;
+
+    uint8_t getFoolishItemModelId( uint8_t originalItem )
+    {
+        FoolishItems* foolishItemsPtr = &foolishItems;
+        const uint8_t* foolishItemIds = foolishItemsPtr->itemIds;
+        for ( uint32_t i = 0; i < MAX_SPAWNED_FOOLISH_ITEMS; i++ )
+        {
+            if ( originalItem == foolishItemIds[i] )
+            {
+                return foolishItemsPtr->itemModelId[i];
+            }
+        }
+        return originalItem;
+    }
 
     // Currrently unused, so will leave here
     Randomizer::~Randomizer( void )
@@ -60,8 +67,8 @@ namespace mod::rando
         const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mStage;
         seed->LoadChecks( stage );
 
-        // Make sure foolishTrapSpawnCount is reset before randomizing foolish item models
-        foolishTrapSpawnCount = 0;
+        // Make sure the foolish items spawn count is reset before randomizing foolish item models
+        foolishItems.spawnCount = 0;
 
         game_patch::_02_modifyFoolishFieldModel();
     }
