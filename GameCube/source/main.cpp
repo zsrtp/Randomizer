@@ -1222,8 +1222,6 @@ namespace mod
                                 }
                                 case 4:     // Vanilla
                                 {
-                                    if(randomizer->m_Seed->m_Header->castleRequirements == 0) 
-                                    {
                                     bool palaceCleared = return_isEventBit(eventPtr, flag);  
                                     if(palaceCleared)// if palace is cleared
                                     {
@@ -1232,7 +1230,7 @@ namespace mod
                                             0x0F );
                                     events::setSaveFileEventFlag( libtp::data::flags::BARRIER_GONE ); 
                                     }
-                                    }
+                                    
                                     return false; // Go ahead and return false since we don't want to worry about triggering the Squidna CS and it won't matter once the Barrier Broken flag is set.
                                     break;
                                 }
