@@ -79,9 +79,16 @@ namespace mod::events
         }
 
         if ( ( strcmp( playPtr->mNextStage.stageValues.mStage, "F_SP103" ) == 0 ) && ( currentRoom == 1 ) &&
-             ( currentPoint == 0x1 ) )
+             ( currentPoint == 0x1 ) )     // If we are spawning in Ordon for the first time.
         {
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle = 180;
+
+            if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::CLEARED_FARON_TWILIGHT ) )
+            {
+                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.horse_place.mPos.y =
+                    -1000.f;     // Place Epona out of bounds in Faron if the twilight has been cleared since the game will
+                                 // spawn her in the air.
+            }
         }
 
         randomizer->overrideEventARC();
