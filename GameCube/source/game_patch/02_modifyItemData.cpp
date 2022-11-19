@@ -502,9 +502,6 @@ namespace mod::game_patch
             // If the player has the castle requirement set to Fused Shadows.
             if ( randomizer->m_Seed->m_Header->castleRequirements == 1 )
             {
-                libtp::tp::d_save::onSwitch_dSv_memBit(
-                    &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[9].temp_flags,
-                    0x0F );
                 events::setSaveFileEventFlag( libtp::data::flags::BARRIER_GONE );
             }
             // If the player has the palace requirement set to Fused Shadows.
@@ -536,9 +533,6 @@ namespace mod::game_patch
             // If the player has the castle requirement set to Mirror Shards.
             if ( randomizer->m_Seed->m_Header->castleRequirements == 2 )
             {
-                libtp::tp::d_save::onSwitch_dSv_memBit(
-                    &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[9].temp_flags,
-                    0x0F );
                 events::setSaveFileEventFlag( libtp::data::flags::BARRIER_GONE );
             }
             // If the player has the palace requirement set to Mirror Shards.

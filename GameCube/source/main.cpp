@@ -1209,34 +1209,22 @@ namespace mod
                                     }
                                     if ( numDungeons == 0x8 )
                                     {
-                                        libtp::tp::d_save::onSwitch_dSv_memBit(
-                                            &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
-                                            0x0F );
                                         events::setSaveFileEventFlag( libtp::data::flags::BARRIER_GONE );
-                                        break;
                                     }
-                                    else
-                                    {
-                                        return false;
-                                    }
+                                    break;
                                 }
                                 case 4:     // Vanilla
                                 {
-                                    bool palaceCleared = return_isEventBit(eventPtr, flag);  
-                                    if(palaceCleared)// if palace is cleared
+                                    bool palaceCleared = return_isEventBit( eventPtr, flag );
+                                    if ( palaceCleared )     // if palace is cleared
                                     {
-                                         libtp::tp::d_save::onSwitch_dSv_memBit(
-                                            &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
-                                            0x0F );
-                                    events::setSaveFileEventFlag( libtp::data::flags::BARRIER_GONE ); 
+                                        events::setSaveFileEventFlag( libtp::data::flags::BARRIER_GONE );
                                     }
-                                    
-                                    return false; // Go ahead and return false since we don't want to worry about triggering the Squidna CS and it won't matter once the Barrier Broken flag is set.
                                     break;
                                 }
                                 default:
                                 {
-                                    return false;
+                                    break;
                                 }
                             }
                         }
