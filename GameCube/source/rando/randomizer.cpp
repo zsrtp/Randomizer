@@ -36,6 +36,7 @@ namespace mod::rando
     {
         FoolishItems* foolishItemsPtr = &foolishItems;
         const uint8_t* foolishItemIds = foolishItemsPtr->itemIds;
+
         for ( uint32_t i = 0; i < MAX_SPAWNED_FOOLISH_ITEMS; i++ )
         {
             if ( originalItem == foolishItemIds[i] )
@@ -43,6 +44,7 @@ namespace mod::rando
                 return foolishItemsPtr->itemModelId[i];
             }
         }
+
         return originalItem;
     }
 

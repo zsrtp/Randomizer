@@ -2,6 +2,9 @@
 80003458:memset
 80003540:memcpy
 
+// m_Do_printf.o
+80006abc:OSReport
+
 // OSModule.o
 // text
 8033e510:OSLink

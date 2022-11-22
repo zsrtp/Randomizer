@@ -299,7 +299,7 @@ namespace mod::rando
 
     struct FoolishItems
     {
-        const uint8_t itemIds[MAX_SPAWNED_FOOLISH_ITEMS] = {
+        static constexpr const uint8_t itemIds[MAX_SPAWNED_FOOLISH_ITEMS] = {
             libtp::data::items::Foolish_Item_1,
             libtp::data::items::Foolish_Item_2,
             libtp::data::items::Foolish_Item_3,
