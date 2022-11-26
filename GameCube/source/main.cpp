@@ -394,7 +394,7 @@ namespace mod
 
                         case 1:
                             // Only one seed present, auto-select it and disable console for convenience
-                            getConsole() << "First and only seed automatically applied...\n";
+                            getConsole() << "Seed: " << seedList->m_minSeedInfo[0].fileName << " loaded.\n";
                             setScreen( false );
                             break;
 

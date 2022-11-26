@@ -244,7 +244,9 @@ namespace mod::rando
 
         for ( uint32_t i = 0; i < num_relchecks; i++ )
         {
-            if ( allREL[i].stageIDX == stageIDX )
+            if ( ( allREL[i].stageIDX == stageIDX ) ||
+                 ( allREL[i].stageIDX == 0xFF ) )     // Check if we are on the current stage, or if the rel override needs to
+                                                      // be applied to every stage
             {
                 m_numLoadedRELChecks++;
             }
@@ -259,7 +261,9 @@ namespace mod::rando
 
         for ( uint32_t i = 0; i < num_relchecks; i++ )
         {
-            if ( allREL[i].stageIDX == stageIDX )
+            if ( ( allREL[i].stageIDX == stageIDX ) ||
+                 ( allREL[i].stageIDX == 0xFF ) )     // Check if we are on the current stage, or if the rel override needs to
+                                                      // be applied to every stage
             {
                 // Store the i'th DZX check into the j'th Loaded DZX check that's relevant to our current stage
                 memcpy( &m_RELChecks[j], &allREL[i], sizeof( RELCheck ) );
