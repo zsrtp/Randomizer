@@ -73,6 +73,7 @@ namespace mod::rando
         foolishItems.spawnCount = 0;
 
         game_patch::_02_modifyFoolishFieldModel();
+        seed->loadShopModels();
     }
 
     void Randomizer::initSave( void )

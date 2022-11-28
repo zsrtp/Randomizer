@@ -18,6 +18,9 @@
 #include "tp/d_com_inf_game.h"
 #include "tp/d_item.h"
 #include "user_patch/user_patch.h"
+#include "tp/d_item_data.h"
+#include "tp/d_a_shop_item_static.h"
+#include "game_patch/game_patch.h"
 
 namespace mod::rando
 {
@@ -528,6 +531,61 @@ namespace mod::rando
                     }
                 }
             }
+        }
+    }
+
+    void Seed::loadShopModels()
+    {
+        using namespace libtp::tp;
+
+        uint32_t num_shopItems = m_Header->shopItemCheckInfo.numEntries;
+        uint32_t gci_offset = m_Header->shopItemCheckInfo.dataOffset;
+
+        // Set the pointer as offset into our buffer
+        shopCheck* allSHOP = reinterpret_cast<shopCheck*>( &m_GCIData[gci_offset] );
+
+        d_item_data::ItemResource* itemResourcePtr = &d_item_data::item_resource[0];
+        for ( uint32_t i = 0; i < num_shopItems; i++ )
+        {
+            uint32_t replacementItem = game_patch::_04_verifyProgressiveItem( randomizer, allSHOP[i].replacementItemID );
+            uint32_t shopItem = allSHOP[i].shopItemID;
+
+            switch ( replacementItem )
+            {
+                // Only the first foolish item should need to be checked, but check all to be safe
+                case libtp::data::items::Foolish_Item_1:
+                case libtp::data::items::Foolish_Item_2:
+                case libtp::data::items::Foolish_Item_3:
+                case libtp::data::items::Foolish_Item_4:
+                case libtp::data::items::Foolish_Item_5:
+                case libtp::data::items::Foolish_Item_6:
+                {
+                    game_patch::_02_modifyFoolishShopModel( static_cast<uint16_t>( shopItem ) );
+                    break;
+                }
+
+                case libtp::data::items::Master_Sword:
+                case libtp::data::items::Master_Sword_Light:
+                {
+                    d_a_shop_item_static::shopItemData[shopItem].scale = 0.35f;
+                    [[fallthrough]];
+                }
+                default:
+                {
+                    d_a_shop_item_static::shopItemData[shopItem].arcName = itemResourcePtr[replacementItem].arcName;
+                    d_a_shop_item_static::shopItemData[shopItem].modelResIdx = itemResourcePtr[replacementItem].modelResIdx;
+                    d_a_shop_item_static::shopItemData[shopItem].wBtkResIdx = itemResourcePtr[replacementItem].btkResIdx;
+                    d_a_shop_item_static::shopItemData[shopItem].wBckResIdx = itemResourcePtr[replacementItem].bckResIdx;
+                    d_a_shop_item_static::shopItemData[shopItem].wBrkResIdx = itemResourcePtr[replacementItem].brkResIdx;
+                    d_a_shop_item_static::shopItemData[shopItem].wBtpResIdx = itemResourcePtr[replacementItem].btpResIdx;
+                    d_a_shop_item_static::shopItemData[shopItem].tevFrm = itemResourcePtr[replacementItem].tevFrm;
+                    break;
+                }
+            }
+
+            d_a_shop_item_static::shopItemData[shopItem].btpFrm = 0xFF;
+            d_a_shop_item_static::shopItemData[shopItem].posY = 15.0f;
+            d_a_shop_item_static::shopItemData[shopItem].mFlags = 0xFFFFFFFF;
         }
     }
 
