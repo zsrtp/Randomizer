@@ -35,6 +35,7 @@ namespace mod::game_patch
     void _02_modifyItemData();
     void _02_modifyFoolishFieldModel();
     void _02_modifyFoolishShopModel( uint16_t shopID );
+    void _02_modifyShopModelScale( uint16_t shopID, uint16_t itemID );
     void giveNodeDungeonItems( const libtp::data::stage::AreaNodesID nodeId,
                                const libtp::data::items::NodeDungeonItemType type );
 

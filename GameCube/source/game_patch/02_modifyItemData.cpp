@@ -135,12 +135,39 @@ namespace mod::game_patch
         libtp::tp::d_item_data::ItemResource* fieldItemResPtr = &libtp::tp::d_item_data::item_resource[shopModelItemID];
         ShopItemData* shopItemDataPtr = &shopItemData[shopID];
 
+        _02_modifyShopModelScale( shopID, shopModelItemID );
+
         shopItemDataPtr->arcName = fieldItemResPtr->arcName;
         shopItemDataPtr->modelResIdx = fieldItemResPtr->modelResIdx;
         shopItemDataPtr->wBckResIdx = fieldItemResPtr->bckResIdx;
         shopItemDataPtr->wBrkResIdx = fieldItemResPtr->brkResIdx;
         shopItemDataPtr->wBtpResIdx = fieldItemResPtr->btpResIdx;
         shopItemDataPtr->tevFrm = fieldItemResPtr->tevFrm;
+
+        // Clear the cache for the modified values
+        libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( shopItemDataPtr ),
+                                               sizeof( libtp::tp::d_a_shop_item_static::ShopItemData ) );
+    }
+
+    void _02_modifyShopModelScale( uint16_t shopID, uint16_t itemID )
+    {
+        using namespace libtp::tp::d_a_shop_item_static;
+        uint32_t shopModelItemID = _04_verifyProgressiveItem( randomizer, itemID );
+        ShopItemData* shopItemDataPtr = &shopItemData[shopID];
+
+        switch ( shopModelItemID )
+        {
+            case libtp::data::items::Master_Sword:
+            case libtp::data::items::Master_Sword_Light:
+            {
+                shopItemDataPtr->scale = 0.35f;
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
 
         // Clear the cache for the modified values
         libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( shopItemDataPtr ),
