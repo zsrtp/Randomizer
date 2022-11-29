@@ -537,10 +537,12 @@ namespace mod::rando
     void Seed::loadShopModels()
     {
         using namespace libtp::tp;
+        using namespace libtp::data;
         using namespace libtp::tp::d_a_shop_item_static;
 
-        uint32_t num_shopItems = m_Header->shopItemCheckInfo.numEntries;
-        uint32_t gci_offset = m_Header->shopItemCheckInfo.dataOffset;
+        entryInfo* shopItemCheckInfo = &m_Header->shopItemCheckInfo;
+        uint32_t num_shopItems = shopItemCheckInfo->numEntries;
+        uint32_t gci_offset = shopItemCheckInfo->dataOffset;
 
         // Set the pointer as offset into our buffer
         shopCheck* allSHOP = reinterpret_cast<shopCheck*>( &m_GCIData[gci_offset] );
@@ -548,40 +550,51 @@ namespace mod::rando
         d_item_data::ItemResource* itemResourcePtr = &d_item_data::item_resource[0];
         for ( uint32_t i = 0; i < num_shopItems; i++ )
         {
-            uint32_t replacementItem = game_patch::_04_verifyProgressiveItem( randomizer, allSHOP[i].replacementItemID );
-            uint32_t shopItem = allSHOP[i].shopItemID;
-            ShopItemData* shopItemDataPtr = &shopItemData[shopItem];
+            shopCheck* currentShopCheck = &allSHOP[i];
+
+            uint32_t replacementItem = game_patch::_04_verifyProgressiveItem( randomizer, currentShopCheck->replacementItemID );
+            uint32_t shopItem = currentShopCheck->shopItemID;
+
+            ShopItemData* currentShopItemDataPtr = &shopItemData[shopItem];
 
             switch ( replacementItem )
             {
                 // Only the first foolish item should need to be checked, but check all to be safe
-                case libtp::data::items::Foolish_Item_1:
-                case libtp::data::items::Foolish_Item_2:
-                case libtp::data::items::Foolish_Item_3:
-                case libtp::data::items::Foolish_Item_4:
-                case libtp::data::items::Foolish_Item_5:
-                case libtp::data::items::Foolish_Item_6:
+                case items::Foolish_Item_1:
+                case items::Foolish_Item_2:
+                case items::Foolish_Item_3:
+                case items::Foolish_Item_4:
+                case items::Foolish_Item_5:
+                case items::Foolish_Item_6:
                 {
                     game_patch::_02_modifyFoolishShopModel( static_cast<uint16_t>( shopItem ) );
                     break;
                 }
                 default:
                 {
-                    shopItemDataPtr->arcName = itemResourcePtr[replacementItem].arcName;
-                    shopItemDataPtr->modelResIdx = itemResourcePtr[replacementItem].modelResIdx;
-                    shopItemDataPtr->wBtkResIdx = itemResourcePtr[replacementItem].btkResIdx;
-                    shopItemDataPtr->wBckResIdx = itemResourcePtr[replacementItem].bckResIdx;
-                    shopItemDataPtr->wBrkResIdx = itemResourcePtr[replacementItem].brkResIdx;
-                    shopItemDataPtr->wBtpResIdx = itemResourcePtr[replacementItem].btpResIdx;
-                    shopItemDataPtr->tevFrm = itemResourcePtr[replacementItem].tevFrm;
+                    d_item_data::ItemResource* currentItemResourcePtr = &itemResourcePtr[replacementItem];
+
+                    currentShopItemDataPtr->arcName = currentItemResourcePtr->arcName;
+                    currentShopItemDataPtr->modelResIdx = currentItemResourcePtr->modelResIdx;
+                    currentShopItemDataPtr->wBtkResIdx = currentItemResourcePtr->btkResIdx;
+                    currentShopItemDataPtr->wBckResIdx = currentItemResourcePtr->bckResIdx;
+                    currentShopItemDataPtr->wBrkResIdx = currentItemResourcePtr->brkResIdx;
+                    currentShopItemDataPtr->wBtpResIdx = currentItemResourcePtr->btpResIdx;
+                    currentShopItemDataPtr->tevFrm = currentItemResourcePtr->tevFrm;
+
                     break;
                 }
             }
 
-            shopItemDataPtr->btpFrm = 0xFF;
-            shopItemDataPtr->posY = 15.0f;
-            shopItemDataPtr->mFlags = 0xFFFFFFFF;
+            currentShopItemDataPtr->btpFrm = 0xFF;
+            currentShopItemDataPtr->posY = 15.0f;
+            currentShopItemDataPtr->mFlags = 0xFFFFFFFF;
+
             game_patch::_02_modifyShopModelScale( shopItem, replacementItem );
+
+            // Clear the cache for the modified values
+            libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( currentShopItemDataPtr ),
+                                                   sizeof( libtp::tp::d_a_shop_item_static::ShopItemData ) );
         }
     }
 

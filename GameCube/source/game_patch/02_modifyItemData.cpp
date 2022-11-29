@@ -135,8 +135,6 @@ namespace mod::game_patch
         libtp::tp::d_item_data::ItemResource* fieldItemResPtr = &libtp::tp::d_item_data::item_resource[shopModelItemID];
         ShopItemData* shopItemDataPtr = &shopItemData[shopID];
 
-        _02_modifyShopModelScale( shopID, shopModelItemID );
-
         shopItemDataPtr->arcName = fieldItemResPtr->arcName;
         shopItemDataPtr->modelResIdx = fieldItemResPtr->modelResIdx;
         shopItemDataPtr->wBckResIdx = fieldItemResPtr->bckResIdx;
@@ -144,16 +142,18 @@ namespace mod::game_patch
         shopItemDataPtr->wBtpResIdx = fieldItemResPtr->btpResIdx;
         shopItemDataPtr->tevFrm = fieldItemResPtr->tevFrm;
 
+        _02_modifyShopModelScale( shopID, shopModelItemID );
+
         // Clear the cache for the modified values
-        libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( shopItemDataPtr ),
-                                               sizeof( libtp::tp::d_a_shop_item_static::ShopItemData ) );
+        libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( shopItemDataPtr ), sizeof( ShopItemData ) );
     }
 
     void _02_modifyShopModelScale( uint16_t shopID, uint16_t itemID )
     {
         using namespace libtp::tp::d_a_shop_item_static;
-        uint32_t shopModelItemID = _04_verifyProgressiveItem( randomizer, itemID );
+
         ShopItemData* shopItemDataPtr = &shopItemData[shopID];
+        uint32_t shopModelItemID = _04_verifyProgressiveItem( randomizer, itemID );
 
         switch ( shopModelItemID )
         {
@@ -165,13 +165,13 @@ namespace mod::game_patch
             }
             default:
             {
-                break;
+                // Assume no changes are being made, so the cache does not need to be cleared
+                return;
             }
         }
 
-        // Clear the cache for the modified values
-        libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( shopItemDataPtr ),
-                                               sizeof( libtp::tp::d_a_shop_item_static::ShopItemData ) );
+        // Clear the cache for the modified value
+        libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( &shopItemDataPtr->scale ), sizeof( float ) );
     }
 
     KEEP_VAR const char* _02_hiddenSkillArc = "O_gD_memo";
