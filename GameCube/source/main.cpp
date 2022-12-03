@@ -66,6 +66,7 @@ namespace mod
     KEEP_VAR uint8_t seedRelAction = SEED_ACTION_NONE;
     uint32_t randNext = 0;
     KEEP_VAR const char* m_DonationText = nullptr;
+    bool modifyShopModels = false;
 
     // Function hook return trampolines
     KEEP_VAR void ( *return_fapGm_Execute )( void ) = nullptr;
@@ -196,6 +197,7 @@ namespace mod
     KEEP_VAR bool ( *return_checkBootsMoveAnime )( libtp::tp::d_a_alink::daAlink* d_a_alink, int32_t param_1 ) = nullptr;
     KEEP_VAR bool ( *return_checkDamageAction )( libtp::tp::d_a_alink::daAlink* linkMapPtr ) = nullptr;
     KEEP_VAR void ( *return_setGetItemFace )( libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID ) = nullptr;
+    KEEP_VAR void ( *return_setWolfLockDomeModel )( libtp::tp::d_a_alink::daAlink* daALink ) = nullptr;
 
     // Audio functions
     KEEP_VAR void ( *return_loadSeWave )( void* Z2SceneMgr, uint32_t waveID ) = nullptr;
@@ -1476,6 +1478,17 @@ namespace mod
             }
         }
         return return_setGetItemFace( linkMapPtr, itemID );
+    }
+
+    KEEP_FUNC void handle_setWolfLockDomeModel( libtp::tp::d_a_alink::daAlink* linkActrPtr )
+    {
+        // call the original function immediately, as certain values need to be set in the Link Actor struct.
+        return_setWolfLockDomeModel( linkActrPtr );
+        if ( getCurrentSeed( randomizer ) )
+        {
+            randomizer->replaceWolfLockDomeColor( linkActrPtr );
+        }
+        return;
     }
 
     KEEP_FUNC void handle_loadSeWave( void* Z2SceneMgr, uint32_t waveID )

@@ -276,6 +276,7 @@ namespace mod::rando
         uint32_t xButtonColor;
         uint32_t yButtonColor;
         uint32_t zButtonColor;
+        uint32_t wolfDomeAttackColor;
     } __attribute__( ( __packed__ ) );
 
     enum DvdEntryNumId : uint8_t

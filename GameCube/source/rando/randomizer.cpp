@@ -25,6 +25,7 @@
 #include "tp/JKRArchive.h"
 #include "util/color_utils.h"
 #include "util/texture_utils.h"
+#include "tools.h"
 
 namespace mod::rando
 {
@@ -72,8 +73,41 @@ namespace mod::rando
         // Make sure the foolish items spawn count is reset before randomizing foolish item models
         foolishItems.spawnCount = 0;
 
-        game_patch::_02_modifyFoolishFieldModel();
-        seed->loadShopModels();
+        int32_t stageIDX = libtp::tools::getStageIndex( stage );
+        switch ( stageIDX )
+        {
+            case libtp::data::stage::stageIDs::Hyrule_Field:
+            case libtp::data::stage::stageIDs::Kakariko_Village:
+            case libtp::data::stage::stageIDs::Kakariko_Graveyard:
+            case libtp::data::stage::stageIDs::Fishing_Pond:
+            case libtp::data::stage::stageIDs::Zoras_Domain:
+            case libtp::data::stage::stageIDs::Sacred_Grove:
+            case libtp::data::stage::stageIDs::Lake_Hylia:
+            case libtp::data::stage::stageIDs::Bulblin_Camp:
+            case libtp::data::stage::stageIDs::Outside_Castle_Town:
+            case libtp::data::stage::stageIDs::Gerudo_Desert:
+            case libtp::data::stage::stageIDs::Upper_Zoras_River:
+            case libtp::data::stage::stageIDs::Hidden_Village:
+            {
+                game_patch::_02_modifyFoolishFieldModel();
+                break;
+            }
+
+            case libtp::data::stage::stageIDs::Ordon_Village_Interiors:
+            case libtp::data::stage::stageIDs::Kakariko_Village_Interiors:
+            case libtp::data::stage::stageIDs::Castle_Town_Shops:
+            {
+                if ( modifyShopModels )
+                {
+                    seed->loadShopModels();
+                }
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
     }
 
     void Randomizer::initSave( void )
@@ -589,5 +623,49 @@ namespace mod::rando
             }
             delete[] loadedBmdEntries;
         }
+    }
+
+    void Randomizer::replaceWolfLockDomeColor( libtp::tp::d_a_alink::daAlink* linkActrPtr )
+    {
+        Seed* seed;
+        if ( seed = getCurrentSeed( this ), !seed )
+        {
+            return;
+        }
+
+        rando::RawRGBTable* rawRGBListPtr = randomizer->m_Seed->m_RawRGBTable;
+
+        uint8_t* domeRGBA = reinterpret_cast<uint8_t*>( &rawRGBListPtr->wolfDomeAttackColor );
+        uint32_t chromaRegisterTable = reinterpret_cast<uint32_t>( linkActrPtr->tevRegKey->chromaRPtr );
+
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x3 ) ) = domeRGBA[0];      // Set Red Alpha for the ring base
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x13 ) ) = domeRGBA[0];     // Set Red Alpha for ring wave 1
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x23 ) ) = domeRGBA[0];     // Set Red Alpha for ring wave 2
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0xB ) ) = domeRGBA[0];     // Set Red Alpha for darkworld ring base
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x1B ) ) =
+            domeRGBA[0];     // Set Red Alpha for darkworld ring wave 1
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x2B ) ) =
+            domeRGBA[0];     // Set Red Alpha for darkworld ring wave 2
+
+        chromaRegisterTable = reinterpret_cast<uint32_t>( linkActrPtr->tevRegKey->chromaGPtr );
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x3 ) ) = domeRGBA[1];      // Set Green Alpha for the ring base
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x13 ) ) = domeRGBA[1];     // Set Green Alpha for ring wave 1
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x23 ) ) = domeRGBA[1];     // Set Green Alpha for ring wave 2
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0xB ) ) = domeRGBA[1];     // Set Red Alpha for darkworld ring base
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x1B ) ) =
+            domeRGBA[1];     // Set Red Alpha for darkworld ring wave 1
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x2B ) ) =
+            domeRGBA[1];     // Set Red Alpha for darkworld ring wave 2
+
+        chromaRegisterTable = reinterpret_cast<uint32_t>( linkActrPtr->tevRegKey->chromaBPtr );
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x3 ) ) = domeRGBA[2];      // Set Blue Alpha for the ring base
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x13 ) ) = domeRGBA[2];     // Set Blue Alpha for ring wave 1
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x23 ) ) = domeRGBA[2];     // Set Blue Alpha for ring wave 2
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0xB ) ) = domeRGBA[2];     // Set Red Alpha for darkworld ring base
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x1B ) ) =
+            domeRGBA[2];     // Set Red Alpha for darkworld ring wave 1
+        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x2B ) ) =
+            domeRGBA[2];     // Set Red Alpha for darkworld ring wave 2
+        return;
     }
 }     // namespace mod::rando

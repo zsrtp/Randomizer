@@ -15,6 +15,7 @@
 #include "tp/dzx.h"
 #include "tp/d_resource.h"
 #include "tp/m_Do_dvd_thread.h"
+#include "tp/d_a_alink.h"
 
 namespace mod::rando
 {
@@ -37,6 +38,7 @@ namespace mod::rando
         void overrideEventARC();
         uint8_t overrideBugReward( uint8_t bugID );
         uint8_t getHiddenSkillItem( uint16_t eventIndex );
+        void replaceWolfLockDomeColor( libtp::tp::d_a_alink::daAlink* linkActrPtr );
 
         // NOTE: This function returns dynamic memory
         BmdEntry* generateBmdEntries( mod::rando::DvdEntryNumId arcIndex, uint32_t numEntries );

@@ -8,9 +8,9 @@ namespace mod::user_patch
     void loadShopModels( rando::Randomizer* randomizer, bool set )
     {
         rando::Seed* seed;
-        if ( set && ( seed = getCurrentSeed( randomizer ), seed ) )
+        if ( seed = getCurrentSeed( randomizer ), seed )
         {
-            seed->loadShopModels();
+            modifyShopModels = set;
         }
     }
 }     // namespace mod::user_patch

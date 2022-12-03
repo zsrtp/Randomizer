@@ -134,6 +134,7 @@
 800cffa4:dComIfGp_setItemLifeCount
 800be3e4:checkRestartRoom
 8011f9ec:checkWarpStart
+80138cb8:setWolfLockDomeModel
 
 // data
 8038EB8C:climbVars

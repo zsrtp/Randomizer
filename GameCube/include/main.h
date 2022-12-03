@@ -71,6 +71,7 @@ namespace mod
     extern uint8_t seedRelAction;
     extern bool walletsPatched;
     extern const char* m_DonationText;
+    extern bool modifyShopModels;
 
     void hookFunctions();
     void initRandNext();
@@ -336,6 +337,9 @@ namespace mod
 
     void handle_setGetItemFace( libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID );
     extern void ( *return_setGetItemFace )( libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID );
+
+    void handle_setWolfLockDomeModel( libtp::tp::d_a_alink::daAlink* daALink );
+    extern void ( *return_setWolfLockDomeModel )( libtp::tp::d_a_alink::daAlink* daALink );
 
     // Audio functions
     void handle_loadSeWave( void* Z2SceneMgr, uint32_t waveID );

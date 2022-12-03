@@ -170,6 +170,9 @@ namespace mod
             patch::hookFunction( libtp::tp::d_a_alink::checkBootsMoveAnime, mod::handle_checkBootsMoveAnime );
         return_setGetItemFace = patch::hookFunction( libtp::tp::d_a_alink::setGetItemFace, mod::handle_setGetItemFace );
 
+        return_setWolfLockDomeModel =
+            patch::hookFunction( libtp::tp::d_a_alink::setWolfLockDomeModel, mod::handle_setWolfLockDomeModel );
+
         // Audio functions
         return_loadSeWave = patch::hookFunction( libtp::z2audiolib::z2scenemgr::loadSeWave, mod::handle_loadSeWave );
         return_sceneChange = patch::hookFunction( libtp::z2audiolib::z2scenemgr::sceneChange, mod::handle_sceneChange );
