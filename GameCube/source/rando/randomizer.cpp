@@ -627,47 +627,24 @@ namespace mod::rando
 
     void Randomizer::replaceWolfLockDomeColor( libtp::tp::d_a_alink::daAlink* linkActrPtr )
     {
-        Seed* seed;
-        if ( seed = getCurrentSeed( this ), !seed )
+        RawRGBTable* rawRGBListPtr = m_Seed->m_RawRGBTable;
+        if ( rawRGBListPtr->wolfDomeAttackColor != 0xFFFFFFFF )     // Don't do anything if the value is default
         {
-            return;
+            uint8_t* domeRGBA = reinterpret_cast<uint8_t*>( &rawRGBListPtr->wolfDomeAttackColor );
+            uint8_t** chromaRegisterTable = reinterpret_cast<uint8_t**>( &linkActrPtr->tevRegKey->chromaRPtr );
+
+            for ( uint32_t i = 0; i < 3; i++ )
+            {
+                uint8_t* currentTable = chromaRegisterTable[i];
+                uint8_t currentColor = domeRGBA[i];
+
+                currentTable[0x3] = currentColor;      // Set Alpha for the ring base
+                currentTable[0x13] = currentColor;     // Set Alpha for ring wave 1
+                currentTable[0x23] = currentColor;     // Set Alpha for ring wave 2
+                currentTable[0xB] = currentColor;      // Set Alpha for darkworld ring base
+                currentTable[0x1B] = currentColor;     // Set Alpha for darkworld ring wave 1
+                currentTable[0x2B] = currentColor;     // Set Alpha for darkworld ring wave 2
+            }
         }
-
-        rando::RawRGBTable* rawRGBListPtr = randomizer->m_Seed->m_RawRGBTable;
-
-        uint8_t* domeRGBA = reinterpret_cast<uint8_t*>( &rawRGBListPtr->wolfDomeAttackColor );
-        uint32_t chromaRegisterTable = reinterpret_cast<uint32_t>( linkActrPtr->tevRegKey->chromaRPtr );
-
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x3 ) ) = domeRGBA[0];      // Set Red Alpha for the ring base
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x13 ) ) = domeRGBA[0];     // Set Red Alpha for ring wave 1
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x23 ) ) = domeRGBA[0];     // Set Red Alpha for ring wave 2
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0xB ) ) = domeRGBA[0];     // Set Red Alpha for darkworld ring base
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x1B ) ) =
-            domeRGBA[0];     // Set Red Alpha for darkworld ring wave 1
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x2B ) ) =
-            domeRGBA[0];     // Set Red Alpha for darkworld ring wave 2
-
-        chromaRegisterTable = reinterpret_cast<uint32_t>( linkActrPtr->tevRegKey->chromaGPtr );
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x3 ) ) = domeRGBA[1];      // Set Green Alpha for the ring base
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x13 ) ) = domeRGBA[1];     // Set Green Alpha for ring wave 1
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x23 ) ) = domeRGBA[1];     // Set Green Alpha for ring wave 2
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0xB ) ) =
-            domeRGBA[1];     // Set Green Alpha for darkworld ring base
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x1B ) ) =
-            domeRGBA[1];     // Set Green Alpha for darkworld ring wave 1
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x2B ) ) =
-            domeRGBA[1];     // Set Green Alpha for darkworld ring wave 2
-
-        chromaRegisterTable = reinterpret_cast<uint32_t>( linkActrPtr->tevRegKey->chromaBPtr );
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x3 ) ) = domeRGBA[2];      // Set Blue Alpha for the ring base
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x13 ) ) = domeRGBA[2];     // Set Blue Alpha for ring wave 1
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x23 ) ) = domeRGBA[2];     // Set Blue Alpha for ring wave 2
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0xB ) ) =
-            domeRGBA[2];     // Set Blue Alpha for darkworld ring base
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x1B ) ) =
-            domeRGBA[2];     // Set Blue Alpha for darkworld ring wave 1
-        *reinterpret_cast<uint8_t*>( ( chromaRegisterTable + 0x2B ) ) =
-            domeRGBA[2];     // Set Blue Alpha for darkworld ring wave 2
-        return;
     }
 }     // namespace mod::rando

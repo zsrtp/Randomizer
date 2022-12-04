@@ -310,7 +310,7 @@ namespace mod::rando
 
         uint8_t itemModelId[MAX_SPAWNED_FOOLISH_ITEMS];     // Array holding the IDs of the item that the ice trap is copying
 
-        uint8_t spawnCount;       // How many ice teaps are currently spawned
+        uint8_t spawnCount;       // How many ice traps are currently spawned
         uint8_t triggerCount;     // How many ice traps have been triggered and have yet to occur
     };
 
