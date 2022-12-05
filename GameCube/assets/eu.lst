@@ -139,6 +139,7 @@
 //d_meter2_info.o
 80432148:g_meter2_info
 80432164:wZButtonPtr
+8021e388:resetMiniGameItem
 
 // d_menu_collect.o
 801B3598:setWalletMaxNum

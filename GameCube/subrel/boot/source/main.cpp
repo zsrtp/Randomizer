@@ -190,6 +190,10 @@ namespace mod
 
         return_mountArchive__execute =
             patch::hookFunction( libtp::tp::m_Do_dvd_thread::mountArchive__execute, mod::handle_mountArchive__execute );
+
+        // d_meter functions
+        return_resetMiniGameItem =
+            patch::hookFunction( libtp::tp::d_meter2_info::resetMiniGameItem, mod::handle_resetMiniGameItem );
     }
 
     void initRandNext()

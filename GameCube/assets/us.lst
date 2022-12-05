@@ -320,6 +320,7 @@
 //d_meter2_info.o
 80430188:g_meter2_info
 804301A4:wZButtonPtr
+8021e0c4:resetMiniGameItem
 
 //d_a_shop_item_static.o
 803792e8:shopItemData

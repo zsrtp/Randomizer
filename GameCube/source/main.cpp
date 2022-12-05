@@ -224,6 +224,10 @@ namespace mod
     KEEP_VAR bool ( *return_mountArchive__execute )( libtp::tp::m_Do_dvd_thread::mDoDvdThd_mountArchive_c* mountArchive ) =
         nullptr;
 
+    // d_meter functions
+    KEEP_VAR void ( *return_resetMiniGameItem )( libtp::tp::d_meter2_info::G_Meter2_Info* gMeter2InfoPtr,
+                                                 bool minigameFlag ) = nullptr;
+
     void main()
     {
         // do_link needs to be hooked immediately, as otherwise we may not be able to modify f_pc_profile_lst.rel, which gets
@@ -1436,6 +1440,28 @@ namespace mod
     {
         game_patch::_07_checkPlayerStageReturn();
         return return_collect_save_open_init( param_1 );
+    }
+
+    KEEP_FUNC void handle_resetMiniGameItem( libtp::tp::d_meter2_info::G_Meter2_Info* gMeter2InfoPtr, bool minigameFlag )
+    {
+        using namespace libtp::tp;
+
+        // If we are in Iza's hut and we have the bow, we want to update the save file bow item stored in g_meter2_info just in
+        // case the player started the minigame without it and somehow broke out of the minigame.
+        if ( d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Zoras_River] ) )
+        {
+            if ( events::haveItem( libtp::data::items::Heros_Bow ) )
+            {
+                gMeter2InfoPtr->mSaveBowItem = libtp::data::items::Heros_Bow;
+                // We want to keep track of the number of arrows we have as well because the game
+                // will set our arrow count to this variable upon save warp if the minigame is not completed.
+                gMeter2InfoPtr->mSaveArrowNum =
+                    d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_item_record.bow_ammo;
+            }
+        }
+
+        // Run the original function as we want to clear the other minigame flags
+        return_resetMiniGameItem( gMeter2InfoPtr, minigameFlag );
     }
 
     KEEP_FUNC bool handle_checkBootsMoveAnime( libtp::tp::d_a_alink::daAlink* d_a_alink, int32_t param_1 )

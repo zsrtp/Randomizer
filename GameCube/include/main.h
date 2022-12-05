@@ -25,6 +25,7 @@
 #include "tp/d_resource.h"
 #include "tp/JKRMemArchive.h"
 #include "tp/m_Do_dvd_thread.h"
+#include "tp/d_meter2_info.h"
 
 // Number of lines that should not be cleared when flushing the screen
 #define CONSOLE_PROTECTED_LINES 4
@@ -385,5 +386,8 @@ namespace mod
     bool handle_mountArchive__execute( libtp::tp::m_Do_dvd_thread::mDoDvdThd_mountArchive_c* mountArchive );
     extern bool ( *return_mountArchive__execute )( libtp::tp::m_Do_dvd_thread::mDoDvdThd_mountArchive_c* mountArchive );
 
+    // d_meter functions
+    void handle_resetMiniGameItem( libtp::tp::d_meter2_info::G_Meter2_Info* gMeter2InfoPtr, bool minigameFlag );
+    extern void ( *return_resetMiniGameItem )( libtp::tp::d_meter2_info::G_Meter2_Info* gMeter2InfoPtr, bool minigameFlag );
 }     // namespace mod
 #endif

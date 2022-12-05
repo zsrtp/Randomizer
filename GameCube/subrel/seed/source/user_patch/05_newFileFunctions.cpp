@@ -7,9 +7,7 @@ namespace mod::user_patch
 {
     void loadShopModels( rando::Randomizer* randomizer, bool set )
     {
-        if ( randomizer )
-        {
-            modifyShopModels = set;
-        }
+        (void) randomizer;
+        modifyShopModels = set;
     }
 }     // namespace mod::user_patch

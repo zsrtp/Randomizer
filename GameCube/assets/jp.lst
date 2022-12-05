@@ -364,6 +364,7 @@
 // d_meter2_info.o
 8042A2E4:wZButtonPtr
 8042a2c8:g_meter2_info
+8021e81c:resetMiniGameItem
 
 // d_a_player.o
 8044b158:m_midnaActor
