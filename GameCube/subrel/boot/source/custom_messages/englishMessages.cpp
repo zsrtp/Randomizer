@@ -507,7 +507,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_RED)
         "Dominion Rod"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! Now it can\nbe used to imbude statues\nwith life in the present!"
+        "! Now it can\nbe used to imbue statues\nwith life in the present!"
     MSG_END()
     MSG_BEGIN_ARRAY( firstCharacterEn )
         MSG_SPEED(MSG_SPEED_FAST)
