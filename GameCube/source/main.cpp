@@ -176,6 +176,7 @@ namespace mod
     KEEP_VAR bool ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR int32_t ( *return_query004 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR int32_t ( *return_query037 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    KEEP_VAR int32_t ( *return_query049 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR uint32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
     KEEP_VAR int32_t ( *return_event017 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
     KEEP_VAR int32_t ( *return_event003 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
@@ -1000,6 +1001,16 @@ namespace mod
             events::handleTimeOfDayChange();
         }
         return menuType;
+    }
+
+    KEEP_FUNC int32_t handle_query049( void* unk1, void* unk2, int32_t unk3 )
+    {
+        int32_t poeFlag = return_query049( unk1, unk2, unk3 );
+        if ( ( poeFlag == 4 ) && !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::GOT_BOTTLE_FROM_JOVANI ) )
+        {
+            return 3;
+        }
+        return poeFlag;
     }
 
     KEEP_FUNC bool handle_query042( void* unk1, void* unk2, int32_t unk3 )

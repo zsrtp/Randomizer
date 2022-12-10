@@ -344,6 +344,7 @@
 8024c550:event003
 8024da78:event041
 8024bc80:query037
+8024c2a0:query049
 
 //d_menu_window.o
 801fa590:collect_save_open_init
