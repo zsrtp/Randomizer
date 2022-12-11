@@ -89,6 +89,10 @@ namespace mod::assembly
         void asmAdjustCreateItemParamsEnd();
         void handleAdjustCreateItemParams( void* daDitem );
 
+        // d_a_npc_pouya.o
+        void asmCheck60PoeReward();
+        bool handleCheck60PoeReward( uint8_t poeCount );
+
         // d_a_alink.o
 #ifdef TP_JP
         void asmUnpatchMapGlitchStart();

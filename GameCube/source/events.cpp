@@ -116,6 +116,14 @@ namespace mod::events
 
                 break;
             }
+            // d_a_tbox.rel
+            // Treasure Chests
+            case 0x29:
+            {
+                // Nop out the bne- that causes chests to play the cutscene for big items.
+                performStaticASMReplacement( relPtrRaw + 0xA58, 0x60000000 );
+                break;
+            }
             // d_a_kytag11.rel
             // d_kankyo tag 11
             case 0x4c:
@@ -376,6 +384,15 @@ namespace mod::events
             {
                 // Prevent Bo from talking after the chest has been opened
                 performStaticASMReplacement( relPtrRaw + 0x1A44, 0x48000028 );     // b 0x28
+                break;
+            }
+            // d_a_npc_pouya.rel
+            // Jovani
+            case 0x15C:
+            {
+                // Nop out the bne- that causes chests to play the cutscene for big items.
+                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x14D4 ),
+                                             reinterpret_cast<void*>( assembly::asmCheck60PoeReward ) );
                 break;
             }
             // d_a_npc_ykm.rel

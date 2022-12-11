@@ -213,7 +213,7 @@ namespace mod
     KEEP_VAR void ( *return_startSound )( void* soungMgr,
                                           libtp::z2audiolib::z2scenemgr::JAISoundID soundId,
                                           void* soundHandle,
-                                          void* pos );
+                                          void* pos ) = nullptr;
 
     // Title Screen functions
     KEEP_VAR void* ( *return_dScnLogo_c_dt )( void* dScnLogo_c, int16_t bFreeThis ) = nullptr;

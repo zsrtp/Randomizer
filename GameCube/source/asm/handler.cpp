@@ -98,6 +98,13 @@ namespace mod::assembly
         events::onAdjustCreateItemParams( daDitem );
     }
 
+    bool handleCheck60PoeReward( uint8_t poeCount )
+    {
+        // Check if we are getting the 60 Poe Check and that we have already gotten the 20 Poe Check.
+        return ( ( poeCount >= 60 ) &&
+                 libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::GOT_BOTTLE_FROM_JOVANI ) );
+    }
+
 #ifdef TP_JP
     void unpatchMapGlitch( libtp::tp::d_a_alink::daAlink* d_a_alink )
     {
