@@ -67,6 +67,7 @@ namespace mod
     uint32_t randNext = 0;
     KEEP_VAR const char* m_DonationText = nullptr;
     bool modifyShopModels = false;
+    bool instantTextEnabled = false;
 
     // Function hook return trampolines
     KEEP_VAR void ( *return_fapGm_Execute )( void ) = nullptr;
@@ -168,6 +169,14 @@ namespace mod
     KEEP_VAR uint32_t ( *return_getFontCCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
     KEEP_VAR uint32_t ( *return_getFontGCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
     KEEP_VAR char ( *return_parseCharacter_1Byte )( const char** text ) = nullptr;
+    KEEP_VAR void ( *return_jmessage_tSequenceProcessor__do_begin )( void* seqProcessor,
+                                                                     const void* unk2,
+                                                                     const char* text ) = nullptr;
+
+    KEEP_VAR bool ( *return_jmessage_tSequenceProcessor__do_tag )( void* seqProcessor,
+                                                                   uint32_t unk2,
+                                                                   const void* currentText,
+                                                                   uint32_t unk4 ) = nullptr;
 
     // Query/Event functions.
     KEEP_VAR bool ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
@@ -573,13 +582,7 @@ namespace mod
             }
         }
 
-        uint8_t* triggerCount = &rando::foolishItems.triggerCount;
-        uint8_t foolishTrapCount = *triggerCount;
-        if ( foolishTrapCount > 0 )
-        {
-            *triggerCount = 0;
-            handleFoolishItem( foolishTrapCount );
-        }
+        handleFoolishItem();
 
         roomReloadingState = currentReloadingState;
 
@@ -1053,6 +1056,35 @@ namespace mod
             }
         }
         return return_event041( messageFlow, nodeEvent, actrPtr );
+    }
+
+    KEEP_FUNC void handle_jmessage_tSequenceProcessor__do_begin( void* seqProcessor, const void* unk2, const char* text )
+    {
+        // Call the original function immediately as it sets necessary values needed later on.
+        return_jmessage_tSequenceProcessor__do_begin( seqProcessor, unk2, text );
+
+        if ( instantTextEnabled )
+        {
+            *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( seqProcessor ) + 0xB2 ) = 0x1;
+        }
+    }
+
+    KEEP_FUNC bool handle_jmessage_tSequenceProcessor__do_tag( void* seqProcessor,
+                                                               uint32_t unk2,
+                                                               const void* currentText,
+                                                               uint32_t unk4 )
+    {
+        // Call the original function immediately as it sets necessary values needed later on.
+        const bool result = return_jmessage_tSequenceProcessor__do_tag( seqProcessor, unk2, currentText, unk4 );
+
+        if ( instantTextEnabled )
+        {
+            *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( seqProcessor ) + 0xB2 ) = 0x1;
+
+            uint32_t tReferencePtr = *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( seqProcessor ) + 0x4 );
+            *reinterpret_cast<int16_t*>( tReferencePtr + 0x5D6 ) = 0;
+        }
+        return result;
     }
 
     KEEP_FUNC bool handle_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* membitPtr, const int32_t memBit )
@@ -1560,12 +1592,33 @@ namespace mod
         return ret;
     }
 
-    KEEP_FUNC void handleFoolishItem( uint8_t count )
+    KEEP_FUNC void handleFoolishItem()
     {
+        if ( !randoIsEnabled( randomizer ) )
+        {
+            return;
+        }
+
+        // Get the trigger count
+        uint8_t* triggerCount = &rando::foolishItems.triggerCount;
+        uint32_t count = *triggerCount;
+        if ( count == 0 )
+        {
+            return;
+        }
+
         if ( !events::checkFoolItemFreeze() )
         {
             return;
         }
+
+        // Failsafe: Make sure the count does not somehow exceed 100
+        if ( count > 100 )
+        {
+            count = 100;
+        }
+        // reset trigger counter to 0
+        *triggerCount = 0;
 
         using namespace libtp::z2audiolib;
         using namespace libtp::z2audiolib::z2scenemgr;
@@ -1583,12 +1636,6 @@ namespace mod
         m_Do_Audio::mDoAud_seStartLevel( 0x10040, nullptr, 0, 0 );
         loadSeWave( Z2ScenePtr, seWave1 );
         loadSeWave( Z2ScenePtr, seWave2 );
-
-        // Failsafe: Make sure the count does not somehow exceed 100
-        if ( count > 100 )
-        {
-            count = 100;
-        }
 
         d_com_inf_game::dComIfG_inf_c* gameInfoPtr = &d_com_inf_game::dComIfG_gameInfo;
         libtp::tp::d_save::dSv_player_status_a_c* playerStatusPtr = &gameInfoPtr->save.save_file.player.player_status_a;

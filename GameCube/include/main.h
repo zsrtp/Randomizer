@@ -73,6 +73,7 @@ namespace mod
     extern bool walletsPatched;
     extern const char* m_DonationText;
     extern bool modifyShopModels;
+    extern bool instantTextEnabled;
 
     void hookFunctions();
     void initRandNext();
@@ -82,7 +83,7 @@ namespace mod
     uint32_t ulRand( uint32_t* seed, uint32_t range );
     float intToFloat( int32_t value );
     void handleInput( uint32_t inputs );
-    void handleFoolishItem( uint8_t count );
+    void handleFoolishItem();
     void initArcLookupTable();
 
     // Inline getConsole, as it's just a shortcut to get a reference to the console variable
@@ -280,6 +281,18 @@ namespace mod
 
     char handle_parseCharacter_1Byte( const char** text );
     extern char ( *return_parseCharacter_1Byte )( const char** text );
+
+    void handle_jmessage_tSequenceProcessor__do_begin( void* seqProcessor, const void* unk2, const char* text );
+    extern void ( *return_jmessage_tSequenceProcessor__do_begin )( void* seqProcessor, const void* unk2, const char* text );
+
+    bool handle_jmessage_tSequenceProcessor__do_tag( void* seqProcessor,
+                                                     uint32_t unk2,
+                                                     const void* currentText,
+                                                     uint32_t unk4 );
+    extern bool ( *return_jmessage_tSequenceProcessor__do_tag )( void* seqProcessor,
+                                                                 uint32_t unk2,
+                                                                 const void* currentText,
+                                                                 uint32_t unk4 );
 
     // Query/Event functions. Various uses
     bool handle_query022( void* unk1, void* unk2, int32_t unk3 );

@@ -139,6 +139,12 @@ namespace mod
         return_parseCharacter_1Byte =
             patch::hookFunction( tp::resource::parseCharacter_1Byte, mod::handle_parseCharacter_1Byte );
 
+        return_jmessage_tSequenceProcessor__do_begin =
+            patch::hookFunction( tp::d_msg_class::jmessage_tSequenceProcessor__do_begin,
+                                 mod::handle_jmessage_tSequenceProcessor__do_begin );
+        return_jmessage_tSequenceProcessor__do_tag = patch::hookFunction( tp::d_msg_class::jmessage_tSequenceProcessor__do_tag,
+                                                                          mod::handle_jmessage_tSequenceProcessor__do_tag );
+
         // Query/EventFunctions
         return_query022 = patch::hookFunction( libtp::tp::d_msg_flow::query022, mod::handle_query022 );
         return_query023 = patch::hookFunction( libtp::tp::d_msg_flow::query023, mod::handle_query023 );

@@ -22,6 +22,7 @@ namespace mod::user_patch
     void loadShopModels( rando::Randomizer* randomizer, bool set );
     void setMinorCutsceneValues( rando::Randomizer* randomizer, bool set );
     void clearMDH( rando::Randomizer* randomizer, bool set );
+    void setInstantText( rando::Randomizer* randomizer, bool set );
 }     // namespace mod::user_patch
 
 #endif

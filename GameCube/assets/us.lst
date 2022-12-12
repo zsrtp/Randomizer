@@ -328,6 +328,8 @@
 // d_msg_class.o
 802288fc:getFontCCColorTable
 802289a8:getFontGCColorTable
+8022b658:jmessage_tSequenceProcessor__do_begin
+8022c1a0:jmessage_tSequenceProcessor__do_tag
 
 // processor.o
 802A7C54:getResource_groupID

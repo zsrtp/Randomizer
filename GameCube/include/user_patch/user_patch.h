@@ -30,7 +30,7 @@ namespace mod::user_patch
 
     // Available Game patches accessible by index
     extern GamePatch volatilePatches[5];
-    extern GamePatch oneTimePatches[4];
+    extern GamePatch oneTimePatches[5];
 
 }     // namespace mod::user_patch
 #endif

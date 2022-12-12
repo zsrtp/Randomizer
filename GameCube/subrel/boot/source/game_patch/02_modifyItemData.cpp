@@ -235,6 +235,7 @@ namespace mod::game_patch
         itemResourcePtr[items::Shadow_Crystal].ringTexResIdx = 0x002E;
         itemResourcePtr[items::Master_Sword_Light].ringTexResIdx = 0x0042;
 
+        // Change the itemGet fanfare for custom items.
         getSeTypePtr[items::Master_Sword] = getSeTypePtr[items::Clawshot];
         getSeTypePtr[items::Master_Sword_Light] = getSeTypePtr[items::Clawshot];
         getSeTypePtr[items::Shadow_Crystal] = getSeTypePtr[items::Clawshot];

@@ -390,7 +390,7 @@ namespace mod::events
             // Jovani
             case 0x15C:
             {
-                // Nop out the bne- that causes chests to play the cutscene for big items.
+                // Branch to a custom function that checks for the 20 soul flag as well as soul count.
                 libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x14D4 ),
                                              reinterpret_cast<void*>( assembly::asmCheck60PoeReward ) );
                 break;

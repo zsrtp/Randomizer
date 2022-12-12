@@ -10,4 +10,11 @@ namespace mod::user_patch
         (void) randomizer;
         modifyShopModels = set;
     }
+
+    void setInstantText( rando::Randomizer* randomizer, bool set )
+    {
+        (void) randomizer;
+        instantTextEnabled = set;
+        getConsole() << "instant text is " << instantTextEnabled << "\n";
+    }
 }     // namespace mod::user_patch

@@ -315,6 +315,8 @@
 //d_msg_class.o
 80228bc0:getFontCCColorTable
 80228c6c:getFontGCColorTable
+8022c66c:jmessage_tSequenceProcessor__do_tag
+8022bb24:jmessage_tSequenceProcessor__do_begin
 
 //d_item_data.o
 803ae280:item_resource

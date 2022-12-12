@@ -14,10 +14,11 @@
 
 namespace mod::user_patch
 {
-    GamePatch oneTimePatches[4] = {
+    GamePatch oneTimePatches[5] = {
         patchWallet,
         removeIBLimit,
         loadShopModels,
         disableBattleMusic,
+        setInstantText,
     };
 }
