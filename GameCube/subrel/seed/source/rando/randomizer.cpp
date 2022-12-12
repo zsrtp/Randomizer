@@ -53,8 +53,8 @@ namespace mod::rando
             else
             {
                 // The seed failed to load, so clear the seed
-                libtp::memory::clearMemory( &m_SeedInfo, sizeof( m_SeedInfo ) );
                 delete m_Seed;
+                libtp::memory::clearMemory( &m_SeedInfo, sizeof( m_SeedInfo ) );
                 m_Seed = nullptr;
                 m_CurrentSeed = 0xFF;
             }
@@ -65,8 +65,8 @@ namespace mod::rando
     {
         getConsole() << "Seed unloading...\n";
 
-        libtp::memory::clearMemory( &m_SeedInfo, sizeof( m_SeedInfo ) );
         delete m_Seed;
+        libtp::memory::clearMemory( &m_SeedInfo, sizeof( m_SeedInfo ) );
         m_Seed = nullptr;
         m_SeedInit = false;
         m_CurrentSeed = 0xFF;

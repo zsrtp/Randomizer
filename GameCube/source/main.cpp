@@ -1533,6 +1533,9 @@ namespace mod
                 break;
             }
 
+            case Wooden_Sword:
+            case Ordon_Sword:
+            case Ordon_Shield:
             case Master_Sword:
             case Master_Sword_Light:
             case Shadow_Crystal:
