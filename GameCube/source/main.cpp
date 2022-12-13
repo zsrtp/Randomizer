@@ -324,7 +324,7 @@ namespace mod
         using namespace libtp::tp::m_do_controller_pad;
         CPadInfo* padInfo = &cpadInfo[PAD_1];
 
-        return padInfo->mButtonFlags & buttons;
+        return padInfo->mPressedButtonFlags & buttons;
     }
 
     // Note: With the way this function is currently set up, if checking for either of the analog triggers, then those will need
