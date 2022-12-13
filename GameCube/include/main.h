@@ -79,7 +79,7 @@ namespace mod
     void initRandNext();
     rando::Seed* getCurrentSeed( rando::Randomizer* rando );
     void setScreen( bool state );     // Sets visibility of console
-    bool checkButtonsPressedSingleFrame( uint32_t buttons );
+    bool checkButtonsPressedThisFrame( uint32_t buttons );
     bool checkButtonCombo( uint32_t combo, bool checkAnalog );
     uint32_t rand( uint32_t* seed );
     uint32_t ulRand( uint32_t* seed, uint32_t range );

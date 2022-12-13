@@ -110,7 +110,7 @@ namespace mod::item_wheel_menu
         if ( !ringDrawnThisFrame )
         {
             // Check if either Start or Z were pressed this frame
-            if ( checkButtonsPressedSingleFrame( PadInputs::Button_Start | PadInputs::Button_Z ) )
+            if ( checkButtonsPressedThisFrame( PadInputs::Button_Start | PadInputs::Button_Z ) )
             {
                 shouldDisplayMenu = !shouldDisplayMenu;
                 displayMenu = shouldDisplayMenu;

@@ -319,7 +319,7 @@ namespace mod
         libtp::display::setConsole( state, 0 );
     }
 
-    bool checkButtonsPressedSingleFrame( uint32_t buttons )
+    bool checkButtonsPressedThisFrame( uint32_t buttons )
     {
         using namespace libtp::tp::m_do_controller_pad;
         CPadInfo* padInfo = &cpadInfo[PAD_1];
