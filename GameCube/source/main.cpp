@@ -319,10 +319,65 @@ namespace mod
         libtp::display::setConsole( state, 0 );
     }
 
+    bool checkButtonsPressedSingleFrame( uint32_t buttons )
+    {
+        using namespace libtp::tp::m_do_controller_pad;
+        CPadInfo* padInfo = &cpadInfo[PAD_1];
+
+        return padInfo->mButtonFlags & buttons;
+    }
+
+    // Note: With the way this function is currently set up, if checking for either of the analog triggers, then those will need
+    // to be held before pressing other buttons. Avoiding this problem would require keeping track of what the analog values
+    // were on the previous frame, whether that was below 0.7, and if the current frame is now at least 0.7.
+    bool checkButtonCombo( uint32_t combo, bool checkAnalog )
+    {
+        using namespace libtp::tp::m_do_controller_pad;
+        CPadInfo* padInfo = &cpadInfo[PAD_1];
+
+        // Get the buttons that are currently held
+        uint32_t heldButtons = padInfo->mButtonFlags;
+
+        // Check if analog L and R should be checked
+        if ( checkAnalog )
+        {
+            // Check if L is included in the button combo
+            if ( combo & PadInputs::Button_L )
+            {
+                // Check if analog L is at 70% or more
+                if ( padInfo->mTriggerLeft >= 0.7f )
+                {
+                    // Manually set the bit for L being pressed
+                    heldButtons |= PadInputs::Button_L;
+                }
+            }
+
+            // Check if R is included in the button combo
+            if ( combo & PadInputs::Button_R )
+            {
+                // Check if analog R is at 70% or more
+                if ( padInfo->mTriggerRight >= 0.7f )
+                {
+                    // Manually set the bit for R being pressed
+                    heldButtons |= PadInputs::Button_R;
+                }
+            }
+        }
+
+        // Check if the button combo is held
+        if ( ( heldButtons & combo ) != combo )
+        {
+            return false;
+        }
+
+        // Check if at least one button in the combo was pressed this frame
+        return padInfo->mPressedButtonFlags & combo;
+    }
+
     void doInput( uint32_t input )
     {
         using namespace libtp::tp::m_do_controller_pad;
-        auto checkBtn = [&input]( uint32_t combo ) { return ( input & combo ) == combo; };
+        auto checkBtn = [&input]( uint32_t combo ) { return static_cast<bool>( ( input & combo ) == combo ); };
 
         if ( input && gameState == GAME_TITLE )
         {
@@ -359,6 +414,7 @@ namespace mod
     {
         using namespace libtp;
         using namespace tp::m_do_controller_pad;
+        using namespace tp::f_pc_node_req;
         using namespace tp::d_com_inf_game;
 
 // Uncomment out the next line to display debug heap info
@@ -371,13 +427,9 @@ namespace mod
         // New frame, so the ring will be redrawn
         item_wheel_menu::ringDrawnThisFrame = false;
 
-        // Load relevant pointers locally for faster access
-        CPadInfo* padInfo = &cpadInfo;
         dComIfG_inf_c* gameInfo = &dComIfG_gameInfo;
 
         // Handle game state updates
-        using namespace libtp::tp::f_pc_node_req;
-
         if ( l_fpcNdRq_Queue )
         {
             // Previous state
@@ -428,38 +480,40 @@ namespace mod
         }
         // End of handling gameStates
 
-        // handle button inputs only if buttons are being held that weren't held last time
-        if ( padInfo->buttonInput != lastButtonInput )
+        // Handle button inputs only if buttons are being held that weren't held last time
+        auto checkBtn = []( uint32_t input, uint32_t combo ) { return static_cast<bool>( ( input & combo ) == combo ); };
+        CPadInfo* padInfo = &cpadInfo[PAD_1];
+        uint32_t currentButtons = padInfo->mButtonFlags;
+
+        if ( currentButtons != lastButtonInput )
         {
             // Store before processing since we (potentially) un-set the padInfo values later
-            lastButtonInput = padInfo->buttonInput;
+            lastButtonInput = currentButtons;
 
             // Special combo to (de)activate the console should be handled first
-            if ( ( padInfo->buttonInput & ( PadInputs::Button_R | PadInputs::Button_Z ) ) ==
-                 ( PadInputs::Button_R | PadInputs::Button_Z ) )
+            if ( checkBtn( currentButtons, PadInputs::Button_R | PadInputs::Button_Z ) )
             {
-                // Disallow during boot as we print copyright info etc.
+                // Disallow during boot as we print info etc.
                 // Will automatically disappear if there is no seeds to select from
                 setScreen( !consoleState );
             }
             // Handle Inputs if console is already active
             else if ( consoleState )
             {
-                doInput( padInfo->buttonInput );
+                doInput( currentButtons );
 
                 if ( gameState != GAME_BOOT )
                 {
                     // Disable input so game doesn't notice
-                    padInfo->buttonInput = 0;
-                    padInfo->buttonInputTrg = 0;
+                    currentButtons = 0;
+                    padInfo->mButtonFlags = 0;
+                    padInfo->mPressedButtonFlags = 0;
                 }
             }
 
-            else if ( ( padInfo->buttonInput & ( PadInputs::Button_R | PadInputs::Button_Y ) ) ==
-                      ( PadInputs::Button_R | PadInputs::Button_Y ) )
+            else if ( checkButtonCombo( PadInputs::Button_R | PadInputs::Button_Y, true ) )
             {
-                // Disallow during boot as we print copyright info etc.
-                // Will automatically disappear if there is no seeds to select from
+                // Disallow during boot as we print info etc.
                 events::handleQuickTransform();
             }
         }
@@ -479,16 +533,16 @@ namespace mod
                     // m_Enabled will be set to true in the seed REL
                     // The seed REL will set seedRelAction to SEED_ACTION_NONE if it ran successfully
 #ifdef DVD
-                    if ( !libtp::tools::callRelProlog( "/mod/seed.rel" ) )
+                    if ( !tools::callRelProlog( "/mod/seed.rel" ) )
 #else
                     // Only mount/unmount the memory card once
-                    if ( !libtp::tools::callRelProlog( chan, SUBREL_SEED_ID, false, true ) )
+                    if ( !tools::callRelProlog( chan, SUBREL_SEED_ID, false, true ) )
 #endif
                     {
                         seedRelAction = SEED_ACTION_FATAL;
                     }
 #ifndef DVD
-                    libtp::gc_wii::card::CARDUnmount( chan );
+                    gc_wii::card::CARDUnmount( chan );
 #endif
                 }
                 else
@@ -504,16 +558,16 @@ namespace mod
 
                         // The seed REL will set seedRelAction to SEED_ACTION_NONE if it ran successfully
 #ifdef DVD
-                        if ( !libtp::tools::callRelProlog( "/mod/seed.rel" ) )
+                        if ( !tools::callRelProlog( "/mod/seed.rel" ) )
 #else
                         // Only mount/unmount the memory card once
-                        if ( !libtp::tools::callRelProlog( chan, SUBREL_SEED_ID, false, true ) )
+                        if ( !tools::callRelProlog( chan, SUBREL_SEED_ID, false, true ) )
 #endif
                         {
                             seedRelAction = SEED_ACTION_FATAL;
                         }
 #ifndef DVD
-                        libtp::gc_wii::card::CARDUnmount( chan );
+                        gc_wii::card::CARDUnmount( chan );
 #endif
                     }
                     else
@@ -546,11 +600,11 @@ namespace mod
 
         // Custom events
         bool currentReloadingState;
-        libtp::tp::d_a_alink::daAlink* linkMapPtr = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer;
+        tp::d_a_alink::daAlink* linkMapPtr = gameInfo->play.mPlayer;
         if ( linkMapPtr )
         {
             // checkRestartRoom is needed for voiding
-            currentReloadingState = libtp::tp::d_a_alink::checkRestartRoom( linkMapPtr );
+            currentReloadingState = tp::d_a_alink::checkRestartRoom( linkMapPtr );
         }
         else
         {

@@ -109,8 +109,8 @@ namespace mod::item_wheel_menu
         // If the ring was already drawn this frame, then dont check the buttons
         if ( !ringDrawnThisFrame )
         {
-            // Check if either Start or Z is pressed
-            if ( cpadInfo.buttonInputTrg & ( PadInputs::Button_Start | PadInputs::Button_Z ) )
+            // Check if either Start or Z were pressed this frame
+            if ( checkButtonsPressedSingleFrame( PadInputs::Button_Start | PadInputs::Button_Z ) )
             {
                 shouldDisplayMenu = !shouldDisplayMenu;
                 displayMenu = shouldDisplayMenu;
