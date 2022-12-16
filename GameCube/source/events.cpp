@@ -91,6 +91,15 @@ namespace mod::events
             }
         }
 
+        // Check to see if currently in Snowpeak Ruins
+        if ( strcmp( currentStage, libtp::data::stage::allStages[libtp::data::stage::stageIDs::City_in_the_Sky] ) == 0 )
+        {
+            libtp::tp::d_save::offSwitch_dSv_memBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
+                                                     0xA );     // Fan in main room active
+            libtp::tp::d_save::offSwitch_dSv_memBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
+                                                     0xF );     // Main Room 1F explored
+        }
+
         randomizer->overrideEventARC();
     }
 

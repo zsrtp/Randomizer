@@ -61,6 +61,7 @@
 80034318:onCollectMirror
 800342d4:onCollectCrystal
 80034940:onSwitch_dSv_memBit
+80034968:offSwitch_dSv_memBit
 80033060:setItem
 80034410:onLightDropGetFlag
 80033894:checkEmptyBottle

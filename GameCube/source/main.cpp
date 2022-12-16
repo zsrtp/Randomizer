@@ -342,7 +342,8 @@ namespace mod
         if ( checkAnalog )
         {
             // Check if L is included in the button combo
-            if ( combo & PadInputs::Button_L )
+            // Commented out due to this part of the code not being used at the moment to save memory.
+            /*if ( combo & PadInputs::Button_L )
             {
                 // Check if analog L is at 70% or more
                 if ( padInfo->mTriggerLeft >= 0.7f )
@@ -350,7 +351,7 @@ namespace mod
                     // Manually set the bit for L being pressed
                     heldButtons |= PadInputs::Button_L;
                 }
-            }
+            }*/
 
             // Check if R is included in the button combo
             if ( combo & PadInputs::Button_R )
@@ -1519,6 +1520,21 @@ namespace mod
                 if ( flag == 0x52 )
                 {
                     return;     // Don't set the flag for all monkeys freed in the lobby of Forest Temple
+                }
+            }
+        }
+
+        if ( libtp::tp::d_a_alink::checkStageName(
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Arbiters_Grounds] ) )
+        {
+            if ( memoryBit == &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags )
+            {
+                if ( flag == 0x26 )
+                {
+                    libtp::tp::d_save::offSwitch_dSv_memBit(
+                        &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
+                        0x45 );     // Open the Poe gate
+                    return;
                 }
             }
         }

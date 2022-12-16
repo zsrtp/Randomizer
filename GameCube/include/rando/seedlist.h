@@ -29,7 +29,7 @@
 // future update (pre-1.0 release) to determine if a SeedData can be played even
 // if some of its non-critical features are not supported.
 #define MAX_FULLY_SUPPORTED_SEED_DATA_VER_MAJOR 1
-#define MAX_FULLY_SUPPORTED_SEED_DATA_VER_MINOR 0
+#define MAX_FULLY_SUPPORTED_SEED_DATA_VER_MINOR 1
 
 // Defines to help with version comparisions, as otherwise we get: "error:
 // comparison is always true due to limited range of data type

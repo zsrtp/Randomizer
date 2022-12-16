@@ -56,6 +56,7 @@
 800349bc:isEventBit
 80034860:isSwitch_dSv_memBit
 80034810:onSwitch_dSv_memBit
+80034838:offSwitch_dSv_memBit
 803a13e8:saveBitLabels
 80032bb0:isDarkClearLV
 80032fb8:setItem

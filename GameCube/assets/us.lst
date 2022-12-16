@@ -60,6 +60,7 @@
 80034934:isDungeonItem
 800349bc:isEventBit
 80034810:onSwitch_dSv_memBit
+80034838:offSwitch_dSv_memBit
 80034860:isSwitch_dSv_memBit
 800332f8:setLineUpItem
 80034368:onLightDropGetFlag
