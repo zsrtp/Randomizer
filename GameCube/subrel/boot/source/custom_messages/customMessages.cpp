@@ -1,6 +1,7 @@
 #include "customMessages.h"
 #include "main.h"
 #include "cxx.h"
+#include "game_patch/game_patch.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -20,6 +21,7 @@ namespace mod::customMessages
         // Get the MsgEntry to use
         const MsgEntry* entries;
 #ifdef TP_US
+        game_patch::dungeonItemAreaColorIndex = 57;
         entries = entriesUs;
 #elif defined TP_JP
         entries = entriesJp;

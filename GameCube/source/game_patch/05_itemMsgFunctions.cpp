@@ -10,12 +10,15 @@
 #include "tp/processor.h"
 #include "tp/resource.h"
 #include "tp/JKRArchivePub.h"
+#include "memory.h"
 
 #include <cstring>
 #include <cstdarg>
 
 namespace mod::game_patch
 {
+    KEEP_VAR uint8_t dungeonItemAreaColorIndex = 0;
+
     /*
     int32_t getItemIdFromMsgId( const void* TProcessor, uint16_t unk3, uint32_t msgId )
     {
@@ -259,7 +262,9 @@ namespace mod::game_patch
                     }
 
                     // Figure out what dungeon area this is for
-                    // Also figure out what areas should have 'the' infront of them
+                    // Also figure out what color to use for each area name, as well as what areas should have 'the' infront of
+                    // them
+                    uint8_t areaColorId = MSG_COLOR_WHITE_HEX;
                     uint32_t dungeonAreaMsgId;
                     bool addTheText = false;
 
@@ -270,6 +275,7 @@ namespace mod::game_patch
                         case Forest_Temple_Compass:
                         case Forest_Temple_Dungeon_Map:
                         {
+                            areaColorId = MSG_COLOR_GREEN_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::FOREST_TEMPLE;
                             addTheText = true;
                             break;
@@ -278,6 +284,7 @@ namespace mod::game_patch
                         case Goron_Mines_Compass:
                         case Goron_Mines_Dungeon_Map:
                         {
+                            areaColorId = MSG_COLOR_RED_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::GORON_MINES;
                             break;
                         }
@@ -286,6 +293,7 @@ namespace mod::game_patch
                         case Lakebed_Temple_Compass:
                         case Lakebed_Temple_Dungeon_Map:
                         {
+                            areaColorId = CUSTOM_MSG_COLOR_BLUE_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::LAKEBED_TEMPLE;
                             addTheText = true;
                             break;
@@ -295,6 +303,7 @@ namespace mod::game_patch
                         case Arbiters_Grounds_Compass:
                         case Arbiters_Grounds_Dungeon_Map:
                         {
+                            areaColorId = MSG_COLOR_ORANGE_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::ARBITERS_GROUNDS;
                             break;
                         }
@@ -302,6 +311,7 @@ namespace mod::game_patch
                         case Snowpeak_Ruins_Compass:
                         case Snowpeak_Ruins_Dungeon_Map:
                         {
+                            areaColorId = MSG_COLOR_LIGHT_BLUE_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::SNOWPEAK_RUINS;
                             break;
                         }
@@ -310,6 +320,7 @@ namespace mod::game_patch
                         case Temple_of_Time_Compass:
                         case Temple_of_Time_Dungeon_Map:
                         {
+                            areaColorId = CUSTOM_MSG_COLOR_DARK_GREEN_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::TEMPLE_OF_TIME;
                             addTheText = true;
                             break;
@@ -319,6 +330,7 @@ namespace mod::game_patch
                         case City_in_The_Sky_Compass:
                         case City_in_The_Sky_Dungeon_Map:
                         {
+                            areaColorId = MSG_COLOR_YELLOW_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::CITY_IN_THE_SKY;
                             addTheText = true;
                             break;
@@ -328,6 +340,7 @@ namespace mod::game_patch
                         case Palace_of_Twilight_Compass:
                         case Palace_of_Twilight_Dungeon_Map:
                         {
+                            areaColorId = MSG_COLOR_PURPLE_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::PALACE_OF_TWILIGHT;
                             addTheText = true;
                             break;
@@ -337,11 +350,13 @@ namespace mod::game_patch
                         case Hyrule_Castle_Compass:
                         case Hyrule_Castle_Dungeon_Map:
                         {
+                            areaColorId = CUSTOM_MSG_COLOR_SILVER_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::HYRULE_CASTLE;
                             break;
                         }
                         case Bulblin_Camp_Key:
                         {
+                            areaColorId = MSG_COLOR_ORANGE_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::BUBLIN_CAMP;
                             addTheText = true;
                             break;
@@ -380,6 +395,13 @@ namespace mod::game_patch
                     {
                         theText = "";
                     }
+
+                    // Replace the dungeon area color
+                    char* colorAddress = const_cast<char*>( &format[dungeonItemAreaColorIndex] );
+                    *colorAddress = areaColorId;
+
+                    // Clear the cache for the entire format string to be safe
+                    libtp::memory::clear_DC_IC_Cache( const_cast<char*>( format ), msgSize );
 
                     return mergeStrings( format, msgSize, smallKeyText, theText, areaText );
                 }

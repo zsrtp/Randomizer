@@ -21,6 +21,8 @@ namespace mod::game_patch
 #define TOTAL_FOOLISH_ITEM_MODELS 20
     extern const uint8_t foolishModelItemList[TOTAL_FOOLISH_ITEM_MODELS];
 
+    extern uint8_t dungeonItemAreaColorIndex;
+
     // Special message ids that use values that are normally never used
     enum SpecialMessageIds
     {
