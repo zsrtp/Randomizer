@@ -398,7 +398,7 @@ namespace mod::game_patch
 
                     // Replace the dungeon area color
                     char* colorAddress = const_cast<char*>( &format[dungeonItemAreaColorIndex] );
-                    *colorAddress = areaColorId;
+                    *colorAddress = static_cast<char>( areaColorId );
 
                     // Clear the cache for the entire format string to be safe
                     libtp::gc_wii::os_cache::DCFlushRange( const_cast<char*>( format ), msgSize );
