@@ -458,7 +458,7 @@ namespace mod::item_wheel_menu
                 // Draw the small key count for the current area
                 events::drawText( buf, ringPosX + smallKeyCountsPosXOffset, tempPosY, currentColor, textSize );
 
-                // Do not show big keys, dungeon maps, or compasses for Faron Woods or Bublin Camp
+                // Do not show big keys, dungeon maps, or compasses for Faron Woods or Bulblin Camp
                 if ( i < TrackedAreas::FARON_WOODS )
                 {
                     // Get the big key text

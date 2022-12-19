@@ -911,7 +911,7 @@ namespace mod::customMessages
             sizeof( hyruleSmallKeyJp ),
             0x00F1,
 
-            // Bublin Camp small key
+            // Bulblin Camp small key
             campSmallKeyJp,
             sizeof( campSmallKeyJp ),
             0x00F2,
@@ -1227,7 +1227,7 @@ namespace mod::customMessages
             // フィローネの森
             "\x83\x74\x83\x42\x83\x8D\x81\x5B\x83\x6C\x82\xCC\x90\x58",
 
-            // Bublin Camp
+            // Bulblin Camp
             // ブルブリンの要塞
             "\x83\x75\x83\x8B\x83\x75\x83\x8A\x83\x93\x82\xCC\x97\x76\x8D\xC7",
         },

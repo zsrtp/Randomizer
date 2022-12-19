@@ -980,7 +980,7 @@ namespace mod::events
             tools::SpawnActor( 6, ImpPoeActr );
         }
         else if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Bulblin_Camp] ) &&
-                  !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::ESCAPED_BURNING_TENT_IN_BUBLIN_CAMP ) )
+                  !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::ESCAPED_BURNING_TENT_IN_BULBLIN_CAMP ) )
         {
             tools::SpawnActor( 1, CampBoarActr );
         }

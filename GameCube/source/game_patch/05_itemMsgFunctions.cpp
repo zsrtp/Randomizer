@@ -357,7 +357,7 @@ namespace mod::game_patch
                         case Bulblin_Camp_Key:
                         {
                             areaColorId = MSG_COLOR_ORANGE_HEX;
-                            dungeonAreaMsgId = SpecialMessageIds::BUBLIN_CAMP;
+                            dungeonAreaMsgId = SpecialMessageIds::BULBLIN_CAMP;
                             addTheText = true;
                             break;
                         }

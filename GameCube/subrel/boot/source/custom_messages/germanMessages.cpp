@@ -998,7 +998,7 @@ namespace mod::customMessages
             sizeof( hyruleSmallKeyDe ),
             0x00F1,
 
-            // Bublin Camp small key
+            // Bulblin Camp small key
             campSmallKeyDe,
             sizeof( campSmallKeyDe ),
             0x00F2,
@@ -1314,7 +1314,7 @@ namespace mod::customMessages
             // Wald von Phirone
             "\x57\x61\x6C\x64\x20\x76\x6F\x6E\x20\x50\x68\x69\x72\x6F\x6E\x65",
 
-            // Bublin Camp
+            // Bulblin Camp
             // Camp der Bulblins
             "\x43\x61\x6d\x70\x20\x64\x65\x72\x20\x42\x75\x6c\x62\x6c\x69\x6e\x73",
         },

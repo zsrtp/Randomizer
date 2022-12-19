@@ -1013,7 +1013,7 @@ namespace mod::customMessages
             sizeof( hyruleSmallKeyIt ),
             0x00F1,
 
-            // Bublin Camp small key
+            // Bulblin Camp small key
             campSmallKeyIt,
             sizeof( campSmallKeyIt ),
             0x00F2,
@@ -1329,7 +1329,7 @@ namespace mod::customMessages
             // Foresta di Firone
             "\x46\x6F\x72\x65\x73\x74\x61\x20\x64\x69\x20\x46\x69\x72\x6F\x6E\x65",
 
-            // Bublin Camp
+            // Bulblin Camp
             // campo dei Bulbin
             "\x63\x61\x6D\x70\x6F\x20\x64\x65\x69\x20\x42\x75\x6C\x62\x69\x6E",
         },

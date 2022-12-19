@@ -297,7 +297,7 @@ namespace mod::customMessages
     char cityInTheSkyText[] = "City in the Sky";
     char palaceOfTwilightText[] = "Palace of Twilight";
     char hyruleCastleText[] = "Hyrule Castle";
-    char bublinCampText[] = "Bulblin Camp";
+    char bulblinCampText[] = "Bulblin Camp";
     // clang-format on
 
     MsgEntry entriesUs[TOTAL_CUSTOM_MESSAGES] = {
@@ -518,10 +518,10 @@ namespace mod::customMessages
         sizeof( hyruleCastleText ),
         game_patch::SpecialMessageIds::HYRULE_CASTLE,
 
-        // Bublin Camp
-        bublinCampText,
-        sizeof( bublinCampText ),
-        game_patch::SpecialMessageIds::BUBLIN_CAMP,
+        // Bulblin Camp
+        bulblinCampText,
+        sizeof( bulblinCampText ),
+        game_patch::SpecialMessageIds::BULBLIN_CAMP,
     };
 
     const MsgEntry charloDonationEntryUs = { charloDonationEn, sizeof( charloDonationEn ), 0x0355 };

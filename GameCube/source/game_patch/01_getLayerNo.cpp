@@ -777,7 +777,7 @@ namespace mod::game_patch
                     case stage::stageIDs::Bulblin_Camp:
                     {
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
-                            ESCAPED_BURNING_TENT_IN_BUBLIN_CAMP );     // Escaped Burning Tent in Bublin Camp
+                            ESCAPED_BURNING_TENT_IN_BULBLIN_CAMP );     // Escaped Burning Tent in Bulblin Camp
                         if ( condition )
                         {
                             if ( roomId == 3 )     // Other states for this room are very similar, but do not have the boar

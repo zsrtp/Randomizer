@@ -18,7 +18,7 @@ namespace mod::item_wheel_menu
         PALACE_OF_TWILIGHT,
         HYRULE_CASTLE,
         FARON_WOODS,
-        BUBLIN_CAMP,
+        BULBLIN_CAMP,
         TRACKED_AREAS_END
     };
 

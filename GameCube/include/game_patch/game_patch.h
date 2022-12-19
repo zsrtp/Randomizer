@@ -40,7 +40,7 @@ namespace mod::game_patch
         CITY_IN_THE_SKY,
         PALACE_OF_TWILIGHT,
         HYRULE_CASTLE,
-        BUBLIN_CAMP,
+        BULBLIN_CAMP,
     };
 
     // 00 - Function definitions used to patch how Poes operate
