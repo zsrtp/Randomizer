@@ -10,7 +10,7 @@
 #include "tp/processor.h"
 #include "tp/resource.h"
 #include "tp/JKRArchivePub.h"
-#include "memory.h"
+#include "gc_wii/OSCache.h"
 
 #include <cstring>
 #include <cstdarg>
@@ -401,7 +401,7 @@ namespace mod::game_patch
                     *colorAddress = areaColorId;
 
                     // Clear the cache for the entire format string to be safe
-                    libtp::memory::clear_DC_IC_Cache( const_cast<char*>( format ), msgSize );
+                    libtp::gc_wii::os_cache::DCFlushRange( const_cast<char*>( format ), msgSize );
 
                     return mergeStrings( format, msgSize, smallKeyText, theText, areaText );
                 }
