@@ -4,6 +4,7 @@
 #include "customMessages.h"
 #include "tp/resource.h"
 #include "item_wheel_menu.h"
+#include "game_patch/game_patch.h"
 
 #include <cstdint>
 
@@ -17,119 +18,11 @@ namespace mod::customMessages
         MSG_SPEED( MSG_SPEED_FAST )
         "You got a "
         MSG_COLOR(MSG_COLOR_RED)
-        "small key"
+        "%s"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the \n"
+        "!\nIt can be used in \n%s"
         MSG_COLOR(MSG_COLOR_GREEN)
-        "Forest Temple"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( minesSmallKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "small key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
-        MSG_COLOR(MSG_COLOR_RED)
-        "Goron Mines"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( lakebedSmallKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "small key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Lakebed Temple"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( arbitersSmallKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "small key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
-        MSG_COLOR(MSG_COLOR_ORANGE)
-        "Arbiter's Grounds"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( snowpeakSmallKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "small key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
-        MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "Snowpeak Ruins"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( timeSmallKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "small key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Temple of Time"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( citySmallKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "small key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(MSG_COLOR_YELLOW)
-        "City in the Sky"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( palaceSmallKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "small key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(MSG_COLOR_PURPLE)
-        "Palace of Twilight"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( hyruleSmallKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "small key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
-        MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Hyrule Castle"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( campSmallKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "small key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(MSG_COLOR_ORANGE)
-        "Bulblin Camp"
+        "%s"
         MSG_COLOR(MSG_COLOR_WHITE)
         "."
     MSG_END()
@@ -144,306 +37,6 @@ namespace mod::customMessages
         "Zant's "
         MSG_COLOR(MSG_COLOR_WHITE)
         "power that allows\nyou to transform at will!"
-    MSG_END()
-    MSG_BEGIN_ARRAY( forestDungeonMapEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "dungeon map"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(MSG_COLOR_GREEN)
-        "Forest Temple"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( minesDungeonMapEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "dungeon map"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
-        MSG_COLOR(MSG_COLOR_RED)
-        "Goron Mines"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( lakebedDungeonMapEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "dungeon map"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Lakebed Temple"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( arbitersDungeonMapEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "dungeon map"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
-        MSG_COLOR(MSG_COLOR_ORANGE)
-        "Arbiter's Grounds"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( snowpeakDungeonMapEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "dungeon map"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
-        MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "Snowpeak Ruins"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( timeDungeonMapEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "dungeon map"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Temple of Time"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( cityDungeonMapEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "dungeon map"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(MSG_COLOR_YELLOW)
-        "City in the Sky"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( palaceDungeonMapEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "dungeon map"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(MSG_COLOR_PURPLE)
-        "Palace of Twilight"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( hyruleDungeonMapEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "dungeon map"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
-        MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Hyrule Castle"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( forestCompassEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "compass"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(MSG_COLOR_GREEN)
-        "Forest Temple"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( minesCompassEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "compass"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
-        MSG_COLOR(MSG_COLOR_RED)
-        "Goron Mines"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( lakebedCompassEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "compass"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Lakebed Temple"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( arbitersCompassEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "compass"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
-        MSG_COLOR(MSG_COLOR_ORANGE)
-        "Arbiter's Grounds"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( snowpeakCompassEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "compass"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
-        MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        "Snowpeak Ruins"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( timeCompassEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "compass"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Temple of Time"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( cityCompassEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "compass"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(MSG_COLOR_YELLOW)
-        "City in the Sky"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( palaceCompassEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "compass"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(MSG_COLOR_PURPLE)
-        "Palace of Twilight"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( hyruleCompassEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "compass"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
-        MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Hyrule Castle"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( forestBigKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "big key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(MSG_COLOR_GREEN)
-        "Forest Temple"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( lakebedBigKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "big key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        "Lakebed Temple"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( arbitersBigKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "big key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
-        MSG_COLOR(MSG_COLOR_ORANGE)
-        "Arbiter's Grounds"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( timeBigKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "big key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        "Temple of Time"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( cityBigKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "big key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(MSG_COLOR_YELLOW)
-        "City in the Sky"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( palaceBigKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "big key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in the\n"
-        MSG_COLOR(MSG_COLOR_PURPLE)
-        "Palace of Twilight"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
-    MSG_END()
-    MSG_BEGIN_ARRAY( hyruleBigKeyEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "big key"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in\n"
-        MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        "Hyrule Castle"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
     MSG_END()
     MSG_BEGIN_ARRAY( endingBlowEn )
         MSG_SPEED(MSG_SPEED_FAST)
@@ -683,330 +276,252 @@ namespace mod::customMessages
         MSG_OPTION_LIST( MSG_OPTION_2 ) 
         "50 Rupees\n" 
         MSG_OPTION_LIST( MSG_OPTION_3 ) 
-        "Sorry...";
+        "Sorry..."
     MSG_END()
-
     MSG_BEGIN_ARRAY( recognitionMsg )
         MSG_SPEED(MSG_SPEED_FAST)
         "The Randomizer Team would like\nto thank our amazing testers.\nWithout you, this project would\nnot be what it is today: Taka\nAnorakkis, Archer, Br00ty, Chris\nChrono, clabrus, Demon, EmperorP\nElinadrian, Empty, Fennec, Zushi\nFleakee, Foxhole Gaming, Luzagar\nHeartPiece, Hornlitz, IceStorm\nJanWegh, JD, jdflyer, Jeez, Oxy\nJustRyland, Lance H., link1183\nLinkman124, Luneyes, GameWyrm\nMattStrats, MultFij, NesmaN88\nXenoWars, Papy_Grant, Simikins\npokemongenius, Psi-Hate, Lars P\nRaziel_Stratton, Redriel, Revven\nSparky7198, Zach, SwiftIke, j_im\nZenith, Prince, The., TheBruce\nTreZc0_, Wameslo, WickedGligar\nDGod63 and Sushi."
     MSG_END()
-        // clang-format on
+    
+    char theText[] = "the "; // The space at the end here is intentional
+    char smallKeyText[] = "small key";
+    char dungeonMapText[] = "dungeon map";
+    char compassText[] = "compass";
+    char bigKeyText[] = "big key";
+    char forestTempleText[] = "Forest Temple";
+    char goronMinesText[] = "Goron Mines";
+    char lakebedTempleText[] = "Lakebed Temple";
+    char arbitersGroundsText[] = "Arbiter's Grounds";
+    char snowpeakRuinsText[] = "Snowpeak Ruins";
+    char templeOfTimeText[] = "Temple of Time";
+    char cityInTheSkyText[] = "City in the Sky";
+    char palaceOfTwilightText[] = "Palace of Twilight";
+    char hyruleCastleText[] = "Hyrule Castle";
+    char bublinCampText[] = "Bulblin Camp";
+    // clang-format on
 
-        MsgEntry entriesUs[TOTAL_CUSTOM_MESSAGES] = {
-            // Forest Temple small key
-            forestSmallKeyEn,
-            sizeof( forestSmallKeyEn ),
-            0x00E9,
+    MsgEntry entriesUs[TOTAL_CUSTOM_MESSAGES] = {
+        // Forest Temple small key
+        // All other dungeon items will use this as a base
+        forestSmallKeyEn,
+        sizeof( forestSmallKeyEn ),
+        0x00E9,
 
-            // Goron Mines small key
-            minesSmallKeyEn,
-            sizeof( minesSmallKeyEn ),
-            0x00EA,
+        // Shadow Crystal
+        shadowCrystalEn,
+        sizeof( shadowCrystalEn ),
+        0x0096,
 
-            // Lakebed Temple small key
-            lakebedSmallKeyEn,
-            sizeof( lakebedSmallKeyEn ),
-            0x00EB,
+        // Ending Blow hidden skill
+        endingBlowEn,
+        sizeof( endingBlowEn ),
+        0x0145,
 
-            // Arbiter's Grounds small key
-            arbitersSmallKeyEn,
-            sizeof( arbitersSmallKeyEn ),
-            0x00EC,
+        // Shield Attack hidden skill
+        shieldAttackEn,
+        sizeof( shieldAttackEn ),
+        0x0146,
 
-            // Snowpeak Ruins small key
-            snowpeakSmallKeyEn,
-            sizeof( snowpeakSmallKeyEn ),
-            0x00ED,
+        // Back Slice hidden skill
+        backSliceEn,
+        sizeof( backSliceEn ),
+        0x0147,
 
-            // Temple of Time small key
-            timeSmallKeyEn,
-            sizeof( timeSmallKeyEn ),
-            0x00EE,
+        // Helm Splitter hidden skill
+        helmSplitterEn,
+        sizeof( helmSplitterEn ),
+        0x0148,
 
-            // City in the Sky small key
-            citySmallKeyEn,
-            sizeof( citySmallKeyEn ),
-            0x00EF,
+        // Mortal Draw hidden skill
+        mortalDrawEn,
+        sizeof( mortalDrawEn ),
+        0x0149,
 
-            // Palace of Twilight small key
-            palaceSmallKeyEn,
-            sizeof( palaceSmallKeyEn ),
-            0x00F0,
+        // Jump Strike hidden skill
+        jumpStrikeEn,
+        sizeof( jumpStrikeEn ),
+        0x014A,
 
-            // Hyrule Castle small key
-            hyruleSmallKeyEn,
-            sizeof( hyruleSmallKeyEn ),
-            0x00F1,
+        // Great Spin hidden skill
+        greatSpinEn,
+        sizeof( greatSpinEn ),
+        0x014B,
 
-            // Bublin Camp small key
-            campSmallKeyEn,
-            sizeof( campSmallKeyEn ),
-            0x00F2,
+        // Powered up Dominion Rod
+        poweredRodEn,
+        sizeof( poweredRodEn ),
+        0x00B0,
 
-            // Shadow Crystal
-            shadowCrystalEn,
-            sizeof( shadowCrystalEn ),
-            0x0096,
+        // First Ancient Sky Book character
+        firstCharacterEn,
+        sizeof( firstCharacterEn ),
+        0x013F,
 
-            // Forest Temple dungeon map
-            forestDungeonMapEn,
-            sizeof( forestDungeonMapEn ),
-            0x011A,
+        // Second Ancient Sky Book character
+        secondCharacterEn,
+        sizeof( secondCharacterEn ),
+        0x0140,
 
-            // Goron Mines dungeon map
-            minesDungeonMapEn,
-            sizeof( minesDungeonMapEn ),
-            0x011B,
+        // Third Ancient Sky Book character
+        thirdCharacterEn,
+        sizeof( thirdCharacterEn ),
+        0x0141,
 
-            // Lakebed Temple dungeon map
-            lakebedDungeonMapEn,
-            sizeof( lakebedDungeonMapEn ),
-            0x011C,
+        // Fourth Ancient Sky Book character
+        fourthCharacterEn,
+        sizeof( fourthCharacterEn ),
+        0x0142,
 
-            // Arbiter's Grounds dungeon map
-            arbitersDungeonMapEn,
-            sizeof( arbitersDungeonMapEn ),
-            0x011D,
+        // Fifth Ancient Sky Book character
+        fifthCharacterEn,
+        sizeof( fifthCharacterEn ),
+        0x0143,
 
-            // Snowpeak Ruins dungeon map
-            snowpeakDungeonMapEn,
-            sizeof( snowpeakDungeonMapEn ),
-            0x011E,
+        // Sixth Ancient Sky Book character
+        firstFusedShadowEn,
+        sizeof( firstFusedShadowEn ),
+        0x013C,
 
-            // Temple of Time dungeon map
-            timeDungeonMapEn,
-            sizeof( timeDungeonMapEn ),
-            0x011F,
+        // Second Fused Shadow
+        secondFusedShadowEn,
+        sizeof( secondFusedShadowEn ),
+        0x013D,
 
-            // City in the Sky dungeon map
-            cityDungeonMapEn,
-            sizeof( cityDungeonMapEn ),
-            0x0120,
+        // Third Fused Shadow
+        thirdFusedShadowEn,
+        sizeof( thirdFusedShadowEn ),
+        0x013E,
 
-            // Palace of Twilight dungeon map
-            palaceDungeonMapEn,
-            sizeof( palaceDungeonMapEn ),
-            0x0121,
+        // Second Mirror Shard
+        secondMirrorShardEn,
+        sizeof( secondMirrorShardEn ),
+        0x0109,
 
-            // Hyrule Castle dungeon map
-            hyruleDungeonMapEn,
-            sizeof( hyruleDungeonMapEn ),
-            0x0122,
+        // Third Mirror Shard
+        thirdMirrorShardEn,
+        sizeof( thirdMirrorShardEn ),
+        0x010A,
 
-            // Forest Temple compass
-            forestCompassEn,
-            sizeof( forestCompassEn ),
-            0x00FD,
+        // Fourth Mirror Shard
+        fourthMirrorShardEn,
+        sizeof( fourthMirrorShardEn ),
+        0x010B,
 
-            // Goron Mines compass
-            minesCompassEn,
-            sizeof( minesCompassEn ),
-            0x00FE,
+        // Foolish Item
+        foolishItemEn,
+        sizeof( foolishItemEn ),
+        0x0077,
 
-            // Lakebed Temple compass
-            lakebedCompassEn,
-            sizeof( lakebedCompassEn ),
-            0x00FF,
+        // Talking to Midna
+        talkToMidnaEn,
+        sizeof( talkToMidnaEn ),
+        0x0BBB,
 
-            // Arbiter's Grounds compass
-            arbitersCompassEn,
-            sizeof( arbitersCompassEn ),
-            0x010C,
+        // Big Wallet
+        bigWalletEn,
+        sizeof( bigWalletEn ),
+        0x0099,
 
-            // Snowpeak Ruins compass
-            snowpeakCompassEn,
-            sizeof( snowpeakCompassEn ),
-            0x010D,
+        // Giant Wallet
+        giantWalletEn,
+        sizeof( giantWalletEn ),
+        0x009A,
 
-            // Temple of Time compass
-            timeCompassEn,
-            sizeof( timeCompassEn ),
-            0x010E,
+        // Small Wallet Menu Text
+        smallWalletPauseEn,
+        sizeof( smallWalletPauseEn ),
+        0x0298,
 
-            // City in the Sky compass
-            cityCompassEn,
-            sizeof( cityCompassEn ),
-            0x010F,
+        // Big Wallet Menu Text
+        bigWalletPauseEn,
+        sizeof( bigWalletPauseEn ),
+        0x0299,
 
-            // Palace of Twilight compass
-            palaceCompassEn,
-            sizeof( palaceCompassEn ),
-            0x0110,
+        // Giant Wallet Menu Text
+        giantWalletPauseEn,
+        sizeof( giantWalletPauseEn ),
+        0x029a,
 
-            // Hyrule Castle compass
-            hyruleCompassEn,
-            sizeof( hyruleCompassEn ),
-            0x0111,
+        // Recognition text
+        recognitionMsg,
+        sizeof( recognitionMsg ),
+        0x0b44,
 
-            // Forest Temple big key
-            forestBigKeyEn,
-            sizeof( forestBigKeyEn ),
-            0x00F6,
+        // Special invalid-id texts
+        // the
+        theText,
+        sizeof( theText ),
+        game_patch::SpecialMessageIds::THE,
 
-            // Lakebed Temple big key
-            lakebedBigKeyEn,
-            sizeof( lakebedBigKeyEn ),
-            0x00F7,
+        // Small Key
+        smallKeyText,
+        sizeof( smallKeyText ),
+        game_patch::SpecialMessageIds::SMALL_KEY,
 
-            // Arbiter's Grounds big key
-            arbitersBigKeyEn,
-            sizeof( arbitersBigKeyEn ),
-            0x00F8,
+        // Dungeon Map
+        dungeonMapText,
+        sizeof( dungeonMapText ),
+        game_patch::SpecialMessageIds::DUNGEON_MAP,
 
-            // Temple of Time big key
-            timeBigKeyEn,
-            sizeof( timeBigKeyEn ),
-            0x00F9,
+        // Compass
+        compassText,
+        sizeof( compassText ),
+        game_patch::SpecialMessageIds::COMPASS,
 
-            // City in the Sky big key
-            cityBigKeyEn,
-            sizeof( cityBigKeyEn ),
-            0x00FA,
+        // Big Key
+        bigKeyText,
+        sizeof( bigKeyText ),
+        game_patch::SpecialMessageIds::BIG_KEY,
 
-            // Palace of Twilight big key
-            palaceBigKeyEn,
-            sizeof( palaceBigKeyEn ),
-            0x00FB,
+        // Forest Temple
+        forestTempleText,
+        sizeof( forestTempleText ),
+        game_patch::SpecialMessageIds::FOREST_TEMPLE,
 
-            // Hyrule Castle big key
-            hyruleBigKeyEn,
-            sizeof( hyruleBigKeyEn ),
-            0x00FC,
+        // Goron Mines
+        goronMinesText,
+        sizeof( goronMinesText ),
+        game_patch::SpecialMessageIds::GORON_MINES,
 
-            // Ending Blow hidden skill
-            endingBlowEn,
-            sizeof( endingBlowEn ),
-            0x0145,
+        // Lakebed Temple
+        lakebedTempleText,
+        sizeof( lakebedTempleText ),
+        game_patch::SpecialMessageIds::LAKEBED_TEMPLE,
 
-            // Shield Attack hidden skill
-            shieldAttackEn,
-            sizeof( shieldAttackEn ),
-            0x0146,
+        // Arbiter's Grounds
+        arbitersGroundsText,
+        sizeof( arbitersGroundsText ),
+        game_patch::SpecialMessageIds::ARBITERS_GROUNDS,
 
-            // Back Slice hidden skill
-            backSliceEn,
-            sizeof( backSliceEn ),
-            0x0147,
+        // Snowpeak Ruins
+        snowpeakRuinsText,
+        sizeof( snowpeakRuinsText ),
+        game_patch::SpecialMessageIds::SNOWPEAK_RUINS,
 
-            // Helm Splitter hidden skill
-            helmSplitterEn,
-            sizeof( helmSplitterEn ),
-            0x0148,
+        // Temple of Time
+        templeOfTimeText,
+        sizeof( templeOfTimeText ),
+        game_patch::SpecialMessageIds::TEMPLE_OF_TIME,
 
-            // Mortal Draw hidden skill
-            mortalDrawEn,
-            sizeof( mortalDrawEn ),
-            0x0149,
+        // City in the Sky
+        cityInTheSkyText,
+        sizeof( cityInTheSkyText ),
+        game_patch::SpecialMessageIds::CITY_IN_THE_SKY,
 
-            // Jump Strike hidden skill
-            jumpStrikeEn,
-            sizeof( jumpStrikeEn ),
-            0x014A,
+        // Palace of Twilight
+        palaceOfTwilightText,
+        sizeof( palaceOfTwilightText ),
+        game_patch::SpecialMessageIds::PALACE_OF_TWILIGHT,
 
-            // Great Spin hidden skill
-            greatSpinEn,
-            sizeof( greatSpinEn ),
-            0x014B,
+        // Hyrule Castle
+        hyruleCastleText,
+        sizeof( hyruleCastleText ),
+        game_patch::SpecialMessageIds::HYRULE_CASTLE,
 
-            // Powered up Dominion Rod
-            poweredRodEn,
-            sizeof( poweredRodEn ),
-            0x00B0,
-
-            // First Ancient Sky Book character
-            firstCharacterEn,
-            sizeof( firstCharacterEn ),
-            0x013F,
-
-            // Second Ancient Sky Book character
-            secondCharacterEn,
-            sizeof( secondCharacterEn ),
-            0x0140,
-
-            // Third Ancient Sky Book character
-            thirdCharacterEn,
-            sizeof( thirdCharacterEn ),
-            0x0141,
-
-            // Fourth Ancient Sky Book character
-            fourthCharacterEn,
-            sizeof( fourthCharacterEn ),
-            0x0142,
-
-            // Fifth Ancient Sky Book character
-            fifthCharacterEn,
-            sizeof( fifthCharacterEn ),
-            0x0143,
-
-            // Sixth Ancient Sky Book character
-            firstFusedShadowEn,
-            sizeof( firstFusedShadowEn ),
-            0x013C,
-
-            // Second Fused Shadow
-            secondFusedShadowEn,
-            sizeof( secondFusedShadowEn ),
-            0x013D,
-
-            // Third Fused Shadow
-            thirdFusedShadowEn,
-            sizeof( thirdFusedShadowEn ),
-            0x013E,
-
-            // Second Mirror Shard
-            secondMirrorShardEn,
-            sizeof( secondMirrorShardEn ),
-            0x0109,
-
-            // Third Mirror Shard
-            thirdMirrorShardEn,
-            sizeof( thirdMirrorShardEn ),
-            0x010A,
-
-            // Fourth Mirror Shard
-            fourthMirrorShardEn,
-            sizeof( fourthMirrorShardEn ),
-            0x010B,
-
-            // Foolish Item
-            foolishItemEn,
-            sizeof( foolishItemEn ),
-            0x0077,
-
-            // Talking to Midna
-            talkToMidnaEn,
-            sizeof( talkToMidnaEn ),
-            0x0BBB,
-
-            // Big Wallet
-            bigWalletEn,
-            sizeof( bigWalletEn ),
-            0x0099,
-
-            // Giant Wallet
-            giantWalletEn,
-            sizeof( giantWalletEn ),
-            0x009A,
-
-            // Small Wallet Menu Text
-            smallWalletPauseEn,
-            sizeof( smallWalletPauseEn ),
-            0x0298,
-
-            // Big Wallet Menu Text
-            bigWalletPauseEn,
-            sizeof( bigWalletPauseEn ),
-            0x0299,
-
-            // Giant Wallet Menu Text
-            giantWalletPauseEn,
-            sizeof( giantWalletPauseEn ),
-            0x029a,
-
-            // Recognition text
-            recognitionMsg,
-            sizeof( recognitionMsg ),
-            0x0b44,
+        // Bublin Camp
+        bublinCampText,
+        sizeof( bublinCampText ),
+        game_patch::SpecialMessageIds::BUBLIN_CAMP,
     };
 
     const MsgEntry charloDonationEntryUs = { charloDonationEn, sizeof( charloDonationEn ), 0x0355 };

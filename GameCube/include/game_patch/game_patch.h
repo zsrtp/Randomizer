@@ -21,6 +21,26 @@ namespace mod::game_patch
 #define TOTAL_FOOLISH_ITEM_MODELS 20
     extern const uint8_t foolishModelItemList[TOTAL_FOOLISH_ITEM_MODELS];
 
+    // Special message ids that use values that are normally never used
+    enum SpecialMessageIds
+    {
+        THE = 10000,
+        SMALL_KEY,
+        DUNGEON_MAP,
+        COMPASS,
+        BIG_KEY,
+        FOREST_TEMPLE,
+        GORON_MINES,
+        LAKEBED_TEMPLE,
+        ARBITERS_GROUNDS,
+        SNOWPEAK_RUINS,
+        TEMPLE_OF_TIME,
+        CITY_IN_THE_SKY,
+        PALACE_OF_TWILIGHT,
+        HYRULE_CASTLE,
+        BUBLIN_CAMP,
+    };
+
     // 00 - Function definitions used to patch how Poes operate
     /**
      * @brief Patches the unused itemFunc corresponding to the poe itemID
@@ -149,8 +169,10 @@ namespace mod::game_patch
                                    uint16_t unk3,
                                    uint16_t msgId,
                                    rando::Randomizer* randomizer );
+
     uint32_t _05_getCustomMsgColor( uint8_t colorId );
     const char* _05_getMsgById( rando::Randomizer* randomizer, uint32_t msgId );
+    const char* _05_getMsgById( rando::Randomizer* randomizer, uint32_t msgId, uint16_t* sizeOut );
     const char** _05_replaceMessageString( const char** text );
 
     // 06 - Function definitions for assembly patches

@@ -1,5 +1,3 @@
-#include <cstring>
-
 #include "game_patch/game_patch.h"
 #include "data/items.h"
 #include "data/stages.h"
@@ -12,6 +10,9 @@
 #include "tp/processor.h"
 #include "tp/resource.h"
 #include "tp/JKRArchivePub.h"
+
+#include <cstring>
+#include <cstdarg>
 
 namespace mod::game_patch
 {
@@ -84,6 +85,318 @@ namespace mod::game_patch
         return reinterpret_cast<void*>( infPtrRaw + 0x20 );
     }
 
+    // Assume that all variadic params will be strings
+    const char* mergeStrings( const char* format, uint32_t size, ... )
+    {
+        static char buf[160];
+        constexpr uint32_t maxLength = sizeof( buf ) - 1;
+
+        char* tempBuf = buf;
+        uint32_t currentIndex = 0;
+
+        va_list args;
+        va_start( args, size );
+
+        // Loop through each character
+        for ( uint32_t i = 0; i < ( size - 1 ); i++ )
+        {
+            // If currentIndex reaches the end of the buffer, then break
+            if ( currentIndex >= maxLength )
+            {
+                break;
+            }
+
+            char currentCharacter = format[i];
+
+            // Handle specifier
+            if ( currentCharacter == '%' )
+            {
+                bool exitIf = false;
+                switch ( format[i + 1] )     // Current specifier
+                {
+                    case 's':
+                    {
+                        break;
+                    }
+                    case '\0':
+                    {
+                        // The string ends after the %
+                        exitIf = true;
+                        break;
+                    }
+                    default:
+                    {
+                        // The specifier is not a string, so just write the raw character
+                        exitIf = true;
+                        tempBuf[currentIndex++] = currentCharacter;
+                        break;
+                    }
+                }
+
+                if ( !exitIf )
+                {
+                    // Get the length of the current string to write
+                    const char* currentString = va_arg( args, const char* );
+                    int32_t len = strlen( currentString );
+
+                    // Make sure the string will not overflow the buffer
+                    uint32_t endingIndex = len + currentIndex;
+                    if ( endingIndex < maxLength )
+                    {
+                        // String will not overflow, so write it
+                        strcpy( &tempBuf[currentIndex], currentString );
+                        currentIndex = endingIndex;
+                        i++;
+                    }
+                    else
+                    {
+                        // String will overflow
+                        strcpy( tempBuf, "Error: currentString will overflow the buffer." );
+                        return tempBuf;
+                    }
+                }
+            }
+            else
+            {
+                // Write the current char
+                tempBuf[currentIndex++] = currentCharacter;
+            }
+        }
+
+        va_end( args );
+
+        // Ensure currentIndex is valid
+        if ( currentIndex > maxLength )
+        {
+            currentIndex = maxLength;
+        }
+
+        // Ensure the buffer is NULL terminated
+        tempBuf[currentIndex] = '\0';
+        return tempBuf;
+    }
+
+    const char* writeMessageVariadicStrings( uint16_t msgId )
+    {
+        using namespace libtp::data::items;
+
+        const char* format;
+        uint16_t msgSize;
+
+        // Check for item text first
+        int32_t itemId = msgId - 0x64;
+        if ( ( itemId >= 0 ) && ( itemId <= 255 ) )
+        {
+            switch ( itemId )
+            {
+                case Forest_Temple_Small_Key:
+                case Goron_Mines_Small_Key:
+                case Lakebed_Temple_Small_Key:
+                case Arbiters_Grounds_Small_Key:
+                case Snowpeak_Ruins_Small_Key:
+                case Temple_of_Time_Small_Key:
+                case City_in_The_Sky_Small_Key:
+                case Palace_of_Twilight_Small_Key:
+                case Hyrule_Castle_Small_Key:
+                case Bulblin_Camp_Key:
+                case Forest_Temple_Big_Key:
+                case Lakebed_Temple_Big_Key:
+                case Arbiters_Grounds_Big_Key:
+                case Temple_of_Time_Big_Key:
+                case City_in_The_Sky_Big_Key:
+                case Palace_of_Twilight_Big_Key:
+                case Hyrule_Castle_Big_Key:
+                case Forest_Temple_Compass:
+                case Goron_Mines_Compass:
+                case Lakebed_Temple_Compass:
+                case Arbiters_Grounds_Compass:
+                case Snowpeak_Ruins_Compass:
+                case Temple_of_Time_Compass:
+                case City_in_The_Sky_Compass:
+                case Palace_of_Twilight_Compass:
+                case Hyrule_Castle_Compass:
+                case Forest_Temple_Dungeon_Map:
+                case Goron_Mines_Dungeon_Map:
+                case Lakebed_Temple_Dungeon_Map:
+                case Arbiters_Grounds_Dungeon_Map:
+                case Snowpeak_Ruins_Dungeon_Map:
+                case Temple_of_Time_Dungeon_Map:
+                case City_in_The_Sky_Dungeon_Map:
+                case Palace_of_Twilight_Dungeon_Map:
+                case Hyrule_Castle_Dungeon_Map:
+                {
+                    // Get the text and size of the format text
+                    // All of these items will use the Forest Temple small key text as a base
+                    format = _05_getMsgById( randomizer, 0x00E9, &msgSize );
+                    if ( !format )
+                    {
+                        return nullptr;
+                    }
+
+                    // Figure out what dungeon item this is for
+                    uint32_t dungeonItemMsgId;
+                    if ( ( itemId >= Forest_Temple_Small_Key ) && ( itemId <= Bulblin_Camp_Key ) )
+                    {
+                        dungeonItemMsgId = SpecialMessageIds::SMALL_KEY;
+                    }
+                    else if ( ( itemId >= Forest_Temple_Big_Key ) && ( itemId <= Hyrule_Castle_Big_Key ) )
+                    {
+                        dungeonItemMsgId = SpecialMessageIds::BIG_KEY;
+                    }
+                    else if ( ( ( itemId >= Forest_Temple_Compass ) && ( itemId <= Lakebed_Temple_Compass ) ) ||
+                              ( ( itemId >= Arbiters_Grounds_Compass ) && ( itemId <= Hyrule_Castle_Compass ) ) )
+                    {
+                        dungeonItemMsgId = SpecialMessageIds::COMPASS;
+                    }
+                    else if ( ( itemId >= Forest_Temple_Dungeon_Map ) && ( itemId <= Hyrule_Castle_Dungeon_Map ) )
+                    {
+                        dungeonItemMsgId = SpecialMessageIds::DUNGEON_MAP;
+                    }
+                    else
+                    {
+                        // Error occured somehow
+                        return nullptr;
+                    }
+
+                    // Figure out what dungeon area this is for
+                    // Also figure out what areas should have 'the' infront of them
+                    uint32_t dungeonAreaMsgId;
+                    bool addTheText = false;
+
+                    switch ( itemId )
+                    {
+                        case Forest_Temple_Small_Key:
+                        case Forest_Temple_Big_Key:
+                        case Forest_Temple_Compass:
+                        case Forest_Temple_Dungeon_Map:
+                        {
+                            dungeonAreaMsgId = SpecialMessageIds::FOREST_TEMPLE;
+                            addTheText = true;
+                            break;
+                        }
+                        case Goron_Mines_Small_Key:
+                        case Goron_Mines_Compass:
+                        case Goron_Mines_Dungeon_Map:
+                        {
+                            dungeonAreaMsgId = SpecialMessageIds::GORON_MINES;
+                            break;
+                        }
+                        case Lakebed_Temple_Small_Key:
+                        case Lakebed_Temple_Big_Key:
+                        case Lakebed_Temple_Compass:
+                        case Lakebed_Temple_Dungeon_Map:
+                        {
+                            dungeonAreaMsgId = SpecialMessageIds::LAKEBED_TEMPLE;
+                            addTheText = true;
+                            break;
+                        }
+                        case Arbiters_Grounds_Small_Key:
+                        case Arbiters_Grounds_Big_Key:
+                        case Arbiters_Grounds_Compass:
+                        case Arbiters_Grounds_Dungeon_Map:
+                        {
+                            dungeonAreaMsgId = SpecialMessageIds::ARBITERS_GROUNDS;
+                            break;
+                        }
+                        case Snowpeak_Ruins_Small_Key:
+                        case Snowpeak_Ruins_Compass:
+                        case Snowpeak_Ruins_Dungeon_Map:
+                        {
+                            dungeonAreaMsgId = SpecialMessageIds::SNOWPEAK_RUINS;
+                            break;
+                        }
+                        case Temple_of_Time_Small_Key:
+                        case Temple_of_Time_Big_Key:
+                        case Temple_of_Time_Compass:
+                        case Temple_of_Time_Dungeon_Map:
+                        {
+                            dungeonAreaMsgId = SpecialMessageIds::TEMPLE_OF_TIME;
+                            addTheText = true;
+                            break;
+                        }
+                        case City_in_The_Sky_Small_Key:
+                        case City_in_The_Sky_Big_Key:
+                        case City_in_The_Sky_Compass:
+                        case City_in_The_Sky_Dungeon_Map:
+                        {
+                            dungeonAreaMsgId = SpecialMessageIds::CITY_IN_THE_SKY;
+                            addTheText = true;
+                            break;
+                        }
+                        case Palace_of_Twilight_Small_Key:
+                        case Palace_of_Twilight_Big_Key:
+                        case Palace_of_Twilight_Compass:
+                        case Palace_of_Twilight_Dungeon_Map:
+                        {
+                            dungeonAreaMsgId = SpecialMessageIds::PALACE_OF_TWILIGHT;
+                            addTheText = true;
+                            break;
+                        }
+                        case Hyrule_Castle_Small_Key:
+                        case Hyrule_Castle_Big_Key:
+                        case Hyrule_Castle_Compass:
+                        case Hyrule_Castle_Dungeon_Map:
+                        {
+                            dungeonAreaMsgId = SpecialMessageIds::HYRULE_CASTLE;
+                            break;
+                        }
+                        case Bulblin_Camp_Key:
+                        {
+                            dungeonAreaMsgId = SpecialMessageIds::BUBLIN_CAMP;
+                            addTheText = true;
+                            break;
+                        }
+                        default:
+                        {
+                            // Error occured somehow
+                            return nullptr;
+                        }
+                    }
+
+                    // Get the texts for the small key and area
+                    const char* smallKeyText = _05_getMsgById( randomizer, dungeonItemMsgId );
+                    if ( !smallKeyText )
+                    {
+                        return nullptr;
+                    }
+
+                    const char* areaText = _05_getMsgById( randomizer, dungeonAreaMsgId );
+                    if ( !areaText )
+                    {
+                        return nullptr;
+                    }
+
+                    // Get the 'the' text
+                    const char* theText;
+                    if ( addTheText )
+                    {
+                        theText = _05_getMsgById( randomizer, SpecialMessageIds::THE );
+                        if ( !theText )
+                        {
+                            return nullptr;
+                        }
+                    }
+                    else
+                    {
+                        theText = "";
+                    }
+
+                    return mergeStrings( format, msgSize, smallKeyText, theText, areaText );
+                }
+                default:
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            // Generic checks here
+        }
+
+        return nullptr;
+    }
+
     void _05_setCustomItemMessage( libtp::tp::control::TControl* control,
                                    const void* TProcessor,
                                    uint16_t unk3,
@@ -91,6 +404,7 @@ namespace mod::game_patch
                                    rando::Randomizer* randomizer )
     {
         using namespace libtp::data::stage;
+        using namespace libtp::data::items;
 
         auto setMessageText = [=]( const char* text )
         {
@@ -141,13 +455,13 @@ namespace mod::game_patch
         if ( currentInf1 == getZel00BmgInf() )
         {
             // If msgId is for a foolish item, then only use the value from the first one to avoid duplicate entries
-            switch ( msgId )
+            switch ( msgId - 0x64 )
             {
-                case 0x78:     // Foolish Item 2
-                case 0x79:     // Foolish Item 3
-                case 0xB1:     // Foolish Item 4
-                case 0xB2:     // Foolish Item 5
-                case 0xBB:     // Foolish Item 6
+                case Foolish_Item_2:
+                case Foolish_Item_3:
+                case Foolish_Item_4:
+                case Foolish_Item_5:
+                case Foolish_Item_6:
                 {
                     msgId = 0x77;     // Foolish Item 1
                     break;
@@ -158,8 +472,17 @@ namespace mod::game_patch
                 }
             }
 
-            const char* newMessage = _05_getMsgById( randomizer, msgId );
-            setMessageText( newMessage );
+            // Check if the currennt msgId should be handled in writeMessageVariadicStrings
+            const char* newMessage = writeMessageVariadicStrings( msgId );
+            if ( newMessage )
+            {
+                setMessageText( newMessage );
+            }
+            else
+            {
+                newMessage = _05_getMsgById( randomizer, msgId );
+                setMessageText( newMessage );
+            }
             return;
         }
         else if ( checkForSpecificMsg( charloDonationMsgId, 2, allStages[stageIDs::Castle_Town], currentInf1, "zel_04.bmg" ) )
@@ -210,6 +533,11 @@ namespace mod::game_patch
     }
 
     const char* _05_getMsgById( rando::Randomizer* randomizer, uint32_t msgId )
+    {
+        return _05_getMsgById( randomizer, msgId, nullptr );
+    }
+
+    const char* _05_getMsgById( rando::Randomizer* randomizer, uint32_t msgId, uint16_t* sizeOut )
     {
         // Make sure the randomizer is loaded/enabled
         if ( !randoIsEnabled( randomizer ) )
@@ -269,7 +597,14 @@ namespace mod::game_patch
         {
             if ( msgIds[i] == msgId )
             {
-                return &messages[msgOffsets[i]];
+                const char* currentMsg = &messages[msgOffsets[i]];
+
+                if ( sizeOut )
+                {
+                    *sizeOut = static_cast<uint16_t>( &messages[msgOffsets[i + 1]] - currentMsg );
+                }
+
+                return currentMsg;
             }
         }
 
