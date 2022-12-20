@@ -522,6 +522,12 @@ namespace mod::customMessages
         bulblinCampText,
         sizeof( bulblinCampText ),
         game_patch::SpecialMessageIds::BULBLIN_CAMP,
+
+        // This is an extra section that should go unused, and is only needed for _05_getMsgById in 05_itemMsgFunctions.cpp to
+        // ensure that it can properly calculate sizeOut
+        "",
+        0,
+        0xFFFF,
     };
 
     const MsgEntry charloDonationEntryUs = { charloDonationEn, sizeof( charloDonationEn ), 0x0355 };

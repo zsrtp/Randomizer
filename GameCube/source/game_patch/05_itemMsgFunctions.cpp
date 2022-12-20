@@ -179,7 +179,7 @@ namespace mod::game_patch
         return tempBuf;
     }
 
-    const char* writeMessageVariadicStrings( uint16_t msgId )
+    const char* getCustomMessage( rando::Randomizer* randomizer, uint16_t msgId )
     {
         using namespace libtp::data::items;
 
@@ -187,7 +187,7 @@ namespace mod::game_patch
         uint16_t msgSize;
 
         // Check for item text first
-        int32_t itemId = msgId - 0x64;
+        int32_t itemId = ID_TO_ITEM( msgId );
         if ( ( itemId >= 0 ) && ( itemId <= 255 ) )
         {
             switch ( itemId )
@@ -230,7 +230,7 @@ namespace mod::game_patch
                 {
                     // Get the text and size of the format text
                     // All of these items will use the Forest Temple small key text as a base
-                    format = _05_getMsgById( randomizer, 0x00E9, &msgSize );
+                    format = _05_getMsgById( randomizer, ITEM_TO_ID( Forest_Temple_Small_Key ), &msgSize );
                     if ( !format )
                     {
                         return nullptr;
@@ -416,7 +416,7 @@ namespace mod::game_patch
             // Generic checks here
         }
 
-        return nullptr;
+        return _05_getMsgById( randomizer, msgId );
     }
 
     void _05_setCustomItemMessage( libtp::tp::control::TControl* control,
@@ -477,7 +477,7 @@ namespace mod::game_patch
         if ( currentInf1 == getZel00BmgInf() )
         {
             // If msgId is for a foolish item, then only use the value from the first one to avoid duplicate entries
-            switch ( msgId - 0x64 )
+            switch ( ID_TO_ITEM( msgId ) )
             {
                 case Foolish_Item_2:
                 case Foolish_Item_3:
@@ -485,7 +485,7 @@ namespace mod::game_patch
                 case Foolish_Item_5:
                 case Foolish_Item_6:
                 {
-                    msgId = 0x77;     // Foolish Item 1
+                    msgId = ITEM_TO_ID( Foolish_Item_1 );
                     break;
                 }
                 default:
@@ -494,17 +494,8 @@ namespace mod::game_patch
                 }
             }
 
-            // Check if the currennt msgId should be handled in writeMessageVariadicStrings
-            const char* newMessage = writeMessageVariadicStrings( msgId );
-            if ( newMessage )
-            {
-                setMessageText( newMessage );
-            }
-            else
-            {
-                newMessage = _05_getMsgById( randomizer, msgId );
-                setMessageText( newMessage );
-            }
+            const char* newMessage = getCustomMessage( randomizer, msgId );
+            setMessageText( newMessage );
             return;
         }
         else if ( checkForSpecificMsg( charloDonationMsgId, 2, allStages[stageIDs::Castle_Town], currentInf1, "zel_04.bmg" ) )
@@ -561,6 +552,8 @@ namespace mod::game_patch
 
     const char* _05_getMsgById( rando::Randomizer* randomizer, uint32_t msgId, uint16_t* sizeOut )
     {
+        using namespace libtp::data::items;
+
         // Make sure the randomizer is loaded/enabled
         if ( !randoIsEnabled( randomizer ) )
         {
@@ -570,17 +563,23 @@ namespace mod::game_patch
         // If there are any special message IDs that require additional logic, we handle them here.
         switch ( msgId )
         {
-            case 0x99:      // Big Wallet Item Get Text
-            case 0x9A:      // Giant Wallet Item Get Text
-            case 0x298:     // Small Wallet Pause Menu Text
-            case 0x299:     // Big Wallet Pause Menu Text
-            case 0x29A:     // Giant Wallet Pause Menu Text
+            case ITEM_TO_ID( Big_Wallet ):       // Big Wallet Item Get Text
+            case ITEM_TO_ID( Giant_Wallet ):     // Giant Wallet Item Get Text
+            case 0x298:                          // Small Wallet Pause Menu Text
+            case 0x299:                          // Big Wallet Pause Menu Text
+            case 0x29A:                          // Giant Wallet Pause Menu Text
             {
                 if ( !walletsPatched )
                 {
                     return nullptr;
                 }
                 break;
+            }
+            case 0xFFFF:
+            {
+                // This is a special entry that is added to the very end of the messages, and is only included to make sure that
+                // sizeOut can be properly calculated. It should never be used for anything else.
+                return nullptr;
             }
             default:
             {

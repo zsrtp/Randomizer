@@ -47,6 +47,10 @@
 #define SEED_ACTION_CHANGE_SEED 2
 #define SEED_ACTION_FATAL 255
 
+// Converting item ids to msg ids and vice versa
+#define ITEM_TO_ID( item ) ( item + 0x64 )
+#define ID_TO_ITEM( msgId ) ( msgId - 0x64 )
+
 // May be moved somewhere else later
 // Required for keeping certain unused functions/variables from being removed
 #define KEEP_FUNC __attribute__( ( used, visibility( "default" ) ) )
