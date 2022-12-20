@@ -470,6 +470,9 @@ namespace mod::game_patch
     KEEP_FUNC void _02_filledSkybookItemFunc()
     {
         events::setSaveFileEventFlag( libtp::data::flags::SKY_CANNON_REPAIRED );     // Repaired Cannon at Lake
+        libtp::tp::d_save::setItem( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_item,
+                                    22,
+                                    libtp::data::items::Ancient_Sky_Book_Completed );     // Add Skybook to the Item Wheel
     }
 
     KEEP_FUNC void _02_bigWalletItemFunc()
