@@ -14,6 +14,8 @@
 
 #include <cstring>
 #include <cstdarg>
+#include <cstdio>
+#include <cinttypes>
 
 namespace mod::game_patch
 {
@@ -93,8 +95,6 @@ namespace mod::game_patch
     {
         static char buf[160];
         constexpr uint32_t maxLength = sizeof( buf ) - 1;
-
-        char* tempBuf = buf;
         uint32_t currentIndex = 0;
 
         va_list args;
@@ -103,7 +103,7 @@ namespace mod::game_patch
         // Loop through each character
         for ( uint32_t i = 0; i < ( size - 1 ); i++ )
         {
-            // If currentIndex reaches the end of the buffer, then break
+            // If currentIndex reaches the end of the buffer, then there is no more room for characters
             if ( currentIndex >= maxLength )
             {
                 break;
@@ -111,58 +111,47 @@ namespace mod::game_patch
 
             char currentCharacter = format[i];
 
-            // Handle specifier
-            if ( currentCharacter == '%' )
+            if ( currentCharacter != '%' )
             {
-                bool exitIf = false;
-                switch ( format[i + 1] )     // Current specifier
-                {
-                    case 's':
-                    {
-                        break;
-                    }
-                    case '\0':
-                    {
-                        // The string ends after the %
-                        exitIf = true;
-                        break;
-                    }
-                    default:
-                    {
-                        // The specifier is not a string, so just write the raw character
-                        exitIf = true;
-                        tempBuf[currentIndex++] = currentCharacter;
-                        break;
-                    }
-                }
-
-                if ( !exitIf )
-                {
-                    // Get the length of the current string to write
-                    const char* currentString = va_arg( args, const char* );
-                    int32_t len = strlen( currentString );
-
-                    // Make sure the string will not overflow the buffer
-                    uint32_t endingIndex = len + currentIndex;
-                    if ( endingIndex < maxLength )
-                    {
-                        // String will not overflow, so write it
-                        strcpy( &tempBuf[currentIndex], currentString );
-                        currentIndex = endingIndex;
-                        i++;
-                    }
-                    else
-                    {
-                        // String will overflow
-                        strcpy( tempBuf, "Error: currentString will overflow the buffer." );
-                        return tempBuf;
-                    }
-                }
+                // Write the current character
+                buf[currentIndex++] = currentCharacter;
             }
-            else
+            else     // Handle specifier
             {
-                // Write the current char
-                tempBuf[currentIndex++] = currentCharacter;
+                if ( format[i + 1] != 's' )     // Current specifier
+                {
+                    // Either the string ends after the %, or the specifier is not a string, so just write the raw character
+                    buf[currentIndex++] = currentCharacter;
+                    continue;
+                }
+
+                // Assume the specifier will be properly handled, so skip past it to avoid writing the character for it
+                i++;
+
+                // Get the length of the current string to write
+                const char* currentString = va_arg( args, const char* );
+                uint32_t len = strlen( currentString );
+
+                // Don't write anything if the current string is an empty string
+                if ( len == 0 )
+                {
+                    continue;
+                }
+
+                // Make sure the string will not overflow the buffer
+                uint32_t endingIndex = currentIndex + len;
+                if ( endingIndex <= maxLength )
+                {
+                    // String will not overflow, so write it
+                    strcpy( &buf[currentIndex], currentString );
+                    currentIndex = endingIndex;
+                }
+                else
+                {
+                    // String will overflow
+                    snprintf( buf, sizeof( buf ), "Error: String with length\nof %" PRIu32 " will overflow buffer.", len );
+                    return buf;
+                }
             }
         }
 
@@ -175,8 +164,8 @@ namespace mod::game_patch
         }
 
         // Ensure the buffer is NULL terminated
-        tempBuf[currentIndex] = '\0';
-        return tempBuf;
+        buf[currentIndex] = '\0';
+        return buf;
     }
 
     const char* getCustomMessage( rando::Randomizer* randomizer, uint16_t msgId )
