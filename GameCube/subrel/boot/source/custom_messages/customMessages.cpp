@@ -2,6 +2,8 @@
 #include "main.h"
 #include "cxx.h"
 #include "game_patch/game_patch.h"
+#include "data/items.h"
+#include "tp/resource.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -21,7 +23,6 @@ namespace mod::customMessages
         // Get the MsgEntry to use
         const MsgEntry* entries;
 #ifdef TP_US
-        game_patch::dungeonItemAreaColorIndex = 57;
         entries = entriesUs;
 #elif defined TP_JP
         entries = entriesJp;
@@ -107,6 +108,87 @@ namespace mod::customMessages
         // Assign the buffer and total entries
         m_MsgTableInfo = buf;
         m_TotalMsgEntries = TOTAL_CUSTOM_MESSAGES;
+    }
+
+    void setDungeonItemAreaColorIndex()
+    {
+        // Get the MsgEntry to use
+        const MsgEntry* entries;
+#ifdef TP_US
+        entries = entriesUs;
+#elif defined TP_JP
+        entries = entriesJp;
+#elif defined TP_EU
+        switch ( currentLanguage )
+        {
+            case Languages::uk:
+            default:     // The language is invalid/unsupported, so the game defaults to English
+            {
+                entries = entriesUs;
+                break;
+            }
+            case Languages::de:
+            {
+                entries = entriesDe;
+                break;
+            }
+            case Languages::fr:
+            {
+                entries = entriesFr;
+                break;
+            }
+            case Languages::it:
+            {
+                entries = entriesIt;
+                break;
+            }
+            case Languages::sp:
+            {
+                entries = entriesSp;
+                break;
+            }
+        }
+#endif
+        // Find the Forest Temple small key text
+        const char* smallKeyText = nullptr;
+        uint32_t textSize;
+
+        for ( uint32_t i = 0; i < TOTAL_CUSTOM_MESSAGES; i++ )
+        {
+            const MsgEntry* entry = &entries[i];
+            if ( entry->id == ITEM_TO_ID( libtp::data::items::Forest_Temple_Small_Key ) )
+            {
+                smallKeyText = entry->msg;
+                textSize = entry->size;
+                break;
+            }
+        }
+
+        // Make sure the text was found
+        if ( !smallKeyText )
+        {
+            return;
+        }
+
+        // The color for the dungeon area should be the last color used in the string, so search for it
+        // Get the area and color text to search for
+        char areaTextAndColor[] = MSG_COLOR( MSG_COLOR_GREEN );
+        constexpr uint32_t areaTextAndColorSize = sizeof( areaTextAndColor );
+
+        // Get a pointer to the end of the string, minus the size of the color text
+        const char* smallKeyTextEnd = &smallKeyText[textSize - areaTextAndColorSize];
+
+        // Loop through the string backwards until the area and color are found
+        for ( ; smallKeyTextEnd >= smallKeyText; smallKeyTextEnd-- )
+        {
+            // Must use memcmp instead of strncmp since message commands have NULL characters
+            if ( memcmp( smallKeyTextEnd, areaTextAndColor, areaTextAndColorSize - 1 ) == 0 )
+            {
+                // Set the index to where the color id is
+                game_patch::dungeonItemAreaColorIndex = smallKeyTextEnd - smallKeyText + areaTextAndColorSize - 2;
+                return;
+            }
+        }
     }
 
     void createItemWheelMenuData()

@@ -19,6 +19,7 @@ namespace mod::customMessages
     };
 
     void createMsgTable();
+    void setDungeonItemAreaColorIndex();
     void createItemWheelMenuData();
     void createCharloDonationMessage();
 

@@ -397,11 +397,16 @@ namespace mod::game_patch
                     }
 
                     // Replace the dungeon area color
-                    char* colorAddress = const_cast<char*>( &format[dungeonItemAreaColorIndex] );
-                    *colorAddress = static_cast<char>( areaColorId );
+                    // Make sure the index was properly adjusted
+                    uint32_t colorIndex = dungeonItemAreaColorIndex;
+                    if ( colorIndex != 0 )
+                    {
+                        char* colorAddress = const_cast<char*>( &format[colorIndex] );
+                        *colorAddress = static_cast<char>( areaColorId );
 
-                    // Clear the cache for the entire format string to be safe
-                    libtp::gc_wii::os_cache::DCFlushRange( const_cast<char*>( format ), msgSize );
+                        // Clear the cache for the entire format string to be safe
+                        libtp::gc_wii::os_cache::DCFlushRange( const_cast<char*>( format ), msgSize );
+                    }
 
                     return mergeStrings( format, msgSize, smallKeyText, theText, areaText );
                 }
