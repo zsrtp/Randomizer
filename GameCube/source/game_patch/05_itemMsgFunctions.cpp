@@ -93,6 +93,12 @@ namespace mod::game_patch
     // Assume that all variadic params will be strings
     const char* mergeStrings( const char* format, uint32_t size, ... )
     {
+        // Make sure format and size are valid
+        if ( !format || ( size == 0 ) )
+        {
+            return nullptr;
+        }
+
         static char buf[160];
         constexpr uint32_t maxLength = sizeof( buf ) - 1;
         uint32_t currentIndex = 0;
@@ -124,11 +130,15 @@ namespace mod::game_patch
             // Assume the specifier will be properly handled, so skip past it to avoid writing the character for it
             i++;
 
-            // Get the length of the current string to write
+            // Get the next string and make sure it's a valid pointer
             const char* currentString = va_arg( args, const char* );
-            uint32_t len = strlen( currentString );
+            if ( !currentString )
+            {
+                continue;
+            }
 
             // Don't write anything if the current string is an empty string
+            uint32_t len = strlen( currentString );
             if ( len == 0 )
             {
                 continue;
@@ -377,7 +387,7 @@ namespace mod::game_patch
                     }
                     else
                     {
-                        theText = "";
+                        theText = nullptr;
                     }
 
                     // Replace the dungeon area color
