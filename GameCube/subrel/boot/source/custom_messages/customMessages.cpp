@@ -170,11 +170,14 @@ namespace mod::customMessages
             return;
         }
 
-        // The color for the dungeon area should be the last color used in the string, so search for it
+        // The area color for the Forest Temple is set to green, and green should only be used once in the string, so search for
+        // it
+
         // Get the area and color text to search for
         char areaTextAndColor[] = MSG_COLOR( MSG_COLOR_GREEN );
         constexpr uint32_t areaTextAndColorSize = sizeof( areaTextAndColor );
 
+        // The area text and color should be closer to the end of the string, so start searching from the end
         // Get a pointer to the end of the string, minus the size of the color text
         const char* smallKeyTextEnd = &smallKeyText[textSize - areaTextAndColorSize];
 
