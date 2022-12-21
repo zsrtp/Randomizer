@@ -185,7 +185,9 @@ namespace mod::customMessages
             if ( memcmp( smallKeyTextEnd, areaTextAndColor, areaTextAndColorSize - 1 ) == 0 )
             {
                 // Set the index to where the color id is
-                game_patch::dungeonItemAreaColorIndex = smallKeyTextEnd - smallKeyText + areaTextAndColorSize - 2;
+                game_patch::dungeonItemAreaColorIndex =
+                    static_cast<uint8_t>( smallKeyTextEnd - smallKeyText + areaTextAndColorSize - 2 );
+
                 return;
             }
         }
