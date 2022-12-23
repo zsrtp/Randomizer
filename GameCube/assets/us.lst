@@ -240,12 +240,16 @@
 80362770:__fixunssfdi
 80362770:__fixunsdfdi
 
+// ctype.o
+80365470:tolower
+
 // mem.o
 8036608C:memcmp
 
 // printf.o
 803664DC:sprintf
 803665BC:snprintf
+80366690:vsnprintf
 
 // string.o
 80368994:strcmp

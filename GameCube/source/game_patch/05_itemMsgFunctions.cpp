@@ -14,6 +14,7 @@
 
 #include <cstring>
 #include <cstdarg>
+#include <cctype>
 #include <cstdio>
 #include <cinttypes>
 
@@ -90,8 +91,7 @@ namespace mod::game_patch
         return reinterpret_cast<void*>( infPtrRaw + 0x20 );
     }
 
-    // Assume that all variadic params will be strings
-    const char* mergeStrings( const char* format, uint32_t size, ... )
+    const char* createString( const char* format, uint32_t size, ... )
     {
         // Make sure format and size are valid
         if ( !format || ( size == 0 ) )
@@ -102,6 +102,7 @@ namespace mod::game_patch
         static char buf[160];
         constexpr uint32_t maxLength = sizeof( buf ) - 1;
         uint32_t currentIndex = 0;
+        bool exitLoop = false;
 
         va_list args;
         va_start( args, size );
@@ -117,47 +118,97 @@ namespace mod::game_patch
 
             char currentCharacter = format[i];
 
-            // If the current character is not %, then write it
-
-            // If the current character is % and the next character is not s, then either the string ends after the %, or the
-            // specifier is not a string, so just write the raw character
-            if ( ( currentCharacter != '%' ) || ( format[i + 1] != 's' ) )
+            // Check if currently at the introductory of a specifier
+            if ( currentCharacter != '%' )
             {
+                // Not at the introductory of a specifier, so write the current character
                 buf[currentIndex++] = currentCharacter;
                 continue;
             }
 
-            // Assume the specifier will be properly handled, so skip past it to avoid writing the character for it
-            i++;
+            // Loop through the characters until a specifier is found
+            bool foundSpecifier = false;
+            uint32_t specifierIndex = 0;
 
-            // Get the next string and make sure it's a valid pointer
-            const char* currentString = va_arg( args, const char* );
-            if ( !currentString )
+            // Get a pointer to the introductory character
+            const char* specifier = &format[i];
+
+            do
             {
-                continue;
+                switch ( std::tolower( specifier[++specifierIndex] ) )
+                {
+                    case '%':
+                    case 'c':
+                    case 's':
+                    case 'd':
+                    case 'i':
+                    case 'o':
+                    case 'x':
+                    case 'u':
+                    case 'f':
+                    case 'e':
+                    case 'a':
+                    case 'g':
+                    case 'n':
+                    case 'p':
+                    {
+                        foundSpecifier = true;
+                        break;
+                    }
+                    case '\0':
+                    {
+                        // The string ends before any specifier is reached, so just write the remaining characters
+                        // Make sure the remaining characters won't cause an overflow
+                        if ( ( currentIndex + specifierIndex ) > maxLength )
+                        {
+                            specifierIndex = maxLength - currentIndex;
+                        }
+
+                        strncpy( &buf[currentIndex], specifier, specifierIndex );
+                        currentIndex += specifierIndex;
+
+                        // Done, so stop looping through the main format string
+                        foundSpecifier = true;
+                        exitLoop = true;
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+            } while ( !foundSpecifier );
+
+            if ( exitLoop )
+            {
+                break;
             }
 
-            // Don't write anything if the current string is an empty string
-            uint32_t len = strlen( currentString );
-            if ( len == 0 )
-            {
-                continue;
-            }
+            // Set up a buffer for the specifier
+            char specifierFormat[specifierIndex + 2];
 
-            // Make sure the string will not overflow the buffer
-            uint32_t endingIndex = currentIndex + len;
-            if ( endingIndex <= maxLength )
+            // Copy the specifier to the buffer
+            strncpy( specifierFormat, specifier, specifierIndex + 1 );
+
+            // Make sure the buffer is properly NULL terminated
+            specifierFormat[specifierIndex + 1] = '\0';
+
+            // Handle the current specifier
+            const uint32_t currentMaxSize = sizeof( buf ) - currentIndex;
+            int32_t len = vsnprintf( &buf[currentIndex], currentMaxSize, specifierFormat, args );
+
+            // Make sure the current specifier was handled correctly
+            if ( len < 0 )     // Do not need to check if the correct amount of bytes were written
             {
-                // String will not overflow, so write it
-                strcpy( &buf[currentIndex], currentString );
-                currentIndex = endingIndex;
-            }
-            else
-            {
-                // String will overflow
-                snprintf( buf, sizeof( buf ), "Error: String with length\nof %" PRIu32 " will overflow buffer.", len );
+                // Error occured
+                snprintf( buf, sizeof( buf ), "Error: String could not be\nwritten at index 0x%" PRIx32 ".", currentIndex );
                 return buf;
             }
+
+            // The current specifier was handled correctly
+            // If not all characters were written, then currentIndex will be >= maxLength, so the loop will end
+            currentIndex += len;
+            i += specifierIndex;
         }
 
         va_end( args );
@@ -402,7 +453,7 @@ namespace mod::game_patch
                         libtp::gc_wii::os_cache::DCFlushRange( const_cast<char*>( format ), msgSize );
                     }
 
-                    return mergeStrings( format, msgSize, smallKeyText, theText, areaText );
+                    return createString( format, msgSize, smallKeyText, theText, areaText );
                 }
                 default:
                 {
