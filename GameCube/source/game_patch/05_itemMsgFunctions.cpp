@@ -102,7 +102,6 @@ namespace mod::game_patch
         static char buf[160];
         constexpr uint32_t maxLength = sizeof( buf ) - 1;
         uint32_t currentIndex = 0;
-        bool exitLoop = false;
 
         va_list args;
         va_start( args, size );
@@ -116,88 +115,22 @@ namespace mod::game_patch
                 break;
             }
 
+            // If the current character is NULL, then write it and go to the next character
             char currentCharacter = format[i];
-
-            // Check if currently at the introductory of a specifier
-            if ( currentCharacter != '%' )
+            if ( currentCharacter == '\0' )
             {
-                // Not at the introductory of a specifier, so write the current character
                 buf[currentIndex++] = currentCharacter;
                 continue;
             }
 
-            // Loop through the characters until a specifier is found
-            bool foundSpecifier = false;
-            uint32_t specifierIndex = 0;
+            // Figure out how many characters there are until a NULL character is reached
+            uint32_t nullCharacterIndex = strlen( &format[i] ) - 1;
 
-            // Get a pointer to the introductory character
-            const char* specifier = &format[i];
-
-            do
-            {
-                switch ( std::tolower( specifier[++specifierIndex] ) )
-                {
-                    case '%':
-                    case 'c':
-                    case 's':
-                    case 'd':
-                    case 'i':
-                    case 'o':
-                    case 'x':
-                    case 'u':
-                    case 'f':
-                    case 'e':
-                    case 'a':
-                    case 'g':
-                    case 'n':
-                    case 'p':
-                    {
-                        foundSpecifier = true;
-                        break;
-                    }
-                    case '\0':
-                    {
-                        // The string ends before any specifier is reached, so just write the remaining characters
-                        // Make sure the remaining characters won't cause an overflow
-                        if ( ( currentIndex + specifierIndex ) > maxLength )
-                        {
-                            specifierIndex = maxLength - currentIndex;
-                        }
-
-                        strncpy( &buf[currentIndex], specifier, specifierIndex );
-                        currentIndex += specifierIndex;
-
-                        // Done, so stop looping through the main format string
-                        foundSpecifier = true;
-                        exitLoop = true;
-                        break;
-                    }
-                    default:
-                    {
-                        break;
-                    }
-                }
-            } while ( !foundSpecifier );
-
-            if ( exitLoop )
-            {
-                break;
-            }
-
-            // Set up a buffer for the specifier
-            char specifierFormat[specifierIndex + 2];
-
-            // Copy the specifier to the buffer
-            strncpy( specifierFormat, specifier, specifierIndex + 1 );
-
-            // Make sure the buffer is properly NULL terminated
-            specifierFormat[specifierIndex + 1] = '\0';
-
-            // Handle the current specifier
+            // Handle all of the characters up to the NULL character
             const uint32_t currentMaxSize = sizeof( buf ) - currentIndex;
-            int32_t len = vsnprintf( &buf[currentIndex], currentMaxSize, specifierFormat, args );
+            int32_t len = vsnprintf( &buf[currentIndex], currentMaxSize, &format[i], args );
 
-            // Make sure the current specifier was handled correctly
+            // Make sure the characters were handled correctly
             if ( len < 0 )     // Do not need to check if the correct amount of bytes were written
             {
                 // Error occured
@@ -205,10 +138,10 @@ namespace mod::game_patch
                 return buf;
             }
 
-            // The current specifier was handled correctly
+            // The characters were handled correctly
             // If not all characters were written, then currentIndex will be >= maxLength, so the loop will end
             currentIndex += len;
-            i += specifierIndex;
+            i += nullCharacterIndex;
         }
 
         va_end( args );
