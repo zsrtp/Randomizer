@@ -100,17 +100,17 @@ namespace mod::game_patch
         }
 
         static char buf[160];
-        constexpr uint32_t maxLength = sizeof( buf ) - 1;
+        constexpr uint32_t maxIndex = sizeof( buf ) - 1;
         uint32_t currentIndex = 0;
 
         va_list args;
         va_start( args, size );
 
-        // Loop through each character
+        // Loop through each character in the format string
         for ( uint32_t i = 0; i < ( size - 1 ); i++ )
         {
             // If currentIndex reaches the end of the buffer, then there is no more room for characters
-            if ( currentIndex >= maxLength )
+            if ( currentIndex >= maxIndex )
             {
                 break;
             }
@@ -123,10 +123,7 @@ namespace mod::game_patch
                 continue;
             }
 
-            // Figure out how many characters there are until a NULL character is reached
-            uint32_t nullCharacterIndex = strlen( &format[i] ) - 1;
-
-            // Handle all of the characters up to the NULL character
+            // Handle all of the characters up to a NULL character
             const uint32_t currentMaxSize = sizeof( buf ) - currentIndex;
             int32_t len = vsnprintf( &buf[currentIndex], currentMaxSize, &format[i], args );
 
@@ -135,28 +132,17 @@ namespace mod::game_patch
             {
                 // Error occured
                 snprintf( buf, sizeof( buf ), "Error: String could not be\nwritten at index 0x%" PRIx32 ".", currentIndex );
-
-                // Clear the cache for buf to be safe
-                libtp::gc_wii::os_cache::DCFlushRange( buf, sizeof( buf ) );
-                return buf;
+                break;
             }
 
             // The characters were handled correctly
-            // If not all characters were written, then currentIndex will be >= maxLength, so the loop will end
-            currentIndex += len;
-            i += nullCharacterIndex;
+            // Assume that the NULL character was written as well, so it can be skipped in the loop
+            // If not all characters were written, then currentIndex will be >= maxIndex, so the loop will end
+            currentIndex += len + 1;
+            i += strlen( &format[i] );
         }
 
         va_end( args );
-
-        // Ensure currentIndex is valid
-        if ( currentIndex > maxLength )
-        {
-            currentIndex = maxLength;
-        }
-
-        // Ensure the buffer is NULL terminated
-        buf[currentIndex] = '\0';
 
         // Clear the cache for buf to be safe
         libtp::gc_wii::os_cache::DCFlushRange( buf, sizeof( buf ) );
