@@ -14,7 +14,6 @@
 
 #include <cstring>
 #include <cstdarg>
-#include <cctype>
 #include <cstdio>
 #include <cinttypes>
 
