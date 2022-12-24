@@ -135,6 +135,9 @@ namespace mod::game_patch
             {
                 // Error occured
                 snprintf( buf, sizeof( buf ), "Error: String could not be\nwritten at index 0x%" PRIx32 ".", currentIndex );
+
+                // Clear the cache for buf to be safe
+                libtp::gc_wii::os_cache::DCFlushRange( buf, sizeof( buf ) );
                 return buf;
             }
 
@@ -154,6 +157,9 @@ namespace mod::game_patch
 
         // Ensure the buffer is NULL terminated
         buf[currentIndex] = '\0';
+
+        // Clear the cache for buf to be safe
+        libtp::gc_wii::os_cache::DCFlushRange( buf, sizeof( buf ) );
         return buf;
     }
 
@@ -382,8 +388,8 @@ namespace mod::game_patch
                         char* colorAddress = const_cast<char*>( &format[colorIndex] );
                         *colorAddress = static_cast<char>( areaColorId );
 
-                        // Clear the cache for the entire format string to be safe
-                        libtp::gc_wii::os_cache::DCFlushRange( const_cast<char*>( format ), msgSize );
+                        // Clear the cache for the changed character
+                        libtp::gc_wii::os_cache::DCFlushRange( colorAddress, sizeof( char ) );
                     }
 
                     return createString( format, msgSize, smallKeyText, theText, areaText );
