@@ -54,6 +54,9 @@ namespace mod
     KEEP_VAR rando::SeedList* seedList = nullptr;
 
     // Variables
+    // Analog L is currently not being used, so commented out
+    // float prevFrameAnalogL = 0.f;
+    float prevFrameAnalogR = 0.f;
     KEEP_VAR uint8_t* m_MsgTableInfo = nullptr;
     KEEP_VAR uint32_t m_TotalMsgEntries = 0;
     libtp::tp::J2DPicture::J2DPicture* bgWindow = nullptr;
@@ -327,52 +330,67 @@ namespace mod
         return padInfo->mPressedButtonFlags & buttons;
     }
 
-    // Note: With the way this function is currently set up, if checking for either of the analog triggers, then those will need
-    // to be held before pressing other buttons. Avoiding this problem would require keeping track of what the analog values
-    // were on the previous frame, whether that was below 0.7, and if the current frame is now at least 0.7.
     bool checkButtonCombo( uint32_t combo, bool checkAnalog )
     {
         using namespace libtp::tp::m_do_controller_pad;
         CPadInfo* padInfo = &cpadInfo[PAD_1];
 
-        // Get the buttons that are currently held
-        uint32_t heldButtons = padInfo->mButtonFlags;
+        // Get the buttons that are currently held and were pressed this frame
+        uint32_t buttonsHeld = padInfo->mButtonFlags;
+        uint32_t buttonsPressedThisFrame = padInfo->mPressedButtonFlags;
 
         // Check if analog L and R should be checked
         if ( checkAnalog )
         {
+            // Get the threshold for the analog buttons
+            constexpr float analogThreshold = 0.7f;     // 70%
+
             // Check if L is included in the button combo
-            // Commented out due to this part of the code not being used at the moment to save memory.
-            /*if ( combo & PadInputs::Button_L )
+            // Analog L is currently not being used, so commented out
+            /*
+            if ( combo & PadInputs::Button_L )
             {
                 // Check if analog L is at 70% or more
-                if ( padInfo->mTriggerLeft >= 0.7f )
+                if ( padInfo->mTriggerLeft >= analogThreshold )
                 {
                     // Manually set the bit for L being pressed
-                    heldButtons |= PadInputs::Button_L;
+                    buttonsHeld |= PadInputs::Button_L;
+
+                    // If prevFrameAnalogL is less than 70%, then 70% was reached this frame
+                    if ( prevFrameAnalogL < analogThreshold )
+                    {
+                        buttonsPressedThisFrame |= PadInputs::Button_L;
+                    }
                 }
-            }*/
+            }
+            */
 
             // Check if R is included in the button combo
             if ( combo & PadInputs::Button_R )
             {
                 // Check if analog R is at 70% or more
-                if ( padInfo->mTriggerRight >= 0.7f )
+                if ( padInfo->mTriggerRight >= analogThreshold )
                 {
                     // Manually set the bit for R being pressed
-                    heldButtons |= PadInputs::Button_R;
+                    buttonsHeld |= PadInputs::Button_R;
+
+                    // If prevFrameAnalogR is less than 70%, then 70% was reached this frame
+                    if ( prevFrameAnalogR < analogThreshold )
+                    {
+                        buttonsPressedThisFrame |= PadInputs::Button_R;
+                    }
                 }
             }
         }
 
         // Check if the button combo is held
-        if ( ( heldButtons & combo ) != combo )
+        if ( ( buttonsHeld & combo ) != combo )
         {
             return false;
         }
 
         // Check if at least one button in the combo was pressed this frame
-        return padInfo->mPressedButtonFlags & combo;
+        return buttonsPressedThisFrame & combo;
     }
 
     void doInput( uint32_t input )
@@ -429,6 +447,7 @@ namespace mod
         item_wheel_menu::ringDrawnThisFrame = false;
 
         dComIfG_inf_c* gameInfo = &dComIfG_gameInfo;
+        CPadInfo* padInfo = &cpadInfo[PAD_1];
 
         // Handle game state updates
         if ( l_fpcNdRq_Queue )
@@ -483,8 +502,11 @@ namespace mod
 
         // Handle button inputs only if buttons are being held that weren't held last time
         auto checkBtn = []( uint32_t input, uint32_t combo ) { return static_cast<bool>( ( input & combo ) == combo ); };
-        CPadInfo* padInfo = &cpadInfo[PAD_1];
         uint32_t currentButtons = padInfo->mButtonFlags;
+
+        // Generic button checks need to occur outside the following conditional, so use a bool to determine if they should be
+        // checked or not
+        bool handledSpecialInputs = false;
 
         if ( currentButtons != lastButtonInput )
         {
@@ -497,6 +519,7 @@ namespace mod
                 // Disallow during boot as we print info etc.
                 // Will automatically disappear if there is no seeds to select from
                 setScreen( !consoleState );
+                handledSpecialInputs = true;
             }
             // Handle Inputs if console is already active
             else if ( consoleState )
@@ -510,11 +533,16 @@ namespace mod
                     padInfo->mButtonFlags = 0;
                     padInfo->mPressedButtonFlags = 0;
                 }
-            }
 
-            else if ( checkButtonCombo( PadInputs::Button_R | PadInputs::Button_Y, true ) )
+                handledSpecialInputs = true;
+            }
+        }
+
+        if ( !handledSpecialInputs )
+        {
+            // Handle generic button checks
+            if ( checkButtonCombo( PadInputs::Button_R | PadInputs::Button_Y, true ) )
             {
-                // Disallow during boot as we print info etc.
                 events::handleQuickTransform();
             }
         }
@@ -650,7 +678,12 @@ namespace mod
         // End of custom events
 
         // Call the original function
-        return return_fapGm_Execute();
+        return_fapGm_Execute();
+
+        // Main code has ran, so update previous frame variables
+        // Analog L is currently not being used, so commented out
+        // prevFrameAnalogL = padInfo->mTriggerLeft;
+        prevFrameAnalogR = padInfo->mTriggerRight;
     }
 
     KEEP_FUNC bool handle_do_unlink( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
