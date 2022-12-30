@@ -235,7 +235,6 @@ namespace mod::game_patch
                     // them
                     uint8_t areaColorId = MSG_COLOR_WHITE_HEX;
                     uint32_t dungeonAreaMsgId;
-                    bool addTheText = false;
 
                     switch ( itemId )
                     {
@@ -246,7 +245,6 @@ namespace mod::game_patch
                         {
                             areaColorId = MSG_COLOR_GREEN_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::FOREST_TEMPLE;
-                            addTheText = true;
                             break;
                         }
                         case Goron_Mines_Small_Key:
@@ -264,7 +262,6 @@ namespace mod::game_patch
                         {
                             areaColorId = CUSTOM_MSG_COLOR_BLUE_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::LAKEBED_TEMPLE;
-                            addTheText = true;
                             break;
                         }
                         case Arbiters_Grounds_Small_Key:
@@ -291,7 +288,6 @@ namespace mod::game_patch
                         {
                             areaColorId = CUSTOM_MSG_COLOR_DARK_GREEN_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::TEMPLE_OF_TIME;
-                            addTheText = true;
                             break;
                         }
                         case City_in_The_Sky_Small_Key:
@@ -301,7 +297,6 @@ namespace mod::game_patch
                         {
                             areaColorId = MSG_COLOR_YELLOW_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::CITY_IN_THE_SKY;
-                            addTheText = true;
                             break;
                         }
                         case Palace_of_Twilight_Small_Key:
@@ -311,7 +306,6 @@ namespace mod::game_patch
                         {
                             areaColorId = MSG_COLOR_PURPLE_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::PALACE_OF_TWILIGHT;
-                            addTheText = true;
                             break;
                         }
                         case Hyrule_Castle_Small_Key:
@@ -327,7 +321,6 @@ namespace mod::game_patch
                         {
                             areaColorId = MSG_COLOR_ORANGE_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::BULBLIN_CAMP;
-                            addTheText = true;
                             break;
                         }
                         default:
@@ -350,22 +343,7 @@ namespace mod::game_patch
                         return nullptr;
                     }
 
-                    // Get the 'the' text
-                    const char* theText;
-                    if ( addTheText )
-                    {
-                        theText = _05_getMsgById( randomizer, SpecialMessageIds::THE );
-                        if ( !theText )
-                        {
-                            return nullptr;
-                        }
-                    }
-                    else
-                    {
-                        theText = nullptr;
-                    }
-
-                    // Replace the dungeon area color
+                                        // Replace the dungeon area color
                     // Make sure the index was properly adjusted
                     uint32_t colorIndex = dungeonItemAreaColorIndex;
                     if ( colorIndex != 0 )
@@ -377,7 +355,7 @@ namespace mod::game_patch
                         libtp::gc_wii::os_cache::DCFlushRange( colorAddress, sizeof( char ) );
                     }
 
-                    return createString( format, msgSize, smallKeyText, theText, areaText );
+                    return createString( format, msgSize, smallKeyText, areaText );
                 }
                 default:
                 {

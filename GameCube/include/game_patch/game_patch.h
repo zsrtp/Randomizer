@@ -26,7 +26,7 @@ namespace mod::game_patch
     // Special message ids that use values that are normally never used
     enum SpecialMessageIds
     {
-        THE = 10000,
+        FOR = 10000,
         SMALL_KEY,
         DUNGEON_MAP,
         COMPASS,

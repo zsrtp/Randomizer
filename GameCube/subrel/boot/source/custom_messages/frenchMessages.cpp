@@ -16,172 +16,7 @@ namespace mod::customMessages
     MSG_BEGIN_ARRAY( forestSmallKeyFr )
         MSG_SPEED( MSG_SPEED_FAST )
         //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //petite clé
-        "\x70\x65\x74\x69\x74\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée au 
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x61\x75\x20\x0A"
-        MSG_COLOR(MSG_COLOR_GREEN)
-        //Temple Sylvestre
-        "\x54\x65\x6d\x70\x6c\x65\x20\x53\x79\x6c\x76\x65\x73\x74\x72\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( minesSmallKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //petite clé
-        "\x70\x65\x74\x69\x74\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée dansla 
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x64\x61\x6e\x73\x0A\x6c\x61\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //Mine Goron
-        "\x4d\x69\x6e\x65\x20\x47\x6f\x72\x6f\x6e"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( lakebedSmallKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //petite clé
-        "\x70\x65\x74\x69\x74\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée au 
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x61\x75\x20\x0A"
-        MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        //Temple Abyssal
-        "\x54\x65\x6d\x70\x6c\x65\x20\x41\x62\x79\x73\x73\x61\x6c"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( arbitersSmallKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //petite clé
-        "\x70\x65\x74\x69\x74\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée dans la
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x64\x61\x6e\x73\x20\x6c\x61\x0A"
-        MSG_COLOR(MSG_COLOR_ORANGE)
-        //Tour du Jugement
-        "\x54\x6f\x75\x72\x20\x64\x75\x20\x4a\x75\x67\x65\x6d\x65\x6e\x74"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( snowpeakSmallKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //petite clé
-        "\x70\x65\x74\x69\x74\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée aux
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x61\x75\x78\x0A"
-        MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        //Ruines des Pics Blancs
-        "\x52\x75\x69\x6e\x65\x73\x20\x64\x65\x73\x20\x50\x69\x63\x73\x20\x42\x6c\x61\x6e\x63\x73"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( timeSmallKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //petite clé
-        "\x70\x65\x74\x69\x74\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée au 
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x61\x75\x20\x0A"
-        MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        //Temple du Temps
-        "\x54\x65\x6d\x70\x6c\x65\x20\x64\x75\x20\x54\x65\x6d\x70\x73"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( citySmallKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //petite clé
-        "\x70\x65\x74\x69\x74\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée à
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\xe0\x0A"
-        MSG_COLOR(MSG_COLOR_YELLOW)
-        //Célestia
-        "\x43\xe9\x6c\x65\x73\x74\x69\x61"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( palaceSmallKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //petite clé
-        "\x70\x65\x74\x69\x74\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée dansle 
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x64\x61\x6e\x73\x0A\x6c\x65\x20"
-        MSG_COLOR(MSG_COLOR_PURPLE)
-        //Palais du Crépuscule
-        "\x50\x61\x6c\x61\x69\x73\x20\x64\x75\x20\x43\x72\xe9\x70\x75\x73\x63\x75\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( hyruleSmallKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //petite clé
-        "\x70\x65\x74\x69\x74\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée au
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x61\x75\x0A"
-        MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        //Château d'Hyrule
-        "\x43\x68\xe2\x74\x65\x61\x75\x20\x64\x27\x48\x79\x72\x75\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( campSmallKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //petite clé
-        "\x70\x65\x74\x69\x74\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée dansle 
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x64\x61\x6e\x73\x0A\x6c\x65\x20"
-        MSG_COLOR(MSG_COLOR_ORANGE)
-        //Camp Bulblin
-        "\x43\x61\x6d\x70\x20\x42\x75\x6c\x62\x6c\x69\x6e"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
+        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20%s\n%s\x21"
     MSG_END()
     MSG_BEGIN_ARRAY( shadowCrystalFr )
         MSG_SPEED(MSG_SPEED_SLOW)
@@ -193,431 +28,6 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //!La sombre manifestation des pouvoirs de Xanto qui permet de se transformer à volonté!
         "\x21\x0A\x4c\x61\x20\x73\x6f\x6d\x62\x72\x65\x20\x6d\x61\x6e\x69\x66\x65\x73\x74\x61\x74\x69\x6f\x6e\x20\x64\x65\x73\x0A\x70\x6f\x75\x76\x6f\x69\x72\x73\x20\x64\x65\x20\x58\x61\x6e\x74\x6f\x20\x71\x75\x69\x20\x70\x65\x72\x6d\x65\x74\x0A\x64\x65\x20\x73\x65\x20\x74\x72\x61\x6e\x73\x66\x6f\x72\x6d\x65\x72\x20\xe0\x20\x76\x6f\x6c\x6f\x6e\x74\xe9\x21"
-    MSG_END()
-    MSG_BEGIN_ARRAY( forestDungeonMapFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //carte dedonjon
-        "\x63\x61\x72\x74\x65\x20\x64\x65\x0A\x64\x6f\x6e\x6a\x6f\x6e"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //! Elle appartient au
-        "\x21\x20\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\x61\x75\x0A"
-        MSG_COLOR(MSG_COLOR_GREEN)
-        //Temple Sylvestre
-        "\x54\x65\x6d\x70\x6c\x65\x20\x53\x79\x6c\x76\x65\x73\x74\x72\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( minesDungeonMapFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //carte dedonjon
-        "\x63\x61\x72\x74\x65\x20\x64\x65\x0A\x64\x6f\x6e\x6a\x6f\x6e"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //! Elle appartient a la
-        "\x21\x20\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\xE0\x20\x6C\x61\x0A"
-        MSG_COLOR(MSG_COLOR_RED)
-        //Mine Goron
-        "\x4d\x69\x6e\x65\x20\x47\x6f\x72\x6f\x6e"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( lakebedDungeonMapFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //carte dedonjon
-        "\x63\x61\x72\x74\x65\x20\x64\x65\x0A\x64\x6f\x6e\x6a\x6f\x6e"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //! Elle appartient au
-        "\x21\x20\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\x61\x75\x0A"
-        MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        //Temple Abyssal
-        "\x54\x65\x6d\x70\x6c\x65\x20\x41\x62\x79\x73\x73\x61\x6c"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( arbitersDungeonMapFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //carte dedonjon
-        "\x63\x61\x72\x74\x65\x20\x64\x65\x0A\x64\x6f\x6e\x6a\x6f\x6e"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //! Elle appartient à la
-        "\x21\x20\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\xe0\x20\x6c\x61\x0A"
-        MSG_COLOR(MSG_COLOR_ORANGE)
-        //Tour du Jugement
-        "\x54\x6f\x75\x72\x20\x64\x75\x20\x4a\x75\x67\x65\x6d\x65\x6e\x74"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( snowpeakDungeonMapFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //carte dedonjon
-        "\x63\x61\x72\x74\x65\x20\x64\x65\x0A\x64\x6f\x6e\x6a\x6f\x6e"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //! Elle appartient aux
-        "\x21\x20\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\x61\x75\x78\x0A"
-        MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        //Ruines des Pics Blancs
-        "\x52\x75\x69\x6e\x65\x73\x20\x64\x65\x73\x20\x50\x69\x63\x73\x20\x42\x6c\x61\x6e\x63\x73"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( timeDungeonMapFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //carte dedonjon
-        "\x63\x61\x72\x74\x65\x20\x64\x65\x0A\x64\x6f\x6e\x6a\x6f\x6e"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //! Elle appartient au
-        "\x21\x20\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\x61\x75\x0A"
-        MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        //Temple du Temps
-        "\x54\x65\x6d\x70\x6c\x65\x20\x64\x75\x20\x54\x65\x6d\x70\x73"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( cityDungeonMapFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //carte dedonjon
-        "\x63\x61\x72\x74\x65\x20\x64\x65\x0A\x64\x6f\x6e\x6a\x6f\x6e"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //! Elle appartient à
-        "\x21\x20\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\xe0\x0A"
-        MSG_COLOR(MSG_COLOR_YELLOW)
-        //Célestia
-        "\x43\xe9\x6c\x65\x73\x74\x69\x61"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( palaceDungeonMapFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //carte dedonjon
-        "\x63\x61\x72\x74\x65\x20\x64\x65\x0A\x64\x6f\x6e\x6a\x6f\x6e"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //! Elle appartient au
-        "\x21\x20\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\x61\x75\x0A"
-        MSG_COLOR(MSG_COLOR_PURPLE)
-        //Palais du Crépuscule
-        "\x50\x61\x6c\x61\x69\x73\x20\x64\x75\x20\x43\x72\xe9\x70\x75\x73\x63\x75\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( hyruleDungeonMapFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //carte dedonjon
-        "\x63\x61\x72\x74\x65\x20\x64\x65\x0A\x64\x6f\x6e\x6a\x6f\x6e"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //! Elle appartient au
-        "\x21\x20\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\x61\x75\x0A"
-        MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        //Château d'Hyrule
-        "\x43\x68\xe2\x74\x65\x61\x75\x20\x64\x27\x48\x79\x72\x75\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( forestCompassFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //boussole
-        "\x62\x6f\x75\x73\x73\x6f\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle appartient au 
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\x61\x75\x20\x0A"
-        MSG_COLOR(MSG_COLOR_GREEN)
-        //Temple Sylvestre
-        "\x54\x65\x6d\x70\x6c\x65\x20\x53\x79\x6c\x76\x65\x73\x74\x72\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( minesCompassFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //boussole
-        "\x62\x6f\x75\x73\x73\x6f\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle appartient a la
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\xE0\x20\x6C\x61\x0A"
-        MSG_COLOR(MSG_COLOR_RED)
-        //Mine Goron
-        "\x4d\x69\x6e\x65\x20\x47\x6f\x72\x6f\x6e"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( lakebedCompassFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //boussole
-        "\x62\x6f\x75\x73\x73\x6f\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle appartient au 
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\x61\x75\x20\x0A"
-        MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        //Temple Abyssal
-        "\x54\x65\x6d\x70\x6c\x65\x20\x41\x62\x79\x73\x73\x61\x6c"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( arbitersCompassFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //boussole
-        "\x62\x6f\x75\x73\x73\x6f\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle appartient à la 
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\xe0\x20\x6c\x61\x20\x0A"
-        MSG_COLOR(MSG_COLOR_ORANGE)
-        //Tour du Jugement
-        "\x54\x6f\x75\x72\x20\x64\x75\x20\x4a\x75\x67\x65\x6d\x65\x6e\x74"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( snowpeakCompassFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //boussole
-        "\x62\x6f\x75\x73\x73\x6f\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle appartient aux 
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\x61\x75\x78\x20\x0A"
-        MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
-        //Ruines des Pics Blancs
-        "\x52\x75\x69\x6e\x65\x73\x20\x64\x65\x73\x20\x50\x69\x63\x73\x20\x42\x6c\x61\x6e\x63\x73"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( timeCompassFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //boussole
-        "\x62\x6f\x75\x73\x73\x6f\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle appartient au 
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\x61\x75\x20\x0A"
-        MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        //Temple du Temps
-        "\x54\x65\x6d\x70\x6c\x65\x20\x64\x75\x20\x54\x65\x6d\x70\x73"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( cityCompassFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //boussole
-        "\x62\x6f\x75\x73\x73\x6f\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle appartient à 
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\xe0\x20"
-        MSG_COLOR(MSG_COLOR_YELLOW)
-        //Célestia
-        "\x43\xe9\x6c\x65\x73\x74\x69\x61"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( palaceCompassFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //boussole
-        "\x62\x6f\x75\x73\x73\x6f\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle appartient au 
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\x61\x75\x20\x0A"
-        MSG_COLOR(MSG_COLOR_PURPLE)
-        //Palais du Crépuscule
-        "\x50\x61\x6c\x61\x69\x73\x20\x64\x75\x20\x43\x72\xe9\x70\x75\x73\x63\x75\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( hyruleCompassFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x65\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //boussole
-        "\x62\x6f\x75\x73\x73\x6f\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle appartient au 
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x61\x70\x70\x61\x72\x74\x69\x65\x6e\x74\x20\x61\x75\x20\x0A"
-        MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        //Château d'Hyrule
-        "\x43\x68\xe2\x74\x65\x61\x75\x20\x64\x27\x48\x79\x72\x75\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( forestBigKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //la grande clé
-        "\x6c\x61\x20\x67\x72\x61\x6e\x64\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée au
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x61\x75\x0A"
-        MSG_COLOR(MSG_COLOR_GREEN)
-        //Temple Sylvestre
-        "\x54\x65\x6d\x70\x6c\x65\x20\x53\x79\x6c\x76\x65\x73\x74\x72\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( lakebedBigKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //la grande clé
-        "\x6c\x61\x20\x67\x72\x61\x6e\x64\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée au
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x61\x75\x0A"
-        MSG_COLOR(CUSTOM_MSG_COLOR_BLUE)
-        //Temple Abyssal
-        "\x54\x65\x6d\x70\x6c\x65\x20\x41\x62\x79\x73\x73\x61\x6c"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( arbitersBigKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //la grande clé
-        "\x6c\x61\x20\x67\x72\x61\x6e\x64\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée dans la
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x64\x61\x6e\x73\x20\x6c\x61\x0A"
-        MSG_COLOR(MSG_COLOR_ORANGE)
-        //Tour du Jugement
-        "\x54\x6f\x75\x72\x20\x64\x75\x20\x4a\x75\x67\x65\x6d\x65\x6e\x74"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( timeBigKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //la grande clé
-        "\x6c\x61\x20\x67\x72\x61\x6e\x64\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée au
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x61\x75\x0A"
-        MSG_COLOR(CUSTOM_MSG_COLOR_DARK_GREEN)
-        //Temple du Temps
-        "\x54\x65\x6d\x70\x6c\x65\x20\x64\x75\x20\x54\x65\x6d\x70\x73"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( cityBigKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //la grande clé
-        "\x6c\x61\x20\x67\x72\x61\x6e\x64\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée à
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\xe0\x0A"
-        MSG_COLOR(MSG_COLOR_YELLOW)
-        //Célestia
-        "\x43\xe9\x6c\x65\x73\x74\x69\x61"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( palaceBigKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //la grande clé
-        "\x6c\x61\x20\x67\x72\x61\x6e\x64\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée au
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x61\x75\x0A"
-        MSG_COLOR(MSG_COLOR_PURPLE)
-        //Palais du Crépuscule
-        "\x50\x61\x6c\x61\x69\x73\x20\x64\x75\x20\x43\x72\xe9\x70\x75\x73\x63\x75\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
-    MSG_END()
-    MSG_BEGIN_ARRAY( hyruleBigKeyFr )
-        MSG_SPEED(MSG_SPEED_FAST)
-        //Vous obtenez 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20"
-        MSG_COLOR(MSG_COLOR_RED)
-        //la grande clé
-        "\x6c\x61\x20\x67\x72\x61\x6e\x64\x65\x20\x63\x6c\xe9"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //!Elle peut être utilisée au
-        "\x21\x0A\x45\x6c\x6c\x65\x20\x70\x65\x75\x74\x20\xea\x74\x72\x65\x20\x75\x74\x69\x6c\x69\x73\xe9\x65\x20\x61\x75\x0A"
-        MSG_COLOR(CUSTOM_MSG_COLOR_SILVER)
-        //Château d'Hyrule
-        "\x43\x68\xe2\x74\x65\x61\x75\x20\x64\x27\x48\x79\x72\x75\x6c\x65"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        //.
-        "\x2e"
     MSG_END()
     MSG_BEGIN_ARRAY( endingBlowFr )
         MSG_SPEED(MSG_SPEED_FAST)
@@ -959,323 +369,251 @@ namespace mod::customMessages
         // L'équipe du Randomizer souhaiterait remercier nos incroyables testeurs. Ce projet ne serait pas ce qu'il est aujourd'hui sans vous
         "\x4C\x27\xE9\x71\x75\x69\x70\x65\x20\x64\x75\x20\x52\x61\x6E\x64\x6F\x6D\x69\x7A\x65\x72\n\x73\x6F\x75\x68\x61\x69\x74\x65\x72\x61\x69\x74\x20\x72\x65\x6D\x65\x72\x63\x69\x65\x72\x20\x6E\x6F\x73\n\x69\x6E\x63\x72\x6F\x79\x61\x62\x6C\x65\x73\x20\x74\x65\x73\x74\x65\x75\x72\x73\x2E\x20\x43\x65\n\x70\x72\x6F\x6A\x65\x74\x20\x6E\x65\x20\x73\x65\x72\x61\x69\x74\x20\x70\x61\x73\x20\x63\x65\x20\x71\x75\x27\x69\x6C\n\x65\x73\x74\x20\x61\x75\x6A\x6F\x75\x72\x64\x27\x68\x75\x69\x20\x73\x61\x6E\x73\x20\x76\x6F\x75\x73: Taka\nAnorakkis, Archer, Br00ty, Chris\nChrono, clabrus, Demon, EmperorP\nElinadrian, Empty, Fennec, Zushi\nFleakee, Foxhole Gaming, Luzagar\nHeartPiece, Hornlitz, IceStorm\nJanWegh, JD, jdflyer, Jeez, Oxy\nJustRyland, Lance H., link1183\nLinkman124, Luneyes, GameWyrm\nMattStrats, MultFij, NesmaN88\nXenoWars, Papy_Grant, Simikins\npokemongenius, Psi-Hate, Lars P\nRaziel_Stratton, Redriel, Revven\nSparky7198, Zach, SwiftIke, j_im\nZenith, Prince, The., TheBruce\nTreZc0_, Wameslo, WickedGligar\nDGod63 and Sushi."
     MSG_END()
-        // clang-format on
 
-        MsgEntry entriesFr[TOTAL_CUSTOM_MESSAGES] = {
-            // Forest Temple small key
-            forestSmallKeyFr,
-            sizeof( forestSmallKeyFr ),
-            0x00E9,
+    char forText[] = "";
+    char smallKeyText[] = "\x75\x6e\x65\x20\x70\x65\x74\x69\x74\x65\x20\x63\x6c\xe9"; //une petite clé
+    char dungeonMapText[] = "\x6c\x61\x20\x63\x61\x72\x74\x65\x20\x64\x65\x0A\x64\x6f\x6e\x6a\x6f\x6e"; // la carte de donjon
+    char compassText[] = "\x6c\x61\x20\x62\x6f\x75\x73\x73\x6f\x6c\x65"; // la boussole
+    char bigKeyText[] = "\x6c\x61\x20\x67\x72\x61\x6e\x64\x65\x20\x63\x6c\xe9"; // la grande clé
+    char forestTempleText[] = "\x64\x75\x20\x54\x65\x6d\x70\x6c\x65\x20\x53\x79\x6c\x76\x65\x73\x74\x72\x65"; //du Temple Sylvestre
+    char goronMinesText[] = "\x64\x75\x20\x4d\x69\x6e\x65\x20\x47\x6f\x72\x6f\x6e"; // du Mines Goron
+    char lakebedTempleText[] = "\x64\x75\x20\x54\x65\x6d\x70\x6c\x65\x20\x41\x62\x79\x73\x73\x61\x6c"; // du Temple Abyssal
+    char arbitersGroundsText[] = "\x64\x65\x20\6c\x61\x20\x54\x6f\x75\x72\x20\x64\x75\x20\x4a\x75\x67\x65\x6d\x65\x6e\x74"; // de la Tour du Jugement
+    char snowpeakRuinsText[] = "\x64\x65\x73\x52\x75\x69\x6e\x65\x73\x20\x64\x65\x73\x20\x50\x69\x63\x73\x20\x42\x6c\x61\x6e\x63\x73"; // des Ruines des Pics Blancs
+    char templeOfTimeText[] = "\x64\x75\x20\x54\x65\x6d\x70\x6c\x65\x20\x64\x75\x20\x54\x65\x6d\x70\x73"; // du Temple du Temps
+    char cityInTheSkyText[] = "\x64\x65\x20\x43\xe9\x6c\x65\x73\x74\x69\x61"; // de Célestia
+    char palaceOfTwilightText[] = "\x64\x75\x20\x50\x61\x6c\x61\x69\x73\x20\x64\x75\x20\x43\x72\xe9\x70\x75\x73\x63\x75\x6c\x65"; // du Palais du Crépuscule
+    char hyruleCastleText[] = "\x64\x75\x20\x43\x68\xe2\x74\x65\x61\x75\x20\x64\x27\x48\x79\x72\x75\x6c\x65"; // du Château d'Hyrule
+    char bulblinCampText[] = "\x64\x75\x20\x43\x61\x6d\x70\x20\x42\x75\x6c\x62\x6c\x69\x6e"; // du Camp Bulblin
+    // clang-format on
 
-            // Goron Mines small key
-            minesSmallKeyFr,
-            sizeof( minesSmallKeyFr ),
-            0x00EA,
+    MsgEntry entriesFr[TOTAL_CUSTOM_MESSAGES] = {
+        // Forest Temple small key
+        forestSmallKeyFr,
+        sizeof( forestSmallKeyFr ),
+        0x00E9,
 
-            // Lakebed Temple small key
-            lakebedSmallKeyFr,
-            sizeof( lakebedSmallKeyFr ),
-            0x00EB,
+        // Shadow Crystal
+        shadowCrystalFr,
+        sizeof( shadowCrystalFr ),
+        0x0096,
 
-            // Arbiter's Grounds small key
-            arbitersSmallKeyFr,
-            sizeof( arbitersSmallKeyFr ),
-            0x00EC,
+        // Ending Blow hidden skill
+        endingBlowFr,
+        sizeof( endingBlowFr ),
+        0x0145,
 
-            // Snowpeak Ruins small key
-            snowpeakSmallKeyFr,
-            sizeof( snowpeakSmallKeyFr ),
-            0x00ED,
+        // Shield Attack hidden skill
+        shieldAttackFr,
+        sizeof( shieldAttackFr ),
+        0x0146,
 
-            // Temple of Time small key
-            timeSmallKeyFr,
-            sizeof( timeSmallKeyFr ),
-            0x00EE,
+        // Back Slice hidden skill
+        backSliceFr,
+        sizeof( backSliceFr ),
+        0x0147,
 
-            // City in the Sky small key
-            citySmallKeyFr,
-            sizeof( citySmallKeyFr ),
-            0x00EF,
+        // Helm Splitter hidden skill
+        helmSplitterFr,
+        sizeof( helmSplitterFr ),
+        0x0148,
 
-            // Palace of Twilight small key
-            palaceSmallKeyFr,
-            sizeof( palaceSmallKeyFr ),
-            0x00F0,
+        // Mortal Draw hidden skill
+        mortalDrawFr,
+        sizeof( mortalDrawFr ),
+        0x0149,
 
-            // Hyrule Castle small key
-            hyruleSmallKeyFr,
-            sizeof( hyruleSmallKeyFr ),
-            0x00F1,
+        // Jump Strike hidden skill
+        jumpStrikeFr,
+        sizeof( jumpStrikeFr ),
+        0x014A,
 
-            // Bulblin Camp small key
-            campSmallKeyFr,
-            sizeof( campSmallKeyFr ),
-            0x00F2,
+        // Great Spin hidden skill
+        greatSpinFr,
+        sizeof( greatSpinFr ),
+        0x014B,
 
-            // Shadow Crystal
-            shadowCrystalFr,
-            sizeof( shadowCrystalFr ),
-            0x0096,
+        // Powered up Dominion Rod
+        poweredRodFr,
+        sizeof( poweredRodFr ),
+        0x00B0,
 
-            // Forest Temple dungeon map
-            forestDungeonMapFr,
-            sizeof( forestDungeonMapFr ),
-            0x011A,
+        // First Ancient Sky Book character
+        firstCharacterFr,
+        sizeof( firstCharacterFr ),
+        0x013F,
 
-            // Goron Mines dungeon map
-            minesDungeonMapFr,
-            sizeof( minesDungeonMapFr ),
-            0x011B,
+        // Second Ancient Sky Book character
+        secondCharacterFr,
+        sizeof( secondCharacterFr ),
+        0x0140,
 
-            // Lakebed Temple dungeon map
-            lakebedDungeonMapFr,
-            sizeof( lakebedDungeonMapFr ),
-            0x011C,
+        // Third Ancient Sky Book character
+        thirdCharacterFr,
+        sizeof( thirdCharacterFr ),
+        0x0141,
 
-            // Arbiter's Grounds dungeon map
-            arbitersDungeonMapFr,
-            sizeof( arbitersDungeonMapFr ),
-            0x011D,
+        // Fourth Ancient Sky Book character
+        fourthCharacterFr,
+        sizeof( fourthCharacterFr ),
+        0x0142,
 
-            // Snowpeak Ruins dungeon map
-            snowpeakDungeonMapFr,
-            sizeof( snowpeakDungeonMapFr ),
-            0x011E,
+        // Fifth Ancient Sky Book character
+        fifthCharacterFr,
+        sizeof( fifthCharacterFr ),
+        0x0143,
 
-            // Temple of Time dungeon map
-            timeDungeonMapFr,
-            sizeof( timeDungeonMapFr ),
-            0x011F,
+        // Sixth Ancient Sky Book character
+        firstFusedShadowFr,
+        sizeof( firstFusedShadowFr ),
+        0x013C,
 
-            // City in the Sky dungeon map
-            cityDungeonMapFr,
-            sizeof( cityDungeonMapFr ),
-            0x0120,
+        // Second Fused Shadow
+        secondFusedShadowFr,
+        sizeof( secondFusedShadowFr ),
+        0x013D,
 
-            // Palace of Twilight dungeon map
-            palaceDungeonMapFr,
-            sizeof( palaceDungeonMapFr ),
-            0x0121,
+        // Third Fused Shadow
+        thirdFusedShadowFr,
+        sizeof( thirdFusedShadowFr ),
+        0x013E,
 
-            // Hyrule Castle dungeon map
-            hyruleDungeonMapFr,
-            sizeof( hyruleDungeonMapFr ),
-            0x0122,
+        // Second Mirror Shard
+        secondMirrorShardFr,
+        sizeof( secondMirrorShardFr ),
+        0x0109,
 
-            // Forest Temple compass
-            forestCompassFr,
-            sizeof( forestCompassFr ),
-            0x00FD,
+        // Third Mirror Shard
+        thirdMirrorShardFr,
+        sizeof( thirdMirrorShardFr ),
+        0x010A,
 
-            // Goron Mines compass
-            minesCompassFr,
-            sizeof( minesCompassFr ),
-            0x00FE,
+        // Fourth Mirror Shard
+        fourthMirrorShardFr,
+        sizeof( fourthMirrorShardFr ),
+        0x010B,
 
-            // Lakebed Temple compass
-            lakebedCompassFr,
-            sizeof( lakebedCompassFr ),
-            0x00FF,
+        // Foolish Item
+        foolishItemFr,
+        sizeof( foolishItemFr ),
+        0x0077,
 
-            // Arbiter's Grounds compass
-            arbitersCompassFr,
-            sizeof( arbitersCompassFr ),
-            0x010C,
+        // Talking to Midna
+        talkToMidnaFr,
+        sizeof( talkToMidnaFr ),
+        0x0BBB,
 
-            // Snowpeak Ruins compass
-            snowpeakCompassFr,
-            sizeof( snowpeakCompassFr ),
-            0x010D,
+        // Big Wallet
+        bigWalletFr,
+        sizeof( bigWalletFr ),
+        0x0099,
 
-            // Temple of Time compass
-            timeCompassFr,
-            sizeof( timeCompassFr ),
-            0x010E,
+        // Giant Wallet
+        giantWalletFr,
+        sizeof( giantWalletFr ),
+        0x009A,
 
-            // City in the Sky compass
-            cityCompassFr,
-            sizeof( cityCompassFr ),
-            0x010F,
+        // Small Wallet Menu Text
+        smallWalletPauseFr,
+        sizeof( smallWalletPauseFr ),
+        0x0298,
 
-            // Palace of Twilight compass
-            palaceCompassFr,
-            sizeof( palaceCompassFr ),
-            0x0110,
+        // Big Wallet Menu Text
+        bigWalletPauseFr,
+        sizeof( bigWalletPauseFr ),
+        0x0299,
 
-            // Hyrule Castle compass
-            hyruleCompassFr,
-            sizeof( hyruleCompassFr ),
-            0x0111,
+        // Giant Wallet Menu Text
+        giantWalletPauseFr,
+        sizeof( giantWalletPauseFr ),
+        0x029a,
 
-            // Forest Temple big key
-            forestBigKeyFr,
-            sizeof( forestBigKeyFr ),
-            0x00F6,
+        // Recognition text
+        recognitionFr,
+        sizeof( recognitionFr ),
+        0x0b44,
 
-            // Lakebed Temple big key
-            lakebedBigKeyFr,
-            sizeof( lakebedBigKeyFr ),
-            0x00F7,
+        // Special invalid-id texts
+        // the
+        forText,
+        sizeof( forText ),
+        game_patch::SpecialMessageIds::FOR,
 
-            // Arbiter's Grounds big key
-            arbitersBigKeyFr,
-            sizeof( arbitersBigKeyFr ),
-            0x00F8,
+        // Small Key
+        smallKeyText,
+        sizeof( smallKeyText ),
+        game_patch::SpecialMessageIds::SMALL_KEY,
 
-            // Temple of Time big key
-            timeBigKeyFr,
-            sizeof( timeBigKeyFr ),
-            0x00F9,
+        // Dungeon Map
+        dungeonMapText,
+        sizeof( dungeonMapText ),
+        game_patch::SpecialMessageIds::DUNGEON_MAP,
 
-            // City in the Sky big key
-            cityBigKeyFr,
-            sizeof( cityBigKeyFr ),
-            0x00FA,
+        // Compass
+        compassText,
+        sizeof( compassText ),
+        game_patch::SpecialMessageIds::COMPASS,
 
-            // Palace of Twilight big key
-            palaceBigKeyFr,
-            sizeof( palaceBigKeyFr ),
-            0x00FB,
+        // Big Key
+        bigKeyText,
+        sizeof( bigKeyText ),
+        game_patch::SpecialMessageIds::BIG_KEY,
 
-            // Hyrule Castle big key
-            hyruleBigKeyFr,
-            sizeof( hyruleBigKeyFr ),
-            0x00FC,
+        // Forest Temple
+        forestTempleText,
+        sizeof( forestTempleText ),
+        game_patch::SpecialMessageIds::FOREST_TEMPLE,
 
-            // Ending Blow hidden skill
-            endingBlowFr,
-            sizeof( endingBlowFr ),
-            0x0145,
+        // Goron Mines
+        goronMinesText,
+        sizeof( goronMinesText ),
+        game_patch::SpecialMessageIds::GORON_MINES,
 
-            // Shield Attack hidden skill
-            shieldAttackFr,
-            sizeof( shieldAttackFr ),
-            0x0146,
+        // Lakebed Temple
+        lakebedTempleText,
+        sizeof( lakebedTempleText ),
+        game_patch::SpecialMessageIds::LAKEBED_TEMPLE,
 
-            // Back Slice hidden skill
-            backSliceFr,
-            sizeof( backSliceFr ),
-            0x0147,
+        // Arbiter's Grounds
+        arbitersGroundsText,
+        sizeof( arbitersGroundsText ),
+        game_patch::SpecialMessageIds::ARBITERS_GROUNDS,
 
-            // Helm Splitter hidden skill
-            helmSplitterFr,
-            sizeof( helmSplitterFr ),
-            0x0148,
+        // Snowpeak Ruins
+        snowpeakRuinsText,
+        sizeof( snowpeakRuinsText ),
+        game_patch::SpecialMessageIds::SNOWPEAK_RUINS,
 
-            // Mortal Draw hidden skill
-            mortalDrawFr,
-            sizeof( mortalDrawFr ),
-            0x0149,
+        // Temple of Time
+        templeOfTimeText,
+        sizeof( templeOfTimeText ),
+        game_patch::SpecialMessageIds::TEMPLE_OF_TIME,
 
-            // Jump Strike hidden skill
-            jumpStrikeFr,
-            sizeof( jumpStrikeFr ),
-            0x014A,
+        // City in the Sky
+        cityInTheSkyText,
+        sizeof( cityInTheSkyText ),
+        game_patch::SpecialMessageIds::CITY_IN_THE_SKY,
 
-            // Great Spin hidden skill
-            greatSpinFr,
-            sizeof( greatSpinFr ),
-            0x014B,
+        // Palace of Twilight
+        palaceOfTwilightText,
+        sizeof( palaceOfTwilightText ),
+        game_patch::SpecialMessageIds::PALACE_OF_TWILIGHT,
 
-            // Powered up Dominion Rod
-            poweredRodFr,
-            sizeof( poweredRodFr ),
-            0x00B0,
+        // Hyrule Castle
+        hyruleCastleText,
+        sizeof( hyruleCastleText ),
+        game_patch::SpecialMessageIds::HYRULE_CASTLE,
 
-            // First Ancient Sky Book character
-            firstCharacterFr,
-            sizeof( firstCharacterFr ),
-            0x013F,
+        // Bulblin Camp
+        bulblinCampText,
+        sizeof( bulblinCampText ),
+        game_patch::SpecialMessageIds::BULBLIN_CAMP,
 
-            // Second Ancient Sky Book character
-            secondCharacterFr,
-            sizeof( secondCharacterFr ),
-            0x0140,
-
-            // Third Ancient Sky Book character
-            thirdCharacterFr,
-            sizeof( thirdCharacterFr ),
-            0x0141,
-
-            // Fourth Ancient Sky Book character
-            fourthCharacterFr,
-            sizeof( fourthCharacterFr ),
-            0x0142,
-
-            // Fifth Ancient Sky Book character
-            fifthCharacterFr,
-            sizeof( fifthCharacterFr ),
-            0x0143,
-
-            // Sixth Ancient Sky Book character
-            firstFusedShadowFr,
-            sizeof( firstFusedShadowFr ),
-            0x013C,
-
-            // Second Fused Shadow
-            secondFusedShadowFr,
-            sizeof( secondFusedShadowFr ),
-            0x013D,
-
-            // Third Fused Shadow
-            thirdFusedShadowFr,
-            sizeof( thirdFusedShadowFr ),
-            0x013E,
-
-            // Second Mirror Shard
-            secondMirrorShardFr,
-            sizeof( secondMirrorShardFr ),
-            0x0109,
-
-            // Third Mirror Shard
-            thirdMirrorShardFr,
-            sizeof( thirdMirrorShardFr ),
-            0x010A,
-
-            // Fourth Mirror Shard
-            fourthMirrorShardFr,
-            sizeof( fourthMirrorShardFr ),
-            0x010B,
-
-            // Foolish Item
-            foolishItemFr,
-            sizeof( foolishItemFr ),
-            0x0077,
-
-            // Talking to Midna
-            talkToMidnaFr,
-            sizeof( talkToMidnaFr ),
-            0x0BBB,
-
-            // Big Wallet
-            bigWalletFr,
-            sizeof( bigWalletFr ),
-            0x0099,
-
-            // Giant Wallet
-            giantWalletFr,
-            sizeof( giantWalletFr ),
-            0x009A,
-
-            // Small Wallet Menu Text
-            smallWalletPauseFr,
-            sizeof( smallWalletPauseFr ),
-            0x0298,
-
-            // Big Wallet Menu Text
-            bigWalletPauseFr,
-            sizeof( bigWalletPauseFr ),
-            0x0299,
-
-            // Giant Wallet Menu Text
-            giantWalletPauseFr,
-            sizeof( giantWalletPauseFr ),
-            0x029a,
-
-            // Recognition text
-            recognitionFr,
-            sizeof( recognitionFr ),
-            0x0b44,
+        // This is an extra section that should go unused, and is only needed for _05_getMsgById in 05_itemMsgFunctions.cpp to
+        // ensure that it can properly calculate sizeOut
+        "",
+        0,
+        0xFFFF,
     };
 
     const MsgEntry charloDonationEntryFr = { charloDonationFr, sizeof( charloDonationFr ), 0x0355 };

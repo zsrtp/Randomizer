@@ -16,15 +16,7 @@ namespace mod::customMessages
     // clang-format off
     MSG_BEGIN_ARRAY( forestSmallKeyEn )
         MSG_SPEED( MSG_SPEED_FAST )
-        "You got a "
-        MSG_COLOR(MSG_COLOR_RED)
-        "%s"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "!\nIt can be used in %s\n"
-        MSG_COLOR(MSG_COLOR_GREEN)
-        "%s"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "."
+        "You got %s\n%s!"
     MSG_END()
     MSG_BEGIN_ARRAY( shadowCrystalEn )
         MSG_SPEED(MSG_SPEED_SLOW)
@@ -283,11 +275,11 @@ namespace mod::customMessages
         "The Randomizer Team would like\nto thank our amazing testers.\nWithout you, this project would\nnot be what it is today: Taka\nAnorakkis, Archer, Br00ty, Chris\nChrono, clabrus, Demon, EmperorP\nElinadrian, Empty, Fennec, Zushi\nFleakee, Foxhole Gaming, Luzagar\nHeartPiece, Hornlitz, IceStorm\nJanWegh, JD, jdflyer, Jeez, Oxy\nJustRyland, Lance H., link1183\nLinkman124, Luneyes, GameWyrm\nMattStrats, MultFij, NesmaN88\nXenoWars, Papy_Grant, Simikins\npokemongenius, Psi-Hate, Lars P\nRaziel_Stratton, Redriel, Revven\nSparky7198, Zach, SwiftIke, j_im\nZenith, Prince, The., TheBruce\nTreZc0_, Wameslo, WickedGligar\nDGod63 and Sushi."
     MSG_END()
     
-    char theText[] = "the";
-    char smallKeyText[] = "small key";
-    char dungeonMapText[] = "dungeon map";
-    char compassText[] = "compass";
-    char bigKeyText[] = "big key";
+    char forText[] = "for";
+    char smallKeyText[] = "a small key";
+    char dungeonMapText[] = "the dungeon map";
+    char compassText[] = "the compass";
+    char bigKeyText[] = "the big key";
     char forestTempleText[] = "Forest Temple";
     char goronMinesText[] = "Goron Mines";
     char lakebedTempleText[] = "Lakebed Temple";
@@ -449,9 +441,9 @@ namespace mod::customMessages
 
         // Special invalid-id texts
         // the
-        theText,
-        sizeof( theText ),
-        game_patch::SpecialMessageIds::THE,
+        forText,
+        sizeof( forText ),
+        game_patch::SpecialMessageIds::FOR,
 
         // Small Key
         smallKeyText,

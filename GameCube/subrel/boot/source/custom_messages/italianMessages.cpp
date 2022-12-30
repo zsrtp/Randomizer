@@ -1282,6 +1282,89 @@ namespace mod::customMessages
             recognitionIt,
             sizeof( recognitionIt ),
             0x0b44,
+
+            // Special invalid-id texts
+            // the
+            forText,
+            sizeof( forText ),
+            game_patch::SpecialMessageIds::FOR,
+
+            // Small Key
+            smallKeyText,
+            sizeof( smallKeyText ),
+            game_patch::SpecialMessageIds::SMALL_KEY,
+
+            // Dungeon Map
+            dungeonMapText,
+            sizeof( dungeonMapText ),
+            game_patch::SpecialMessageIds::DUNGEON_MAP,
+
+            // Compass
+            compassText,
+            sizeof( compassText ),
+            game_patch::SpecialMessageIds::COMPASS,
+
+            // Big Key
+            bigKeyText,
+            sizeof( bigKeyText ),
+            game_patch::SpecialMessageIds::BIG_KEY,
+
+            // Forest Temple
+            forestTempleText,
+            sizeof( forestTempleText ),
+            game_patch::SpecialMessageIds::FOREST_TEMPLE,
+
+            // Goron Mines
+            goronMinesText,
+            sizeof( goronMinesText ),
+            game_patch::SpecialMessageIds::GORON_MINES,
+
+            // Lakebed Temple
+            lakebedTempleText,
+            sizeof( lakebedTempleText ),
+            game_patch::SpecialMessageIds::LAKEBED_TEMPLE,
+
+            // Arbiter's Grounds
+            arbitersGroundsText,
+            sizeof( arbitersGroundsText ),
+            game_patch::SpecialMessageIds::ARBITERS_GROUNDS,
+
+            // Snowpeak Ruins
+            snowpeakRuinsText,
+            sizeof( snowpeakRuinsText ),
+            game_patch::SpecialMessageIds::SNOWPEAK_RUINS,
+
+            // Temple of Time
+            templeOfTimeText,
+            sizeof( templeOfTimeText ),
+            game_patch::SpecialMessageIds::TEMPLE_OF_TIME,
+
+            // City in the Sky
+            cityInTheSkyText,
+            sizeof( cityInTheSkyText ),
+            game_patch::SpecialMessageIds::CITY_IN_THE_SKY,
+
+            // Palace of Twilight
+            palaceOfTwilightText,
+            sizeof( palaceOfTwilightText ),
+            game_patch::SpecialMessageIds::PALACE_OF_TWILIGHT,
+
+            // Hyrule Castle
+            hyruleCastleText,
+            sizeof( hyruleCastleText ),
+            game_patch::SpecialMessageIds::HYRULE_CASTLE,
+
+            // Bulblin Camp
+            bulblinCampText,
+            sizeof( bulblinCampText ),
+            game_patch::SpecialMessageIds::BULBLIN_CAMP,
+
+            // This is an extra section that should go unused, and is only needed for _05_getMsgById in 05_itemMsgFunctions.cpp
+            // to
+            // ensure that it can properly calculate sizeOut
+            "",
+            0,
+            0xFFFF,
     };
 
     const MsgEntry charloDonationEntryIt = { charloDonationIt, sizeof( charloDonationIt ), 0x0355 };
