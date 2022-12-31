@@ -22,10 +22,13 @@ namespace mod::customMessages
     {
         // Get the MsgEntry to use
         const MsgEntry* entries;
+        uint32_t totalCustomMessages;
 #ifdef TP_US
         entries = entriesUs;
+        totalCustomMessages = totalCustomMessagesUs;
 #elif defined TP_JP
         entries = entriesJp;
+        totalCustomMessages = totalCustomMessagesJp;
 #elif defined TP_EU
         switch ( currentLanguage )
         {
@@ -33,43 +36,48 @@ namespace mod::customMessages
             default:     // The language is invalid/unsupported, so the game defaults to English
             {
                 entries = entriesUs;
+                totalCustomMessages = totalCustomMessagesUs;
                 break;
             }
             case Languages::de:
             {
                 entries = entriesDe;
+                totalCustomMessages = totalCustomMessagesDe;
                 break;
             }
             case Languages::fr:
             {
                 entries = entriesFr;
+                totalCustomMessages = totalCustomMessagesFr;
                 break;
             }
             case Languages::it:
             {
                 entries = entriesIt;
+                totalCustomMessages = totalCustomMessagesIt;
                 break;
             }
             case Languages::sp:
             {
                 entries = entriesSp;
+                totalCustomMessages = totalCustomMessagesSp;
                 break;
             }
         }
 #endif
         // Get the total size to allocate for the table
         // Get the space used by the message ids
-        uint32_t messageIdsSize = TOTAL_CUSTOM_MESSAGES * sizeof( uint16_t );
+        uint32_t messageIdsSize = totalCustomMessages * sizeof( uint16_t );
 
         // Round messageIdsSize up to the size of the offsets to make sure the offsets are properly aligned
         messageIdsSize = ( messageIdsSize + sizeof( uint32_t ) - 1 ) & ~( sizeof( uint32_t ) - 1 );
 
         // Get the space used by the message offsets
-        uint32_t messageOffsetsSize = TOTAL_CUSTOM_MESSAGES * sizeof( uint32_t );
+        uint32_t messageOffsetsSize = totalCustomMessages * sizeof( uint32_t );
 
         // Get the total size of all of the strings
         uint32_t totalMessagesSize = 0;
-        for ( uint32_t i = 0; i < TOTAL_CUSTOM_MESSAGES; i++ )
+        for ( uint32_t i = 0; i < totalCustomMessages; i++ )
         {
             totalMessagesSize += entries[i].size;
         }
@@ -90,7 +98,7 @@ namespace mod::customMessages
 
         // Write the dataSrc to the table
         uint32_t msgTableWrittenSize = 0;
-        for ( uint32_t i = 0; i < TOTAL_CUSTOM_MESSAGES; i++ )
+        for ( uint32_t i = 0; i < totalCustomMessages; i++ )
         {
             const MsgEntry* entry = &entries[i];
 
@@ -107,17 +115,20 @@ namespace mod::customMessages
 
         // Assign the buffer and total entries
         m_MsgTableInfo = buf;
-        m_TotalMsgEntries = TOTAL_CUSTOM_MESSAGES;
+        m_TotalMsgEntries = totalCustomMessages;
     }
 
     void setDungeonItemAreaColorIndex()
     {
         // Get the MsgEntry to use
         const MsgEntry* entries;
+        uint32_t totalCustomMessages;
 #ifdef TP_US
         entries = entriesUs;
+        totalCustomMessages = totalCustomMessagesUs;
 #elif defined TP_JP
         entries = entriesJp;
+        totalCustomMessages = totalCustomMessagesJp;
 #elif defined TP_EU
         switch ( currentLanguage )
         {
@@ -125,26 +136,31 @@ namespace mod::customMessages
             default:     // The language is invalid/unsupported, so the game defaults to English
             {
                 entries = entriesUs;
+                totalCustomMessages = totalCustomMessagesUs;
                 break;
             }
             case Languages::de:
             {
                 entries = entriesDe;
+                totalCustomMessages = totalCustomMessagesDe;
                 break;
             }
             case Languages::fr:
             {
                 entries = entriesFr;
+                totalCustomMessages = totalCustomMessagesFr;
                 break;
             }
             case Languages::it:
             {
                 entries = entriesIt;
+                totalCustomMessages = totalCustomMessagesIt;
                 break;
             }
             case Languages::sp:
             {
                 entries = entriesSp;
+                totalCustomMessages = totalCustomMessagesSp;
                 break;
             }
         }
@@ -153,7 +169,7 @@ namespace mod::customMessages
         const char* smallKeyText = nullptr;
         uint32_t textSize;
 
-        for ( uint32_t i = 0; i < TOTAL_CUSTOM_MESSAGES; i++ )
+        for ( uint32_t i = 0; i < totalCustomMessages; i++ )
         {
             const MsgEntry* entry = &entries[i];
             if ( entry->id == ITEM_TO_ID( libtp::data::items::Forest_Temple_Small_Key ) )

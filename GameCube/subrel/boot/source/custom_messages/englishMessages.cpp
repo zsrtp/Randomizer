@@ -16,7 +16,15 @@ namespace mod::customMessages
     // clang-format off
     MSG_BEGIN_ARRAY( forestSmallKeyEn )
         MSG_SPEED( MSG_SPEED_FAST )
-        "You got %s\n%s!"
+        "You got\n"
+        MSG_COLOR(MSG_COLOR_RED)
+        "%s"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        " %s %s\n"
+        MSG_COLOR(MSG_COLOR_GREEN)
+        "%s"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        "!"
     MSG_END()
     MSG_BEGIN_ARRAY( shadowCrystalEn )
         MSG_SPEED(MSG_SPEED_SLOW)
@@ -276,6 +284,7 @@ namespace mod::customMessages
     MSG_END()
     
     char forText[] = "for";
+    char theText[] = "the";
     char smallKeyText[] = "a small key";
     char dungeonMapText[] = "the dungeon map";
     char compassText[] = "the compass";
@@ -292,7 +301,7 @@ namespace mod::customMessages
     char bulblinCampText[] = "Bulblin Camp";
     // clang-format on
 
-    MsgEntry entriesUs[TOTAL_CUSTOM_MESSAGES] = {
+    const MsgEntry entriesUs[] = {
         // Forest Temple small key
         // All other dungeon items will use this as a base
         forestSmallKeyEn,
@@ -440,10 +449,15 @@ namespace mod::customMessages
         0x0b44,
 
         // Special invalid-id texts
-        // the
+        // for
         forText,
         sizeof( forText ),
         game_patch::SpecialMessageIds::FOR,
+
+        // the
+        theText,
+        sizeof( theText ),
+        game_patch::SpecialMessageIds::THE,
 
         // Small Key
         smallKeyText,
@@ -522,6 +536,7 @@ namespace mod::customMessages
         0xFFFF,
     };
 
+    const uint32_t totalCustomMessagesUs = sizeof( entriesUs ) / sizeof( MsgEntry );
     const MsgEntry charloDonationEntryUs = { charloDonationEn, sizeof( charloDonationEn ), 0x0355 };
 
     const ItemWheelMenuStrings itemWheelMenuStringsUs = {

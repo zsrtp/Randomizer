@@ -27,6 +27,7 @@ namespace mod::game_patch
     enum SpecialMessageIds
     {
         FOR = 10000,
+        THE,
         SMALL_KEY,
         DUNGEON_MAP,
         COMPASS,

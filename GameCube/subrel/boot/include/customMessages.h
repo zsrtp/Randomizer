@@ -9,8 +9,6 @@ namespace mod::customMessages
 {
     using namespace item_wheel_menu;
 
-#define TOTAL_CUSTOM_MESSAGES 45
-
     struct MsgEntry
     {
         const char* msg;
@@ -25,13 +23,15 @@ namespace mod::customMessages
 
 #ifndef TP_JP
     // English
-    extern MsgEntry entriesUs[TOTAL_CUSTOM_MESSAGES];
+    extern const MsgEntry entriesUs[];
+    extern const uint32_t totalCustomMessagesUs;
     extern const MsgEntry charloDonationEntryUs;
     extern const ItemWheelMenuStrings itemWheelMenuStringsUs;
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsUs;
 #else
     // Japanese
-    extern MsgEntry entriesJp[TOTAL_CUSTOM_MESSAGES];
+    extern const MsgEntry entriesJp[];
+    extern const uint32_t totalCustomMessagesJp;
     extern const MsgEntry charloDonationEntryJp;
     extern const ItemWheelMenuStrings itemWheelMenuStringsJp;
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsJp;
@@ -39,25 +39,29 @@ namespace mod::customMessages
 
 #ifdef TP_EU
     // German
-    extern MsgEntry entriesDe[TOTAL_CUSTOM_MESSAGES];
+    extern const MsgEntry entriesDe[];
+    extern const uint32_t totalCustomMessagesDe;
     extern const MsgEntry charloDonationEntryDe;
     extern const ItemWheelMenuStrings itemWheelMenuStringsDe;
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsDe;
 
     // French
-    extern MsgEntry entriesFr[TOTAL_CUSTOM_MESSAGES];
+    extern const MsgEntry entriesFr[];
+    extern const uint32_t totalCustomMessagesFr;
     extern const MsgEntry charloDonationEntryFr;
     extern const ItemWheelMenuStrings itemWheelMenuStringsFr;
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsFr;
 
     // Spanish
-    extern MsgEntry entriesSp[TOTAL_CUSTOM_MESSAGES];
+    extern const MsgEntry entriesSp[];
+    extern const uint32_t totalCustomMessagesSp;
     extern const MsgEntry charloDonationEntrySp;
     extern const ItemWheelMenuStrings itemWheelMenuStringsSp;
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsSp;
 
     // Italian
-    extern MsgEntry entriesIt[TOTAL_CUSTOM_MESSAGES];
+    extern const MsgEntry entriesIt[];
+    extern const uint32_t totalCustomMessagesIt;
     extern const MsgEntry charloDonationEntryIt;
     extern const ItemWheelMenuStrings itemWheelMenuStringsIt;
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsIt;

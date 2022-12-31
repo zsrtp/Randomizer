@@ -4,6 +4,7 @@
 #include "customMessages.h"
 #include "tp/resource.h"
 #include "item_wheel_menu.h"
+#include "game_patch/game_patch.h"
 
 #include <cstdint>
 
@@ -362,6 +363,7 @@ namespace mod::customMessages
         // Das gesamte Randomizer Team möchte sich bei unseren fantastischen Testern bedanken. Ohne euch wäre das Projekt nicht, was es heute ist.
         "\x44\x61\x73\x20\x67\x65\x73\x61\x6D\x74\x65\x20\x52\x61\x6E\x64\x6F\x6D\x69\x7A\x65\x72\x20\x54\x65\x61\x6D\n\x6D\xF6\x63\x68\x74\x65\x20\x73\x69\x63\x68\x20\x62\x65\x69\x20\x75\x6E\x73\x65\x72\x65\x6E\n\x66\x61\x6E\x74\x61\x73\x74\x69\x73\x63\x68\x65\x6E\x20\x54\x65\x73\x74\x65\x72\x6E\x20\x62\x65\x64\x61\x6E\x6B\x65\x6E\x2E\n\x4F\x68\x6E\x65\x20\x65\x75\x63\x68\x20\x77\xE4\x72\x65\x20\x64\x61\x73\x20\x50\x72\x6F\x6A\x65\x6B\x74\n\x6E\x69\x63\x68\x74\x2C\x20\x77\x61\x73\x20\x65\x73\x20\x68\x65\x75\x74\x65\x20\x69\x73\x74: Taka\nAnorakkis, Archer, Br00ty, Chris\nChrono, clabrus, Demon, EmperorP\nElinadrian, Empty, Fennec, Zushi\nFleakee, Foxhole Gaming, Luzagar\nHeartPiece, Hornlitz, IceStorm\nJanWegh, JD, jdflyer, Jeez, Oxy\nJustRyland, Lance H., link1183\nLinkman124, Luneyes, GameWyrm\nMattStrats, MultFij, NesmaN88\nXenoWars, Papy_Grant, Simikins\npokemongenius, Psi-Hate, Lars P\nRaziel_Stratton, Redriel, Revven\nSparky7198, Zach, SwiftIke, j_im\nZenith, Prince, The., TheBruce\nTreZc0_, Wameslo, WickedGligar\nDGod63 and Sushi."
     MSG_END()
+    
     char forText[] = "\x66\xfc\x72";
     char smallKeyText[] = "\x65\x69\x6e\x65\x6e\x20\x6b\x6c\x65\x69\x6e\x65\x6e\x20\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"; //einen kleinen Schlüssel
     char dungeonMapText[] = "\x64\x69\x65\x20\x44\x75\x6e\x67\x65\x6f\x6e\x2d\x4b\x61\x72\x74\x65"; // die Dungeon-Karte
@@ -379,7 +381,7 @@ namespace mod::customMessages
     char bulblinCampText[] = "\x64\x61\x73\x20\x4C\x61\x67\x65\x72\x20\x64\x65\x72\x20\x42\x75\x6C\x62\x6C\x69\x6E\x73"; // das lager der Bulblins
     // clang-format on
 
-    MsgEntry entriesDe[TOTAL_CUSTOM_MESSAGES] = {
+    const MsgEntry entriesDe[] = {
         // Forest Temple small key
         forestSmallKeyDe,
         sizeof( forestSmallKeyDe ),
@@ -526,7 +528,7 @@ namespace mod::customMessages
         0x0b44,
 
         // Special invalid-id texts
-        // the
+        // for
         forText,
         sizeof( forText ),
         game_patch::SpecialMessageIds::FOR,
@@ -608,6 +610,7 @@ namespace mod::customMessages
         0xFFFF,
     };
 
+    const uint32_t totalCustomMessagesDe = sizeof( entriesDe ) / sizeof( MsgEntry );
     const MsgEntry charloDonationEntryDe = { charloDonationDe, sizeof( charloDonationDe ), 0x0355 };
 
     const ItemWheelMenuStrings itemWheelMenuStringsDe = {

@@ -12,6 +12,10 @@
 #include "tp/JKRArchivePub.h"
 #include "gc_wii/OSCache.h"
 
+#ifdef TP_EU
+#include "tp/d_s_logo.h"
+#endif
+
 #include <cstring>
 #include <cstdarg>
 #include <cstdio>
@@ -151,7 +155,9 @@ namespace mod::game_patch
     const char* getCustomMessage( rando::Randomizer* randomizer, uint16_t msgId )
     {
         using namespace libtp::data::items;
-
+#ifdef TP_EU
+        using namespace libtp::tp::d_s_logo;
+#endif
         const char* format;
         uint16_t msgSize;
 
@@ -204,37 +210,63 @@ namespace mod::game_patch
                     {
                         return nullptr;
                     }
+#ifdef TP_EU
+                    Languages currentLanguage = getPalLanguage2( nullptr );
+#endif
+                    // 'for' text is only used for some languages
+                    auto getForText = [&]()
+                    {
+#ifdef TP_EU
+                        switch ( currentLanguage )
+                        {
+                            case Languages::uk:
+                            case Languages::de:
+                            default:     // The language is invalid/unsupported, so the game defaults to English
+                            {
+                                return true;
+                            }
+                            case Languages::fr:
+                            case Languages::sp:
+                            case Languages::it:
+                            {
+                                return false;
+                            }
+                        }
+#else
+                        return true;
+#endif
+                    };
 
-                    // Figure out what dungeon item this is for
-                    uint32_t dungeonItemMsgId;
-                    if ( ( itemId >= Forest_Temple_Small_Key ) && ( itemId <= Bulblin_Camp_Key ) )
+                    // 'the' text is only used for some languages
+                    auto getTheText = [&]()
                     {
-                        dungeonItemMsgId = SpecialMessageIds::SMALL_KEY;
-                    }
-                    else if ( ( itemId >= Forest_Temple_Big_Key ) && ( itemId <= Hyrule_Castle_Big_Key ) )
-                    {
-                        dungeonItemMsgId = SpecialMessageIds::BIG_KEY;
-                    }
-                    else if ( ( ( itemId >= Forest_Temple_Compass ) && ( itemId <= Lakebed_Temple_Compass ) ) ||
-                              ( ( itemId >= Arbiters_Grounds_Compass ) && ( itemId <= Hyrule_Castle_Compass ) ) )
-                    {
-                        dungeonItemMsgId = SpecialMessageIds::COMPASS;
-                    }
-                    else if ( ( itemId >= Forest_Temple_Dungeon_Map ) && ( itemId <= Hyrule_Castle_Dungeon_Map ) )
-                    {
-                        dungeonItemMsgId = SpecialMessageIds::DUNGEON_MAP;
-                    }
-                    else
-                    {
-                        // Error occured somehow
-                        return nullptr;
-                    }
+#ifdef TP_EU
+                        switch ( currentLanguage )
+                        {
+                            case Languages::uk:
+                            default:     // The language is invalid/unsupported, so the game defaults to English
+                            {
+                                return true;
+                            }
+                            case Languages::de:
+                            case Languages::fr:
+                            case Languages::sp:
+                            case Languages::it:
+                            {
+                                return false;
+                            }
+                        }
+#else
+                        return true;
+#endif
+                    };
 
                     // Figure out what dungeon area this is for
                     // Also figure out what color to use for each area name, as well as what areas should have 'the' infront of
                     // them
                     uint8_t areaColorId = MSG_COLOR_WHITE_HEX;
                     uint32_t dungeonAreaMsgId;
+                    bool addTheText = false;
 
                     switch ( itemId )
                     {
@@ -245,6 +277,7 @@ namespace mod::game_patch
                         {
                             areaColorId = MSG_COLOR_GREEN_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::FOREST_TEMPLE;
+                            addTheText = getTheText();
                             break;
                         }
                         case Goron_Mines_Small_Key:
@@ -262,6 +295,7 @@ namespace mod::game_patch
                         {
                             areaColorId = CUSTOM_MSG_COLOR_BLUE_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::LAKEBED_TEMPLE;
+                            addTheText = getTheText();
                             break;
                         }
                         case Arbiters_Grounds_Small_Key:
@@ -288,6 +322,7 @@ namespace mod::game_patch
                         {
                             areaColorId = CUSTOM_MSG_COLOR_DARK_GREEN_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::TEMPLE_OF_TIME;
+                            addTheText = getTheText();
                             break;
                         }
                         case City_in_The_Sky_Small_Key:
@@ -297,6 +332,7 @@ namespace mod::game_patch
                         {
                             areaColorId = MSG_COLOR_YELLOW_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::CITY_IN_THE_SKY;
+                            addTheText = getTheText();
                             break;
                         }
                         case Palace_of_Twilight_Small_Key:
@@ -306,6 +342,7 @@ namespace mod::game_patch
                         {
                             areaColorId = MSG_COLOR_PURPLE_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::PALACE_OF_TWILIGHT;
+                            addTheText = getTheText();
                             break;
                         }
                         case Hyrule_Castle_Small_Key:
@@ -321,6 +358,7 @@ namespace mod::game_patch
                         {
                             areaColorId = MSG_COLOR_ORANGE_HEX;
                             dungeonAreaMsgId = SpecialMessageIds::BULBLIN_CAMP;
+                            addTheText = getTheText();
                             break;
                         }
                         default:
@@ -330,20 +368,7 @@ namespace mod::game_patch
                         }
                     }
 
-                    // Get the texts for the small key and area
-                    const char* smallKeyText = _05_getMsgById( randomizer, dungeonItemMsgId );
-                    if ( !smallKeyText )
-                    {
-                        return nullptr;
-                    }
-
-                    const char* areaText = _05_getMsgById( randomizer, dungeonAreaMsgId );
-                    if ( !areaText )
-                    {
-                        return nullptr;
-                    }
-
-                                        // Replace the dungeon area color
+                    // Replace the dungeon area color
                     // Make sure the index was properly adjusted
                     uint32_t colorIndex = dungeonItemAreaColorIndex;
                     if ( colorIndex != 0 )
@@ -355,7 +380,75 @@ namespace mod::game_patch
                         libtp::gc_wii::os_cache::DCFlushRange( colorAddress, sizeof( char ) );
                     }
 
-                    return createString( format, msgSize, smallKeyText, areaText );
+                    // Figure out what dungeon item this is for
+                    uint32_t dungeonItemMsgId;
+                    if ( ( itemId >= Forest_Temple_Small_Key ) && ( itemId <= Bulblin_Camp_Key ) )
+                    {
+                        dungeonItemMsgId = SpecialMessageIds::SMALL_KEY;
+                    }
+                    else if ( ( itemId >= Forest_Temple_Big_Key ) && ( itemId <= Hyrule_Castle_Big_Key ) )
+                    {
+                        dungeonItemMsgId = SpecialMessageIds::BIG_KEY;
+                    }
+                    else if ( ( ( itemId >= Forest_Temple_Compass ) && ( itemId <= Lakebed_Temple_Compass ) ) ||
+                              ( ( itemId >= Arbiters_Grounds_Compass ) && ( itemId <= Hyrule_Castle_Compass ) ) )
+                    {
+                        dungeonItemMsgId = SpecialMessageIds::COMPASS;
+                    }
+                    else if ( ( itemId >= Forest_Temple_Dungeon_Map ) && ( itemId <= Hyrule_Castle_Dungeon_Map ) )
+                    {
+                        dungeonItemMsgId = SpecialMessageIds::DUNGEON_MAP;
+                    }
+                    else
+                    {
+                        // Error occured somehow
+                        return nullptr;
+                    }
+
+                    // Get the texts for the item and area
+                    const char* dungeonItemText = _05_getMsgById( randomizer, dungeonItemMsgId );
+                    if ( !dungeonItemText )
+                    {
+                        return nullptr;
+                    }
+
+                    const char* areaText = _05_getMsgById( randomizer, dungeonAreaMsgId );
+                    if ( !areaText )
+                    {
+                        return nullptr;
+                    }
+
+                    // Get the 'for' text
+                    const char* forText;
+                    if ( getForText() )
+                    {
+                        forText = _05_getMsgById( randomizer, SpecialMessageIds::FOR );
+                        if ( !forText )
+                        {
+                            return nullptr;
+                        }
+                    }
+                    else
+                    {
+                        forText = nullptr;
+                    }
+
+                    // Get the 'the' text
+                    const char* theText;
+                    if ( addTheText )
+                    {
+                        theText = _05_getMsgById( randomizer, SpecialMessageIds::THE );
+                        if ( !theText )
+                        {
+                            return nullptr;
+                        }
+                    }
+                    else
+                    {
+                        theText = nullptr;
+                    }
+
+                    return createString( format, msgSize, dungeonItemText, forText, theText, areaText );
                 }
                 default:
                 {
