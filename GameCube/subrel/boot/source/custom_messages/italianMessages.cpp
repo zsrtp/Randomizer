@@ -17,19 +17,15 @@ namespace mod::customMessages
     MSG_BEGIN_ARRAY( forestSmallKeyIt )
         MSG_SPEED( MSG_SPEED_FAST )
         //Hai ottenuto una  
-        "\x48\x61\x69\x20\x6f\x74\x74\x65\x6e\x75\x74\x6f\x20\x75\x6e\x61\x20"
+        "\x48\x61\x69\x20\x6f\x74\x74\x65\x6e\x75\x74\x6f\x20"
         MSG_COLOR(MSG_COLOR_RED)
-        //Piccola chiave 
-        "\x50\x69\x63\x63\x6f\x6c\x61\x20\x63\x68\x69\x61\x76\x65"
+        "%s\n"
         MSG_COLOR(MSG_COLOR_WHITE)
-        //!Pùo essere utilizzate nel 
-        "\x21\x0A\x50\xf9\x6f\x20\x65\x73\x73\x65\x72\x65\x20\x75\x74\x69\x6c\x69\x7a\x7a\x61\x74\x65\x20\x6e\x65\x6c\x0A"
+        "%s %s"
         MSG_COLOR(MSG_COLOR_GREEN)
-        //Santuario della foresta 
-        "\x53\x61\x6e\x74\x75\x61\x72\x69\x6f\x20\x64\x65\x6c\x6c\x61\x20\x66\x6f\x72\x65\x73\x74\x61"
+        "%s"
         MSG_COLOR(MSG_COLOR_WHITE)
-        //. 
-        "\x2e"
+        "!"
     MSG_END()
     MSG_BEGIN_ARRAY( minesSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
@@ -966,6 +962,23 @@ namespace mod::customMessages
         // La Squadra Randomizer vuole ringraziare ai nostri fantastici tester. Senza di voi, questo progetto non sarebbe quello lo che è oggi
         "\x4C\x61\x20\x53\x71\x75\x61\x64\x72\x61\x20\x52\x61\x6E\x64\x6F\x6D\x69\x7A\x65\x72\x20\x76\x75\x6F\x6C\x65\n\x72\x69\x6E\x67\x72\x61\x7A\x69\x61\x72\x65\x20\x61\x69\x20\x6E\x6F\x73\x74\x72\x69\n\x66\x61\x6E\x74\x61\x73\x74\x69\x63\x69\x20\x74\x65\x73\x74\x65\x72\x2E\x20\x53\x65\x6E\x7A\x61\x20\x64\x69\n\x76\x6F\x69\x2C\x20\x71\x75\x65\x73\x74\x6F\x20\x70\x72\x6F\x67\x65\x74\x74\x6F\x20\x6E\x6F\x6E\n\x73\x61\x72\x65\x62\x62\x65\x20\x71\x75\x65\x6C\x6C\x6F\x20\x6C\x6F\x20\x63\x68\x65\x20\xE8\x20\x6F\x67\x67\x69: Taka\nAnorakkis, Archer, Br00ty, Chris\nChrono, clabrus, Demon, EmperorP\nElinadrian, Empty, Fennec, Zushi\nFleakee, Foxhole Gaming, Luzagar\nHeartPiece, Hornlitz, IceStorm\nJanWegh, JD, jdflyer, Jeez, Oxy\nJustRyland, Lance H., link1183\nLinkman124, Luneyes, GameWyrm\nMattStrats, MultFij, NesmaN88\nXenoWars, Papy_Grant, Simikins\npokemongenius, Psi-Hate, Lars P\nRaziel_Stratton, Redriel, Revven\nSparky7198, Zach, SwiftIke, j_im\nZenith, Prince, The., TheBruce\nTreZc0_, Wameslo, WickedGligar\nDGod63 and Sushi."
     MSG_END()
+
+    char forTextIt[] = "\x70\x65\x72"; // per
+    char theTextIt[] = "";
+    char smallKeyTextIt[] = "\x75\x6e\x61\x20\x50\x69\x63\x63\x6f\x6c\x61\x20\x63\x68\x69\x61\x76\x65"; // una piccola chiave
+    char dungeonMapTextIt[] = "\x6c\x61\x20\x4d\x61\x70\x70\x61"; // la mappa
+    char compassTextIt[] = "\x6c\x61\x20\x42\x75\x73\x73\x6f\x6c\x61"; // la bussola
+    char bigKeyTextIt[] = "\x75\x6e\x61\x20\x47\x72\x61\x6e\x64\x65\x20\x63\x68\x69\x61\x76\x65"; // una grande chiave
+    char forestTempleTextIt[] = "\x69\x6c\x20\x53\x61\x6e\x74\x75\x61\x72\x69\x6f\x20\x64\x65\x6c\x6c\x61\x20\x66\x6f\x72\x65\x73\x74\x61"; // il Sanctuario della foresta
+    char goronMinesTextIt[] = "\x6c\x61\x20\x4d\x69\x6e\x69\x65\x72\x61\x20\x64\x65\x69\x20\x47\x6f\x72\x6f\x6e"; // la Miniera dei Goron
+    char lakebedTempleTextIt[] = "\x69\x6c\x20\x53\x61\x6e\x74\x75\x61\x72\x69\x6f\x20\x6e\x65\x6c\x20\x6c\x61\x67\x6f"; // il Santuario nel lago
+    char arbitersGroundsTextIt[] = "\x69\x6c\x20\x50\x61\x74\x69\x62\x6f\x6c\x6f\x20\x64\x65\x6c\x20\x64\x65\x73\x65\x72\x74\x6f"; // il Patibolo del deserto
+    char snowpeakRuinsTextIt[] = "\x6c\x65\x20\x52\x6f\x76\x69\x6e\x65\x20\x73\x75\x6c\x20\x67\x68\x69\x61\x63\x63\x69\x61\x69\x6f"; // le Rovine sul ghiacciaio
+    char templeOfTimeTextIt[] = "\x69\x6c\x20\x53\x61\x6e\x74\x75\x61\x72\x69\x6f\x20\x64\x65\x6c\x20\x74\x65\x6d\x70\x6f"; // il Santuario del tempo
+    char cityInTheSkyTextIt[] = "\x6c\x61\x20\x43\x69\x74\x74\xe0\x20\x65\x74\x65\x72\x65\x61"; // la Citta eterea
+    char palaceOfTwilightTextIt[] = "\x69\x6c\x20\x50\x61\x6c\x61\x7a\x7a\x6f\x20\x64\x65\x6c\x20\x63\x72\x65\x70\x75\x73\x63\x6f\x6c\x6f"; // il Palazzo del crepuscolo
+    char hyruleCastleTextIt[] = "\x69\x6c\x20\x43\x61\x73\x74\x65\x6c\x6c\x6f\x20\x64\x69\x20\x48\x79\x72\x75\x6c\x65"; // il Castello di Hyrule
+    char bulblinCampTextIt[] = "\x69\x6c\x20\x63\x61\x6d\x70\x6f\x20\x64\x65\x69\x20\x42\x75\x6c\x62\x6c\x69\x6e"; // il campo dei Bulblin
         // clang-format on
 
         const MsgEntry entriesIt[] = {
@@ -974,180 +987,10 @@ namespace mod::customMessages
             sizeof( forestSmallKeyIt ),
             0x00E9,
 
-            // Goron Mines small key
-            minesSmallKeyIt,
-            sizeof( minesSmallKeyIt ),
-            0x00EA,
-
-            // Lakebed Temple small key
-            lakebedSmallKeyIt,
-            sizeof( lakebedSmallKeyIt ),
-            0x00EB,
-
-            // Arbiter's Grounds small key
-            arbitersSmallKeyIt,
-            sizeof( arbitersSmallKeyIt ),
-            0x00EC,
-
-            // Snowpeak Ruins small key
-            snowpeakSmallKeyIt,
-            sizeof( snowpeakSmallKeyIt ),
-            0x00ED,
-
-            // Temple of Time small key
-            timeSmallKeyIt,
-            sizeof( timeSmallKeyIt ),
-            0x00EE,
-
-            // City in the Sky small key
-            citySmallKeyIt,
-            sizeof( citySmallKeyIt ),
-            0x00EF,
-
-            // Palace of Twilight small key
-            palaceSmallKeyIt,
-            sizeof( palaceSmallKeyIt ),
-            0x00F0,
-
-            // Hyrule Castle small key
-            hyruleSmallKeyIt,
-            sizeof( hyruleSmallKeyIt ),
-            0x00F1,
-
-            // Bulblin Camp small key
-            campSmallKeyIt,
-            sizeof( campSmallKeyIt ),
-            0x00F2,
-
             // Shadow Crystal
             shadowCrystalIt,
             sizeof( shadowCrystalIt ),
             0x0096,
-
-            // Forest Temple dungeon map
-            forestDungeonMapIt,
-            sizeof( forestDungeonMapIt ),
-            0x011A,
-
-            // Goron Mines dungeon map
-            minesDungeonMapIt,
-            sizeof( minesDungeonMapIt ),
-            0x011B,
-
-            // Lakebed Temple dungeon map
-            lakebedDungeonMapIt,
-            sizeof( lakebedDungeonMapIt ),
-            0x011C,
-
-            // Arbiter's Grounds dungeon map
-            arbitersDungeonMapIt,
-            sizeof( arbitersDungeonMapIt ),
-            0x011D,
-
-            // Snowpeak Ruins dungeon map
-            snowpeakDungeonMapIt,
-            sizeof( snowpeakDungeonMapIt ),
-            0x011E,
-
-            // Temple of Time dungeon map
-            timeDungeonMapIt,
-            sizeof( timeDungeonMapIt ),
-            0x011F,
-
-            // City in the Sky dungeon map
-            cityDungeonMapIt,
-            sizeof( cityDungeonMapIt ),
-            0x0120,
-
-            // Palace of Twilight dungeon map
-            palaceDungeonMapIt,
-            sizeof( palaceDungeonMapIt ),
-            0x0121,
-
-            // Hyrule Castle dungeon map
-            hyruleDungeonMapIt,
-            sizeof( hyruleDungeonMapIt ),
-            0x0122,
-
-            // Forest Temple compass
-            forestCompassIt,
-            sizeof( forestCompassIt ),
-            0x00FD,
-
-            // Goron Mines compass
-            minesCompassIt,
-            sizeof( minesCompassIt ),
-            0x00FE,
-
-            // Lakebed Temple compass
-            lakebedCompassIt,
-            sizeof( lakebedCompassIt ),
-            0x00FF,
-
-            // Arbiter's Grounds compass
-            arbitersCompassIt,
-            sizeof( arbitersCompassIt ),
-            0x010C,
-
-            // Snowpeak Ruins compass
-            snowpeakCompassIt,
-            sizeof( snowpeakCompassIt ),
-            0x010D,
-
-            // Temple of Time compass
-            timeCompassIt,
-            sizeof( timeCompassIt ),
-            0x010E,
-
-            // City in the Sky compass
-            cityCompassIt,
-            sizeof( cityCompassIt ),
-            0x010F,
-
-            // Palace of Twilight compass
-            palaceCompassIt,
-            sizeof( palaceCompassIt ),
-            0x0110,
-
-            // Hyrule Castle compass
-            hyruleCompassIt,
-            sizeof( hyruleCompassIt ),
-            0x0111,
-
-            // Forest Temple big key
-            forestBigKeyIt,
-            sizeof( forestBigKeyIt ),
-            0x00F6,
-
-            // Lakebed Temple big key
-            lakebedBigKeyIt,
-            sizeof( lakebedBigKeyIt ),
-            0x00F7,
-
-            // Arbiter's Grounds big key
-            arbitersBigKeyIt,
-            sizeof( arbitersBigKeyIt ),
-            0x00F8,
-
-            // Temple of Time big key
-            timeBigKeyIt,
-            sizeof( timeBigKeyIt ),
-            0x00F9,
-
-            // City in the Sky big key
-            cityBigKeyIt,
-            sizeof( cityBigKeyIt ),
-            0x00FA,
-
-            // Palace of Twilight big key
-            palaceBigKeyIt,
-            sizeof( palaceBigKeyIt ),
-            0x00FB,
-
-            // Hyrule Castle big key
-            hyruleBigKeyIt,
-            sizeof( hyruleBigKeyIt ),
-            0x00FC,
 
             // Ending Blow hidden skill
             endingBlowIt,
@@ -1283,6 +1126,93 @@ namespace mod::customMessages
             recognitionIt,
             sizeof( recognitionIt ),
             0x0b44,
+
+            // Special invalid-id texts
+            // for
+            forTextIt,
+            sizeof( forTextIt ), 
+            game_patch::SpecialMessageIds::FOR,
+
+            // the
+            theTextIt,
+            sizeof( theTextIt ),
+            game_patch::SpecialMessageIds::THE,
+
+            // Small Key
+            smallKeyTextIt,
+            sizeof( smallKeyTextIt ),
+            game_patch::SpecialMessageIds::SMALL_KEY,
+
+            // Dungeon Map
+            dungeonMapTextIt,
+            sizeof( dungeonMapTextIt ),
+            game_patch::SpecialMessageIds::DUNGEON_MAP,
+
+            // Compass
+            compassTextIt,
+            sizeof( compassTextIt ),
+            game_patch::SpecialMessageIds::COMPASS,
+
+            // Big Key
+            bigKeyTextIt,
+            sizeof( bigKeyTextIt ),
+            game_patch::SpecialMessageIds::BIG_KEY,
+
+            // Forest Temple
+            forestTempleTextIt,
+            sizeof( forestTempleTextIt ),
+            game_patch::SpecialMessageIds::FOREST_TEMPLE,
+
+            // Goron Mines
+            goronMinesTextIt,
+            sizeof( goronMinesTextIt ),
+            game_patch::SpecialMessageIds::GORON_MINES,
+
+            // Lakebed Temple
+            lakebedTempleTextIt,
+            sizeof( lakebedTempleTextIt ),
+            game_patch::SpecialMessageIds::LAKEBED_TEMPLE,
+
+            // Arbiter's Grounds
+            arbitersGroundsTextIt,
+            sizeof( arbitersGroundsTextIt ),
+            game_patch::SpecialMessageIds::ARBITERS_GROUNDS,
+
+            // Snowpeak Ruins
+            snowpeakRuinsTextIt,
+            sizeof( snowpeakRuinsTextIt ),
+            game_patch::SpecialMessageIds::SNOWPEAK_RUINS,
+
+            // Temple of Time
+            templeOfTimeTextIt,
+            sizeof( templeOfTimeTextIt ),
+            game_patch::SpecialMessageIds::TEMPLE_OF_TIME,
+
+            // City in the Sky
+            cityInTheSkyTextIt,
+            sizeof( cityInTheSkyTextIt ),
+            game_patch::SpecialMessageIds::CITY_IN_THE_SKY,
+
+            // Palace of Twilight
+            palaceOfTwilightTextIt,
+            sizeof( palaceOfTwilightTextIt ),
+            game_patch::SpecialMessageIds::PALACE_OF_TWILIGHT,
+
+            // Hyrule Castle
+            hyruleCastleTextIt,
+            sizeof( hyruleCastleTextIt ),
+            game_patch::SpecialMessageIds::HYRULE_CASTLE,
+
+            // Bulblin Camp
+            bulblinCampTextIt,
+            sizeof( bulblinCampTextIt ),
+            game_patch::SpecialMessageIds::BULBLIN_CAMP,
+
+            // This is an extra section that should go unused, and is only needed for _05_getMsgById in 05_itemMsgFunctions.cpp to
+            // ensure that it can properly calculate sizeOut
+            "",
+            0,
+            0xFFFF,
     };
 
     const uint32_t totalCustomMessagesIt = sizeof( entriesIt ) / sizeof( MsgEntry );

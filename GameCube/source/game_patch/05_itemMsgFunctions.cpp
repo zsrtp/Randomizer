@@ -221,13 +221,13 @@ namespace mod::game_patch
                         {
                             case Languages::uk:
                             case Languages::de:
+                            case Languages::it:
                             default:     // The language is invalid/unsupported, so the game defaults to English
                             {
                                 return true;
                             }
                             case Languages::fr:
                             case Languages::sp:
-                            case Languages::it:
                             {
                                 return false;
                             }
@@ -447,7 +447,6 @@ namespace mod::game_patch
                     {
                         theText = nullptr;
                     }
-
                     return createString( format, msgSize, dungeonItemText, forText, theText, areaText );
                 }
                 default:

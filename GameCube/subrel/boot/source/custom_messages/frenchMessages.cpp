@@ -17,7 +17,15 @@ namespace mod::customMessages
     MSG_BEGIN_ARRAY( forestSmallKeyFr )
         MSG_SPEED( MSG_SPEED_FAST )
         //Vous obtenez une 
-        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20%s\n%s\x21"
+        "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20"
+        MSG_COLOR(MSG_COLOR_RED)
+        "%s"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        " %s %s\n"
+        MSG_COLOR(MSG_COLOR_GREEN)
+        "%s"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        "!"
     MSG_END()
     MSG_BEGIN_ARRAY( shadowCrystalFr )
         MSG_SPEED(MSG_SPEED_SLOW)
@@ -371,20 +379,22 @@ namespace mod::customMessages
         "\x4C\x27\xE9\x71\x75\x69\x70\x65\x20\x64\x75\x20\x52\x61\x6E\x64\x6F\x6D\x69\x7A\x65\x72\n\x73\x6F\x75\x68\x61\x69\x74\x65\x72\x61\x69\x74\x20\x72\x65\x6D\x65\x72\x63\x69\x65\x72\x20\x6E\x6F\x73\n\x69\x6E\x63\x72\x6F\x79\x61\x62\x6C\x65\x73\x20\x74\x65\x73\x74\x65\x75\x72\x73\x2E\x20\x43\x65\n\x70\x72\x6F\x6A\x65\x74\x20\x6E\x65\x20\x73\x65\x72\x61\x69\x74\x20\x70\x61\x73\x20\x63\x65\x20\x71\x75\x27\x69\x6C\n\x65\x73\x74\x20\x61\x75\x6A\x6F\x75\x72\x64\x27\x68\x75\x69\x20\x73\x61\x6E\x73\x20\x76\x6F\x75\x73: Taka\nAnorakkis, Archer, Br00ty, Chris\nChrono, clabrus, Demon, EmperorP\nElinadrian, Empty, Fennec, Zushi\nFleakee, Foxhole Gaming, Luzagar\nHeartPiece, Hornlitz, IceStorm\nJanWegh, JD, jdflyer, Jeez, Oxy\nJustRyland, Lance H., link1183\nLinkman124, Luneyes, GameWyrm\nMattStrats, MultFij, NesmaN88\nXenoWars, Papy_Grant, Simikins\npokemongenius, Psi-Hate, Lars P\nRaziel_Stratton, Redriel, Revven\nSparky7198, Zach, SwiftIke, j_im\nZenith, Prince, The., TheBruce\nTreZc0_, Wameslo, WickedGligar\nDGod63 and Sushi."
     MSG_END()
 
-    char smallKeyText[] = "\x75\x6e\x65\x20\x70\x65\x74\x69\x74\x65\x20\x63\x6c\xe9"; //une petite clé
-    char dungeonMapText[] = "\x6c\x61\x20\x63\x61\x72\x74\x65\x20\x64\x65\x0A\x64\x6f\x6e\x6a\x6f\x6e"; // la carte de donjon
-    char compassText[] = "\x6c\x61\x20\x62\x6f\x75\x73\x73\x6f\x6c\x65"; // la boussole
-    char bigKeyText[] = "\x6c\x61\x20\x67\x72\x61\x6e\x64\x65\x20\x63\x6c\xe9"; // la grande clé
-    char forestTempleText[] = "\x64\x75\x20\x54\x65\x6d\x70\x6c\x65\x20\x53\x79\x6c\x76\x65\x73\x74\x72\x65"; //du Temple Sylvestre
-    char goronMinesText[] = "\x64\x75\x20\x4d\x69\x6e\x65\x20\x47\x6f\x72\x6f\x6e"; // du Mines Goron
-    char lakebedTempleText[] = "\x64\x75\x20\x54\x65\x6d\x70\x6c\x65\x20\x41\x62\x79\x73\x73\x61\x6c"; // du Temple Abyssal
-    char arbitersGroundsText[] = "\x64\x65\x20\6c\x61\x20\x54\x6f\x75\x72\x20\x64\x75\x20\x4a\x75\x67\x65\x6d\x65\x6e\x74"; // de la Tour du Jugement
-    char snowpeakRuinsText[] = "\x64\x65\x73\x52\x75\x69\x6e\x65\x73\x20\x64\x65\x73\x20\x50\x69\x63\x73\x20\x42\x6c\x61\x6e\x63\x73"; // des Ruines des Pics Blancs
-    char templeOfTimeText[] = "\x64\x75\x20\x54\x65\x6d\x70\x6c\x65\x20\x64\x75\x20\x54\x65\x6d\x70\x73"; // du Temple du Temps
-    char cityInTheSkyText[] = "\x64\x65\x20\x43\xe9\x6c\x65\x73\x74\x69\x61"; // de Célestia
-    char palaceOfTwilightText[] = "\x64\x75\x20\x50\x61\x6c\x61\x69\x73\x20\x64\x75\x20\x43\x72\xe9\x70\x75\x73\x63\x75\x6c\x65"; // du Palais du Crépuscule
-    char hyruleCastleText[] = "\x64\x75\x20\x43\x68\xe2\x74\x65\x61\x75\x20\x64\x27\x48\x79\x72\x75\x6c\x65"; // du Château d'Hyrule
-    char bulblinCampText[] = "\x64\x75\x20\x43\x61\x6d\x70\x20\x42\x75\x6c\x62\x6c\x69\x6e"; // du Camp Bulblin
+    char forTextFr[] = "";
+    char theTextFr[] = "";
+    char smallKeyTextFr[] = "\x75\x6e\x65\x20\x70\x65\x74\x69\x74\x65\x20\x63\x6c\xe9"; //une petite clé
+    char dungeonMapTextFr[] = "\x6c\x61\x20\x63\x61\x72\x74\x65"; // la carte 
+    char compassTextFr[] = "\x6c\x61\x20\x62\x6f\x75\x73\x73\x6f\x6c\x65"; // la boussole
+    char bigKeyTextFr[] = "\x6c\x61\x20\x67\x72\x61\x6e\x64\x65\x20\x63\x6c\xe9"; // la grande clé
+    char forestTempleTextFr[] = "\x64\x75\x20\x54\x65\x6d\x70\x6c\x65\x20\x53\x79\x6c\x76\x65\x73\x74\x72\x65"; //du Temple Sylvestre
+    char goronMinesTextFr[] = "\x64\x75\x20\x4d\x69\x6e\x65\x20\x47\x6f\x72\x6f\x6e"; // du Mines Goron
+    char lakebedTempleTextFr[] = "\x64\x75\x20\x54\x65\x6d\x70\x6c\x65\x20\x41\x62\x79\x73\x73\x61\x6c"; // du Temple Abyssal
+    char arbitersGroundsTextFr[] = "\x64\x65\x20\x6c\x61\x20\x54\x6f\x75\x72\x20\x64\x75\x20\x4a\x75\x67\x65\x6d\x65\x6e\x74"; // de la Tour du Jugement
+    char snowpeakRuinsTextFr[] = "\x64\x65\x73\x20\x52\x75\x69\x6e\x65\x73\x20\x64\x65\x73\x20\x50\x69\x63\x73\x20\x42\x6c\x61\x6e\x63\x73"; // des Ruines des Pics Blancs
+    char templeOfTimeTextFr[] = "\x64\x75\x20\x54\x65\x6d\x70\x6c\x65\x20\x64\x75\x20\x54\x65\x6d\x70\x73"; // du Temple du Temps
+    char cityInTheSkyTextFr[] = "\x64\x65\x20\x43\xe9\x6c\x65\x73\x74\x69\x61"; // de Célestia
+    char palaceOfTwilightTextFr[] = "\x64\x75\x20\x50\x61\x6c\x61\x69\x73\x20\x64\x75\x20\x43\x72\xe9\x70\x75\x73\x63\x75\x6c\x65"; // du Palais du Crépuscule
+    char hyruleCastleTextFr[] = "\x64\x75\x20\x43\x68\xe2\x74\x65\x61\x75\x20\x64\x27\x48\x79\x72\x75\x6c\x65"; // du Château d'Hyrule
+    char bulblinCampTextFr[] = "\x64\x75\x20\x43\x61\x6d\x70\x20\x42\x75\x6c\x62\x6c\x69\x6e"; // du Camp Bulblin
     // clang-format on
 
     const MsgEntry entriesFr[] = {
@@ -534,74 +544,84 @@ namespace mod::customMessages
         0x0b44,
 
         // Special invalid-id texts
+        // for
+        forTextFr,
+        sizeof( forTextFr ),
+        game_patch::SpecialMessageIds::FOR,
+
+        // the
+        theTextFr,
+        sizeof( theTextFr ),
+        game_patch::SpecialMessageIds::THE,
+
         // Small Key
-        smallKeyText,
-        sizeof( smallKeyText ),
+        smallKeyTextFr,
+        sizeof( smallKeyTextFr ),
         game_patch::SpecialMessageIds::SMALL_KEY,
 
         // Dungeon Map
-        dungeonMapText,
-        sizeof( dungeonMapText ),
+        dungeonMapTextFr,
+        sizeof( dungeonMapTextFr ),
         game_patch::SpecialMessageIds::DUNGEON_MAP,
 
         // Compass
-        compassText,
-        sizeof( compassText ),
+        compassTextFr,
+        sizeof( compassTextFr ),
         game_patch::SpecialMessageIds::COMPASS,
 
         // Big Key
-        bigKeyText,
-        sizeof( bigKeyText ),
+        bigKeyTextFr,
+        sizeof( bigKeyTextFr ),
         game_patch::SpecialMessageIds::BIG_KEY,
 
         // Forest Temple
-        forestTempleText,
-        sizeof( forestTempleText ),
+        forestTempleTextFr,
+        sizeof( forestTempleTextFr ),
         game_patch::SpecialMessageIds::FOREST_TEMPLE,
 
         // Goron Mines
-        goronMinesText,
-        sizeof( goronMinesText ),
+        goronMinesTextFr,
+        sizeof( goronMinesTextFr ),
         game_patch::SpecialMessageIds::GORON_MINES,
 
         // Lakebed Temple
-        lakebedTempleText,
-        sizeof( lakebedTempleText ),
+        lakebedTempleTextFr,
+        sizeof( lakebedTempleTextFr ),
         game_patch::SpecialMessageIds::LAKEBED_TEMPLE,
 
         // Arbiter's Grounds
-        arbitersGroundsText,
-        sizeof( arbitersGroundsText ),
+        arbitersGroundsTextFr,
+        sizeof( arbitersGroundsTextFr ),
         game_patch::SpecialMessageIds::ARBITERS_GROUNDS,
 
         // Snowpeak Ruins
-        snowpeakRuinsText,
-        sizeof( snowpeakRuinsText ),
+        snowpeakRuinsTextFr,
+        sizeof( snowpeakRuinsTextFr ),
         game_patch::SpecialMessageIds::SNOWPEAK_RUINS,
 
         // Temple of Time
-        templeOfTimeText,
-        sizeof( templeOfTimeText ),
+        templeOfTimeTextFr,
+        sizeof( templeOfTimeTextFr ),
         game_patch::SpecialMessageIds::TEMPLE_OF_TIME,
 
         // City in the Sky
-        cityInTheSkyText,
-        sizeof( cityInTheSkyText ),
+        cityInTheSkyTextFr,
+        sizeof( cityInTheSkyTextFr ),
         game_patch::SpecialMessageIds::CITY_IN_THE_SKY,
 
         // Palace of Twilight
-        palaceOfTwilightText,
-        sizeof( palaceOfTwilightText ),
+        palaceOfTwilightTextFr,
+        sizeof( palaceOfTwilightTextFr ),
         game_patch::SpecialMessageIds::PALACE_OF_TWILIGHT,
 
         // Hyrule Castle
-        hyruleCastleText,
-        sizeof( hyruleCastleText ),
+        hyruleCastleTextFr,
+        sizeof( hyruleCastleTextFr ),
         game_patch::SpecialMessageIds::HYRULE_CASTLE,
 
         // Bulblin Camp
-        bulblinCampText,
-        sizeof( bulblinCampText ),
+        bulblinCampTextFr,
+        sizeof( bulblinCampTextFr ),
         game_patch::SpecialMessageIds::BULBLIN_CAMP,
 
         // This is an extra section that should go unused, and is only needed for _05_getMsgById in 05_itemMsgFunctions.cpp to
