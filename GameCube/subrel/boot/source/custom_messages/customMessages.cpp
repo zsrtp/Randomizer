@@ -204,7 +204,7 @@ namespace mod::customMessages
 
 #ifdef TP_JP
         // Loop through the string until the area and color are found
-        for ( const char* currentText = smallKeyText; currentText < smallKeyTextEnd; currentText++ )
+        for ( const char* currentText = smallKeyText; currentText <= smallKeyTextEnd; currentText++ )
 #else
         // The area text and color should be closer to the end of the string, so start searching from the end
         // Loop through the string backwards until the area and color are found
