@@ -27,6 +27,10 @@
 #include "tp/m_Do_dvd_thread.h"
 #include "tp/d_meter2_info.h"
 
+#ifdef TP_EU
+#include "tp/d_s_logo.h"
+#endif
+
 // Number of lines that should not be cleared when flushing the screen
 #define CONSOLE_PROTECTED_LINES 4
 
@@ -69,15 +73,20 @@ namespace mod
     extern libtp::tp::J2DPicture::J2DPicture* bgWindow;
     extern uint32_t lastButtonInput;
     extern bool roomReloadingState;
-    extern uint32_t randNext;
     extern bool consoleState;
     extern uint8_t gameState;
-    extern void* Z2ScenePtr;
-    extern uint8_t seedRelAction;
     extern bool walletsPatched;
-    extern const char* m_DonationText;
+    extern uint8_t seedRelAction;
     extern bool modifyShopModels;
     extern bool instantTextEnabled;
+
+#ifdef TP_EU
+    extern libtp::tp::d_s_logo::Languages currentLanguage;
+#endif
+
+    extern void* Z2ScenePtr;
+    extern uint32_t randNext;
+    extern const char* m_DonationText;
 
     void hookFunctions();
     void initRandNext();

@@ -379,8 +379,6 @@ namespace mod::customMessages
         "\x4C\x27\xE9\x71\x75\x69\x70\x65\x20\x64\x75\x20\x52\x61\x6E\x64\x6F\x6D\x69\x7A\x65\x72\n\x73\x6F\x75\x68\x61\x69\x74\x65\x72\x61\x69\x74\x20\x72\x65\x6D\x65\x72\x63\x69\x65\x72\x20\x6E\x6F\x73\n\x69\x6E\x63\x72\x6F\x79\x61\x62\x6C\x65\x73\x20\x74\x65\x73\x74\x65\x75\x72\x73\x2E\x20\x43\x65\n\x70\x72\x6F\x6A\x65\x74\x20\x6E\x65\x20\x73\x65\x72\x61\x69\x74\x20\x70\x61\x73\x20\x63\x65\x20\x71\x75\x27\x69\x6C\n\x65\x73\x74\x20\x61\x75\x6A\x6F\x75\x72\x64\x27\x68\x75\x69\x20\x73\x61\x6E\x73\x20\x76\x6F\x75\x73: Taka\nAnorakkis, Archer, Br00ty, Chris\nChrono, clabrus, Demon, EmperorP\nElinadrian, Empty, Fennec, Zushi\nFleakee, Foxhole Gaming, Luzagar\nHeartPiece, Hornlitz, IceStorm\nJanWegh, JD, jdflyer, Jeez, Oxy\nJustRyland, Lance H., link1183\nLinkman124, Luneyes, GameWyrm\nMattStrats, MultFij, NesmaN88\nXenoWars, Papy_Grant, Simikins\npokemongenius, Psi-Hate, Lars P\nRaziel_Stratton, Redriel, Revven\nSparky7198, Zach, SwiftIke, j_im\nZenith, Prince, The., TheBruce\nTreZc0_, Wameslo, WickedGligar\nDGod63 and Sushi."
     MSG_END()
 
-    char forTextFr[] = "";
-    char theTextFr[] = "";
     char smallKeyTextFr[] = "\x75\x6e\x65\x20\x70\x65\x74\x69\x74\x65\x20\x63\x6c\xe9"; //une petite clé
     char dungeonMapTextFr[] = "\x6c\x61\x20\x63\x61\x72\x74\x65"; // la carte 
     char compassTextFr[] = "\x6c\x61\x20\x62\x6f\x75\x73\x73\x6f\x6c\x65"; // la boussole
@@ -544,16 +542,6 @@ namespace mod::customMessages
         0x0b44,
 
         // Special invalid-id texts
-        // for
-        forTextFr,
-        sizeof( forTextFr ),
-        game_patch::SpecialMessageIds::FOR,
-
-        // the
-        theTextFr,
-        sizeof( theTextFr ),
-        game_patch::SpecialMessageIds::THE,
-
         // Small Key
         smallKeyTextFr,
         sizeof( smallKeyTextFr ),

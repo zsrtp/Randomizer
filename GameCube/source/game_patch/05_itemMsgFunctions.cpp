@@ -211,13 +211,14 @@ namespace mod::game_patch
                         return nullptr;
                     }
 #ifdef TP_EU
-                    Languages currentLanguage = getPalLanguage2( nullptr );
+                    // Using a local variable for the language ends up using less assembly overall due to optimizations
+                    libtp::tp::d_s_logo::Languages tempCurrentLanguage = currentLanguage;
 #endif
                     // 'for' text is only used for some languages
                     auto getForText = [&]()
                     {
 #ifdef TP_EU
-                        switch ( currentLanguage )
+                        switch ( tempCurrentLanguage )
                         {
                             case Languages::uk:
                             case Languages::de:
@@ -232,8 +233,11 @@ namespace mod::game_patch
                                 return false;
                             }
                         }
-#else
+#elif defined TP_US
                         return true;
+#elif defined TP_JP
+                        // Shouldn't be necessary, but do anyway
+                        return false;
 #endif
                     };
 
@@ -241,7 +245,7 @@ namespace mod::game_patch
                     auto getTheText = [&]()
                     {
 #ifdef TP_EU
-                        switch ( currentLanguage )
+                        switch ( tempCurrentLanguage )
                         {
                             case Languages::uk:
                             default:     // The language is invalid/unsupported, so the game defaults to English
@@ -256,8 +260,11 @@ namespace mod::game_patch
                                 return false;
                             }
                         }
-#else
+#elif defined TP_US
                         return true;
+#elif defined TP_JP
+                        // Shouldn't be necessary, but do anyway
+                        return false;
 #endif
                     };
 
@@ -417,7 +424,7 @@ namespace mod::game_patch
                     {
                         return nullptr;
                     }
-
+#ifndef TP_JP
                     // Get the 'for' text
                     const char* forText;
                     if ( getForText() )
@@ -447,7 +454,16 @@ namespace mod::game_patch
                     {
                         theText = nullptr;
                     }
+
                     return createString( format, msgSize, dungeonItemText, forText, theText, areaText );
+#else
+                    // Prevent the compiler from complaining about getForText and addTheText being unused
+                    (void) getForText();
+                    (void) addTheText;
+
+                    // JP doesn't use `for` nor `the` and the params are in a different order
+                    return createString( format, msgSize, areaText, dungeonItemText );
+#endif
                 }
                 default:
                 {

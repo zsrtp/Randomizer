@@ -964,7 +964,6 @@ namespace mod::customMessages
     MSG_END()
 
     char forTextIt[] = "\x70\x65\x72"; // per
-    char theTextIt[] = "";
     char smallKeyTextIt[] = "\x75\x6e\x61\x20\x50\x69\x63\x63\x6f\x6c\x61\x20\x63\x68\x69\x61\x76\x65"; // una piccola chiave
     char dungeonMapTextIt[] = "\x6c\x61\x20\x4d\x61\x70\x70\x61"; // la mappa
     char compassTextIt[] = "\x6c\x61\x20\x42\x75\x73\x73\x6f\x6c\x61"; // la bussola
@@ -979,240 +978,235 @@ namespace mod::customMessages
     char palaceOfTwilightTextIt[] = "\x69\x6c\x20\x50\x61\x6c\x61\x7a\x7a\x6f\x20\x64\x65\x6c\x20\x63\x72\x65\x70\x75\x73\x63\x6f\x6c\x6f"; // il Palazzo del crepuscolo
     char hyruleCastleTextIt[] = "\x69\x6c\x20\x43\x61\x73\x74\x65\x6c\x6c\x6f\x20\x64\x69\x20\x48\x79\x72\x75\x6c\x65"; // il Castello di Hyrule
     char bulblinCampTextIt[] = "\x69\x6c\x20\x63\x61\x6d\x70\x6f\x20\x64\x65\x69\x20\x42\x75\x6c\x62\x6c\x69\x6e"; // il campo dei Bulblin
-        // clang-format on
+    // clang-format on
 
-        const MsgEntry entriesIt[] = {
-            // Forest Temple small key
-            forestSmallKeyIt,
-            sizeof( forestSmallKeyIt ),
-            0x00E9,
+    const MsgEntry entriesIt[] = {
+        // Forest Temple small key
+        forestSmallKeyIt,
+        sizeof( forestSmallKeyIt ),
+        0x00E9,
 
-            // Shadow Crystal
-            shadowCrystalIt,
-            sizeof( shadowCrystalIt ),
-            0x0096,
+        // Shadow Crystal
+        shadowCrystalIt,
+        sizeof( shadowCrystalIt ),
+        0x0096,
 
-            // Ending Blow hidden skill
-            endingBlowIt,
-            sizeof( endingBlowIt ),
-            0x0145,
+        // Ending Blow hidden skill
+        endingBlowIt,
+        sizeof( endingBlowIt ),
+        0x0145,
 
-            // Shield Attack hidden skill
-            shieldAttackIt,
-            sizeof( shieldAttackIt ),
-            0x0146,
+        // Shield Attack hidden skill
+        shieldAttackIt,
+        sizeof( shieldAttackIt ),
+        0x0146,
 
-            // Back Slice hidden skill
-            backSliceIt,
-            sizeof( backSliceIt ),
-            0x0147,
+        // Back Slice hidden skill
+        backSliceIt,
+        sizeof( backSliceIt ),
+        0x0147,
 
-            // Helm Splitter hidden skill
-            helmSplitterIt,
-            sizeof( helmSplitterIt ),
-            0x0148,
+        // Helm Splitter hidden skill
+        helmSplitterIt,
+        sizeof( helmSplitterIt ),
+        0x0148,
 
-            // Mortal Draw hidden skill
-            mortalDrawIt,
-            sizeof( mortalDrawIt ),
-            0x0149,
+        // Mortal Draw hidden skill
+        mortalDrawIt,
+        sizeof( mortalDrawIt ),
+        0x0149,
 
-            // Jump Strike hidden skill
-            jumpStrikeIt,
-            sizeof( jumpStrikeIt ),
-            0x014A,
+        // Jump Strike hidden skill
+        jumpStrikeIt,
+        sizeof( jumpStrikeIt ),
+        0x014A,
 
-            // Great Spin hidden skill
-            greatSpinIt,
-            sizeof( greatSpinIt ),
-            0x014B,
+        // Great Spin hidden skill
+        greatSpinIt,
+        sizeof( greatSpinIt ),
+        0x014B,
 
-            // Powered up Dominion Rod
-            poweredRodIt,
-            sizeof( poweredRodIt ),
-            0x00B0,
+        // Powered up Dominion Rod
+        poweredRodIt,
+        sizeof( poweredRodIt ),
+        0x00B0,
 
-            // First Ancient Sky Book character
-            firstCharacterIt,
-            sizeof( firstCharacterIt ),
-            0x013F,
+        // First Ancient Sky Book character
+        firstCharacterIt,
+        sizeof( firstCharacterIt ),
+        0x013F,
 
-            // Second Ancient Sky Book character
-            secondCharacterIt,
-            sizeof( secondCharacterIt ),
-            0x0140,
+        // Second Ancient Sky Book character
+        secondCharacterIt,
+        sizeof( secondCharacterIt ),
+        0x0140,
 
-            // Third Ancient Sky Book character
-            thirdCharacterIt,
-            sizeof( thirdCharacterIt ),
-            0x0141,
+        // Third Ancient Sky Book character
+        thirdCharacterIt,
+        sizeof( thirdCharacterIt ),
+        0x0141,
 
-            // Fourth Ancient Sky Book character
-            fourthCharacterIt,
-            sizeof( fourthCharacterIt ),
-            0x0142,
+        // Fourth Ancient Sky Book character
+        fourthCharacterIt,
+        sizeof( fourthCharacterIt ),
+        0x0142,
 
-            // Fifth Ancient Sky Book character
-            fifthCharacterIt,
-            sizeof( fifthCharacterIt ),
-            0x0143,
+        // Fifth Ancient Sky Book character
+        fifthCharacterIt,
+        sizeof( fifthCharacterIt ),
+        0x0143,
 
-            // Sixth Ancient Sky Book character
-            firstFusedShadowIt,
-            sizeof( firstFusedShadowIt ),
-            0x013C,
+        // Sixth Ancient Sky Book character
+        firstFusedShadowIt,
+        sizeof( firstFusedShadowIt ),
+        0x013C,
 
-            // Second Fused Shadow
-            secondFusedShadowIt,
-            sizeof( secondFusedShadowIt ),
-            0x013D,
+        // Second Fused Shadow
+        secondFusedShadowIt,
+        sizeof( secondFusedShadowIt ),
+        0x013D,
 
-            // Third Fused Shadow
-            thirdFusedShadowIt,
-            sizeof( thirdFusedShadowIt ),
-            0x013E,
+        // Third Fused Shadow
+        thirdFusedShadowIt,
+        sizeof( thirdFusedShadowIt ),
+        0x013E,
 
-            // Second Mirror Shard
-            secondMirrorShardIt,
-            sizeof( secondMirrorShardIt ),
-            0x0109,
+        // Second Mirror Shard
+        secondMirrorShardIt,
+        sizeof( secondMirrorShardIt ),
+        0x0109,
 
-            // Third Mirror Shard
-            thirdMirrorShardIt,
-            sizeof( thirdMirrorShardIt ),
-            0x010A,
+        // Third Mirror Shard
+        thirdMirrorShardIt,
+        sizeof( thirdMirrorShardIt ),
+        0x010A,
 
-            // Fourth Mirror Shard
-            fourthMirrorShardIt,
-            sizeof( fourthMirrorShardIt ),
-            0x010B,
+        // Fourth Mirror Shard
+        fourthMirrorShardIt,
+        sizeof( fourthMirrorShardIt ),
+        0x010B,
 
-            // Foolish Item
-            foolishItemIt,
-            sizeof( foolishItemIt ),
-            0x0077,
+        // Foolish Item
+        foolishItemIt,
+        sizeof( foolishItemIt ),
+        0x0077,
 
-            // Talking to Midna
-            talkToMidnaIt,
-            sizeof( talkToMidnaIt ),
-            0x0BBB,
+        // Talking to Midna
+        talkToMidnaIt,
+        sizeof( talkToMidnaIt ),
+        0x0BBB,
 
-            // Big Wallet
-            bigWalletIt,
-            sizeof( bigWalletIt ),
-            0x0099,
+        // Big Wallet
+        bigWalletIt,
+        sizeof( bigWalletIt ),
+        0x0099,
 
-            // Giant Wallet
-            giantWalletIt,
-            sizeof( giantWalletIt ),
-            0x009A,
+        // Giant Wallet
+        giantWalletIt,
+        sizeof( giantWalletIt ),
+        0x009A,
 
-            // Small Wallet Menu Text
-            smallWalletPauseIt,
-            sizeof( smallWalletPauseIt ),
-            0x0298,
+        // Small Wallet Menu Text
+        smallWalletPauseIt,
+        sizeof( smallWalletPauseIt ),
+        0x0298,
 
-            // Big Wallet Menu Text
-            bigWalletPauseIt,
-            sizeof( bigWalletPauseIt ),
-            0x0299,
+        // Big Wallet Menu Text
+        bigWalletPauseIt,
+        sizeof( bigWalletPauseIt ),
+        0x0299,
 
-            // Giant Wallet Menu Text
-            giantWalletPauseIt,
-            sizeof( giantWalletPauseIt ),
-            0x029a,
+        // Giant Wallet Menu Text
+        giantWalletPauseIt,
+        sizeof( giantWalletPauseIt ),
+        0x029a,
 
-            // Recognition text
-            recognitionIt,
-            sizeof( recognitionIt ),
-            0x0b44,
+        // Recognition text
+        recognitionIt,
+        sizeof( recognitionIt ),
+        0x0b44,
 
-            // Special invalid-id texts
-            // for
-            forTextIt,
-            sizeof( forTextIt ), 
-            game_patch::SpecialMessageIds::FOR,
+        // Special invalid-id texts
+        // for
+        forTextIt,
+        sizeof( forTextIt ),
+        game_patch::SpecialMessageIds::FOR,
 
-            // the
-            theTextIt,
-            sizeof( theTextIt ),
-            game_patch::SpecialMessageIds::THE,
+        // Small Key
+        smallKeyTextIt,
+        sizeof( smallKeyTextIt ),
+        game_patch::SpecialMessageIds::SMALL_KEY,
 
-            // Small Key
-            smallKeyTextIt,
-            sizeof( smallKeyTextIt ),
-            game_patch::SpecialMessageIds::SMALL_KEY,
+        // Dungeon Map
+        dungeonMapTextIt,
+        sizeof( dungeonMapTextIt ),
+        game_patch::SpecialMessageIds::DUNGEON_MAP,
 
-            // Dungeon Map
-            dungeonMapTextIt,
-            sizeof( dungeonMapTextIt ),
-            game_patch::SpecialMessageIds::DUNGEON_MAP,
+        // Compass
+        compassTextIt,
+        sizeof( compassTextIt ),
+        game_patch::SpecialMessageIds::COMPASS,
 
-            // Compass
-            compassTextIt,
-            sizeof( compassTextIt ),
-            game_patch::SpecialMessageIds::COMPASS,
+        // Big Key
+        bigKeyTextIt,
+        sizeof( bigKeyTextIt ),
+        game_patch::SpecialMessageIds::BIG_KEY,
 
-            // Big Key
-            bigKeyTextIt,
-            sizeof( bigKeyTextIt ),
-            game_patch::SpecialMessageIds::BIG_KEY,
+        // Forest Temple
+        forestTempleTextIt,
+        sizeof( forestTempleTextIt ),
+        game_patch::SpecialMessageIds::FOREST_TEMPLE,
 
-            // Forest Temple
-            forestTempleTextIt,
-            sizeof( forestTempleTextIt ),
-            game_patch::SpecialMessageIds::FOREST_TEMPLE,
+        // Goron Mines
+        goronMinesTextIt,
+        sizeof( goronMinesTextIt ),
+        game_patch::SpecialMessageIds::GORON_MINES,
 
-            // Goron Mines
-            goronMinesTextIt,
-            sizeof( goronMinesTextIt ),
-            game_patch::SpecialMessageIds::GORON_MINES,
+        // Lakebed Temple
+        lakebedTempleTextIt,
+        sizeof( lakebedTempleTextIt ),
+        game_patch::SpecialMessageIds::LAKEBED_TEMPLE,
 
-            // Lakebed Temple
-            lakebedTempleTextIt,
-            sizeof( lakebedTempleTextIt ),
-            game_patch::SpecialMessageIds::LAKEBED_TEMPLE,
+        // Arbiter's Grounds
+        arbitersGroundsTextIt,
+        sizeof( arbitersGroundsTextIt ),
+        game_patch::SpecialMessageIds::ARBITERS_GROUNDS,
 
-            // Arbiter's Grounds
-            arbitersGroundsTextIt,
-            sizeof( arbitersGroundsTextIt ),
-            game_patch::SpecialMessageIds::ARBITERS_GROUNDS,
+        // Snowpeak Ruins
+        snowpeakRuinsTextIt,
+        sizeof( snowpeakRuinsTextIt ),
+        game_patch::SpecialMessageIds::SNOWPEAK_RUINS,
 
-            // Snowpeak Ruins
-            snowpeakRuinsTextIt,
-            sizeof( snowpeakRuinsTextIt ),
-            game_patch::SpecialMessageIds::SNOWPEAK_RUINS,
+        // Temple of Time
+        templeOfTimeTextIt,
+        sizeof( templeOfTimeTextIt ),
+        game_patch::SpecialMessageIds::TEMPLE_OF_TIME,
 
-            // Temple of Time
-            templeOfTimeTextIt,
-            sizeof( templeOfTimeTextIt ),
-            game_patch::SpecialMessageIds::TEMPLE_OF_TIME,
+        // City in the Sky
+        cityInTheSkyTextIt,
+        sizeof( cityInTheSkyTextIt ),
+        game_patch::SpecialMessageIds::CITY_IN_THE_SKY,
 
-            // City in the Sky
-            cityInTheSkyTextIt,
-            sizeof( cityInTheSkyTextIt ),
-            game_patch::SpecialMessageIds::CITY_IN_THE_SKY,
+        // Palace of Twilight
+        palaceOfTwilightTextIt,
+        sizeof( palaceOfTwilightTextIt ),
+        game_patch::SpecialMessageIds::PALACE_OF_TWILIGHT,
 
-            // Palace of Twilight
-            palaceOfTwilightTextIt,
-            sizeof( palaceOfTwilightTextIt ),
-            game_patch::SpecialMessageIds::PALACE_OF_TWILIGHT,
+        // Hyrule Castle
+        hyruleCastleTextIt,
+        sizeof( hyruleCastleTextIt ),
+        game_patch::SpecialMessageIds::HYRULE_CASTLE,
 
-            // Hyrule Castle
-            hyruleCastleTextIt,
-            sizeof( hyruleCastleTextIt ),
-            game_patch::SpecialMessageIds::HYRULE_CASTLE,
+        // Bulblin Camp
+        bulblinCampTextIt,
+        sizeof( bulblinCampTextIt ),
+        game_patch::SpecialMessageIds::BULBLIN_CAMP,
 
-            // Bulblin Camp
-            bulblinCampTextIt,
-            sizeof( bulblinCampTextIt ),
-            game_patch::SpecialMessageIds::BULBLIN_CAMP,
-
-            // This is an extra section that should go unused, and is only needed for _05_getMsgById in 05_itemMsgFunctions.cpp to
-            // ensure that it can properly calculate sizeOut
-            "",
-            0,
-            0xFFFF,
+        // This is an extra section that should go unused, and is only needed for _05_getMsgById in 05_itemMsgFunctions.cpp to
+        // ensure that it can properly calculate sizeOut
+        "",
+        0,
+        0xFFFF,
     };
 
     const uint32_t totalCustomMessagesIt = sizeof( entriesIt ) / sizeof( MsgEntry );

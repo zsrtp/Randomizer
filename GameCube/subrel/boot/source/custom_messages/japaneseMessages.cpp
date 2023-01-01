@@ -349,9 +349,6 @@ namespace mod::customMessages
         "\x83\x78\x81\x5B\x83\x5E\x83\x65\x83\x58\x83\x5E\x81\x5B\x82\xCC\x8A\x46\x97\x6C\x82\xC9\x8A\xB4\x8E\xD3\x82\xB5\x82\xDC\n\x82\xB7\x81\x42\x96\x7B\x93\x96\x82\xC9\x82\xA0\x82\xE8\x82\xAA\x82\xC6\x82\xA4\x82\xB2\x82\xB4\x82\xA2\x82\xDC\x82\xB5\n\x82\xBD: Taka\nAnorakkis, Archer, Br00ty, Chris\nChrono, clabrus, Demon, EmperorP\nElinadrian, Empty, Fennec, Zushi\nFleakee, Foxhole Gaming, Luzagar\nHeartPiece, Hornlitz, IceStorm\nJanWegh, JD, jdflyer, Jeez, Oxy\nJustRyland, Lance H., link1183\nLinkman124, Luneyes, GameWyrm\nMattStrats, MultFij, NesmaN88\nXenoWars, Papy_Grant, Simikins\npokemongenius, Psi-Hate, Lars P\nRaziel_Stratton, Redriel, Revven\nSparky7198, Zach, SwiftIke, j_im\nZenith, Prince, The., TheBruce\nTreZc0_, Wameslo, WickedGligar\nDGod63 and Sushi."
     MSG_END()
 
-
-    char forTextJp[] = ""; 
-    char theTextJp[] = "";
     char smallKeyTextJp[] = "\x8F\xAC\x82\xB3\x82\xC8\x83\x4A\x83\x4D"; // 小さなカギ
     char dungeonMapTextJp[] = "\x83\x5F\x83\x93\x83\x57\x83\x87\x83\x93\x83\x7D\x83\x62\x83\x76"; // ダンジョンマップ
     char compassTextJp[] = "\x83\x52\x83\x93\x83\x70\x83\x58"; // コンパス
@@ -366,240 +363,230 @@ namespace mod::customMessages
     char palaceOfTwilightTextJp[] = "\x89\x65\x82\xCC\x8B\x7B\x93\x61"; // 影の宮殿
     char hyruleCastleTextJp[] = "\x83\x6E\x83\x43\x83\x89\x83\x8B\x8F\xE9"; // ハイラル城
     char bulblinCampTextJp[] = "\x83\x75\x83\x8B\x83\x75\x83\x8A\x83\x93\x82\xCC\x97\x76\x8D\xC7"; // ブルブリンの要塞
-        // clang-format on
+    // clang-format on
 
-        const MsgEntry entriesJp[] = {
-            // Forest Temple small key
-            forestSmallKeyJp,
-            sizeof( forestSmallKeyJp ),
-            0x00E9,
+    const MsgEntry entriesJp[] = {
+        // Forest Temple small key
+        forestSmallKeyJp,
+        sizeof( forestSmallKeyJp ),
+        0x00E9,
 
-            // Shadow Crystal
-            shadowCrystalJp,
-            sizeof( shadowCrystalJp ),
-            0x0096,
+        // Shadow Crystal
+        shadowCrystalJp,
+        sizeof( shadowCrystalJp ),
+        0x0096,
 
-            // Ending Blow hidden skill
-            endingBlowJp,
-            sizeof( endingBlowJp ),
-            0x0145,
+        // Ending Blow hidden skill
+        endingBlowJp,
+        sizeof( endingBlowJp ),
+        0x0145,
 
-            // Shield Attack hidden skill
-            shieldAttackJp,
-            sizeof( shieldAttackJp ),
-            0x0146,
+        // Shield Attack hidden skill
+        shieldAttackJp,
+        sizeof( shieldAttackJp ),
+        0x0146,
 
-            // Back Slice hidden skill
-            backSliceJp,
-            sizeof( backSliceJp ),
-            0x0147,
+        // Back Slice hidden skill
+        backSliceJp,
+        sizeof( backSliceJp ),
+        0x0147,
 
-            // Helm Splitter hidden skill
-            helmSplitterJp,
-            sizeof( helmSplitterJp ),
-            0x0148,
+        // Helm Splitter hidden skill
+        helmSplitterJp,
+        sizeof( helmSplitterJp ),
+        0x0148,
 
-            // Mortal Draw hidden skill
-            mortalDrawJp,
-            sizeof( mortalDrawJp ),
-            0x0149,
+        // Mortal Draw hidden skill
+        mortalDrawJp,
+        sizeof( mortalDrawJp ),
+        0x0149,
 
-            // Jump Strike hidden skill
-            jumpStrikeJp,
-            sizeof( jumpStrikeJp ),
-            0x014A,
+        // Jump Strike hidden skill
+        jumpStrikeJp,
+        sizeof( jumpStrikeJp ),
+        0x014A,
 
-            // Great Spin hidden skill
-            greatSpinJp,
-            sizeof( greatSpinJp ),
-            0x014B,
+        // Great Spin hidden skill
+        greatSpinJp,
+        sizeof( greatSpinJp ),
+        0x014B,
 
-            // Powered up Dominion Rod
-            poweredRodJp,
-            sizeof( poweredRodJp ),
-            0x00B0,
+        // Powered up Dominion Rod
+        poweredRodJp,
+        sizeof( poweredRodJp ),
+        0x00B0,
 
-            // First Ancient Sky Book character
-            firstCharacterJp,
-            sizeof( firstCharacterJp ),
-            0x013F,
+        // First Ancient Sky Book character
+        firstCharacterJp,
+        sizeof( firstCharacterJp ),
+        0x013F,
 
-            // Second Ancient Sky Book character
-            secondCharacterJp,
-            sizeof( secondCharacterJp ),
-            0x0140,
+        // Second Ancient Sky Book character
+        secondCharacterJp,
+        sizeof( secondCharacterJp ),
+        0x0140,
 
-            // Third Ancient Sky Book character
-            thirdCharacterJp,
-            sizeof( thirdCharacterJp ),
-            0x0141,
+        // Third Ancient Sky Book character
+        thirdCharacterJp,
+        sizeof( thirdCharacterJp ),
+        0x0141,
 
-            // Fourth Ancient Sky Book character
-            fourthCharacterJp,
-            sizeof( fourthCharacterJp ),
-            0x0142,
+        // Fourth Ancient Sky Book character
+        fourthCharacterJp,
+        sizeof( fourthCharacterJp ),
+        0x0142,
 
-            // Fifth Ancient Sky Book character
-            fifthCharacterJp,
-            sizeof( fifthCharacterJp ),
-            0x0143,
+        // Fifth Ancient Sky Book character
+        fifthCharacterJp,
+        sizeof( fifthCharacterJp ),
+        0x0143,
 
-            // Sixth Ancient Sky Book character
-            firstFusedShadowJp,
-            sizeof( firstFusedShadowJp ),
-            0x013C,
+        // Sixth Ancient Sky Book character
+        firstFusedShadowJp,
+        sizeof( firstFusedShadowJp ),
+        0x013C,
 
-            // Second Fused Shadow
-            secondFusedShadowJp,
-            sizeof( secondFusedShadowJp ),
-            0x013D,
+        // Second Fused Shadow
+        secondFusedShadowJp,
+        sizeof( secondFusedShadowJp ),
+        0x013D,
 
-            // Third Fused Shadow
-            thirdFusedShadowJp,
-            sizeof( thirdFusedShadowJp ),
-            0x013E,
+        // Third Fused Shadow
+        thirdFusedShadowJp,
+        sizeof( thirdFusedShadowJp ),
+        0x013E,
 
-            // Second Mirror Shard
-            secondMirrorShardJp,
-            sizeof( secondMirrorShardJp ),
-            0x0109,
+        // Second Mirror Shard
+        secondMirrorShardJp,
+        sizeof( secondMirrorShardJp ),
+        0x0109,
 
-            // Third Mirror Shard
-            thirdMirrorShardJp,
-            sizeof( thirdMirrorShardJp ),
-            0x010A,
+        // Third Mirror Shard
+        thirdMirrorShardJp,
+        sizeof( thirdMirrorShardJp ),
+        0x010A,
 
-            // Fourth Mirror Shard
-            fourthMirrorShardJp,
-            sizeof( fourthMirrorShardJp ),
-            0x010B,
+        // Fourth Mirror Shard
+        fourthMirrorShardJp,
+        sizeof( fourthMirrorShardJp ),
+        0x010B,
 
-            // Foolish Item
-            foolishItemJp,
-            sizeof( foolishItemJp ),
-            0x0077,
+        // Foolish Item
+        foolishItemJp,
+        sizeof( foolishItemJp ),
+        0x0077,
 
-            // Talking to Midna
-            talkToMidnaJp,
-            sizeof( talkToMidnaJp ),
-            0x0BBB,
+        // Talking to Midna
+        talkToMidnaJp,
+        sizeof( talkToMidnaJp ),
+        0x0BBB,
 
-            // Big Wallet
-            bigWalletJp,
-            sizeof( bigWalletJp ),
-            0x0099,
+        // Big Wallet
+        bigWalletJp,
+        sizeof( bigWalletJp ),
+        0x0099,
 
-            // Giant Wallet
-            giantWalletJp,
-            sizeof( giantWalletJp ),
-            0x009A,
+        // Giant Wallet
+        giantWalletJp,
+        sizeof( giantWalletJp ),
+        0x009A,
 
-            // Small Wallet Menu Text
-            smallWalletPauseJp,
-            sizeof( smallWalletPauseJp ),
-            0x0298,
+        // Small Wallet Menu Text
+        smallWalletPauseJp,
+        sizeof( smallWalletPauseJp ),
+        0x0298,
 
-            // Big Wallet Menu Text
-            bigWalletPauseJp,
-            sizeof( bigWalletPauseJp ),
-            0x0299,
+        // Big Wallet Menu Text
+        bigWalletPauseJp,
+        sizeof( bigWalletPauseJp ),
+        0x0299,
 
-            // Giant Wallet Menu Text
-            giantWalletPauseJp,
-            sizeof( giantWalletPauseJp ),
-            0x029a,
+        // Giant Wallet Menu Text
+        giantWalletPauseJp,
+        sizeof( giantWalletPauseJp ),
+        0x029a,
 
-            // Recognition text
-            recognitionJp,
-            sizeof( recognitionJp ),
-            0x0b44,
+        // Recognition text
+        recognitionJp,
+        sizeof( recognitionJp ),
+        0x0b44,
 
-            // Special invalid-id texts
-            // for
-            forTextJp,
-            sizeof( forTextJp ),
-            game_patch::SpecialMessageIds::FOR,
+        // Special invalid-id texts
+        // Small Key
+        smallKeyTextJp,
+        sizeof( smallKeyTextJp ),
+        game_patch::SpecialMessageIds::SMALL_KEY,
 
-            // the
-            theTextJp,
-            sizeof( theTextJp ),
-            game_patch::SpecialMessageIds::THE,
+        // Dungeon Map
+        dungeonMapTextJp,
+        sizeof( dungeonMapTextJp ),
+        game_patch::SpecialMessageIds::DUNGEON_MAP,
 
-            // Small Key
-            smallKeyTextJp,
-            sizeof( smallKeyTextJp ),
-            game_patch::SpecialMessageIds::SMALL_KEY,
+        // Compass
+        compassTextJp,
+        sizeof( compassTextJp ),
+        game_patch::SpecialMessageIds::COMPASS,
 
-            // Dungeon Map
-            dungeonMapTextJp,
-            sizeof( dungeonMapTextJp ),
-            game_patch::SpecialMessageIds::DUNGEON_MAP,
+        // Big Key
+        bigKeyTextJp,
+        sizeof( bigKeyTextJp ),
+        game_patch::SpecialMessageIds::BIG_KEY,
 
-            // Compass
-            compassTextJp,
-            sizeof( compassTextJp ),
-            game_patch::SpecialMessageIds::COMPASS,
+        // Forest Temple
+        forestTempleTextJp,
+        sizeof( forestTempleTextJp ),
+        game_patch::SpecialMessageIds::FOREST_TEMPLE,
 
-            // Big Key
-            bigKeyTextJp,
-            sizeof( bigKeyTextJp ),
-            game_patch::SpecialMessageIds::BIG_KEY,
+        // Goron Mines
+        goronMinesTextJp,
+        sizeof( goronMinesTextJp ),
+        game_patch::SpecialMessageIds::GORON_MINES,
 
-            // Forest Temple
-            forestTempleTextJp,
-            sizeof( forestTempleTextJp ),
-            game_patch::SpecialMessageIds::FOREST_TEMPLE,
+        // Lakebed Temple
+        lakebedTempleTextJp,
+        sizeof( lakebedTempleTextJp ),
+        game_patch::SpecialMessageIds::LAKEBED_TEMPLE,
 
-            // Goron Mines
-            goronMinesTextJp,
-            sizeof( goronMinesTextJp ),
-            game_patch::SpecialMessageIds::GORON_MINES,
+        // Arbiter's Grounds
+        arbitersGroundsTextJp,
+        sizeof( arbitersGroundsTextJp ),
+        game_patch::SpecialMessageIds::ARBITERS_GROUNDS,
 
-            // Lakebed Temple
-            lakebedTempleTextJp,
-            sizeof( lakebedTempleTextJp ),
-            game_patch::SpecialMessageIds::LAKEBED_TEMPLE,
+        // Snowpeak Ruins
+        snowpeakRuinsTextJp,
+        sizeof( snowpeakRuinsTextJp ),
+        game_patch::SpecialMessageIds::SNOWPEAK_RUINS,
 
-            // Arbiter's Grounds
-            arbitersGroundsTextJp,
-            sizeof( arbitersGroundsTextJp ),
-            game_patch::SpecialMessageIds::ARBITERS_GROUNDS,
+        // Temple of Time
+        templeOfTimeTextJp,
+        sizeof( templeOfTimeTextJp ),
+        game_patch::SpecialMessageIds::TEMPLE_OF_TIME,
 
-            // Snowpeak Ruins
-            snowpeakRuinsTextJp,
-            sizeof( snowpeakRuinsTextJp ),
-            game_patch::SpecialMessageIds::SNOWPEAK_RUINS,
+        // City in the Sky
+        cityInTheSkyTextJp,
+        sizeof( cityInTheSkyTextJp ),
+        game_patch::SpecialMessageIds::CITY_IN_THE_SKY,
 
-            // Temple of Time
-            templeOfTimeTextJp,
-            sizeof( templeOfTimeTextJp ),
-            game_patch::SpecialMessageIds::TEMPLE_OF_TIME,
+        // Palace of Twilight
+        palaceOfTwilightTextJp,
+        sizeof( palaceOfTwilightTextJp ),
+        game_patch::SpecialMessageIds::PALACE_OF_TWILIGHT,
 
-            // City in the Sky
-            cityInTheSkyTextJp,
-            sizeof( cityInTheSkyTextJp ),
-            game_patch::SpecialMessageIds::CITY_IN_THE_SKY,
+        // Hyrule Castle
+        hyruleCastleTextJp,
+        sizeof( hyruleCastleTextJp ),
+        game_patch::SpecialMessageIds::HYRULE_CASTLE,
 
-            // Palace of Twilight
-            palaceOfTwilightTextJp,
-            sizeof( palaceOfTwilightTextJp ),
-            game_patch::SpecialMessageIds::PALACE_OF_TWILIGHT,
+        // Bulblin Camp
+        bulblinCampTextJp,
+        sizeof( bulblinCampTextJp ),
+        game_patch::SpecialMessageIds::BULBLIN_CAMP,
 
-            // Hyrule Castle
-            hyruleCastleTextJp,
-            sizeof( hyruleCastleTextJp ),
-            game_patch::SpecialMessageIds::HYRULE_CASTLE,
-
-            // Bulblin Camp
-            bulblinCampTextJp,
-            sizeof( bulblinCampTextJp ),
-            game_patch::SpecialMessageIds::BULBLIN_CAMP,
-
-            // This is an extra section that should go unused, and is only needed for _05_getMsgById in 05_itemMsgFunctions.cpp to
-            // ensure that it can properly calculate sizeOut
-            "",
-            0,
-            0xFFFF,
+        // This is an extra section that should go unused, and is only needed for _05_getMsgById in 05_itemMsgFunctions.cpp to
+        // ensure that it can properly calculate sizeOut
+        "",
+        0,
+        0xFFFF,
     };
 
     const uint32_t totalCustomMessagesJp = sizeof( entriesJp ) / sizeof( MsgEntry );

@@ -46,6 +46,10 @@
 #include "util/texture_utils.h"
 #include "rando/data.h"
 
+#ifdef TP_EU
+#include "tp/d_s_logo.h"
+#endif
+
 namespace mod
 {
     // Bind extern global variables
@@ -64,13 +68,18 @@ namespace mod
     bool roomReloadingState = false;
     bool consoleState = true;
     uint8_t gameState = GAME_BOOT;
-    void* Z2ScenePtr = nullptr;
     KEEP_VAR bool walletsPatched = false;
     KEEP_VAR uint8_t seedRelAction = SEED_ACTION_NONE;
-    uint32_t randNext = 0;
-    KEEP_VAR const char* m_DonationText = nullptr;
     bool modifyShopModels = false;
     bool instantTextEnabled = false;
+
+#ifdef TP_EU
+    KEEP_VAR libtp::tp::d_s_logo::Languages currentLanguage = libtp::tp::d_s_logo::Languages::uk;
+#endif
+
+    void* Z2ScenePtr = nullptr;
+    uint32_t randNext = 0;
+    KEEP_VAR const char* m_DonationText = nullptr;
 
     // Function hook return trampolines
     KEEP_VAR void ( *return_fapGm_Execute )( void ) = nullptr;

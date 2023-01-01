@@ -373,7 +373,6 @@ namespace mod::customMessages
     MSG_END()
     
     char forTextDe[] = "\x66\xfc\x72";
-    char theTextDe[] = "";
     char smallKeyTextDe[] = "\x65\x69\x6e\x65\x6e\x0A\x6b\x6c\x65\x69\x6e\x65\x6e\x20\x53\x63\x68\x6c\xfc\x73\x73\x65\x6c"; //einen kleinen Schlüssel
     char dungeonMapTextDe[] = "\x64\x69\x65\x0A\x44\x75\x6e\x67\x65\x6f\x6e\x2d\x4b\x61\x72\x74\x65"; // die Dungeon-Karte
     char compassTextDe[] = "\x64\x65\x6e\x20\x4b\x6f\x6d\x70\x61\x73\x73"; // den Kompass
@@ -541,11 +540,6 @@ namespace mod::customMessages
         forTextDe,
         sizeof( forTextDe ),
         game_patch::SpecialMessageIds::FOR,
-
-        // the
-        theTextDe,
-        sizeof( theTextDe ),
-        game_patch::SpecialMessageIds::THE,
 
         // Small Key
         smallKeyTextDe,

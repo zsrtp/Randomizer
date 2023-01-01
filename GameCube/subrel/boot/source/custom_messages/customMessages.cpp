@@ -14,10 +14,16 @@
 
 namespace mod::customMessages
 {
+
 #ifdef TP_EU
     using namespace libtp::tp::d_s_logo;
-    Languages currentLanguage = getPalLanguage2( nullptr );
+
+    void getCurrentLanguage()
+    {
+        currentLanguage = getPalLanguage2( nullptr );
+    }
 #endif
+
     void createMsgTable()
     {
         // Get the MsgEntry to use
@@ -51,16 +57,16 @@ namespace mod::customMessages
                 totalCustomMessages = totalCustomMessagesFr;
                 break;
             }
-            case Languages::it:
-            {
-                entries = entriesIt;
-                totalCustomMessages = totalCustomMessagesIt;
-                break;
-            }
             case Languages::sp:
             {
                 entries = entriesSp;
                 totalCustomMessages = totalCustomMessagesSp;
+                break;
+            }
+            case Languages::it:
+            {
+                entries = entriesIt;
+                totalCustomMessages = totalCustomMessagesIt;
                 break;
             }
         }
@@ -151,16 +157,16 @@ namespace mod::customMessages
                 totalCustomMessages = totalCustomMessagesFr;
                 break;
             }
-            case Languages::it:
-            {
-                entries = entriesIt;
-                totalCustomMessages = totalCustomMessagesIt;
-                break;
-            }
             case Languages::sp:
             {
                 entries = entriesSp;
                 totalCustomMessages = totalCustomMessagesSp;
+                break;
+            }
+            case Languages::it:
+            {
+                entries = entriesIt;
+                totalCustomMessages = totalCustomMessagesIt;
                 break;
             }
         }
@@ -193,19 +199,24 @@ namespace mod::customMessages
         char areaTextAndColor[] = MSG_COLOR( MSG_COLOR_GREEN );
         constexpr uint32_t areaTextAndColorSize = sizeof( areaTextAndColor );
 
-        // The area text and color should be closer to the end of the string, so start searching from the end
         // Get a pointer to the end of the string, minus the size of the color text
         const char* smallKeyTextEnd = &smallKeyText[textSize - areaTextAndColorSize];
 
+#ifdef TP_JP
+        // Loop through the string until the area and color are found
+        for ( const char* currentText = smallKeyText; currentText < smallKeyTextEnd; currentText++ )
+#else
+        // The area text and color should be closer to the end of the string, so start searching from the end
         // Loop through the string backwards until the area and color are found
-        for ( ; smallKeyTextEnd >= smallKeyText; smallKeyTextEnd-- )
+        for ( const char* currentText = smallKeyTextEnd; currentText >= smallKeyText; currentText-- )
+#endif
         {
             // Must use memcmp instead of strncmp since message commands have NULL characters
-            if ( memcmp( smallKeyTextEnd, areaTextAndColor, areaTextAndColorSize - 1 ) == 0 )
+            if ( memcmp( currentText, areaTextAndColor, areaTextAndColorSize - 1 ) == 0 )
             {
                 // Set the index to where the color id is
                 game_patch::dungeonItemAreaColorIndex =
-                    static_cast<uint8_t>( smallKeyTextEnd - smallKeyText + areaTextAndColorSize - 2 );
+                    static_cast<uint8_t>( ( currentText - smallKeyText ) + areaTextAndColorSize - 2 );
 
                 return;
             }
@@ -247,16 +258,16 @@ namespace mod::customMessages
                 offsetsSrc = &itemWheelMenuOffsetsFr;
                 break;
             }
-            case Languages::it:
-            {
-                stringsSrc = &itemWheelMenuStringsIt;
-                offsetsSrc = &itemWheelMenuOffsetsIt;
-                break;
-            }
             case Languages::sp:
             {
                 stringsSrc = &itemWheelMenuStringsSp;
                 offsetsSrc = &itemWheelMenuOffsetsSp;
+                break;
+            }
+            case Languages::it:
+            {
+                stringsSrc = &itemWheelMenuStringsIt;
+                offsetsSrc = &itemWheelMenuOffsetsIt;
                 break;
             }
         }
@@ -339,14 +350,14 @@ namespace mod::customMessages
                 donationEntry = &charloDonationEntryFr;
                 break;
             }
-            case Languages::it:
-            {
-                donationEntry = &charloDonationEntryIt;
-                break;
-            }
             case Languages::sp:
             {
                 donationEntry = &charloDonationEntrySp;
+                break;
+            }
+            case Languages::it:
+            {
+                donationEntry = &charloDonationEntryIt;
                 break;
             }
         }

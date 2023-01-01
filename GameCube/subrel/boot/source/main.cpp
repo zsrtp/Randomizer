@@ -46,6 +46,10 @@ namespace mod
         game_patch::_03_increaseClimbSpeed();
         game_patch::_06_writeASMPatches();
 
+#ifdef TP_EU
+        customMessages::getCurrentLanguage();
+#endif
+
         // Load custom messages
         customMessages::createMsgTable();
         customMessages::setDungeonItemAreaColorIndex();

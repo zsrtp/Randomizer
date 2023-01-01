@@ -1,6 +1,7 @@
 #include "rando/linkHouseSign.h"
 #include "rando/seed.h"
 #include "tp/resource.h"
+#include "main.h"
 #include "cxx.h"
 
 #ifdef TP_EU
@@ -257,7 +258,6 @@ namespace mod::link_house_sign
 #elif defined TP_EU
         using namespace libtp::tp::d_s_logo;
 
-        Languages currentLanguage = getPalLanguage2( nullptr );
         switch ( currentLanguage )
         {
             case Languages::uk:
@@ -279,16 +279,16 @@ namespace mod::link_house_sign
                 noDungeonsRequired = noDungeonsRequiredFr;
                 break;
             }
-            case Languages::it:
-            {
-                dungeons = dungeonsIt;
-                noDungeonsRequired = noDungeonsRequiredIt;
-                break;
-            }
             case Languages::sp:
             {
                 dungeons = dungeonsSp;
                 noDungeonsRequired = noDungeonsRequiredSp;
+                break;
+            }
+            case Languages::it:
+            {
+                dungeons = dungeonsIt;
+                noDungeonsRequired = noDungeonsRequiredIt;
                 break;
             }
         }

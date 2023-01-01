@@ -385,8 +385,6 @@ namespace mod::customMessages
         "\x51\x75\x65\x72\x65\x6D\x6F\x73\x20\x61\x67\x72\x61\x64\x65\x63\x65\x72\x20\x61\x20\x6E\x75\x65\x73\x74\x72\x6F\x73\n\x69\x6E\x63\x72\x65\xED\x62\x6C\x65\x73\x20\x54\x65\x73\x74\x65\x72\x73\x20\x64\x65\x20\x70\x61\x72\x74\x65\n\x64\x65\x6C\x20\x45\x71\x75\x69\x70\x6F\x20\x52\x61\x6E\x64\x6F\x6D\x69\x7A\x65\x72\x2E\x20\x53\x69\x6E\n\x75\x73\x74\x65\x64\x65\x73\x2C\x20\xE9\x73\x74\x65\x20\x70\x72\x6F\x79\x65\x63\x74\x6F\x20\x6E\x6F\x20\x73\x65\x72\xED\x61\n\x6C\x6F\x20\x71\x75\x65\x20\x65\x73\x20\x65\x6C\x20\x64\xED\x61\x20\x64\x65\x20\x68\x6F\x79: Taka\nAnorakkis, Archer, Br00ty, Chris\nChrono, clabrus, Demon, EmperorP\nElinadrian, Empty, Fennec, Zushi\nFleakee, Foxhole Gaming, Luzagar\nHeartPiece, Hornlitz, IceStorm\nJanWegh, JD, jdflyer, Jeez, Oxy\nJustRyland, Lance H., link1183\nLinkman124, Luneyes, GameWyrm\nMattStrats, MultFij, NesmaN88\nXenoWars, Papy_Grant, Simikins\npokemongenius, Psi-Hate, Lars P\nRaziel_Stratton, Redriel, Revven\nSparky7198, Zach, SwiftIke, j_im\nZenith, Prince, The., TheBruce\nTreZc0_, Wameslo, WickedGligar\nDGod63 and Sushi."
     MSG_END()
 
-    char forTextSp[] = "";
-    char theTextSp[] = "";
     char smallKeyTextSp[] = "\x75\x6E\x61\x20\x6C\x6C\x61\x76\x65\x20\x70\x65\x71\x75\x65\xF1\x61"; // una llave pequeña
     char dungeonMapTextSp[] = "\x65\x6C\x20\x6D\x61\x70\x61"; // el mapa
     char compassTextSp[] = "\x6C\x61\x20\x62\x72\xFA\x6A\x75\x6C\x61"; // la brújula
@@ -550,16 +548,6 @@ namespace mod::customMessages
         0x0b44,
 
         // Special invalid-id texts
-        // for
-        forTextSp,
-        sizeof( forTextSp ),
-        game_patch::SpecialMessageIds::FOR,
-
-        // the
-        theTextSp,
-        sizeof( theTextSp ),
-        game_patch::SpecialMessageIds::THE,
-
         // Small Key
         smallKeyTextSp,
         sizeof( smallKeyTextSp ),

@@ -283,22 +283,22 @@ namespace mod::customMessages
         "The Randomizer Team would like\nto thank our amazing testers.\nWithout you, this project would\nnot be what it is today: Taka\nAnorakkis, Archer, Br00ty, Chris\nChrono, clabrus, Demon, EmperorP\nElinadrian, Empty, Fennec, Zushi\nFleakee, Foxhole Gaming, Luzagar\nHeartPiece, Hornlitz, IceStorm\nJanWegh, JD, jdflyer, Jeez, Oxy\nJustRyland, Lance H., link1183\nLinkman124, Luneyes, GameWyrm\nMattStrats, MultFij, NesmaN88\nXenoWars, Papy_Grant, Simikins\npokemongenius, Psi-Hate, Lars P\nRaziel_Stratton, Redriel, Revven\nSparky7198, Zach, SwiftIke, j_im\nZenith, Prince, The., TheBruce\nTreZc0_, Wameslo, WickedGligar\nDGod63 and Sushi."
     MSG_END()
     
-    char forText[] = "for";
-    char theText[] = "the";
-    char smallKeyText[] = "a small key";
-    char dungeonMapText[] = "the dungeon map";
-    char compassText[] = "the compass";
-    char bigKeyText[] = "the big key";
-    char forestTempleText[] = "Forest Temple";
-    char goronMinesText[] = "Goron Mines";
-    char lakebedTempleText[] = "Lakebed Temple";
-    char arbitersGroundsText[] = "Arbiter's Grounds";
-    char snowpeakRuinsText[] = "Snowpeak Ruins";
-    char templeOfTimeText[] = "Temple of Time";
-    char cityInTheSkyText[] = "City in the Sky";
-    char palaceOfTwilightText[] = "Palace of Twilight";
-    char hyruleCastleText[] = "Hyrule Castle";
-    char bulblinCampText[] = "Bulblin Camp";
+    char forTextUs[] = "for";
+    char theTextUs[] = "the";
+    char smallKeyTextUs[] = "a small key";
+    char dungeonMapTextUs[] = "the dungeon map";
+    char compassTextUs[] = "the compass";
+    char bigKeyTextUs[] = "the big key";
+    char forestTempleTextUs[] = "Forest Temple";
+    char goronMinesTextUs[] = "Goron Mines";
+    char lakebedTempleTextUs[] = "Lakebed Temple";
+    char arbitersGroundsTextUs[] = "Arbiter's Grounds";
+    char snowpeakRuinsTextUs[] = "Snowpeak Ruins";
+    char templeOfTimeTextUs[] = "Temple of Time";
+    char cityInTheSkyTextUs[] = "City in the Sky";
+    char palaceOfTwilightTextUs[] = "Palace of Twilight";
+    char hyruleCastleTextUs[] = "Hyrule Castle";
+    char bulblinCampTextUs[] = "Bulblin Camp";
     // clang-format on
 
     const MsgEntry entriesUs[] = {
@@ -450,83 +450,83 @@ namespace mod::customMessages
 
         // Special invalid-id texts
         // for
-        forText,
-        sizeof( forText ),
+        forTextUs,
+        sizeof( forTextUs ),
         game_patch::SpecialMessageIds::FOR,
 
         // the
-        theText,
-        sizeof( theText ),
+        theTextUs,
+        sizeof( theTextUs ),
         game_patch::SpecialMessageIds::THE,
 
         // Small Key
-        smallKeyText,
-        sizeof( smallKeyText ),
+        smallKeyTextUs,
+        sizeof( smallKeyTextUs ),
         game_patch::SpecialMessageIds::SMALL_KEY,
 
         // Dungeon Map
-        dungeonMapText,
-        sizeof( dungeonMapText ),
+        dungeonMapTextUs,
+        sizeof( dungeonMapTextUs ),
         game_patch::SpecialMessageIds::DUNGEON_MAP,
 
         // Compass
-        compassText,
-        sizeof( compassText ),
+        compassTextUs,
+        sizeof( compassTextUs ),
         game_patch::SpecialMessageIds::COMPASS,
 
         // Big Key
-        bigKeyText,
-        sizeof( bigKeyText ),
+        bigKeyTextUs,
+        sizeof( bigKeyTextUs ),
         game_patch::SpecialMessageIds::BIG_KEY,
 
         // Forest Temple
-        forestTempleText,
-        sizeof( forestTempleText ),
+        forestTempleTextUs,
+        sizeof( forestTempleTextUs ),
         game_patch::SpecialMessageIds::FOREST_TEMPLE,
 
         // Goron Mines
-        goronMinesText,
-        sizeof( goronMinesText ),
+        goronMinesTextUs,
+        sizeof( goronMinesTextUs ),
         game_patch::SpecialMessageIds::GORON_MINES,
 
         // Lakebed Temple
-        lakebedTempleText,
-        sizeof( lakebedTempleText ),
+        lakebedTempleTextUs,
+        sizeof( lakebedTempleTextUs ),
         game_patch::SpecialMessageIds::LAKEBED_TEMPLE,
 
         // Arbiter's Grounds
-        arbitersGroundsText,
-        sizeof( arbitersGroundsText ),
+        arbitersGroundsTextUs,
+        sizeof( arbitersGroundsTextUs ),
         game_patch::SpecialMessageIds::ARBITERS_GROUNDS,
 
         // Snowpeak Ruins
-        snowpeakRuinsText,
-        sizeof( snowpeakRuinsText ),
+        snowpeakRuinsTextUs,
+        sizeof( snowpeakRuinsTextUs ),
         game_patch::SpecialMessageIds::SNOWPEAK_RUINS,
 
         // Temple of Time
-        templeOfTimeText,
-        sizeof( templeOfTimeText ),
+        templeOfTimeTextUs,
+        sizeof( templeOfTimeTextUs ),
         game_patch::SpecialMessageIds::TEMPLE_OF_TIME,
 
         // City in the Sky
-        cityInTheSkyText,
-        sizeof( cityInTheSkyText ),
+        cityInTheSkyTextUs,
+        sizeof( cityInTheSkyTextUs ),
         game_patch::SpecialMessageIds::CITY_IN_THE_SKY,
 
         // Palace of Twilight
-        palaceOfTwilightText,
-        sizeof( palaceOfTwilightText ),
+        palaceOfTwilightTextUs,
+        sizeof( palaceOfTwilightTextUs ),
         game_patch::SpecialMessageIds::PALACE_OF_TWILIGHT,
 
         // Hyrule Castle
-        hyruleCastleText,
-        sizeof( hyruleCastleText ),
+        hyruleCastleTextUs,
+        sizeof( hyruleCastleTextUs ),
         game_patch::SpecialMessageIds::HYRULE_CASTLE,
 
         // Bulblin Camp
-        bulblinCampText,
-        sizeof( bulblinCampText ),
+        bulblinCampTextUs,
+        sizeof( bulblinCampTextUs ),
         game_patch::SpecialMessageIds::BULBLIN_CAMP,
 
         // This is an extra section that should go unused, and is only needed for _05_getMsgById in 05_itemMsgFunctions.cpp to
