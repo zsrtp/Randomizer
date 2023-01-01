@@ -1350,15 +1350,6 @@ namespace mod
                                     }
                                     break;
                                 }
-                                case 4:     // Vanilla
-                                {
-                                    bool palaceCleared = return_isEventBit( eventPtr, flag );
-                                    if ( palaceCleared )     // if palace is cleared
-                                    {
-                                        events::setSaveFileEventFlag( libtp::data::flags::BARRIER_GONE );
-                                    }
-                                    break;
-                                }
                                 default:
                                 {
                                     break;
@@ -1474,6 +1465,27 @@ namespace mod
                         }
                     }
 
+                    break;
+                }
+
+                case PALACE_OF_TWILIGHT_CLEARED:
+                {
+                    if ( randoIsEnabled( randomizer ) )
+                    {
+                        if ( randomizer->m_Seed->m_Header->castleRequirements == 4 )     // Vanilla
+                        {
+                            events::setSaveFileEventFlag( libtp::data::flags::BARRIER_GONE );
+                            return return_onEventBit( eventPtr, flag );     // set PoT story flag
+                        }
+                    }
+                    break;
+                }
+
+                case BARRIER_GONE:
+                {
+                    libtp::tp::d_save::onSwitch_dSv_memBit(
+                        &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[9].temp_flags,
+                        0x0F );
                     break;
                 }
 
