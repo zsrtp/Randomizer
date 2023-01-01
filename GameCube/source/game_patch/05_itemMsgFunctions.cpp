@@ -102,7 +102,7 @@ namespace mod::game_patch
             return nullptr;
         }
 
-        static char buf[160];
+        static char buf[128];
         constexpr uint32_t maxIndex = sizeof( buf ) - 1;
         uint32_t currentIndex = 0;
 
@@ -151,6 +151,28 @@ namespace mod::game_patch
         libtp::gc_wii::os_cache::DCFlushRange( buf, sizeof( buf ) );
         return buf;
     }
+
+#ifdef TP_EU
+    bool __attribute__( ( noinline ) ) shouldGetTheText()
+    {
+        using namespace libtp::tp::d_s_logo;
+        switch ( currentLanguage )
+        {
+            case Languages::uk:
+            default:     // The language is invalid/unsupported, so the game defaults to English
+            {
+                return true;
+            }
+            case Languages::de:
+            case Languages::fr:
+            case Languages::sp:
+            case Languages::it:
+            {
+                return false;
+            }
+        }
+    }
+#endif
 
     const char* getCustomMessage( rando::Randomizer* randomizer, uint16_t msgId )
     {
@@ -210,15 +232,12 @@ namespace mod::game_patch
                     {
                         return nullptr;
                     }
-#ifdef TP_EU
-                    // Using a local variable for the language ends up using less assembly overall due to optimizations
-                    libtp::tp::d_s_logo::Languages tempCurrentLanguage = currentLanguage;
-#endif
+
                     // 'for' text is only used for some languages
-                    auto getForText = [&]()
+                    auto getForText = []()
                     {
 #ifdef TP_EU
-                        switch ( tempCurrentLanguage )
+                        switch ( currentLanguage )
                         {
                             case Languages::uk:
                             case Languages::de:
@@ -242,24 +261,10 @@ namespace mod::game_patch
                     };
 
                     // 'the' text is only used for some languages
-                    auto getTheText = [&]()
+                    auto getTheText = []()
                     {
 #ifdef TP_EU
-                        switch ( tempCurrentLanguage )
-                        {
-                            case Languages::uk:
-                            default:     // The language is invalid/unsupported, so the game defaults to English
-                            {
-                                return true;
-                            }
-                            case Languages::de:
-                            case Languages::fr:
-                            case Languages::sp:
-                            case Languages::it:
-                            {
-                                return false;
-                            }
-                        }
+                        return shouldGetTheText();
 #elif defined TP_US
                         return true;
 #elif defined TP_JP
