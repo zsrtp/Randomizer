@@ -1363,7 +1363,6 @@ namespace mod::events
         if ( autoMashThroughTextEnabled )
         {
             // Automash through text if B is held
-            // Use padInfo->mButtonFlags instead of checkButtonCombo since padInfo is already passed in
             if ( padInfo->mButtonFlags & PadInputs::Button_B )
             {
                 // Return A to immediately jump to the return value in the function
