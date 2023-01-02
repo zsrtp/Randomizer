@@ -16,7 +16,7 @@ namespace mod::customMessages
     // clang-format off
     MSG_BEGIN_ARRAY( forestSmallKeyEn )
         MSG_SPEED( MSG_SPEED_FAST )
-        "You got\n"
+        "You got "
         MSG_COLOR(MSG_COLOR_RED)
         "%s"
         MSG_COLOR(MSG_COLOR_WHITE)
