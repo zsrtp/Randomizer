@@ -14,6 +14,7 @@
 #include "tp/d_com_inf_game.h"
 #include "tp/m_Do_dvd_thread.h"
 #include "Z2AudioLib/Z2SceneMgr.h"
+#include "tp/d_msg_object.h"
 
 namespace mod::game_patch
 {
@@ -96,6 +97,17 @@ namespace mod::game_patch
         libtp::patch::writeBranchBL( reinterpret_cast<void*>( screenSetAddress + 0xDF0 ),
                                      reinterpret_cast<void*>( events::getPauseRupeeMax ) );
 
+        // Modify isSend button checks to allow for automashing through text
+        uint32_t isSendAddress = reinterpret_cast<uint32_t>( libtp::tp::d_msg_object::isSend );
+
+        libtp::patch::writeBranchBL( reinterpret_cast<void*>( isSendAddress + 0xE4 ),
+                                     reinterpret_cast<void*>( events::autoMashThroughText ) );
+
+        libtp::patch::writeBranchBL( reinterpret_cast<void*>( isSendAddress + 0x160 ),
+                                     reinterpret_cast<void*>( events::autoMashThroughText ) );
+
+        libtp::patch::writeBranchBL( reinterpret_cast<void*>( isSendAddress + 0x1B8 ),
+                                     reinterpret_cast<void*>( events::autoMashThroughText ) );
 #ifdef TP_JP
         uint32_t checkWarpStartAddress = reinterpret_cast<uint32_t>( libtp::tp::d_a_alink::checkWarpStart );
 

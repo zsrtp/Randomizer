@@ -18,6 +18,7 @@
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
 #include "tp/f_op_actor.h"
+#include "tp/m_do_controller_pad.h"
 
 namespace mod::events
 {
@@ -140,6 +141,7 @@ namespace mod::events
     bool checkFoolItemFreeze();
 
     uint16_t getPauseRupeeMax( libtp::tp::d_save::dSv_player_status_a_c* plyrStatus );
+    uint32_t autoMashThroughText( libtp::tp::m_do_controller_pad::CPadInfo* padInfo );
 
     void performStaticASMReplacement( uint32_t memoryOffset, uint32_t value );
 

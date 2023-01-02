@@ -336,6 +336,9 @@
 8022b658:jmessage_tSequenceProcessor__do_begin
 8022c1a0:jmessage_tSequenceProcessor__do_tag
 
+// d_msg_object.o
+802369D8:isSend
+
 // processor.o
 802A7C54:getResource_groupID
 

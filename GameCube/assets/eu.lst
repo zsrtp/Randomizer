@@ -323,6 +323,9 @@
 8022c66c:jmessage_tSequenceProcessor__do_tag
 8022bb24:jmessage_tSequenceProcessor__do_begin
 
+// d_msg_object.o
+80236F8C:isSend
+
 //d_item_data.o
 803ae280:item_resource
 803b0a58:item_info

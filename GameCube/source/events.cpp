@@ -24,6 +24,7 @@
 #include "user_patch/03_customCosmetics.h"
 #include "tp/J2DPicture.h"
 #include "data/flags.h"
+#include "tp/m_do_controller_pad.h"
 
 namespace mod::events
 {
@@ -1353,6 +1354,25 @@ namespace mod::events
             }
         }
         return 0;
+    }
+
+    KEEP_FUNC uint32_t autoMashThroughText( libtp::tp::m_do_controller_pad::CPadInfo* padInfo )
+    {
+        using namespace libtp::tp::m_do_controller_pad;
+
+        if ( autoMashThroughTextEnabled )
+        {
+            // Automash through text if B is held
+            // Use padInfo->mButtonFlags instead of checkButtonCombo since padInfo is already passed in
+            if ( padInfo->mButtonFlags & PadInputs::Button_B )
+            {
+                // Return A to immediately jump to the return value in the function
+                return PadInputs::Button_A;
+            }
+        }
+
+        // Restore the overwritten instruction
+        return padInfo->mPressedButtonFlags;
     }
 
     KEEP_FUNC void performStaticASMReplacement( uint32_t memoryOffset, uint32_t value )

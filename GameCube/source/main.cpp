@@ -72,6 +72,7 @@ namespace mod
     KEEP_VAR uint8_t seedRelAction = SEED_ACTION_NONE;
     bool modifyShopModels = false;
     bool instantTextEnabled = false;
+    bool autoMashThroughTextEnabled = true;     // Set to false and remove this comment when properly implemented
 
 #ifdef TP_EU
     KEEP_VAR libtp::tp::d_s_logo::Languages currentLanguage = libtp::tp::d_s_logo::Languages::uk;
