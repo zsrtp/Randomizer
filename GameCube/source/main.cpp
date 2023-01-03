@@ -1178,9 +1178,13 @@ namespace mod
         if ( instantTextEnabled )
         {
             *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( seqProcessor ) + 0xB2 ) = 0x1;
-
+#ifdef TP_JP
+            constexpr uint32_t offset = 0x5A6;
+#else
+            constexpr uint32_t offset = 0x5D6;
+#endif
             uint32_t tReferencePtr = *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( seqProcessor ) + 0x4 );
-            *reinterpret_cast<int16_t*>( tReferencePtr + 0x5D6 ) = 0;
+            *reinterpret_cast<int16_t*>( tReferencePtr + offset ) = 0;
         }
         return result;
     }
