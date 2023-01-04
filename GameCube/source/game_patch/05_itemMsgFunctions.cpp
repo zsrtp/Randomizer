@@ -305,7 +305,8 @@ namespace mod::game_patch
 #endif
                     };
 
-                    // JP Snowpeak Ruins doesn't need anything from the next section
+                    // JP Snowpeak Ruins doesn't need anything from the next section as the colors are already defined in
+                    // the customMessage object in japaneseMessages.cpp
                     const char* areaText = nullptr;
                     bool addTheText;
 
