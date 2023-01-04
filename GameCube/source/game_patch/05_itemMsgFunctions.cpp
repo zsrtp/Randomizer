@@ -305,117 +305,126 @@ namespace mod::game_patch
 #endif
                     };
 
-                    // Figure out what dungeon area this is for
-                    // Also figure out what color to use for each area name, as well as what areas should have 'the' infront of
-                    // them
-                    uint8_t areaColorId = MSG_COLOR_WHITE_HEX;
-                    uint32_t dungeonAreaMsgId;
-                    bool addTheText = false;
+                    // JP Snowpeak Ruins doesn't need anything from the next section
+                    const char* areaText = nullptr;
+                    bool addTheText;
 
-                    switch ( itemId )
-                    {
-                        case Forest_Temple_Small_Key:
-                        case Forest_Temple_Big_Key:
-                        case Forest_Temple_Compass:
-                        case Forest_Temple_Dungeon_Map:
-                        {
-                            areaColorId = MSG_COLOR_GREEN_HEX;
-                            dungeonAreaMsgId = SpecialMessageIds::FOREST_TEMPLE;
-                            addTheText = getTheText();
-                            break;
-                        }
-                        case Goron_Mines_Small_Key:
-                        case Goron_Mines_Compass:
-                        case Goron_Mines_Dungeon_Map:
-                        {
-                            areaColorId = MSG_COLOR_RED_HEX;
-                            dungeonAreaMsgId = SpecialMessageIds::GORON_MINES;
-                            break;
-                        }
-                        case Lakebed_Temple_Small_Key:
-                        case Lakebed_Temple_Big_Key:
-                        case Lakebed_Temple_Compass:
-                        case Lakebed_Temple_Dungeon_Map:
-                        {
-                            areaColorId = CUSTOM_MSG_COLOR_BLUE_HEX;
-                            dungeonAreaMsgId = SpecialMessageIds::LAKEBED_TEMPLE;
-                            addTheText = getTheText();
-                            break;
-                        }
-                        case Arbiters_Grounds_Small_Key:
-                        case Arbiters_Grounds_Big_Key:
-                        case Arbiters_Grounds_Compass:
-                        case Arbiters_Grounds_Dungeon_Map:
-                        {
-                            areaColorId = MSG_COLOR_ORANGE_HEX;
-                            dungeonAreaMsgId = SpecialMessageIds::ARBITERS_GROUNDS;
-                            break;
-                        }
-                        case Snowpeak_Ruins_Small_Key:
-                        case Snowpeak_Ruins_Compass:
-                        case Snowpeak_Ruins_Dungeon_Map:
-                        {
-                            areaColorId = MSG_COLOR_LIGHT_BLUE_HEX;
-                            dungeonAreaMsgId = SpecialMessageIds::SNOWPEAK_RUINS;
-                            break;
-                        }
-                        case Temple_of_Time_Small_Key:
-                        case Temple_of_Time_Big_Key:
-                        case Temple_of_Time_Compass:
-                        case Temple_of_Time_Dungeon_Map:
-                        {
-                            areaColorId = CUSTOM_MSG_COLOR_DARK_GREEN_HEX;
-                            dungeonAreaMsgId = SpecialMessageIds::TEMPLE_OF_TIME;
-                            addTheText = getTheText();
-                            break;
-                        }
-                        case City_in_The_Sky_Small_Key:
-                        case City_in_The_Sky_Big_Key:
-                        case City_in_The_Sky_Compass:
-                        case City_in_The_Sky_Dungeon_Map:
-                        {
-                            areaColorId = MSG_COLOR_YELLOW_HEX;
-                            dungeonAreaMsgId = SpecialMessageIds::CITY_IN_THE_SKY;
-                            addTheText = getTheText();
-                            break;
-                        }
-                        case Palace_of_Twilight_Small_Key:
-                        case Palace_of_Twilight_Big_Key:
-                        case Palace_of_Twilight_Compass:
-                        case Palace_of_Twilight_Dungeon_Map:
-                        {
-                            areaColorId = MSG_COLOR_PURPLE_HEX;
-                            dungeonAreaMsgId = SpecialMessageIds::PALACE_OF_TWILIGHT;
-                            addTheText = getTheText();
-                            break;
-                        }
-                        case Hyrule_Castle_Small_Key:
-                        case Hyrule_Castle_Big_Key:
-                        case Hyrule_Castle_Compass:
-                        case Hyrule_Castle_Dungeon_Map:
-                        {
-                            areaColorId = CUSTOM_MSG_COLOR_SILVER_HEX;
-                            dungeonAreaMsgId = SpecialMessageIds::HYRULE_CASTLE;
-                            break;
-                        }
-                        case Bulblin_Camp_Key:
-                        {
-                            areaColorId = MSG_COLOR_ORANGE_HEX;
-                            dungeonAreaMsgId = SpecialMessageIds::BULBLIN_CAMP;
-                            addTheText = getTheText();
-                            break;
-                        }
-                        default:
-                        {
-                            // Error occured somehow
-                            return nullptr;
-                        }
-                    }
-
-                    // Replace the dungeon area color
-                    // JP Snowpeak Ruins will not need this
                     if ( !checkIfSnowpeakRuinsText() )
                     {
+                        // Figure out what dungeon area this is for
+                        // Also figure out what color to use for each area name, as well as what areas should have 'the' infront
+                        // of them
+                        uint8_t areaColorId = MSG_COLOR_WHITE_HEX;
+                        uint32_t dungeonAreaMsgId;
+
+                        switch ( itemId )
+                        {
+                            case Forest_Temple_Small_Key:
+                            case Forest_Temple_Big_Key:
+                            case Forest_Temple_Compass:
+                            case Forest_Temple_Dungeon_Map:
+                            {
+                                areaColorId = MSG_COLOR_GREEN_HEX;
+                                dungeonAreaMsgId = SpecialMessageIds::FOREST_TEMPLE;
+                                addTheText = getTheText();
+                                break;
+                            }
+                            case Goron_Mines_Small_Key:
+                            case Goron_Mines_Compass:
+                            case Goron_Mines_Dungeon_Map:
+                            {
+                                areaColorId = MSG_COLOR_RED_HEX;
+                                dungeonAreaMsgId = SpecialMessageIds::GORON_MINES;
+                                break;
+                            }
+                            case Lakebed_Temple_Small_Key:
+                            case Lakebed_Temple_Big_Key:
+                            case Lakebed_Temple_Compass:
+                            case Lakebed_Temple_Dungeon_Map:
+                            {
+                                areaColorId = CUSTOM_MSG_COLOR_BLUE_HEX;
+                                dungeonAreaMsgId = SpecialMessageIds::LAKEBED_TEMPLE;
+                                addTheText = getTheText();
+                                break;
+                            }
+                            case Arbiters_Grounds_Small_Key:
+                            case Arbiters_Grounds_Big_Key:
+                            case Arbiters_Grounds_Compass:
+                            case Arbiters_Grounds_Dungeon_Map:
+                            {
+                                areaColorId = MSG_COLOR_ORANGE_HEX;
+                                dungeonAreaMsgId = SpecialMessageIds::ARBITERS_GROUNDS;
+                                break;
+                            }
+                            case Snowpeak_Ruins_Small_Key:
+                            case Snowpeak_Ruins_Compass:
+                            case Snowpeak_Ruins_Dungeon_Map:
+                            {
+                                areaColorId = MSG_COLOR_LIGHT_BLUE_HEX;
+                                dungeonAreaMsgId = SpecialMessageIds::SNOWPEAK_RUINS;
+                                break;
+                            }
+                            case Temple_of_Time_Small_Key:
+                            case Temple_of_Time_Big_Key:
+                            case Temple_of_Time_Compass:
+                            case Temple_of_Time_Dungeon_Map:
+                            {
+                                areaColorId = CUSTOM_MSG_COLOR_DARK_GREEN_HEX;
+                                dungeonAreaMsgId = SpecialMessageIds::TEMPLE_OF_TIME;
+                                addTheText = getTheText();
+                                break;
+                            }
+                            case City_in_The_Sky_Small_Key:
+                            case City_in_The_Sky_Big_Key:
+                            case City_in_The_Sky_Compass:
+                            case City_in_The_Sky_Dungeon_Map:
+                            {
+                                areaColorId = MSG_COLOR_YELLOW_HEX;
+                                dungeonAreaMsgId = SpecialMessageIds::CITY_IN_THE_SKY;
+                                addTheText = getTheText();
+                                break;
+                            }
+                            case Palace_of_Twilight_Small_Key:
+                            case Palace_of_Twilight_Big_Key:
+                            case Palace_of_Twilight_Compass:
+                            case Palace_of_Twilight_Dungeon_Map:
+                            {
+                                areaColorId = MSG_COLOR_PURPLE_HEX;
+                                dungeonAreaMsgId = SpecialMessageIds::PALACE_OF_TWILIGHT;
+                                addTheText = getTheText();
+                                break;
+                            }
+                            case Hyrule_Castle_Small_Key:
+                            case Hyrule_Castle_Big_Key:
+                            case Hyrule_Castle_Compass:
+                            case Hyrule_Castle_Dungeon_Map:
+                            {
+                                areaColorId = CUSTOM_MSG_COLOR_SILVER_HEX;
+                                dungeonAreaMsgId = SpecialMessageIds::HYRULE_CASTLE;
+                                break;
+                            }
+                            case Bulblin_Camp_Key:
+                            {
+                                areaColorId = MSG_COLOR_ORANGE_HEX;
+                                dungeonAreaMsgId = SpecialMessageIds::BULBLIN_CAMP;
+                                addTheText = getTheText();
+                                break;
+                            }
+                            default:
+                            {
+                                // Error occured somehow
+                                return nullptr;
+                            }
+                        }
+
+                        // Get the text for the area
+                        areaText = _05_getMsgById( randomizer, dungeonAreaMsgId );
+                        if ( !areaText )
+                        {
+                            return nullptr;
+                        }
+
+                        // Replace the dungeon area color
                         // Make sure the index was properly adjusted
                         uint32_t colorIndex = dungeonItemAreaColorIndex;
                         if ( colorIndex != 0 )
@@ -453,22 +462,11 @@ namespace mod::game_patch
                         return nullptr;
                     }
 
-                    // Get the texts for the item and area
+                    // Get the text for the item
                     const char* dungeonItemText = _05_getMsgById( randomizer, dungeonItemMsgId );
                     if ( !dungeonItemText )
                     {
                         return nullptr;
-                    }
-
-                    // JP Snowpeak Ruins will not need this
-                    const char* areaText;
-                    if ( !checkIfSnowpeakRuinsText() )
-                    {
-                        areaText = _05_getMsgById( randomizer, dungeonAreaMsgId );
-                        if ( !areaText )
-                        {
-                            return nullptr;
-                        }
                     }
 #ifndef TP_JP
                     // Get the 'for' text
