@@ -226,12 +226,44 @@ namespace mod::game_patch
                 case Hyrule_Castle_Dungeon_Map:
                 {
                     // Get the text and size of the format text
-                    // All of these items will use the Forest Temple small key text as a base
-                    format = _05_getMsgById( randomizer, ITEM_TO_ID( Forest_Temple_Small_Key ), &msgSize );
+                    uint32_t itemIdForBase;
+#ifdef TP_JP
+                    switch ( itemId )
+                    {
+                        case Snowpeak_Ruins_Small_Key:
+                        case Snowpeak_Ruins_Compass:
+                        case Snowpeak_Ruins_Dungeon_Map:
+                        {
+                            // Snowpeak Ruins requires a special format string, since it's name uses a command
+                            // All of the Snowpeak Ruins items will use the Snowpeak Ruins small key text as a base
+                            itemIdForBase = Snowpeak_Ruins_Small_Key;
+                            break;
+                        }
+                        default:
+                        {
+                            // All of the items will use the Forest Temple small key text as a base
+                            itemIdForBase = Forest_Temple_Small_Key;
+                            break;
+                        }
+                    }
+#else
+                    // All of the items will use the Forest Temple small key text as a base
+                    itemIdForBase = Forest_Temple_Small_Key;
+#endif
+                    format = _05_getMsgById( randomizer, ITEM_TO_ID( itemIdForBase ), &msgSize );
                     if ( !format )
                     {
                         return nullptr;
                     }
+
+                    auto checkIfSnowpeakRuinsText = [&]()
+                    {
+#ifdef TP_JP
+                        return static_cast<bool>( itemIdForBase == Snowpeak_Ruins_Small_Key );
+#else
+                        return false;
+#endif
+                    };
 
                     // 'for' text is only used for some languages
                     auto getForText = []()
@@ -381,15 +413,19 @@ namespace mod::game_patch
                     }
 
                     // Replace the dungeon area color
-                    // Make sure the index was properly adjusted
-                    uint32_t colorIndex = dungeonItemAreaColorIndex;
-                    if ( colorIndex != 0 )
+                    // JP Snowpeak Ruins will not need this
+                    if ( !checkIfSnowpeakRuinsText() )
                     {
-                        char* colorAddress = const_cast<char*>( &format[colorIndex] );
-                        *colorAddress = static_cast<char>( areaColorId );
+                        // Make sure the index was properly adjusted
+                        uint32_t colorIndex = dungeonItemAreaColorIndex;
+                        if ( colorIndex != 0 )
+                        {
+                            char* colorAddress = const_cast<char*>( &format[colorIndex] );
+                            *colorAddress = static_cast<char>( areaColorId );
 
-                        // Clear the cache for the changed character
-                        libtp::gc_wii::os_cache::DCFlushRange( colorAddress, sizeof( char ) );
+                            // Clear the cache for the changed character
+                            libtp::gc_wii::os_cache::DCFlushRange( colorAddress, sizeof( char ) );
+                        }
                     }
 
                     // Figure out what dungeon item this is for
@@ -424,10 +460,15 @@ namespace mod::game_patch
                         return nullptr;
                     }
 
-                    const char* areaText = _05_getMsgById( randomizer, dungeonAreaMsgId );
-                    if ( !areaText )
+                    // JP Snowpeak Ruins will not need this
+                    const char* areaText;
+                    if ( !checkIfSnowpeakRuinsText() )
                     {
-                        return nullptr;
+                        areaText = _05_getMsgById( randomizer, dungeonAreaMsgId );
+                        if ( !areaText )
+                        {
+                            return nullptr;
+                        }
                     }
 #ifndef TP_JP
                     // Get the 'for' text
@@ -467,7 +508,14 @@ namespace mod::game_patch
                     (void) addTheText;
 
                     // JP doesn't use `for` nor `the` and the params are in a different order
-                    return createString( format, msgSize, areaText, dungeonItemText );
+                    if ( checkIfSnowpeakRuinsText() )
+                    {
+                        return createString( format, msgSize, dungeonItemText );
+                    }
+                    else
+                    {
+                        return createString( format, msgSize, areaText, dungeonItemText );
+                    }
 #endif
                 }
                 default:

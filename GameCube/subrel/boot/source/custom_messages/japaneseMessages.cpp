@@ -29,6 +29,21 @@ namespace mod::customMessages
         // を手に入れ
         "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA"
     MSG_END()
+    MSG_BEGIN_ARRAY( snowpeakSmallKeyJp )
+        MSG_SPEED( MSG_SPEED_FAST )
+        MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
+        // 雪山の廃墟
+        "\x90\xE1\x8E\x52\x82\xCC\x94\x70" MSG_SP_CHAR_KYO
+        MSG_COLOR(MSG_COLOR_WHITE)
+        // の
+        "\x82\xCC"
+        MSG_COLOR(MSG_COLOR_RED)
+        // X
+        "%s"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        // を手に入れ
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA"
+    MSG_END()
     MSG_BEGIN_ARRAY( shadowCrystalJp )
         MSG_SPEED(MSG_SPEED_SLOW)
         MSG_COLOR(MSG_COLOR_RED)
@@ -357,7 +372,6 @@ namespace mod::customMessages
     char goronMinesTextJp[] = "\x83\x53\x83\x8D\x83\x93\x8D\x7A\x8E\x52"; // ゴロン鉱山
     char lakebedTempleTextJp[] = "\x8C\xCE\x92\xEA\x82\xCC\x90\x5F\x93\x61"; // 湖底の神殿
     char arbitersGroundsTextJp[] = "\x8D\xBB\x94\x99\x82\xCC\x8F\x88\x8C\x59\x8F\xEA"; // 砂漠の処刑場
-    char snowpeakRuinsTextJp[] = "\x90\xE1\x8E\x52\x82\xCC\x94\x70"; // 雪山の廃
     char templeOfTimeTextJp[] = "\x8E\x9E\x82\xCC\x90\x5F\x93\x61"; // 時の神殿
     char cityInTheSkyTextJp[] = "\x93\x56\x8B\xF3\x93\x73\x8E\x73"; // 天空都市
     char palaceOfTwilightTextJp[] = "\x89\x65\x82\xCC\x8B\x7B\x93\x61"; // 影の宮殿
@@ -370,6 +384,11 @@ namespace mod::customMessages
         forestSmallKeyJp,
         sizeof( forestSmallKeyJp ),
         0x00E9,
+
+        // Snowpeak Ruins small key
+        snowpeakSmallKeyJp,
+        sizeof( snowpeakSmallKeyJp ),
+        0x00ED,
 
         // Shadow Crystal
         shadowCrystalJp,
@@ -551,11 +570,6 @@ namespace mod::customMessages
         arbitersGroundsTextJp,
         sizeof( arbitersGroundsTextJp ),
         game_patch::SpecialMessageIds::ARBITERS_GROUNDS,
-
-        // Snowpeak Ruins
-        snowpeakRuinsTextJp,
-        sizeof( snowpeakRuinsTextJp ),
-        game_patch::SpecialMessageIds::SNOWPEAK_RUINS,
 
         // Temple of Time
         templeOfTimeTextJp,
