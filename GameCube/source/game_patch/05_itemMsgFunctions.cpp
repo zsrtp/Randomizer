@@ -316,6 +316,7 @@ namespace mod::game_patch
                         // of them
                         uint8_t areaColorId = MSG_COLOR_WHITE_HEX;
                         uint32_t dungeonAreaMsgId;
+                        addTheText = false;
 
                         switch ( itemId )
                         {
