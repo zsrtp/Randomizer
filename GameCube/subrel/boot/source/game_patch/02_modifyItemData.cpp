@@ -205,6 +205,10 @@ namespace mod::game_patch
                 &itemResourcePtr[items::Ilias_Charm],
                 sizeof( d_item_data::ItemResource ) );
 
+        memcpy( &itemResourcePtr[items::Purple_Rupee_Links_House],
+                &itemResourcePtr[items::Purple_Rupee],
+                sizeof( d_item_data::ItemResource ) );
+
         uint32_t loopCount = sizeof( itemsWithNoFieldModel ) / sizeof( itemsWithNoFieldModel[0] );
         for ( uint32_t i = 0; i < loopCount; i++ )
         {

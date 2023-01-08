@@ -72,7 +72,6 @@ namespace mod
     KEEP_VAR uint8_t seedRelAction = SEED_ACTION_NONE;
     bool modifyShopModels = false;
     bool instantTextEnabled = false;
-    bool autoMashThroughTextEnabled = true;     // Set to false and remove this comment when properly implemented
 
 #ifdef TP_EU
     KEEP_VAR libtp::tp::d_s_logo::Languages currentLanguage = libtp::tp::d_s_logo::Languages::uk;
@@ -803,30 +802,42 @@ namespace mod
 
         // If Link is in wolf form, then we want to change the entrance type to prevent a softlock caused by Link repeatedly
         // voiding out.
-        if ( playerStatusPtr->currentForm == 1 )
+
+        libtp::tp::d_stage::stage_actor_data_class* allPLYR = i_data->mDzrDataPointer;
+
+        for ( int32_t i = 0; i < num; i++ )
         {
-            libtp::tp::d_stage::stage_actor_data_class* allPLYR = i_data->mDzrDataPointer;
+            uint8_t* mParameter = reinterpret_cast<uint8_t*>( &allPLYR[i].mParameter );
+            uint8_t* entranceType = &mParameter[2];
 
-            for ( int32_t i = 0; i < num; i++ )
+            switch ( *entranceType )
             {
-                uint8_t* mParameter = reinterpret_cast<uint8_t*>( &allPLYR[i].mParameter );
-                uint8_t* entranceType = &mParameter[2];
-
-                switch ( *entranceType )
+                // Only replace the entrance type if it is a door.
+                case 0x80:
+                case 0xA0:
+                case 0xB0:
                 {
-                    // Only replace the entrance type if it is a door.
-                    case 0x80:
-                    case 0xA0:
-                    case 0xB0:
+                    if ( playerStatusPtr->currentForm == 1 )
                     {
                         // Change the entrance type to play the animation of walking out of the loading zone instead of entering
                         // through the door.
                         *entranceType = 0x50;
-                        break;
                     }
-                    default:
-                        break;
+                    break;
                 }
+
+                case 0xD0:
+                {
+                    if ( libtp::tp::d_a_alink::checkStageName(
+                             libtp::data::stage::allStages[libtp::data::stage::stageIDs::Lake_Hylia] ) &&
+                         !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::CLEARED_LANAYRU_TWILIGHT ) )
+                    {
+                        *entranceType = 0x50;
+                    }
+                    break;
+                }
+                default:
+                    break;
             }
         }
         return return_dStage_playerInit( stageDt, i_data, num, raw_data );

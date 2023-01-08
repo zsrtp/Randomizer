@@ -64,8 +64,12 @@ namespace mod::events
             return;
         }
 
+        using namespace libtp::tp;
+        using namespace libtp::data;
+
         libtp::tp::d_com_inf_game::dComIfG_play* playPtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.play;
-        libtp::tp::d_stage::dStage_startStage* startStagePtr = &playPtr->mStartStage;
+        d_save::dSv_info_c* savePtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save;
+        d_stage::dStage_startStage* startStagePtr = &playPtr->mStartStage;
 
         const char* currentStage = startStagePtr->mStage;
         int32_t currentRoom = startStagePtr->mRoomNo;
@@ -82,23 +86,24 @@ namespace mod::events
         if ( ( strcmp( playPtr->mNextStage.stageValues.mStage, "F_SP103" ) == 0 ) && ( currentRoom == 1 ) &&
              ( currentPoint == 0x1 ) )     // If we are spawning in Ordon for the first time.
         {
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle = 180;
+            savePtr->save_file.player.player_status_b.skyAngle = 180;
 
-            if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::CLEARED_FARON_TWILIGHT ) )
+            if ( d_a_alink::dComIfGs_isEventBit( flags::CLEARED_FARON_TWILIGHT ) )
             {
-                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.horse_place.mPos.y =
+                savePtr->save_file.player.horse_place.mPos.y =
                     -1000.f;     // Place Epona out of bounds in Faron if the twilight has been cleared since the game will
                                  // spawn her in the air.
             }
         }
 
-        // Check to see if currently in Snowpeak Ruins
-        if ( strcmp( currentStage, libtp::data::stage::allStages[libtp::data::stage::stageIDs::City_in_the_Sky] ) == 0 )
+        // Check to see if currently in City and our last visited stage was not City.
+        if ( ( strcmp( currentStage, stage::allStages[stage::stageIDs::City_in_the_Sky] ) == 0 ) && ( currentRoom == 0x0 ) &&
+             ( currentPoint == 0x3 ) )
         {
-            libtp::tp::d_save::offSwitch_dSv_memBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
-                                                     0xA );     // Fan in main room active
-            libtp::tp::d_save::offSwitch_dSv_memBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
-                                                     0xF );     // Main Room 1F explored
+            d_save::offSwitch_dSv_memBit( &savePtr->memory.temp_flags,
+                                          0xA );     // Fan in main room active
+            d_save::offSwitch_dSv_memBit( &savePtr->memory.temp_flags,
+                                          0xF );     // Main Room 1F explored
         }
 
         randomizer->overrideEventARC();
@@ -1360,7 +1365,7 @@ namespace mod::events
     {
         using namespace libtp::tp::m_do_controller_pad;
 
-        if ( autoMashThroughTextEnabled )
+        if ( instantTextEnabled )
         {
             // Automash through text if B is held
             if ( padInfo->mButtonFlags & PadInputs::Button_B )
