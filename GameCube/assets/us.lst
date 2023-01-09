@@ -428,3 +428,6 @@
 80015edc:mountArchive__execute
 // JKRArchivePri.o
 802D65A4:JKRArchive_findFsResource
+
+// d_menu_fmap2D.o
+801d7994:checkPlayerWarpAccept

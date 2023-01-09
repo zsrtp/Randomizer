@@ -139,8 +139,7 @@ namespace mod::user_patch
             }
         }
 
-        if ( *reinterpret_cast<uint32_t*>( lanternColor ) !=
-             0xffffffff )     // Don't set the value if there isn't a replacement
+        if ( *reinterpret_cast<uint32_t*>( lanternColor ) != 0x502814ff )     // Don't set the value if it is already vanilla
         {
             using namespace libtp::tp::d_a_alink;
             // Set lantern variables
