@@ -19,11 +19,14 @@
 #include "tp/dzx.h"
 #include "tp/f_op_actor.h"
 #include "tp/m_do_controller_pad.h"
+#include "tp/rel/d_a_obj_Lv5Key.h"
 
 namespace mod::events
 {
-    typedef bool ( *CMEB )( void* );
-    extern CMEB checkNpcTransform;
+    typedef void ( *daObjLv5Key_Wait_Def )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* );
+    typedef bool ( *daObjLifeContainer_Create_Def )( void* );
+    typedef void ( *daObjLifeContainer_setEffect_Def )( void* );
+    typedef bool ( *CheckNpcTransform_Def )( void* );
 
     extern libtp::tp::dzx::ACTR GanonBarrierActor;
     extern libtp::tp::dzx::ACTR EponaActor;

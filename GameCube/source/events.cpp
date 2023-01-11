@@ -29,10 +29,10 @@
 namespace mod::events
 {
     // REL patching trampolines
-    void ( *return_daObjLv5Key_c__Wait )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* _this ) = nullptr;
-    void ( *return_daObjLifeContainer_c__Create )( void* _this ) = nullptr;
-    void ( *return_daObjLifeContainer_c__setEffect )( void* _this ) = nullptr;
-    CMEB checkNpcTransform = nullptr;
+    daObjLv5Key_Wait_Def return_daObjLv5Key_c__Wait = nullptr;
+    daObjLifeContainer_Create_Def return_daObjLifeContainer_c__Create = nullptr;
+    daObjLifeContainer_setEffect_Def return_daObjLifeContainer_c__setEffect = nullptr;
+    CheckNpcTransform_Def checkNpcTransform = nullptr;
     uint8_t timeChange = 0;
 
     libtp::tp::dzx::ACTR GanonBarrierActor =
@@ -245,7 +245,7 @@ namespace mod::events
             {
                 // Adjust freestanding heart field model height based on the current item being created
                 return_daObjLifeContainer_c__Create = libtp::patch::hookFunction(
-                    reinterpret_cast<void ( * )( void* )>( relPtrRaw + 0x5D0 ),
+                    reinterpret_cast<daObjLifeContainer_Create_Def>( relPtrRaw + 0x5D0 ),
                     []( void* daObjLifePtr )
                     {
                         using namespace libtp::data;
@@ -339,12 +339,12 @@ namespace mod::events
                                 break;
                             }
                         }
-                        return_daObjLifeContainer_c__Create( daObjLifePtr );
+                        return return_daObjLifeContainer_c__Create( daObjLifePtr );
                     } );
 
                 // Remove glow and sparkle from rupees and Poe Souls
                 return_daObjLifeContainer_c__setEffect = libtp::patch::hookFunction(
-                    reinterpret_cast<void ( * )( void* )>( relPtrRaw + 0x764 ),
+                    reinterpret_cast<daObjLifeContainer_setEffect_Def>( relPtrRaw + 0x764 ),
                     []( void* daObjLifePtr )
                     {
                         using namespace libtp::data;
@@ -494,69 +494,68 @@ namespace mod::events
             case 0x189:
             {
                 // Prevent Snowpeak Ruins Small Key softlock
-                return_daObjLv5Key_c__Wait =
-                    libtp::patch::hookFunction( reinterpret_cast<void ( * )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* )>(
-                                                    relPtrRaw + d_a_obj_Lv5Key__Wait_offset ),
-                                                []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr )
-                                                {
-                                                    float playerPos[3];
-                                                    libtp::tp::d_map_path_dmap::getMapPlayerPos( playerPos );
+                return_daObjLv5Key_c__Wait = libtp::patch::hookFunction(
+                    reinterpret_cast<daObjLv5Key_Wait_Def>( relPtrRaw + d_a_obj_Lv5Key__Wait_offset ),
+                    []( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* lv5KeyPtr )
+                    {
+                        float playerPos[3];
+                        libtp::tp::d_map_path_dmap::getMapPlayerPos( playerPos );
 
-                                                    // Will compare xPos if 0x4000 & yRot is nonzero (lock is on x-axis).
-                                                    // Will compare zPos if 0x4000 & yRot is zero (lock is on z-axis).
-                                                    // Will compare greater if 0x8000 & yRot is nonzero.
-                                                    // This implementation reduces instruction count to 49 compared to naive
-                                                    // approach's 86.
+                        // Will compare xPos if 0x4000 & yRot is nonzero (lock is on x-axis).
+                        // Will compare zPos if 0x4000 & yRot is zero (lock is on z-axis).
+                        // Will compare greater if 0x8000 & yRot is nonzero.
+                        // This implementation reduces instruction count to 49 compared to naive
+                        // approach's 86.
 
-                                                    bool isCompareX = lv5KeyPtr->mCollisionRot.y & 0x4000;
-                                                    bool isCompareGreater = lv5KeyPtr->mCollisionRot.y & 0x8000;
+                        bool isCompareX = lv5KeyPtr->mCollisionRot.y & 0x4000;
+                        bool isCompareGreater = lv5KeyPtr->mCollisionRot.y & 0x8000;
 
-                                                    float* playerAxisPos = nullptr;
-                                                    float* lockPos = nullptr;
+                        float* playerAxisPos = nullptr;
+                        float* lockPos = nullptr;
 
-                                                    if ( isCompareX )
-                                                    {
-                                                        playerAxisPos = &playerPos[0];
-                                                        lockPos = &( lv5KeyPtr->mCurrent.mPosition.x );
-                                                    }
-                                                    else
-                                                    {
-                                                        playerAxisPos = &playerPos[2];
-                                                        lockPos = &( lv5KeyPtr->mCurrent.mPosition.z );
-                                                    }
+                        if ( isCompareX )
+                        {
+                            playerAxisPos = &playerPos[0];
+                            lockPos = &( lv5KeyPtr->mCurrent.mPosition.x );
+                        }
+                        else
+                        {
+                            playerAxisPos = &playerPos[2];
+                            lockPos = &( lv5KeyPtr->mCurrent.mPosition.z );
+                        }
 
-                                                    bool swapDoorSides = false;
+                        bool swapDoorSides = false;
 
-                                                    if ( isCompareGreater )
-                                                    {
-                                                        if ( *playerAxisPos > *lockPos + 17 )
-                                                        {
-                                                            swapDoorSides = true;
-                                                            *lockPos += 34;
-                                                        }
-                                                    }
-                                                    else if ( *playerAxisPos < *lockPos - 17 )
-                                                    {
-                                                        swapDoorSides = true;
-                                                        *lockPos -= 34;
-                                                    }
+                        if ( isCompareGreater )
+                        {
+                            if ( *playerAxisPos > *lockPos + 17 )
+                            {
+                                swapDoorSides = true;
+                                *lockPos += 34;
+                            }
+                        }
+                        else if ( *playerAxisPos < *lockPos - 17 )
+                        {
+                            swapDoorSides = true;
+                            *lockPos -= 34;
+                        }
 
-                                                    if ( swapDoorSides )
-                                                    {
-                                                        lv5KeyPtr->mCollisionRot.y ^= 0x8000;       // facing
-                                                        lv5KeyPtr->mCurrent.mAngle.y ^= 0x8000;     // speed direction
-                                                    }
+                        if ( swapDoorSides )
+                        {
+                            lv5KeyPtr->mCollisionRot.y ^= 0x8000;       // facing
+                            lv5KeyPtr->mCurrent.mAngle.y ^= 0x8000;     // speed direction
+                        }
 
-                                                    // Call original function
-                                                    return_daObjLv5Key_c__Wait( lv5KeyPtr );
-                                                } );
+                        // Call original function
+                        return_daObjLv5Key_c__Wait( lv5KeyPtr );
+                    } );
                 break;
             }
             // d_a_midna.rel
             // Midna
             case 0x33:
             {
-                checkNpcTransform = reinterpret_cast<CMEB>( relPtrRaw + 0x8A0C );
+                checkNpcTransform = reinterpret_cast<CheckNpcTransform_Def>( relPtrRaw + 0x8A0C );
                 break;
             }
             // d_a_e_s1.rel
@@ -1077,11 +1076,11 @@ namespace mod::events
             }
             else
             {
-                CMEB tempCMEB = checkNpcTransform;
-                if ( tempCMEB )
+                CheckNpcTransform_Def tempCheckNpcTransform = checkNpcTransform;
+                if ( tempCheckNpcTransform )
                 {
                     // Use the game's default checks for if the player can currently transform
-                    if ( !tempCMEB( libtp::tp::d_a_player::m_midnaActor ) )
+                    if ( !tempCheckNpcTransform( libtp::tp::d_a_player::m_midnaActor ) )
                     {
                         return;
                     }
