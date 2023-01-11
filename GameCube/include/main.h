@@ -119,8 +119,8 @@ namespace mod
         return rando->m_Enabled;
     }
 
-    int32_t initCreatePlayerItem( uint8_t itemID,
-                                  uint8_t flag,
+    int32_t initCreatePlayerItem( uint32_t itemID,
+                                  uint32_t flag,
                                   const float pos[3],
                                   int32_t roomNo,
                                   const int16_t rot[3],

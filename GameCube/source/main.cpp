@@ -698,14 +698,14 @@ namespace mod
         prevFrameAnalogR = padInfo->mTriggerRight;
     }
 
-    int32_t initCreatePlayerItem( uint8_t itemID,
-                                  uint8_t flag,
+    int32_t initCreatePlayerItem( uint32_t itemID,
+                                  uint32_t flag,
                                   const float pos[3],
                                   int32_t roomNo,
                                   const int16_t rot[3],
                                   const float scale[3] )
     {
-        uint32_t params = 0xFF0000 | ( flag << 0x8 ) | itemID;
+        uint32_t params = 0xFF0000 | ( ( flag & 0xFF ) << 0x8 ) | ( itemID & 0xFF );
         return libtp::tp::f_op_actor_mng::fopAcM_create( 539, params, pos, roomNo, rot, scale, -1 );
     }
 
