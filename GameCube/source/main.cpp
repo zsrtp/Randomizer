@@ -698,6 +698,17 @@ namespace mod
         prevFrameAnalogR = padInfo->mTriggerRight;
     }
 
+    int32_t initCreatePlayerItem( uint8_t itemID,
+                                  uint8_t flag,
+                                  const float pos[3],
+                                  int32_t roomNo,
+                                  const int16_t rot[3],
+                                  const float scale[3] )
+    {
+        uint32_t params = 0xFF0000 | ( flag << 0x8 ) | itemID;
+        return libtp::tp::f_op_actor_mng::fopAcM_create( 539, params, pos, roomNo, rot, scale, -1 );
+    }
+
     KEEP_FUNC bool handle_do_unlink( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
     {
         events::onRELUnlink( randomizer, dmc );
@@ -865,7 +876,6 @@ namespace mod
         {
             parameters = 0x9F;
         }
-        uint32_t params = 0xFF0000 | ( parameters & 0xFF ) << 0x8 | ( itemID & 0xFF );
 
         // If we are in hyrule field then the function is running to give us the Hot Springwater heart piece and we want it to
         // spawn on the ground.
@@ -873,7 +883,8 @@ namespace mod
         {
             *const_cast<float*>( &pos[1] ) = -190.f;
         }
-        return libtp::tp::f_op_actor_mng::fopAcM_create( 539, params, pos, roomNo, rot, scale, -1 );
+
+        return initCreatePlayerItem( itemID, parameters & 0xFF, pos, roomNo, rot, scale );
     }
 
     KEEP_FUNC int32_t handle_createItemForMidBoss( const float pos[3],
@@ -884,14 +895,14 @@ namespace mod
                                                    int32_t unk6,
                                                    int32_t itemPickupFlag )
     {
-        if ( static_cast<uint32_t>( item ) == libtp::data::items::Boomerang )
+        if ( item == libtp::data::items::Boomerang )
         {
             // Spawn the appropriate item
             uint8_t itemID = randomizer->getBossItem( item );
             itemID = game_patch::_04_verifyProgressiveItem( mod::randomizer, itemID );
-            uint32_t params = itemID | 0xFFFF00;
-            return libtp::tp::f_op_actor_mng::fopAcM_create( 539, params, pos, roomNo, rot, scale, -1 );
+            return initCreatePlayerItem( itemID, 0xFF, pos, roomNo, rot, scale );
         }
+
         return return_createItemForMidBoss( pos, item, roomNo, rot, scale, unk6, itemPickupFlag );
     }
 

@@ -119,6 +119,13 @@ namespace mod
         return rando->m_Enabled;
     }
 
+    int32_t initCreatePlayerItem( uint8_t itemID,
+                                  uint8_t flag,
+                                  const float pos[3],
+                                  int32_t roomNo,
+                                  const int16_t rot[3],
+                                  const float scale[3] );
+
     // Function hook handlers & trampolines
     void handle_fapGm_Execute( void );
     extern void ( *return_fapGm_Execute )( void );
