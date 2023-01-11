@@ -145,7 +145,7 @@ namespace mod::rando
                     {
                         case rando::ReplacementType::Item:
                         {
-                            uint8_t itemID = relOverride & 0xFF;
+                            uint32_t itemID = relOverride & 0xFF;
                             itemID = game_patch::_04_verifyProgressiveItem( this, itemID );
                             relOverride = ( relOverride & 0xFFFFFF00 ) | itemID;
                             break;
@@ -160,7 +160,7 @@ namespace mod::rando
                             }
 
                             itemID = static_cast<int32_t>(
-                                game_patch::_04_verifyProgressiveItem( this, static_cast<uint8_t>( itemID ) ) );
+                                game_patch::_04_verifyProgressiveItem( this, static_cast<uint32_t>( itemID ) ) );
 
                             relOverride = ( relOverride & 0xFFFF0000 ) | ( itemID + 0x65 );
                             break;
@@ -350,7 +350,7 @@ namespace mod::rando
             {
                 case rando::ReplacementType::Item:
                 {
-                    replacementValue = game_patch::_04_verifyProgressiveItem( this, static_cast<uint8_t>( replacementValue ) );
+                    replacementValue = game_patch::_04_verifyProgressiveItem( this, replacementValue );
 
                     uint32_t replacementAddress = fileAddr + replacementOffset;
                     *reinterpret_cast<uint8_t*>( ( replacementAddress ) ) = replacementValue;
@@ -397,7 +397,7 @@ namespace mod::rando
                 }
                 case rando::ReplacementType::ItemMessage:
                 {
-                    replacementValue = game_patch::_04_verifyProgressiveItem( this, static_cast<uint8_t>( replacementValue ) );
+                    replacementValue = game_patch::_04_verifyProgressiveItem( this, replacementValue );
 
                     uint32_t replacementAddress = fileAddr + replacementOffset;
                     *reinterpret_cast<uint16_t*>( ( replacementAddress ) ) = replacementValue + 0x65;
@@ -415,7 +415,7 @@ namespace mod::rando
                         reinterpret_cast<uint32_t>( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mMsgDtArchive[0] ) +
                         0x64 );
 
-                    replacementValue = game_patch::_04_verifyProgressiveItem( this, static_cast<uint8_t>( replacementValue ) );
+                    replacementValue = game_patch::_04_verifyProgressiveItem( this, replacementValue );
                     uint32_t replacementAddress = adjustedFilePtr + replacementOffset;
                     *reinterpret_cast<uint16_t*>( ( replacementAddress ) ) = replacementValue + 0x65;
 
@@ -430,7 +430,7 @@ namespace mod::rando
                     uint32_t adjustedFilePtr =
                         reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
 
-                    replacementValue = game_patch::_04_verifyProgressiveItem( this, static_cast<uint8_t>( replacementValue ) );
+                    replacementValue = game_patch::_04_verifyProgressiveItem( this, replacementValue );
                     uint32_t replacementAddress = adjustedFilePtr + replacementOffset;
                     *reinterpret_cast<uint16_t*>( ( replacementAddress ) ) = replacementValue + 0x65;
 

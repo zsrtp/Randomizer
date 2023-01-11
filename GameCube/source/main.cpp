@@ -870,7 +870,7 @@ namespace mod
         (void) unk7;
 
         // Spawn the appropriate item with model
-        uint8_t itemID = randomizer->getBossItem( item );
+        uint32_t itemID = randomizer->getBossItem( item );
         itemID = game_patch::_04_verifyProgressiveItem( mod::randomizer, itemID );
         if ( item == libtp::data::items::Heart_Container )     // used for Dungeon Heart Containers
         {
@@ -898,7 +898,7 @@ namespace mod
         if ( item == libtp::data::items::Boomerang )
         {
             // Spawn the appropriate item
-            uint8_t itemID = randomizer->getBossItem( item );
+            uint32_t itemID = randomizer->getBossItem( item );
             itemID = game_patch::_04_verifyProgressiveItem( mod::randomizer, itemID );
             return initCreatePlayerItem( itemID, 0xFF, pos, roomNo, rot, scale );
         }
