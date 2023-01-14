@@ -36,7 +36,7 @@ namespace mod::events
     uint8_t timeChange = 0;
 
     libtp::tp::dzx::ACTR GanonBarrierActor =
-        { "Obj_gb", 0x800F0601, 10778.207f, 3096.82666f, -62651.0078f, static_cast<int16_t>( -164.7121 ), 0x4000, 0, 0xFFFF };
+        { "Obj_gb", 0x800F0601, 10778.207f, 3096.82666f, -62651.0078f, static_cast<int16_t>( -164 ), 0x4000, 0, 0xFFFF };
 
     libtp::tp::dzx::ACTR AuruActr =
         { "Rafrel", 0x00001D01, -116486.945f, -13860.f, 58533.0078f, 0, static_cast<int16_t>( 0xCCCD ), 0, 0xFFFF };
@@ -595,9 +595,24 @@ namespace mod::events
             // Golden Wolf
             case 0x13B:
             {
-                // Change the flag that the faron wolf checks for when it spawns.
+                // Change the flag that the faron wolf checks for when it spawns. The original value, is structured like this:
+                // XXXXYYYY  where XXXX is the flag for the Ending Blow and YYYY is for having howled at the DMT stone. Since we
+                // don't want the wolf to disappear once we have the ending blow, I changed it to use an unused flag in the
+                // event bit list (I confirmed with Taka that it is unused). So in reality, we are only changing the upper two
+                // bits
                 performStaticASMReplacement( relPtrRaw + 0x5B80,
                                              0x01EB01EC );     // static values. 0x01EB for faron wolf and 0x01EC for ordon wolf
+
+                // Apply an ASM patch to d_a_npc_GWolf::isDelete that checks for if the wolf should spawn and spawn a
+                // freestanding item in it's place.
+                /*libtp::patch::writeStandardBranches(  relPtrRaw + 0x20B4 ,
+                                                      assembly::asmReplaceGWolfWithItemStart ,
+                                                      assembly::asmReplaceGWolfWithItemEnd  );
+
+                performStaticASMReplacement( relPtrRaw + 0x20B8,
+                                             0x41820038 );     // beq 0x38 - Branch to have isDelete return if the return value
+                                                               // condition listed in asmReplaceGWolfWithItem is not met
+                */
                 break;
             }
         }

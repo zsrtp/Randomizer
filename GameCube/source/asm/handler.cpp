@@ -105,6 +105,20 @@ namespace mod::assembly
                  libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::GOT_BOTTLE_FROM_JOVANI ) );
     }
 
+    bool handleReplaceGWolfWithItem( bool evtResult, void* daNpcGWolf )
+    {
+        if ( !evtResult )
+        {
+            initCreatePlayerItem( 0x32,
+                                  0x9E,
+                                  reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daNpcGWolf ) + 0x4d0 ),
+                                  libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo,
+                                  nullptr,
+                                  nullptr );
+        }
+        return evtResult;
+    }
+
 #ifdef TP_JP
     void unpatchMapGlitch( libtp::tp::d_a_alink::daAlink* d_a_alink )
     {

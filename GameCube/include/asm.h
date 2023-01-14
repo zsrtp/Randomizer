@@ -93,6 +93,11 @@ namespace mod::assembly
         void asmCheck60PoeReward();
         bool handleCheck60PoeReward( uint8_t poeCount );
 
+        // d_a_npc_GWolf.o
+        void asmReplaceGWolfWithItemStart( void );
+        void asmReplaceGWolfWithItemEnd( void );
+        bool handleReplaceGWolfWithItem( bool evtResult, void* daNpcGWolf );
+
         // d_a_alink.o
 #ifdef TP_JP
         void asmUnpatchMapGlitchStart();
