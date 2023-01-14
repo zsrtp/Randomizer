@@ -84,30 +84,18 @@ namespace mod::game_patch
 
         // Modify dKyr_odour_draw to draw the Reekfish path so long as we have smelled the fish once.
         uint32_t odourDrawAddress = reinterpret_cast<uint32_t>( libtp::tp::d_kankyo_rain::dKyr_odour_draw );
-
-        libtp::patch::writeBranchBL( reinterpret_cast<void*>( odourDrawAddress + 0xBC ),
-                                     reinterpret_cast<void*>( assembly::asmShowReekfishPath ) );
+        libtp::patch::writeBranchBL( odourDrawAddress + 0xBC, assembly::asmShowReekfishPath );
 
         // Modify getRupeeMax calls in screenSet to display the proper wallet in the pause menu
         uint32_t screenSetAddress = reinterpret_cast<uint32_t>( libtp::tp::d_menu_collect::dMenuCollect_screenSet );
-
-        libtp::patch::writeBranchBL( reinterpret_cast<void*>( screenSetAddress + 0xDCC ),
-                                     reinterpret_cast<void*>( events::getPauseRupeeMax ) );
-
-        libtp::patch::writeBranchBL( reinterpret_cast<void*>( screenSetAddress + 0xDF0 ),
-                                     reinterpret_cast<void*>( events::getPauseRupeeMax ) );
+        libtp::patch::writeBranchBL( screenSetAddress + 0xDCC, events::getPauseRupeeMax );
+        libtp::patch::writeBranchBL( screenSetAddress + 0xDF0, events::getPauseRupeeMax );
 
         // Modify isSend button checks to allow for automashing through text
         uint32_t isSendAddress = reinterpret_cast<uint32_t>( libtp::tp::d_msg_object::isSend );
-
-        libtp::patch::writeBranchBL( reinterpret_cast<void*>( isSendAddress + 0xE4 ),
-                                     reinterpret_cast<void*>( events::autoMashThroughText ) );
-
-        libtp::patch::writeBranchBL( reinterpret_cast<void*>( isSendAddress + 0x160 ),
-                                     reinterpret_cast<void*>( events::autoMashThroughText ) );
-
-        libtp::patch::writeBranchBL( reinterpret_cast<void*>( isSendAddress + 0x1B8 ),
-                                     reinterpret_cast<void*>( events::autoMashThroughText ) );
+        libtp::patch::writeBranchBL( isSendAddress + 0xE4, events::autoMashThroughText );
+        libtp::patch::writeBranchBL( isSendAddress + 0x160, events::autoMashThroughText );
+        libtp::patch::writeBranchBL( isSendAddress + 0x1B8, events::autoMashThroughText );
 #ifdef TP_JP
         uint32_t checkWarpStartAddress = reinterpret_cast<uint32_t>( libtp::tp::d_a_alink::checkWarpStart );
 
@@ -115,9 +103,9 @@ namespace mod::game_patch
         *reinterpret_cast<uint32_t*>( checkWarpStartAddress + 0x15C ) = ASM_NOP;     // Previous 0x901e0570
 
         // Patch checkWarpStart to allow map glitch to work
-        libtp::patch::writeStandardBranches( reinterpret_cast<void*>( checkWarpStartAddress + 0x64 ),
-                                             reinterpret_cast<void*>( assembly::asmUnpatchMapGlitchStart ),
-                                             reinterpret_cast<void*>( assembly::asmUnpatchMapGlitchEnd ) );
+        libtp::patch::writeStandardBranches( checkWarpStartAddress + 0x64,
+                                             assembly::asmUnpatchMapGlitchStart,
+                                             assembly::asmUnpatchMapGlitchEnd );
 #endif
     }
 }     // namespace mod::game_patch

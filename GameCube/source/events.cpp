@@ -156,9 +156,9 @@ namespace mod::events
             // Generic Poe
             case 0x00C8:
             {
-                libtp::patch::writeStandardBranches( reinterpret_cast<void*>( relPtrRaw + e_hp_ExecDead_liOffset ),
-                                                     reinterpret_cast<void*>( assembly::asmAdjustPoeItemStart ),
-                                                     reinterpret_cast<void*>( assembly::asmAdjustPoeItemEnd ) );
+                libtp::patch::writeStandardBranches( relPtrRaw + e_hp_ExecDead_liOffset,
+                                                     assembly::asmAdjustPoeItemStart,
+                                                     assembly::asmAdjustPoeItemEnd );
 
                 // Disable Poe increment (handled through item_get_func; see game_patches)
                 performStaticASMReplacement( relPtrRaw + e_hp_ExecDead_incOffset, 0x60000000 );
@@ -169,9 +169,9 @@ namespace mod::events
             // Arbiter's Poe
             case 0x00DD:
             {
-                libtp::patch::writeStandardBranches( reinterpret_cast<void*>( relPtrRaw + e_po_ExecDead_liOffset ),
-                                                     reinterpret_cast<void*>( assembly::asmAdjustAGPoeItemStart ),
-                                                     reinterpret_cast<void*>( assembly::asmAdjustAGPoeItemEnd ) );
+                libtp::patch::writeStandardBranches( relPtrRaw + e_po_ExecDead_liOffset,
+                                                     assembly::asmAdjustAGPoeItemStart,
+                                                     assembly::asmAdjustAGPoeItemEnd );
 
                 // Disable Poe increment (handled through item_get_func; see game_patches)
                 performStaticASMReplacement( relPtrRaw + e_po_ExecDead_incOffset, 0x60000000 );
@@ -196,9 +196,9 @@ namespace mod::events
             case 0x147:
             {
                 // Give a an item based on which Golden Wolf you learned a skill from.
-                libtp::patch::writeStandardBranches( reinterpret_cast<void*>( relPtrRaw + 0x34D0 ),
-                                                     reinterpret_cast<void*>( assembly::asmAdjustHiddenSkillItemStart ),
-                                                     reinterpret_cast<void*>( assembly::asmAdjustHiddenSkillItemEnd ) );
+                libtp::patch::writeStandardBranches( relPtrRaw + 0x34D0,
+                                                     assembly::asmAdjustHiddenSkillItemStart,
+                                                     assembly::asmAdjustHiddenSkillItemEnd );
                 break;
             }
             // d_a_npc_ins.rel
@@ -210,9 +210,9 @@ namespace mod::events
                 {
                     if ( seed->m_numBugRewardChecks > 0 )
                     {
-                        libtp::patch::writeStandardBranches( reinterpret_cast<void*>( relPtrRaw + 0x21B8 ),
-                                                             reinterpret_cast<void*>( assembly::asmAdjustBugRewardStart ),
-                                                             reinterpret_cast<void*>( assembly::asmAdjustBugRewardEnd ) );
+                        libtp::patch::writeStandardBranches( relPtrRaw + 0x21B8,
+                                                             assembly::asmAdjustBugRewardStart,
+                                                             assembly::asmAdjustBugRewardEnd );
                     }
                 }
                 break;
@@ -221,9 +221,7 @@ namespace mod::events
             // Fishing Hole Rod
             case 0x32:
             {
-                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0xB2B0 ),
-                                             reinterpret_cast<void*>( libtp::tp::d_item::execItemGet ) );
-
+                libtp::patch::writeBranchBL( relPtrRaw + 0xB2B0, libtp::tp::d_item::execItemGet );
                 break;
             }
             // d_a_Statue_Tag.rel
@@ -233,9 +231,9 @@ namespace mod::events
                 // Replace sky character
                 performStaticASMReplacement( relPtrRaw + 0xB7C, 0x48000020 );     // b 0x20
 
-                libtp::patch::writeStandardBranches( reinterpret_cast<void*>( relPtrRaw + 0xB9C ),
-                                                     reinterpret_cast<void*>( assembly::asmAdjustSkyCharacterStart ),
-                                                     reinterpret_cast<void*>( assembly::asmAdjustSkyCharacterEnd ) );
+                libtp::patch::writeStandardBranches( relPtrRaw + 0xB9C,
+                                                     assembly::asmAdjustSkyCharacterStart,
+                                                     assembly::asmAdjustSkyCharacterEnd );
 
                 break;
             }
@@ -369,8 +367,7 @@ namespace mod::events
                             }
                         }
                     } );
-                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x1804 ),
-                                             reinterpret_cast<void*>( assembly::asmAdjustFieldItemParams ) );
+                libtp::patch::writeBranchBL( relPtrRaw + 0x1804, assembly::asmAdjustFieldItemParams );
                 break;
             }
 
@@ -378,17 +375,16 @@ namespace mod::events
             // Item held in Link's hand upon giving/recieving it
             case 0x3F:
             {
-                libtp::patch::writeStandardBranches( reinterpret_cast<void*>( relPtrRaw + 0x1E50 ),
-                                                     reinterpret_cast<void*>( assembly::asmAdjustCreateItemParamsStart ),
-                                                     reinterpret_cast<void*>( assembly::asmAdjustCreateItemParamsEnd ) );
+                libtp::patch::writeStandardBranches( relPtrRaw + 0x1E50,
+                                                     assembly::asmAdjustCreateItemParamsStart,
+                                                     assembly::asmAdjustCreateItemParamsEnd );
                 break;
             }
             // d_a_obj_bosswarp.rel
             // Post-Boss Cutscene
             case 0x5B:
             {
-                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x1884 ),
-                                             reinterpret_cast<void*>( libtp::tp::d_item::execItemGet ) );
+                libtp::patch::writeBranchBL( relPtrRaw + 0x1884, libtp::tp::d_item::execItemGet );
                 performStaticASMReplacement( relPtrRaw + 0x1888, 0x480000A8 );     // b 0xA8
                 // Replace dungeon reward that is given after beating a boss and show the appropriate text.
                 break;
@@ -406,8 +402,7 @@ namespace mod::events
             case 0x15C:
             {
                 // Branch to a custom function that checks for the 20 soul flag as well as soul count.
-                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x14D4 ),
-                                             reinterpret_cast<void*>( assembly::asmCheck60PoeReward ) );
+                libtp::patch::writeBranchBL( relPtrRaw + 0x14D4, assembly::asmCheck60PoeReward );
                 break;
             }
             // d_a_npc_ykm.rel
@@ -446,9 +441,7 @@ namespace mod::events
             case 0xD2:
             {
                 // Transform back into link if you are wolf when defeating Ook
-                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x4A88 ),
-                                             reinterpret_cast<void*>( assembly::asmTransformOokWolf ) );
-
+                libtp::patch::writeBranchBL( relPtrRaw + 0x4A88, assembly::asmTransformOokWolf );
                 break;
             }
             // d_a_obj_swBallC.rel
@@ -482,9 +475,9 @@ namespace mod::events
             case 0x8B:
             {
                 // Transform back into link if you are wolf when defeating Diababa
-                libtp::patch::writeStandardBranches( reinterpret_cast<void*>( relPtrRaw + 0x21B8 ),
-                                                     reinterpret_cast<void*>( assembly::asmTransformDiababaWolfStart ),
-                                                     reinterpret_cast<void*>( assembly::asmTransformDiababaWolfEnd ) );
+                libtp::patch::writeStandardBranches( relPtrRaw + 0x21B8,
+                                                     assembly::asmTransformDiababaWolfStart,
+                                                     assembly::asmTransformDiababaWolfEnd );
 
                 break;
             }
@@ -566,8 +559,7 @@ namespace mod::events
                          libtp::data::stage::allStages[libtp::data::stage::stageIDs::Upper_Zoras_River] ) )
                 {
                     // Set human flags After Defeating Shadow Beasts By Iza
-                    libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x407C ),
-                                                 reinterpret_cast<void*>( assembly::asmAdjustIzaWolf ) );
+                    libtp::patch::writeBranchBL( relPtrRaw + 0x407C, assembly::asmAdjustIzaWolf );
                 }
                 break;
             }
@@ -588,8 +580,7 @@ namespace mod::events
             case 0x10C:
             {
                 // Modify draw function to draw the Reekfish path so long as we have smelled the fish once.
-                libtp::patch::writeBranchBL( reinterpret_cast<void*>( relPtrRaw + 0x66C ),
-                                             reinterpret_cast<void*>( assembly::asmShowReekfishPath ) );
+                libtp::patch::writeBranchBL( relPtrRaw + 0x66C, assembly::asmShowReekfishPath );
                 break;
             }
             // d_a_npc_ks.rel

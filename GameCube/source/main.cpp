@@ -260,9 +260,9 @@ namespace mod
         // gets called
         uint32_t do_link_address = reinterpret_cast<uint32_t>( libtp::tp::dynamic_link::do_link );
 
-        libtp::patch::writeStandardBranches( reinterpret_cast<void*>( do_link_address + 0x250 ),
-                                             reinterpret_cast<void*>( assembly::asmDoLinkHookStart ),
-                                             reinterpret_cast<void*>( assembly::asmDoLinkHookEnd ) );
+        libtp::patch::writeStandardBranches( do_link_address + 0x250,
+                                             assembly::asmDoLinkHookStart,
+                                             assembly::asmDoLinkHookEnd );
 
         // Call the boot REL
 #ifdef DVD
