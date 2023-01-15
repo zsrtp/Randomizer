@@ -1,4 +1,4 @@
-The assembly used for the codehandler in this folder was taken from the **Neogamma** project, which can be found [here](https://github.com/iGlitch/Neogamma/tree/master/code_handler_source). The **Neogamma** project is licensed under **GNU GPL, version 2**. so a license file for that has been included in this folder.
+The assembly used for the codehandler in this folder was taken from the **Neogamma** project, which can be found [here](https://github.com/iGlitch/Neogamma/tree/master/code_handler_source). The **Neogamma** project is licensed under **GNU GPL, version 2**, so a license file for that has been included in this folder.
 
 The assembly is intended to be built using the following three programs (in which **file** is replaced with the filename):
 ```
