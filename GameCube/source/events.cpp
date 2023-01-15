@@ -32,8 +32,7 @@ namespace mod::events
     daObjLv5Key_Wait_Def return_daObjLv5Key_c__Wait = nullptr;
     daObjLifeContainer_Create_Def return_daObjLifeContainer_c__Create = nullptr;
     daObjLifeContainer_setEffect_Def return_daObjLifeContainer_c__setEffect = nullptr;
-    daMidna_CheckMetamorphoseEnableBase_Def return_CheckMetamorphoseEnableBase = nullptr;
-    uint8_t timeChange = 0;
+    daMidna_checkMetamorphoseEnableBase_Def return_daMidna_c__checkMetamorphoseEnableBase = nullptr;
 
     libtp::tp::dzx::ACTR GanonBarrierActor =
         { "Obj_gb", 0x800F0601, 10778.207f, 3096.82666f, -62651.0078f, static_cast<int16_t>( -164 ), 0x4000, 0, 0xFFFF };
@@ -49,6 +48,8 @@ namespace mod::events
     libtp::tp::dzx::ACTR ImpPoeActr = { "E_hp", 0xFF031E00, 4531.19f, -30.f, 2631.961f, 0, 0, 0x0, 0xFFFF };
     libtp::tp::dzx::ACTR CampBoarActr =
         { "E_wb", 0xFFFFFFFF, 1650.f, 0.f, 1250.f, 0, static_cast<int16_t>( 0xA000 ), 0x0, 0xFFFF };
+
+    uint8_t timeChange = 0;
 
     void onLoad( rando::Randomizer* randomizer )
     {
@@ -548,8 +549,8 @@ namespace mod::events
             // Midna
             case 0x33:
             {
-                return_CheckMetamorphoseEnableBase =
-                    libtp::patch::hookFunction( reinterpret_cast<daMidna_CheckMetamorphoseEnableBase_Def>( relPtrRaw + 0x8A0C ),
+                return_daMidna_c__checkMetamorphoseEnableBase =
+                    libtp::patch::hookFunction( reinterpret_cast<daMidna_checkMetamorphoseEnableBase_Def>( relPtrRaw + 0x8A0C ),
                                                 []( void* daMidnaPtr )
                                                 {
                                                     rando::Seed* seed;
@@ -563,7 +564,7 @@ namespace mod::events
                                                     }
 
                                                     // Call the original function
-                                                    return return_CheckMetamorphoseEnableBase( daMidnaPtr );
+                                                    return return_daMidna_c__checkMetamorphoseEnableBase( daMidnaPtr );
                                                 } );
                 break;
             }
@@ -651,7 +652,8 @@ namespace mod::events
             // Midna
             case 0x33:
             {
-                return_CheckMetamorphoseEnableBase = libtp::patch::unhookFunction( return_CheckMetamorphoseEnableBase );
+                return_daMidna_c__checkMetamorphoseEnableBase =
+                    libtp::patch::unhookFunction( return_daMidna_c__checkMetamorphoseEnableBase );
                 break;
             }
             // d_a_obj_life_container.rel
@@ -1097,10 +1099,10 @@ namespace mod::events
                 libtp::tp::d_a_alink::procCoMetamorphoseInit( linkMapPtr );
                 return;
             }
-            else if ( return_CheckMetamorphoseEnableBase )
+            else if ( return_daMidna_c__checkMetamorphoseEnableBase )
             {
                 // Use the game's default checks for if the player can currently transform
-                if ( !return_CheckMetamorphoseEnableBase( libtp::tp::d_a_player::m_midnaActor ) )
+                if ( !return_daMidna_c__checkMetamorphoseEnableBase( libtp::tp::d_a_player::m_midnaActor ) )
                 {
                     return;
                 }
