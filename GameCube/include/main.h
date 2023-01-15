@@ -89,8 +89,6 @@ namespace mod
     extern uint32_t randNext;
     extern const char* m_DonationText;
 
-    void hookFunctions();
-    void initRandNext();
     rando::Seed* getCurrentSeed( rando::Randomizer* rando );
     void setScreen( bool state );     // Sets visibility of console
     bool checkButtonsPressedThisFrame( uint32_t buttons );
@@ -100,7 +98,6 @@ namespace mod
     float intToFloat( int32_t value );
     void handleInput( uint32_t inputs );
     void handleFoolishItem();
-    void initArcLookupTable();
 
     // Inline getConsole, as it's just a shortcut to get a reference to the console variable
     inline libtp::display::Console& getConsole()
@@ -125,6 +122,12 @@ namespace mod
                                   int32_t roomNo,
                                   const int16_t rot[3],
                                   const float scale[3] );
+
+    // Subrel functions
+    void hookFunctions();
+    void initRandNext();
+    void initArcLookupTable();
+    void writeCodehandlerToMemory();
 
     // Function hook handlers & trampolines
     void handle_fapGm_Execute( void );

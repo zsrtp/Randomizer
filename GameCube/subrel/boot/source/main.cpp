@@ -26,8 +26,15 @@
 #include "tp/JKRMemArchive.h"
 #include "tp/m_Do_dvd_thread.h"
 #include "gc_wii/dvdfs.h"
+#include "gc_wii/OSCache.h"
+#include "codehandler.h"
+#include "memory.h"
+#include "gc_wii/OSInterrupt.h"
+#include "gc_wii/vi.h"
+#include "asm.h"
 
 #include <cstdint>
+#include <cstring>
 
 namespace mod
 {
@@ -36,6 +43,9 @@ namespace mod
         // Set up the console
         // Align to uint8_t, as that's the largest variable type in the Console class
         mod::console = new ( sizeof( uint8_t ) ) libtp::display::Console( CONSOLE_PROTECTED_LINES );
+
+        // Set up the codehandler
+        writeCodehandlerToMemory();
 
         // Initialize randNext
         initRandNext();
@@ -237,5 +247,65 @@ namespace mod
         // lookupTable[ResObjectCWShd] = DVDConvertPathToEntrynum( "/res/Object/CWShd.arc" );
         // lookupTable[ResObjectSWShd] = DVDConvertPathToEntrynum( "/res/Object/SWShd.arc" );
         // lookupTable[ResObjectHyShd] = DVDConvertPathToEntrynum( "/res/Object/HyShd.arc" );
+    }
+
+    void writeCodehandlerToMemory()
+    {
+        // Clear the cache for the codehandler flag and source address to be safe
+        uint8_t* codehandlerIsWrittenAddress = reinterpret_cast<uint8_t*>( 0x800013FF );
+        libtp::gc_wii::os_cache::DCFlushRange( codehandlerIsWrittenAddress, sizeof( uint8_t ) );
+
+        uint32_t* dst = reinterpret_cast<uint32_t*>( 0x80001800 );
+        const uint32_t size = codehandler::codehandlerSize;
+        libtp::memory::clear_DC_IC_Cache( dst, size );
+
+        // If something is already at 0x80001800, then assume a codehandler is already in place
+        bool codehandlerIsWritten = static_cast<bool>( *codehandlerIsWrittenAddress );
+        if ( dst[0] != 0 )
+        {
+            // If the codehandler has not been manually written, then assume an external codehandler is being used
+            if ( !codehandlerIsWritten )
+            {
+                return;
+            }
+        }
+        else if ( codehandlerIsWritten )
+        {
+            // Somehow nothing is at 0x80001800 when the codehandler was previously written
+            return;
+        }
+
+        // Disable interrupts to be safe
+        bool enable = libtp::gc_wii::os_interrupt::OSDisableInterrupts();
+
+        // Write the codehandler to memory if necessary
+        if ( !codehandlerIsWritten )
+        {
+            // Perform a safety clear before writing the codehandler
+            libtp::memory::clearMemory( dst, size );
+
+            // Copy the codehandler to 0x80001800
+            memcpy( dst, reinterpret_cast<const void*>( codehandler::codehandler ), size );
+
+            // Copy the game id, disc number, and version number to 0x80001800
+            memcpy( dst, reinterpret_cast<void*>( 0x80000000 ), 8 );
+
+            // Clear the cache for the codehandler
+            libtp::memory::clear_DC_IC_Cache( dst, size );
+
+            // Set the flag for the codehandler being manually written and clear the cache for it
+            *codehandlerIsWrittenAddress = 1;
+            libtp::gc_wii::os_cache::DCFlushRange( codehandlerIsWrittenAddress, sizeof( uint8_t ) );
+        }
+
+        // Hook VISetNextFrameBuffer to branch to the codehandler
+        uint32_t VISetNextFrameBufferAddress = reinterpret_cast<uint32_t>( libtp::gc_wii::vi::VISetNextFrameBuffer );
+
+        libtp::patch::writeStandardBranches( VISetNextFrameBufferAddress + 0x44,
+                                             assembly::asmCallCodehandlerStart,
+                                             assembly::asmCallCodehandlerEnd );
+
+        // Restore interrupts
+        libtp::gc_wii::os_interrupt::OSRestoreInterrupts( enable );
     }
 }     // namespace mod

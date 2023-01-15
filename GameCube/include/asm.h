@@ -98,6 +98,10 @@ namespace mod::assembly
         void asmReplaceGWolfWithItemEnd( void );
         bool handleReplaceGWolfWithItem( bool evtResult, void* daNpcGWolf );
 
+        // vi.o
+        void asmCallCodehandlerStart();
+        void asmCallCodehandlerEnd();
+
         // d_a_alink.o
 #ifdef TP_JP
         void asmUnpatchMapGlitchStart();

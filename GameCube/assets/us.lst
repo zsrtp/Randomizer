@@ -1,3 +1,5 @@
+800018A8:codehandlerStartAddress
+
 // memory
 80003458:memset
 80003540:memcpy
@@ -431,3 +433,6 @@
 
 // d_menu_fmap2D.o
 801d7994:checkPlayerWarpAccept
+
+// vi.o
+8034D7C4:VISetNextFrameBuffer

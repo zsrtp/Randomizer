@@ -4,6 +4,7 @@
 **/*.elf
 **/*.gci
 **/build.*
+**/codehandler/*.bin
 **/autobuild.sh
 
 Generator/src/obj
