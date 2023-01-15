@@ -216,10 +216,6 @@ namespace mod
         // d_meter functions
         return_resetMiniGameItem =
             patch::hookFunction( libtp::tp::d_meter2_info::resetMiniGameItem, mod::handle_resetMiniGameItem );
-
-        // d_menu funcitons
-        return_checkPlayerWarpAccept =
-            patch::hookFunction( libtp::tp::d_menu_fmap2D::checkPlayerWarpAccept, mod::handle_checkPlayerWarpAccept );
     }
 
     void initRandNext()

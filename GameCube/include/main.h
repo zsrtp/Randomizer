@@ -431,9 +431,5 @@ namespace mod
     // d_meter functions
     void handle_resetMiniGameItem( libtp::tp::d_meter2_info::G_Meter2_Info* gMeter2InfoPtr, bool minigameFlag );
     extern void ( *return_resetMiniGameItem )( libtp::tp::d_meter2_info::G_Meter2_Info* gMeter2InfoPtr, bool minigameFlag );
-
-    // d_menu functions
-    bool handle_checkPlayerWarpAccept( void* mapPtr );
-    extern bool ( *return_checkPlayerWarpAccept )( void* mapPtr );
 }     // namespace mod
 #endif

@@ -26,7 +26,7 @@ namespace mod::events
     typedef void ( *daObjLv5Key_Wait_Def )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* );
     typedef bool ( *daObjLifeContainer_Create_Def )( void* );
     typedef void ( *daObjLifeContainer_setEffect_Def )( void* );
-    typedef bool ( *CheckNpcTransform_Def )( void* );
+    typedef bool ( *daMidna_CheckMetamorphoseEnableBase_Def )( void* );
 
     extern libtp::tp::dzx::ACTR GanonBarrierActor;
     extern libtp::tp::dzx::ACTR EponaActor;

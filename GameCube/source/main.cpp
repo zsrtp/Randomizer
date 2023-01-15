@@ -250,9 +250,6 @@ namespace mod
     KEEP_VAR void ( *return_resetMiniGameItem )( libtp::tp::d_meter2_info::G_Meter2_Info* gMeter2InfoPtr,
                                                  bool minigameFlag ) = nullptr;
 
-    // d_menu functions
-    KEEP_VAR bool ( *return_checkPlayerWarpAccept )( void* mapPtr ) = nullptr;
-
     void main()
     {
         // do_link needs to be hooked immediately, as otherwise we may not be able to modify f_pc_profile_lst.rel, which gets
@@ -1659,19 +1656,6 @@ namespace mod
 
         // Run the original function as we want to clear the other minigame flags
         return_resetMiniGameItem( gMeter2InfoPtr, minigameFlag );
-    }
-
-    KEEP_FUNC bool handle_checkPlayerWarpAccept( void* mapPtr )
-    {
-        rando::Seed* seed;
-        if ( seed = getCurrentSeed( randomizer ), seed )
-        {
-            if ( seed->m_Header->transformAnywhere )
-            {
-                return true;
-            }
-        }
-        return return_checkPlayerWarpAccept( mapPtr );
     }
 
     KEEP_FUNC bool handle_checkBootsMoveAnime( libtp::tp::d_a_alink::daAlink* d_a_alink, int32_t param_1 )

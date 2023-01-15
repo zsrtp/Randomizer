@@ -32,7 +32,7 @@ namespace mod::events
     daObjLv5Key_Wait_Def return_daObjLv5Key_c__Wait = nullptr;
     daObjLifeContainer_Create_Def return_daObjLifeContainer_c__Create = nullptr;
     daObjLifeContainer_setEffect_Def return_daObjLifeContainer_c__setEffect = nullptr;
-    CheckNpcTransform_Def checkNpcTransform = nullptr;
+    daMidna_CheckMetamorphoseEnableBase_Def return_CheckMetamorphoseEnableBase = nullptr;
     uint8_t timeChange = 0;
 
     libtp::tp::dzx::ACTR GanonBarrierActor =
@@ -548,7 +548,23 @@ namespace mod::events
             // Midna
             case 0x33:
             {
-                checkNpcTransform = reinterpret_cast<CheckNpcTransform_Def>( relPtrRaw + 0x8A0C );
+                return_CheckMetamorphoseEnableBase =
+                    libtp::patch::hookFunction( reinterpret_cast<daMidna_CheckMetamorphoseEnableBase_Def>( relPtrRaw + 0x8A0C ),
+                                                []( void* daMidnaPtr )
+                                                {
+                                                    rando::Seed* seed;
+                                                    if ( seed = getCurrentSeed( mod::randomizer ), seed )
+                                                    {
+                                                        if ( seed->m_Header->transformAnywhere )
+                                                        {
+                                                            // Allow transforming regardless of whether there are people around
+                                                            return true;
+                                                        }
+                                                    }
+
+                                                    // Call the original function
+                                                    return return_CheckMetamorphoseEnableBase( daMidnaPtr );
+                                                } );
                 break;
             }
             // d_a_e_s1.rel
@@ -635,7 +651,7 @@ namespace mod::events
             // Midna
             case 0x33:
             {
-                checkNpcTransform = nullptr;
+                return_CheckMetamorphoseEnableBase = libtp::patch::unhookFunction( return_CheckMetamorphoseEnableBase );
                 break;
             }
             // d_a_obj_life_container.rel
@@ -1074,22 +1090,19 @@ namespace mod::events
 
         if ( randoIsEnabled( randomizer ) )
         {
-            if ( randomizer->m_Seed->m_Header->transformAnywhere )
+            rando::Seed* seed;
+            if ( ( seed = randomizer->m_Seed, seed ) && seed->m_Header->transformAnywhere )
             {
                 // Allow transforming regardless of whether there are people around
                 libtp::tp::d_a_alink::procCoMetamorphoseInit( linkMapPtr );
                 return;
             }
-            else
+            else if ( return_CheckMetamorphoseEnableBase )
             {
-                CheckNpcTransform_Def tempCheckNpcTransform = checkNpcTransform;
-                if ( tempCheckNpcTransform )
+                // Use the game's default checks for if the player can currently transform
+                if ( !return_CheckMetamorphoseEnableBase( libtp::tp::d_a_player::m_midnaActor ) )
                 {
-                    // Use the game's default checks for if the player can currently transform
-                    if ( !tempCheckNpcTransform( libtp::tp::d_a_player::m_midnaActor ) )
-                    {
-                        return;
-                    }
+                    return;
                 }
             }
         }
