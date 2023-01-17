@@ -25,6 +25,7 @@
 #include "tp/J2DPicture.h"
 #include "data/flags.h"
 #include "tp/m_do_controller_pad.h"
+#include "asm_templates.h"
 
 namespace mod::events
 {
@@ -127,7 +128,7 @@ namespace mod::events
                          libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) )
                 {
                     // Set the call to checkOpenDoor to always return true when in SPR
-                    performStaticASMReplacement( relPtrRaw + 0xD68, 0x38600001 );     // li r3, 1
+                    performStaticASMReplacement( relPtrRaw + 0xD68, ASM_LOAD_IMMEDIATE( 3, 1 ) );
                 }
 
                 break;
@@ -137,7 +138,7 @@ namespace mod::events
             case 0x29:
             {
                 // Nop out the bne- that causes chests to play the cutscene for big items.
-                performStaticASMReplacement( relPtrRaw + 0xA58, 0x60000000 );
+                performStaticASMReplacement( relPtrRaw + 0xA58, ASM_NOP );
                 break;
             }
             // d_a_kytag11.rel
@@ -148,7 +149,7 @@ namespace mod::events
                          libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hyrule_Field] ) )
                 {
                     // Nop out the instruction that causes the time flow to not consider the mTimeSpeed variable in Field.
-                    performStaticASMReplacement( relPtrRaw + 0x2CC, 0x60000000 );     // nop
+                    performStaticASMReplacement( relPtrRaw + 0x2CC, ASM_NOP );
                 }
 
                 break;
@@ -162,7 +163,7 @@ namespace mod::events
                                                      assembly::asmAdjustPoeItemEnd );
 
                 // Disable Poe increment (handled through item_get_func; see game_patches)
-                performStaticASMReplacement( relPtrRaw + e_hp_ExecDead_incOffset, 0x60000000 );
+                performStaticASMReplacement( relPtrRaw + e_hp_ExecDead_incOffset, ASM_NOP );
 
                 break;
             }
@@ -175,7 +176,7 @@ namespace mod::events
                                                      assembly::asmAdjustAGPoeItemEnd );
 
                 // Disable Poe increment (handled through item_get_func; see game_patches)
-                performStaticASMReplacement( relPtrRaw + e_po_ExecDead_incOffset, 0x60000000 );
+                performStaticASMReplacement( relPtrRaw + e_po_ExecDead_incOffset, ASM_NOP );
                 break;
             }
             // d_a_obj_kshutter.rel
@@ -188,7 +189,7 @@ namespace mod::events
                          2,
                          libtp::data::stage::allStages[libtp::data::stage::stageIDs::Lakebed_Temple] ) )
                 {
-                    performStaticASMReplacement( relPtrRaw + 0x1198, 0x60000000 );     // Previous: 0x3803ffff
+                    performStaticASMReplacement( relPtrRaw + 0x1198, ASM_NOP );     // Previous: subi r0,r3,1
                 }
                 break;
             }
@@ -230,7 +231,7 @@ namespace mod::events
             case 0x85:     // d_a_Tag_Statue - Owl Statues
             {
                 // Replace sky character
-                performStaticASMReplacement( relPtrRaw + 0xB7C, 0x48000020 );     // b 0x20
+                performStaticASMReplacement( relPtrRaw + 0xB7C, ASM_BRANCH( 0x20 ) );
 
                 libtp::patch::writeStandardBranches( relPtrRaw + 0xB9C,
                                                      assembly::asmAdjustSkyCharacterStart,
@@ -386,7 +387,7 @@ namespace mod::events
             case 0x5B:
             {
                 libtp::patch::writeBranchBL( relPtrRaw + 0x1884, libtp::tp::d_item::execItemGet );
-                performStaticASMReplacement( relPtrRaw + 0x1888, 0x480000A8 );     // b 0xA8
+                performStaticASMReplacement( relPtrRaw + 0x1888, ASM_BRANCH( 0xA8 ) );
                 // Replace dungeon reward that is given after beating a boss and show the appropriate text.
                 break;
             }
@@ -395,7 +396,7 @@ namespace mod::events
             case 0x121:
             {
                 // Prevent Bo from talking after the chest has been opened
-                performStaticASMReplacement( relPtrRaw + 0x1A44, 0x48000028 );     // b 0x28
+                performStaticASMReplacement( relPtrRaw + 0x1A44, ASM_BRANCH( 0x28 ) );
                 break;
             }
             // d_a_npc_pouya.rel
@@ -411,7 +412,7 @@ namespace mod::events
             case 0x17F:
             {
                 // Prevent Yeto from leaving the dungeon if the player has the boss key
-                performStaticASMReplacement( relPtrRaw + 0x1524, 0x38600000 );     // li r3,0
+                performStaticASMReplacement( relPtrRaw + 0x1524, ASM_LOAD_IMMEDIATE( 3, 0 ) );
                 break;
             }
             // d_a_npc_ykw.rel
@@ -419,9 +420,8 @@ namespace mod::events
             case 0x180:
             {
                 // Prevent Yeta from leaving the dungeon if the player has the boss key
-                performStaticASMReplacement( relPtrRaw + 0x1038, 0x38600000 );
-
-                performStaticASMReplacement( relPtrRaw + 0x1000, 0x386000ED );     // li r3,0
+                performStaticASMReplacement( relPtrRaw + 0x1038, ASM_LOAD_IMMEDIATE( 3, 0 ) );
+                performStaticASMReplacement( relPtrRaw + 0x1000, ASM_LOAD_IMMEDIATE( 3, 0xED ) );
                 break;
             }
             // d_a_e_md.rel
@@ -432,7 +432,7 @@ namespace mod::events
                          libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) )
                 {
                     // Branch to code to create actor if we are in snowpeak ruins, regardless of BossFlags value.
-                    performStaticASMReplacement( relPtrRaw + 0x14B8, 0x4800001c );     // b 0x1C
+                    performStaticASMReplacement( relPtrRaw + 0x14B8, ASM_BRANCH( 0x1C ) );
                 }
 
                 break;
@@ -450,7 +450,7 @@ namespace mod::events
             case 0x280:
             {
                 // The cutscene gives link the MS during the cutscene by default, so we just nop out the link to the function.
-                performStaticASMReplacement( relPtrRaw + 0xB50, 0x60000000 );
+                performStaticASMReplacement( relPtrRaw + 0xB50, ASM_NOP );
                 break;
             }
             // d_a_npc_rafrel.rel
@@ -459,7 +459,7 @@ namespace mod::events
             {
                 performStaticASMReplacement(
                     relPtrRaw + 0x6C4,
-                    0x38600131 );     // set auru to check for whether he gave the player the item to spawn.
+                    ASM_LOAD_IMMEDIATE( 3, 0x131 ) );     // set auru to check for whether he gave the player the item to spawn.
                 break;
             }
             // d_a_obj_smallkey.rel
@@ -468,7 +468,7 @@ namespace mod::events
             {
                 performStaticASMReplacement(
                     relPtrRaw + 0xC88,
-                    0x48000058 );     // patch instruction to prevent game from removing bulblin camp key.
+                    ASM_BRANCH( 0x58 ) );     // patch instruction to prevent game from removing bulblin camp key.
                 break;
             }
             // d_a_b_bq.rel
@@ -585,8 +585,8 @@ namespace mod::events
             case 0x1B7:
             {
                 // set wait timer to 1
-                performStaticASMReplacement( relPtrRaw + 0x0FCC, 0x38000001 );     // li r4, 1
-                performStaticASMReplacement( relPtrRaw + 0x1038, 0x38000001 );     // li r4, 1
+                performStaticASMReplacement( relPtrRaw + 0x0FCC, ASM_LOAD_IMMEDIATE( 0, 1 ) );
+                performStaticASMReplacement( relPtrRaw + 0x1038, ASM_LOAD_IMMEDIATE( 0, 1 ) );
 
                 // set y_pos of drop to be at ground level
                 performStaticASMReplacement( relPtrRaw + 0x2474, 0x00000000 );
@@ -605,7 +605,7 @@ namespace mod::events
             case 0x14A:
             {
                 // Prevent the game from triggering the 4 monkeys cutscene in the lobby.
-                performStaticASMReplacement( relPtrRaw + 0x9CE8, 0x2c030001 );     // cmpwi r3,1
+                performStaticASMReplacement( relPtrRaw + 0x9CE8, ASM_COMPARE_WORD_IMMEDIATE( 3, 1 ) );
                 break;
             }
             // d_a_npc_gwolf.rel
@@ -620,15 +620,17 @@ namespace mod::events
                 performStaticASMReplacement( relPtrRaw + 0x5B80,
                                              0x01EB01EC );     // static values. 0x01EB for faron wolf and 0x01EC for ordon wolf
 
+                /*
                 // Apply an ASM patch to d_a_npc_GWolf::isDelete that checks for if the wolf should spawn and spawn a
                 // freestanding item in it's place.
-                /*libtp::patch::writeStandardBranches(  relPtrRaw + 0x20B4 ,
-                                                      assembly::asmReplaceGWolfWithItemStart ,
-                                                      assembly::asmReplaceGWolfWithItemEnd  );
+                libtp::patch::writeStandardBranches( relPtrRaw + 0x20B4,
+                                                     assembly::asmReplaceGWolfWithItemStart,
+                                                     assembly::asmReplaceGWolfWithItemEnd );
 
-                performStaticASMReplacement( relPtrRaw + 0x20B8,
-                                             0x41820038 );     // beq 0x38 - Branch to have isDelete return if the return value
-                                                               // condition listed in asmReplaceGWolfWithItem is not met
+                performStaticASMReplacement(
+                    relPtrRaw + 0x20B8,
+                    ASM_BRANCH_EQUAL_MINUS( 0x38 ) );     // Branch to have isDelete return if the return value condition listed
+                                                          // in asmReplaceGWolfWithItem is not met
                 */
                 break;
             }

@@ -1,7 +1,7 @@
 #include <cstdint>
 
 #include "game_patch/game_patch.h"
-#include "user_patch/user_patch.h"
+#include "asm_templates.h"
 #include "tp/d_item.h"
 #include "tp/d_msg_flow.h"
 #include "tp/d_a_alink.h"
@@ -46,7 +46,8 @@ namespace mod::game_patch
         // Modify the skipper function to check whether or not a cutscene is skippable instead of whether the player skips the
         // CS. This effectively auto-skips all skippable cutscenes.
         uint32_t skipperFunctionAddress = reinterpret_cast<uint32_t>( libtp::tp::d_event::skipper );
-        *reinterpret_cast<uint32_t*>( skipperFunctionAddress + 0x54 ) = 0x281e0000;     // Previous 0x4540004e7
+        *reinterpret_cast<uint32_t*>( skipperFunctionAddress + 0x54 ) =
+            ASM_COMPARE_LOGICAL_WORD_IMMEDIATE( 30, 0 );     // Previous rlwinm r0,r0,0,19,19
 
         // Modify the Wooden Sword function to not set a region flag by default by nopping out the function call to isSwitch
         uint32_t woodenSwordFunctionAddress = reinterpret_cast<uint32_t>( libtp::tp::d_item::item_func_WOOD_STICK );
@@ -75,7 +76,7 @@ namespace mod::game_patch
 
         // Patch setSceneName so that the Morpheel Boss Music plays even if MDH is skipped.
         uint32_t setSceneNameAddress = reinterpret_cast<uint32_t>( libtp::z2audiolib::z2scenemgr::setSceneName );
-        *reinterpret_cast<uint32_t*>( setSceneNameAddress + 0x216C ) = 0x48000028;     // Previous 0x41820028
+        *reinterpret_cast<uint32_t*>( setSceneNameAddress + 0x216C ) = ASM_BRANCH( 0x28 );     // Previous beq- 0x28
 
         uint32_t mDoDvdThd_mountArchive_c__execute =
             reinterpret_cast<uint32_t>( libtp::tp::m_Do_dvd_thread::mountArchive__execute );

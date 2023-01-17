@@ -6,6 +6,7 @@
  */
 
 #include "user_patch/user_patch.h"
+#include "asm_templates.h"
 #include "main.h"
 #include "rando/randomizer.h"
 #include "tp/d_menu_collect.h"
