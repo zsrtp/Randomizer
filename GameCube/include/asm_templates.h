@@ -14,25 +14,27 @@
 
 inline uint32_t ASM_BRANCH_EQUAL_PLUS( int32_t value )
 {
-    if ( static_cast<int16_t>( ( value ) ) >= 0 )
+    int16_t tempValue = value & 0xFFFF;
+    if ( tempValue >= 0 )
     {
-        return ASM_BRANCH_CONDITIONAL( 13, 2, value );
+        return ASM_BRANCH_CONDITIONAL( 13, 2, tempValue );
     }
     else
     {
-        return ASM_BRANCH_CONDITIONAL( 12, 2, value );
+        return ASM_BRANCH_CONDITIONAL( 12, 2, tempValue );
     }
 }
 
 inline uint32_t ASM_BRANCH_EQUAL_MINUS( int32_t value )
 {
-    if ( static_cast<int16_t>( ( value ) ) >= 0 )
+    int16_t tempValue = value & 0xFFFF;
+    if ( tempValue >= 0 )
     {
-        return ASM_BRANCH_CONDITIONAL( 12, 2, value );
+        return ASM_BRANCH_CONDITIONAL( 12, 2, tempValue );
     }
     else
     {
-        return ASM_BRANCH_CONDITIONAL( 13, 2, value );
+        return ASM_BRANCH_CONDITIONAL( 13, 2, tempValue );
     }
 }
 
