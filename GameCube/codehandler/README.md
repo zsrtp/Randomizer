@@ -8,4 +8,4 @@ powerpc-eabi-strip --strip-debug --strip-all --discard-all -o file.elf -F elf32-
 
 powerpc-eabi-objcopy -I elf32-powerpc -O binary file.elf file.bin
 ```
-The raw hex of the binary can then be extraced and used in the main project's code.
+The binary can then be passed to `file2header.py` to create a header file that contains the raw bytes of the binary in a **uint8_t** array, which can then be used in the main project's code. Additonal arguments for `file2header.py` can be seen by passing **-h** to it.
