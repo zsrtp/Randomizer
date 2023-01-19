@@ -251,9 +251,10 @@ namespace mod
         uint8_t* codehandlerIsWrittenAddress = reinterpret_cast<uint8_t*>( 0x800013FF );
         libtp::gc_wii::os_cache::DCFlushRange( codehandlerIsWrittenAddress, sizeof( uint8_t ) );
 
+        // Only the first 4 bytes of the codehandler source address's cache needs to be cleared, as we only need to check the
+        // first 4 bytes to determine if anything else should be done
         uint32_t* dst = reinterpret_cast<uint32_t*>( 0x80001800 );
-        const uint32_t size = codehandler::codehandlerSize;
-        libtp::memory::clear_DC_IC_Cache( dst, size );
+        libtp::memory::clear_DC_IC_Cache( dst, sizeof( uint32_t ) );
 
         // If something is already at 0x80001800, then assume a codehandler is already in place
         bool codehandlerIsWritten = static_cast<bool>( *codehandlerIsWrittenAddress );
@@ -278,13 +279,20 @@ namespace mod
         if ( !codehandlerIsWritten )
         {
             // Perform a safety clear before writing the codehandler
+            const uint32_t size = codehandler::codehandlerSize;
             libtp::memory::clearMemory( dst, size );
 
             // Copy the codehandler to 0x80001800
             memcpy( dst, reinterpret_cast<const void*>( codehandler::codehandler ), size );
 
             // Copy the game id, disc number, and version number to 0x80001800
-            memcpy( dst, reinterpret_cast<void*>( 0x80000000 ), 8 );
+            // These use a total of 8 bytes, so handle as uint32_t variables for simplicity
+            uint32_t* gameInfo = reinterpret_cast<uint32_t*>( 0x80000000 );
+            dst[0] = gameInfo[0];
+            dst[1] = gameInfo[1];
+
+            // Uncomment out the next line to enable pause at boot
+            // *reinterpret_cast<uint32_t*>( 0x80002774 ) = 1;
 
             // Clear the cache for the codehandler
             libtp::memory::clear_DC_IC_Cache( dst, size );
