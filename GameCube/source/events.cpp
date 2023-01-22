@@ -609,6 +609,12 @@ namespace mod::events
                 performStaticASMReplacement( relPtrRaw + 0x5B80,
                                              0x01EB01EC );     // static values. 0x01EB for faron wolf and 0x01EC for ordon wolf
 
+                // If a seed is not loaded, then use vanilla behavior
+                if ( !getCurrentSeed( randomizer ) )
+                {
+                    break;
+                }
+
                 // Apply an ASM patch to d_a_npc_GWolf::isDelete that checks for if the wolf should spawn and spawn a
                 // freestanding item in it's place.
                 libtp::patch::writeStandardBranches( relPtrRaw + 0x20B4,
@@ -619,7 +625,6 @@ namespace mod::events
                     relPtrRaw + 0x20B8,
                     ASM_BRANCH_EQUAL_MINUS( 0x38 ) );     // Branch to have isDelete return if the return value condition listed
                                                           // in asmReplaceGWolfWithItem is not met
-
                 break;
             }
         }
@@ -712,10 +717,7 @@ namespace mod::events
 
     void onHiddenSkill( rando::Randomizer* randomizer, void* daNpcGWolfPtr )
     {
-        if ( getCurrentSeed( randomizer ) )
-        {
-            randomizer->getHiddenSkillItem( daNpcGWolfPtr );
-        }
+        randomizer->getHiddenSkillItem( daNpcGWolfPtr );
     }
 
     void setSaveFileEventFlag( uint16_t flag )

@@ -138,10 +138,11 @@ namespace mod::rando
         {
             for ( uint32_t i = 0; i < numReplacements; i++ )
             {
-                if ( rel->id == relReplacements[i].moduleID )
+                RELCheck* currentRelReplacement = &relReplacements[i];
+                if ( rel->id == currentRelReplacement->moduleID )
                 {
-                    uint32_t relOverride = relReplacements[i].override;
-                    switch ( static_cast<rando::ReplacementType>( relReplacements[i].replacementType ) )
+                    uint32_t relOverride = currentRelReplacement->override;
+                    switch ( static_cast<rando::ReplacementType>( currentRelReplacement->replacementType ) )
                     {
                         case rando::ReplacementType::Item:
                         {
@@ -170,7 +171,7 @@ namespace mod::rando
                             break;
                         }
                     }
-                    uint32_t offset = reinterpret_cast<uint32_t>( rel ) + relReplacements[i].offset;
+                    uint32_t offset = reinterpret_cast<uint32_t>( rel ) + currentRelReplacement->offset;
                     events::performStaticASMReplacement( offset, relOverride );
                 }
             }
@@ -277,12 +278,16 @@ namespace mod::rando
 
     int32_t Randomizer::getPoeItem( uint8_t flag )
     {
-        for ( uint32_t i = 0; i < m_Seed->m_numLoadedPOEChecks; i++ )
+        uint32_t numLoadedPOEChecks = m_Seed->m_numLoadedPOEChecks;
+        POECheck* poeChecks = &m_Seed->m_POEChecks[0];
+
+        for ( uint32_t i = 0; i < numLoadedPOEChecks; i++ )
         {
-            if ( flag == m_Seed->m_POEChecks[i].flag )
+            POECheck* currentPOECheck = &poeChecks[i];
+            if ( flag == currentPOECheck->flag )
             {
                 // Return new item
-                return static_cast<int32_t>( m_Seed->m_POEChecks[i].item );
+                return static_cast<int32_t>( currentPOECheck->item );
             }
         }
 
@@ -293,17 +298,21 @@ namespace mod::rando
     uint8_t Randomizer::getSkyCharacter()
     {
         // Return the item id if we only have one item to pick from, otherwise, check the room to get the character we want.
-        if ( m_Seed->m_numSkyBookChecks == 1 )
+        uint32_t numSkyBookChecks = m_Seed->m_numSkyBookChecks;
+        SkyCharacter* skyBookChecks = &m_Seed->m_SkyBookChecks[0];
+
+        if ( numSkyBookChecks == 1 )
         {
-            return m_Seed->m_SkyBookChecks[0].itemID;
+            return skyBookChecks[0].itemID;
         }
         else
         {
-            for ( uint32_t i = 0; i < m_Seed->m_numSkyBookChecks; i++ )
+            for ( uint32_t i = 0; i < numSkyBookChecks; i++ )
             {
-                if ( m_Seed->m_SkyBookChecks[i].roomID == libtp::tp::d_kankyo::env_light.currentRoom )
+                SkyCharacter* currentSkyBookCheck = &skyBookChecks[i];
+                if ( currentSkyBookCheck->roomID == libtp::tp::d_kankyo::env_light.currentRoom )
                 {
-                    return m_Seed->m_SkyBookChecks[i].itemID;
+                    return currentSkyBookCheck->itemID;
                 }
             }
         }
@@ -424,24 +433,28 @@ namespace mod::rando
     void Randomizer::overrideObjectARC( libtp::tp::d_resource::dRes_info_c* resourcePtr, const char* fileName )
     {
         m_Seed->LoadObjectARCChecks();
+        uint32_t fileSize = strlen( fileName );
+
         uint32_t numReplacements = m_Seed->m_numLoadedObjectArcReplacements;
-        uint8_t fileSize = strlen( fileName );
+        ObjectArchiveReplacement* objectArcReplacements = &m_Seed->m_ObjectArcReplacements[0];
 
         // Just because the game fetches the resource info doesn't mean that it got a match.
-        if ( resourcePtr->mArchive )
+        void* mArchive = resourcePtr->mArchive;
+        if ( mArchive )
         {
             // Loop through all ArcChecks and replace the item at an offset given the fileIndex.
             for ( uint32_t i = 0; i < numReplacements; i++ )
             {
-                if ( strncmp( fileName, m_Seed->m_ObjectArcReplacements[i].fileName, fileSize ) == 0 )
+                ObjectArchiveReplacement* currentObjectArcReplacement = &objectArcReplacements[i];
+
+                if ( strncmp( fileName, currentObjectArcReplacement->fileName, fileSize ) == 0 )
                 {
                     uint32_t replacementValue =
-                        game_patch::_04_verifyProgressiveItem( this, m_Seed->m_ObjectArcReplacements[i].replacementValue );
+                        game_patch::_04_verifyProgressiveItem( this, currentObjectArcReplacement->replacementValue );
 
-                    uint32_t archiveData =
-                        *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( resourcePtr->mArchive ) + 0x28 );
+                    uint32_t archiveData = *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( mArchive ) + 0x28 );
 
-                    uint32_t replacementAddress = archiveData + m_Seed->m_ObjectArcReplacements[i].offset;
+                    uint32_t replacementAddress = archiveData + currentObjectArcReplacement->offset;
                     *reinterpret_cast<uint8_t*>( ( replacementAddress ) ) = replacementValue;
 
                     libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint8_t ) );
@@ -460,12 +473,16 @@ namespace mod::rando
 
     uint8_t Randomizer::overrideBugReward( uint8_t bugID )
     {
-        for ( uint32_t i = 0; i < m_Seed->m_numBugRewardChecks; i++ )
+        uint32_t numBugRewardChecks = m_Seed->m_numBugRewardChecks;
+        BugReward* bugRewardChecks = &m_Seed->m_BugRewardChecks[0];
+
+        for ( uint32_t i = 0; i < numBugRewardChecks; i++ )
         {
-            if ( bugID == m_Seed->m_BugRewardChecks[i].bugID )
+            BugReward* currentBugRewardCheck = &bugRewardChecks[i];
+            if ( bugID == currentBugRewardCheck->bugID )
             {
                 // Return new item
-                return m_Seed->m_BugRewardChecks[i].itemID;
+                return currentBugRewardCheck->itemID;
             }
         }
         // Default
@@ -474,23 +491,33 @@ namespace mod::rando
 
     void Randomizer::getHiddenSkillItem( void* daNpcGWolfPtr )
     {
-        for ( uint32_t i = 0; i < m_Seed->m_numHiddenSkillChecks; i++ )
+        int32_t currentRoomNum = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo;
+        HiddenSkillCheck* hiddenSkillChecks = &m_Seed->m_HiddenSkillChecks[0];
+        uint32_t numHiddenSkillChecks = m_Seed->m_numHiddenSkillChecks;
+        uint32_t stageIDX = m_Seed->m_StageIDX;
+
+        for ( uint32_t i = 0; i < numHiddenSkillChecks; i++ )
         {
-            if ( m_Seed->m_StageIDX == m_Seed->m_HiddenSkillChecks[i].stageIDX )
+            HiddenSkillCheck* currentHiddenSkillCheck = &hiddenSkillChecks[i];
+
+            if ( stageIDX != currentHiddenSkillCheck->stageIDX )
             {
-                if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo ==
-                     m_Seed->m_HiddenSkillChecks[i].roomID )
-                {
-                    // Create a freestanding actor in the Golden Wolf's place using the values from the loaded check.
-                    initCreatePlayerItem( m_Seed->m_HiddenSkillChecks[i].itemID,
-                                          m_Seed->m_HiddenSkillChecks[i].flag,
-                                          reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daNpcGWolfPtr ) + 0x4d0 ),
-                                          libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo,
-                                          nullptr,
-                                          nullptr );
-                    return;
-                }
+                continue;
             }
+
+            if ( static_cast<uint32_t>( currentRoomNum ) != currentHiddenSkillCheck->roomID )
+            {
+                continue;
+            }
+
+            // Create a freestanding actor in the Golden Wolf's place using the values from the loaded check.
+            initCreatePlayerItem( currentHiddenSkillCheck->itemID,
+                                  currentHiddenSkillCheck->flag,
+                                  reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daNpcGWolfPtr ) + 0x4d0 ),
+                                  currentRoomNum,
+                                  nullptr,
+                                  nullptr );
+            break;
         }
     }
 
