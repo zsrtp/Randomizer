@@ -50,11 +50,6 @@ namespace mod::assembly
         void asmAdjustAGPoeItemEnd( void );
         int32_t handleAdjustAGPoeItem( void* );
 
-        // d_a_npc_kn.rel
-        void asmAdjustHiddenSkillItemStart();
-        void asmAdjustHiddenSkillItemEnd();
-        void handleAdjustHiddenSkillItem( uint16_t eventIndex );
-
         // d_a_npc_ins.rel
         void asmAdjustBugRewardStart();
         void asmAdjustBugRewardEnd();

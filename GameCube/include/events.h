@@ -90,7 +90,7 @@ namespace mod::events
      * @param randomizer Pointer to mod::randomizer
      * @param eventIndex The offset from saveBitLabels that contains the flag being set.
      */
-    void onHiddenSkill( rando::Randomizer* randomizer, uint16_t eventIndex );
+    void onHiddenSkill( rando::Randomizer* randomizer, void* daNpcGWolfPtr );
 
     /**
      * @brief Runs when the game loads the ARC files from the game disc.

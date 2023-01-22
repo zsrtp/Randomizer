@@ -1532,36 +1532,6 @@ namespace mod
                 }
             }
         }
-
-        else if ( eventPtr == &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.events )
-        {
-            switch ( flag )
-            {
-                case 0x2:
-                {
-                    if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Hidden_Skill] ) )
-                    {
-                        if ( !strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info
-                                          .player_last_stage,
-                                      allStages[stageIDs::Faron_Woods] ) &&
-                             !libtp::tp::d_a_alink::dComIfGs_isEventBit( 0x3C10 ) )
-                        {
-                            // If we are in the hidden skill area and the wolf is trying to force load room 6, we know that we
-                            // are trying to go back to faron so we want to use the default state instead of forcing 0.
-                            events::setSaveFileEventFlag(
-                                0x3C10 );     // a vanilla unused bit that is now checked for the faron wolf
-                            events::onHiddenSkill( randomizer, 0x3D6 );     // give the item for the faron golden wolf
-                        }
-                    }
-                    break;
-                }
-                default:
-                {
-                    return return_onEventBit( eventPtr, flag );
-                    break;
-                }
-            }
-        }
         return return_onEventBit( eventPtr, flag );
     }
 

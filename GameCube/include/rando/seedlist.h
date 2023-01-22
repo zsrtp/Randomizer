@@ -18,7 +18,7 @@
 
 // Earliest SeedData version (Major.Minor) which this version of the Randomizer
 // supports.
-#define MIN_SUPPORTED_SEED_DATA_VER_MAJOR 1
+#define MIN_SUPPORTED_SEED_DATA_VER_MAJOR 2
 #define MIN_SUPPORTED_SEED_DATA_VER_MINOR 0
 
 // Final SeedData version (Major.Minor) for which this version of the Randomizer
@@ -28,8 +28,8 @@
 // Randomizer is released. This maxFullySupportedVersion will be used in a
 // future update (pre-1.0 release) to determine if a SeedData can be played even
 // if some of its non-critical features are not supported.
-#define MAX_FULLY_SUPPORTED_SEED_DATA_VER_MAJOR 1
-#define MAX_FULLY_SUPPORTED_SEED_DATA_VER_MINOR 1
+#define MAX_FULLY_SUPPORTED_SEED_DATA_VER_MAJOR 2
+#define MAX_FULLY_SUPPORTED_SEED_DATA_VER_MINOR 0
 
 // Defines to help with version comparisions, as otherwise we get: "error:
 // comparison is always true due to limited range of data type

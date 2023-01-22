@@ -189,11 +189,10 @@ namespace mod::rando
 
     struct HiddenSkillCheck
     {
-        uint16_t indexNumber;     // The flag that is trying to be set for the specific Golden Wolf that the skill has been
-                                  // learned from.
-        uint16_t itemID;          // The item to be given when the above flag is set.
-        uint16_t stageIDX;        // The ID of the stage that Golden Wolf was located in
-        uint16_t roomID;          // The room of the stage that the Golden Wolf was located in.
+        uint8_t stageIDX;     // The ID of the stage that Golden Wolf was located in
+        uint8_t roomID;       // The room of the stage that the Golden Wolf was located in.
+        uint8_t flag;         // The flag for the freestanding item that replaces the wolf.
+        uint8_t itemID;       // The item to be given when the above flag is set.
     } __attribute__( ( __packed__ ) );
 
     struct BugReward

@@ -34,12 +34,6 @@ namespace mod::assembly
         return events::onPoe( mod::randomizer, flag );
     }
 
-    void handleAdjustHiddenSkillItem( uint16_t eventIndex )
-    {
-        events::onHiddenSkill( mod::randomizer, eventIndex );
-        return;
-    }
-
     void handleAdjustBugReward( uint32_t msgEventAddress, uint8_t bugID )
     {
         events::onBugReward( mod::randomizer, msgEventAddress, bugID );
@@ -109,12 +103,7 @@ namespace mod::assembly
     {
         if ( !evtResult )
         {
-            initCreatePlayerItem( 0x32,
-                                  0x9E,
-                                  reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daNpcGWolf ) + 0x4d0 ),
-                                  libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo,
-                                  nullptr,
-                                  nullptr );
+            events::onHiddenSkill( mod::randomizer, daNpcGWolf );
         }
         return evtResult;
     }

@@ -359,42 +359,6 @@ namespace mod::rando
                     libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint8_t ) );
                     break;
                 }
-                case rando::ReplacementType::HiddenSkill:
-                {
-                    uint32_t adjustedFilePtr =
-                        reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
-
-                    uint8_t stageIDX;
-                    for ( stageIDX = 0;
-                          stageIDX < sizeof( libtp::data::stage::allStages ) / sizeof( libtp::data::stage::allStages[0] );
-                          stageIDX++ )
-                    {
-                        if ( !strcmp( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info
-                                          .player_last_stage,
-                                      libtp::data::stage::allStages[stageIDX] ) )
-                        {
-                            break;
-                        }
-                    }
-
-                    for ( uint32_t j = 0; j < seed->m_numHiddenSkillChecks; j++ )
-                    {
-                        if ( ( seed->m_HiddenSkillChecks[j].stageIDX == stageIDX ) &&
-                             ( seed->m_HiddenSkillChecks[j].roomID == libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file
-                                                                          .player.player_return_place.link_room_id ) )
-                        {
-                            uint16_t msgID = game_patch::_04_verifyProgressiveItem( this, seed->m_HiddenSkillChecks[j].itemID );
-
-                            uint32_t replacementAddress = adjustedFilePtr + replacementOffset;
-                            *reinterpret_cast<uint16_t*>( replacementAddress ) = msgID + 0x65;
-
-                            // Clear the cache for the modified value
-                            libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ),
-                                                                   sizeof( uint16_t ) );
-                        }
-                    }
-                    break;
-                }
                 case rando::ReplacementType::ItemMessage:
                 {
                     replacementValue = game_patch::_04_verifyProgressiveItem( this, replacementValue );
@@ -508,18 +472,25 @@ namespace mod::rando
         return bugID;
     }
 
-    uint8_t Randomizer::getHiddenSkillItem( uint16_t eventIndex )
+    void Randomizer::getHiddenSkillItem( void* daNpcGWolfPtr )
     {
         for ( uint32_t i = 0; i < m_Seed->m_numHiddenSkillChecks; i++ )
         {
-            if ( eventIndex == m_Seed->m_HiddenSkillChecks[i].indexNumber )
+            if ( m_Seed->m_StageIDX == m_Seed->m_HiddenSkillChecks[i].stageIDX )
             {
-                // Return new item
-                return m_Seed->m_HiddenSkillChecks[i].itemID;
+                if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo ==
+                     m_Seed->m_HiddenSkillChecks[i].roomID )
+                {
+                    // Return new item
+                    initCreatePlayerItem( m_Seed->m_HiddenSkillChecks[i].itemID,
+                                          m_Seed->m_HiddenSkillChecks[i].flag,
+                                          reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daNpcGWolfPtr ) + 0x4d0 ),
+                                          libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo,
+                                          nullptr,
+                                          nullptr );
+                }
             }
         }
-        // Default
-        return libtp::data::items::Recovery_Heart;
     }
 
     // NOTE: This function returns dynamic memory

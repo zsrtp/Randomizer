@@ -193,16 +193,6 @@ namespace mod::events
                 }
                 break;
             }
-            // d_a_npc_kn.rel
-            // Hero's Shade
-            case 0x147:
-            {
-                // Give a an item based on which Golden Wolf you learned a skill from.
-                libtp::patch::writeStandardBranches( relPtrRaw + 0x34D0,
-                                                     assembly::asmAdjustHiddenSkillItemStart,
-                                                     assembly::asmAdjustHiddenSkillItemEnd );
-                break;
-            }
             // d_a_npc_ins.rel
             // Agitha
             case 0x141:
@@ -614,13 +604,11 @@ namespace mod::events
             {
                 // Change the flag that the faron wolf checks for when it spawns. The original value, is structured like this:
                 // XXXXYYYY  where XXXX is the flag for the Ending Blow and YYYY is for having howled at the DMT stone. Since we
-                // don't want the wolf to disappear once we have the ending blow, I changed it to use an unused flag in the
-                // event bit list (I confirmed with Taka that it is unused). So in reality, we are only changing the upper two
-                // bits
+                // don't want the wolf to disappear once we have the ending blow, it was changed to use an unused flag in the
+                // event bit list.
                 performStaticASMReplacement( relPtrRaw + 0x5B80,
                                              0x01EB01EC );     // static values. 0x01EB for faron wolf and 0x01EC for ordon wolf
 
-                /*
                 // Apply an ASM patch to d_a_npc_GWolf::isDelete that checks for if the wolf should spawn and spawn a
                 // freestanding item in it's place.
                 libtp::patch::writeStandardBranches( relPtrRaw + 0x20B4,
@@ -631,7 +619,7 @@ namespace mod::events
                     relPtrRaw + 0x20B8,
                     ASM_BRANCH_EQUAL_MINUS( 0x38 ) );     // Branch to have isDelete return if the return value condition listed
                                                           // in asmReplaceGWolfWithItem is not met
-                */
+
                 break;
             }
         }
@@ -722,11 +710,11 @@ namespace mod::events
         }
     }
 
-    void onHiddenSkill( rando::Randomizer* randomizer, uint16_t eventIndex )
+    void onHiddenSkill( rando::Randomizer* randomizer, void* daNpcGWolfPtr )
     {
         if ( getCurrentSeed( randomizer ) )
         {
-            libtp::tp::d_item::execItemGet( randomizer->getHiddenSkillItem( eventIndex ) );
+            randomizer->getHiddenSkillItem( daNpcGWolfPtr );
         }
     }
 
