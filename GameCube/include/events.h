@@ -88,7 +88,7 @@ namespace mod::events
      * @brief Runs when the randomizer is trying to set a flag related to learning a hidden skill.
      *
      * @param randomizer Pointer to mod::randomizer
-     * @param eventIndex The offset from saveBitLabels that contains the flag being set.
+     * @param daNpcGWolfPtr The pointer to the Golden Wolf actor struct.
      */
     void onHiddenSkill( rando::Randomizer* randomizer, void* daNpcGWolfPtr );
 

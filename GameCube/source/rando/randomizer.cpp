@@ -481,13 +481,14 @@ namespace mod::rando
                 if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo ==
                      m_Seed->m_HiddenSkillChecks[i].roomID )
                 {
-                    // Return new item
+                    // Create a freestanding actor in the Golden Wolf's place using the values from the loaded check.
                     initCreatePlayerItem( m_Seed->m_HiddenSkillChecks[i].itemID,
                                           m_Seed->m_HiddenSkillChecks[i].flag,
                                           reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daNpcGWolfPtr ) + 0x4d0 ),
                                           libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo,
                                           nullptr,
                                           nullptr );
+                    return;
                 }
             }
         }
