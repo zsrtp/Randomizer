@@ -80,4 +80,13 @@ namespace mod::user_patch
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag |= 0x8;
         }
     }
+
+    void setMapRegionBits( rando::Randomizer* randomizer, bool set )
+    {
+        if ( set )
+        {
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info.player_last_region +=
+                randomizer->m_Seed->m_Header->mapClearBits;
+        }
+    }
 }     // namespace mod::user_patch

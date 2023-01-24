@@ -12,11 +12,6 @@
 
 namespace mod::user_patch
 {
-    GamePatch volatilePatches[5] = {
-        clearFaronTwilight,
-        clearEldinTwilight,
-        clearLanayruTwilight,
-        setMinorCutsceneValues,
-        clearMDH,
-    };
+    GamePatch volatilePatches[6] =
+        { clearFaronTwilight, clearEldinTwilight, clearLanayruTwilight, setMinorCutsceneValues, clearMDH, setMapRegionBits };
 }

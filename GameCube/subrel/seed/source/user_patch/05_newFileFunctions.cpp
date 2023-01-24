@@ -15,6 +15,5 @@ namespace mod::user_patch
     {
         (void) randomizer;
         instantTextEnabled = set;
-        getConsole() << "instant text is " << instantTextEnabled << "\n";
     }
 }     // namespace mod::user_patch
