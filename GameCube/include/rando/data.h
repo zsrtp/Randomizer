@@ -66,6 +66,7 @@ namespace mod::rando
         /* 0x52 */ uint8_t castleRequirements;
         /* 0x53 */ uint8_t palaceRequirements;
         /* 0x54 */ uint8_t mapClearBits;
+        /* 0x55 */ uint8_t padding[3];
     } __attribute__( ( __packed__ ) );
 
     // Minimum amount of data needed for keeping track of a seed
@@ -102,7 +103,7 @@ namespace mod::rando
         uint8_t replacementBgmTrack;
         uint8_t replacementBgmWave;
         uint8_t padding;
-    };
+    } __attribute__( ( __packed__ ) );
 
     struct regionFlag
     {

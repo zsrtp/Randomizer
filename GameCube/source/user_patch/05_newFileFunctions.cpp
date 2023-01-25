@@ -85,7 +85,7 @@ namespace mod::user_patch
     {
         if ( set )
         {
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info.player_last_region +=
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_last_stay_info.player_last_region |=
                 randomizer->m_Seed->m_Header->mapClearBits;
         }
     }
