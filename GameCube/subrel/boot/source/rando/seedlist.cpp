@@ -70,8 +70,8 @@ namespace mod::rando
     {
         using namespace libtp::gc_wii::dvd;
 
-        DVDDir dir;
-        DVDDirEntry dirEntry;
+        DVDDirectory dir;
+        DVDDirectoryEntry entry;
         char filePath[96];
 #else
     // This function assumes that the memory card is already mounted
@@ -101,21 +101,21 @@ namespace mod::rando
 #ifdef DVD
             // Loop through the files in the directory
             // DVDReadDir will return false once all files have been looped through
-            if ( !DVDReadDir( &dir, &dirEntry ) )
+            if ( !DVDReadDir( &dir, &entry ) )
             {
                 break;
             }
 
             // Currently only supporting a single folder
-            if ( dirEntry.bIsDir )
+            if ( entry.is_directory )
             {
                 // Entry is a directory
                 continue;
             }
 
             // Try to open the file and get the header data
-            // dirEntry does not contain the full file path
-            currentFileName = dirEntry.fileName;
+            // entry does not contain the full file path
+            currentFileName = entry.fileName;
             snprintf( filePath, sizeof( filePath ), "/mod/seed/%s", currentFileName );
 
             // Try to open the file and get the header data
