@@ -32,6 +32,7 @@ namespace mod::rando
     int32_t lookupTable[DvdEntryNumIdSize];
 
     FoolishItems foolishItems;
+    GoldenWolfItemReplacement goldenWolfItemReplacement;
 
     uint8_t getFoolishItemModelId( uint8_t originalItem )
     {
@@ -489,7 +490,7 @@ namespace mod::rando
         return bugID;
     }
 
-    void Randomizer::getHiddenSkillItem( void* daNpcGWolfPtr )
+    void Randomizer::getHiddenSkillItem( void* daNpcGWolfPtr, int16_t flag )
     {
         int32_t currentRoomNum = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo;
         HiddenSkillCheck* hiddenSkillChecks = &m_Seed->m_HiddenSkillChecks[0];
@@ -510,13 +511,18 @@ namespace mod::rando
                 continue;
             }
 
+            GoldenWolfItemReplacement* goldenWolfItemReplacementPtr = &goldenWolfItemReplacement;
+
             // Create a freestanding actor in the Golden Wolf's place using the values from the loaded check.
-            initCreatePlayerItem( currentHiddenSkillCheck->itemID,
-                                  currentHiddenSkillCheck->flag,
-                                  reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daNpcGWolfPtr ) + 0x4d0 ),
-                                  currentRoomNum,
-                                  nullptr,
-                                  nullptr );
+            goldenWolfItemReplacementPtr->flag = flag;
+
+            goldenWolfItemReplacementPtr->itemModelId =
+                initCreatePlayerItem( currentHiddenSkillCheck->itemID,
+                                      0xFF,
+                                      reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daNpcGWolfPtr ) + 0x4d0 ),
+                                      currentRoomNum,
+                                      nullptr,
+                                      nullptr );
             break;
         }
     }

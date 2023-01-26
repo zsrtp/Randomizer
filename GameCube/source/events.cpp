@@ -25,6 +25,7 @@
 #include "tp/J2DPicture.h"
 #include "data/flags.h"
 #include "tp/m_do_controller_pad.h"
+#include "tp/d_a_npc.h"
 #include "asm_templates.h"
 
 namespace mod::events
@@ -33,6 +34,7 @@ namespace mod::events
     daObjLv5Key_Wait_Def return_daObjLv5Key_c__Wait = nullptr;
     daObjLifeContainer_Create_Def return_daObjLifeContainer_c__Create = nullptr;
     daObjLifeContainer_setEffect_Def return_daObjLifeContainer_c__setEffect = nullptr;
+    daObjLifeContainer_initActionOrderGetDemo_Def return_daObjLifeContainer_c__initActionOrderGetDemo = nullptr;
     daMidna_checkMetamorphoseEnableBase_Def return_daMidna_c__checkMetamorphoseEnableBase = nullptr;
 
     libtp::tp::dzx::ACTR GanonBarrierActor =
@@ -56,6 +58,7 @@ namespace mod::events
     {
         randomizer->onStageLoad();
         timeChange = 0;
+        rando::goldenWolfItemReplacement.itemModelId = -1;
     }
 
     void offLoad( rando::Randomizer* randomizer )
@@ -239,6 +242,7 @@ namespace mod::events
                     []( void* daObjLifePtr )
                     {
                         using namespace libtp::data;
+
                         uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x92A );
 
                         // Must check for foolish items first, as they will use the item id of the item they are copying
@@ -329,6 +333,8 @@ namespace mod::events
                                 break;
                             }
                         }
+
+                        // Call the original function
                         return return_daObjLifeContainer_c__Create( daObjLifePtr );
                     } );
 
@@ -338,6 +344,7 @@ namespace mod::events
                     []( void* daObjLifePtr )
                     {
                         using namespace libtp::data;
+
                         uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x92A );
                         switch ( itemID )
                         {
@@ -355,10 +362,38 @@ namespace mod::events
                             }
                             default:
                             {
+                                // Call the original function
                                 return return_daObjLifeContainer_c__setEffect( daObjLifePtr );
                             }
                         }
                     } );
+
+                // Handle misc flags when obtaining items
+                return_daObjLifeContainer_c__initActionOrderGetDemo = libtp::patch::hookFunction(
+                    reinterpret_cast<daObjLifeContainer_initActionOrderGetDemo_Def>( relPtrRaw + 0x1224 ),
+                    []( void* daObjLifePtr )
+                    {
+                        // Call the original function immediately
+                        const bool ret = return_daObjLifeContainer_c__initActionOrderGetDemo( daObjLifePtr );
+
+                        // Check if the golden wolf item is spawned
+                        rando::GoldenWolfItemReplacement* goldenWolfItemReplacementPtr = &rando::goldenWolfItemReplacement;
+                        int32_t modelId = goldenWolfItemReplacementPtr->itemModelId;
+
+                        if ( modelId != -1 )
+                        {
+                            // Check if the golden wolf item was collected
+                            if ( modelId == *reinterpret_cast<int32_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4 ) )
+                            {
+                                // The golden wolf item was collected, so set the flag for it
+                                goldenWolfItemReplacementPtr->itemModelId = -1;
+                                libtp::tp::d_a_npc::daNpcT_onEvtBit( goldenWolfItemReplacementPtr->flag );
+                            }
+                        }
+
+                        return ret;
+                    } );
+
                 libtp::patch::writeBranchBL( relPtrRaw + 0x1804, assembly::asmAdjustFieldItemParams );
                 break;
             }
@@ -617,7 +652,7 @@ namespace mod::events
 
                 // Apply an ASM patch to d_a_npc_GWolf::isDelete that checks for if the wolf should spawn and spawn a
                 // freestanding item in it's place.
-                libtp::patch::writeStandardBranches( relPtrRaw + 0x20B4,
+                libtp::patch::writeStandardBranches( relPtrRaw + 0x20B0,
                                                      assembly::asmReplaceGWolfWithItemStart,
                                                      assembly::asmReplaceGWolfWithItemEnd );
 
@@ -657,6 +692,9 @@ namespace mod::events
             {
                 return_daObjLifeContainer_c__Create = libtp::patch::unhookFunction( return_daObjLifeContainer_c__Create );
                 return_daObjLifeContainer_c__setEffect = libtp::patch::unhookFunction( return_daObjLifeContainer_c__setEffect );
+
+                return_daObjLifeContainer_c__initActionOrderGetDemo =
+                    libtp::patch::unhookFunction( return_daObjLifeContainer_c__initActionOrderGetDemo );
                 break;
             }
         }
@@ -715,9 +753,9 @@ namespace mod::events
         }
     }
 
-    void onHiddenSkill( rando::Randomizer* randomizer, void* daNpcGWolfPtr )
+    void onHiddenSkill( rando::Randomizer* randomizer, void* daNpcGWolfPtr, int16_t flag )
     {
-        randomizer->getHiddenSkillItem( daNpcGWolfPtr );
+        randomizer->getHiddenSkillItem( daNpcGWolfPtr, flag );
     }
 
     void setSaveFileEventFlag( uint16_t flag )

@@ -352,8 +352,8 @@ namespace mod
     bool handle_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit );
     extern bool ( *return_isDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit );
 
-    bool handle_chkEvtBit( uint32_t flag );
-    extern bool ( *return_chkEvtBit )( uint32_t flag );
+    bool handle_daNpcT_chkEvtBit( int16_t flag );
+    extern bool ( *return_daNpcT_chkEvtBit )( int16_t flag );
 
     bool handle_isEventBit( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag );
     extern bool ( *return_isEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag );

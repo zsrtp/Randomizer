@@ -193,8 +193,8 @@ namespace mod::rando
     {
         uint8_t stageIDX;     // The ID of the stage that Golden Wolf was located in
         uint8_t roomID;       // The room of the stage that the Golden Wolf was located in.
-        uint8_t flag;         // The flag for the freestanding item that replaces the wolf.
-        uint8_t itemID;       // The item to be given when the above flag is set.
+        uint8_t itemID;       // The item to be given when in the above stage and room.
+        uint8_t padding;
     } __attribute__( ( __packed__ ) );
 
     struct BugReward
@@ -313,6 +313,14 @@ namespace mod::rando
 
         uint8_t spawnCount;       // How many ice traps are currently spawned
         uint8_t triggerCount;     // How many ice traps have been triggered and have yet to occur
+    };
+
+    struct GoldenWolfItemReplacement
+    {
+        int32_t itemModelId;     // Global model id for the spawned item
+        int16_t flag;            // Flag associated with the current golden wolf
+
+        GoldenWolfItemReplacement() { itemModelId = -1; }
     };
 
     extern int32_t lookupTable[DvdEntryNumIdSize];

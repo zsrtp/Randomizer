@@ -362,8 +362,9 @@
 8024dc08:query049
 
 // d_a_npc.o
-8014caf8:chkEvtBit
-80155680:chkEvtBitF
+8014ca78:daNpcT_onEvtBit
+8014caf8:daNpcT_chkEvtBit
+80155680:daNpcF_chkEvtBit
 
 // d_menu_window.o
 801fac88:collect_save_open_init

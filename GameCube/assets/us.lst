@@ -362,8 +362,9 @@
 801fa590:collect_save_open_init
 
 //d_a_npc.o
-8014caac:chkEvtBit
-80155634:chkEvtBitF
+8014ca2c:daNpcT_onEvtBit
+8014caac:daNpcT_chkEvtBit
+80155634:daNpcF_chkEvtBit
 
 //resource.o
 802a9490:parseCharacter_1Byte

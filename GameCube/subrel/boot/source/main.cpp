@@ -14,6 +14,7 @@
 #include "tp/d_msg_class.h"
 #include "tp/resource.h"
 #include "tp/d_msg_flow.h"
+#include "tp/d_a_npc.h"
 #include "tp/d_menu_window.h"
 #include "Z2AudioLib/Z2AudioMgr.h"
 #include "tp/d_s_logo.h"
@@ -173,7 +174,7 @@ namespace mod
 
         // Save flag functions
         return_isDungeonItem = patch::hookFunction( tp::d_save::isDungeonItem, mod::handle_isDungeonItem );
-        return_chkEvtBit = patch::hookFunction( libtp::tp::d_msg_flow::chkEvtBit, mod::handle_chkEvtBit );
+        return_daNpcT_chkEvtBit = patch::hookFunction( libtp::tp::d_a_npc::daNpcT_chkEvtBit, mod::handle_daNpcT_chkEvtBit );
         return_isEventBit = patch::hookFunction( libtp::tp::d_save::isEventBit, mod::handle_isEventBit );
         return_onEventBit = patch::hookFunction( libtp::tp::d_save::onEventBit, mod::handle_onEventBit );
         return_isSwitch_dSv_memBit =

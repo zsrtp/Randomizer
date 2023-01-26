@@ -11,6 +11,7 @@
 #include "tp/d_save.h"
 #include "data/items.h"
 #include "data/flags.h"
+#include "tp/d_a_npc.h"
 
 namespace mod::assembly
 {
@@ -99,13 +100,14 @@ namespace mod::assembly
                  libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::GOT_BOTTLE_FROM_JOVANI ) );
     }
 
-    bool handleReplaceGWolfWithItem( bool evtResult, void* daNpcGWolf )
+    bool handleReplaceGWolfWithItem( int16_t flag, void* daNpcGWolf )
     {
-        if ( !evtResult )
+        const bool flagIsSet = libtp::tp::d_a_npc::daNpcT_chkEvtBit( flag );
+        if ( !flagIsSet )
         {
-            events::onHiddenSkill( mod::randomizer, daNpcGWolf );
+            events::onHiddenSkill( mod::randomizer, daNpcGWolf, flag );
         }
-        return evtResult;
+        return flagIsSet;
     }
 
 #ifdef TP_JP

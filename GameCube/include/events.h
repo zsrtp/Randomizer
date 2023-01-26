@@ -26,6 +26,7 @@ namespace mod::events
     typedef void ( *daObjLv5Key_Wait_Def )( libtp::tp::rel::d_a_obj_Lv5Key::daObjLv5Key_c* );
     typedef bool ( *daObjLifeContainer_Create_Def )( void* );
     typedef void ( *daObjLifeContainer_setEffect_Def )( void* );
+    typedef bool ( *daObjLifeContainer_initActionOrderGetDemo_Def )( void* );
     typedef bool ( *daMidna_checkMetamorphoseEnableBase_Def )( void* );
 
     extern libtp::tp::dzx::ACTR GanonBarrierActor;
@@ -89,8 +90,9 @@ namespace mod::events
      *
      * @param randomizer Pointer to mod::randomizer
      * @param daNpcGWolfPtr The pointer to the Golden Wolf actor struct.
+     * @param flag The flag associated to the current Golden Wolf actor.
      */
-    void onHiddenSkill( rando::Randomizer* randomizer, void* daNpcGWolfPtr );
+    void onHiddenSkill( rando::Randomizer* randomizer, void* daNpcGWolfPtr, int16_t flag );
 
     /**
      * @brief Runs when the game loads the ARC files from the game disc.

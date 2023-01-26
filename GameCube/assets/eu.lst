@@ -358,7 +358,8 @@
 
 
 //d_a_npc.o
-8014ccb8:chkEvtBit
+8014cc38:daNpcT_onEvtBit
+8014ccb8:daNpcT_chkEvtBit
 
 //resource.o
 802aa290:parseCharacter_1Byte

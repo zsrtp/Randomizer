@@ -205,7 +205,7 @@ namespace mod
 
     // Save flag functions
     KEEP_VAR bool ( *return_isDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit ) = nullptr;
-    KEEP_VAR bool ( *return_chkEvtBit )( uint32_t flag ) = nullptr;
+    KEEP_VAR bool ( *return_daNpcT_chkEvtBit )( int16_t flag ) = nullptr;
     KEEP_VAR bool ( *return_isEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
     KEEP_VAR void ( *return_onEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
     KEEP_VAR bool ( *return_isSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag ) = nullptr;
@@ -1216,7 +1216,7 @@ namespace mod
         return events::proc_isDungeonItem( membitPtr, memBit );
     }
 
-    KEEP_FUNC bool handle_chkEvtBit( uint32_t flag )
+    KEEP_FUNC bool handle_daNpcT_chkEvtBit( int16_t flag )
     {
         switch ( flag )
         {
@@ -1242,7 +1242,7 @@ namespace mod
             default:
                 break;
         }
-        return return_chkEvtBit( flag );
+        return return_daNpcT_chkEvtBit( flag );
     }
 
     KEEP_FUNC bool handle_isEventBit( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag )
