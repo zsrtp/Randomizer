@@ -100,12 +100,24 @@ namespace mod::assembly
                  libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::GOT_BOTTLE_FROM_JOVANI ) );
     }
 
-    bool handleReplaceGWolfWithItem( int16_t flag, void* daNpcGWolf )
+    bool handleReplaceGWolfWithItem( const int16_t* l_delFlag, uint32_t flagIndex, void* daNpcGWolf )
     {
-        const bool flagIsSet = libtp::tp::d_a_npc::daNpcT_chkEvtBit( flag );
+        int16_t delFlag = l_delFlag[flagIndex];
+        const bool flagIsSet = libtp::tp::d_a_npc::daNpcT_chkEvtBit( delFlag );
+
         if ( !flagIsSet )
         {
-            events::onHiddenSkill( mod::randomizer, daNpcGWolf, flag );
+            // Check if the player has howled at the statue for the current golden wolf
+            // l_warpAppearFlag is 0xEC before l_delFlag
+            const int16_t* l_warpAppearFlag =
+                reinterpret_cast<const int16_t*>( reinterpret_cast<uint32_t>( l_delFlag ) - 0xEC );
+
+            // If the appear flag is -1, then the wolf should be spawned without howling. This is used for the Faron wolf.
+            int16_t appearFlag = l_warpAppearFlag[flagIndex];
+            if ( ( appearFlag == -1 ) || libtp::tp::d_a_npc::daNpcT_chkEvtBit( appearFlag ) )
+            {
+                events::onHiddenSkill( mod::randomizer, daNpcGWolf, delFlag );
+            }
         }
         return flagIsSet;
     }
