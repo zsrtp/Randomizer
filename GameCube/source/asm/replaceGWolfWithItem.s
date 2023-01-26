@@ -1,13 +1,7 @@
-.global asmReplaceGWolfWithItemStart
-.global asmReplaceGWolfWithItemEnd
+.global asmReplaceGWolfWithItem
+.hidden asmReplaceGWolfWithItem
 
-.hidden asmReplaceGWolfWithItemStart
-.hidden asmReplaceGWolfWithItemEnd
-
-asmReplaceGWolfWithItemStart:
+asmReplaceGWolfWithItem:
 # r3 already contains the flag
 mr %r4,%r31 # daNpcGWolf
-bl handleReplaceGWolfWithItem
-
-asmReplaceGWolfWithItemEnd:
-b 0
+b handleReplaceGWolfWithItem

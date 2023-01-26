@@ -652,9 +652,7 @@ namespace mod::events
 
                 // Apply an ASM patch to d_a_npc_GWolf::isDelete that checks for if the wolf should spawn and spawn a
                 // freestanding item in it's place.
-                libtp::patch::writeStandardBranches( relPtrRaw + 0x20B0,
-                                                     assembly::asmReplaceGWolfWithItemStart,
-                                                     assembly::asmReplaceGWolfWithItemEnd );
+                libtp::patch::writeBranchBL( relPtrRaw + 0x20B0, assembly::asmReplaceGWolfWithItem );
 
                 performStaticASMReplacement(
                     relPtrRaw + 0x20B8,
