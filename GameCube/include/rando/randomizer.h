@@ -37,7 +37,7 @@ namespace mod::rando
         void overrideObjectARC( libtp::tp::d_resource::dRes_info_c* resourcePtr, const char* fileName );
         void overrideEventARC();
         uint8_t overrideBugReward( uint8_t bugID );
-        void getHiddenSkillItem( void* daNpcGWolfPtr, int16_t flag );
+        void getHiddenSkillItem( void* daNpcGWolfPtr, int16_t flag, uint32_t markerFlag );
         void replaceWolfLockDomeColor( libtp::tp::d_a_alink::daAlink* linkActrPtr );
 
         // NOTE: This function returns dynamic memory

@@ -90,7 +90,7 @@ namespace mod::assembly
 
         // d_a_npc_GWolf.o
         void asmReplaceGWolfWithItem( void );
-        bool handleReplaceGWolfWithItem( const int16_t* l_delFlag, uint32_t flagIndex, void* daNpcGWolf );
+        bool handleReplaceGWolfWithItem( const int16_t* l_delFlag, void* daNpcGWolf );
 
         // vi.o
         void asmCallCodehandlerStart();

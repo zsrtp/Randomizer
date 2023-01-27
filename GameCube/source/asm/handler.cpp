@@ -100,25 +100,30 @@ namespace mod::assembly
                  libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::GOT_BOTTLE_FROM_JOVANI ) );
     }
 
-    bool handleReplaceGWolfWithItem( const int16_t* l_delFlag, uint32_t flagIndex, void* daNpcGWolf )
+    bool handleReplaceGWolfWithItem( const int16_t* l_delFlag, void* daNpcGWolf )
     {
+        // The flag index is signed, but it should always be positive if this code runs
+        const uint32_t flagIndex = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daNpcGWolf ) + 0xE11 );
         int16_t delFlag = l_delFlag[flagIndex];
+
         const bool flagIsSet = libtp::tp::d_a_npc::daNpcT_chkEvtBit( delFlag );
-
-        if ( !flagIsSet )
+        if ( flagIsSet )
         {
-            // Check if the player has howled at the statue for the current golden wolf
-            // l_warpAppearFlag is 0xEC before l_delFlag
-            const int16_t* l_warpAppearFlag =
-                reinterpret_cast<const int16_t*>( reinterpret_cast<uint32_t>( l_delFlag ) - 0xEC );
-
-            // If the appear flag is -1, then the wolf should be spawned without howling. This is used for the Faron wolf.
-            int16_t appearFlag = l_warpAppearFlag[flagIndex];
-            if ( ( appearFlag == -1 ) || libtp::tp::d_a_npc::daNpcT_chkEvtBit( appearFlag ) )
-            {
-                events::onHiddenSkill( mod::randomizer, daNpcGWolf, delFlag );
-            }
+            return flagIsSet;
         }
+
+        // Check if the player has howled at the statue for the current golden wolf
+        // l_warpAppearFlag is 0xEC before l_delFlag
+        const int16_t* l_warpAppearFlag = reinterpret_cast<const int16_t*>( reinterpret_cast<uint32_t>( l_delFlag ) - 0xEC );
+
+        // If appearFlag is -1, then the wolf should be spawned without howling. This is used for the Faron wolf.
+        int16_t appearFlag = l_warpAppearFlag[flagIndex];
+        if ( ( appearFlag == -1 ) || libtp::tp::d_a_npc::daNpcT_chkEvtBit( appearFlag ) )
+        {
+            uint32_t markerFlag = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daNpcGWolf ) + 0xE1E );
+            events::onHiddenSkill( mod::randomizer, daNpcGWolf, delFlag, markerFlag );
+        }
+
         return flagIsSet;
     }
 

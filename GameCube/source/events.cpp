@@ -385,9 +385,17 @@ namespace mod::events
                             // Check if the golden wolf item was collected
                             if ( modelId == *reinterpret_cast<int32_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4 ) )
                             {
-                                // The golden wolf item was collected, so set the flag for it
+                                // The golden wolf item was collected, so set the flag for it and clear the map marker for it
                                 goldenWolfItemReplacementPtr->itemModelId = -1;
                                 libtp::tp::d_a_npc::daNpcT_onEvtBit( goldenWolfItemReplacementPtr->flag );
+
+                                libtp::tp::d_com_inf_game::dComIfG_inf_c* gameInfoPtr =
+                                    &libtp::tp::d_com_inf_game::dComIfG_gameInfo;
+
+                                libtp::tp::d_save::offSwitch_dSv_info(
+                                    &gameInfoPtr->save,
+                                    static_cast<int32_t>( goldenWolfItemReplacementPtr->markerFlag ),
+                                    gameInfoPtr->play.mStartStage.mRoomNo );
                             }
                         }
 
@@ -752,9 +760,9 @@ namespace mod::events
         }
     }
 
-    void onHiddenSkill( rando::Randomizer* randomizer, void* daNpcGWolfPtr, int16_t flag )
+    void onHiddenSkill( rando::Randomizer* randomizer, void* daNpcGWolfPtr, int16_t flag, uint32_t markerFlag )
     {
-        randomizer->getHiddenSkillItem( daNpcGWolfPtr, flag );
+        randomizer->getHiddenSkillItem( daNpcGWolfPtr, flag, markerFlag );
     }
 
     void setSaveFileEventFlag( uint16_t flag )

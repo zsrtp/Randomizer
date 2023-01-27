@@ -490,7 +490,7 @@ namespace mod::rando
         return bugID;
     }
 
-    void Randomizer::getHiddenSkillItem( void* daNpcGWolfPtr, int16_t flag )
+    void Randomizer::getHiddenSkillItem( void* daNpcGWolfPtr, int16_t flag, uint32_t markerFlag )
     {
         int32_t currentRoomNum = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo;
         HiddenSkillCheck* hiddenSkillChecks = &m_Seed->m_HiddenSkillChecks[0];
@@ -514,6 +514,7 @@ namespace mod::rando
             GoldenWolfItemReplacement* goldenWolfItemReplacementPtr = &goldenWolfItemReplacement;
 
             // Create a freestanding actor in the Golden Wolf's place using the values from the loaded check.
+            goldenWolfItemReplacementPtr->markerFlag = static_cast<uint8_t>( markerFlag );
             goldenWolfItemReplacementPtr->flag = flag;
 
             goldenWolfItemReplacementPtr->itemModelId =

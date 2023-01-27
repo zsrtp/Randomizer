@@ -91,8 +91,9 @@ namespace mod::events
      * @param randomizer Pointer to mod::randomizer
      * @param daNpcGWolfPtr The pointer to the Golden Wolf actor struct.
      * @param flag The flag associated to the current Golden Wolf actor.
+     * @param markerFlag The flag associated to the current Golden Wolf's marker on the map.
      */
-    void onHiddenSkill( rando::Randomizer* randomizer, void* daNpcGWolfPtr, int16_t flag );
+    void onHiddenSkill( rando::Randomizer* randomizer, void* daNpcGWolfPtr, int16_t flag, uint32_t markerFlag );
 
     /**
      * @brief Runs when the game loads the ARC files from the game disc.
