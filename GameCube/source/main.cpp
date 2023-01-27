@@ -29,6 +29,7 @@
 #include "tp/d_save.h"
 #include "tp/dzx.h"
 #include "tp/f_op_actor_mng.h"
+#include "tp/f_op_actor.h"
 #include "tp/f_op_scene_req.h"
 #include "tp/f_pc_node_req.h"
 #include "tp/m_do_controller_pad.h"
@@ -72,6 +73,7 @@ namespace mod
     KEEP_VAR uint8_t seedRelAction = SEED_ACTION_NONE;
     bool modifyShopModels = false;
     bool instantTextEnabled = false;
+    bool increaseSpinnerSpeed = false;
 
 #ifdef TP_EU
     KEEP_VAR libtp::tp::d_s_logo::Languages currentLanguage = libtp::tp::d_s_logo::Languages::uk;
@@ -553,6 +555,21 @@ namespace mod
             if ( checkButtonCombo( PadInputs::Button_R | PadInputs::Button_Y, true ) )
             {
                 events::handleQuickTransform();
+            }
+
+            else if ( checkBtn( currentButtons, PadInputs::Button_R ) && increaseSpinnerSpeed &&
+                      libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer )
+            {
+                libtp::tp::f_op_actor::fopAc_ac_c* spinnerActor =
+                    libtp::tp::d_a_alink::getSpinnerActor( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer );
+
+                if ( spinnerActor )
+                {
+                    if ( spinnerActor->mSpeedF < 60.f )
+                    {
+                        spinnerActor->mSpeedF += 1.0f;
+                    }
+                }
             }
         }
 

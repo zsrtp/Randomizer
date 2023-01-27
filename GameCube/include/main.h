@@ -80,6 +80,7 @@ namespace mod
     extern uint8_t seedRelAction;
     extern bool modifyShopModels;
     extern bool instantTextEnabled;
+    extern bool increaseSpinnerSpeed;
 
 #ifdef TP_EU
     extern libtp::tp::d_s_logo::Languages currentLanguage;

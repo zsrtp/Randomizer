@@ -196,6 +196,18 @@ namespace mod::events
                 }
                 break;
             }
+            // d_a_e_hzelda.rel
+            // Puppet Zelda
+            case 0xCA:
+            {
+                // nop out the greater than branch so that Zelda will always throw a Ball if she is able to
+                performStaticASMReplacement( relPtrRaw + 0xA94, ASM_NOP );     // Previous: bge
+
+                // nop out the addition of f1 (the random number of frames) to f0 (the base number of frames) so that there is
+                // always only 100 frames between each of Zelda's attacks.
+                performStaticASMReplacement( relPtrRaw + 0x8EC, ASM_NOP );     // Previous: bfadds f0,f0,f1
+                break;
+            }
             // d_a_npc_ins.rel
             // Agitha
             case 0x141:

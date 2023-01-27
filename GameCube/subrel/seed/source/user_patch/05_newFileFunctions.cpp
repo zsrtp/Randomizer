@@ -16,4 +16,10 @@ namespace mod::user_patch
         (void) randomizer;
         instantTextEnabled = set;
     }
+
+    void increaseSpinnerVelocity( rando::Randomizer* randomizer, bool set )
+    {
+        (void) randomizer;
+        increaseSpinnerSpeed = set;
+    }
 }     // namespace mod::user_patch

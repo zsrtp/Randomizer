@@ -132,6 +132,7 @@
 800be5f0:checkRestartRoom
 8011fbf8:checkWarpStart
 80138ec4:setWolfLockDomeModel
+800d0434:getSpinnerActor
 
 // data
 8039038C:climbVars
