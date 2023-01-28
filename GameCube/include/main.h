@@ -371,6 +371,9 @@ namespace mod
     bool handle_checkTreasureRupeeReturn( void* unk1, int32_t item );
     extern bool ( *return_checkTreasureRupeeReturn )( void* unk1, int32_t item );
 
+    bool handle_isDarkClearLV( void* playerStatusPtr, int32_t twilightNode );
+    extern bool ( *return_isDarkClearLV )( void* playerStatusPtr, int32_t twilightNode );
+
     // Pause menu functions
     void handle_collect_save_open_init( uint8_t param_1 );
     extern void ( *return_collect_save_open_init )( uint8_t param_1 );
@@ -384,6 +387,9 @@ namespace mod
 
     void handle_setWolfLockDomeModel( libtp::tp::d_a_alink::daAlink* daALink );
     extern void ( *return_setWolfLockDomeModel )( libtp::tp::d_a_alink::daAlink* daALink );
+
+    libtp::tp::f_op_actor::fopAc_ac_c* handle_searchBouDoor( libtp::tp::f_op_actor::fopAc_ac_c* actrPtr );
+    extern libtp::tp::f_op_actor::fopAc_ac_c* ( *return_searchBouDoor )( libtp::tp::f_op_actor::fopAc_ac_c* actrPtr );
 
     // Audio functions
     void handle_loadSeWave( void* Z2SceneMgr, uint32_t waveID );

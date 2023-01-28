@@ -140,6 +140,7 @@
 8011f9ec:checkWarpStart
 80138cb8:setWolfLockDomeModel
 800d0228:getSpinnerActor
+800b7d4c:searchBouDoor
 
 // data
 8038EB8C:climbVars

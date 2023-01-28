@@ -213,6 +213,7 @@ namespace mod
     KEEP_VAR bool ( *return_isSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag ) = nullptr;
     KEEP_VAR void ( *return_onSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag ) = nullptr;
     KEEP_VAR bool ( *return_checkTreasureRupeeReturn )( void* unk1, int32_t item ) = nullptr;
+    KEEP_VAR bool ( *return_isDarkClearLV )( void* playerStatusPtr, int32_t twilightNode ) = nullptr;
 
     // Pause menu functions
     KEEP_VAR void ( *return_collect_save_open_init )( uint8_t param_1 ) = nullptr;
@@ -222,6 +223,8 @@ namespace mod
     KEEP_VAR bool ( *return_checkDamageAction )( libtp::tp::d_a_alink::daAlink* linkMapPtr ) = nullptr;
     KEEP_VAR void ( *return_setGetItemFace )( libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID ) = nullptr;
     KEEP_VAR void ( *return_setWolfLockDomeModel )( libtp::tp::d_a_alink::daAlink* daALink ) = nullptr;
+    KEEP_VAR libtp::tp::f_op_actor::fopAc_ac_c* ( *return_searchBouDoor )( libtp::tp::f_op_actor::fopAc_ac_c* actrPtr ) =
+        nullptr;
 
     // Audio functions
     KEEP_VAR void ( *return_loadSeWave )( void* Z2SceneMgr, uint32_t waveID ) = nullptr;
@@ -567,7 +570,7 @@ namespace mod
                 {
                     if ( spinnerActor->mSpeedF < 60.f )
                     {
-                        spinnerActor->mSpeedF += 1.0f;
+                        spinnerActor->mSpeedF += 2.0f;
                     }
                 }
             }
@@ -1441,6 +1444,23 @@ namespace mod
                 break;
             }
 
+            case WATCHED_CUTSCENE_AFTER_GOATS_2:
+            {
+                if ( libtp::tools::playerIsInRoomStage( 1, allStages[stageIDs::Ordon_Village_Interiors] ) )
+                {
+                    if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( SERAS_CAT_RETURNED_TO_SHOP ) )
+                    {
+                        return false;     // Return false so Sera will give the milk item to the player once they help the cat.
+                    }
+                    else
+                    {
+                        return true;     // Return true so the player can always access the shop, even if the cat has not
+                                         // returned.
+                    }
+                }
+                break;
+            }
+
             default:
             {
                 return return_isEventBit( eventPtr, flag );
@@ -1617,6 +1637,22 @@ namespace mod
         return false;
     }
 
+    KEEP_FUNC bool handle_isDarkClearLV( void* playerStatusPtr, int32_t twilightNode )
+    {
+        if ( libtp::tp::d_a_alink::checkStageName(
+                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Ordon_Village_Interiors] ) )
+        {
+            if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo == 1 )
+            {
+                if ( twilightNode == 0 )
+                {
+                    return false;     // return false so Sera will give us the bottle if we have rescued the cat.
+                }
+            }
+        }
+        return return_isDarkClearLV( playerStatusPtr, twilightNode );
+    }
+
     KEEP_FUNC void handle_collect_save_open_init( uint8_t param_1 )
     {
         game_patch::_07_checkPlayerStageReturn();
@@ -1699,6 +1735,19 @@ namespace mod
             randomizer->replaceWolfLockDomeColor( linkActrPtr );
         }
         return;
+    }
+
+    KEEP_FUNC libtp::tp::f_op_actor::fopAc_ac_c* handle_searchBouDoor( libtp::tp::f_op_actor::fopAc_ac_c* actrPtr )
+    {
+        rando::Seed* seed;
+        if ( seed = getCurrentSeed( randomizer ), seed )
+        {
+            if ( seed->m_StageIDX == libtp::data::stage::stageIDs::Ordon_Village )
+            {
+                return nullptr;
+            }
+        }
+        return return_searchBouDoor( actrPtr );
     }
 
     KEEP_FUNC void handle_loadSeWave( void* Z2SceneMgr, uint32_t waveID )

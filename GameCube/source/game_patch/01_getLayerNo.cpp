@@ -408,8 +408,7 @@ namespace mod::game_patch
                                         }
                                         else
                                         {
-                                            chosenLayer = stage::ordonVillageStateIDs::Ordon_Epona_Tamed;
-                                            libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
+                                            chosenLayer = stage::ordonVillageStateIDs::Ordon_Goats_1_Completed;
                                         }
                                     }
                                     else
@@ -473,6 +472,7 @@ namespace mod::game_patch
 
                     case stage::stageIDs::Ordon_Village_Interiors:
                     {
+                        /* not used in randomizer anymore. keeping for documentation sake
                         if ( roomId == 1 )     // Sera's Shop
                         {
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
@@ -481,38 +481,37 @@ namespace mod::game_patch
                             {
                                 chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
                             }
-                        }
-                        else
+                        }*/
+                        if ( roomId == 2 )     // Jaggle's House
                         {
-                            if ( roomId == 2 )     // Jaggle's House
+                            uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
+                            if ( uVar2 == 0 )
                             {
-                                uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                                if ( uVar2 == 0 )
+                                condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
+                                    FINISHED_SEWERS );     // First Trip to Sewers done
+                                if ( condition != false )
                                 {
-                                    condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
-                                        FINISHED_SEWERS );     // First Trip to Sewers done
-                                    if ( condition != false )
-                                    {
-                                        chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Finished_Sewers;
-                                    }
-                                }
-                                else
-                                {
-                                    chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
+                                    chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Finished_Sewers;
                                 }
                             }
                             else
                             {
-                                if ( roomId == 5 )     // Rusl's House
-                                {
-                                    uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                                    if ( uVar2 != 0 )
-                                    {
-                                        chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
-                                    }
-                                }
+                                chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Finished_Sewers;
                             }
                         }
+                        /* not used in randomizer anymore. keeping for documentation sake
+                        else
+                        {
+                            if ( roomId == 5 )     // Rusl's House
+                            {
+                                uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
+                                if ( uVar2 != 0 )
+                                {
+                                    chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
+                                }
+                            }
+                        }*/
+
                         break;
                     }
 

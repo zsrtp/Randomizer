@@ -349,6 +349,19 @@ namespace mod::rando
         seed->LoadARCChecks( seed->m_StageIDX, fileDirectory, roomNo );
         uint32_t numReplacements = seed->m_numLoadedArcReplacements;
 
+        if ( seed->m_StageIDX == libtp::data::stage::stageIDs::Ordon_Village && fileDirectory == FileDirectory::Room )
+        {
+            // Unlock the right door to Bo's House
+            uint32_t replacementAddress = fileAddr + 0x2F58;
+            *reinterpret_cast<uint16_t*>( ( replacementAddress ) ) = 0xFFFF;
+            libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint16_t ) );
+
+            // Unlock the left door to Bo's House
+            replacementAddress = fileAddr + 0x2F7C;
+            *reinterpret_cast<uint16_t*>( ( replacementAddress ) ) = 0xFFFF;
+            libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint16_t ) );
+        }
+
         // Loop through all ArcChecks and replace the item at an offset given the fileIndex.
         for ( uint32_t i = 0; i < numReplacements; i++ )
         {

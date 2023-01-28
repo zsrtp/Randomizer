@@ -184,6 +184,8 @@ namespace mod
         return_checkTreasureRupeeReturn =
             patch::hookFunction( tp::d_a_alink::checkTreasureRupeeReturn, mod::handle_checkTreasureRupeeReturn );
 
+        return_isDarkClearLV = patch::hookFunction( tp::d_save::isDarkClearLV, mod::handle_isDarkClearLV );
+
         // Pause Menu Functions
         return_collect_save_open_init =
             patch::hookFunction( tp::d_menu_window::collect_save_open_init, mod::handle_collect_save_open_init );
@@ -195,6 +197,8 @@ namespace mod
 
         return_setWolfLockDomeModel =
             patch::hookFunction( libtp::tp::d_a_alink::setWolfLockDomeModel, mod::handle_setWolfLockDomeModel );
+
+        return_searchBouDoor = patch::hookFunction( libtp::tp::d_a_alink::searchBouDoor, mod::handle_searchBouDoor );
 
         // Audio functions
         return_loadSeWave = patch::hookFunction( libtp::z2audiolib::z2scenemgr::loadSeWave, mod::handle_loadSeWave );
