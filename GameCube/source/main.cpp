@@ -46,6 +46,7 @@
 #include "tp/m_Do_dvd_thread.h"
 #include "util/texture_utils.h"
 #include "rando/data.h"
+#include "gc_wii/OSInterrupt.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -267,15 +268,17 @@ namespace mod
                                              assembly::asmDoLinkHookEnd );
 
         // Call the boot REL
+        // Interrupts are required to be enabled for CARD/DVD functions to work properly
+        bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
 #ifdef DVD
         // The seedlist will be generated in the boot REL
         libtp::tools::callRelProlog( "/mod/boot.rel" );
 #else
         // The seedlist will be generated in the boot REL, so avoid mounting/unmounting the memory card multiple times
-        constexpr int32_t chan = CARD_SLOT_A;
-        libtp::tools::callRelProlog( chan, SUBREL_BOOT_ID, false, true );
-        libtp::gc_wii::card::CARDUnmount( chan );
+        libtp::tools::callRelProlog( CARD_SLOT_A, SUBREL_BOOT_ID );
 #endif
+        // Restore interrupts
+        libtp::gc_wii::os_interrupt::OSRestoreInterrupts( enable );
     }
 
     void exit() {}
@@ -581,6 +584,8 @@ namespace mod
         {
             if ( !getCurrentSeed( randomizer ) && ( seedList->m_numSeeds > 0 ) && ( seedRelAction == SEED_ACTION_NONE ) )
             {
+                // Interrupts are required to be enabled for CARD/DVD functions to work properly
+                bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
 #ifndef DVD
                 constexpr int32_t chan = CARD_SLOT_A;
 #endif
@@ -594,14 +599,11 @@ namespace mod
                     if ( !tools::callRelProlog( "/mod/seed.rel" ) )
 #else
                     // Only mount/unmount the memory card once
-                    if ( !tools::callRelProlog( chan, SUBREL_SEED_ID, false, true ) )
+                    if ( !tools::callRelProlog( chan, SUBREL_SEED_ID ) )
 #endif
                     {
                         seedRelAction = SEED_ACTION_FATAL;
                     }
-#ifndef DVD
-                    gc_wii::card::CARDUnmount( chan );
-#endif
                 }
                 else
                 {
@@ -619,14 +621,11 @@ namespace mod
                         if ( !tools::callRelProlog( "/mod/seed.rel" ) )
 #else
                         // Only mount/unmount the memory card once
-                        if ( !tools::callRelProlog( chan, SUBREL_SEED_ID, false, true ) )
+                        if ( !tools::callRelProlog( chan, SUBREL_SEED_ID ) )
 #endif
                         {
                             seedRelAction = SEED_ACTION_FATAL;
                         }
-#ifndef DVD
-                        gc_wii::card::CARDUnmount( chan );
-#endif
                     }
                     else
                     {
@@ -634,6 +633,9 @@ namespace mod
                         randomizer->onStageLoad();
                     }
                 }
+
+                // Restore interrupts
+                libtp::gc_wii::os_interrupt::OSRestoreInterrupts( enable );
 
                 // Make sure no errors occurred
                 rando::Seed* seed = getCurrentSeed( randomizer );

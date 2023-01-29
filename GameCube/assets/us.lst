@@ -424,6 +424,7 @@
 
 // OSInterrupt.o
 8033D6F4:OSDisableInterrupts
+8033D708:OSEnableInterrupts
 8033D71C:OSRestoreInterrupts
 
 // d_a_itembase.o

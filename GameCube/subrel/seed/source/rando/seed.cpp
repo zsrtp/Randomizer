@@ -26,6 +26,7 @@
 #include "tp/d_a_shop_item_static.h"
 #include "tp/d_item_data.h"
 #include "user_patch/user_patch.h"
+#include "gc_wii/OSInterrupt.h"
 
 namespace mod::rando
 {
@@ -46,18 +47,26 @@ namespace mod::rando
 
         // Align to 0x20 for safety, since some functions may cast parts of it to classes/structs/arrays/etc.
         uint8_t* data = new ( -0x20 ) uint8_t[totalSize];
+
+        // Interrupts are required to be enabled for CARD/DVD functions to work properly
+        bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
+
 #ifdef DVD
         // fileName does not contain the full file path
         char filePath[96];
         snprintf( filePath, sizeof( filePath ), "/mod/seed/%s", fileName );
 
         m_CARDResult = libtp::tools::ReadFile( filePath, totalSize, 0, data );
-        if ( m_CARDResult == DVD_STATE_END )
+        constexpr int32_t resultComparison = DVD_STATE_END;
 #else
         // The memory card should already be mounted
         m_CARDResult = libtp::tools::ReadGCIMounted( m_CardSlot, fileName, totalSize, 0, data, true );
-        if ( m_CARDResult == CARD_RESULT_READY )
+        constexpr int32_t resultComparison = CARD_RESULT_READY;
 #endif
+        // Restore interrupts
+        libtp::gc_wii::os_interrupt::OSRestoreInterrupts( enable );
+
+        if ( m_CARDResult == resultComparison )
         {
             Header* headerPtr = m_Header;
 

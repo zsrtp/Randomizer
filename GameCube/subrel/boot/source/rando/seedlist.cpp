@@ -22,6 +22,7 @@
 #include "tools.h"
 #include "memory.h"
 #include "cxx.h"
+#include "gc_wii/OSInterrupt.h"
 
 namespace mod::rando
 {
@@ -87,6 +88,9 @@ namespace mod::rando
 
         // Starting index
         uint32_t index = 0;
+
+        // Interrupts are required to be enabled for CARD/DVD functions to work properly
+        bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
 
 #ifdef DVD
         // Try to open the directory that has the seeds
@@ -180,6 +184,9 @@ namespace mod::rando
         // Close the directory that has the seeds
         DVDCloseDir( &dir );
 #endif
+        // Restore interrupts
+        libtp::gc_wii::os_interrupt::OSRestoreInterrupts( enable );
+
         // Update m_numSeeds
         m_numSeeds = static_cast<uint8_t>( index );
     }

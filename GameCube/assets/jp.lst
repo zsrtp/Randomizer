@@ -417,6 +417,7 @@
 
 // OSInterrupt.o
 8033FB90:OSDisableInterrupts
+8033FBA4:OSEnableInterrupts
 8033FBB8:OSRestoreInterrupts
 
 // d_a_itembase.o
