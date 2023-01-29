@@ -331,7 +331,7 @@ namespace mod::item_wheel_menu
                           textSize );
 
         // Get the offset for the gate keys value
-        bool hasGateKeys = libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::ZORA_ESCORT_CLEARED );
+        bool hasGateKeys = events::haveItem( libtp::data::items::Gate_Keys );
         uint32_t gateKeysValueOffset;
 
         if ( hasGateKeys )

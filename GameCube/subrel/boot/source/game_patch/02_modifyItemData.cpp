@@ -547,6 +547,7 @@ namespace mod::game_patch
         itemGetCheckFuncPtr[items::Mortal_Draw] = _02_mortalDrawItemGetCheck;
         itemGetCheckFuncPtr[items::Jump_Strike] = _02_jumpStrikeItemGetCheck;
         itemGetCheckFuncPtr[items::Bulblin_Camp_Key] = _02_campSmallKeyItemGetCheck;
+        itemGetCheckFuncPtr[items::Gate_Keys] = _02_gateKeysItemGetCheck;
     }
 
     void _02_modifyItemData()
