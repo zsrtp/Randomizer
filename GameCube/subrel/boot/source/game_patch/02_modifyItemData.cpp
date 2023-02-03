@@ -413,7 +413,7 @@ namespace mod::game_patch
             itemResourcePtr[customShardsIDs[i]].modelResIdx = 0x0009;
             itemResourcePtr[customShardsIDs[i]].brkResIdx = 0xFFFF;
             itemResourcePtr[customShardsIDs[i]].tevFrm = 0x00;
-            getSeTypePtr[customShardsIDs[i]] = 0x2;
+            getSeTypePtr[customShardsIDs[i]] = getSeTypePtr[items::Clawshot];
         }
 
         listLength = sizeof( customShadowsIDs ) / sizeof( customShadowsIDs[0] );
@@ -421,7 +421,7 @@ namespace mod::game_patch
         {
             itemResourcePtr[customShadowsIDs[i]].brkResIdx = 0xFFFF;
             itemResourcePtr[customShadowsIDs[i]].tevFrm = 0x00;
-            getSeTypePtr[customShadowsIDs[i]] = 0x2;
+            getSeTypePtr[customShadowsIDs[i]] = getSeTypePtr[items::Clawshot];
         }
 
         itemResourcePtr[libtp::data::items::Fused_Shadow_1].arcName = _02_firstShadowArc;

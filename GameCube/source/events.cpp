@@ -1083,6 +1083,20 @@ namespace mod::events
     {
         libtp::tp::d_a_alink::daAlink* linkMapPtr = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer;
 
+        if ( !randoIsEnabled( randomizer ) )
+        {
+            return;
+        }
+        rando::Seed* seed = getCurrentSeed( randomizer );
+        if ( !seed )
+        {
+            return;
+        }
+        if ( !seed->m_Header->quickTransform )
+        {
+            return;
+        }
+
         // Ensure that Link is loaded on the map.
         if ( !linkMapPtr )
         {
@@ -1139,16 +1153,9 @@ namespace mod::events
             return;
         }
 
-        if ( randoIsEnabled( randomizer ) )
+        if ( !seed->m_Header->transformAnywhere )
         {
-            rando::Seed* seed;
-            if ( ( seed = randomizer->m_Seed, seed ) && seed->m_Header->transformAnywhere )
-            {
-                // Allow transforming regardless of whether there are people around
-                libtp::tp::d_a_alink::procCoMetamorphoseInit( linkMapPtr );
-                return;
-            }
-            else if ( return_daMidna_c__checkMetamorphoseEnableBase )
+            if ( return_daMidna_c__checkMetamorphoseEnableBase )
             {
                 // Use the game's default checks for if the player can currently transform
                 if ( !return_daMidna_c__checkMetamorphoseEnableBase( libtp::tp::d_a_player::m_midnaActor ) )
@@ -1156,12 +1163,11 @@ namespace mod::events
                     return;
                 }
             }
-        }
-
-        // Check if the player has scared someone in the current area in wolf form
-        if ( ( libtp::tp::d_kankyo::env_light.mEvilPacketEnabled & 0x80 ) != 0 )
-        {
-            return;
+            // Check if the player has scared someone in the current area in wolf form
+            if ( ( libtp::tp::d_kankyo::env_light.mEvilPacketEnabled & 0x80 ) != 0 )
+            {
+                return;
+            }
         }
 
         libtp::tp::d_a_alink::procCoMetamorphoseInit( linkMapPtr );

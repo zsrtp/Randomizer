@@ -586,8 +586,35 @@ namespace mod::rando
                 }
             }
 
+            if ( shopItem == 0x13 )     // Magic Armor
+            {
+                switch ( replacementItem )
+                {
+                    case items::Green_Rupee:
+                    case items::Blue_Rupee:
+                    case items::Yellow_Rupee:
+                    case items::Red_Rupee:
+                    case items::Purple_Rupee:
+                    case items::Orange_Rupee:
+                    case items::Silver_Rupee:
+                    case items::Purple_Rupee_Links_House:
+                    {
+                        currentShopItemDataPtr->posY = 65.f;
+                        break;
+                    }
+                    default:
+                    {
+                        currentShopItemDataPtr->posY = 60.f;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                currentShopItemDataPtr->posY = 15.f;
+            }
+
             currentShopItemDataPtr->btpFrm = 0xFF;
-            currentShopItemDataPtr->posY = 15.0f;
             currentShopItemDataPtr->mFlags = 0xFFFFFFFF;
 
             game_patch::_02_modifyShopModelScale( shopItem, replacementItem );
