@@ -1081,23 +1081,20 @@ namespace mod::events
 
     void handleQuickTransform()
     {
-        libtp::tp::d_a_alink::daAlink* linkMapPtr = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer;
+        rando::Seed* seed;
+        if ( seed = getCurrentSeed( randomizer ), !seed )
+        {
+            return;
+        }
 
-        if ( !randoIsEnabled( randomizer ) )
-        {
-            return;
-        }
-        rando::Seed* seed = getCurrentSeed( randomizer );
-        if ( !seed )
-        {
-            return;
-        }
-        if ( !seed->m_Header->quickTransform )
+        rando::Header* seedHeader = seed->m_Header;
+        if ( !seedHeader->quickTransform )
         {
             return;
         }
 
         // Ensure that Link is loaded on the map.
+        libtp::tp::d_a_alink::daAlink* linkMapPtr = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer;
         if ( !linkMapPtr )
         {
             return;
@@ -1153,7 +1150,7 @@ namespace mod::events
             return;
         }
 
-        if ( !seed->m_Header->transformAnywhere )
+        if ( !seedHeader->transformAnywhere )
         {
             if ( return_daMidna_c__checkMetamorphoseEnableBase )
             {
@@ -1163,6 +1160,7 @@ namespace mod::events
                     return;
                 }
             }
+
             // Check if the player has scared someone in the current area in wolf form
             if ( ( libtp::tp::d_kankyo::env_light.mEvilPacketEnabled & 0x80 ) != 0 )
             {
