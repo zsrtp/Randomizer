@@ -408,7 +408,14 @@ namespace mod::game_patch
                                         }
                                         else
                                         {
-                                            chosenLayer = stage::ordonVillageStateIDs::Ordon_Goats_1_Completed;
+                                            if ( !libtp::tp::d_kankyo::dKy_daynight_check() )
+                                            {
+                                                chosenLayer = stage::ordonVillageStateIDs::Ordon_Goats_1_Completed;
+                                            }
+                                            else
+                                            {
+                                                chosenLayer = stage::ordonVillageStateIDs::Ordon_Epona_Tamed_Night;
+                                            }
                                         }
                                     }
                                     else

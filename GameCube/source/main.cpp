@@ -47,6 +47,7 @@
 #include "util/texture_utils.h"
 #include "rando/data.h"
 #include "gc_wii/OSInterrupt.h"
+#include "tp/d_kankyo.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -1595,6 +1596,16 @@ namespace mod
             if ( flag == 0x61 )     // Is Impaz in her house
             {
                 return true;
+            }
+        }
+
+        else if ( libtp::tp::d_a_alink::checkStageName(
+                      libtp::data::stage::allStages[libtp::data::stage::stageIDs::Ordon_Village] ) )
+        {
+            if ( ( flag == 0x21 ) &&
+                 !libtp::tp::d_kankyo::dKy_daynight_check() )     // Midna jumps to shield house are active and it is daytime
+            {
+                return false;
             }
         }
         return return_isSwitch_dSv_memBit( memoryBit, flag );
