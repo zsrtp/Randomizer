@@ -1653,17 +1653,15 @@ namespace mod
 
     KEEP_FUNC bool handle_isDarkClearLV( void* playerStatusPtr, int32_t twilightNode )
     {
-        if ( libtp::tp::d_a_alink::checkStageName(
+        if ( ( twilightNode == 0 ) &&
+             libtp::tools::playerIsInRoomStage(
+                 1,
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Ordon_Village_Interiors] ) )
+
         {
-            if ( libtp::tp::d_stage::mStayNo == 1 )
-            {
-                if ( twilightNode == 0 )
-                {
-                    return false;     // return false so Sera will give us the bottle if we have rescued the cat.
-                }
-            }
+            return false;     // Return false so Sera will give us the bottle if we have rescued the cat.
         }
+
         return return_isDarkClearLV( playerStatusPtr, twilightNode );
     }
 

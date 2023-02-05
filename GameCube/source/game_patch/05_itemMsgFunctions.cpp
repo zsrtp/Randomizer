@@ -564,7 +564,6 @@ namespace mod::game_patch
             }
 
             // Check if the stage and room are correct
-            // Either or can be omitted
             if ( !libtp::tools::playerIsInRoomStage( room, stage ) )
             {
                 return false;

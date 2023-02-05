@@ -309,10 +309,11 @@ namespace mod::rando
         }
         else
         {
+            int32_t currentRoom = libtp::tools::getCurrentRoomNo();
             for ( uint32_t i = 0; i < numSkyBookChecks; i++ )
             {
                 SkyCharacter* currentSkyBookCheck = &skyBookChecks[i];
-                if ( currentSkyBookCheck->roomID == libtp::tp::d_kankyo::env_light.currentRoom )
+                if ( currentSkyBookCheck->roomID == static_cast<uint32_t>( currentRoom ) )
                 {
                     return currentSkyBookCheck->itemID;
                 }
@@ -506,7 +507,7 @@ namespace mod::rando
 
     void Randomizer::getHiddenSkillItem( void* daNpcGWolfPtr, int16_t flag, uint32_t markerFlag )
     {
-        int32_t currentRoomNum = libtp::tp::d_stage::mStayNo;
+        int32_t currentRoom = libtp::tools::getCurrentRoomNo();
         HiddenSkillCheck* hiddenSkillChecks = &m_Seed->m_HiddenSkillChecks[0];
         uint32_t numHiddenSkillChecks = m_Seed->m_numHiddenSkillChecks;
         uint32_t stageIDX = m_Seed->m_StageIDX;
@@ -520,7 +521,7 @@ namespace mod::rando
                 continue;
             }
 
-            if ( static_cast<uint32_t>( currentRoomNum ) != currentHiddenSkillCheck->roomID )
+            if ( static_cast<uint32_t>( currentRoom ) != currentHiddenSkillCheck->roomID )
             {
                 continue;
             }
@@ -535,7 +536,7 @@ namespace mod::rando
                 initCreatePlayerItem( currentHiddenSkillCheck->itemID,
                                       0xFF,
                                       reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daNpcGWolfPtr ) + 0x4d0 ),
-                                      currentRoomNum,
+                                      currentRoom,
                                       nullptr,
                                       nullptr );
             break;

@@ -410,7 +410,7 @@ namespace mod::events
                                 libtp::tp::d_save::offSwitch_dSv_info(
                                     &gameInfoPtr->save,
                                     static_cast<int32_t>( goldenWolfItemReplacementPtr->markerFlag ),
-                                    libtp::tp::d_stage::mStayNo );
+                                    libtp::tools::getCurrentRoomNo() );
                             }
                         }
 
@@ -987,9 +987,7 @@ namespace mod::events
             {
                 if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Forest_Temple] ) )
                 {
-                    const uint8_t currentRoom = libtp::tp::d_stage::mStayNo;
-
-                    if ( currentRoom < 4 )
+                    if ( libtp::tools::getCurrentRoomNo() < 4 )
                     {
                         return false;
                     }
@@ -1011,11 +1009,14 @@ namespace mod::events
         using namespace libtp;
         if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) ||
              ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Ordon_Village] ) &&
-               ( libtp::tp::d_stage::mStayNo == 0 ) ) )
+               ( libtp::tools::getCurrentRoomNo() == 0 ) ) )
         {
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.horse_place.mPos.x = EponaActr.pos.x;
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.horse_place.mPos.y = EponaActr.pos.y;
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.horse_place.mPos.z = EponaActr.pos.z;
+            cXyz* eponaPos = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.horse_place.mPos;
+            cXyz* eponaActorPos = &EponaActr.pos;
+
+            eponaPos->x = eponaActorPos->x;
+            eponaPos->y = eponaActorPos->y;
+            eponaPos->z = eponaActorPos->z;
             tools::SpawnActor( 0, EponaActr );
         }
     }
