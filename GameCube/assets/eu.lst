@@ -46,6 +46,7 @@
 80026c64:roomLoader
 80026c00:stageLoader
 800250bc:dStage_playerInit
+80452d24:mStayNo
 
 // d_save.o
 80032B50:getRupeeMax

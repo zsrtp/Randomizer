@@ -1,4 +1,4 @@
-/**	@file check.h
+/**	@file data.h
  *  @brief Contains structs for different types of checks.
  *
  *  StageIDX are different size on purpose for alignment/padding, they should never exceed 0xFF.
@@ -12,9 +12,6 @@
 #include "gc_wii/card.h"
 #include "data/items.h"
 #include <cstdint>
-
-// Maximum expected number of spawned ice traps in any given area
-#define MAX_SPAWNED_FOOLISH_ITEMS 6
 
 namespace mod::rando
 {
@@ -297,22 +294,6 @@ namespace mod::rando
         // DvdEntryNumIdSize MUST GO LAST. When adding a new enum, put it above
         // this one and don't forget to actually add the lookup in the
         // `dvdentrynum.cpp` file!
-    };
-
-    struct FoolishItems
-    {
-        static constexpr const uint8_t itemIds[MAX_SPAWNED_FOOLISH_ITEMS] = {
-            libtp::data::items::Foolish_Item_1,
-            libtp::data::items::Foolish_Item_2,
-            libtp::data::items::Foolish_Item_3,
-            libtp::data::items::Foolish_Item_4,
-            libtp::data::items::Foolish_Item_5,
-            libtp::data::items::Foolish_Item_6 };     // Array holding the IDs of all the ice traps
-
-        uint8_t itemModelId[MAX_SPAWNED_FOOLISH_ITEMS];     // Array holding the IDs of the item that the ice trap is copying
-
-        uint8_t spawnCount;       // How many ice traps are currently spawned
-        uint8_t triggerCount;     // How many ice traps have been triggered and have yet to occur
     };
 
     struct GoldenWolfItemReplacement

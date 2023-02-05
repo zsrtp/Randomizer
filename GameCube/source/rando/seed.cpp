@@ -21,6 +21,7 @@
 #include "tp/d_item_data.h"
 #include "tp/d_a_shop_item_static.h"
 #include "game_patch/game_patch.h"
+#include "rando/customItems.h"
 
 namespace mod::rando
 {
@@ -560,12 +561,12 @@ namespace mod::rando
             switch ( replacementItem )
             {
                 // Only the first foolish item should need to be checked, but check all to be safe
-                case items::Foolish_Item_1:
-                case items::Foolish_Item_2:
-                case items::Foolish_Item_3:
-                case items::Foolish_Item_4:
-                case items::Foolish_Item_5:
-                case items::Foolish_Item_6:
+                case rando::customItems::Foolish_Item_1:
+                case rando::customItems::Foolish_Item_2:
+                case rando::customItems::Foolish_Item_3:
+                case rando::customItems::Foolish_Item_4:
+                case rando::customItems::Foolish_Item_5:
+                case rando::customItems::Foolish_Item_6:
                 {
                     game_patch::_02_modifyFoolishShopModel( static_cast<uint16_t>( shopItem ) );
                     break;

@@ -11,6 +11,7 @@
 #include "tp/resource.h"
 #include "tp/JKRArchivePub.h"
 #include "gc_wii/OSCache.h"
+#include "rando/customItems.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -177,6 +178,7 @@ namespace mod::game_patch
     const char* getCustomMessage( rando::Randomizer* randomizer, uint16_t msgId )
     {
         using namespace libtp::data::items;
+        using namespace rando::customItems;
 #ifdef TP_EU
         using namespace libtp::tp::d_s_logo;
 #endif
@@ -540,6 +542,7 @@ namespace mod::game_patch
     {
         using namespace libtp::data::stage;
         using namespace libtp::data::items;
+        using namespace rando::customItems;
 
         auto setMessageText = [=]( const char* text )
         {

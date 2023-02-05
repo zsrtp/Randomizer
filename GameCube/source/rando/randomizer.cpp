@@ -26,17 +26,18 @@
 #include "util/color_utils.h"
 #include "util/texture_utils.h"
 #include "tools.h"
+#include "rando/customItems.h"
 
 namespace mod::rando
 {
     int32_t lookupTable[DvdEntryNumIdSize];
 
-    FoolishItems foolishItems;
+    customItems::FoolishItems foolishItems;
     GoldenWolfItemReplacement goldenWolfItemReplacement;
 
     uint8_t getFoolishItemModelId( uint8_t originalItem )
     {
-        FoolishItems* foolishItemsPtr = &foolishItems;
+        customItems::FoolishItems* foolishItemsPtr = &foolishItems;
         const uint8_t* foolishItemIds = foolishItemsPtr->itemIds;
 
         for ( uint32_t i = 0; i < MAX_SPAWNED_FOOLISH_ITEMS; i++ )
@@ -505,7 +506,7 @@ namespace mod::rando
 
     void Randomizer::getHiddenSkillItem( void* daNpcGWolfPtr, int16_t flag, uint32_t markerFlag )
     {
-        int32_t currentRoomNum = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo;
+        int32_t currentRoomNum = libtp::tp::d_stage::mStayNo;
         HiddenSkillCheck* hiddenSkillChecks = &m_Seed->m_HiddenSkillChecks[0];
         uint32_t numHiddenSkillChecks = m_Seed->m_numHiddenSkillChecks;
         uint32_t stageIDX = m_Seed->m_StageIDX;

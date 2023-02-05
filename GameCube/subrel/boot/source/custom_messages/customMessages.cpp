@@ -4,6 +4,7 @@
 #include "game_patch/game_patch.h"
 #include "data/items.h"
 #include "tp/resource.h"
+#include "rando/customItems.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -178,7 +179,7 @@ namespace mod::customMessages
         for ( uint32_t i = 0; i < totalCustomMessages; i++ )
         {
             const MsgEntry* entry = &entries[i];
-            if ( entry->id == ITEM_TO_ID( libtp::data::items::Forest_Temple_Small_Key ) )
+            if ( entry->id == ITEM_TO_ID( rando::customItems::Forest_Temple_Small_Key ) )
             {
                 smallKeyText = entry->msg;
                 textSize = entry->size;

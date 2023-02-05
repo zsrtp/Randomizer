@@ -27,6 +27,8 @@
 #include "tp/m_do_controller_pad.h"
 #include "tp/d_a_npc.h"
 #include "asm_templates.h"
+#include "tp/rel/ids.h"
+#include "rando/customItems.h"
 
 namespace mod::events
 {
@@ -44,7 +46,7 @@ namespace mod::events
         { "Rafrel", 0x00001D01, -116486.945f, -13860.f, 58533.0078f, 0, static_cast<int16_t>( 0xCCCD ), 0, 0xFFFF };
     libtp::tp::dzx::ACTR ItemActr =
         { "item", 0xF3FFFF04, -108290.086f, -18654.748f, 45935.2969f, 0, static_cast<int16_t>( 0x1 ), 0x3F, 0xFFFF };
-    libtp::tp::dzx::ACTR EponaActr = { "Horse", 0x00000F0D, 0.f, 0.f, 0.f, 0, -180, 0, 0xFFFF };
+    libtp::tp::dzx::ACTR EponaActr = { "Horse", 0x00000F0D, -1200.f, 367.f, 6100.f, 0, -180, 0, 0xFFFF };
     libtp::tp::dzx::SCOB HorseJumpScob =
         { "Hjump", 0x044FFF02, 5600.f, -5680.f, 52055.f, 0, static_cast<int16_t>( 0x4000 ), 0, 0xFFFF, 0x20, 0x2D, 0x2D, 0xFF };
     libtp::tp::dzx::ACTR ForestGWolfActr = { "GWolf", 0x05FF01FF, -35178.f, 430.21f, -21503.6f, 0, -0x4000, 0xFF, 0xFFFF };
@@ -116,6 +118,7 @@ namespace mod::events
 
     void onRELLink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
     {
+        using namespace libtp::tp::rel::relIDs;
         randomizer->overrideREL();
 
         // Static REL overrides and patches
@@ -123,9 +126,8 @@ namespace mod::events
 
         switch ( dmc->moduleInfo->id )
         {
-            // d_a_door_shutter.rel
             // Door - Shutter
-            case 0x8:
+            case D_A_DOOR_SHUTTER:
             {
                 if ( libtp::tp::d_a_alink::checkStageName(
                          libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) )
@@ -136,17 +138,17 @@ namespace mod::events
 
                 break;
             }
-            // d_a_tbox.rel
+
             // Treasure Chests
-            case 0x29:
+            case D_A_TBOX:
             {
                 // Nop out the bne- that causes chests to play the cutscene for big items.
                 performStaticASMReplacement( relPtrRaw + 0xA58, ASM_NOP );
                 break;
             }
-            // d_a_kytag11.rel
+
             // d_kankyo tag 11
-            case 0x4c:
+            case D_A_KYTAG11:
             {
                 if ( libtp::tp::d_a_alink::checkStageName(
                          libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hyrule_Field] ) )
@@ -157,9 +159,9 @@ namespace mod::events
 
                 break;
             }
-            // d_a_e_hp.rel
+
             // Generic Poe
-            case 0x00C8:
+            case D_A_E_HP:
             {
                 libtp::patch::writeStandardBranches( relPtrRaw + e_hp_ExecDead_liOffset,
                                                      assembly::asmAdjustPoeItemStart,
@@ -170,9 +172,9 @@ namespace mod::events
 
                 break;
             }
-            // d_a_e_po.rel
+
             // Arbiter's Poe
-            case 0x00DD:
+            case D_A_E_PO:
             {
                 libtp::patch::writeStandardBranches( relPtrRaw + e_po_ExecDead_liOffset,
                                                      assembly::asmAdjustAGPoeItemStart,
@@ -182,9 +184,9 @@ namespace mod::events
                 performStaticASMReplacement( relPtrRaw + e_po_ExecDead_incOffset, ASM_NOP );
                 break;
             }
-            // d_a_obj_kshutter.rel
+
             // Lakebed Temple Boss Door
-            case 0x1FA:
+            case D_A_OBJ_KSHUTTER:
             {
                 // Nop out the instruction that stores the new total small key value when the game attempts to
                 // remove a small key from the inventory when opening the boss door
@@ -196,9 +198,9 @@ namespace mod::events
                 }
                 break;
             }
-            // d_a_e_hzelda.rel
+
             // Puppet Zelda
-            case 0xCA:
+            case D_A_E_HZELDA:
             {
                 // nop out the greater than branch so that Zelda will always throw a Ball if she is able to
                 performStaticASMReplacement( relPtrRaw + 0xA94, ASM_NOP );     // Previous: bge
@@ -208,9 +210,9 @@ namespace mod::events
                 performStaticASMReplacement( relPtrRaw + 0x8EC, ASM_NOP );     // Previous: bfadds f0,f0,f1
                 break;
             }
-            // d_a_npc_ins.rel
+
             // Agitha
-            case 0x141:
+            case D_A_NPC_INS:
             {
                 mod::rando::Seed* seed;
                 if ( seed = getCurrentSeed( randomizer ), seed )
@@ -224,16 +226,16 @@ namespace mod::events
                 }
                 break;
             }
-            // d_a_mg_rod.rel
+
             // Fishing Hole Rod
-            case 0x32:
+            case D_A_MG_ROD:
             {
                 libtp::patch::writeBranchBL( relPtrRaw + 0xB2B0, libtp::tp::d_item::execItemGet );
                 break;
             }
-            // d_a_Statue_Tag.rel
+
             // Owl Statues
-            case 0x85:     // d_a_Tag_Statue - Owl Statues
+            case D_A_TAG_STATUE_EVT:
             {
                 // Replace sky character
                 performStaticASMReplacement( relPtrRaw + 0xB7C, ASM_BRANCH( 0x20 ) );
@@ -244,9 +246,9 @@ namespace mod::events
 
                 break;
             }
-            // d_a_obj_life_container.rel
+
             // Heart Pieces/Containers
-            case 0x35:
+            case D_A_OBJ_LIFE_CONTAINER:
             {
                 // Adjust freestanding heart field model height based on the current item being created
                 return_daObjLifeContainer_c__Create = libtp::patch::hookFunction(
@@ -254,6 +256,7 @@ namespace mod::events
                     []( void* daObjLifePtr )
                     {
                         using namespace libtp::data;
+                        using namespace rando;
 
                         uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x92A );
 
@@ -281,9 +284,9 @@ namespace mod::events
                             case items::Mirror_Piece_2:
                             case items::Mirror_Piece_3:
                             case items::Mirror_Piece_4:
-                            case items::Fused_Shadow_1:
-                            case items::Fused_Shadow_2:
-                            case items::Fused_Shadow_3:
+                            case customItems::Fused_Shadow_1:
+                            case customItems::Fused_Shadow_2:
+                            case customItems::Fused_Shadow_3:
                             case items::Dominion_Rod_Uncharged:
                             case items::Dominion_Rod:
                             {
@@ -304,25 +307,25 @@ namespace mod::events
                                 *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 40.f;
                                 break;
                             }
-                            case items::Forest_Temple_Small_Key:
-                            case items::Goron_Mines_Small_Key:
-                            case items::Lakebed_Temple_Small_Key:
-                            case items::Arbiters_Grounds_Small_Key:
-                            case items::Snowpeak_Ruins_Small_Key:
-                            case items::Temple_of_Time_Small_Key:
-                            case items::City_in_The_Sky_Small_Key:
-                            case items::Palace_of_Twilight_Small_Key:
-                            case items::Hyrule_Castle_Small_Key:
-                            case items::Forest_Temple_Big_Key:
-                            case items::Lakebed_Temple_Big_Key:
-                            case items::Arbiters_Grounds_Big_Key:
-                            case items::Temple_of_Time_Big_Key:
-                            case items::City_in_The_Sky_Big_Key:
-                            case items::Palace_of_Twilight_Big_Key:
-                            case items::Hyrule_Castle_Big_Key:
+                            case customItems::Forest_Temple_Small_Key:
+                            case customItems::Goron_Mines_Small_Key:
+                            case customItems::Lakebed_Temple_Small_Key:
+                            case customItems::Arbiters_Grounds_Small_Key:
+                            case customItems::Snowpeak_Ruins_Small_Key:
+                            case customItems::Temple_of_Time_Small_Key:
+                            case customItems::City_in_The_Sky_Small_Key:
+                            case customItems::Palace_of_Twilight_Small_Key:
+                            case customItems::Hyrule_Castle_Small_Key:
+                            case customItems::Forest_Temple_Big_Key:
+                            case customItems::Lakebed_Temple_Big_Key:
+                            case customItems::Arbiters_Grounds_Big_Key:
+                            case customItems::Temple_of_Time_Big_Key:
+                            case customItems::City_in_The_Sky_Big_Key:
+                            case customItems::Palace_of_Twilight_Big_Key:
+                            case customItems::Hyrule_Castle_Big_Key:
                             case items::Small_Key_N_Faron_Gate:
                             case items::Bed_Key:
-                            case items::Bulblin_Camp_Key:
+                            case customItems::Bulblin_Camp_Key:
                             case items::Gate_Keys:
                             case items::Slingshot:
                             case items::Giant_Bomb_Bag:
@@ -407,7 +410,7 @@ namespace mod::events
                                 libtp::tp::d_save::offSwitch_dSv_info(
                                     &gameInfoPtr->save,
                                     static_cast<int32_t>( goldenWolfItemReplacementPtr->markerFlag ),
-                                    gameInfoPtr->play.mStartStage.mRoomNo );
+                                    libtp::tp::d_stage::mStayNo );
                             }
                         }
 
@@ -418,60 +421,58 @@ namespace mod::events
                 break;
             }
 
-            // d_a_demo_item.rel
             // Item held in Link's hand upon giving/recieving it
-            case 0x3F:
+            case D_A_DEMO_ITEM:
             {
                 libtp::patch::writeStandardBranches( relPtrRaw + 0x1E50,
                                                      assembly::asmAdjustCreateItemParamsStart,
                                                      assembly::asmAdjustCreateItemParamsEnd );
                 break;
             }
-            // d_a_obj_bosswarp.rel
-            // Post-Boss Cutscene
-            case 0x5B:
+
+            // Post-Boss Portal
+            case D_A_OBJ_BOSSWARP:
             {
                 libtp::patch::writeBranchBL( relPtrRaw + 0x1884, libtp::tp::d_item::execItemGet );
                 performStaticASMReplacement( relPtrRaw + 0x1888, ASM_BRANCH( 0xA8 ) );
                 // Replace dungeon reward that is given after beating a boss and show the appropriate text.
                 break;
             }
-            // d_a_npc_bouS.rel
-            // Inside Bo's House
-            case 0x121:
+
+            // Bo - Sumo
+            case D_A_NPC_BOUS:
             {
                 // Prevent Bo from talking after the chest has been opened
                 performStaticASMReplacement( relPtrRaw + 0x1A44, ASM_BRANCH( 0x28 ) );
                 break;
             }
-            // d_a_npc_pouya.rel
+
             // Jovani
-            case 0x15C:
+            case D_A_NPC_POUYA:
             {
                 // Branch to a custom function that checks for the 20 soul flag as well as soul count.
                 libtp::patch::writeBranchBL( relPtrRaw + 0x14D4, assembly::asmCheck60PoeReward );
                 break;
             }
-            // d_a_npc_ykm.rel
+
             // Yeto
-            case 0x17F:
+            case D_A_NPC_YKM:
             {
                 // Prevent Yeto from leaving the dungeon if the player has the boss key
                 performStaticASMReplacement( relPtrRaw + 0x1524, ASM_LOAD_IMMEDIATE( 3, 0 ) );
                 break;
             }
-            // d_a_npc_ykw.rel
+
             // Yeta
-            case 0x180:
+            case D_A_NPC_YKW:
             {
                 // Prevent Yeta from leaving the dungeon if the player has the boss key
-                performStaticASMReplacement( relPtrRaw + 0x1038, ASM_LOAD_IMMEDIATE( 3, 0 ) );
-                performStaticASMReplacement( relPtrRaw + 0x1000, ASM_LOAD_IMMEDIATE( 3, 0xED ) );
+                performStaticASMReplacement( relPtrRaw + 0x1038, ASM_LOAD_IMMEDIATE( 3, 0 ) );     // li r3,0
                 break;
             }
-            // d_a_e_md.rel
+
             // SPR Suit of Armor
-            case 0xD0:
+            case D_A_E_MD:
             {
                 if ( libtp::tp::d_a_alink::checkStageName(
                          libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) )
@@ -482,43 +483,43 @@ namespace mod::events
 
                 break;
             }
-            // d_a_e_mk.rel
+
             // Ook
-            case 0xD2:
+            case D_A_E_MK:
             {
                 // Transform back into link if you are wolf when defeating Ook
                 libtp::patch::writeBranchBL( relPtrRaw + 0x4A88, assembly::asmTransformOokWolf );
                 break;
             }
-            // d_a_obj_swBallC.rel
+
             // Light Sword Cutscene
-            case 0x280:
+            case D_A_OBJ_SWBALLC:
             {
                 // The cutscene gives link the MS during the cutscene by default, so we just nop out the link to the function.
                 performStaticASMReplacement( relPtrRaw + 0xB50, ASM_NOP );
                 break;
             }
-            // d_a_npc_rafrel.rel
+
             // Auru
-            case 0x15F:
+            case D_A_NPC_RAFREL:
             {
                 performStaticASMReplacement(
                     relPtrRaw + 0x6C4,
                     ASM_LOAD_IMMEDIATE( 3, 0x131 ) );     // set auru to check for whether he gave the player the item to spawn.
                 break;
             }
-            // d_a_obj_smallkey.rel
+
             // Freestanding Small Keys
-            case 0x26D:
+            case D_A_OBJ_SMALLKEY:
             {
                 performStaticASMReplacement(
                     relPtrRaw + 0xC88,
                     ASM_BRANCH( 0x58 ) );     // patch instruction to prevent game from removing bulblin camp key.
                 break;
             }
-            // d_a_b_bq.rel
+
             // Diababa
-            case 0x8B:
+            case D_A_B_BQ:
             {
                 // Transform back into link if you are wolf when defeating Diababa
                 libtp::patch::writeStandardBranches( relPtrRaw + 0x21B8,
@@ -528,9 +529,8 @@ namespace mod::events
                 break;
             }
 
-            // d_a_obj_Lv5Key.rel
             // Snowpeak Ruins Small Key Lock
-            case 0x189:
+            case D_A_OBJ_LV5KEY:
             {
                 // Prevent Snowpeak Ruins Small Key softlock
                 return_daObjLv5Key_c__Wait = libtp::patch::hookFunction(
@@ -590,9 +590,9 @@ namespace mod::events
                     } );
                 break;
             }
-            // d_a_midna.rel
+
             // Midna
-            case 0x33:
+            case D_A_MIDNA:
             {
                 return_daMidna_c__checkMetamorphoseEnableBase =
                     libtp::patch::hookFunction( reinterpret_cast<daMidna_checkMetamorphoseEnableBase_Def>( relPtrRaw + 0x8A0C ),
@@ -613,9 +613,9 @@ namespace mod::events
                                                 } );
                 break;
             }
-            // d_a_e_s1.rel
+
             // Shadow Beast
-            case 0xE2:
+            case D_A_E_S1:
             {
                 if ( libtp::tp::d_a_alink::checkStageName(
                          libtp::data::stage::allStages[libtp::data::stage::stageIDs::Upper_Zoras_River] ) )
@@ -625,9 +625,9 @@ namespace mod::events
                 }
                 break;
             }
-            // d_a_obj_drop.rel
+
             // Tear of Light
-            case 0x1B7:
+            case D_A_OBJ_DROP:
             {
                 // set wait timer to 1
                 performStaticASMReplacement( relPtrRaw + 0x0FCC, ASM_LOAD_IMMEDIATE( 0, 1 ) );
@@ -638,24 +638,24 @@ namespace mod::events
                 break;
             }
 
-            // d_a_kytag03.rel
-            case 0x10C:
+            case D_A_KYTAG03:
             {
                 // Modify draw function to draw the Reekfish path so long as we have smelled the fish once.
                 libtp::patch::writeBranchBL( relPtrRaw + 0x66C, assembly::asmShowReekfishPath );
                 break;
             }
-            // d_a_npc_ks.rel
+
             // Red Bow Monkey
-            case 0x14A:
+            case D_A_NPC_KS:
             {
                 // Prevent the game from triggering the 4 monkeys cutscene in the lobby.
                 performStaticASMReplacement( relPtrRaw + 0x9CE8, ASM_COMPARE_WORD_IMMEDIATE( 3, 1 ) );
                 break;
             }
+
             // d_a_npc_gwolf.rel
             // Golden Wolf
-            case 0x13B:
+            case D_A_NPC_GWOLF:
             {
                 // Change the flag that the faron wolf checks for when it spawns. The original value, is structured like this:
                 // XXXXYYYY  where XXXX is the flag for the Ending Blow and YYYY is for having howled at the DMT stone. Since we
@@ -687,27 +687,27 @@ namespace mod::events
     void onRELUnlink( rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc )
     {
         (void) randomizer;
+        using namespace libtp::tp::rel::relIDs;
 
         switch ( dmc->moduleInfo->id )
         {
-            // d_a_obj_Lv5Key.rel
             // Snowpeak Ruins Small Key Lock
-            case 0x189:
+            case D_A_OBJ_LV5KEY:
             {
                 return_daObjLv5Key_c__Wait = libtp::patch::unhookFunction( return_daObjLv5Key_c__Wait );
                 break;
             }
-            // d_a_midna.rel
+
             // Midna
-            case 0x33:
+            case D_A_MIDNA:
             {
                 return_daMidna_c__checkMetamorphoseEnableBase =
                     libtp::patch::unhookFunction( return_daMidna_c__checkMetamorphoseEnableBase );
                 break;
             }
-            // d_a_obj_life_container.rel
+
             // Heart Pieces/Containers
-            case 0x35:
+            case D_A_OBJ_LIFE_CONTAINER:
             {
                 return_daObjLifeContainer_c__Create = libtp::patch::unhookFunction( return_daObjLifeContainer_c__Create );
                 return_daObjLifeContainer_c__setEffect = libtp::patch::unhookFunction( return_daObjLifeContainer_c__setEffect );
@@ -944,10 +944,11 @@ namespace mod::events
     bool proc_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit )
     {
         using namespace libtp::data::stage;
+        using namespace libtp::data::flags;
 
         switch ( memBit )
         {
-            case 3:     // Boss Defeated
+            case BOSS_DEFEATED:
             {
                 const char* dungeonStages[] = { allStages[stageIDs::Forest_Temple],
                                                 allStages[stageIDs::Ook],
@@ -977,23 +978,18 @@ namespace mod::events
                 break;
             }
 
-            case 4:     // Heart Container Collected
+            case HEART_CONTAINER_COLLECTED:
             {
                 return false;
             }
 
-            case 7:     // Miniboss defeated
+            case MINIBOSS_DEFEATED:
             {
                 if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Forest_Temple] ) )
                 {
-                    const uint8_t currentRoom = libtp::tp::d_kankyo::env_light.currentRoom;
+                    const uint8_t currentRoom = libtp::tp::d_stage::mStayNo;
 
-                    if ( ( ( currentRoom == 3 ) || ( currentRoom == 1 ) ) &&
-                         ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mEvtManager.mRoomNo != 0 ) )
-                    {
-                        return false;
-                    }
-                    else if ( currentRoom == 2 )
+                    if ( currentRoom < 4 )
                     {
                         return false;
                     }
@@ -1013,8 +1009,13 @@ namespace mod::events
     void loadCustomActors()
     {
         using namespace libtp;
-        if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) )
+        if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) ||
+             ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Ordon_Village] ) &&
+               ( libtp::tp::d_stage::mStayNo == 0 ) ) )
         {
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.horse_place.mPos.x = EponaActr.pos.x;
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.horse_place.mPos.y = EponaActr.pos.y;
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.horse_place.mPos.z = EponaActr.pos.z;
             tools::SpawnActor( 0, EponaActr );
         }
     }
@@ -1042,9 +1043,9 @@ namespace mod::events
             libtp::tp::dzx::ACTR localGanonBarrierActor;
             memcpy( &localGanonBarrierActor, &GanonBarrierActor, sizeof( libtp::tp::dzx::ACTR ) );
             tools::SpawnActor( 7, localGanonBarrierActor );
-            localGanonBarrierActor.pos[2] -= 270.f;
+            localGanonBarrierActor.pos.z -= 270.f;
             tools::SpawnActor( 7, localGanonBarrierActor );
-            localGanonBarrierActor.pos[2] -= 270.f;
+            localGanonBarrierActor.pos.z -= 270.f;
             tools::SpawnActor( 7, localGanonBarrierActor );
         }
         else if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) &&

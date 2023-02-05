@@ -3,6 +3,7 @@
 #include "data/items.h"
 #include "events.h"
 #include "tp/d_item.h"
+#include "rando/customItems.h"
 
 namespace mod::game_patch
 {
@@ -46,7 +47,7 @@ namespace mod::game_patch
 
     uint32_t _04_getProgressiveSkill()
     {
-        using namespace libtp::data::items;
+        using namespace rando::customItems;
         const uint8_t progressiveSkillsList[] =
             { Ending_Blow, Shield_Attack, Back_Slice, Helm_Splitter, Mortal_Draw, Jump_Strike };
 
@@ -66,6 +67,7 @@ namespace mod::game_patch
 
     uint32_t _04_getProgressiveSkyBook()
     {
+        using namespace rando::customItems;
         using namespace libtp::data::items;
         const uint8_t progressiveSkyBooksList[] = { Ancient_Sky_Book_Empty,
                                                     Ancient_Sky_Book_First_Character,
@@ -128,7 +130,7 @@ namespace mod::game_patch
 
     uint32_t _04_getProgressiveFusedShadow()
     {
-        using namespace libtp::data::items;
+        using namespace rando::customItems;
         const uint8_t progressiveFusedShadowList[] { Fused_Shadow_1, Fused_Shadow_2, Fused_Shadow_3 };
 
         const uint32_t listLength = sizeof( progressiveFusedShadowList ) / sizeof( progressiveFusedShadowList[0] );
@@ -148,6 +150,7 @@ namespace mod::game_patch
     KEEP_FUNC uint32_t _04_verifyProgressiveItem( rando::Randomizer* randomizer, uint32_t itemID )
     {
         using namespace libtp::data::items;
+        using namespace rando::customItems;
         if ( randoIsEnabled( randomizer ) )
         {
             switch ( itemID )
@@ -281,7 +284,7 @@ namespace mod::game_patch
                 case Foolish_Item_5:
                 case Foolish_Item_6:
                 {
-                    rando::FoolishItems* foolishItemsPtr = &rando::foolishItems;
+                    rando::customItems::FoolishItems* foolishItemsPtr = &rando::foolishItems;
                     uint32_t count = foolishItemsPtr->spawnCount;
 
                     // Make sure the current count is valid before using

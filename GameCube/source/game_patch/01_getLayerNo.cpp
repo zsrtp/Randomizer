@@ -7,6 +7,7 @@
 #include "tp/d_kankyo.h"
 #include "tp/d_save.h"
 #include "data/flags.h"
+#include "rando/customItems.h"
 
 namespace mod::game_patch
 {
@@ -799,7 +800,7 @@ namespace mod::game_patch
                         }
                         else
                         {
-                            if ( events::haveItem( libtp::data::items::Bulblin_Camp_Key ) )
+                            if ( events::haveItem( rando::customItems::Bulblin_Camp_Key ) )
                             {
                                 libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x1C] = 0x1;
                             }

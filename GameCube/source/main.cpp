@@ -48,6 +48,7 @@
 #include "rando/data.h"
 #include "gc_wii/OSInterrupt.h"
 #include "tp/d_kankyo.h"
+#include "rando/customItems.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -1655,7 +1656,7 @@ namespace mod
         if ( libtp::tp::d_a_alink::checkStageName(
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Ordon_Village_Interiors] ) )
         {
-            if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage.mRoomNo == 1 )
+            if ( libtp::tp::d_stage::mStayNo == 1 )
             {
                 if ( twilightNode == 0 )
                 {
@@ -1706,6 +1707,7 @@ namespace mod
     KEEP_FUNC void handle_setGetItemFace( libtp::tp::d_a_alink::daAlink* linkMapPtr, uint16_t itemID )
     {
         using namespace libtp::data::items;
+        using namespace rando::customItems;
         switch ( itemID )
         {
             // Only the first foolish item should need to be checked, but check all to be safe

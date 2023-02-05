@@ -16,6 +16,7 @@
 #include "tp/d_resource.h"
 #include "tp/m_Do_dvd_thread.h"
 #include "tp/d_a_alink.h"
+#include "rando/customItems.h"
 
 namespace mod::rando
 {
@@ -82,7 +83,7 @@ namespace mod::rando
 
     uint8_t getFoolishItemModelId( uint8_t originalItem );
 
-    extern FoolishItems foolishItems;
+    extern customItems::FoolishItems foolishItems;
     extern GoldenWolfItemReplacement goldenWolfItemReplacement;
 
 }     // namespace mod::rando

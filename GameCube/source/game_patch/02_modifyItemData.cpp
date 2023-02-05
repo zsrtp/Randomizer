@@ -15,6 +15,7 @@
 #include "tp/d_save.h"
 #include "data/flags.h"
 #include "rando/data.h"
+#include "rando/customItems.h"
 
 namespace mod::game_patch
 {
@@ -103,7 +104,7 @@ namespace mod::game_patch
         constexpr uint32_t modelListSize = sizeof( foolishModelItemList ) / sizeof( foolishModelItemList[0] );
         libtp::tp::d_item_data::FieldItemRes* fieldItemResPtr = &libtp::tp::d_item_data::field_item_res[0];
 
-        rando::FoolishItems* foolishItemsPtr = &rando::foolishItems;
+        rando::customItems::FoolishItems* foolishItemsPtr = &rando::foolishItems;
         const uint8_t* foolishItemIds = foolishItemsPtr->itemIds;
         uint8_t* itemModelIds = foolishItemsPtr->itemModelId;
 
@@ -655,35 +656,35 @@ namespace mod::game_patch
     KEEP_FUNC int32_t _02_firstSkybookItemGetCheck()
     {
         bool result =
-            libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Ancient_Sky_Book_First_Character );
+            libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Ancient_Sky_Book_First_Character );
         return static_cast<int32_t>( result );
     }
 
     KEEP_FUNC int32_t _02_secondSkybookItemGetCheck()
     {
         bool result =
-            libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Ancient_Sky_Book_Second_Character );
+            libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Ancient_Sky_Book_Second_Character );
         return static_cast<int32_t>( result );
     }
 
     KEEP_FUNC int32_t _02_thirdSkybookItemGetCheck()
     {
         bool result =
-            libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Ancient_Sky_Book_Third_Character );
+            libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Ancient_Sky_Book_Third_Character );
         return static_cast<int32_t>( result );
     }
 
     KEEP_FUNC int32_t _02_fourthSkybookItemGetCheck()
     {
         bool result =
-            libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Ancient_Sky_Book_Fourth_Character );
+            libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Ancient_Sky_Book_Fourth_Character );
         return static_cast<int32_t>( result );
     }
 
     KEEP_FUNC int32_t _02_fifthSkybookItemGetCheck()
     {
         bool result =
-            libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Ancient_Sky_Book_Fifth_Character );
+            libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Ancient_Sky_Book_Fifth_Character );
         return static_cast<int32_t>( result );
     }
 
@@ -701,19 +702,19 @@ namespace mod::game_patch
 
     KEEP_FUNC int32_t _02_firstFusedShadowItemGetCheck()
     {
-        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Fused_Shadow_1 );
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Fused_Shadow_1 );
         return static_cast<int32_t>( result );
     }
 
     KEEP_FUNC int32_t _02_secondFusedShadowItemGetCheck()
     {
-        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Fused_Shadow_2 );
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Fused_Shadow_2 );
         return static_cast<int32_t>( result );
     }
 
     KEEP_FUNC int32_t _02_thirdFusedShadowItemGetCheck()
     {
-        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Fused_Shadow_3 );
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Fused_Shadow_3 );
         return static_cast<int32_t>( result );
     }
 
@@ -743,43 +744,43 @@ namespace mod::game_patch
 
     KEEP_FUNC int32_t _02_endingBlowItemGetCheck()
     {
-        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Ending_Blow );
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Ending_Blow );
         return static_cast<int32_t>( result );
     }
 
     KEEP_FUNC int32_t _02_shieldAttackItemGetCheck()
     {
-        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Shield_Attack );
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Shield_Attack );
         return static_cast<int32_t>( result );
     }
 
     KEEP_FUNC int32_t _02_backSliceItemGetCheck()
     {
-        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Back_Slice );
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Back_Slice );
         return static_cast<int32_t>( result );
     }
 
     KEEP_FUNC int32_t _02_helmSplitterItemGetCheck()
     {
-        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Helm_Splitter );
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Helm_Splitter );
         return static_cast<int32_t>( result );
     }
 
     KEEP_FUNC int32_t _02_mortalDrawItemGetCheck()
     {
-        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Mortal_Draw );
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Mortal_Draw );
         return static_cast<int32_t>( result );
     }
 
     KEEP_FUNC int32_t _02_jumpStrikeItemGetCheck()
     {
-        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Jump_Strike );
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Jump_Strike );
         return static_cast<int32_t>( result );
     }
 
     KEEP_FUNC int32_t _02_campSmallKeyItemGetCheck()
     {
-        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( libtp::data::items::Bulblin_Camp_Key );
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Bulblin_Camp_Key );
         return static_cast<int32_t>( result );
     }
 
