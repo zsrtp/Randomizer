@@ -197,7 +197,7 @@ namespace mod::customMessages
         // it
 
         // Get the area and color text to search for
-        char areaTextAndColor[] = MSG_COLOR( MSG_COLOR_GREEN );
+        static char areaTextAndColor[] = MSG_COLOR( MSG_COLOR_GREEN );
         constexpr uint32_t areaTextAndColorSize = sizeof( areaTextAndColor );
 
         // Get a pointer to the end of the string, minus the size of the color text
