@@ -48,6 +48,9 @@ namespace mod
         // Set up the codehandler
         // writeCodehandlerToMemory();
 
+        // Initialize the Golden Wolf item replacement model id to -1
+        rando::goldenWolfItemReplacement.itemModelId = -1;
+
         // Initialize randNext
         initRandNext();
 

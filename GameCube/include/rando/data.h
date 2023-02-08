@@ -301,8 +301,6 @@ namespace mod::rando
         int32_t itemModelId;     // Global model id for the spawned item
         int16_t flag;            // Flag associated with the current golden wolf
         uint8_t markerFlag;      // Flag associated with the current golden wolf's marker on the map
-
-        GoldenWolfItemReplacement() { itemModelId = -1; }
     };
 
     extern int32_t lookupTable[DvdEntryNumIdSize];
