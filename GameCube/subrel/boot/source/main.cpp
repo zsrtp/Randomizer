@@ -46,7 +46,7 @@ namespace mod
         mod::console = new ( sizeof( uint8_t ) ) libtp::display::Console( CONSOLE_PROTECTED_LINES );
 
         // Set up the codehandler
-        writeCodehandlerToMemory();
+        // writeCodehandlerToMemory();
 
         // Initialize randNext
         initRandNext();
