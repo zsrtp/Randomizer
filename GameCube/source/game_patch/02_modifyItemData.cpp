@@ -99,19 +99,44 @@ namespace mod::game_patch
         }
     }
 
+    uint32_t getFoolishModelRandomIndex( uint8_t* foolishModelIndexes, uint32_t loopCurrentCount )
+    {
+        constexpr uint32_t modelListSize = sizeof( foolishModelItemList ) / sizeof( foolishModelItemList[0] );
+        uint32_t randomIndex = libtp::tools::ulRand( &randState, modelListSize );
+
+        uint32_t i = 0;
+        while ( i < loopCurrentCount )
+        {
+            // Make sure no duplicate indexes are used
+            if ( randomIndex == foolishModelIndexes[i] )
+            {
+                // Get a new index and restart the loop
+                randomIndex = libtp::tools::ulRand( &randState, modelListSize );
+                i = 0;
+                continue;
+            }
+            i++;
+        }
+
+        foolishModelIndexes[loopCurrentCount] = static_cast<uint8_t>( randomIndex );
+        return randomIndex;
+    }
+
     void _02_modifyFoolishFieldModel()
     {
         // Set the field model of the Foolish Item ID to the model of a random important item.
-        constexpr uint32_t modelListSize = sizeof( foolishModelItemList ) / sizeof( foolishModelItemList[0] );
         libtp::tp::d_item_data::FieldItemRes* fieldItemResPtr = &libtp::tp::d_item_data::field_item_res[0];
-
         rando::customItems::FoolishItems* foolishItemsPtr = &rando::foolishItems;
+
         const uint8_t* foolishItemIds = foolishItemsPtr->itemIds;
         uint8_t* itemModelIds = foolishItemsPtr->itemModelId;
 
-        for ( uint32_t i = 0; i < MAX_SPAWNED_FOOLISH_ITEMS; i++ )
+        constexpr uint32_t loopCount = MAX_SPAWNED_FOOLISH_ITEMS;
+        uint8_t foolishModelIndexes[loopCount];
+
+        for ( uint32_t i = 0; i < loopCount; i++ )
         {
-            uint32_t randomIndex = libtp::tools::ulRand( &randState, modelListSize );
+            uint32_t randomIndex = getFoolishModelRandomIndex( foolishModelIndexes, i );
             uint32_t fieldModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
             itemModelIds[i] = static_cast<uint8_t>( fieldModelItemID );
 
@@ -125,13 +150,12 @@ namespace mod::game_patch
         }
     }
 
-    void _02_modifyFoolishShopModel( uint16_t shopID )
+    void _02_modifyFoolishShopModel( uint8_t* foolishModelIndexes, uint32_t loopCurrentCount, uint32_t shopID )
     {
         using namespace libtp::tp::d_a_shop_item_static;
 
         // Set the shop model of the Foolish Item ID to the model of a random important item.
-        constexpr uint32_t modelListSize = TOTAL_FOOLISH_ITEM_MODELS;
-        uint32_t randomIndex = libtp::tools::ulRand( &randState, modelListSize );
+        uint32_t randomIndex = getFoolishModelRandomIndex( foolishModelIndexes, loopCurrentCount );
         uint32_t shopModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
 
         libtp::tp::d_item_data::ItemResource* fieldItemResPtr = &libtp::tp::d_item_data::item_resource[shopModelItemID];
@@ -150,7 +174,7 @@ namespace mod::game_patch
         libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( shopItemDataPtr ), sizeof( ShopItemData ) );
     }
 
-    void _02_modifyShopModelScale( uint16_t shopID, uint16_t itemID )
+    void _02_modifyShopModelScale( uint32_t shopID, uint32_t itemID )
     {
         using namespace libtp::tp::d_a_shop_item_static;
 

@@ -57,8 +57,8 @@ namespace mod::game_patch
     // 02 - Function definitions for custom items and patched vanilla items
     void _02_modifyItemData();
     void _02_modifyFoolishFieldModel();
-    void _02_modifyFoolishShopModel( uint16_t shopID );
-    void _02_modifyShopModelScale( uint16_t shopID, uint16_t itemID );
+    void _02_modifyFoolishShopModel( uint8_t* foolishModelIndexes, uint32_t loopCurrentCount, uint32_t shopID );
+    void _02_modifyShopModelScale( uint32_t shopID, uint32_t itemID );
     void giveNodeDungeonItems( const libtp::data::stage::AreaNodesID nodeId,
                                const libtp::data::items::NodeDungeonItemType type );
 
