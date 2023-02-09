@@ -51,8 +51,8 @@ namespace mod
         // Initialize the Golden Wolf item replacement model id to -1
         rando::goldenWolfItemReplacement.itemModelId = -1;
 
-        // Initialize randNext
-        initRandNext();
+        // Initialize randState
+        initRandState();
 
         // Run game patches
         game_patch::_00_poe();
@@ -226,17 +226,18 @@ namespace mod
             patch::hookFunction( libtp::tp::d_meter2_info::resetMiniGameItem, mod::handle_resetMiniGameItem );
     }
 
-    void initRandNext()
+    void initRandState()
     {
-        uint32_t next;
+        uint32_t state;
 
-        // OSGetTick may return 0, and using that would make randNext have a predictable value, so don't allow 0 to be used
+        // randState is being used with xorshift32, which requires the state to not be 0. OSGetTick may return 0, so keep
+        // calling it until it does not return 0.
         do
         {
-            next = libtp::gc_wii::os_time::OSGetTick();
-        } while ( next == 0 );
+            state = libtp::gc_wii::os_time::OSGetTick();
+        } while ( state == 0 );
 
-        randNext = next;
+        randState = state;
     }
 
     void initArcLookupTable()

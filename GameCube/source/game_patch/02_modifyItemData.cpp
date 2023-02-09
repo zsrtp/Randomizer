@@ -16,6 +16,7 @@
 #include "data/flags.h"
 #include "rando/data.h"
 #include "rando/customItems.h"
+#include "tools.h"
 
 namespace mod::game_patch
 {
@@ -110,7 +111,7 @@ namespace mod::game_patch
 
         for ( uint32_t i = 0; i < MAX_SPAWNED_FOOLISH_ITEMS; i++ )
         {
-            uint32_t randomIndex = ulRand( &randNext, modelListSize );
+            uint32_t randomIndex = libtp::tools::ulRand( &randState, modelListSize );
             uint32_t fieldModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
             itemModelIds[i] = static_cast<uint8_t>( fieldModelItemID );
 
@@ -130,7 +131,7 @@ namespace mod::game_patch
 
         // Set the shop model of the Foolish Item ID to the model of a random important item.
         constexpr uint32_t modelListSize = TOTAL_FOOLISH_ITEM_MODELS;
-        uint32_t randomIndex = ulRand( &randNext, modelListSize );
+        uint32_t randomIndex = libtp::tools::ulRand( &randState, modelListSize );
         uint32_t shopModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
 
         libtp::tp::d_item_data::ItemResource* fieldItemResPtr = &libtp::tp::d_item_data::item_resource[shopModelItemID];

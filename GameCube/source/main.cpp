@@ -83,7 +83,7 @@ namespace mod
 #endif
 
     void* Z2ScenePtr = nullptr;
-    uint32_t randNext = 0;
+    uint32_t randState = 0;
     KEEP_VAR const char* m_DonationText = nullptr;
 
     // Function hook return trampolines
@@ -702,7 +702,7 @@ namespace mod
 
         roomReloadingState = currentReloadingState;
 
-        rand( &randNext );
+        tools::xorshift32( &randState );
 
         if ( events::timeChange != 0 )
         {
@@ -1904,31 +1904,6 @@ namespace mod
 
         return ret;
     };
-
-    uint32_t rand( uint32_t* seed )
-    {
-        uint32_t externSeed = *seed;
-        uint32_t val = ( externSeed * 0x41C64E6D ) + 0x3039;
-        *seed = val;
-        return val;
-    }
-
-    uint32_t ulRand( uint32_t* seed, uint32_t range )
-    {
-        uint32_t ret;
-
-        if ( range > 0 )
-        {
-            ret = rand( seed );
-            ret -= ( ret / range ) * range;
-        }
-        else
-        {
-            ret = 0;
-        }
-
-        return ret;
-    }
 
     float __attribute__( ( noinline ) ) intToFloat( int32_t value )
     {

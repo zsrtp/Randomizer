@@ -87,15 +87,13 @@ namespace mod
 #endif
 
     extern void* Z2ScenePtr;
-    extern uint32_t randNext;
+    extern uint32_t randState;
     extern const char* m_DonationText;
 
     rando::Seed* getCurrentSeed( rando::Randomizer* rando );
     void setScreen( bool state );     // Sets visibility of console
     bool checkButtonsPressedThisFrame( uint32_t buttons );
     bool checkButtonCombo( uint32_t combo, bool checkAnalog );
-    uint32_t rand( uint32_t* seed );
-    uint32_t ulRand( uint32_t* seed, uint32_t range );
     float intToFloat( int32_t value );
     void handleInput( uint32_t inputs );
     void handleFoolishItem();
@@ -126,7 +124,7 @@ namespace mod
 
     // Subrel functions
     void hookFunctions();
-    void initRandNext();
+    void initRandState();
     void initArcLookupTable();
     void writeCodehandlerToMemory();
 
