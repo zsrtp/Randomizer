@@ -29,6 +29,7 @@
 #include "asm_templates.h"
 #include "tp/rel/ids.h"
 #include "rando/customItems.h"
+#include "tp/f_op_actor_iter.h"
 
 namespace mod::events
 {
@@ -37,7 +38,7 @@ namespace mod::events
     daObjLifeContainer_Create_Def return_daObjLifeContainer_c__Create = nullptr;
     daObjLifeContainer_setEffect_Def return_daObjLifeContainer_c__setEffect = nullptr;
     daObjLifeContainer_initActionOrderGetDemo_Def return_daObjLifeContainer_c__initActionOrderGetDemo = nullptr;
-    daMidna_checkMetamorphoseEnableBase_Def return_daMidna_c__checkMetamorphoseEnableBase = nullptr;
+    daMidna_checkMetamorphoseEnableBase_Def daMidna_c__checkMetamorphoseEnableBase = nullptr;
 
     libtp::tp::dzx::ACTR GanonBarrierActor =
         { "Obj_gb", 0x800F0601, 10778.207f, 3096.82666f, -62651.0078f, static_cast<int16_t>( -164 ), 0x4000, 0, 0xFFFF };
@@ -594,24 +595,11 @@ namespace mod::events
             // Midna
             case D_A_MIDNA:
             {
-                return_daMidna_c__checkMetamorphoseEnableBase = libtp::patch::hookFunction(
-                    reinterpret_cast<daMidna_checkMetamorphoseEnableBase_Def>( relPtrRaw + 0x8A0C ),
-                    []( void* daMidnaPtr )
-                    {
-                        rando::Seed* seed;
-                        if ( seed = getCurrentSeed( mod::randomizer ), seed )
-                        {
-                            if ( seed->m_Header->transformAnywhere &&
-                                 libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::TRANSFORMING_UNLOCKED ) )
-                            {
-                                // Allow transforming regardless of whether there are people around
-                                return true;
-                            }
-                        }
+                daMidna_c__checkMetamorphoseEnableBase =
+                    reinterpret_cast<daMidna_checkMetamorphoseEnableBase_Def>( relPtrRaw + 0x8A0C );
 
-                        // Call the original function
-                        return return_daMidna_c__checkMetamorphoseEnableBase( daMidnaPtr );
-                    } );
+                // Adjust checkMetamorphoseEnableBase to not check for nearby NPCs if transformAnywhere is enabled
+                libtp::patch::writeBranchBL( relPtrRaw + 0x8A64, events::handleTransformAnywhere );
                 break;
             }
 
@@ -702,8 +690,7 @@ namespace mod::events
             // Midna
             case D_A_MIDNA:
             {
-                return_daMidna_c__checkMetamorphoseEnableBase =
-                    libtp::patch::unhookFunction( return_daMidna_c__checkMetamorphoseEnableBase );
+                daMidna_c__checkMetamorphoseEnableBase = nullptr;
                 break;
             }
 
@@ -1155,10 +1142,10 @@ namespace mod::events
 
         if ( !seedHeader->transformAnywhere )
         {
-            if ( return_daMidna_c__checkMetamorphoseEnableBase )
+            if ( daMidna_c__checkMetamorphoseEnableBase )
             {
                 // Use the game's default checks for if the player can currently transform
-                if ( !return_daMidna_c__checkMetamorphoseEnableBase( libtp::tp::d_a_player::m_midnaActor ) )
+                if ( !daMidna_c__checkMetamorphoseEnableBase( libtp::tp::d_a_player::m_midnaActor ) )
                 {
                     return;
                 }
@@ -1453,6 +1440,18 @@ namespace mod::events
 
         // Restore the overwritten instruction
         return padInfo->mPressedButtonFlags;
+    }
+
+    void* handleTransformAnywhere( libtp::tp::f_op_actor_iter::fopAcIt_JudgeFunc unk1, void* unk2 )
+    {
+        if ( transformAnywhereEnabled )
+        {
+            // Return nullptr to make the calling function return true
+            return nullptr;
+        }
+
+        // Restore the overwritten instruction
+        return libtp::tp::f_op_actor_iter::fopAcIt_Judge( unk1, unk2 );
     }
 
     KEEP_FUNC void performStaticASMReplacement( uint32_t memoryOffset, uint32_t value )

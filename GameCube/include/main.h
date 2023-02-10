@@ -81,6 +81,7 @@ namespace mod
     extern bool modifyShopModels;
     extern bool instantTextEnabled;
     extern bool increaseSpinnerSpeed;
+    extern bool transformAnywhereEnabled;
 
 #ifdef TP_EU
     extern libtp::tp::d_s_logo::Languages currentLanguage;

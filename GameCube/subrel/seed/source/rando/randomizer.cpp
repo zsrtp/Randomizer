@@ -47,6 +47,9 @@ namespace mod::rando
 
             if ( m_Seed->checkIfSeedLoaded() )
             {
+                // Update transformAnywhereEnabled now that a seed is loaded
+                transformAnywhereEnabled = static_cast<bool>( m_Seed->m_Header->transformAnywhere );
+
                 // Load checks for first load
                 onStageLoad();
             }

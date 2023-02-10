@@ -77,6 +77,7 @@ namespace mod
     bool modifyShopModels = false;
     bool instantTextEnabled = false;
     bool increaseSpinnerSpeed = false;
+    bool transformAnywhereEnabled = false;
 
 #ifdef TP_EU
     KEEP_VAR libtp::tp::d_s_logo::Languages currentLanguage = libtp::tp::d_s_logo::Languages::uk;

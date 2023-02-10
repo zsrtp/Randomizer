@@ -20,6 +20,7 @@
 #include "tp/f_op_actor.h"
 #include "tp/m_do_controller_pad.h"
 #include "tp/rel/d_a_obj_Lv5Key.h"
+#include "tp/f_op_actor_iter.h"
 
 namespace mod::events
 {
@@ -148,6 +149,7 @@ namespace mod::events
 
     uint16_t getPauseRupeeMax( libtp::tp::d_save::dSv_player_status_a_c* plyrStatus );
     uint32_t autoMashThroughText( libtp::tp::m_do_controller_pad::CPadInfo* padInfo );
+    void* handleTransformAnywhere( libtp::tp::f_op_actor_iter::fopAcIt_JudgeFunc unk1, void* unk2 );
 
     void performStaticASMReplacement( uint32_t memoryOffset, uint32_t value );
 

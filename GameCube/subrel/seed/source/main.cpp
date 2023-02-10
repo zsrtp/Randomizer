@@ -34,6 +34,9 @@ namespace mod
                     delete randomizer;
                 }
 
+                // Make sure transformAnywhereEnabled is properly initialized
+                transformAnywhereEnabled = false;
+
                 // The randomizer constructor sets m_Enabled to true
                 // Align to void*, as pointers use the largest variable type in the Randomizer class
                 randomizer = new ( sizeof( void* ) ) rando::Randomizer( &seedList->m_minSeedInfo[selectedSeed], selectedSeed );
@@ -44,6 +47,9 @@ namespace mod
             }
             case SEED_ACTION_CHANGE_SEED:
             {
+                // Make sure transformAnywhereEnabled is reset between seeds
+                transformAnywhereEnabled = false;
+
                 randomizer->changeSeed( &seedList->m_minSeedInfo[selectedSeed], selectedSeed );
 
                 // One-time patches need to be applied whenever a seed is loaded

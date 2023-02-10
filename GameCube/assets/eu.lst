@@ -440,3 +440,6 @@
 
 // vi.o
 8034E630:VISetNextFrameBuffer
+
+// f_op_actor_iter.o
+800198A0:fopAcIt_Judge
