@@ -572,15 +572,15 @@ namespace mod::rando
                 case rando::customItems::Foolish_Item_5:
                 case rando::customItems::Foolish_Item_6:
                 {
+                    game_patch::_02_modifyFoolishShopModel( foolishModelIndexes, foolishModelCounter, shopItem );
+                    foolishModelCounter++;
+
                     // If the end of the array is reached, then reset the counter, as there should only ever be a certain amount
                     // of ice traps in any given shop
                     if ( foolishModelCounter >= sizeof( foolishModelIndexes ) )
                     {
                         foolishModelCounter = 0;
                     }
-
-                    game_patch::_02_modifyFoolishShopModel( foolishModelIndexes, foolishModelCounter, shopItem );
-                    foolishModelCounter++;
                     break;
                 }
                 default:
