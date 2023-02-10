@@ -594,23 +594,24 @@ namespace mod::events
             // Midna
             case D_A_MIDNA:
             {
-                return_daMidna_c__checkMetamorphoseEnableBase =
-                    libtp::patch::hookFunction( reinterpret_cast<daMidna_checkMetamorphoseEnableBase_Def>( relPtrRaw + 0x8A0C ),
-                                                []( void* daMidnaPtr )
-                                                {
-                                                    rando::Seed* seed;
-                                                    if ( seed = getCurrentSeed( mod::randomizer ), seed )
-                                                    {
-                                                        if ( seed->m_Header->transformAnywhere )
-                                                        {
-                                                            // Allow transforming regardless of whether there are people around
-                                                            return true;
-                                                        }
-                                                    }
+                return_daMidna_c__checkMetamorphoseEnableBase = libtp::patch::hookFunction(
+                    reinterpret_cast<daMidna_checkMetamorphoseEnableBase_Def>( relPtrRaw + 0x8A0C ),
+                    []( void* daMidnaPtr )
+                    {
+                        rando::Seed* seed;
+                        if ( seed = getCurrentSeed( mod::randomizer ), seed )
+                        {
+                            if ( seed->m_Header->transformAnywhere &&
+                                 libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::TRANSFORMING_UNLOCKED ) )
+                            {
+                                // Allow transforming regardless of whether there are people around
+                                return true;
+                            }
+                        }
 
-                                                    // Call the original function
-                                                    return return_daMidna_c__checkMetamorphoseEnableBase( daMidnaPtr );
-                                                } );
+                        // Call the original function
+                        return return_daMidna_c__checkMetamorphoseEnableBase( daMidnaPtr );
+                    } );
                 break;
             }
 
