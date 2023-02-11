@@ -61,7 +61,7 @@ namespace mod::events
     {
         randomizer->onStageLoad();
         timeChange = 0;
-        rando::goldenWolfItemReplacement.itemModelId = -1;
+        rando::goldenWolfItemReplacement.itemActorId = -1;
     }
 
     void offLoad( rando::Randomizer* randomizer )
@@ -394,15 +394,15 @@ namespace mod::events
 
                         // Check if the golden wolf item is spawned
                         rando::GoldenWolfItemReplacement* goldenWolfItemReplacementPtr = &rando::goldenWolfItemReplacement;
-                        int32_t modelId = goldenWolfItemReplacementPtr->itemModelId;
+                        int32_t actorId = goldenWolfItemReplacementPtr->itemActorId;
 
-                        if ( modelId != -1 )
+                        if ( actorId != -1 )
                         {
                             // Check if the golden wolf item was collected
-                            if ( modelId == *reinterpret_cast<int32_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4 ) )
+                            if ( actorId == *reinterpret_cast<int32_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4 ) )
                             {
                                 // The golden wolf item was collected, so set the flag for it and clear the map marker for it
-                                goldenWolfItemReplacementPtr->itemModelId = -1;
+                                goldenWolfItemReplacementPtr->itemActorId = -1;
                                 libtp::tp::d_a_npc::daNpcT_onEvtBit( goldenWolfItemReplacementPtr->flag );
 
                                 libtp::tp::d_com_inf_game::dComIfG_inf_c* gameInfoPtr =

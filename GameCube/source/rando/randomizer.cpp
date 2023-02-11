@@ -532,7 +532,7 @@ namespace mod::rando
             goldenWolfItemReplacementPtr->markerFlag = static_cast<uint8_t>( markerFlag );
             goldenWolfItemReplacementPtr->flag = flag;
 
-            goldenWolfItemReplacementPtr->itemModelId =
+            goldenWolfItemReplacementPtr->itemActorId =
                 initCreatePlayerItem( currentHiddenSkillCheck->itemID,
                                       0xFF,
                                       reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daNpcGWolfPtr ) + 0x4d0 ),
