@@ -7,6 +7,8 @@
 #include "game_patch/game_patch.h"
 
 #include <cstdint>
+#include <cstdio>
+#include <cinttypes>
 
 namespace mod::customMessages
 {
@@ -269,6 +271,18 @@ namespace mod::customMessages
         MSG_SPEED(MSG_SPEED_FAST)
         "The wallet given by Agitha to\nbenefactors of the insect kingdom.\nIt can hold up to 9,999 Rupees."
     MSG_END()
+    MSG_BEGIN_ARRAY( poeSoulEn )
+        MSG_SPEED( MSG_SPEED_FAST )
+        "You got a "
+        MSG_COLOR(MSG_COLOR_RED)
+        "Poe's soul"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        "!\nYou've collected "
+        MSG_COLOR(MSG_COLOR_RED)
+        "%" PRIu8
+        MSG_COLOR(MSG_COLOR_WHITE)
+        " so far."
+    MSG_END()
     MSG_BEGIN_ARRAY( charloDonationEn )
         "For the sake of peace in Hyrule...\nWould you please make a donation?" 
         MSG_OPTION_LIST( MSG_OPTION_1 ) 
@@ -442,6 +456,11 @@ namespace mod::customMessages
         giantWalletPauseEn,
         sizeof( giantWalletPauseEn ),
         0x029a,
+
+        // Poe Soul
+        poeSoulEn,
+        sizeof( poeSoulEn ),
+        0x0144,
 
         // Recognition text
         recognitionMsg,

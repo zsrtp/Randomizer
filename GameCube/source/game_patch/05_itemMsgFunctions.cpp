@@ -175,6 +175,23 @@ namespace mod::game_patch
     }
 #endif
 
+    const char* getPoeSoulMessage( rando::Randomizer* randomizer )
+    {
+        using namespace libtp::data::items;
+
+        uint16_t msgSize;
+        const char* format = _05_getMsgById( randomizer, ITEM_TO_ID( Poe_Soul ), &msgSize );
+
+        if ( !format )
+        {
+            return nullptr;
+        }
+
+        // The poe count doesn't update until after the texbox has closed, so add one to get the new count
+        uint32_t poeCount = libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect.poe_count + 1;
+        return createString( format, msgSize, static_cast<uint8_t>( poeCount ) );
+    };
+
     const char* getCustomMessage( rando::Randomizer* randomizer, uint16_t msgId )
     {
         using namespace libtp::data::items;
@@ -520,6 +537,10 @@ namespace mod::game_patch
                     }
 #endif
                 }
+                case Poe_Soul:
+                {
+                    return getPoeSoulMessage( randomizer );
+                }
                 default:
                 {
                     break;
@@ -528,7 +549,18 @@ namespace mod::game_patch
         }
         else
         {
-            // Generic checks here
+            switch ( msgId )
+            {
+                case 0x4CE:     // 20 Poe souls
+                case 0x4CF:     // 60 Poe souls
+                {
+                    return getPoeSoulMessage( randomizer );
+                }
+                default:
+                {
+                    break;
+                }
+            }
         }
 
         return _05_getMsgById( randomizer, msgId );
@@ -665,7 +697,7 @@ namespace mod::game_patch
         return _05_getMsgById( randomizer, msgId, nullptr );
     }
 
-    const char* _05_getMsgById( rando::Randomizer* randomizer, uint32_t msgId, uint16_t* sizeOut )
+    const char* _05_getMsgById( rando::Randomizer* randomizer, uint32_t msgId, uint16_t* msgSizeOut )
     {
         using namespace libtp::data::items;
 
@@ -735,9 +767,9 @@ namespace mod::game_patch
             {
                 const char* currentMsg = &messages[msgOffsets[i]];
 
-                if ( sizeOut )
+                if ( msgSizeOut )
                 {
-                    *sizeOut = static_cast<uint16_t>( &messages[msgOffsets[i + 1]] - currentMsg );
+                    *msgSizeOut = static_cast<uint16_t>( &messages[msgOffsets[i + 1]] - currentMsg );
                 }
 
                 return currentMsg;
