@@ -498,9 +498,7 @@ namespace mod::game_patch
     {
         using namespace libtp::data::items;
         using namespace rando::customItems;
-#ifdef TP_EU
-        using namespace libtp::tp::d_s_logo;
-#endif
+
         switch ( msgId )
         {
             case ITEM_TO_ID( Forest_Temple_Small_Key ):
