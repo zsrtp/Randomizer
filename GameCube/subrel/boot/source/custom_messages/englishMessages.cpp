@@ -279,7 +279,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!\nYou've collected "
         MSG_COLOR(MSG_COLOR_RED)
-        "%" PRIu8
+        "%" PRIu32
         MSG_COLOR(MSG_COLOR_WHITE)
         " so far."
     MSG_END()
