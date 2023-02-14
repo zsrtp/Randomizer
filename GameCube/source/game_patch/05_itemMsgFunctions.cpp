@@ -192,6 +192,308 @@ namespace mod::game_patch
         return createString( format, msgSize, static_cast<uint8_t>( poeCount ) );
     };
 
+    const char* getDungeonItemMessage( rando::Randomizer* randomizer, int32_t itemId )
+    {
+        using namespace libtp::data::items;
+        using namespace rando::customItems;
+#ifdef TP_EU
+        using namespace libtp::tp::d_s_logo;
+#endif
+        // Get the text and size of the format text
+        uint32_t itemIdForBase;
+#ifdef TP_JP
+        switch ( itemId )
+        {
+            case Snowpeak_Ruins_Small_Key:
+            case Snowpeak_Ruins_Compass:
+            case Snowpeak_Ruins_Dungeon_Map:
+            {
+                // Snowpeak Ruins requires a special format string, since it's name uses a command
+                // All of the Snowpeak Ruins items will use the Snowpeak Ruins small key text as a base
+                itemIdForBase = Snowpeak_Ruins_Small_Key;
+                break;
+            }
+            default:
+            {
+                // All of the items will use the Forest Temple small key text as a base
+                itemIdForBase = Forest_Temple_Small_Key;
+                break;
+            }
+        }
+#else
+        // All of the items will use the Forest Temple small key text as a base
+        itemIdForBase = Forest_Temple_Small_Key;
+#endif
+        uint16_t msgSize;
+        const char* format = _05_getMsgById( randomizer, ITEM_TO_ID( itemIdForBase ), &msgSize );
+        if ( !format )
+        {
+            return nullptr;
+        }
+
+        auto checkIfSnowpeakRuinsText = [&]()
+        {
+#ifdef TP_JP
+            return static_cast<bool>( itemIdForBase == Snowpeak_Ruins_Small_Key );
+#else
+            return false;
+#endif
+        };
+
+        // 'for' text is only used for some languages
+        auto getForText = []()
+        {
+#ifdef TP_EU
+            switch ( currentLanguage )
+            {
+                case Languages::uk:
+                case Languages::de:
+                case Languages::it:
+                default:     // The language is invalid/unsupported, so the game defaults to English
+                {
+                    return true;
+                }
+                case Languages::fr:
+                case Languages::sp:
+                {
+                    return false;
+                }
+            }
+#elif defined TP_US
+            return true;
+#elif defined TP_JP
+            // Shouldn't be necessary, but do anyway
+            return false;
+#endif
+        };
+
+        // 'the' text is only used for some languages
+        auto getTheText = []()
+        {
+#ifdef TP_EU
+            return shouldGetTheText();
+#elif defined TP_US
+            return true;
+#elif defined TP_JP
+            // Shouldn't be necessary, but do anyway
+            return false;
+#endif
+        };
+
+        // JP Snowpeak Ruins doesn't need anything from the next section as the colors are already defined in
+        // the customMessage object in japaneseMessages.cpp
+        const char* areaText = nullptr;
+        bool addTheText;
+
+        if ( !checkIfSnowpeakRuinsText() )
+        {
+            // Figure out what dungeon area this is for
+            // Also figure out what color to use for each area name, as well as what areas should have 'the' infront
+            // of them
+            uint8_t areaColorId = MSG_COLOR_WHITE_HEX;
+            uint32_t dungeonAreaMsgId;
+            addTheText = false;
+
+            switch ( itemId )
+            {
+                case Forest_Temple_Small_Key:
+                case Forest_Temple_Big_Key:
+                case Forest_Temple_Compass:
+                case Forest_Temple_Dungeon_Map:
+                {
+                    areaColorId = MSG_COLOR_GREEN_HEX;
+                    dungeonAreaMsgId = SpecialMessageIds::FOREST_TEMPLE;
+                    addTheText = getTheText();
+                    break;
+                }
+                case Goron_Mines_Small_Key:
+                case Goron_Mines_Compass:
+                case Goron_Mines_Dungeon_Map:
+                {
+                    areaColorId = MSG_COLOR_RED_HEX;
+                    dungeonAreaMsgId = SpecialMessageIds::GORON_MINES;
+                    break;
+                }
+                case Lakebed_Temple_Small_Key:
+                case Lakebed_Temple_Big_Key:
+                case Lakebed_Temple_Compass:
+                case Lakebed_Temple_Dungeon_Map:
+                {
+                    areaColorId = CUSTOM_MSG_COLOR_BLUE_HEX;
+                    dungeonAreaMsgId = SpecialMessageIds::LAKEBED_TEMPLE;
+                    addTheText = getTheText();
+                    break;
+                }
+                case Arbiters_Grounds_Small_Key:
+                case Arbiters_Grounds_Big_Key:
+                case Arbiters_Grounds_Compass:
+                case Arbiters_Grounds_Dungeon_Map:
+                {
+                    areaColorId = MSG_COLOR_ORANGE_HEX;
+                    dungeonAreaMsgId = SpecialMessageIds::ARBITERS_GROUNDS;
+                    break;
+                }
+                case Snowpeak_Ruins_Small_Key:
+                case Snowpeak_Ruins_Compass:
+                case Snowpeak_Ruins_Dungeon_Map:
+                {
+                    areaColorId = MSG_COLOR_LIGHT_BLUE_HEX;
+                    dungeonAreaMsgId = SpecialMessageIds::SNOWPEAK_RUINS;
+                    break;
+                }
+                case Temple_of_Time_Small_Key:
+                case Temple_of_Time_Big_Key:
+                case Temple_of_Time_Compass:
+                case Temple_of_Time_Dungeon_Map:
+                {
+                    areaColorId = CUSTOM_MSG_COLOR_DARK_GREEN_HEX;
+                    dungeonAreaMsgId = SpecialMessageIds::TEMPLE_OF_TIME;
+                    addTheText = getTheText();
+                    break;
+                }
+                case City_in_The_Sky_Small_Key:
+                case City_in_The_Sky_Big_Key:
+                case City_in_The_Sky_Compass:
+                case City_in_The_Sky_Dungeon_Map:
+                {
+                    areaColorId = MSG_COLOR_YELLOW_HEX;
+                    dungeonAreaMsgId = SpecialMessageIds::CITY_IN_THE_SKY;
+                    addTheText = getTheText();
+                    break;
+                }
+                case Palace_of_Twilight_Small_Key:
+                case Palace_of_Twilight_Big_Key:
+                case Palace_of_Twilight_Compass:
+                case Palace_of_Twilight_Dungeon_Map:
+                {
+                    areaColorId = MSG_COLOR_PURPLE_HEX;
+                    dungeonAreaMsgId = SpecialMessageIds::PALACE_OF_TWILIGHT;
+                    addTheText = getTheText();
+                    break;
+                }
+                case Hyrule_Castle_Small_Key:
+                case Hyrule_Castle_Big_Key:
+                case Hyrule_Castle_Compass:
+                case Hyrule_Castle_Dungeon_Map:
+                {
+                    areaColorId = CUSTOM_MSG_COLOR_SILVER_HEX;
+                    dungeonAreaMsgId = SpecialMessageIds::HYRULE_CASTLE;
+                    break;
+                }
+                case Bulblin_Camp_Key:
+                {
+                    areaColorId = MSG_COLOR_ORANGE_HEX;
+                    dungeonAreaMsgId = SpecialMessageIds::BULBLIN_CAMP;
+                    addTheText = getTheText();
+                    break;
+                }
+                default:
+                {
+                    // Error occured somehow
+                    return nullptr;
+                }
+            }
+
+            // Get the text for the area
+            areaText = _05_getMsgById( randomizer, dungeonAreaMsgId );
+            if ( !areaText )
+            {
+                return nullptr;
+            }
+
+            // Replace the dungeon area color
+            // Make sure the index was properly adjusted
+            uint32_t colorIndex = dungeonItemAreaColorIndex;
+            if ( colorIndex != 0 )
+            {
+                char* colorAddress = const_cast<char*>( &format[colorIndex] );
+                *colorAddress = static_cast<char>( areaColorId );
+
+                // Clear the cache for the changed character
+                libtp::gc_wii::os_cache::DCFlushRange( colorAddress, sizeof( char ) );
+            }
+        }
+
+        // Figure out what dungeon item this is for
+        uint32_t dungeonItemMsgId;
+        if ( ( itemId >= Forest_Temple_Small_Key ) && ( itemId <= Bulblin_Camp_Key ) )
+        {
+            dungeonItemMsgId = SpecialMessageIds::SMALL_KEY;
+        }
+        else if ( ( itemId >= Forest_Temple_Big_Key ) && ( itemId <= Hyrule_Castle_Big_Key ) )
+        {
+            dungeonItemMsgId = SpecialMessageIds::BIG_KEY;
+        }
+        else if ( ( ( itemId >= Forest_Temple_Compass ) && ( itemId <= Lakebed_Temple_Compass ) ) ||
+                  ( ( itemId >= Arbiters_Grounds_Compass ) && ( itemId <= Hyrule_Castle_Compass ) ) )
+        {
+            dungeonItemMsgId = SpecialMessageIds::COMPASS;
+        }
+        else if ( ( itemId >= Forest_Temple_Dungeon_Map ) && ( itemId <= Hyrule_Castle_Dungeon_Map ) )
+        {
+            dungeonItemMsgId = SpecialMessageIds::DUNGEON_MAP;
+        }
+        else
+        {
+            // Error occured somehow
+            return nullptr;
+        }
+
+        // Get the text for the item
+        const char* dungeonItemText = _05_getMsgById( randomizer, dungeonItemMsgId );
+        if ( !dungeonItemText )
+        {
+            return nullptr;
+        }
+#ifndef TP_JP
+        // Get the 'for' text
+        const char* forText;
+        if ( getForText() )
+        {
+            forText = _05_getMsgById( randomizer, SpecialMessageIds::FOR );
+            if ( !forText )
+            {
+                return nullptr;
+            }
+        }
+        else
+        {
+            forText = nullptr;
+        }
+
+        // Get the 'the' text
+        const char* theText;
+        if ( addTheText )
+        {
+            theText = _05_getMsgById( randomizer, SpecialMessageIds::THE );
+            if ( !theText )
+            {
+                return nullptr;
+            }
+        }
+        else
+        {
+            theText = nullptr;
+        }
+
+        return createString( format, msgSize, dungeonItemText, forText, theText, areaText );
+#else
+        // Prevent the compiler from complaining about getForText and addTheText being unused
+        (void) getForText();
+        (void) addTheText;
+
+        // JP doesn't use `for` nor `the` and the params are in a different order
+        if ( checkIfSnowpeakRuinsText() )
+        {
+            return createString( format, msgSize, dungeonItemText );
+        }
+        else
+        {
+            return createString( format, msgSize, areaText, dungeonItemText );
+        }
+#endif
+    }
+
     const char* getCustomMessage( rando::Randomizer* randomizer, uint16_t msgId )
     {
         using namespace libtp::data::items;
@@ -199,367 +501,55 @@ namespace mod::game_patch
 #ifdef TP_EU
         using namespace libtp::tp::d_s_logo;
 #endif
-        const char* format;
-        uint16_t msgSize;
-
-        // Check for item text first
-        int32_t itemId = ID_TO_ITEM( msgId );
-        if ( ( itemId >= 0 ) && ( itemId <= 255 ) )
+        switch ( msgId )
         {
-            switch ( itemId )
+            case ITEM_TO_ID( Forest_Temple_Small_Key ):
+            case ITEM_TO_ID( Goron_Mines_Small_Key ):
+            case ITEM_TO_ID( Lakebed_Temple_Small_Key ):
+            case ITEM_TO_ID( Arbiters_Grounds_Small_Key ):
+            case ITEM_TO_ID( Snowpeak_Ruins_Small_Key ):
+            case ITEM_TO_ID( Temple_of_Time_Small_Key ):
+            case ITEM_TO_ID( City_in_The_Sky_Small_Key ):
+            case ITEM_TO_ID( Palace_of_Twilight_Small_Key ):
+            case ITEM_TO_ID( Hyrule_Castle_Small_Key ):
+            case ITEM_TO_ID( Bulblin_Camp_Key ):
+            case ITEM_TO_ID( Forest_Temple_Big_Key ):
+            case ITEM_TO_ID( Lakebed_Temple_Big_Key ):
+            case ITEM_TO_ID( Arbiters_Grounds_Big_Key ):
+            case ITEM_TO_ID( Temple_of_Time_Big_Key ):
+            case ITEM_TO_ID( City_in_The_Sky_Big_Key ):
+            case ITEM_TO_ID( Palace_of_Twilight_Big_Key ):
+            case ITEM_TO_ID( Hyrule_Castle_Big_Key ):
+            case ITEM_TO_ID( Forest_Temple_Compass ):
+            case ITEM_TO_ID( Goron_Mines_Compass ):
+            case ITEM_TO_ID( Lakebed_Temple_Compass ):
+            case ITEM_TO_ID( Arbiters_Grounds_Compass ):
+            case ITEM_TO_ID( Snowpeak_Ruins_Compass ):
+            case ITEM_TO_ID( Temple_of_Time_Compass ):
+            case ITEM_TO_ID( City_in_The_Sky_Compass ):
+            case ITEM_TO_ID( Palace_of_Twilight_Compass ):
+            case ITEM_TO_ID( Hyrule_Castle_Compass ):
+            case ITEM_TO_ID( Forest_Temple_Dungeon_Map ):
+            case ITEM_TO_ID( Goron_Mines_Dungeon_Map ):
+            case ITEM_TO_ID( Lakebed_Temple_Dungeon_Map ):
+            case ITEM_TO_ID( Arbiters_Grounds_Dungeon_Map ):
+            case ITEM_TO_ID( Snowpeak_Ruins_Dungeon_Map ):
+            case ITEM_TO_ID( Temple_of_Time_Dungeon_Map ):
+            case ITEM_TO_ID( City_in_The_Sky_Dungeon_Map ):
+            case ITEM_TO_ID( Palace_of_Twilight_Dungeon_Map ):
+            case ITEM_TO_ID( Hyrule_Castle_Dungeon_Map ):
             {
-                case Forest_Temple_Small_Key:
-                case Goron_Mines_Small_Key:
-                case Lakebed_Temple_Small_Key:
-                case Arbiters_Grounds_Small_Key:
-                case Snowpeak_Ruins_Small_Key:
-                case Temple_of_Time_Small_Key:
-                case City_in_The_Sky_Small_Key:
-                case Palace_of_Twilight_Small_Key:
-                case Hyrule_Castle_Small_Key:
-                case Bulblin_Camp_Key:
-                case Forest_Temple_Big_Key:
-                case Lakebed_Temple_Big_Key:
-                case Arbiters_Grounds_Big_Key:
-                case Temple_of_Time_Big_Key:
-                case City_in_The_Sky_Big_Key:
-                case Palace_of_Twilight_Big_Key:
-                case Hyrule_Castle_Big_Key:
-                case Forest_Temple_Compass:
-                case Goron_Mines_Compass:
-                case Lakebed_Temple_Compass:
-                case Arbiters_Grounds_Compass:
-                case Snowpeak_Ruins_Compass:
-                case Temple_of_Time_Compass:
-                case City_in_The_Sky_Compass:
-                case Palace_of_Twilight_Compass:
-                case Hyrule_Castle_Compass:
-                case Forest_Temple_Dungeon_Map:
-                case Goron_Mines_Dungeon_Map:
-                case Lakebed_Temple_Dungeon_Map:
-                case Arbiters_Grounds_Dungeon_Map:
-                case Snowpeak_Ruins_Dungeon_Map:
-                case Temple_of_Time_Dungeon_Map:
-                case City_in_The_Sky_Dungeon_Map:
-                case Palace_of_Twilight_Dungeon_Map:
-                case Hyrule_Castle_Dungeon_Map:
-                {
-                    // Get the text and size of the format text
-                    uint32_t itemIdForBase;
-#ifdef TP_JP
-                    switch ( itemId )
-                    {
-                        case Snowpeak_Ruins_Small_Key:
-                        case Snowpeak_Ruins_Compass:
-                        case Snowpeak_Ruins_Dungeon_Map:
-                        {
-                            // Snowpeak Ruins requires a special format string, since it's name uses a command
-                            // All of the Snowpeak Ruins items will use the Snowpeak Ruins small key text as a base
-                            itemIdForBase = Snowpeak_Ruins_Small_Key;
-                            break;
-                        }
-                        default:
-                        {
-                            // All of the items will use the Forest Temple small key text as a base
-                            itemIdForBase = Forest_Temple_Small_Key;
-                            break;
-                        }
-                    }
-#else
-                    // All of the items will use the Forest Temple small key text as a base
-                    itemIdForBase = Forest_Temple_Small_Key;
-#endif
-                    format = _05_getMsgById( randomizer, ITEM_TO_ID( itemIdForBase ), &msgSize );
-                    if ( !format )
-                    {
-                        return nullptr;
-                    }
-
-                    auto checkIfSnowpeakRuinsText = [&]()
-                    {
-#ifdef TP_JP
-                        return static_cast<bool>( itemIdForBase == Snowpeak_Ruins_Small_Key );
-#else
-                        return false;
-#endif
-                    };
-
-                    // 'for' text is only used for some languages
-                    auto getForText = []()
-                    {
-#ifdef TP_EU
-                        switch ( currentLanguage )
-                        {
-                            case Languages::uk:
-                            case Languages::de:
-                            case Languages::it:
-                            default:     // The language is invalid/unsupported, so the game defaults to English
-                            {
-                                return true;
-                            }
-                            case Languages::fr:
-                            case Languages::sp:
-                            {
-                                return false;
-                            }
-                        }
-#elif defined TP_US
-                        return true;
-#elif defined TP_JP
-                        // Shouldn't be necessary, but do anyway
-                        return false;
-#endif
-                    };
-
-                    // 'the' text is only used for some languages
-                    auto getTheText = []()
-                    {
-#ifdef TP_EU
-                        return shouldGetTheText();
-#elif defined TP_US
-                        return true;
-#elif defined TP_JP
-                        // Shouldn't be necessary, but do anyway
-                        return false;
-#endif
-                    };
-
-                    // JP Snowpeak Ruins doesn't need anything from the next section as the colors are already defined in
-                    // the customMessage object in japaneseMessages.cpp
-                    const char* areaText = nullptr;
-                    bool addTheText;
-
-                    if ( !checkIfSnowpeakRuinsText() )
-                    {
-                        // Figure out what dungeon area this is for
-                        // Also figure out what color to use for each area name, as well as what areas should have 'the' infront
-                        // of them
-                        uint8_t areaColorId = MSG_COLOR_WHITE_HEX;
-                        uint32_t dungeonAreaMsgId;
-                        addTheText = false;
-
-                        switch ( itemId )
-                        {
-                            case Forest_Temple_Small_Key:
-                            case Forest_Temple_Big_Key:
-                            case Forest_Temple_Compass:
-                            case Forest_Temple_Dungeon_Map:
-                            {
-                                areaColorId = MSG_COLOR_GREEN_HEX;
-                                dungeonAreaMsgId = SpecialMessageIds::FOREST_TEMPLE;
-                                addTheText = getTheText();
-                                break;
-                            }
-                            case Goron_Mines_Small_Key:
-                            case Goron_Mines_Compass:
-                            case Goron_Mines_Dungeon_Map:
-                            {
-                                areaColorId = MSG_COLOR_RED_HEX;
-                                dungeonAreaMsgId = SpecialMessageIds::GORON_MINES;
-                                break;
-                            }
-                            case Lakebed_Temple_Small_Key:
-                            case Lakebed_Temple_Big_Key:
-                            case Lakebed_Temple_Compass:
-                            case Lakebed_Temple_Dungeon_Map:
-                            {
-                                areaColorId = CUSTOM_MSG_COLOR_BLUE_HEX;
-                                dungeonAreaMsgId = SpecialMessageIds::LAKEBED_TEMPLE;
-                                addTheText = getTheText();
-                                break;
-                            }
-                            case Arbiters_Grounds_Small_Key:
-                            case Arbiters_Grounds_Big_Key:
-                            case Arbiters_Grounds_Compass:
-                            case Arbiters_Grounds_Dungeon_Map:
-                            {
-                                areaColorId = MSG_COLOR_ORANGE_HEX;
-                                dungeonAreaMsgId = SpecialMessageIds::ARBITERS_GROUNDS;
-                                break;
-                            }
-                            case Snowpeak_Ruins_Small_Key:
-                            case Snowpeak_Ruins_Compass:
-                            case Snowpeak_Ruins_Dungeon_Map:
-                            {
-                                areaColorId = MSG_COLOR_LIGHT_BLUE_HEX;
-                                dungeonAreaMsgId = SpecialMessageIds::SNOWPEAK_RUINS;
-                                break;
-                            }
-                            case Temple_of_Time_Small_Key:
-                            case Temple_of_Time_Big_Key:
-                            case Temple_of_Time_Compass:
-                            case Temple_of_Time_Dungeon_Map:
-                            {
-                                areaColorId = CUSTOM_MSG_COLOR_DARK_GREEN_HEX;
-                                dungeonAreaMsgId = SpecialMessageIds::TEMPLE_OF_TIME;
-                                addTheText = getTheText();
-                                break;
-                            }
-                            case City_in_The_Sky_Small_Key:
-                            case City_in_The_Sky_Big_Key:
-                            case City_in_The_Sky_Compass:
-                            case City_in_The_Sky_Dungeon_Map:
-                            {
-                                areaColorId = MSG_COLOR_YELLOW_HEX;
-                                dungeonAreaMsgId = SpecialMessageIds::CITY_IN_THE_SKY;
-                                addTheText = getTheText();
-                                break;
-                            }
-                            case Palace_of_Twilight_Small_Key:
-                            case Palace_of_Twilight_Big_Key:
-                            case Palace_of_Twilight_Compass:
-                            case Palace_of_Twilight_Dungeon_Map:
-                            {
-                                areaColorId = MSG_COLOR_PURPLE_HEX;
-                                dungeonAreaMsgId = SpecialMessageIds::PALACE_OF_TWILIGHT;
-                                addTheText = getTheText();
-                                break;
-                            }
-                            case Hyrule_Castle_Small_Key:
-                            case Hyrule_Castle_Big_Key:
-                            case Hyrule_Castle_Compass:
-                            case Hyrule_Castle_Dungeon_Map:
-                            {
-                                areaColorId = CUSTOM_MSG_COLOR_SILVER_HEX;
-                                dungeonAreaMsgId = SpecialMessageIds::HYRULE_CASTLE;
-                                break;
-                            }
-                            case Bulblin_Camp_Key:
-                            {
-                                areaColorId = MSG_COLOR_ORANGE_HEX;
-                                dungeonAreaMsgId = SpecialMessageIds::BULBLIN_CAMP;
-                                addTheText = getTheText();
-                                break;
-                            }
-                            default:
-                            {
-                                // Error occured somehow
-                                return nullptr;
-                            }
-                        }
-
-                        // Get the text for the area
-                        areaText = _05_getMsgById( randomizer, dungeonAreaMsgId );
-                        if ( !areaText )
-                        {
-                            return nullptr;
-                        }
-
-                        // Replace the dungeon area color
-                        // Make sure the index was properly adjusted
-                        uint32_t colorIndex = dungeonItemAreaColorIndex;
-                        if ( colorIndex != 0 )
-                        {
-                            char* colorAddress = const_cast<char*>( &format[colorIndex] );
-                            *colorAddress = static_cast<char>( areaColorId );
-
-                            // Clear the cache for the changed character
-                            libtp::gc_wii::os_cache::DCFlushRange( colorAddress, sizeof( char ) );
-                        }
-                    }
-
-                    // Figure out what dungeon item this is for
-                    uint32_t dungeonItemMsgId;
-                    if ( ( itemId >= Forest_Temple_Small_Key ) && ( itemId <= Bulblin_Camp_Key ) )
-                    {
-                        dungeonItemMsgId = SpecialMessageIds::SMALL_KEY;
-                    }
-                    else if ( ( itemId >= Forest_Temple_Big_Key ) && ( itemId <= Hyrule_Castle_Big_Key ) )
-                    {
-                        dungeonItemMsgId = SpecialMessageIds::BIG_KEY;
-                    }
-                    else if ( ( ( itemId >= Forest_Temple_Compass ) && ( itemId <= Lakebed_Temple_Compass ) ) ||
-                              ( ( itemId >= Arbiters_Grounds_Compass ) && ( itemId <= Hyrule_Castle_Compass ) ) )
-                    {
-                        dungeonItemMsgId = SpecialMessageIds::COMPASS;
-                    }
-                    else if ( ( itemId >= Forest_Temple_Dungeon_Map ) && ( itemId <= Hyrule_Castle_Dungeon_Map ) )
-                    {
-                        dungeonItemMsgId = SpecialMessageIds::DUNGEON_MAP;
-                    }
-                    else
-                    {
-                        // Error occured somehow
-                        return nullptr;
-                    }
-
-                    // Get the text for the item
-                    const char* dungeonItemText = _05_getMsgById( randomizer, dungeonItemMsgId );
-                    if ( !dungeonItemText )
-                    {
-                        return nullptr;
-                    }
-#ifndef TP_JP
-                    // Get the 'for' text
-                    const char* forText;
-                    if ( getForText() )
-                    {
-                        forText = _05_getMsgById( randomizer, SpecialMessageIds::FOR );
-                        if ( !forText )
-                        {
-                            return nullptr;
-                        }
-                    }
-                    else
-                    {
-                        forText = nullptr;
-                    }
-
-                    // Get the 'the' text
-                    const char* theText;
-                    if ( addTheText )
-                    {
-                        theText = _05_getMsgById( randomizer, SpecialMessageIds::THE );
-                        if ( !theText )
-                        {
-                            return nullptr;
-                        }
-                    }
-                    else
-                    {
-                        theText = nullptr;
-                    }
-
-                    return createString( format, msgSize, dungeonItemText, forText, theText, areaText );
-#else
-                    // Prevent the compiler from complaining about getForText and addTheText being unused
-                    (void) getForText();
-                    (void) addTheText;
-
-                    // JP doesn't use `for` nor `the` and the params are in a different order
-                    if ( checkIfSnowpeakRuinsText() )
-                    {
-                        return createString( format, msgSize, dungeonItemText );
-                    }
-                    else
-                    {
-                        return createString( format, msgSize, areaText, dungeonItemText );
-                    }
-#endif
-                }
-                case Poe_Soul:
-                {
-                    return getPoeSoulMessage( randomizer );
-                }
-                default:
-                {
-                    break;
-                }
+                return getDungeonItemMessage( randomizer, ID_TO_ITEM( msgId ) );
             }
-        }
-        else
-        {
-            switch ( msgId )
+            case ITEM_TO_ID( Poe_Soul ):
+            case 0x4CE:     // 20 Poe souls
+            case 0x4CF:     // 60 Poe souls
             {
-                case 0x4CE:     // 20 Poe souls
-                case 0x4CF:     // 60 Poe souls
-                {
-                    return getPoeSoulMessage( randomizer );
-                }
-                default:
-                {
-                    break;
-                }
+                return getPoeSoulMessage( randomizer );
+            }
+            default:
+            {
+                break;
             }
         }
 
