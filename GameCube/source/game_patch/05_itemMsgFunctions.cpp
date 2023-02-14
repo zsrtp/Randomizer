@@ -153,6 +153,23 @@ namespace mod::game_patch
         return buf;
     }
 
+    const char* getPoeSoulMessage( rando::Randomizer* randomizer )
+    {
+        using namespace libtp::data::items;
+
+        uint16_t msgSize;
+        const char* format = _05_getMsgById( randomizer, ITEM_TO_ID( Poe_Soul ), &msgSize );
+
+        if ( !format )
+        {
+            return nullptr;
+        }
+
+        // The poe count doesn't update until after the texbox has closed, so add one to get the new count
+        uint32_t poeCount = libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect.poe_count + 1;
+        return createString( format, msgSize, static_cast<uint8_t>( poeCount ) );
+    };
+
 #ifdef TP_EU
     bool __attribute__( ( noinline ) ) shouldGetTheText()
     {
@@ -174,23 +191,6 @@ namespace mod::game_patch
         }
     }
 #endif
-
-    const char* getPoeSoulMessage( rando::Randomizer* randomizer )
-    {
-        using namespace libtp::data::items;
-
-        uint16_t msgSize;
-        const char* format = _05_getMsgById( randomizer, ITEM_TO_ID( Poe_Soul ), &msgSize );
-
-        if ( !format )
-        {
-            return nullptr;
-        }
-
-        // The poe count doesn't update until after the texbox has closed, so add one to get the new count
-        uint32_t poeCount = libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect.poe_count + 1;
-        return createString( format, msgSize, static_cast<uint8_t>( poeCount ) );
-    };
 
     const char* getDungeonItemMessage( rando::Randomizer* randomizer, int32_t itemId )
     {
