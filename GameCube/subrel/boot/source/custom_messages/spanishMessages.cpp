@@ -378,6 +378,7 @@ namespace mod::customMessages
         // !\nHas conseguido
         "\x21\x20\x0a\x48\x61\x73\x20\x63\x6f\x6e\x73\x65\x67\x75\x69\x64\x6f\x20"
         MSG_COLOR(MSG_COLOR_RED)
+        // X
         "%" PRIu32
         MSG_COLOR(MSG_COLOR_WHITE)
         // hasta ahora.
