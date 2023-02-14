@@ -494,7 +494,7 @@ namespace mod::game_patch
 #endif
     }
 
-    const char* getCustomMessage( rando::Randomizer* randomizer, uint16_t msgId )
+    const char* getCustomMessage( rando::Randomizer* randomizer, uint32_t msgId )
     {
         using namespace libtp::data::items;
         using namespace rando::customItems;
@@ -577,7 +577,7 @@ namespace mod::game_patch
         };
 
         auto checkForSpecificMsg =
-            [=]( uint16_t desiredMsgId, int32_t room, const char* stage, const void* currentInf1, const char* desiredFile )
+            [=]( uint32_t desiredMsgId, int32_t room, const char* stage, const void* currentInf1, const char* desiredFile )
         {
             // Check if the message ids are the same
             if ( msgId != desiredMsgId )
@@ -596,8 +596,8 @@ namespace mod::game_patch
         };
 
         // Get message ids for specific checks
-        constexpr uint16_t linkHouseMsgId = 0x658;
-        constexpr uint16_t charloDonationMsgId = 0x355;
+        constexpr uint32_t linkHouseMsgId = 0x658;
+        constexpr uint32_t charloDonationMsgId = 0x355;
 
         // Get a pointer to the current BMG file being used
         // The pointer is to INF1
