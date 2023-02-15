@@ -261,7 +261,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_RED)
         "%" PRIu32
         MSG_COLOR(MSG_COLOR_WHITE)
-        " so far."
+        " character(s) so far."
     MSG_END();
     MSG_BEGIN_ARRAY( charloDonationEn )
         "For the sake of peace in Hyrule...\nWould you please make a donation?" 
