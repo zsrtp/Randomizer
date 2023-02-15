@@ -27,7 +27,7 @@ namespace mod::customMessages
         "%s"
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( shadowCrystalEn )
         MSG_SPEED(MSG_SPEED_SLOW)
         "You got the "
@@ -39,7 +39,7 @@ namespace mod::customMessages
         "Zant's "
         MSG_COLOR(MSG_COLOR_WHITE)
         "power that allows\nyou to transform at will!"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( endingBlowEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You learned the "
@@ -47,7 +47,7 @@ namespace mod::customMessages
         "Ending Blow"
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( shieldAttackEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You learned the "
@@ -55,7 +55,7 @@ namespace mod::customMessages
         "Shield Attack"
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( backSliceEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You learned the "
@@ -63,7 +63,7 @@ namespace mod::customMessages
         "Back Slice"
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( helmSplitterEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You learned the "
@@ -71,7 +71,7 @@ namespace mod::customMessages
         "Helm Splitter"
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( mortalDrawEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You learned the "
@@ -79,7 +79,7 @@ namespace mod::customMessages
         "Mortal Draw"
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( jumpStrikeEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You learned the "
@@ -87,7 +87,7 @@ namespace mod::customMessages
         "Jump Strike"
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( greatSpinEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You learned the "
@@ -95,7 +95,7 @@ namespace mod::customMessages
         "Great Spin"
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( poweredRodEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "Power has been restored to\nthe "
@@ -103,7 +103,7 @@ namespace mod::customMessages
         "Dominion Rod"
         MSG_COLOR(MSG_COLOR_WHITE)
         "! Now it can\nbe used to imbue statues\nwith life in the present!"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( firstCharacterEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You found the first "
@@ -111,7 +111,7 @@ namespace mod::customMessages
         "Sky\ncharacter"
         MSG_COLOR(MSG_COLOR_WHITE)
         "! A missing part\nof the word in the Ancient\nSky Book has been restored."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( secondCharacterEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You found the second "
@@ -119,7 +119,7 @@ namespace mod::customMessages
         "Sky\ncharacter"
         MSG_COLOR(MSG_COLOR_WHITE)
         "! A missing part\nof the word in the Ancient\nSky Book has been restored."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( thirdCharacterEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You found the third "
@@ -127,7 +127,7 @@ namespace mod::customMessages
         "Sky\ncharacter"
         MSG_COLOR(MSG_COLOR_WHITE)
         "! A missing part\nof the word in the Ancient\nSky Book has been restored."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( fourthCharacterEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You found the fourth "
@@ -135,7 +135,7 @@ namespace mod::customMessages
         "Sky\ncharacter"
         MSG_COLOR(MSG_COLOR_WHITE)
         "! A missing part\nof the word in the Ancient\nSky Book has been restored."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( fifthCharacterEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You found the fifth "
@@ -143,7 +143,7 @@ namespace mod::customMessages
         "Sky\ncharacter"
         MSG_COLOR(MSG_COLOR_WHITE)
         "! A missing part\nof the word in the Ancient\nSky Book has been restored."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( firstFusedShadowEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got a "
@@ -155,7 +155,7 @@ namespace mod::customMessages
         "moss"
         MSG_COLOR(MSG_COLOR_WHITE)
         "\ngrowing on it.."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( secondFusedShadowEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the second "
@@ -167,7 +167,7 @@ namespace mod::customMessages
         "warm"
         MSG_COLOR(MSG_COLOR_WHITE)
         " to\nthe touch.."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( thirdFusedShadowEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the final "
@@ -179,7 +179,7 @@ namespace mod::customMessages
         "wet"
         MSG_COLOR(MSG_COLOR_WHITE)
         " and\nsmells like fish.."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( secondMirrorShardEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the second shard of\nthe "
@@ -191,7 +191,7 @@ namespace mod::customMessages
         "cold"
         MSG_COLOR(MSG_COLOR_WHITE)
         ".."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( thirdMirrorShardEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the third shard of\nthe "
@@ -203,7 +203,7 @@ namespace mod::customMessages
         "webs"
         MSG_COLOR(MSG_COLOR_WHITE)
         ".."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( fourthMirrorShardEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the final shard of\nthe "
@@ -215,7 +215,7 @@ namespace mod::customMessages
         "air"
         MSG_COLOR(MSG_COLOR_WHITE)
         ".."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( foolishItemEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "A "
@@ -223,7 +223,7 @@ namespace mod::customMessages
         "cold"
         MSG_COLOR(MSG_COLOR_WHITE)
         " wind blows.."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( talkToMidnaEn )
         "What is it, "
         MSG_PLYR_NAME
@@ -234,7 +234,7 @@ namespace mod::customMessages
         "Warp\n"
         MSG_OPTION_LIST(MSG_OPTION_3)
         "Change time of day"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( bigWalletEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the "
@@ -246,7 +246,7 @@ namespace mod::customMessages
         "5,000 Rupees"
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( giantWalletEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the "
@@ -258,19 +258,19 @@ namespace mod::customMessages
         "9,999 Rupees"
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( smallWalletPauseEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "A wallet from your childhood.\nIt holds up to 1,000 Rupees."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( bigWalletPauseEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "The wallet given to you by Agitha,\nprincess of the insect kingdom.\nIt can hold 5,000 Rupees."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( giantWalletPauseEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "The wallet given by Agitha to\nbenefactors of the insect kingdom.\nIt can hold up to 9,999 Rupees."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( poeSoulEn )
         MSG_SPEED( MSG_SPEED_FAST )
         "You got a "
@@ -282,7 +282,7 @@ namespace mod::customMessages
         "%" PRIu32
         MSG_COLOR(MSG_COLOR_WHITE)
         " so far."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( charloDonationEn )
         "For the sake of peace in Hyrule...\nWould you please make a donation?" 
         MSG_OPTION_LIST( MSG_OPTION_1 ) 
@@ -291,11 +291,11 @@ namespace mod::customMessages
         "50 Rupees\n" 
         MSG_OPTION_LIST( MSG_OPTION_3 ) 
         "Sorry..."
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( recognitionMsg )
         MSG_SPEED(MSG_SPEED_FAST)
         "The Randomizer Team would like\nto thank our amazing testers.\nWithout you, this project would\nnot be what it is today: Taka\nAnorakkis, Archer, Br00ty, Chris\nChrono, clabrus, Demon, EmperorP\nElinadrian, Empty, Fennec, Zushi\nFleakee, Foxhole Gaming, Luzagar\nHeartPiece, Hornlitz, IceStorm\nJanWegh, JD, jdflyer, Jeez, Oxy\nJustRyland, Lance H., link1183\nLinkman124, Luneyes, GameWyrm\nMattStrats, MultFij, NesmaN88\nXenoWars, Papy_Grant, Simikins\npokemongenius, Psi-Hate, Lars P\nRaziel_Stratton, Redriel, Revven\nSparky7198, Zach, SwiftIke, j_im\nZenith, Prince, The., TheBruce\nTreZc0_, Wameslo, WickedGligar\nDGod63 and Sushi."
-    MSG_END()
+    MSG_END();
     
     char forTextUs[] = "for";
     char theTextUs[] = "the";

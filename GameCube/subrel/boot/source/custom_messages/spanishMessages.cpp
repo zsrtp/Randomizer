@@ -28,7 +28,7 @@ namespace mod::customMessages
         "%s"
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( shadowCrystalSp )
         MSG_SPEED(MSG_SPEED_SLOW)
         // ¡Has obtenido el 
@@ -45,7 +45,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // te permite\ntransformarte cuando quieras!
         "\x74\x65\x20\x70\x65\x72\x6D\x69\x74\x65\x0A\x74\x72\x61\x6E\x73\x66\x6F\x72\x6D\x61\x72\x74\x65\x20\x63\x75\x61\x6E\x64\x6F\x20\x71\x75\x69\x65\x72\x61\x73\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( endingBlowSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Técnica aprendida :\n
@@ -56,7 +56,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // !
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( shieldAttackSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Técnica aprendida :\n
@@ -67,7 +67,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // !
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( backSliceSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Técnica aprendida :\n
@@ -78,7 +78,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // !
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( helmSplitterSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Técnica aprendida :\n
@@ -89,7 +89,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // !
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( mortalDrawSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Técnica aprendida :\n
@@ -100,7 +100,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // !
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( jumpStrikeSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Técnica aprendida :\n
@@ -111,7 +111,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // !
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( greatSpinSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Técnica aprendida :\n
@@ -122,7 +122,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // !
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( poweredRodSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // El 
@@ -133,7 +133,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // ha\nrecuperado su magia! Ahora\npuede ser utilizado para dar\nvida a estatuas en el presente."
         "\x68\x61\x0A\x72\x65\x63\x75\x70\x65\x72\x61\x64\x6F\x20\x73\x75\x20\x6D\x61\x67\x69\x61\x21\x20\x41\x68\x6F\x72\x61\x0A\x70\x75\x65\x64\x65\x20\x73\x65\x72\x20\x75\x74\x69\x6C\x69\x7A\x61\x64\x6F\x20\x70\x61\x72\x61\x20\x64\x61\x72\x0A\x76\x69\x64\x61\x20\x61\x20\x65\x73\x74\x61\x74\x75\x61\x73\x20\x65\x6E\x20\x65\x6C\x20\x70\x72\x65\x73\x65\x6E\x74\x65\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( firstCharacterSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Has encontrado la primera\n
@@ -144,7 +144,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // !\nUna parte faltante de la palabra\nen el Libro de los Cielos\nha sido restaurada.
         "\x21\x0A\x55\x6E\x61\x20\x70\x61\x72\x74\x65\x20\x66\x61\x6C\x74\x61\x6E\x74\x65\x20\x64\x65\x20\x6C\x61\x20\x70\x61\x6C\x61\x62\x72\x61\x0A\x65\x6E\x20\x65\x6C\x20\x4C\x69\x62\x72\x6F\x20\x64\x65\x20\x6C\x6F\x73\x20\x43\x69\x65\x6C\x6F\x73\x0A\x68\x61\x20\x73\x69\x64\x6F\x20\x72\x65\x73\x74\x61\x75\x72\x61\x64\x61\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( secondCharacterSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Has encontrado la segunda\n
@@ -155,7 +155,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // !\nUna parte faltante de la palabra\nen el Libro de los Cielos\nha sido restaurada.
         "\x21\x0A\x55\x6E\x61\x20\x70\x61\x72\x74\x65\x20\x66\x61\x6C\x74\x61\x6E\x74\x65\x20\x64\x65\x20\x6C\x61\x20\x70\x61\x6C\x61\x62\x72\x61\x0A\x65\x6E\x20\x65\x6C\x20\x4C\x69\x62\x72\x6F\x20\x64\x65\x20\x6C\x6F\x73\x20\x43\x69\x65\x6C\x6F\x73\x0A\x68\x61\x20\x73\x69\x64\x6F\x20\x72\x65\x73\x74\x61\x75\x72\x61\x64\x61\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( thirdCharacterSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Has encontrado la tercera\n
@@ -166,7 +166,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // !\nUna parte faltante de la palabra\nen el Libro de los Cielos\nha sido restaurada.
         "\x21\x0A\x55\x6E\x61\x20\x70\x61\x72\x74\x65\x20\x66\x61\x6C\x74\x61\x6E\x74\x65\x20\x64\x65\x20\x6C\x61\x20\x70\x61\x6C\x61\x62\x72\x61\x0A\x65\x6E\x20\x65\x6C\x20\x4C\x69\x62\x72\x6F\x20\x64\x65\x20\x6C\x6F\x73\x20\x43\x69\x65\x6C\x6F\x73\x0A\x68\x61\x20\x73\x69\x64\x6F\x20\x72\x65\x73\x74\x61\x75\x72\x61\x64\x61\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( fourthCharacterSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Has encontrado la cuarta\n
@@ -177,7 +177,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // !\nUna parte faltante de la palabra\nen el Libro de los Cielos\nha sido restaurada.
         "\x21\x0A\x55\x6E\x61\x20\x70\x61\x72\x74\x65\x20\x66\x61\x6C\x74\x61\x6E\x74\x65\x20\x64\x65\x20\x6C\x61\x20\x70\x61\x6C\x61\x62\x72\x61\x0A\x65\x6E\x20\x65\x6C\x20\x4C\x69\x62\x72\x6F\x20\x64\x65\x20\x6C\x6F\x73\x20\x43\x69\x65\x6C\x6F\x73\x0A\x68\x61\x20\x73\x69\x64\x6F\x20\x72\x65\x73\x74\x61\x75\x72\x61\x64\x61\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( fifthCharacterSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Has encontrado la quinta\n
@@ -188,7 +188,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // !\nUna parte faltante de la palabra\nen el Libro de los Cielos\nha sido restaurada.
         "\x21\x0A\x55\x6E\x61\x20\x70\x61\x72\x74\x65\x20\x66\x61\x6C\x74\x61\x6E\x74\x65\x20\x64\x65\x20\x6C\x61\x20\x70\x61\x6C\x61\x62\x72\x61\x0A\x65\x6E\x20\x65\x6C\x20\x4C\x69\x62\x72\x6F\x20\x64\x65\x20\x6C\x6F\x73\x20\x43\x69\x65\x6C\x6F\x73\x0A\x68\x61\x20\x73\x69\x64\x6F\x20\x72\x65\x73\x74\x61\x75\x72\x61\x64\x61\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( firstFusedShadowSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Has obtenido un fragmento de\n
@@ -205,7 +205,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // ha crecido\nsobre él..
         "\x68\x61\x20\x63\x72\x65\x63\x69\x64\x6F\x0A\x73\x6F\x62\x72\x65\x20\xE9\x6C\x2E\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( secondFusedShadowSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Has obtenido el segundo\nfragmento de 
@@ -222,7 +222,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // al tocar..
         "\x61\x6C\x20\x74\x6F\x63\x61\x72\x2E\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( thirdFusedShadowSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Has obtenido el último\nfragmento de 
@@ -239,7 +239,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // y huele\na pescado..
         "\x79\x20\x68\x75\x65\x6C\x65\x0A\x61\x20\x70\x65\x73\x63\x61\x64\x6F\x2E\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( secondMirrorShardSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Has obtenido el segundo\nfragmento del 
@@ -256,7 +256,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // al tocar..
         "\x61\x6C\x20\x74\x6F\x63\x61\x72\x2E\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( thirdMirrorShardSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Has obtenido el tercer\nfragmento del
@@ -273,7 +273,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // ..
         "\x2E\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( fourthMirrorShardSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Has obtenido el último\nfragmento del 
@@ -290,7 +290,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // ..
         "\x2E\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( foolishItemSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // Sopla un viento 
@@ -301,7 +301,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // ..
         "\x2E\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( talkToMidnaSp )
         // ¿Qué quieres, 
         "\xBF\x51\x75\xE9\x20\x71\x75\x69\x65\x72\x65\x73\x2C\x20"
@@ -317,7 +317,7 @@ namespace mod::customMessages
         MSG_OPTION_LIST(MSG_OPTION_3)
         // Cambiar la hora del día 
         "\x43\x61\x6D\x62\x69\x61\x72\x20\x6C\x61\x20\x68\x6F\x72\x61\x20\x64\x65\x6C\x20\x64\xED\x61\x20"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( bigWalletSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Has obtenido la 
@@ -334,7 +334,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // !
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( giantWalletSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Has obtenido la 
@@ -351,22 +351,22 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // !
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( smallWalletPauseSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // Objeto que te acompaña desde tu más tierna infancia. Caben hasta 1000 rupias.
         "\x4F\x62\x6A\x65\x74\x6F\x20\x71\x75\x65\x20\x74\x65\x20\x61\x63\x6F\x6D\x70\x61\xF1\x61\x0A\x64\x65\x73\x64\x65\x20\x74\x75\x20\x6D\xE1\x73\x20\x74\x69\x65\x72\x6E\x61\x20\x69\x6E\x66\x61\x6E\x63\x69\x61\x2E\x0A\x43\x61\x62\x65\x6E\x20\x68\x61\x73\x74\x61\x20\x31\x30\x30\x30\x20\x72\x75\x70\x69\x61\x73\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( bigWalletPauseSp )
         MSG_SPEED(MSG_SPEED_FAST)
         //Bolsa que te dio Maripola, reina de los insectos. Caben hasta 5000 rupias.
         "\x42\x6F\x6C\x73\x61\x20\x71\x75\x65\x20\x74\x65\x20\x64\x69\x6F\x20\x4D\x61\x72\x69\x70\x6F\x6C\x61\x2C\x0A\x72\x65\x69\x6E\x61\x20\x64\x65\x20\x6C\x6F\x73\x20\x69\x6E\x73\x65\x63\x74\x6F\x73\x2E\x0A\x43\x61\x62\x65\x6E\x20\x68\x61\x73\x74\x61\x20\x35\x30\x30\x30\x20\x72\x75\x70\x69\x61\x73\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( giantWalletPauseSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // Bolsa que te dio Maripola, reina de los insectos. Solo la reciben sus fieles servidores. Caben hasta 9999 rupias.
         "\x42\x6F\x6C\x73\x61\x20\x71\x75\x65\x20\x74\x65\x20\x64\x69\x6F\x20\x4D\x61\x72\x69\x70\x6F\x6C\x61\x2C\x20\x72\x65\x69\x6E\x61\x20\x64\x65\x20\x6C\x6F\x73\x0A\x69\x6E\x73\x65\x63\x74\x6F\x73\x2E\x20\x53\x6F\x6C\x6F\x20\x6C\x61\x20\x72\x65\x63\x69\x62\x65\x6E\x20\x73\x75\x73\x20\x66\x69\x65\x6C\x65\x73\x0A\x73\x65\x72\x76\x69\x64\x6F\x72\x65\x73\x2E\x20\x43\x61\x62\x65\x6E\x20\x68\x61\x73\x74\x61\x20\x39\x39\x39\x39\x20\x72\x75\x70\x69\x61\x73\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( poeSoulSp )
         MSG_SPEED( MSG_SPEED_FAST )
         // Es un
@@ -383,7 +383,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // hasta ahora.
         "\x20\x68\x61\x73\x74\x61\x20\x61\x68\x6f\x72\x61\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( charloDonationSp )
         // ¿Darme una limosna por la paz de Hyrule?
         "\xBF\x44\x61\x72\x6D\x65\x20\x75\x6E\x61\x20\x6C\x69\x6D\x6F\x73\x6E\x61\x20\x70\x6F\x72\x20\x6C\x61\x20\x70\x61\x7A\x0A\x64\x65\x20\x48\x79\x72\x75\x6C\x65\x3F" 
@@ -396,13 +396,13 @@ namespace mod::customMessages
         MSG_OPTION_LIST( MSG_OPTION_3 ) 
         // No
         "\x4E\x6F";
-    MSG_END()
+    MSG_END();
 
     MSG_BEGIN_ARRAY( recognitionSp )
         MSG_SPEED(MSG_SPEED_FAST)
         //Queremos agradecer a nuestros increíbles Testers de parte del Equipo Randomizer. Sin ustedes, éste proyecto no sería lo que es el día de hoy
         "\x51\x75\x65\x72\x65\x6D\x6F\x73\x20\x61\x67\x72\x61\x64\x65\x63\x65\x72\x20\x61\x20\x6E\x75\x65\x73\x74\x72\x6F\x73\n\x69\x6E\x63\x72\x65\xED\x62\x6C\x65\x73\x20\x54\x65\x73\x74\x65\x72\x73\x20\x64\x65\x20\x70\x61\x72\x74\x65\n\x64\x65\x6C\x20\x45\x71\x75\x69\x70\x6F\x20\x52\x61\x6E\x64\x6F\x6D\x69\x7A\x65\x72\x2E\x20\x53\x69\x6E\n\x75\x73\x74\x65\x64\x65\x73\x2C\x20\xE9\x73\x74\x65\x20\x70\x72\x6F\x79\x65\x63\x74\x6F\x20\x6E\x6F\x20\x73\x65\x72\xED\x61\n\x6C\x6F\x20\x71\x75\x65\x20\x65\x73\x20\x65\x6C\x20\x64\xED\x61\x20\x64\x65\x20\x68\x6F\x79: Taka\nAnorakkis, Archer, Br00ty, Chris\nChrono, clabrus, Demon, EmperorP\nElinadrian, Empty, Fennec, Zushi\nFleakee, Foxhole Gaming, Luzagar\nHeartPiece, Hornlitz, IceStorm\nJanWegh, JD, jdflyer, Jeez, Oxy\nJustRyland, Lance H., link1183\nLinkman124, Luneyes, GameWyrm\nMattStrats, MultFij, NesmaN88\nXenoWars, Papy_Grant, Simikins\npokemongenius, Psi-Hate, Lars P\nRaziel_Stratton, Redriel, Revven\nSparky7198, Zach, SwiftIke, j_im\nZenith, Prince, The., TheBruce\nTreZc0_, Wameslo, WickedGligar\nDGod63 and Sushi."
-    MSG_END()
+    MSG_END();
 
     char smallKeyTextSp[] = "\x75\x6E\x61\x20\x6C\x6C\x61\x76\x65\x20\x70\x65\x71\x75\x65\xF1\x61"; // una llave pequeña
     char dungeonMapTextSp[] = "\x65\x6C\x20\x6D\x61\x70\x61"; // el mapa

@@ -28,7 +28,7 @@ namespace mod::customMessages
         "%s"
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( minesSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -45,7 +45,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( lakebedSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -62,7 +62,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( arbitersSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -79,7 +79,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( snowpeakSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -96,7 +96,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( timeSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -113,7 +113,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( citySmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -130,7 +130,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( palaceSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -147,7 +147,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( hyruleSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -164,7 +164,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( campSmallKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -181,7 +181,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( shadowCrystalIt )
         MSG_SPEED(MSG_SPEED_SLOW)
         //Ora hai il  
@@ -198,7 +198,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //ti permette sitransformarti quando vuoi.  
         "\x74\x69\x20\x70\x65\x72\x6d\x65\x74\x74\x65\x20\x73\x69\x0A\x74\x72\x61\x6e\x73\x66\x6f\x72\x6d\x61\x72\x74\x69\x20\x71\x75\x61\x6e\x64\x6f\x20\x76\x75\x6f\x69\x2e\x20"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( forestDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto la  
@@ -215,7 +215,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( minesDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto la  
@@ -232,7 +232,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( lakebedDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto la  
@@ -249,7 +249,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( arbitersDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto la  
@@ -266,7 +266,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( snowpeakDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Ora hai la  
@@ -283,7 +283,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( timeDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto la  
@@ -300,7 +300,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( cityDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto la  
@@ -317,7 +317,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( palaceDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto la  
@@ -334,7 +334,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( hyruleDungeonMapIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto la  
@@ -351,7 +351,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( forestCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -368,7 +368,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( minesCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -385,7 +385,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( lakebedCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -402,7 +402,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( arbitersCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -419,7 +419,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( snowpeakCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -436,7 +436,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( timeCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -453,7 +453,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( cityCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -470,7 +470,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( palaceCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -487,7 +487,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( hyruleCompassIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -504,7 +504,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( forestBigKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -521,7 +521,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( lakebedBigKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -538,7 +538,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( arbitersBigKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -555,7 +555,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( timeBigKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -572,7 +572,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( cityBigKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -589,7 +589,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( palaceBigKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -606,7 +606,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( hyruleBigKeyIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto una  
@@ -623,7 +623,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //. 
         "\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( endingBlowIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai appreso il  
@@ -634,7 +634,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //! 
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( shieldAttackIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai appreso l' 
@@ -645,7 +645,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //! 
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( backSliceIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai appreso il  
@@ -656,7 +656,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //! 
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( helmSplitterIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai appreso lo  
@@ -667,7 +667,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //! 
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( mortalDrawIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai appreso il  
@@ -678,7 +678,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //! 
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( jumpStrikeIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai appreso il  
@@ -689,7 +689,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //! 
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( greatSpinIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai appreso il  
@@ -700,7 +700,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //! 
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( poweredRodIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Lo  
@@ -711,7 +711,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //è dotatodi nuovo di poteri magici! Puòinfondere vita alle antichestatue, anche nel presente. 
         "\xe8\x20\x64\x6f\x74\x61\x74\x6f\x0A\x64\x69\x20\x6e\x75\x6f\x76\x6f\x20\x64\x69\x20\x70\x6f\x74\x65\x72\x69\x20\x6d\x61\x67\x69\x63\x69\x21\x20\x50\x75\xf2\x0A\x69\x6e\x66\x6f\x6e\x64\x65\x72\x65\x20\x76\x69\x74\x61\x20\x61\x6c\x6c\x65\x20\x61\x6e\x74\x69\x63\x68\x65\x0A\x73\x74\x61\x74\x75\x65\x2c\x20\x61\x6e\x63\x68\x65\x20\x6e\x65\x6c\x20\x70\x72\x65\x73\x65\x6e\x74\x65\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( firstCharacterIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Ecco la prima  
@@ -722,7 +722,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //! Una parte delle Letteremancanti nella formulacontenuta nell'Antico libro. 
         "\x21\x20\x55\x6e\x61\x20\x70\x61\x72\x74\x65\x20\x64\x65\x6c\x6c\x65\x20\x4c\x65\x74\x74\x65\x72\x65\x0A\x6d\x61\x6e\x63\x61\x6e\x74\x69\x20\x6e\x65\x6c\x6c\x61\x20\x66\x6f\x72\x6d\x75\x6c\x61\x0A\x63\x6f\x6e\x74\x65\x6e\x75\x74\x61\x20\x6e\x65\x6c\x6c\x27\x41\x6e\x74\x69\x63\x6f\x20\x6c\x69\x62\x72\x6f\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( secondCharacterIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Ecco la seconda  
@@ -733,7 +733,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //! Una parte delle Letteremancanti nella formulacontenuta nell'Antico libro. 
         "\x21\x20\x55\x6e\x61\x20\x70\x61\x72\x74\x65\x20\x64\x65\x6c\x6c\x65\x20\x4c\x65\x74\x74\x65\x72\x65\x0A\x6d\x61\x6e\x63\x61\x6e\x74\x69\x20\x6e\x65\x6c\x6c\x61\x20\x66\x6f\x72\x6d\x75\x6c\x61\x0A\x63\x6f\x6e\x74\x65\x6e\x75\x74\x61\x20\x6e\x65\x6c\x6c\x27\x41\x6e\x74\x69\x63\x6f\x20\x6c\x69\x62\x72\x6f\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( thirdCharacterIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Ecco la terza  
@@ -744,7 +744,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //! Una parte delle Letteremancanti nella formulacontenuta nell'Antico libro. 
         "\x21\x20\x55\x6e\x61\x20\x70\x61\x72\x74\x65\x20\x64\x65\x6c\x6c\x65\x20\x4c\x65\x74\x74\x65\x72\x65\x0A\x6d\x61\x6e\x63\x61\x6e\x74\x69\x20\x6e\x65\x6c\x6c\x61\x20\x66\x6f\x72\x6d\x75\x6c\x61\x0A\x63\x6f\x6e\x74\x65\x6e\x75\x74\x61\x20\x6e\x65\x6c\x6c\x27\x41\x6e\x74\x69\x63\x6f\x20\x6c\x69\x62\x72\x6f\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( fourthCharacterIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Ecco la quarta  
@@ -755,7 +755,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //! Una parte delle Letteremancanti nella formulacontenuta nell'Antico libro. 
         "\x21\x20\x55\x6e\x61\x20\x70\x61\x72\x74\x65\x20\x64\x65\x6c\x6c\x65\x20\x4c\x65\x74\x74\x65\x72\x65\x0A\x6d\x61\x6e\x63\x61\x6e\x74\x69\x20\x6e\x65\x6c\x6c\x61\x20\x66\x6f\x72\x6d\x75\x6c\x61\x0A\x63\x6f\x6e\x74\x65\x6e\x75\x74\x61\x20\x6e\x65\x6c\x6c\x27\x41\x6e\x74\x69\x63\x6f\x20\x6c\x69\x62\x72\x6f\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( fifthCharacterIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Ecco la quinta  
@@ -766,7 +766,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //! Una parte delle Letteremancanti nella formulacontenuta nell'Antico libro. 
         "\x21\x20\x55\x6e\x61\x20\x70\x61\x72\x74\x65\x20\x64\x65\x6c\x6c\x65\x20\x4c\x65\x74\x74\x65\x72\x65\x0A\x6d\x61\x6e\x63\x61\x6e\x74\x69\x20\x6e\x65\x6c\x6c\x61\x20\x66\x6f\x72\x6d\x75\x6c\x61\x0A\x63\x6f\x6e\x74\x65\x6e\x75\x74\x61\x20\x6e\x65\x6c\x6c\x27\x41\x6e\x74\x69\x63\x6f\x20\x6c\x69\x62\x72\x6f\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( firstFusedShadowIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto un frammento di 
@@ -783,7 +783,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //crescendo sopra lui.. 
         "\x63\x72\x65\x73\x63\x65\x6e\x64\x6f\x20\x73\x6f\x70\x72\x61\x20\x6c\x75\x69\x2e\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( secondFusedShadowIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto il secondoframmento di  
@@ -800,7 +800,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //come fuoco.. 
         "\x63\x6f\x6d\x65\x20\x66\x75\x6f\x63\x6f\x2e\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( thirdFusedShadowIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto il utilmoframmento di  
@@ -817,7 +817,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //!? 
         "\x21\x3f"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( secondMirrorShardIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto il secondoframmento del  
@@ -834,7 +834,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //.. 
         "\x2e\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( thirdMirrorShardIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto il terzoframmento del  
@@ -851,7 +851,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //.. 
         "\x2e\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( fourthMirrorShardIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto il ultimo frammento del  
@@ -868,7 +868,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //.. 
         "\x2e\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( foolishItemIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Un  
@@ -879,7 +879,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //soffia.. 
         "\x73\x6f\x66\x66\x69\x61\x2e\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( talkToMidnaIt )
         //Cosa vuoi,  
         "\x43\x6f\x73\x61\x20\x76\x75\x6f\x69\x2c\x20"
@@ -895,7 +895,7 @@ namespace mod::customMessages
         MSG_OPTION_LIST(MSG_OPTION_3)
         //Cambiare il tempo del giorno 
         "\x43\x61\x6d\x62\x69\x61\x72\x65\x20\x69\x6c\x20\x74\x65\x6d\x70\x6f\x20\x64\x65\x6c\x20\x67\x69\x6f\x72\x6e\x6f"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( bigWalletIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Ora hai un  
@@ -912,7 +912,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //! 
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( giantWalletIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Ora hai un  
@@ -929,22 +929,22 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         //! 
         "\x21"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( smallWalletPauseIt )
         MSG_SPEED(MSG_SPEED_FAST)
         //Oggetto dell'infanzia. Può contenere fino a 1000 Rupie.
         "\x4F\x67\x67\x65\x74\x74\x6F\x20\x64\x65\x6C\x6C\x27\x69\x6E\x66\x61\x6E\x7A\x69\x61\x2E\x20\x50\x75\xF2\x0A\x63\x6F\x6E\x74\x65\x6E\x65\x72\x65\x20\x66\x69\x6E\x6F\x20\x61\x20\x31\x2E\x30\x30\x30\x20\x52\x75\x70\x69\x65\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( bigWalletPauseIt )
         MSG_SPEED(MSG_SPEED_FAST)
         // Portarupie ricevuto in dono da Xenia, la principessa del regno degli insetti. Può contenere fino a 5000 Rupie.
         "\x50\x6F\x72\x74\x61\x72\x75\x70\x69\x65\x20\x72\x69\x63\x65\x76\x75\x74\x6F\x20\x69\x6E\x20\x64\x6F\x6E\x6F\x0A\x64\x61\x20\x58\x65\x6E\x69\x61\x2C\x20\x6C\x61\x20\x70\x72\x69\x6E\x63\x69\x70\x65\x73\x73\x61\x20\x64\x65\x6C\x0A\x72\x65\x67\x6E\x6F\x20\x64\x65\x67\x6C\x69\x20\x69\x6E\x73\x65\x74\x74\x69\x2E\x20\x50\x75\xF2\x0A\x63\x6F\x6E\x74\x65\x6E\x65\x72\x65\x20\x66\x69\x6E\x6F\x20\x61\x20\x35\x2E\x30\x30\x30\x20\x52\x75\x70\x69\x65\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( giantWalletPauseIt )
         MSG_SPEED(MSG_SPEED_FAST)
         // Portarupie ricevuto in dono da Xenia, la principessa del regno degli insetti. Lo merita solo chi ha aiutato il regno. Può contenere fino a 9.999 Rupie.
         "\x50\x6F\x72\x74\x61\x72\x75\x70\x69\x65\x20\x72\x69\x63\x65\x76\x75\x74\x6F\x20\x69\x6E\x20\x64\x6F\x6E\x6F\x20\x64\x61\x20\x58\x65\x6E\x69\x61\x2C\x0A\x6C\x61\x20\x70\x72\x69\x6E\x63\x69\x70\x65\x73\x73\x61\x20\x64\x65\x6C\x20\x72\x65\x67\x6E\x6F\x20\x64\x65\x67\x6C\x69\x20\x69\x6E\x73\x65\x74\x74\x69\x2E\x0A\x4C\x6F\x20\x6D\x65\x72\x69\x74\x61\x20\x73\x6F\x6C\x6F\x20\x63\x68\x69\x20\x68\x61\x20\x61\x69\x75\x74\x61\x74\x6F\x20\x69\x6C\x20\x72\x65\x67\x6E\x6F\x2E\x0A\x50\x75\xF2\x20\x63\x6F\x6E\x74\x65\x6E\x65\x72\x65\x20\x66\x69\x6E\x6F\x20\x61\x20\x39\x2E\x39\x39\x39\x20\x52\x75\x70\x69\x65\x2E"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( poeSoulIt )
         MSG_SPEED( MSG_SPEED_FAST )
         // Ora hai un'
@@ -961,7 +961,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         // finora.
         "\x20\x66\x69\x6e\x6f\x72\x61\x2e"
-    MSG_END()
+    MSG_END();
     MSG_BEGIN_ARRAY( charloDonationIt )
     // Avresti qualche spicciolo da dare per la pace di Hyrule?
         "\x41\x76\x72\x65\x73\x74\x69\x20\x71\x75\x61\x6C\x63\x68\x65\x20\x73\x70\x69\x63\x63\x69\x6F\x6C\x6F\x20\x64\x61\x0A\x64\x61\x72\x65\x20\x70\x65\x72\x20\x6C\x61\x20\x70\x61\x63\x65\x20\x64\x69\x20\x48\x79\x72\x75\x6C\x65\x3F\x31"
@@ -974,13 +974,13 @@ namespace mod::customMessages
         MSG_OPTION_LIST( MSG_OPTION_3 ) 
         // No
         "\x4E\x6F";
-    MSG_END()
+    MSG_END();
 
     MSG_BEGIN_ARRAY( recognitionIt )
         MSG_SPEED(MSG_SPEED_FAST)
         // La Squadra Randomizer vuole ringraziare ai nostri fantastici tester. Senza di voi, questo progetto non sarebbe quello lo che è oggi
         "\x4C\x61\x20\x53\x71\x75\x61\x64\x72\x61\x20\x52\x61\x6E\x64\x6F\x6D\x69\x7A\x65\x72\x20\x76\x75\x6F\x6C\x65\n\x72\x69\x6E\x67\x72\x61\x7A\x69\x61\x72\x65\x20\x61\x69\x20\x6E\x6F\x73\x74\x72\x69\n\x66\x61\x6E\x74\x61\x73\x74\x69\x63\x69\x20\x74\x65\x73\x74\x65\x72\x2E\x20\x53\x65\x6E\x7A\x61\x20\x64\x69\n\x76\x6F\x69\x2C\x20\x71\x75\x65\x73\x74\x6F\x20\x70\x72\x6F\x67\x65\x74\x74\x6F\x20\x6E\x6F\x6E\n\x73\x61\x72\x65\x62\x62\x65\x20\x71\x75\x65\x6C\x6C\x6F\x20\x6C\x6F\x20\x63\x68\x65\x20\xE8\x20\x6F\x67\x67\x69: Taka\nAnorakkis, Archer, Br00ty, Chris\nChrono, clabrus, Demon, EmperorP\nElinadrian, Empty, Fennec, Zushi\nFleakee, Foxhole Gaming, Luzagar\nHeartPiece, Hornlitz, IceStorm\nJanWegh, JD, jdflyer, Jeez, Oxy\nJustRyland, Lance H., link1183\nLinkman124, Luneyes, GameWyrm\nMattStrats, MultFij, NesmaN88\nXenoWars, Papy_Grant, Simikins\npokemongenius, Psi-Hate, Lars P\nRaziel_Stratton, Redriel, Revven\nSparky7198, Zach, SwiftIke, j_im\nZenith, Prince, The., TheBruce\nTreZc0_, Wameslo, WickedGligar\nDGod63 and Sushi."
-    MSG_END()
+    MSG_END();
 
     char forTextIt[] = "\x70\x65\x72"; // per
     char smallKeyTextIt[] = "\x75\x6e\x61\x20\x50\x69\x63\x63\x6f\x6c\x61\x20\x63\x68\x69\x61\x76\x65"; // una piccola chiave
