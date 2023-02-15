@@ -104,45 +104,17 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "! Now it can\nbe used to imbue statues\nwith life in the present!"
     MSG_END();
-    MSG_BEGIN_ARRAY( firstCharacterEn )
+    MSG_BEGIN_ARRAY( skyBookCharacterEn )
         MSG_SPEED(MSG_SPEED_FAST)
-        "You found the first "
+        "You got a "
         MSG_COLOR(MSG_COLOR_RED)
-        "Sky\ncharacter"
+        "Sky character"
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! A missing part\nof the word in the Ancient\nSky Book has been restored."
-    MSG_END();
-    MSG_BEGIN_ARRAY( secondCharacterEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You found the second "
+        "!\nYou've collected "
         MSG_COLOR(MSG_COLOR_RED)
-        "Sky\ncharacter"
+        "%" PRIu32
         MSG_COLOR(MSG_COLOR_WHITE)
-        "! A missing part\nof the word in the Ancient\nSky Book has been restored."
-    MSG_END();
-    MSG_BEGIN_ARRAY( thirdCharacterEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You found the third "
-        MSG_COLOR(MSG_COLOR_RED)
-        "Sky\ncharacter"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "! A missing part\nof the word in the Ancient\nSky Book has been restored."
-    MSG_END();
-    MSG_BEGIN_ARRAY( fourthCharacterEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You found the fourth "
-        MSG_COLOR(MSG_COLOR_RED)
-        "Sky\ncharacter"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "! A missing part\nof the word in the Ancient\nSky Book has been restored."
-    MSG_END();
-    MSG_BEGIN_ARRAY( fifthCharacterEn )
-        MSG_SPEED(MSG_SPEED_FAST)
-        "You found the fifth "
-        MSG_COLOR(MSG_COLOR_RED)
-        "Sky\ncharacter"
-        MSG_COLOR(MSG_COLOR_WHITE)
-        "! A missing part\nof the word in the Ancient\nSky Book has been restored."
+        " so far."
     MSG_END();
     MSG_BEGIN_ARRAY( firstFusedShadowEn )
         MSG_SPEED(MSG_SPEED_FAST)
@@ -283,6 +255,14 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         " so far."
     MSG_END();
+    MSG_BEGIN_ARRAY( skyBookDescriptionEn )
+        MSG_SPEED(MSG_SPEED_FAST)
+        "A book written in the ancient Sky language.\nCharacters are missing in areas.\n\nYou've collected "
+        MSG_COLOR(MSG_COLOR_RED)
+        "%" PRIu32
+        MSG_COLOR(MSG_COLOR_WHITE)
+        " so far."
+    MSG_END();
     MSG_BEGIN_ARRAY( charloDonationEn )
         "For the sake of peace in Hyrule...\nWould you please make a donation?" 
         MSG_OPTION_LIST( MSG_OPTION_1 ) 
@@ -368,29 +348,9 @@ namespace mod::customMessages
         0x00B0,
 
         // First Ancient Sky Book character
-        firstCharacterEn,
-        sizeof( firstCharacterEn ),
+        skyBookCharacterEn,
+        sizeof( skyBookCharacterEn ),
         0x013F,
-
-        // Second Ancient Sky Book character
-        secondCharacterEn,
-        sizeof( secondCharacterEn ),
-        0x0140,
-
-        // Third Ancient Sky Book character
-        thirdCharacterEn,
-        sizeof( thirdCharacterEn ),
-        0x0141,
-
-        // Fourth Ancient Sky Book character
-        fourthCharacterEn,
-        sizeof( fourthCharacterEn ),
-        0x0142,
-
-        // Fifth Ancient Sky Book character
-        fifthCharacterEn,
-        sizeof( fifthCharacterEn ),
-        0x0143,
 
         // Sixth Ancient Sky Book character
         firstFusedShadowEn,
@@ -461,6 +421,11 @@ namespace mod::customMessages
         poeSoulEn,
         sizeof( poeSoulEn ),
         0x0144,
+
+        // Sky Book Item Wheel Description
+        skyBookDescriptionEn,
+        sizeof( skyBookDescriptionEn ),
+        0x34d,
 
         // Recognition text
         recognitionMsg,

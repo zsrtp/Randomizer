@@ -153,6 +153,49 @@ namespace mod::game_patch
         return buf;
     }
 
+    const char* getSkyBookMessage( rando::Randomizer* randomizer, uint32_t msgId )
+    {
+        using namespace rando::customItems;
+
+        // Check if this is for the individual characters or the Item Wheel description
+        bool isForCharacter = false;
+        if ( msgId != 0x34D )     // Item Wheel description
+        {
+            // Not for the Item Wheel description, so assume this is for the individual characters
+            msgId = ITEM_TO_ID( Ancient_Sky_Book_First_Character );
+            isForCharacter = true;
+        }
+
+        uint16_t msgSize;
+        const char* format = _05_getMsgById( randomizer, msgId, &msgSize );
+
+        if ( !format )
+        {
+            return nullptr;
+        }
+
+        // Figure out how many characters the player currently has
+        uint32_t skyCharacterCount = 0;
+
+        // If this is for the individual characters, then the flag for the current character won't update until the textbox has
+        // closed, so add one
+        if ( isForCharacter )
+        {
+            skyCharacterCount++;
+        }
+
+        for ( uint32_t i = 0; i < 5; i++ )
+        {
+            if ( !events::haveItem( Ancient_Sky_Book_First_Character + i ) )
+            {
+                break;
+            }
+            skyCharacterCount++;
+        }
+
+        return createString( format, msgSize, skyCharacterCount );
+    }
+
     const char* getPoeSoulMessage( rando::Randomizer* randomizer )
     {
         using namespace libtp::data::items;
@@ -544,6 +587,15 @@ namespace mod::game_patch
             case 0x4CF:     // 60 Poe souls
             {
                 return getPoeSoulMessage( randomizer );
+            }
+            case ITEM_TO_ID( Ancient_Sky_Book_First_Character ):
+            case ITEM_TO_ID( Ancient_Sky_Book_Second_Character ):
+            case ITEM_TO_ID( Ancient_Sky_Book_Third_Character ):
+            case ITEM_TO_ID( Ancient_Sky_Book_Fourth_Character ):
+            case ITEM_TO_ID( Ancient_Sky_Book_Fifth_Character ):
+            case 0x34D:     // Sky Book Item Wheel description
+            {
+                return getSkyBookMessage( randomizer, msgId );
             }
             default:
             {
