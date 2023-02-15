@@ -165,7 +165,7 @@ namespace mod::game_patch
             return nullptr;
         }
 
-        // The poe count doesn't update until after the texbox has closed, so add one to get the new count
+        // This project changes the poe count to increment after the message is displayed, so add one to get the new count
         uint32_t poeCount = libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect.poe_count + 1;
         return createString( format, msgSize, poeCount );
     };
