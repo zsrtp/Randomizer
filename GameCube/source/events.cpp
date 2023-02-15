@@ -1064,9 +1064,9 @@ namespace mod::events
         }
     }
 
-    bool haveItem( uint8_t item )
+    bool haveItem( uint32_t item )
     {
-        return libtp::tp::d_item::checkItemGet( item, 1 );
+        return libtp::tp::d_item::checkItemGet( static_cast<uint8_t>( item ), 1 );
     }
 
     void handleQuickTransform()

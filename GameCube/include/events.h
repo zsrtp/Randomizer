@@ -154,7 +154,7 @@ namespace mod::events
     void performStaticASMReplacement( uint32_t memoryOffset, uint32_t value );
 
     libtp::tp::d_resource::dRes_info_c* getObjectResInfo( const char* arcName );
-    bool haveItem( uint8_t item );
+    bool haveItem( uint32_t item );
     bool checkMembitSaveSwitchFlag( int32_t flag );
     void drawWindow( int32_t x, int32_t y, int32_t width, int32_t height, uint32_t color );
     void drawText( const char* text, int32_t x, int32_t y, uint32_t color, bool drawBorder, float textSize );
