@@ -186,7 +186,6 @@ namespace mod
 
     KEEP_VAR uint32_t ( *return_getFontCCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
     KEEP_VAR uint32_t ( *return_getFontGCColorTable )( uint8_t colorId, uint8_t unk ) = nullptr;
-    KEEP_VAR char ( *return_parseCharacter_1Byte )( const char** text ) = nullptr;
     KEEP_VAR void ( *return_jmessage_tSequenceProcessor__do_begin )( void* seqProcessor,
                                                                      const void* unk2,
                                                                      const char* text ) = nullptr;
@@ -1110,11 +1109,6 @@ namespace mod
         {
             return return_getFontCCColorTable( colorId, unk );
         }
-    }
-
-    KEEP_FUNC char handle_parseCharacter_1Byte( const char** text )
-    {
-        return return_parseCharacter_1Byte( text );
     }
 
     KEEP_FUNC bool handle_query022( void* unk1, void* unk2, int32_t unk3 )

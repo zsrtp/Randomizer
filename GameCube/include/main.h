@@ -305,9 +305,6 @@ namespace mod
     uint32_t handle_getFontGCColorTable( uint8_t colorId, uint8_t unk );
     extern uint32_t ( *return_getFontGCColorTable )( uint8_t colorId, uint8_t unk );
 
-    char handle_parseCharacter_1Byte( const char** text );
-    extern char ( *return_parseCharacter_1Byte )( const char** text );
-
     void handle_jmessage_tSequenceProcessor__do_begin( void* seqProcessor, const void* unk2, const char* text );
     extern void ( *return_jmessage_tSequenceProcessor__do_begin )( void* seqProcessor, const void* unk2, const char* text );
 

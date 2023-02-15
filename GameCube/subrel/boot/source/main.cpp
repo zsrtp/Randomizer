@@ -155,8 +155,6 @@ namespace mod
             patch::hookFunction( tp::d_msg_class::getFontCCColorTable, mod::handle_getFontCCColorTable );
         return_getFontGCColorTable =
             patch::hookFunction( tp::d_msg_class::getFontGCColorTable, mod::handle_getFontGCColorTable );
-        return_parseCharacter_1Byte =
-            patch::hookFunction( tp::resource::parseCharacter_1Byte, mod::handle_parseCharacter_1Byte );
 
         return_jmessage_tSequenceProcessor__do_begin =
             patch::hookFunction( tp::d_msg_class::jmessage_tSequenceProcessor__do_begin,
