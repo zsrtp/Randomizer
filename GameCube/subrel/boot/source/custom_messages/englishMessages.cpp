@@ -352,7 +352,7 @@ namespace mod::customMessages
         sizeof( skyBookCharacterEn ),
         0x013F,
 
-        // Sixth Ancient Sky Book character
+        // First Fused Shadow
         firstFusedShadowEn,
         sizeof( firstFusedShadowEn ),
         0x013C,
