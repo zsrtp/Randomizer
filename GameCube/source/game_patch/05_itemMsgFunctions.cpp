@@ -153,7 +153,7 @@ namespace mod::game_patch
         return buf;
     }
 
-    const char* getSkyBookMessage( rando::Randomizer* randomizer, uint32_t msgId )
+    const char* getSkyBookMessage( uint32_t msgId )
     {
         using namespace rando::customItems;
 
@@ -167,7 +167,7 @@ namespace mod::game_patch
         }
 
         uint16_t msgSize;
-        const char* format = _05_getMsgById( randomizer, msgId, &msgSize );
+        const char* format = _05_getMsgById( msgId, &msgSize );
 
         if ( !format )
         {
@@ -196,12 +196,12 @@ namespace mod::game_patch
         return createString( format, msgSize, skyCharacterCount );
     }
 
-    const char* getPoeSoulMessage( rando::Randomizer* randomizer )
+    const char* getPoeSoulMessage()
     {
         using namespace libtp::data::items;
 
         uint16_t msgSize;
-        const char* format = _05_getMsgById( randomizer, ITEM_TO_ID( Poe_Soul ), &msgSize );
+        const char* format = _05_getMsgById( ITEM_TO_ID( Poe_Soul ), &msgSize );
 
         if ( !format )
         {
@@ -235,7 +235,7 @@ namespace mod::game_patch
     }
 #endif
 
-    const char* getDungeonItemMessage( rando::Randomizer* randomizer, int32_t itemId )
+    const char* getDungeonItemMessage( int32_t itemId )
     {
         using namespace libtp::data::items;
         using namespace rando::customItems;
@@ -268,7 +268,7 @@ namespace mod::game_patch
         itemIdForBase = Forest_Temple_Small_Key;
 #endif
         uint16_t msgSize;
-        const char* format = _05_getMsgById( randomizer, ITEM_TO_ID( itemIdForBase ), &msgSize );
+        const char* format = _05_getMsgById( ITEM_TO_ID( itemIdForBase ), &msgSize );
         if ( !format )
         {
             return nullptr;
@@ -438,7 +438,7 @@ namespace mod::game_patch
             }
 
             // Get the text for the area
-            areaText = _05_getMsgById( randomizer, dungeonAreaMsgId );
+            areaText = _05_getMsgById( dungeonAreaMsgId );
             if ( !areaText )
             {
                 return nullptr;
@@ -483,7 +483,7 @@ namespace mod::game_patch
         }
 
         // Get the text for the item
-        const char* dungeonItemText = _05_getMsgById( randomizer, dungeonItemMsgId );
+        const char* dungeonItemText = _05_getMsgById( dungeonItemMsgId );
         if ( !dungeonItemText )
         {
             return nullptr;
@@ -493,7 +493,7 @@ namespace mod::game_patch
         const char* forText;
         if ( getForText() )
         {
-            forText = _05_getMsgById( randomizer, SpecialMessageIds::FOR );
+            forText = _05_getMsgById( SpecialMessageIds::FOR );
             if ( !forText )
             {
                 return nullptr;
@@ -508,7 +508,7 @@ namespace mod::game_patch
         const char* theText;
         if ( addTheText )
         {
-            theText = _05_getMsgById( randomizer, SpecialMessageIds::THE );
+            theText = _05_getMsgById( SpecialMessageIds::THE );
             if ( !theText )
             {
                 return nullptr;
@@ -537,7 +537,7 @@ namespace mod::game_patch
 #endif
     }
 
-    const char* getCustomMessage( rando::Randomizer* randomizer, uint32_t msgId )
+    const char* getCustomMessage( uint32_t msgId )
     {
         using namespace libtp::data::items;
         using namespace rando::customItems;
@@ -580,13 +580,13 @@ namespace mod::game_patch
             case ITEM_TO_ID( Palace_of_Twilight_Dungeon_Map ):
             case ITEM_TO_ID( Hyrule_Castle_Dungeon_Map ):
             {
-                return getDungeonItemMessage( randomizer, ID_TO_ITEM( msgId ) );
+                return getDungeonItemMessage( ID_TO_ITEM( msgId ) );
             }
             case ITEM_TO_ID( Poe_Soul ):
             case 0x4CE:     // 20 Poe souls
             case 0x4CF:     // 60 Poe souls
             {
-                return getPoeSoulMessage( randomizer );
+                return getPoeSoulMessage();
             }
             case ITEM_TO_ID( Ancient_Sky_Book_First_Character ):
             case ITEM_TO_ID( Ancient_Sky_Book_Second_Character ):
@@ -595,7 +595,7 @@ namespace mod::game_patch
             case ITEM_TO_ID( Ancient_Sky_Book_Fifth_Character ):
             case 0x34D:     // Sky Book Item Wheel description
             {
-                return getSkyBookMessage( randomizer, msgId );
+                return getSkyBookMessage( msgId );
             }
             default:
             {
@@ -603,7 +603,7 @@ namespace mod::game_patch
             }
         }
 
-        return _05_getMsgById( randomizer, msgId );
+        return _05_getMsgById( msgId );
     }
 
     void _05_setCustomItemMessage( libtp::tp::control::TControl* control,
@@ -681,7 +681,7 @@ namespace mod::game_patch
                 }
             }
 
-            const char* newMessage = getCustomMessage( randomizer, msgId );
+            const char* newMessage = getCustomMessage( msgId );
             setMessageText( newMessage );
             return;
         }
@@ -732,20 +732,14 @@ namespace mod::game_patch
         return newColorCode;
     }
 
-    const char* _05_getMsgById( rando::Randomizer* randomizer, uint32_t msgId )
+    const char* _05_getMsgById( uint32_t msgId )
     {
-        return _05_getMsgById( randomizer, msgId, nullptr );
+        return _05_getMsgById( msgId, nullptr );
     }
 
-    const char* _05_getMsgById( rando::Randomizer* randomizer, uint32_t msgId, uint16_t* msgSizeOut )
+    const char* _05_getMsgById( uint32_t msgId, uint16_t* msgSizeOut )
     {
         using namespace libtp::data::items;
-
-        // Make sure the randomizer is loaded/enabled
-        if ( !randoIsEnabled( randomizer ) )
-        {
-            return nullptr;
-        }
 
         // If there are any special message IDs that require additional logic, we handle them here.
         switch ( msgId )

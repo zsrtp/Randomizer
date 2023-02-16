@@ -175,8 +175,8 @@ namespace mod::game_patch
                                    rando::Randomizer* randomizer );
 
     uint32_t _05_getCustomMsgColor( uint8_t colorId );
-    const char* _05_getMsgById( rando::Randomizer* randomizer, uint32_t msgId );
-    const char* _05_getMsgById( rando::Randomizer* randomizer, uint32_t msgId, uint16_t* msgSizeOut );
+    const char* _05_getMsgById( uint32_t msgId );
+    const char* _05_getMsgById( uint32_t msgId, uint16_t* msgSizeOut );
     const char** _05_replaceMessageString( const char** text );
 
     // 06 - Function definitions for assembly patches
