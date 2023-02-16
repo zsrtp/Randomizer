@@ -103,7 +103,7 @@ namespace mod::game_patch
             return nullptr;
         }
 
-        static char buf[160];
+        static char buf[192];
         constexpr uint32_t maxIndex = sizeof( buf ) - 1;
         uint32_t currentIndex = 0;
 

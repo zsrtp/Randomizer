@@ -142,7 +142,7 @@ namespace mod::customMessages
         // letra\n
         "\x6C\x65\x74\x72\x61\x0A"
         MSG_COLOR(MSG_COLOR_WHITE)
-        // del <Libro de los Cielos>!\n
+        // del 
         "\x64\x65\x6C\x20"
          MSG_COLOR(MSG_COLOR_RED)
         // Libro de los Cielos
@@ -151,6 +151,7 @@ namespace mod::customMessages
         // !\n Has conseguido
         "\x21\x0A\x48\x61\x73\x20\x63\x6f\x6e\x73\x65\x67\x75\x69\x64\x6f\x20"
         MSG_COLOR(MSG_COLOR_RED)
+        // X
         "%" PRIu32
         MSG_COLOR(MSG_COLOR_WHITE)
         // hasta ahora.
@@ -356,6 +357,7 @@ namespace mod::customMessages
         // Libro escrito en la antigua lengua Uca.\nParecen faltarle letras.\n\n
         "\x4C\x69\x62\x72\x6F\x20\x65\x73\x63\x72\x69\x74\x6F\x20\x65\x6E\x20\x6C\x61\x20\x61\x6E\x74\x69\x67\x75\x61\x20\x6C\x65\x6E\x67\x75\x61\x20\x55\x63\x61\x2E\x0A\x50\x61\x72\x65\x63\x65\x6E\x20\x66\x61\x6C\x74\x61\x72\x6C\x65\x20\x6C\x65\x74\x72\x61\x73\x2E\x0A\x0A\x48\x61\x73\x20\x63\x6f\x6e\x73\x65\x67\x75\x69\x64\x6f\x20"
         MSG_COLOR(MSG_COLOR_RED)
+        // X
         "%" PRIu32
         MSG_COLOR(MSG_COLOR_WHITE)
         // hasta ahora.
@@ -374,7 +376,6 @@ namespace mod::customMessages
         // No
         "\x4E\x6F";
     MSG_END();
-
     MSG_BEGIN_ARRAY( recognitionSp )
         MSG_SPEED(MSG_SPEED_FAST)
         //Queremos agradecer a nuestros increíbles Testers de parte del Equipo Randomizer. Sin ustedes, éste proyecto no sería lo que es el día de hoy
