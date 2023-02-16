@@ -459,27 +459,64 @@ namespace mod::game_patch
 
         // Figure out what dungeon item this is for
         uint32_t dungeonItemMsgId;
-        if ( ( itemId >= Forest_Temple_Small_Key ) && ( itemId <= Bulblin_Camp_Key ) )
+        switch ( itemId )
         {
-            dungeonItemMsgId = SpecialMessageIds::SMALL_KEY;
-        }
-        else if ( ( itemId >= Forest_Temple_Big_Key ) && ( itemId <= Hyrule_Castle_Big_Key ) )
-        {
-            dungeonItemMsgId = SpecialMessageIds::BIG_KEY;
-        }
-        else if ( ( ( itemId >= Forest_Temple_Compass ) && ( itemId <= Lakebed_Temple_Compass ) ) ||
-                  ( ( itemId >= Arbiters_Grounds_Compass ) && ( itemId <= Hyrule_Castle_Compass ) ) )
-        {
-            dungeonItemMsgId = SpecialMessageIds::COMPASS;
-        }
-        else if ( ( itemId >= Forest_Temple_Dungeon_Map ) && ( itemId <= Hyrule_Castle_Dungeon_Map ) )
-        {
-            dungeonItemMsgId = SpecialMessageIds::DUNGEON_MAP;
-        }
-        else
-        {
-            // Error occured somehow
-            return nullptr;
+            case Forest_Temple_Small_Key:
+            case Goron_Mines_Small_Key:
+            case Lakebed_Temple_Small_Key:
+            case Arbiters_Grounds_Small_Key:
+            case Snowpeak_Ruins_Small_Key:
+            case Temple_of_Time_Small_Key:
+            case City_in_The_Sky_Small_Key:
+            case Palace_of_Twilight_Small_Key:
+            case Hyrule_Castle_Small_Key:
+            case Bulblin_Camp_Key:
+            {
+                dungeonItemMsgId = SpecialMessageIds::SMALL_KEY;
+                break;
+            }
+            case Forest_Temple_Big_Key:
+            case Lakebed_Temple_Big_Key:
+            case Arbiters_Grounds_Big_Key:
+            case Temple_of_Time_Big_Key:
+            case City_in_The_Sky_Big_Key:
+            case Palace_of_Twilight_Big_Key:
+            case Hyrule_Castle_Big_Key:
+            {
+                dungeonItemMsgId = SpecialMessageIds::BIG_KEY;
+                break;
+            }
+            case Forest_Temple_Compass:
+            case Goron_Mines_Compass:
+            case Lakebed_Temple_Compass:
+            case Arbiters_Grounds_Compass:
+            case Snowpeak_Ruins_Compass:
+            case Temple_of_Time_Compass:
+            case City_in_The_Sky_Compass:
+            case Palace_of_Twilight_Compass:
+            case Hyrule_Castle_Compass:
+            {
+                dungeonItemMsgId = SpecialMessageIds::COMPASS;
+                break;
+            }
+            case Forest_Temple_Dungeon_Map:
+            case Goron_Mines_Dungeon_Map:
+            case Lakebed_Temple_Dungeon_Map:
+            case Arbiters_Grounds_Dungeon_Map:
+            case Snowpeak_Ruins_Dungeon_Map:
+            case Temple_of_Time_Dungeon_Map:
+            case City_in_The_Sky_Dungeon_Map:
+            case Palace_of_Twilight_Dungeon_Map:
+            case Hyrule_Castle_Dungeon_Map:
+            {
+                dungeonItemMsgId = SpecialMessageIds::DUNGEON_MAP;
+                break;
+            }
+            default:
+            {
+                // Error occured somehow
+                return nullptr;
+            }
         }
 
         // Get the text for the item
