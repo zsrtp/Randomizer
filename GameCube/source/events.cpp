@@ -995,16 +995,15 @@ namespace mod::events
     void loadCustomActors()
     {
         using namespace libtp;
-        if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) ||
-             ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Ordon_Village] ) &&
-               ( libtp::tools::getCurrentRoomNo() == 0 ) ) )
+        if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) )
         {
-            cXyz* eponaPos = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.horse_place.mPos;
-            cXyz* eponaActorPos = &EponaActr.pos;
-
-            eponaPos->x = eponaActorPos->x;
-            eponaPos->y = eponaActorPos->y;
-            eponaPos->z = eponaActorPos->z;
+            EponaActr.parameters = 0xF0D;
+            tools::SpawnActor( 0, EponaActr );
+        }
+        else if ( ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Ordon_Village] ) &&
+                    ( libtp::tools::getCurrentRoomNo() == 0 ) ) )
+        {
+            EponaActr.parameters = 0x148;
             tools::SpawnActor( 0, EponaActr );
         }
     }

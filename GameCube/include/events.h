@@ -31,7 +31,6 @@ namespace mod::events
     typedef bool ( *daMidna_checkMetamorphoseEnableBase_Def )( void* );
 
     extern libtp::tp::dzx::ACTR GanonBarrierActor;
-    extern libtp::tp::dzx::ACTR EponaActor;
     extern libtp::tp::dzx::ACTR AuruActr;
     extern libtp::tp::dzx::ACTR ItemActr;
     extern libtp::tp::dzx::ACTR EponaActr;
