@@ -997,14 +997,16 @@ namespace mod::events
         using namespace libtp;
         if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) )
         {
-            EponaActr.parameters = 0xF0D;
             tools::SpawnActor( 0, EponaActr );
         }
         else if ( ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Ordon_Village] ) &&
                     ( libtp::tools::getCurrentRoomNo() == 0 ) ) )
         {
-            EponaActr.parameters = 0x148;
-            tools::SpawnActor( 0, EponaActr );
+            libtp::tp::dzx::ACTR localEponaActor;
+            memcpy( &localEponaActor, &EponaActr, sizeof( libtp::tp::dzx::ACTR ) );
+
+            localEponaActor.parameters = 0x148;
+            tools::SpawnActor( 0, localEponaActor );
         }
     }
 
@@ -1030,9 +1032,12 @@ namespace mod::events
         {
             libtp::tp::dzx::ACTR localGanonBarrierActor;
             memcpy( &localGanonBarrierActor, &GanonBarrierActor, sizeof( libtp::tp::dzx::ACTR ) );
+
             tools::SpawnActor( 7, localGanonBarrierActor );
+
             localGanonBarrierActor.pos.z -= 270.f;
             tools::SpawnActor( 7, localGanonBarrierActor );
+
             localGanonBarrierActor.pos.z -= 270.f;
             tools::SpawnActor( 7, localGanonBarrierActor );
         }
