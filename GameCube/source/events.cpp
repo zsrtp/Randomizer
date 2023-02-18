@@ -547,8 +547,9 @@ namespace mod::events
                         // This implementation reduces instruction count to 49 compared to naive
                         // approach's 86.
 
-                        bool isCompareX = lv5KeyPtr->mCollisionRot.y & 0x4000;
-                        bool isCompareGreater = lv5KeyPtr->mCollisionRot.y & 0x8000;
+                        const int16_t collisionRotY = lv5KeyPtr->mCollisionRot.y;
+                        bool isCompareX = collisionRotY & 0x4000;
+                        bool isCompareGreater = collisionRotY & 0x8000;
 
                         float* playerAxisPos = nullptr;
                         float* lockPos = nullptr;
@@ -556,28 +557,28 @@ namespace mod::events
                         if ( isCompareX )
                         {
                             playerAxisPos = &playerPos[0];
-                            lockPos = &( lv5KeyPtr->mCurrent.mPosition.x );
+                            lockPos = &lv5KeyPtr->mCurrent.mPosition.x;
                         }
                         else
                         {
                             playerAxisPos = &playerPos[2];
-                            lockPos = &( lv5KeyPtr->mCurrent.mPosition.z );
+                            lockPos = &lv5KeyPtr->mCurrent.mPosition.z;
                         }
 
                         bool swapDoorSides = false;
 
                         if ( isCompareGreater )
                         {
-                            if ( *playerAxisPos > *lockPos + 17 )
+                            if ( *playerAxisPos > *lockPos + 17.f )
                             {
                                 swapDoorSides = true;
-                                *lockPos += 34;
+                                *lockPos += 34.f;
                             }
                         }
-                        else if ( *playerAxisPos < *lockPos - 17 )
+                        else if ( *playerAxisPos < *lockPos - 17.f )
                         {
                             swapDoorSides = true;
-                            *lockPos -= 34;
+                            *lockPos -= 34.f;
                         }
 
                         if ( swapDoorSides )
