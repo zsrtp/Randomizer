@@ -21,7 +21,7 @@ namespace mod::user_patch
 
         using namespace libtp;
 
-        getConsole() << "[0] WalletPatch [" << ( set ? "x" : " " ) << "]\n";
+        // getConsole() << "[0] WalletPatch [" << ( set ? "x" : " " ) << "]\n";
 
         uint32_t getRupeeMaxPtr = reinterpret_cast<uint32_t>( &tp::d_save::getRupeeMax );
         uint32_t setWalletMaxNumPtr = reinterpret_cast<uint32_t>( &tp::d_menu_collect::setWalletMaxNum );

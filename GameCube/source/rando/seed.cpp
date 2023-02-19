@@ -34,13 +34,14 @@ namespace mod::rando
 
         if ( checkIfSeedLoaded() )
         {
-            getConsole() << "Setting Event Flags... \n";
+            // getConsole() << "Setting Event Flags... \n";
             this->applyEventFlags();
 
-            getConsole() << "Setting Region Flags... \n";
+            // getConsole() << "Setting Region Flags... \n";
             this->applyRegionFlags();
 
             this->giveStartingItems();
+            getConsole() << "Seed Applied Successfully.\n";
             return true;
         }
         else

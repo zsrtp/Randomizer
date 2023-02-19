@@ -644,7 +644,7 @@ namespace mod
                 if ( seed && ( seedRelAction == SEED_ACTION_NONE ) )
                 {
                     // Volatile patches need to be applied whenever a file is loaded
-                    getConsole() << "Applying volatile patches:\n";
+                    // getConsole() << "Applying volatile patches:\n";
                     seed->applyVolatilePatches( true );
                 }
             }

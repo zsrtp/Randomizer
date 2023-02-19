@@ -54,7 +54,7 @@ namespace mod::rando
     // Currrently unused, so will leave here
     Randomizer::~Randomizer( void )
     {
-        getConsole() << "Rando unloading...\n";
+        // getConsole() << "Rando unloading...\n";
 
         // Clear Seed
         delete m_Seed;

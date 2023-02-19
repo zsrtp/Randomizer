@@ -16,13 +16,13 @@ namespace mod::rando
 {
     Randomizer::Randomizer( MinSeedInfo* minSeedInfo, uint8_t selectedSeed )
     {
-        getConsole() << "Rando loading...\n";
+        // getConsole() << "Rando loading...\n";
         loadSeed( minSeedInfo, selectedSeed );
     }
 
     Randomizer::~Randomizer( void )
     {
-        getConsole() << "Rando unloading...\n";
+        // getConsole() << "Rando unloading...\n";
 
         // Clear Seed
         delete m_Seed;
