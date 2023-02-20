@@ -912,15 +912,12 @@ namespace mod::events
 
     int32_t proc_query042( void* unk1, void* unk2, int32_t unk3 )
     {
-        rando::Seed* seed;
-        if ( seed = getCurrentSeed( randomizer ), seed )
+        if ( transformAnywhereEnabled )
         {
-            if ( seed->m_Header->transformAnywhere )
-            {
-                // Return false to allow transforming infront of NPCs using Midna's transform option
-                return 0;
-            }
+            // Return false to allow transforming infront of NPCs using Midna's transform option
+            return 0;
         }
+
         return mod::return_query042( unk1, unk2, unk3 );
     }
 
@@ -1077,8 +1074,7 @@ namespace mod::events
             return;
         }
 
-        rando::Header* seedHeader = seed->m_Header;
-        if ( !seedHeader->quickTransform )
+        if ( !seed->m_Header->quickTransform )
         {
             return;
         }
@@ -1140,7 +1136,7 @@ namespace mod::events
             return;
         }
 
-        if ( !seedHeader->transformAnywhere )
+        if ( !transformAnywhereEnabled )
         {
             if ( daMidna_c__checkMetamorphoseEnableBase )
             {
