@@ -165,6 +165,7 @@ namespace mod
                                                   int32_t unk3,
                                                   void* unk4 );
 
+    /*
     void handle_dComIfGp_setNextStage( const char* stage,
                                        int16_t point,
                                        int8_t roomNo,
@@ -188,6 +189,7 @@ namespace mod
                                                    int16_t lastAngle,
                                                    int32_t param_9,
                                                    int32_t wipSpeedT );
+    */
 
     int32_t handle_tgscInfoInit( void* stageDt, void* i_data, int32_t entryNum, void* param_3 );
     extern int32_t ( *return_tgscInfoInit )( void* stageDt, void* i_data, int32_t entryNum, void* param_3 );
@@ -195,8 +197,8 @@ namespace mod
     void handle_roomLoader( void* data, void* stageDt, int32_t roomNo );
     extern void ( *return_roomLoader )( void* data, void* stageDt, int32_t roomNo );
 
-    void handle_stageLoader( void* data, void* stageDt );
-    extern void ( *return_stageLoader )( void* data, void* stageDt );
+    // void handle_stageLoader( void* data, void* stageDt );
+    // extern void ( *return_stageLoader )( void* data, void* stageDt );
     int32_t handle_dStage_playerInit( void* stageDt,
                                       libtp::tp::d_stage::stage_dzr_header_entry* i_data,
                                       int32_t num,
@@ -318,8 +320,8 @@ namespace mod
                                                                  uint32_t unk4 );
 
     // Query/Event functions. Various uses
-    bool handle_query022( void* unk1, void* unk2, int32_t unk3 );
-    extern bool ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 );
+    int32_t handle_query022( void* unk1, void* unk2, int32_t unk3 );
+    extern int32_t ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 );
 
     int32_t handle_query023( void* unk1, void* unk2, int32_t unk3 );
     extern int32_t ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 );
@@ -327,8 +329,8 @@ namespace mod
     uint8_t handle_checkEmptyBottle( libtp::tp::d_save::dSv_player_item_c* playerItem );
     extern uint8_t ( *return_checkEmptyBottle )( libtp::tp::d_save::dSv_player_item_c* playerItem );
 
-    bool handle_query042( void* unk1, void* unk2, int32_t unk3 );
-    extern bool ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 );
+    int32_t handle_query042( void* unk1, void* unk2, int32_t unk3 );
+    extern int32_t ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 );
 
     int32_t handle_query037( void* unk1, void* unk2, int32_t unk3 );
     extern int32_t ( *return_query037 )( void* unk1, void* unk2, int32_t unk3 );
@@ -336,14 +338,11 @@ namespace mod
     int32_t handle_query049( void* unk1, void* unk2, int32_t unk3 );
     extern int32_t ( *return_query049 )( void* unk1, void* unk2, int32_t unk3 );
 
-    uint32_t handle_event000( void* messageFlow, void* nodeEvent, void* actrPtr );
-    extern uint32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr );
+    // int32_t handle_event000( void* messageFlow, void* nodeEvent, void* actrPtr );
+    // extern int32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr );
 
     int32_t handle_event017( void* messageFlow, void* nodeEvent, void* actrPtr );
     extern int32_t ( *return_event017 )( void* messageFlow, void* nodeEvent, void* actrPtr );
-
-    int32_t handle_event041( void* messageFlow, void* nodeEvent, void* actrPtr );
-    extern int32_t ( *return_event041 )( void* messageFlow, void* nodeEvent, void* actrPtr );
 
     // Save flag functions
     bool handle_isDungeonItem( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit );

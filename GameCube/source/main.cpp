@@ -112,13 +112,14 @@ namespace mod
 
     KEEP_VAR void ( *return_roomLoader )( void* data, void* stageDt, int32_t roomNo ) = nullptr;
 
-    KEEP_VAR void ( *return_stageLoader )( void* data, void* stageDt ) = nullptr;
+    // KEEP_VAR void ( *return_stageLoader )( void* data, void* stageDt ) = nullptr;
 
     KEEP_VAR int32_t ( *return_dStage_playerInit )( void* stageDt,
                                                     libtp::tp::d_stage::stage_dzr_header_entry* i_data,
                                                     int32_t num,
                                                     void* raw_data ) = nullptr;
 
+    /*
     KEEP_VAR void ( *return_dComIfGp_setNextStage )( const char* stage,
                                                      int16_t point,
                                                      int8_t roomNo,
@@ -130,6 +131,7 @@ namespace mod
                                                      int16_t lastAngle,
                                                      int32_t param_9,
                                                      int32_t wipSpeedT ) = nullptr;
+    */
 
     // GetLayerNo trampoline
     KEEP_VAR int32_t ( *return_getLayerNo_common_common )( const char* stageName,
@@ -196,17 +198,16 @@ namespace mod
                                                                    uint32_t unk4 ) = nullptr;
 
     // Query/Event functions.
-    KEEP_VAR bool ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    KEEP_VAR int32_t ( *return_query022 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR int32_t ( *return_query023 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR uint8_t ( *return_checkEmptyBottle )( libtp::tp::d_save::dSv_player_item_c* playerItem ) = nullptr;
-    KEEP_VAR bool ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
+    KEEP_VAR int32_t ( *return_query042 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR int32_t ( *return_query004 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR int32_t ( *return_query037 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
     KEEP_VAR int32_t ( *return_query049 )( void* unk1, void* unk2, int32_t unk3 ) = nullptr;
-    KEEP_VAR uint32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
+    // KEEP_VAR int32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
     KEEP_VAR int32_t ( *return_event017 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
     KEEP_VAR int32_t ( *return_event003 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
-    KEEP_VAR int32_t ( *return_event041 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
 
     // Save flag functions
     KEEP_VAR bool ( *return_isDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit ) = nullptr;
@@ -773,6 +774,7 @@ namespace mod
         return return_tgscInfoInit( stageDt, i_data, entryNum, param_3 );
     }
 
+    /*
     KEEP_FUNC void handle_dComIfGp_setNextStage( const char* stage,
                                                  int16_t point,
                                                  int8_t roomNo,
@@ -805,6 +807,7 @@ namespace mod
                                              param_9,
                                              wipSpeedT );
     }
+    */
 
     KEEP_FUNC void handle_roomLoader( void* data, void* stageDt, int32_t roomNo )
     {
@@ -820,12 +823,14 @@ namespace mod
         return return_roomLoader( data, stageDt, roomNo );
     }
 
+    /*
     KEEP_FUNC void handle_stageLoader( void* data, void* stageDt )
     {
         // This function is a placeholder for now. May work with Taka on getting some ARC checks converted over to use this
         // function instead of roomLoader
         return return_stageLoader( data, stageDt );
     }
+    */
 
     KEEP_FUNC int32_t handle_dStage_playerInit( void* stageDt,
                                                 libtp::tp::d_stage::stage_dzr_header_entry* i_data,
@@ -1079,11 +1084,10 @@ namespace mod
         const bool ret = return_setMessageCode_inSequence( control, TProcessor, unk3, msgId );
 
         // Make sure the function ran successfully
-        if ( !ret )
+        if ( ret )
         {
-            return ret;
+            game_patch::_05_setCustomItemMessage( control, TProcessor, unk3, msgId, randomizer );
         }
-        game_patch::_05_setCustomItemMessage( control, TProcessor, unk3, msgId, randomizer );
         return ret;
     }
 
@@ -1111,7 +1115,7 @@ namespace mod
         }
     }
 
-    KEEP_FUNC bool handle_query022( void* unk1, void* unk2, int32_t unk3 )
+    KEEP_FUNC int32_t handle_query022( void* unk1, void* unk2, int32_t unk3 )
     {
         return events::proc_query022( unk1, unk2, unk3 );
     }
@@ -1135,32 +1139,37 @@ namespace mod
 
     KEEP_FUNC int32_t handle_query037( void* unk1, void* unk2, int32_t unk3 )
     {
-        // Return the original function immediately as we need its output
+        // Call the original function immediately as we need its output
         int32_t menuType = return_query037( unk1, unk2, unk3 );
+
         if ( ( menuType == 0x2 ) && ( reinterpret_cast<int32_t>( libtp::tp::d_a_player::m_midnaActor ) ==
                                       libtp::tp::f_op_actor_mng::fopAcM_getTalkEventPartner( nullptr ) ) )
         {
             events::handleTimeOfDayChange();
         }
+
         return menuType;
     }
 
     KEEP_FUNC int32_t handle_query049( void* unk1, void* unk2, int32_t unk3 )
     {
         int32_t poeFlag = return_query049( unk1, unk2, unk3 );
+
         if ( ( poeFlag == 4 ) && !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::GOT_BOTTLE_FROM_JOVANI ) )
         {
             return 3;
         }
+
         return poeFlag;
     }
 
-    KEEP_FUNC bool handle_query042( void* unk1, void* unk2, int32_t unk3 )
+    KEEP_FUNC int32_t handle_query042( void* unk1, void* unk2, int32_t unk3 )
     {
         return events::proc_query042( unk1, unk2, unk3 );
     }
 
-    KEEP_FUNC uint32_t handle_event000( void* messageFlow, void* nodeEvent, void* actrPtr )
+    /*
+    KEEP_FUNC int32_t handle_event000( void* messageFlow, void* nodeEvent, void* actrPtr )
     {
         // Prevent the hidden skill CS from setting the proper flags
         if ( libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Skill] ) )
@@ -1169,6 +1178,7 @@ namespace mod
         }
         return return_event000( messageFlow, nodeEvent, actrPtr );
     }
+    */
 
     KEEP_FUNC int32_t handle_event017( void* messageFlow, void* nodeEvent, void* actrPtr )
     {
@@ -1179,22 +1189,6 @@ namespace mod
             *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 ) = 0x0000;
         }
         return return_event017( messageFlow, nodeEvent, actrPtr );
-    }
-
-    KEEP_FUNC int32_t handle_event041( void* messageFlow, void* nodeEvent, void* actrPtr )
-    {
-        // If we are donating to Charlo, we want to increase the donated amount by 100 instead of the normal 30.
-        if ( libtp::tools::playerIsInRoomStage( 2, libtp::data::stage::allStages[libtp::data::stage::stageIDs::Castle_Town] ) )
-        {
-            uint32_t donationAmount = *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 );
-            if ( donationAmount == 0x1E )
-            {
-                *reinterpret_cast<uint16_t*>(
-                    &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags.event_flags[0xF7] ) += 100;
-                return 1;
-            }
-        }
-        return return_event041( messageFlow, nodeEvent, actrPtr );
     }
 
     KEEP_FUNC void handle_jmessage_tSequenceProcessor__do_begin( void* seqProcessor, const void* unk2, const char* text )
@@ -1259,7 +1253,9 @@ namespace mod
                 break;
             }
             default:
+            {
                 break;
+            }
         }
         return return_daNpcT_chkEvtBit( flag );
     }
@@ -1269,6 +1265,7 @@ namespace mod
         using namespace libtp::tp::d_a_alink;
         using namespace libtp::data::stage;
         using namespace libtp::data::flags;
+
         switch ( flag )
         {
             case ENDING_BLOW_UNLOCKED:     // Checking for ending blow.
@@ -1462,7 +1459,6 @@ namespace mod
 
             default:
             {
-                return return_isEventBit( eventPtr, flag );
                 break;
             }
         }
@@ -1563,7 +1559,6 @@ namespace mod
 
                 default:
                 {
-                    return return_onEventBit( eventPtr, flag );
                     break;
                 }
             }
@@ -1609,32 +1604,29 @@ namespace mod
 
     KEEP_FUNC void handle_onSwitch_dSv_memBit( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag )
     {
-        if ( libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Forest_Temple] ) )
+        if ( memoryBit == &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags )
         {
-            if ( memoryBit == &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags )
+            if ( libtp::tp::d_a_alink::checkStageName(
+                     libtp::data::stage::allStages[libtp::data::stage::stageIDs::Forest_Temple] ) )
             {
                 if ( flag == 0x52 )
                 {
                     return;     // Don't set the flag for all monkeys freed in the lobby of Forest Temple
                 }
             }
-        }
-
-        if ( libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Arbiters_Grounds] ) )
-        {
-            if ( memoryBit == &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags )
+            else if ( libtp::tp::d_a_alink::checkStageName(
+                          libtp::data::stage::allStages[libtp::data::stage::stageIDs::Arbiters_Grounds] ) )
             {
                 if ( flag == 0x26 )
                 {
-                    libtp::tp::d_save::offSwitch_dSv_memBit(
-                        &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
-                        0x45 );     // Open the Poe gate
+                    libtp::tp::d_save::offSwitch_dSv_memBit( memoryBit,
+                                                             0x45 );     // Open the Poe gate
+
                     return;
                 }
             }
         }
+
         return return_onSwitch_dSv_memBit( memoryBit, flag );
     }
 
@@ -1736,7 +1728,7 @@ namespace mod
 
     KEEP_FUNC void handle_setWolfLockDomeModel( libtp::tp::d_a_alink::daAlink* linkActrPtr )
     {
-        // call the original function immediately, as certain values need to be set in the Link Actor struct.
+        // Call the original function immediately, as certain values need to be set in the Link Actor struct.
         return_setWolfLockDomeModel( linkActrPtr );
         if ( getCurrentSeed( randomizer ) )
         {

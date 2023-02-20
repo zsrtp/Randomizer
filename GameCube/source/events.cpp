@@ -864,7 +864,7 @@ namespace mod::events
         }
     }
 
-    bool proc_query022( void* unk1, void* unk2, int32_t unk3 )
+    int32_t proc_query022( void* unk1, void* unk2, int32_t unk3 )
     {
         // Check to see if currently in one of the Ordon interiors
         if ( libtp::tp::d_a_alink::checkStageName(
@@ -877,7 +877,7 @@ namespace mod::events
             {
                 // Return false so that the door in Bo's house can be opened without having the
                 // Iron Boots
-                return false;
+                return 0;
             }
         }
         return mod::return_query022( unk1, unk2, unk3 );
@@ -885,8 +885,9 @@ namespace mod::events
 
     int32_t proc_query023( void* unk1, void* unk2, int32_t unk3 )
     {
-        // return the original function as we need its value
+        // Call the original function immediately as we need its value
         int32_t numBombs = mod::return_query023( unk1, unk2, unk3 );
+
         // Check to see if currently in one of the Kakariko interiors
         if ( libtp::tools::playerIsInRoomStage(
                  1,
@@ -895,35 +896,28 @@ namespace mod::events
             // If player has not bought Barnes' Bomb Bag, we want to allow them to be able to get the check.
             if ( ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::BOUGHT_BARNES_BOMB_BAG ) ) )
             {
-                return false;
+                return 0;
             }
+
             // If the player has bought the bomb bag check, we won't allow them to get the check, regardless of if they
             // have bombs or not
-            else
+            else if ( numBombs == 0 )
             {
-                if ( numBombs == 0 )
-                {
-                    return 1;
-                }
-                else
-                {
-                    return mod::return_query023( unk1, unk2, unk3 );
-                }
+                return 1;
             }
         }
 
-        // Call original function
-        return mod::return_query023( unk1, unk2, unk3 );
+        return numBombs;
     }
 
-    bool proc_query042( void* unk1, void* unk2, int32_t unk3 )
+    int32_t proc_query042( void* unk1, void* unk2, int32_t unk3 )
     {
-        // Check to see if currently in one of the Ordon interiors
         rando::Seed* seed;
         if ( seed = getCurrentSeed( randomizer ), seed )
         {
             if ( seed->m_Header->transformAnywhere )
             {
+                // Return false to allow transforming infront of NPCs using Midna's transform option
                 return 0;
             }
         }
@@ -939,24 +933,25 @@ namespace mod::events
         {
             case BOSS_DEFEATED:
             {
-                const char* dungeonStages[] = { allStages[stageIDs::Forest_Temple],
-                                                allStages[stageIDs::Ook],
-                                                allStages[stageIDs::Goron_Mines],
-                                                allStages[stageIDs::Dangoro],
-                                                allStages[stageIDs::Lakebed_Temple],
-                                                allStages[stageIDs::Deku_Toad],
-                                                allStages[stageIDs::Arbiters_Grounds],
-                                                allStages[stageIDs::Death_Sword],
-                                                allStages[stageIDs::Snowpeak_Ruins],
-                                                allStages[stageIDs::Darkhammer],
-                                                allStages[stageIDs::Temple_of_Time],
-                                                allStages[stageIDs::Darknut],
-                                                allStages[stageIDs::City_in_the_Sky],
-                                                allStages[stageIDs::Aeralfos],
-                                                allStages[stageIDs::Palace_of_Twilight],
-                                                allStages[stageIDs::Phantom_Zant_1],
-                                                allStages[stageIDs::Phantom_Zant_2] };
-                uint32_t totalDungeonStages = sizeof( dungeonStages ) / sizeof( dungeonStages[0] );
+                static const char* dungeonStages[] = { allStages[stageIDs::Forest_Temple],
+                                                       allStages[stageIDs::Ook],
+                                                       allStages[stageIDs::Goron_Mines],
+                                                       allStages[stageIDs::Dangoro],
+                                                       allStages[stageIDs::Lakebed_Temple],
+                                                       allStages[stageIDs::Deku_Toad],
+                                                       allStages[stageIDs::Arbiters_Grounds],
+                                                       allStages[stageIDs::Death_Sword],
+                                                       allStages[stageIDs::Snowpeak_Ruins],
+                                                       allStages[stageIDs::Darkhammer],
+                                                       allStages[stageIDs::Temple_of_Time],
+                                                       allStages[stageIDs::Darknut],
+                                                       allStages[stageIDs::City_in_the_Sky],
+                                                       allStages[stageIDs::Aeralfos],
+                                                       allStages[stageIDs::Palace_of_Twilight],
+                                                       allStages[stageIDs::Phantom_Zant_1],
+                                                       allStages[stageIDs::Phantom_Zant_2] };
+
+                constexpr uint32_t totalDungeonStages = sizeof( dungeonStages ) / sizeof( dungeonStages[0] );
                 for ( uint32_t i = 0; i < totalDungeonStages; i++ )
                 {
                     if ( libtp::tp::d_a_alink::checkStageName( dungeonStages[i] ) )

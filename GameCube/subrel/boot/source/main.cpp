@@ -112,10 +112,13 @@ namespace mod
         return_actorCommonLayerInit = patch::hookFunction( actorCommonLayerInit, mod::handle_actorCommonLayerInit );
         return_tgscInfoInit = patch::hookFunction( tgscInfoInit, mod::handle_tgscInfoInit );
         return_roomLoader = patch::hookFunction( libtp::tp::d_stage::roomLoader, mod::handle_roomLoader );
-        return_stageLoader = patch::hookFunction( libtp::tp::d_stage::stageLoader, mod::handle_stageLoader );
+        // return_stageLoader = patch::hookFunction( libtp::tp::d_stage::stageLoader, mod::handle_stageLoader );
         return_dStage_playerInit = patch::hookFunction( libtp::tp::d_stage::dStage_playerInit, mod::handle_dStage_playerInit );
+
+        /*
         return_dComIfGp_setNextStage =
             patch::hookFunction( libtp::tp::d_com_inf_game::dComIfGp_setNextStage, mod::handle_dComIfGp_setNextStage );
+        */
 
         // Custom States
         return_getLayerNo_common_common = patch::hookFunction( getLayerNo_common_common, game_patch::_01_getLayerNo );
@@ -123,12 +126,16 @@ namespace mod
         // Item Creation Functions
         return_createItemForBoss =
             patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForBoss, mod::handle_createItemForBoss );
+
         return_createItemForMidBoss =
             patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForMidBoss, mod::handle_createItemForMidBoss );
+
         return_createItemForPresentDemo =
             patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForPresentDemo, mod::handle_createItemForPresentDemo );
+
         return_createItemForTrBoxDemo =
             patch::hookFunction( libtp::tp::f_op_actor_mng::createItemForTrBoxDemo, mod::handle_createItemForTrBoxDemo );
+
         return_CheckFieldItemCreateHeap =
             patch::hookFunction( libtp::tp::d_a_itembase::CheckFieldItemCreateHeap, mod::handle_CheckFieldItemCreateHeap );
 
@@ -151,14 +158,17 @@ namespace mod
         // Message Functions
         return_setMessageCode_inSequence =
             patch::hookFunction( libtp::tp::control::setMessageCode_inSequence, mod::handle_setMessageCode_inSequence );
+
         return_getFontCCColorTable =
             patch::hookFunction( tp::d_msg_class::getFontCCColorTable, mod::handle_getFontCCColorTable );
+
         return_getFontGCColorTable =
             patch::hookFunction( tp::d_msg_class::getFontGCColorTable, mod::handle_getFontGCColorTable );
 
         return_jmessage_tSequenceProcessor__do_begin =
             patch::hookFunction( tp::d_msg_class::jmessage_tSequenceProcessor__do_begin,
                                  mod::handle_jmessage_tSequenceProcessor__do_begin );
+
         return_jmessage_tSequenceProcessor__do_tag = patch::hookFunction( tp::d_msg_class::jmessage_tSequenceProcessor__do_tag,
                                                                           mod::handle_jmessage_tSequenceProcessor__do_tag );
 
@@ -169,19 +179,21 @@ namespace mod
         return_query037 = patch::hookFunction( libtp::tp::d_msg_flow::query037, mod::handle_query037 );
         return_query049 = patch::hookFunction( libtp::tp::d_msg_flow::query049, mod::handle_query049 );
         return_query042 = patch::hookFunction( libtp::tp::d_msg_flow::query042, mod::handle_query042 );
-        return_event000 = patch::hookFunction( libtp::tp::d_msg_flow::event000, mod::handle_event000 );
+        // return_event000 = patch::hookFunction( libtp::tp::d_msg_flow::event000, mod::handle_event000 );
         return_event017 = patch::hookFunction( libtp::tp::d_msg_flow::event017, mod::handle_event017 );
-        return_event041 = patch::hookFunction( libtp::tp::d_msg_flow::event041, mod::handle_event041 );
 
         // Save flag functions
         return_isDungeonItem = patch::hookFunction( tp::d_save::isDungeonItem, mod::handle_isDungeonItem );
         return_daNpcT_chkEvtBit = patch::hookFunction( libtp::tp::d_a_npc::daNpcT_chkEvtBit, mod::handle_daNpcT_chkEvtBit );
         return_isEventBit = patch::hookFunction( libtp::tp::d_save::isEventBit, mod::handle_isEventBit );
         return_onEventBit = patch::hookFunction( libtp::tp::d_save::onEventBit, mod::handle_onEventBit );
+
         return_isSwitch_dSv_memBit =
             patch::hookFunction( libtp::tp::d_save::isSwitch_dSv_memBit, mod::handle_isSwitch_dSv_memBit );
+
         return_onSwitch_dSv_memBit =
             patch::hookFunction( libtp::tp::d_save::onSwitch_dSv_memBit, mod::handle_onSwitch_dSv_memBit );
+
         return_checkTreasureRupeeReturn =
             patch::hookFunction( tp::d_a_alink::checkTreasureRupeeReturn, mod::handle_checkTreasureRupeeReturn );
 
@@ -194,6 +206,7 @@ namespace mod
         // Link functions
         return_checkBootsMoveAnime =
             patch::hookFunction( libtp::tp::d_a_alink::checkBootsMoveAnime, mod::handle_checkBootsMoveAnime );
+
         return_setGetItemFace = patch::hookFunction( libtp::tp::d_a_alink::setGetItemFace, mod::handle_setGetItemFace );
 
         return_setWolfLockDomeModel =
