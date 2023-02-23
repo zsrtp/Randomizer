@@ -75,6 +75,7 @@
 80042B04:skipper
 
 // DynamicLink.o
+80263460:DynamicModuleControl_ct
 80263A5C:do_link
 80263D28:do_unlink
 

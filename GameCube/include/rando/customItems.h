@@ -7,8 +7,6 @@
 #ifndef RANDO_CUSTOMITEMS_H
 #define RANDO_CUSTOMITEMS_H
 
-#include "gc_wii/card.h"
-#include "data/items.h"
 #include <cstdint>
 
 // Maximum expected number of spawned ice traps in any given area
@@ -80,12 +78,12 @@ namespace mod::rando::customItems
     struct FoolishItems
     {
         static constexpr const uint8_t itemIds[MAX_SPAWNED_FOOLISH_ITEMS] = {
-            rando::customItems::Foolish_Item_1,
-            rando::customItems::Foolish_Item_2,
-            rando::customItems::Foolish_Item_3,
-            rando::customItems::Foolish_Item_4,
-            rando::customItems::Foolish_Item_5,
-            rando::customItems::Foolish_Item_6 };     // Array holding the IDs of all the ice traps
+            Foolish_Item_1,
+            Foolish_Item_2,
+            Foolish_Item_3,
+            Foolish_Item_4,
+            Foolish_Item_5,
+            Foolish_Item_6 };     // Array holding the IDs of all the ice traps
 
         uint8_t itemModelId[MAX_SPAWNED_FOOLISH_ITEMS];     // Array holding the IDs of the item that the ice trap is copying
 

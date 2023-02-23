@@ -123,9 +123,9 @@ namespace mod::events
         randomizer->overrideREL();
 
         // Static REL overrides and patches
-        uint32_t relPtrRaw = reinterpret_cast<uint32_t>( dmc->moduleInfo );
+        uint32_t relPtrRaw = reinterpret_cast<uint32_t>( dmc->mModule );
 
-        switch ( dmc->moduleInfo->id )
+        switch ( dmc->mModule->id )
         {
             // Door - Shutter
             case D_A_DOOR_SHUTTER:
@@ -679,7 +679,7 @@ namespace mod::events
         (void) randomizer;
         using namespace libtp::tp::rel::relIDs;
 
-        switch ( dmc->moduleInfo->id )
+        switch ( dmc->mModule->id )
         {
             // Snowpeak Ruins Small Key Lock
             case D_A_OBJ_LV5KEY:

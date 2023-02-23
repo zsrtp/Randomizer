@@ -17,7 +17,7 @@ namespace mod::assembly
 {
     void handleDoLinkHook( libtp::tp::dynamic_link::DynamicModuleControl* dmc )
     {
-        if ( dmc->moduleInfo )
+        if ( dmc->mModule )
         {
             events::onRELLink( mod::randomizer, dmc );
         }
