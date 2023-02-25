@@ -36,7 +36,7 @@ namespace mod::rando
         }
         else
         {
-            getConsole() << "Seed: " << minSeedInfo->fileName << "\n";
+            // getConsole() << "Seed: " << minSeedInfo->fileName << "\n";
 
             // Load the seed
             m_SeedInfo.minSeedInfo = minSeedInfo;

@@ -502,7 +502,7 @@ namespace mod
 
                         case 1:
                             // Only one seed present, auto-select it and disable console for convenience
-                            getConsole() << "Seed: " << seedList->m_minSeedInfo[0].fileName << " loaded.\n";
+                            getConsole() << "Seed: " << seedList->m_minSeedInfo[0].fileName << " found.\n";
                             setScreen( false );
                             break;
 

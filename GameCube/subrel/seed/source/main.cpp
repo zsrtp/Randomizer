@@ -10,7 +10,7 @@ namespace mod
         rando::Seed* seed;
         if ( seed = getCurrentSeed( rando ), seed )
         {
-            getConsole() << "Applying one-time patches:\n";
+            // getConsole() << "Applying one-time patches:\n";
             seed->applyOneTimePatches( true );
             seedRelAction = SEED_ACTION_NONE;
         }
