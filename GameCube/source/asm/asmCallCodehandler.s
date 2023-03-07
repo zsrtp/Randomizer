@@ -1,13 +1,8 @@
-.global asmCallCodehandlerStart
-.global asmCallCodehandlerEnd
+.global asmCallCodehandler
+# asmCallCodehandler needs to be used in at least one subrel, so it cannot be set to hidden
 
-# asmCallCodehandlerStart and asmCallCodehandlerEnd both need to be used in at least one subrel, so they cannot be set to hidden
-
-asmCallCodehandlerStart:
-bl codehandlerStartAddress
-
-# Restore the original instruction
+asmCallCodehandler:
+# Restore the original instruction immediately, as the codehandler backs it up and restores it
 addi %r7,%r31,320
 
-asmCallCodehandlerEnd:
-b 0
+b codehandlerStartAddress

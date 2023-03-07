@@ -93,8 +93,7 @@ namespace mod::assembly
         bool handleReplaceGWolfWithItem( const int16_t* l_delFlag, void* daNpcGWolf );
 
         // vi.o
-        void asmCallCodehandlerStart();
-        void asmCallCodehandlerEnd();
+        void asmCallCodehandler();
 
         // d_a_alink.o
 #ifdef TP_JP

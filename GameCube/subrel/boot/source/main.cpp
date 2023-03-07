@@ -324,10 +324,7 @@ namespace mod
 
         // Hook VISetNextFrameBuffer to branch to the codehandler
         uint32_t VISetNextFrameBufferAddress = reinterpret_cast<uint32_t>( libtp::gc_wii::vi::VISetNextFrameBuffer );
-
-        libtp::patch::writeStandardBranches( VISetNextFrameBufferAddress + 0x44,
-                                             assembly::asmCallCodehandlerStart,
-                                             assembly::asmCallCodehandlerEnd );
+        libtp::patch::writeBranchBL( VISetNextFrameBufferAddress + 0x44, assembly::asmCallCodehandler );
 
         // Restore interrupts
         libtp::gc_wii::os_interrupt::OSRestoreInterrupts( enable );
