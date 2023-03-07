@@ -22,4 +22,10 @@ namespace mod::user_patch
         (void) randomizer;
         increaseSpinnerSpeed = set;
     }
+
+    void changeMagicArmorCost( rando::Randomizer* randomizer, bool set )
+    {
+        (void) randomizer;
+        magicArmorCost = set;
+    }
 }     // namespace mod::user_patch

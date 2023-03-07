@@ -25,6 +25,7 @@ namespace mod::user_patch
     void setInstantText( rando::Randomizer* randomizer, bool set );
     void setMapRegionBits( rando::Randomizer* randomizer, bool set );
     void increaseSpinnerVelocity( rando::Randomizer* randomizer, bool set );
+    void changeMagicArmorCost( rando::Randomizer* randomizer, bool set );
 }     // namespace mod::user_patch
 
 #endif

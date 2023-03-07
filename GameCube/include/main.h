@@ -82,6 +82,7 @@ namespace mod
     extern bool instantTextEnabled;
     extern bool increaseSpinnerSpeed;
     extern bool transformAnywhereEnabled;
+    extern bool magicArmorCost;
 
 #ifdef TP_EU
     extern libtp::tp::d_s_logo::Languages currentLanguage;
