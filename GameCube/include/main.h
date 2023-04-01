@@ -284,8 +284,8 @@ namespace mod
     extern void ( *return_setLineUpItem )( libtp::tp::d_save::dSv_player_item_c* );
 
     // ItemGet functions. These functions handle the player and the flags set for their inventory
-    int32_t handle_execItemGet( uint8_t item );
-    extern int32_t ( *return_execItemGet )( uint8_t item );
+    void handle_execItemGet( uint8_t item );
+    extern void ( *return_execItemGet )( uint8_t item );
 
     int32_t handle_checkItemGet( uint8_t item, int32_t defaultValue );
     extern int32_t ( *return_checkItemGet )( uint8_t item, int32_t defaultValue );
@@ -363,8 +363,8 @@ namespace mod
     void handle_onSwitch_dSv_memBit( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag );
     extern void ( *return_onSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag );
 
-    bool handle_checkTreasureRupeeReturn( void* unk1, int32_t item );
-    extern bool ( *return_checkTreasureRupeeReturn )( void* unk1, int32_t item );
+    bool handle_checkTreasureRupeeReturn( libtp::tp::d_a_alink::daAlink* linkActrPtr, int32_t item );
+    extern bool ( *return_checkTreasureRupeeReturn )( libtp::tp::d_a_alink::daAlink* linkActrPtr, int32_t item );
 
     bool handle_isDarkClearLV( void* playerStatusPtr, int32_t twilightNode );
     extern bool ( *return_isDarkClearLV )( void* playerStatusPtr, int32_t twilightNode );
