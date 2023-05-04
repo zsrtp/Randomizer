@@ -96,10 +96,10 @@ namespace mod::events
         {
             savePtr->save_file.player.player_status_b.skyAngle = 180;
 
-            if ( d_a_alink::dComIfGs_isEventBit( flags::CLEARED_FARON_TWILIGHT ) )
+            if ( d_a_alink::dComIfGs_isEventBit( flags::ORDON_DAY_2_OVER ) )
             {
                 savePtr->save_file.player.horse_place.mPos.y =
-                    -1000.f;     // Place Epona out of bounds in Faron if the twilight has been cleared since the game will
+                    -1000.f;     // Place Epona out of bounds in Faron if Talo has been rescued since the game will
                                  // spawn her in the air.
             }
         }

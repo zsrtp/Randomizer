@@ -178,6 +178,10 @@ namespace mod::rando
                 // Done with the current file, so increment the index
                 index++;
             }
+            else
+            {
+                getConsole() << "ERROR - UNSUPPORTED SEED: " << currentFileName << "\n";
+            }
         }
 
 #ifdef DVD

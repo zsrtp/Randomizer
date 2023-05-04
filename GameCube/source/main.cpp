@@ -177,7 +177,7 @@ namespace mod
     KEEP_VAR void ( *return_setLineUpItem )( libtp::tp::d_save::dSv_player_item_c* ) = nullptr;
 
     // ItemGet functions.
-    KEEP_VAR int32_t ( *return_execItemGet )( uint8_t item ) = nullptr;
+    KEEP_VAR void ( *return_execItemGet )( uint8_t item ) = nullptr;
     KEEP_VAR int32_t ( *return_checkItemGet )( uint8_t item, int32_t defaultValue ) = nullptr;
 
     // Message functions
@@ -216,7 +216,7 @@ namespace mod
     KEEP_VAR void ( *return_onEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
     KEEP_VAR bool ( *return_isSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag ) = nullptr;
     KEEP_VAR void ( *return_onSwitch_dSv_memBit )( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag ) = nullptr;
-    KEEP_VAR bool ( *return_checkTreasureRupeeReturn )( void* unk1, int32_t item ) = nullptr;
+    KEEP_VAR bool ( *return_checkTreasureRupeeReturn )( libtp::tp::d_a_alink::daAlink* linkActrPtr, int32_t item ) = nullptr;
     KEEP_VAR bool ( *return_isDarkClearLV )( void* playerStatusPtr, int32_t twilightNode ) = nullptr;
 
     // Pause menu functions
@@ -1003,7 +1003,7 @@ namespace mod
         }
     }
 
-    KEEP_FUNC int32_t handle_execItemGet( uint8_t item )
+    KEEP_FUNC void handle_execItemGet( uint8_t item )
     {
         item = game_patch::_04_verifyProgressiveItem( mod::randomizer, item );
         return return_execItemGet( item );
@@ -1630,9 +1630,9 @@ namespace mod
         return return_onSwitch_dSv_memBit( memoryBit, flag );
     }
 
-    KEEP_FUNC bool handle_checkTreasureRupeeReturn( void* unk1, int32_t item )
+    KEEP_FUNC bool handle_checkTreasureRupeeReturn( libtp::tp::d_a_alink::daAlink* linkActrPtr, int32_t item )
     {
-        (void) unk1;
+        (void) linkActrPtr;
         (void) item;
 
         return false;
