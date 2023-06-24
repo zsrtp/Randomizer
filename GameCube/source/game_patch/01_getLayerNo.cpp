@@ -13,27 +13,33 @@ namespace mod::game_patch
 {
     int32_t getCurrentStageId()
     {
-        int32_t loopCount = sizeof( libtp::data::stage::allStages ) / sizeof( libtp::data::stage::allStages[0] );
+        const auto stagesPtr = &libtp::data::stage::allStages[0];
+        constexpr int32_t loopCount = sizeof( libtp::data::stage::allStages ) / sizeof( libtp::data::stage::allStages[0] );
+
         for ( int32_t i = 0; i < loopCount; i++ )
         {
-            if ( libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[i] ) )
+            if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[i] ) )
             {
                 return i;
             }
         }
+
         // Didn't find the current stage for some reason
         return -1;
     }
-    KEEP_FUNC int32_t _01_getLayerNo( const char* stageName, int roomId, int layerOverride )
+
+    KEEP_FUNC int32_t _01_getLayerNo( const char* stageName, int32_t roomId, int32_t layerOverride )
     {
-        int chosenLayer;
-        bool condition;
-        int32_t stageID;
-        unsigned int uVar2;
-        libtp::tp::d_save::dSv_player_status_b_c* playerStatusBPtr =
-            &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b;
         using namespace libtp::data;
         using namespace libtp::data::flags;
+
+        int32_t chosenLayer;
+        int32_t stageID;
+        bool darkIsClear;
+        bool condition;
+
+        libtp::tp::d_save::dSv_player_status_b_c* playerStatusBPtr =
+            &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b;
 
         chosenLayer = layerOverride;
         stageID = getCurrentStageId();
@@ -54,6 +60,7 @@ namespace mod::game_patch
                     {
                         condition =
                             libtp::tp::d_a_alink::dComIfGs_isEventBit( SNOWPEAK_RUINS_CLEARED );     // Snowpeak Ruins Completed
+
                         if ( condition )
                         {
                             chosenLayer = stage::snowpeakStateIDs::SPR_Dungeon_Completed;
@@ -64,6 +71,7 @@ namespace mod::game_patch
                     {
                         condition =
                             libtp::tp::d_a_alink::dComIfGs_isEventBit( SNOWPEAK_RUINS_CLEARED );     // Snowpeak Ruins Completed
+
                         if ( condition && ( roomId != 0 ) )
                         {
                             chosenLayer = stage::snowpeakStateIDs::SPR_Dungeon_Completed;
@@ -93,6 +101,7 @@ namespace mod::game_patch
                             {
                                 condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                     FOREST_TEMPLE_CLEARED );     // Forest Temple Completed
+
                                 if ( condition )
                                 {
                                     chosenLayer = stage::faronStateIDs::Faron_Snowpeak_Completed;
@@ -115,9 +124,11 @@ namespace mod::game_patch
                         {
                             condition =
                                 libtp::tp::d_a_alink::dComIfGs_isEventBit( GORON_MINES_CLEARED );     // Goron Mines Completed
+
                             if ( condition == false )
                             {
                                 chosenLayer = stage::kakarikoStateIDs::Kakariko_KB1_Completed;
+
                                 // If it is night, the layer is different.
                                 libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
                             }
@@ -138,10 +149,12 @@ namespace mod::game_patch
                     {
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                             GOT_ZORA_ARMOR_FROM_RUTELA );     // Got Zora Armor from Rutela
+
                         if ( condition == false )
                         {
                             condition =
                                 libtp::tp::d_a_alink::dComIfGs_isEventBit( ZORA_ESCORT_CLEARED );     // Zora Escort Cleared
+
                             if ( condition == false )
                             {
                                 condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
@@ -151,9 +164,11 @@ namespace mod::game_patch
                                 {
                                     condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                         GORON_MINES_CLEARED );     // Goron Mines Completed
+
                                     if ( condition == false )
                                     {
                                         chosenLayer = stage::kakarikoStateIDs::Kakariko_KB1_Completed;
+
                                         // If it is night, the layer is different.
                                         libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
                                     }
@@ -217,6 +232,7 @@ namespace mod::game_patch
                     {
                         condition =
                             libtp::tp::d_a_alink::dComIfGs_isEventBit( GORON_MINES_CLEARED );     // Goron Mines Completed
+
                         if ( condition )
                         {
                             chosenLayer = stage::deathMountainStateIDs::Death_Mountain_Goron_Mines_Completed;
@@ -236,10 +252,12 @@ namespace mod::game_patch
                         {
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                 LAKEBED_TEMPLE_CLEARED );     // Lakebed Temple has been completed
+
                             if ( condition )
                             {
                                 condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                     MIDNAS_DESPERATE_HOUR_STARTED );     // MDH has been started
+
                                 if ( condition == false )
                                 {
                                     chosenLayer = stage::lakeHyliaStateIDs::Lake_Int_Lakebed_Completed;
@@ -254,10 +272,12 @@ namespace mod::game_patch
                         {
                             condition =
                                 libtp::tp::d_a_alink::dComIfGs_isEventBit( SKY_CANNON_REPAIRED );     // Sky Cannon Repaired
+
                             if ( condition == false )
                             {
                                 condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                     WARPED_SKY_CANNON_TO_LAKE_HYLIA );     // Sky Cannon Warped to Lake Hylia
+
                                 if ( condition == false )
                                 {
                                     chosenLayer = stage::lakeHyliaStateIDs::Lake_Hylia_Lakebed_Completed;
@@ -298,10 +318,12 @@ namespace mod::game_patch
                     {
                         condition =
                             libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_COMPLETED );     // MDH Completed
+
                         if ( ( condition == false ) )
                         {
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                 LAKEBED_TEMPLE_CLEARED );     // Lakebed Temple Completed
+
                             if ( condition == false )
                             {
                                 if ( ( roomId == 3 ) &&
@@ -338,6 +360,7 @@ namespace mod::game_patch
                     {
                         condition =
                             libtp::tp::d_a_alink::dComIfGs_isEventBit( SNOWPEAK_RUINS_CLEARED );     // Snowpeak Ruins Completed
+
                         if ( condition != false )
                         {
                             chosenLayer = stage::zorasDomainStateIDs::Domain_Snowpeak_Ruins_Completed;
@@ -358,8 +381,10 @@ namespace mod::game_patch
                     case stage::stageIDs::Gerudo_Desert:
                     {
                         chosenLayer = stage::gerudoDesertStateIDs::Desert_Entrance_Cutscene_Not_Watched;
+
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                             VISITED_DESERT_FOR_THE_FIRST_TIME );     // Have been to desert
+
                         if ( condition != false )
                         {
                             chosenLayer = stage::gerudoDesertStateIDs::Desert_Entrance_Cutscene_Watched;
@@ -371,10 +396,12 @@ namespace mod::game_patch
                     {
                         condition =
                             libtp::tp::d_a_alink::dComIfGs_isEventBit( IZA_1_MINIGAME_DONE );     // Iza 1 Minigame Completed
+
                         if ( condition == false )
                         {
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                 STARTED_IZA_1_MINIGAME );     // Iza 1 Minigame Started
+
                             if ( condition != false )
                             {
                                 chosenLayer = stage::zorasRiverStateIDs::Zoras_River_Iza_1_Started;
@@ -393,6 +420,7 @@ namespace mod::game_patch
                         {
                             condition =
                                 libtp::tp::d_a_alink::dComIfGs_isEventBit( ORDON_DAY_1_FINISHED );     // Ordon Day 1 done
+
                             if ( condition )
                             {
                                 condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( ORDON_DAY_2_OVER );     // Talo Saved
@@ -400,10 +428,11 @@ namespace mod::game_patch
                                 {
                                     condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                         FINISHED_SEWERS );     // First trip to Sewers done
+
                                     if ( condition )
                                     {
-                                        uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                                        if ( uVar2 == 0 )
+                                        darkIsClear = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
+                                        if ( darkIsClear == false )
                                         {
                                             chosenLayer = stage::ordonVillageStateIDs::Ordon_Finished_Sewers;
                                         }
@@ -440,6 +469,7 @@ namespace mod::game_patch
                             {
                                 condition =
                                     libtp::tp::d_a_alink::dComIfGs_isEventBit( ORDON_DAY_1_FINISHED );     // Ordon Day 1 done
+
                                 if ( condition )
                                 {
                                     condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( ORDON_DAY_2_OVER );     // Talo Saved
@@ -447,10 +477,11 @@ namespace mod::game_patch
                                     {
                                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                             FINISHED_SEWERS );     // First trip to Sewers done
+
                                         if ( condition )
                                         {
-                                            uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                                            if ( uVar2 == 0 )
+                                            darkIsClear = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
+                                            if ( darkIsClear == false )
                                             {
                                                 chosenLayer = stage::ordonVillageStateIDs::Ordon_Finished_Sewers;
                                             }
@@ -485,6 +516,7 @@ namespace mod::game_patch
                         {
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                 BOUGHT_SLINGSHOT_FROM_SERA );     // Bought slinghot from Sera
+
                             if ( condition )
                             {
                                 chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
@@ -492,11 +524,12 @@ namespace mod::game_patch
                         }*/
                         if ( roomId == 2 )     // Jaggle's House
                         {
-                            uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                            if ( uVar2 == 0 )
+                            darkIsClear = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
+                            if ( darkIsClear == false )
                             {
                                 condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                     FINISHED_SEWERS );     // First Trip to Sewers done
+
                                 if ( condition != false )
                                 {
                                     chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Finished_Sewers;
@@ -512,8 +545,8 @@ namespace mod::game_patch
                         {
                             if ( roomId == 5 )     // Rusl's House
                             {
-                                uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                                if ( uVar2 != 0 )
+                                darkIsClear = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
+                                if ( darkIsClear != false )
                                 {
                                     chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
                                 }
@@ -529,6 +562,7 @@ namespace mod::game_patch
                         {
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                 TALO_CHASES_MONKEY );     // Sword training done on Ordon Day 2
+
                             if ( condition )
                             {
                                 condition = libtp::tp::d_a_alink::dComIfGs_isEventBit( ORDON_DAY_2_OVER );     // Talo saved
@@ -536,10 +570,11 @@ namespace mod::game_patch
                                 {
                                     condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                         FINISHED_SEWERS );     // First trip to Sewers done
+
                                     if ( condition )
                                     {
-                                        uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                                        if ( uVar2 != 0 )
+                                        darkIsClear = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
+                                        if ( darkIsClear != false )
                                         {
                                             chosenLayer = stage::ordonSpringStateIDs::Ordon_Spring_Faron_Twilight_Cleared;
                                         }
@@ -576,14 +611,16 @@ namespace mod::game_patch
                             {
                                 condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                     WATCHED_CUTSCENE_AFTER_GOATS_2 );     // Saw CS after Goats 2 done
+
                                 if ( condition )
                                 {
                                     condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                         FINISHED_SEWERS );     // First trip to Sewers done
+
                                     if ( condition )
                                     {
-                                        uVar2 = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
-                                        if ( uVar2 == 1 )
+                                        darkIsClear = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
+                                        if ( darkIsClear == true )
                                         {
                                             chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Faron_Twilight_Cleared;
                                             libtp::tp::d_com_inf_game::dComIfG_get_timelayer( &chosenLayer );
@@ -622,10 +659,12 @@ namespace mod::game_patch
                         {
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                 MIDNAS_DESPERATE_HOUR_STARTED );     // MDH State Activated
+
                             if ( condition )
                             {
                                 condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                     MIDNAS_DESPERATE_HOUR_COMPLETED );     // MDH Completed
+
                                 if ( condition )
                                 {
                                     chosenLayer = stage::hyruleFieldStateIDs::Hyrule_Field_MDH_Completed;
@@ -653,10 +692,12 @@ namespace mod::game_patch
                         {
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                 MIDNAS_DESPERATE_HOUR_COMPLETED );     // MDH Completed
+
                             if ( condition == false )
                             {
                                 condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                     MIDNAS_DESPERATE_HOUR_STARTED );     // MDH State Activated
+
                                 if ( condition != false )
                                 {
                                     chosenLayer = stage::outsideCastleTownStateIDs::Outside_Castle_Town_MDH_Started;
@@ -673,18 +714,22 @@ namespace mod::game_patch
                             {
                                 condition =
                                     libtp::tp::d_a_alink::dComIfGs_isEventBit( GOT_WOOD_STATUE );     // Wooden Statue Gotten
+
                                 if ( condition == false )
                                 {
                                     condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                         TALKED_TO_LOUISE_ABOUT_THE_STOLEN_STATUE );     // Talked to Louise after Medicine Scent
+
                                     if ( condition == false )
                                     {
                                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                             MIDNAS_DESPERATE_HOUR_COMPLETED );     // MDH Completed
+
                                         if ( condition == false )
                                         {
                                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                                 MIDNAS_DESPERATE_HOUR_STARTED );     // MDH State Activated
+
                                             if ( condition != false )
                                             {
                                                 chosenLayer = stage::outsideCastleTownStateIDs::Outside_Castle_Town_MDH_Started;
@@ -717,10 +762,12 @@ namespace mod::game_patch
                                 {
                                     condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                         MIDNAS_DESPERATE_HOUR_COMPLETED );     // MDH Completed
+
                                     if ( condition == false )
                                     {
                                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                             MIDNAS_DESPERATE_HOUR_STARTED );     // MDH State Activated
+
                                         if ( condition != false )
                                         {
                                             chosenLayer = stage::outsideCastleTownStateIDs::Outside_Castle_Town_MDH_Started;
@@ -740,6 +787,7 @@ namespace mod::game_patch
                     {
                         condition =
                             libtp::tp::d_a_alink::dComIfGs_isEventBit( GAVE_ILIA_HER_CHARM );     // Ilia shown Ilia's Charm
+
                         if ( condition != false )
                         {
                             chosenLayer = stage::hiddenVillageStateIDs::Hidden_Village_Showed_Ilia_Charm;
@@ -767,6 +815,7 @@ namespace mod::game_patch
                         {
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                                 MALO_MART_CASTLE_TOWN_BRANCH_IS_OPEN );     // CT Shop is Malo Mart
+
                             if ( condition != false )
                             {
                                 chosenLayer = stage::castleTownShopsStateIDs::Castle_Town_Int_Malo_Mart;
@@ -785,6 +834,10 @@ namespace mod::game_patch
                     {
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                             ESCAPED_BURNING_TENT_IN_BULBLIN_CAMP );     // Escaped Burning Tent in Bulblin Camp
+
+                        uint8_t* memoryFlagsPtr =
+                            &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0];
+
                         if ( condition )
                         {
                             if ( roomId == 3 )     // Other states for this room are very similar, but do not have the boar
@@ -795,14 +848,14 @@ namespace mod::game_patch
                             else
                             {
                                 chosenLayer = stage::bulblinCampStateIDs::Bulblin_Camp_Watched_Mirror_Cutscene;
-                                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x1C] = 0x0;
+                                memoryFlagsPtr[0x1C] = 0x0;
                             }
                         }
                         else
                         {
                             if ( events::haveItem( rando::customItems::Bulblin_Camp_Key ) )
                             {
-                                libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x1C] = 0x1;
+                                memoryFlagsPtr[0x1C] = 0x1;
                             }
                         }
 
@@ -845,21 +898,22 @@ namespace mod::game_patch
                     case stage::stageIDs::Fishing_Pond:
                     case stage::stageIDs::Fishing_Pond_Interiors:
                     {
-                        if ( libtp::tp::d_kankyo::env_light.unk_1250[0xAE] == 3 )
+                        const uint32_t envLightVar = libtp::tp::d_kankyo::env_light.unk_1250[0xAE];
+                        if ( envLightVar == 3 )
                         {
                             chosenLayer = stage::fishingHoleStateIDs::Fishing_Hole_Autumn;
                         }
                         else
                         {
-                            if ( libtp::tp::d_kankyo::env_light.unk_1250[0xAE] < 3 )
+                            if ( envLightVar < 3 )
                             {
-                                if ( libtp::tp::d_kankyo::env_light.unk_1250[0xAE] == 1 )
+                                if ( envLightVar == 1 )
                                 {
                                     chosenLayer = stage::fishingHoleStateIDs::Fishing_Hole_Spring;
                                 }
                                 else
                                 {
-                                    if ( libtp::tp::d_kankyo::env_light.unk_1250[0xAE] != 0 )
+                                    if ( envLightVar != 0 )
                                     {
                                         chosenLayer = stage::fishingHoleStateIDs::Fishing_Hole_Summer;
                                     }
@@ -867,7 +921,7 @@ namespace mod::game_patch
                             }
                             else
                             {
-                                if ( libtp::tp::d_kankyo::env_light.unk_1250[0xAE] < 5 )
+                                if ( envLightVar < 5 )
                                 {
                                     chosenLayer = stage::fishingHoleStateIDs::Fishing_Hole_Winter;
                                 }
@@ -883,6 +937,7 @@ namespace mod::game_patch
         {
             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                 WARPED_METEOR_TO_ZORAS_DOMAIN );     // Warped meteor to Zora's Domain
+
             switch ( stageID )
             {
                 case stage::stageIDs::Zoras_River:
@@ -927,6 +982,7 @@ namespace mod::game_patch
                     {
                         condition =
                             libtp::tp::d_a_alink::dComIfGs_isEventBit( PALACE_OF_TWILIGHT_CLEARED );     // Zant Defeated
+
                         if ( condition == false )
                         {
                             chosenLayer = stage::twilightStateIDs::Palace_of_Twilight_Zant_Fight;

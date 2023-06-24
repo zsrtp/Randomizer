@@ -272,7 +272,7 @@ namespace mod
 
         // Call the boot REL
         // Interrupts are required to be enabled for CARD/DVD functions to work properly
-        bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
+        const bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
 #ifdef DVD
         // The seedlist will be generated in the boot REL
         libtp::tools::callRelProlog( "/mod/boot.rel" );
@@ -421,29 +421,40 @@ namespace mod
         if ( input && gameState == GAME_TITLE )
         {
             // Handle seed selection if necessary
-            if ( seedList->m_numSeeds > 1 )
+            const uint32_t numSeeds = seedList->m_numSeeds;
+            if ( numSeeds > 1 )
             {
+                uint32_t selectedSeed = seedList->m_selectedSeed;
+
                 if ( checkBtn( Button_X ) )
                 {
-                    seedList->m_selectedSeed++;
+                    selectedSeed++;
+                    seedList->m_selectedSeed = static_cast<uint8_t>( selectedSeed );
 
-                    if ( seedList->m_selectedSeed >= seedList->m_numSeeds )
-                        seedList->m_selectedSeed = 0;
+                    if ( selectedSeed >= numSeeds )
+                    {
+                        selectedSeed = 0;
+                        seedList->m_selectedSeed = static_cast<uint8_t>( selectedSeed );
+                    }
                 }
                 else if ( checkBtn( Button_Y ) )
                 {
-                    if ( seedList->m_selectedSeed == 0 )
-                        seedList->m_selectedSeed = seedList->m_numSeeds;
+                    if ( selectedSeed == 0 )
+                    {
+                        selectedSeed = numSeeds;
+                        seedList->m_selectedSeed = static_cast<uint8_t>( selectedSeed );
+                    }
 
-                    seedList->m_selectedSeed--;
+                    selectedSeed--;
+                    seedList->m_selectedSeed = static_cast<uint8_t>( selectedSeed );
                 }
 
                 getConsole().setLine( CONSOLE_PROTECTED_LINES - 1 );
                 getConsole() << "\r"
                              << "Press X/Y to select a seed\n"
                              << "Press R + Z to close the console\n"
-                             << "[" << seedList->m_selectedSeed + 1 << "/" << static_cast<int32_t>( seedList->m_numSeeds )
-                             << "] Seed: " << seedList->m_minSeedInfo[seedList->m_selectedSeed].fileName << "\n";
+                             << "[" << selectedSeed + 1 << "/" << static_cast<int32_t>( numSeeds )
+                             << "] Seed: " << seedList->m_minSeedInfo[selectedSeed].fileName << "\n";
             }
         }
         // End of handling title screen inputs
@@ -473,8 +484,8 @@ namespace mod
         if ( l_fpcNdRq_Queue )
         {
             // Previous state
-            uint8_t prevState = gameState;
-            uint8_t state = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( l_fpcNdRq_Queue ) + 0x59 );
+            const uint32_t prevState = gameState;
+            const uint32_t state = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( l_fpcNdRq_Queue ) + 0x59 );
 
             // Normal/Loading into game
             if ( prevState != GAME_ACTIVE && state == 11 )
@@ -558,6 +569,7 @@ namespace mod
             }
         }
 
+        tp::d_a_alink::daAlink* linkMapPtr = gameInfo->play.mPlayer;
         if ( !handledSpecialInputs )
         {
             // Handle generic button checks
@@ -566,33 +578,34 @@ namespace mod
                 events::handleQuickTransform();
             }
 
-            else if ( checkBtn( currentButtons, PadInputs::Button_R ) && increaseSpinnerSpeed &&
-                      libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer )
+            else if ( checkBtn( currentButtons, PadInputs::Button_R ) && increaseSpinnerSpeed && linkMapPtr )
             {
-                libtp::tp::f_op_actor::fopAc_ac_c* spinnerActor =
-                    libtp::tp::d_a_alink::getSpinnerActor( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer );
+                libtp::tp::f_op_actor::fopAc_ac_c* spinnerActor = libtp::tp::d_a_alink::getSpinnerActor( linkMapPtr );
 
                 if ( spinnerActor )
                 {
-                    if ( spinnerActor->mSpeedF < 60.f )
+                    float spinnerSpeed = spinnerActor->mSpeedF;
+                    if ( spinnerSpeed < 60.f )
                     {
-                        spinnerActor->mSpeedF += 2.0f;
+                        spinnerSpeed += 2.f;
+                        spinnerActor->mSpeedF = spinnerSpeed;
                     }
                 }
             }
         }
 
         // Handle rando state
+        rando::Randomizer* rando = randomizer;
         if ( gameState == GAME_ACTIVE )
         {
-            if ( !getCurrentSeed( randomizer ) && ( seedList->m_numSeeds > 0 ) && ( seedRelAction == SEED_ACTION_NONE ) )
+            if ( !getCurrentSeed( rando ) && ( seedList->m_numSeeds > 0 ) && ( seedRelAction == SEED_ACTION_NONE ) )
             {
                 // Interrupts are required to be enabled for CARD/DVD functions to work properly
-                bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
+                const bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
 #ifndef DVD
                 constexpr int32_t chan = CARD_SLOT_A;
 #endif
-                if ( !randomizer || !randomizer->m_Seed )
+                if ( !rando || !rando->m_Seed )
                 {
                     seedRelAction = SEED_ACTION_LOAD_SEED;
 
@@ -611,10 +624,10 @@ namespace mod
                 else
                 {
                     // Enable the randomizer
-                    randomizer->m_Enabled = true;
+                    rando->m_Enabled = true;
 
                     // Check if loading a different seed
-                    if ( randomizer->m_CurrentSeed != seedList->m_selectedSeed )
+                    if ( rando->m_CurrentSeed != seedList->m_selectedSeed )
                     {
                         getConsole() << "Changing seed:\n";
                         seedRelAction = SEED_ACTION_CHANGE_SEED;
@@ -633,7 +646,7 @@ namespace mod
                     else
                     {
                         // Not loading a different seed, so load checks for first load
-                        randomizer->onStageLoad();
+                        rando->onStageLoad();
                     }
                 }
 
@@ -641,7 +654,7 @@ namespace mod
                 libtp::gc_wii::os_interrupt::OSRestoreInterrupts( enable );
 
                 // Make sure no errors occurred
-                rando::Seed* seed = getCurrentSeed( randomizer );
+                rando::Seed* seed = getCurrentSeed( rando );
                 if ( seed && ( seedRelAction == SEED_ACTION_NONE ) )
                 {
                     // Volatile patches need to be applied whenever a file is loaded
@@ -653,17 +666,16 @@ namespace mod
         else
         {
             seedRelAction = SEED_ACTION_NONE;
-            if ( randoIsEnabled( randomizer ) )
+            if ( randoIsEnabled( rando ) )
             {
                 // Temporarily disable the randomizer
-                randomizer->m_Enabled = false;
-                randomizer->m_SeedInit = false;
+                rando->m_Enabled = false;
+                rando->m_SeedInit = false;
             }
         }
 
         // Custom events
         bool currentReloadingState;
-        tp::d_a_alink::daAlink* linkMapPtr = gameInfo->play.mPlayer;
         if ( linkMapPtr )
         {
             // checkRestartRoom is needed for voiding
@@ -676,7 +688,7 @@ namespace mod
             currentReloadingState = true;
         }
 
-        bool prevReloadingState = roomReloadingState;
+        const bool prevReloadingState = roomReloadingState;
 
         // Custom events
         if ( currentReloadingState )
@@ -684,7 +696,7 @@ namespace mod
             if ( !prevReloadingState )
             {
                 // OnLoad
-                events::onLoad( randomizer );
+                events::onLoad( rando );
             }
         }
         else
@@ -692,10 +704,10 @@ namespace mod
             if ( prevReloadingState )
             {
                 // OffLoad
-                events::offLoad( randomizer );
+                events::offLoad( rando );
 
                 // SetHUDCosmetics
-                user_patch::setHUDCosmetics( randomizer );
+                user_patch::setHUDCosmetics( rando );
             }
         }
 
@@ -743,7 +755,7 @@ namespace mod
                                      void* unk4 )
     {
         // Load DZX based randomizer checks that are stored in the local DZX
-        events::onDZX( mod::randomizer, chunkTypeInfo );
+        events::onDZX( randomizer, chunkTypeInfo );
         return return_actorInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
     }
 
@@ -753,7 +765,7 @@ namespace mod
                                             void* unk4 )
     {
         // Load DZX based randomizer checks that are stored in the global DZX
-        events::onDZX( mod::randomizer, chunkTypeInfo );
+        events::onDZX( randomizer, chunkTypeInfo );
         return return_actorInit_always( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
     }
 
@@ -763,7 +775,7 @@ namespace mod
                                                 void* unk4 )
     {
         // Load DZX based checks that are stored in the current layer DZX
-        events::onDZX( mod::randomizer, chunkTypeInfo );
+        events::onDZX( randomizer, chunkTypeInfo );
         events::loadCustomRoomActors();
         return return_actorCommonLayerInit( mStatus_roomControl, chunkTypeInfo, unk3, unk4 );
     }
@@ -811,14 +823,16 @@ namespace mod
 
     KEEP_FUNC void handle_roomLoader( void* data, void* stageDt, int32_t roomNo )
     {
-        if ( randoIsEnabled( randomizer ) )
+        rando::Randomizer* rando = randomizer;
+        if ( randoIsEnabled( rando ) )
         {
-            events::onARC( randomizer, data, roomNo, rando::FileDirectory::Room );     // Replace room based checks.
+            events::onARC( rando, data, roomNo, rando::FileDirectory::Room );     // Replace room based checks.
+
             void* filePtr = libtp::tp::d_com_inf_game::dComIfG_getStageRes(
                 "stage.dzs" );     // Could hook stageLoader instead since it takes the first param as a pointer to the
                                    // stage.dzs
-            events::onARC( randomizer, filePtr, roomNo,
-                           rando::FileDirectory::Stage );     // Replace stage based checks.
+
+            events::onARC( rando, filePtr, roomNo, rando::FileDirectory::Stage );     // Replace stage based checks.
         }
         return return_roomLoader( data, stageDt, roomNo );
     }
@@ -896,8 +910,11 @@ namespace mod
         (void) unk7;
 
         // Spawn the appropriate item with model
-        uint32_t itemID = randomizer->getBossItem( item );
-        itemID = game_patch::_04_verifyProgressiveItem( mod::randomizer, itemID );
+        rando::Randomizer* rando = randomizer;
+
+        uint32_t itemID = rando->getBossItem( item );
+        itemID = game_patch::_04_verifyProgressiveItem( rando, itemID );
+
         if ( item == libtp::data::items::Heart_Container )     // used for Dungeon Heart Containers
         {
             parameters = 0x9F;
@@ -924,8 +941,11 @@ namespace mod
         if ( item == libtp::data::items::Boomerang )
         {
             // Spawn the appropriate item
-            uint32_t itemID = randomizer->getBossItem( item );
-            itemID = game_patch::_04_verifyProgressiveItem( mod::randomizer, itemID );
+            rando::Randomizer* rando = randomizer;
+
+            uint32_t itemID = rando->getBossItem( item );
+            itemID = game_patch::_04_verifyProgressiveItem( rando, itemID );
+
             return initCreatePlayerItem( itemID, 0xFF, pos, roomNo, rot, scale );
         }
 
@@ -940,7 +960,7 @@ namespace mod
                                                        const float rot[3],
                                                        const float scale[3] )
     {
-        item = game_patch::_04_verifyProgressiveItem( mod::randomizer, item );
+        item = game_patch::_04_verifyProgressiveItem( randomizer, item );
         return return_createItemForPresentDemo( pos, item, unk3, unk4, unk5, rot, scale );
     }
 
@@ -951,13 +971,14 @@ namespace mod
                                                      const int16_t rot[3],
                                                      const float scale[3] )
     {
-        item = game_patch::_04_verifyProgressiveItem( mod::randomizer, item );
+        item = game_patch::_04_verifyProgressiveItem( randomizer, item );
         return return_createItemForTrBoxDemo( pos, item, itemPickupFlag, roomNo, rot, scale );
     }
 
     KEEP_FUNC void handle_CheckFieldItemCreateHeap( libtp::tp::f_op_actor::fopAc_ac_c* actor )
     {
         libtp::tp::d_a_itembase::ItemBase* item = static_cast<libtp::tp::d_a_itembase::ItemBase*>( actor );
+
         // We determine whether to use the item_resource or the field_item_resource structs to spawn an item based on the item
         // being created.
         switch ( item->m_itemNo )
@@ -983,21 +1004,26 @@ namespace mod
         (void) unk1;
 
         using namespace libtp::tp::d_com_inf_game;
+
         static const uint8_t i_item_lst[24] = { 0x0A, 0x08, 0x06, 0x02, 0x09, 0x04, 0x03, 0x00, 0x01, 0x17, 0x14, 0x05,
                                                 0x0F, 0x10, 0x11, 0x0B, 0x0C, 0x0D, 0x0E, 0x13, 0x12, 0x16, 0x15, 0x7 };
         int32_t i1 = 0;
         int32_t i2 = 0;
+        libtp::tp::d_save::dSv_player_item_c* playerItemStructPtr = &dComIfG_gameInfo.save.save_file.player.player_item;
+        uint8_t* playerItemSlots = &playerItemStructPtr->item_slots[0];
 
         for ( ; i1 < 24; i1++ )     // Clear all of the item slots.
         {
-            dComIfG_gameInfo.save.save_file.player.player_item.item_slots[i1] = 0xFF;
+            playerItemSlots[i1] = 0xFF;
         }
 
+        uint8_t* playerItem = &playerItemStructPtr->item[0];
         for ( i1 = 0; i1 < 24; i1++ )     // Fill all of the item wheel slots with their respective items if gotten.
         {
-            if ( dComIfG_gameInfo.save.save_file.player.player_item.item[i_item_lst[i1]] != 0xFF )
+            const uint32_t currentEntry = i_item_lst[i1];
+            if ( playerItem[currentEntry] != 0xFF )
             {
-                dComIfG_gameInfo.save.save_file.player.player_item.item_slots[i2] = i_item_lst[i1];
+                playerItemSlots[i2] = static_cast<uint8_t>( currentEntry );
                 i2++;
             }
         }
@@ -1005,23 +1031,24 @@ namespace mod
 
     KEEP_FUNC void handle_execItemGet( uint8_t item )
     {
-        item = game_patch::_04_verifyProgressiveItem( mod::randomizer, item );
+        item = game_patch::_04_verifyProgressiveItem( randomizer, item );
         return return_execItemGet( item );
     }
 
     KEEP_FUNC int32_t handle_checkItemGet( uint8_t item, int32_t defaultValue )
     {
         using namespace libtp;
+        using namespace libtp::tp;
+        using namespace libtp::data;
+        using namespace libtp::data::stage;
+
+        const auto stagesPtr = &allStages[0];
         switch ( item )
         {
-            using namespace libtp::tp;
-            using namespace libtp::data;
-            using namespace libtp::data::stage;
-
             case items::Hylian_Shield:
             {
                 // Check if we are at Kakariko Malo mart and verify that we have not bought the shield.
-                if ( libtp::tools::playerIsInRoomStage( 3, allStages[stageIDs::Kakariko_Village_Interiors] ) &&
+                if ( libtp::tools::playerIsInRoomStage( 3, stagesPtr[stageIDs::Kakariko_Village_Interiors] ) &&
                      !tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::BOUGHT_HYLIAN_SHIELD_AT_MALO_MART ) )
                 {
                     // Return false so we can buy the shield.
@@ -1032,7 +1059,7 @@ namespace mod
             case items::Hawkeye:
             {
                 // Check if we are at Kakariko Village and that the hawkeye is currently not for sale.
-                if ( ( tp::d_a_alink::checkStageName( allStages[stageIDs::Kakariko_Village] ) &&
+                if ( ( tp::d_a_alink::checkStageName( stagesPtr[stageIDs::Kakariko_Village] ) &&
                        !libtp::tp::d_save::isSwitch_dSv_memBit( &d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
                                                                 0x3E ) ) )
                 {
@@ -1045,7 +1072,7 @@ namespace mod
             case items::Ordon_Goat_Cheese:
             {
                 // Check to see if currently in Snowpeak Ruins
-                if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Snowpeak_Ruins] ) )
+                if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[stageIDs::Snowpeak_Ruins] ) )
                 {
                     // Return false so that yeta will give the map item no matter what.
                     return 0;
@@ -1055,7 +1082,7 @@ namespace mod
             case items::Ball_and_Chain:
             {
                 // Check to see if currently in Snowpeak Ruins
-                if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Darkhammer] ) )
+                if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[stageIDs::Darkhammer] ) )
                 {
                     if ( libtp::tp::d_save::isSwitch_dSv_memBit( &d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
                                                                  0x5F ) )     // Picked up the Ball and Chain check.
@@ -1140,7 +1167,7 @@ namespace mod
     KEEP_FUNC int32_t handle_query037( void* unk1, void* unk2, int32_t unk3 )
     {
         // Call the original function immediately as we need its output
-        int32_t menuType = return_query037( unk1, unk2, unk3 );
+        const int32_t menuType = return_query037( unk1, unk2, unk3 );
 
         if ( ( menuType == 0x2 ) && ( reinterpret_cast<int32_t>( libtp::tp::d_a_player::m_midnaActor ) ==
                                       libtp::tp::f_op_actor_mng::fopAcM_getTalkEventPartner( nullptr ) ) )
@@ -1153,7 +1180,7 @@ namespace mod
 
     KEEP_FUNC int32_t handle_query049( void* unk1, void* unk2, int32_t unk3 )
     {
-        int32_t poeFlag = return_query049( unk1, unk2, unk3 );
+        const int32_t poeFlag = return_query049( unk1, unk2, unk3 );
 
         if ( ( poeFlag == 4 ) && !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::GOT_BOTTLE_FROM_JOVANI ) )
         {
@@ -1182,12 +1209,14 @@ namespace mod
 
     KEEP_FUNC int32_t handle_event017( void* messageFlow, void* nodeEvent, void* actrPtr )
     {
-        uint16_t messageParam = *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 );
+        const uint32_t messageParam = *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 );
+
         // Prevent Gor Liggs from setting the third key shard flag
         if ( messageParam == 0x00FB )
         {
             *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 ) = 0x0000;
         }
+
         return return_event017( messageFlow, nodeEvent, actrPtr );
     }
 
@@ -1231,12 +1260,12 @@ namespace mod
 
     KEEP_FUNC bool handle_daNpcT_chkEvtBit( int16_t flag )
     {
+        const auto stagesPtr = &libtp::data::stage::allStages[0];
         switch ( flag )
         {
             case 0x153:     // Checking if the player has Ending Blow
             {
-                if ( libtp::tp::d_a_alink::checkStageName(
-                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Skill] ) )
+                if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Hidden_Skill] ) )
                 {
                     return true;
                 }
@@ -1246,7 +1275,7 @@ namespace mod
             case 0x40:     // Checking if the player has completed Goron Mines
             {
                 if ( libtp::tp::d_a_alink::checkStageName(
-                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Village_Interiors] ) )
+                         stagesPtr[libtp::data::stage::stageIDs::Kakariko_Village_Interiors] ) )
                 {
                     return true;     // Return true so Barnes will sell bombs no matter what
                 }
@@ -1266,11 +1295,14 @@ namespace mod
         using namespace libtp::data::stage;
         using namespace libtp::data::flags;
 
+        const auto stagesPtr = &allStages[0];
+        rando::Randomizer* rando = randomizer;
+
         switch ( flag )
         {
             case ENDING_BLOW_UNLOCKED:     // Checking for ending blow.
             {
-                if ( checkStageName( allStages[stageIDs::Hidden_Skill] ) )
+                if ( checkStageName( stagesPtr[stageIDs::Hidden_Skill] ) )
                 {
                     return true;     // If we don't have the flag, the game sends us to Faron by default. Which we don't
                                      // want.
@@ -1280,7 +1312,7 @@ namespace mod
 
             case GREAT_SPIN_UNLOCKED:
             {
-                if ( checkStageName( allStages[stageIDs::Hidden_Skill] ) )
+                if ( checkStageName( stagesPtr[stageIDs::Hidden_Skill] ) )
                 {
                     return false;     // Tell the game we don't have great spin to
                                       // not softlock in hidden skill training.
@@ -1290,7 +1322,7 @@ namespace mod
 
             case BO_TALKED_TO_YOU_AFTER_OPENING_IRON_BOOTS_CHEST:     // Has Bo been defeated in wrestling
             {
-                if ( checkStageName( allStages[stageIDs::Ordon_Village_Interiors] ) )
+                if ( checkStageName( stagesPtr[stageIDs::Ordon_Village_Interiors] ) )
                 {
                     if ( dComIfGs_isEventBit(
                              libtp::data::flags::HEARD_BO_TEXT_AFTER_SUMO_FIGHT ) )     // Talked to Bo after chest is spawned
@@ -1308,7 +1340,7 @@ namespace mod
             case GAVE_ILIA_HER_CHARM:        // Gave Ilia the charm
             case CITY_OOCCOO_CS_WATCHED:     // CiTS Intro CS watched
             {
-                if ( checkStageName( allStages[stageIDs::Hidden_Village] ) )
+                if ( checkStageName( stagesPtr[stageIDs::Hidden_Village] ) )
                 {
                     if ( !dComIfGs_isEventBit( libtp::data::flags::GOT_ILIAS_CHARM ) )
                     {
@@ -1321,7 +1353,7 @@ namespace mod
 
             case GORON_MINES_CLEARED:     // Goron Mines Story Flag
             {
-                if ( checkStageName( allStages[stageIDs::Goron_Mines] ) )
+                if ( checkStageName( stagesPtr[stageIDs::Goron_Mines] ) )
                 {
                     return false;     // The elders will not spawn if the flag is set.
                 }
@@ -1330,14 +1362,14 @@ namespace mod
 
             case ZORA_ESCORT_CLEARED:     // Escort Completed
             {
-                if ( checkStageName( allStages[stageIDs::Castle_Town] ) )
+                if ( checkStageName( stagesPtr[stageIDs::Castle_Town] ) )
                 {
                     return true;     // If flag isn't set, the player will be thrown into escort when they open the
                                      // door.
                 }
                 else if ( libtp::tools::playerIsInRoomStage(
                               0,
-                              allStages[stageIDs::Kakariko_Village_Interiors] ) )     // Return true to prevent Renado/Illia
+                              stagesPtr[stageIDs::Kakariko_Village_Interiors] ) )     // Return true to prevent Renado/Illia
                                                                                       // crash after ToT
                 {
                     return true;
@@ -1347,7 +1379,7 @@ namespace mod
 
             case ARBITERS_GROUNDS_CLEARED:     // AG story flag.
             {
-                if ( checkStageName( allStages[stageIDs::Stallord] ) )
+                if ( checkStageName( stagesPtr[stageIDs::Stallord] ) )
                 {
                     return false;     // If the flag is set, the post boss music plays during the boss fight.
                 }
@@ -1356,7 +1388,7 @@ namespace mod
 
             case SNOWPEAK_RUINS_CLEARED:     // Snowpeak Ruins Story flag
             {
-                if ( checkStageName( allStages[stageIDs::Kakariko_Graveyard] ) )
+                if ( checkStageName( stagesPtr[stageIDs::Kakariko_Graveyard] ) )
                 {
                     return false;     // If the flag is set, Ralis will no longer spawn in the graveyard.
                 }
@@ -1365,7 +1397,7 @@ namespace mod
 
             case FOREST_TEMPLE_CLEARED:     // Forest Temple Story Flag
             {
-                if ( checkStageName( allStages[stageIDs::Diababa] ) )
+                if ( checkStageName( stagesPtr[stageIDs::Diababa] ) )
                 {
                     return false;     // If the flag is set, the post boss music plays during the boss fight.
                 }
@@ -1374,14 +1406,14 @@ namespace mod
 
             case PALACE_OF_TWILIGHT_CLEARED:     // Zant Defeated (PoT Story Flag)
             {
-                if ( checkStageName( allStages[stageIDs::Castle_Town] ) )
+                if ( checkStageName( stagesPtr[stageIDs::Castle_Town] ) )
                 {
                     if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::BARRIER_GONE ) )
                     {
                         using namespace libtp::data;
-                        if ( randoIsEnabled( randomizer ) )
+                        if ( randoIsEnabled( rando ) )
                         {
-                            switch ( randomizer->m_Seed->m_Header->castleRequirements )
+                            switch ( rando->m_Seed->m_Header->castleRequirements )
                             {
                                 case 3:     // All Dungeons
                                 {
@@ -1415,14 +1447,14 @@ namespace mod
 
             case CITY_IN_THE_SKY_CLEARED:     // City in the Sky Story flag
             {
-                if ( checkStageName( allStages[stageIDs::Mirror_Chamber] ) )
+                if ( checkStageName( stagesPtr[stageIDs::Mirror_Chamber] ) )
                 {
                     if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT ) )
                     {
                         using namespace libtp::data;
-                        if ( randoIsEnabled( randomizer ) )
+                        if ( randoIsEnabled( rando ) )
                         {
-                            if ( randomizer->m_Seed->m_Header->palaceRequirements != 3 )
+                            if ( rando->m_Seed->m_Header->palaceRequirements != 3 )
                             {
                                 return false;
                             }
@@ -1433,7 +1465,7 @@ namespace mod
             }
             case HOWLED_AT_SNOWPEAK_STONE:
             {
-                if ( checkStageName( allStages[stageIDs::Snowpeak] ) )
+                if ( checkStageName( stagesPtr[stageIDs::Snowpeak] ) )
                 {
                     return false;     // Return false so the player can howl at the stone multiple times to remove map glitch
                 }
@@ -1442,7 +1474,7 @@ namespace mod
 
             case WATCHED_CUTSCENE_AFTER_GOATS_2:
             {
-                if ( libtp::tools::playerIsInRoomStage( 1, allStages[stageIDs::Ordon_Village_Interiors] ) )
+                if ( libtp::tools::playerIsInRoomStage( 1, stagesPtr[stageIDs::Ordon_Village_Interiors] ) )
                 {
                     if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( SERAS_CAT_RETURNED_TO_SHOP ) )
                     {
@@ -1470,14 +1502,18 @@ namespace mod
         using namespace libtp::tp::d_a_alink;
         using namespace libtp::data::stage;
         using namespace libtp::data::flags;
-        if ( eventPtr == &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags )
+
+        libtp::tp::d_save::dSv_save_c* saveFilePtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file;
+        if ( eventPtr == &saveFilePtr->event_flags )
         {
+            libtp::tp::d_save::dSv_player_status_b_c* playerStatusPtr = &saveFilePtr->player.player_status_b;
+            const uint32_t darkClearLevelFlag = playerStatusPtr->dark_clear_level_flag;
+
             switch ( flag )
             {
                 case MIDNAS_DESPERATE_HOUR_COMPLETED:     // MDH Completed
                 {
-                    libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b.dark_clear_level_flag |=
-                        0x8;
+                    playerStatusPtr->dark_clear_level_flag |= 0x8;
                     break;
                 }
 
@@ -1485,14 +1521,12 @@ namespace mod
                 {
                     if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_COMPLETED ) )
                     {
-                        if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                                 .dark_clear_level_flag == 0x6 )
+                        if ( darkClearLevelFlag == 0x6 )
                         {
-                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                                .transform_level_flag = 0x8;     // Set the flag for the last transformed twilight.
-                                                                 // Also puts Midna on the player's back
-                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                                .dark_clear_level_flag |= 0x8;
+                            playerStatusPtr->transform_level_flag = 0x8;     // Set the flag for the last transformed twilight.
+                                                                             // Also puts Midna on the player's back
+
+                            playerStatusPtr->dark_clear_level_flag |= 0x8;
                         }
                     }
                     break;
@@ -1504,14 +1538,12 @@ namespace mod
                         MAP_WARPING_UNLOCKED );     // in glitched Logic, you can skip the gorge bridge.
                     if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_COMPLETED ) )
                     {
-                        if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                                 .dark_clear_level_flag == 0x5 )
+                        if ( darkClearLevelFlag == 0x5 )
                         {
-                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                                .transform_level_flag |= 0x8;     // Set the flag for the last transformed twilight.
-                            // Also puts Midna on the player's back
-                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                                .dark_clear_level_flag |= 0x8;
+                            playerStatusPtr->transform_level_flag |= 0x8;     // Set the flag for the last transformed twilight.
+                                                                              // Also puts Midna on the player's back
+
+                            playerStatusPtr->dark_clear_level_flag |= 0x8;
                         }
                     }
 
@@ -1522,14 +1554,12 @@ namespace mod
                 {
                     if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( MIDNAS_DESPERATE_HOUR_COMPLETED ) )
                     {
-                        if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                                 .dark_clear_level_flag == 0x7 )     // All twilights completed
+                        if ( darkClearLevelFlag == 0x7 )                      // All twilights completed
                         {
-                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                                .transform_level_flag |= 0x8;     // Set the flag for the last transformed twilight.
-                            // Also puts Midna on the player's back
-                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                                .dark_clear_level_flag |= 0x8;
+                            playerStatusPtr->transform_level_flag |= 0x8;     // Set the flag for the last transformed twilight.
+                                                                              // Also puts Midna on the player's back
+
+                            playerStatusPtr->dark_clear_level_flag |= 0x8;
                         }
                     }
 
@@ -1568,8 +1598,9 @@ namespace mod
 
     KEEP_FUNC bool handle_isSwitch_dSv_memBit( libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag )
     {
-        if ( libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Graveyard] ) )
+        const auto stagesPtr = &libtp::data::stage::allStages[0];
+
+        if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Kakariko_Graveyard] ) )
         {
             if ( flag == 0x66 )     // Check for escort completed flag
             {
@@ -1581,8 +1612,7 @@ namespace mod
                 }
             }
         }
-        else if ( libtp::tp::d_a_alink::checkStageName(
-                      libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Village_Interiors] ) )
+        else if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Hidden_Village_Interiors] ) )
         {
             if ( flag == 0x61 )     // Is Impaz in her house
             {
@@ -1590,8 +1620,7 @@ namespace mod
             }
         }
 
-        else if ( libtp::tp::d_a_alink::checkStageName(
-                      libtp::data::stage::allStages[libtp::data::stage::stageIDs::Ordon_Village] ) )
+        else if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Ordon_Village] ) )
         {
             if ( ( flag == 0x21 ) &&
                  !libtp::tp::d_kankyo::dKy_daynight_check() )     // Midna jumps to shield house are active and it is daytime
@@ -1606,16 +1635,16 @@ namespace mod
     {
         if ( memoryBit == &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags )
         {
-            if ( libtp::tp::d_a_alink::checkStageName(
-                     libtp::data::stage::allStages[libtp::data::stage::stageIDs::Forest_Temple] ) )
+            const auto stagesPtr = &libtp::data::stage::allStages[0];
+
+            if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Forest_Temple] ) )
             {
                 if ( flag == 0x52 )
                 {
                     return;     // Don't set the flag for all monkeys freed in the lobby of Forest Temple
                 }
             }
-            else if ( libtp::tp::d_a_alink::checkStageName(
-                          libtp::data::stage::allStages[libtp::data::stage::stageIDs::Arbiters_Grounds] ) )
+            else if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Arbiters_Grounds] ) )
             {
                 if ( flag == 0x26 )
                 {
@@ -1669,6 +1698,7 @@ namespace mod
             if ( events::haveItem( libtp::data::items::Heros_Bow ) )
             {
                 gMeter2InfoPtr->mSaveBowItem = libtp::data::items::Heros_Bow;
+
                 // We want to keep track of the number of arrows we have as well because the game
                 // will set our arrow count to this variable upon save warp if the minigame is not completed.
                 gMeter2InfoPtr->mSaveArrowNum =
@@ -1693,6 +1723,7 @@ namespace mod
     {
         using namespace libtp::data::items;
         using namespace rando::customItems;
+
         switch ( itemID )
         {
             // Only the first foolish item should need to be checked, but check all to be safe
@@ -1730,9 +1761,11 @@ namespace mod
     {
         // Call the original function immediately, as certain values need to be set in the Link Actor struct.
         return_setWolfLockDomeModel( linkActrPtr );
-        if ( getCurrentSeed( randomizer ) )
+
+        rando::Randomizer* rando = randomizer;
+        if ( getCurrentSeed( rando ) )
         {
-            randomizer->replaceWolfLockDomeColor( linkActrPtr );
+            rando->replaceWolfLockDomeColor( linkActrPtr );
         }
         return;
     }
@@ -1784,6 +1817,10 @@ namespace mod
 
     KEEP_FUNC void handleFoolishItem()
     {
+        using namespace libtp::z2audiolib;
+        using namespace libtp::z2audiolib::z2scenemgr;
+        using namespace libtp::tp;
+
         if ( !randoIsEnabled( randomizer ) )
         {
             return;
@@ -1810,22 +1847,20 @@ namespace mod
         // reset trigger counter to 0
         *triggerCount = 0;
 
-        using namespace libtp::z2audiolib;
-        using namespace libtp::z2audiolib::z2scenemgr;
-        using namespace libtp::tp;
-
         /* Store the currently loaded sound wave to local variables as we will need to load them back later.
          * We use this method because if we just loaded the sound waves every time the item was gotten, we'd
          * eventually run out of memory so it is safer to unload everything and load it back in. */
-        uint32_t seWave1 = z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_1;
-        uint32_t seWave2 = z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2;
+        z2scenemgr::Z2SceneMgr* sceneMgrPtr = &z2audiomgr::g_mDoAud_zelAudio.mSceneMgr;
+        const uint32_t seWave1 = sceneMgrPtr->SeWaveToErase_1;
+        const uint32_t seWave2 = sceneMgrPtr->SeWaveToErase_2;
 
-        eraseSeWave( Z2ScenePtr, z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_1 );
-        eraseSeWave( Z2ScenePtr, z2audiomgr::g_mDoAud_zelAudio.mSceneMgr.SeWaveToErase_2 );
-        loadSeWave( Z2ScenePtr, 0x46 );
+        void* scenePtr = Z2ScenePtr;
+        eraseSeWave( scenePtr, seWave1 );
+        eraseSeWave( scenePtr, seWave2 );
+        loadSeWave( scenePtr, 0x46 );
         m_Do_Audio::mDoAud_seStartLevel( 0x10040, nullptr, 0, 0 );
-        loadSeWave( Z2ScenePtr, seWave1 );
-        loadSeWave( Z2ScenePtr, seWave2 );
+        loadSeWave( scenePtr, seWave1 );
+        loadSeWave( scenePtr, seWave2 );
 
         d_com_inf_game::dComIfG_inf_c* gameInfoPtr = &d_com_inf_game::dComIfG_gameInfo;
         libtp::tp::d_save::dSv_player_status_a_c* playerStatusPtr = &gameInfoPtr->save.save_file.player.player_status_a;
@@ -1857,10 +1892,13 @@ namespace mod
                                                                      int32_t size )
     {
         libtp::tp::d_resource::dRes_info_c* resourcePtr = return_getResInfo( arcName, objectInfo, size );
-        if ( getCurrentSeed( randomizer ) && resourcePtr )
+
+        rando::Randomizer* rando = randomizer;
+        if ( getCurrentSeed( rando ) && resourcePtr )
         {
-            randomizer->overrideObjectARC( resourcePtr, arcName );
+            rando->overrideObjectARC( resourcePtr, arcName );
         }
+
         return resourcePtr;
     }
 
@@ -1879,9 +1917,11 @@ namespace mod
         {
             // Make sure the randomizer is loaded/enabled and a seed is loaded
             rando::Seed* seed;
-            if ( seed = getCurrentSeed( randomizer ), seed )
+            rando::Randomizer* rando = randomizer;
+
+            if ( seed = getCurrentSeed( rando ), seed )
             {
-                randomizer->recolorArchiveTextures( mountArchive );
+                rando->recolorArchiveTextures( mountArchive );
             }
         }
 

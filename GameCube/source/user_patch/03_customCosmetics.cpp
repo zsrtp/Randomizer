@@ -18,17 +18,17 @@ namespace mod::user_patch
 
     void setHUDCosmetics( rando::Randomizer* randomizer )
     {
+        using namespace libtp::tp::d_meter2_info;
+        using namespace libtp::data::items;
+        using namespace libtp::tp::d_a_alink;
+
         // Make sure the randomizer is loaded/enabled and a seed is loaded
         if ( !getCurrentSeed( randomizer ) )
         {
             return;
         }
 
-        using namespace libtp::tp::d_meter2_info;
-        using namespace libtp::data::items;
-
         libtp::tp::d_meter2_draw::dMeter2Draw_c* mpMeterDraw = g_meter2_info.mMeterClass->mpMeterDraw;
-
         rando::RawRGBTable* rawRGBListPtr = randomizer->m_Seed->m_RawRGBTable;
 
         uint32_t mWindowARaw = reinterpret_cast<uint32_t>( mpMeterDraw->mpButtonA->mWindow );
@@ -43,7 +43,9 @@ namespace mod::user_patch
         const uint32_t yButtonColor = rawRGBListPtr->yButtonColor;
         const uint32_t zButtonColor = rawRGBListPtr->zButtonColor;
         const uint32_t heartColorRGBA = rawRGBListPtr->heartColor;
+
         uint8_t* lanternColor = reinterpret_cast<uint8_t*>( &rawRGBListPtr->lanternColor );
+
         for ( uint32_t i = 0x248; i <= 0x254; i += 0x4 )
         {
             // Patch the A Button Color
@@ -141,7 +143,6 @@ namespace mod::user_patch
 
         if ( *reinterpret_cast<uint32_t*>( lanternColor ) != 0x502814ff )     // Don't set the value if it is already vanilla
         {
-            using namespace libtp::tp::d_a_alink;
             // Set lantern variables
             daAlinkHIO_kandelaar_c0* tempLanternVars = &lanternVars;
             daAlinkHIO_huLight_c0* tempHuLightVars = &huLightVars;

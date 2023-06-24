@@ -75,7 +75,7 @@ namespace mod::rando
         // Make sure the foolish items spawn count is reset before randomizing foolish item models
         foolishItems.spawnCount = 0;
 
-        int32_t stageIDX = libtp::tools::getStageIndex( stage );
+        const int32_t stageIDX = libtp::tools::getStageIndex( stage );
         switch ( stageIDX )
         {
             case libtp::data::stage::stageIDs::Hyrule_Field:
@@ -127,7 +127,7 @@ namespace mod::rando
         }
 
         // Local vars
-        uint32_t numReplacements = seed->m_numLoadedRELChecks;
+        const uint32_t numReplacements = seed->m_numLoadedRELChecks;
         RELCheck* relReplacements = seed->m_RELChecks;
 
         // If we don't have replacements just leave
@@ -155,7 +155,7 @@ namespace mod::rando
                         }
                         case rando::ReplacementType::ItemMessage:
                         {
-                            const uint16_t msgId = relOverride & 0xFFFF;
+                            const uint32_t msgId = relOverride & 0xFFFF;
                             int32_t itemID = msgId - 0x65;
                             if ( ( itemID < 0 ) || ( itemID > 0xFF ) )
                             {
@@ -182,6 +182,8 @@ namespace mod::rando
 
     void Randomizer::overrideDZX( libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo )
     {
+        using namespace libtp::tp::dzx;
+
         // Make sure the randomizer is loaded/enabled and a seed is loaded
         Seed* seed;
         if ( seed = getCurrentSeed( this ), !seed )
@@ -189,13 +191,11 @@ namespace mod::rando
             return;
         }
 
-        using namespace libtp::tp::dzx;
-
         // Local vars
-        uint32_t numReplacements = seed->m_numLoadedDZXChecks;
+        const uint32_t numReplacements = seed->m_numLoadedDZXChecks;
         dzxCheck* dzxReplacements = seed->m_DZXChecks;
 
-        uint32_t numChunks = chunkTypeInfo->numChunks;
+        const uint32_t numChunks = chunkTypeInfo->numChunks;
         ACTR* dzxData = reinterpret_cast<ACTR*>( chunkTypeInfo->chunkDataPtr );
 
         // Check if we have DZX checks to work with
@@ -208,12 +208,13 @@ namespace mod::rando
         for ( uint32_t i = 0; i < numChunks; i++ )
         {
             // The hash in RAM right now
-            uint16_t actorHash = libtp::tools::fletcher16( reinterpret_cast<uint8_t*>( &dzxData[i] ), sizeof( ACTR ) );
+            const uint32_t actorHash = libtp::tools::fletcher16( reinterpret_cast<uint8_t*>( &dzxData[i] ), sizeof( ACTR ) );
 
             // Compare to all available replacements
             for ( uint32_t j = 0; j < numReplacements; j++ )
             {
-                if ( dzxReplacements[j].hash == actorHash )
+                rando::dzxCheck* currentDzxReplacement = &dzxReplacements[j];
+                if ( currentDzxReplacement->hash == actorHash )
                 {
                     // Temporary enum for actor types
                     enum ActorTypes
@@ -230,9 +231,9 @@ namespace mod::rando
                     for ( uint8_t b = 0; b < sizeof( ACTR ); b++ )
                     {
                         // Fetch replacement byte
-                        uint8_t newByte = dzxReplacements[j].data[b];
+                        const uint8_t newByte = currentDzxReplacement->data[b];
 
-                        if ( newByte != dzxReplacements[j].magicByte )
+                        if ( newByte != currentDzxReplacement->magicByte )
                         {
                             target[b] = newByte;
                         }
@@ -280,7 +281,7 @@ namespace mod::rando
 
     int32_t Randomizer::getPoeItem( uint8_t flag )
     {
-        uint32_t numLoadedPOEChecks = m_Seed->m_numLoadedPOEChecks;
+        const uint32_t numLoadedPOEChecks = m_Seed->m_numLoadedPOEChecks;
         POECheck* poeChecks = &m_Seed->m_POEChecks[0];
 
         for ( uint32_t i = 0; i < numLoadedPOEChecks; i++ )
@@ -300,7 +301,7 @@ namespace mod::rando
     uint8_t Randomizer::getSkyCharacter()
     {
         // Return the item id if we only have one item to pick from, otherwise, check the room to get the character we want.
-        uint32_t numSkyBookChecks = m_Seed->m_numSkyBookChecks;
+        const uint32_t numSkyBookChecks = m_Seed->m_numSkyBookChecks;
         SkyCharacter* skyBookChecks = &m_Seed->m_SkyBookChecks[0];
 
         if ( numSkyBookChecks == 1 )
@@ -309,7 +310,7 @@ namespace mod::rando
         }
         else
         {
-            int32_t currentRoom = libtp::tools::getCurrentRoomNo();
+            const int32_t currentRoom = libtp::tools::getCurrentRoomNo();
             for ( uint32_t i = 0; i < numSkyBookChecks; i++ )
             {
                 SkyCharacter* currentSkyBookCheck = &skyBookChecks[i];
@@ -319,7 +320,8 @@ namespace mod::rando
                 }
             }
         }
-        // default
+
+        // Default
         return libtp::data::items::Ancient_Sky_Book_Partly_Filled;
     }
 
@@ -349,7 +351,7 @@ namespace mod::rando
         }
 
         seed->LoadARCChecks( seed->m_StageIDX, fileDirectory, roomNo );
-        uint32_t numReplacements = seed->m_numLoadedArcReplacements;
+        const uint32_t numReplacements = seed->m_numLoadedArcReplacements;
 
         if ( seed->m_StageIDX == libtp::data::stage::stageIDs::Ordon_Village && fileDirectory == FileDirectory::Room )
         {
@@ -369,7 +371,7 @@ namespace mod::rando
         {
             ARCReplacement* arcReplacement = &seed->m_ArcReplacements[i];
             uint32_t replacementValue = arcReplacement->replacementValue;
-            uint32_t replacementOffset = arcReplacement->offset;
+            const uint32_t replacementOffset = arcReplacement->offset;
 
             switch ( seed->m_ArcReplacements[i].replacementType )
             {
@@ -395,12 +397,11 @@ namespace mod::rando
                     libtp::gc_wii::os_cache::DCFlushRange( reinterpret_cast<void*>( replacementAddress ), sizeof( uint16_t ) );
                     break;
                 }
-
                 case rando::ReplacementType::AlwaysLoaded:
                 {
                     // The pointer to the start of bmgres.arc is located at the value stored in mMsgDtArchive[0] + an offset
                     // of 0x64
-                    uint32_t adjustedFilePtr = *reinterpret_cast<uint32_t*>(
+                    const uint32_t adjustedFilePtr = *reinterpret_cast<uint32_t*>(
                         reinterpret_cast<uint32_t>( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mMsgDtArchive[0] ) +
                         0x64 );
 
@@ -413,10 +414,9 @@ namespace mod::rando
 
                     break;
                 }
-
                 case rando::ReplacementType::MessageResource:
                 {
-                    uint32_t adjustedFilePtr =
+                    const uint32_t adjustedFilePtr =
                         reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
 
                     replacementValue = game_patch::_04_verifyProgressiveItem( this, replacementValue );
@@ -429,7 +429,7 @@ namespace mod::rando
                 }
                 case rando::ReplacementType::Instruction:
                 {
-                    uint32_t replacementAddress = fileAddr + replacementOffset;
+                    const uint32_t replacementAddress = fileAddr + replacementOffset;
                     *reinterpret_cast<uint32_t*>( ( replacementAddress ) ) = replacementValue;
 
                     // Clear the cache for the modified value
@@ -437,7 +437,6 @@ namespace mod::rando
                     libtp::memory::clear_DC_IC_Cache( reinterpret_cast<void*>( replacementAddress ), sizeof( uint32_t ) );
                     break;
                 }
-
                 default:
                 {
                     break;
@@ -449,13 +448,13 @@ namespace mod::rando
     void Randomizer::overrideObjectARC( libtp::tp::d_resource::dRes_info_c* resourcePtr, const char* fileName )
     {
         m_Seed->LoadObjectARCChecks();
-        uint32_t fileSize = strlen( fileName );
+        const uint32_t fileSize = strlen( fileName );
 
-        uint32_t numReplacements = m_Seed->m_numLoadedObjectArcReplacements;
+        const uint32_t numReplacements = m_Seed->m_numLoadedObjectArcReplacements;
         ObjectArchiveReplacement* objectArcReplacements = &m_Seed->m_ObjectArcReplacements[0];
 
         // Just because the game fetches the resource info doesn't mean that it got a match.
-        void* mArchive = resourcePtr->mArchive;
+        const void* mArchive = resourcePtr->mArchive;
         if ( mArchive )
         {
             // Loop through all ArcChecks and replace the item at an offset given the fileIndex.
@@ -465,10 +464,10 @@ namespace mod::rando
 
                 if ( strncmp( fileName, currentObjectArcReplacement->fileName, fileSize ) == 0 )
                 {
-                    uint32_t replacementValue =
+                    const uint32_t replacementValue =
                         game_patch::_04_verifyProgressiveItem( this, currentObjectArcReplacement->replacementValue );
 
-                    uint32_t archiveData = *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( mArchive ) + 0x28 );
+                    const uint32_t archiveData = *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( mArchive ) + 0x28 );
 
                     uint32_t replacementAddress = archiveData + currentObjectArcReplacement->offset;
                     *reinterpret_cast<uint8_t*>( ( replacementAddress ) ) = replacementValue;
@@ -481,15 +480,17 @@ namespace mod::rando
 
     void Randomizer::overrideEventARC()
     {
-        uint32_t bmgHeaderLocation = reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
-        uint32_t messageFlowOffset = bmgHeaderLocation + *reinterpret_cast<uint32_t*>( bmgHeaderLocation + 0x8 );
+        const uint32_t bmgHeaderLocation =
+            reinterpret_cast<uint32_t>( libtp::tp::d_meter2_info::g_meter2_info.mStageMsgResource );
+
+        const uint32_t messageFlowOffset = bmgHeaderLocation + *reinterpret_cast<uint32_t*>( bmgHeaderLocation + 0x8 );
 
         this->overrideARC( messageFlowOffset, rando::FileDirectory::Message, 0xFF );
     }
 
     uint8_t Randomizer::overrideBugReward( uint8_t bugID )
     {
-        uint32_t numBugRewardChecks = m_Seed->m_numBugRewardChecks;
+        const uint32_t numBugRewardChecks = m_Seed->m_numBugRewardChecks;
         BugReward* bugRewardChecks = &m_Seed->m_BugRewardChecks[0];
 
         for ( uint32_t i = 0; i < numBugRewardChecks; i++ )
@@ -501,16 +502,17 @@ namespace mod::rando
                 return currentBugRewardCheck->itemID;
             }
         }
+
         // Default
         return bugID;
     }
 
     void Randomizer::getHiddenSkillItem( void* daNpcGWolfPtr, int16_t flag, uint32_t markerFlag )
     {
-        int32_t currentRoom = libtp::tools::getCurrentRoomNo();
+        const int32_t currentRoom = libtp::tools::getCurrentRoomNo();
+        const uint32_t numHiddenSkillChecks = m_Seed->m_numHiddenSkillChecks;
+        const uint32_t stageIDX = m_Seed->m_StageIDX;
         HiddenSkillCheck* hiddenSkillChecks = &m_Seed->m_HiddenSkillChecks[0];
-        uint32_t numHiddenSkillChecks = m_Seed->m_numHiddenSkillChecks;
-        uint32_t stageIDX = m_Seed->m_StageIDX;
 
         for ( uint32_t i = 0; i < numHiddenSkillChecks; i++ )
         {
@@ -559,11 +561,13 @@ namespace mod::rando
                 j++;
             }
         }
-        if ( j == 0 )     // no matches were found or there are no entries in the seed.
+
+        if ( j == 0 )     // No matches were found or there are no entries in the seed.
         {
             delete[] loadedBmdEntries;
             return nullptr;
         }
+
         return loadedBmdEntries;
     }
 
@@ -573,8 +577,9 @@ namespace mod::rando
         using libtp::tp::JKRArchive::JKRArchive_findFsResource;
         using libtp::util::texture::findTex1InBmd;
         using libtp::util::texture::recolorCmprTexture;
+
         CLR0Header* clr0Header = m_Seed->m_CLR0;
-        uint32_t numEntries = clr0Header->numBmdEntries;
+        const uint32_t numEntries = clr0Header->numBmdEntries;
 
         for ( uint32_t res = 0; res < DvdEntryNumId::DvdEntryNumIdSize; res++ )
         {
@@ -594,7 +599,8 @@ namespace mod::rando
             for ( uint32_t i = 0; i < numEntries; i++ )
             {
                 BmdEntry* currentBmdEntry = &loadedBmdEntries[i];
-                char buf[64];     // a little extra to be safe
+                char buf[64];     // A little extra to be safe
+
                 switch ( currentBmdEntry->archiveIndex )
                 {
                     case DvdEntryNumId::ResObjectOgZORA:
@@ -609,7 +615,7 @@ namespace mod::rando
                     }
                 }
 
-                JKRArchive::SDIFileEntry* alBmdFileEntry = JKRArchive_findFsResource( mountArchive->mArchive, buf, 0 );
+                const JKRArchive::SDIFileEntry* alBmdFileEntry = JKRArchive_findFsResource( mountArchive->mArchive, buf, 0 );
                 if ( !alBmdFileEntry )
                 {
                     continue;
@@ -627,9 +633,11 @@ namespace mod::rando
                     {
                         CMPRTextureEntry* bmdTextures = reinterpret_cast<CMPRTextureEntry*>(
                             reinterpret_cast<uint32_t>( clr0Header ) + currentBmdEntry->textureListOffset );
+
                         for ( uint32_t j = 0; j < currentBmdEntry->numTextures; j++ )
                         {
                             CMPRTextureEntry* currentTexture = &bmdTextures[j];
+
                             recolorCmprTexture( tex1Addr,
                                                 currentTexture->textureName,
                                                 reinterpret_cast<uint8_t*>( &currentTexture->rgba ) );
@@ -642,6 +650,7 @@ namespace mod::rando
                     }
                 }
             }
+
             delete[] loadedBmdEntries;
         }
     }
@@ -657,7 +666,7 @@ namespace mod::rando
             for ( uint32_t i = 0; i < 3; i++ )
             {
                 uint8_t* currentTable = chromaRegisterTable[i];
-                uint8_t currentColor = domeRGBA[i];
+                const uint8_t currentColor = domeRGBA[i];
 
                 currentTable[0x3] = currentColor;      // Set Alpha for the ring base
                 currentTable[0x13] = currentColor;     // Set Alpha for ring wave 1

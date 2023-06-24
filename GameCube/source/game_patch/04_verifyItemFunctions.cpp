@@ -10,12 +10,12 @@ namespace mod::game_patch
     uint32_t _04_getProgressiveSword()
     {
         using namespace libtp::data::items;
-        const uint8_t progressiveSwordsList[] = { Wooden_Sword, Ordon_Sword, Master_Sword };
+        static const uint8_t progressiveSwordsList[] = { Wooden_Sword, Ordon_Sword, Master_Sword };
 
-        const uint32_t listLength = sizeof( progressiveSwordsList ) / sizeof( progressiveSwordsList[0] );
+        constexpr uint32_t listLength = sizeof( progressiveSwordsList ) / sizeof( progressiveSwordsList[0] );
         for ( uint32_t i = 0; i < listLength; i++ )
         {
-            uint32_t item = progressiveSwordsList[i];
+            const uint32_t item = progressiveSwordsList[i];
             if ( !events::haveItem( item ) )
             {
                 return item;
@@ -29,12 +29,12 @@ namespace mod::game_patch
     uint32_t _04_getProgressiveBow()
     {
         using namespace libtp::data::items;
-        const uint8_t progressiveBowsList[] = { Heros_Bow, Big_Quiver };
+        static const uint8_t progressiveBowsList[] = { Heros_Bow, Big_Quiver };
 
-        const uint32_t listLength = sizeof( progressiveBowsList ) / sizeof( progressiveBowsList[0] );
+        constexpr uint32_t listLength = sizeof( progressiveBowsList ) / sizeof( progressiveBowsList[0] );
         for ( uint32_t i = 0; i < listLength; i++ )
         {
-            uint32_t item = progressiveBowsList[i];
+            const uint32_t item = progressiveBowsList[i];
             if ( !events::haveItem( item ) )
             {
                 return item;
@@ -48,13 +48,14 @@ namespace mod::game_patch
     uint32_t _04_getProgressiveSkill()
     {
         using namespace rando::customItems;
-        const uint8_t progressiveSkillsList[] =
+
+        static const uint8_t progressiveSkillsList[] =
             { Ending_Blow, Shield_Attack, Back_Slice, Helm_Splitter, Mortal_Draw, Jump_Strike };
 
-        const uint32_t listLength = sizeof( progressiveSkillsList ) / sizeof( progressiveSkillsList[0] );
+        constexpr uint32_t listLength = sizeof( progressiveSkillsList ) / sizeof( progressiveSkillsList[0] );
         for ( uint32_t i = 0; i < listLength; i++ )
         {
-            uint32_t item = progressiveSkillsList[i];
+            const uint32_t item = progressiveSkillsList[i];
             if ( !events::haveItem( item ) )
             {
                 return item;
@@ -69,17 +70,18 @@ namespace mod::game_patch
     {
         using namespace rando::customItems;
         using namespace libtp::data::items;
-        const uint8_t progressiveSkyBooksList[] = { Ancient_Sky_Book_Empty,
-                                                    Ancient_Sky_Book_First_Character,
-                                                    Ancient_Sky_Book_Second_Character,
-                                                    Ancient_Sky_Book_Third_Character,
-                                                    Ancient_Sky_Book_Fourth_Character,
-                                                    Ancient_Sky_Book_Fifth_Character };
 
-        const uint32_t listLength = sizeof( progressiveSkyBooksList ) / sizeof( progressiveSkyBooksList[0] );
+        static const uint8_t progressiveSkyBooksList[] = { Ancient_Sky_Book_Empty,
+                                                           Ancient_Sky_Book_First_Character,
+                                                           Ancient_Sky_Book_Second_Character,
+                                                           Ancient_Sky_Book_Third_Character,
+                                                           Ancient_Sky_Book_Fourth_Character,
+                                                           Ancient_Sky_Book_Fifth_Character };
+
+        constexpr uint32_t listLength = sizeof( progressiveSkyBooksList ) / sizeof( progressiveSkyBooksList[0] );
         for ( uint32_t i = 0; i < listLength; i++ )
         {
-            uint32_t item = progressiveSkyBooksList[i];
+            const uint32_t item = progressiveSkyBooksList[i];
             if ( !events::haveItem( item ) )
             {
                 return item;
@@ -93,12 +95,13 @@ namespace mod::game_patch
     uint32_t _04_getProgressiveKeyShard()
     {
         using namespace libtp::data::items;
-        const uint8_t progressiveKeyShardsList[] { Key_Shard_1, Key_Shard_2 };
 
-        const uint32_t listLength = sizeof( progressiveKeyShardsList ) / sizeof( progressiveKeyShardsList[0] );
+        static const uint8_t progressiveKeyShardsList[] { Key_Shard_1, Key_Shard_2 };
+
+        constexpr uint32_t listLength = sizeof( progressiveKeyShardsList ) / sizeof( progressiveKeyShardsList[0] );
         for ( uint32_t i = 0; i < listLength; i++ )
         {
-            uint32_t item = progressiveKeyShardsList[i];
+            const uint32_t item = progressiveKeyShardsList[i];
             if ( !events::haveItem( item ) )
             {
                 return item;
@@ -112,12 +115,13 @@ namespace mod::game_patch
     uint32_t _04_getProgressiveMirrorShard()
     {
         using namespace libtp::data::items;
-        const uint8_t progressiveMirrorShardsList[] { Mirror_Piece_2, Mirror_Piece_3, Mirror_Piece_4 };
 
-        const uint32_t listLength = sizeof( progressiveMirrorShardsList ) / sizeof( progressiveMirrorShardsList[0] );
+        static const uint8_t progressiveMirrorShardsList[] { Mirror_Piece_2, Mirror_Piece_3, Mirror_Piece_4 };
+
+        constexpr uint32_t listLength = sizeof( progressiveMirrorShardsList ) / sizeof( progressiveMirrorShardsList[0] );
         for ( uint32_t i = 0; i < listLength; i++ )
         {
-            uint32_t item = progressiveMirrorShardsList[i];
+            const uint32_t item = progressiveMirrorShardsList[i];
             if ( !events::haveItem( item ) )
             {
                 return item;
@@ -131,12 +135,13 @@ namespace mod::game_patch
     uint32_t _04_getProgressiveFusedShadow()
     {
         using namespace rando::customItems;
-        const uint8_t progressiveFusedShadowList[] { Fused_Shadow_1, Fused_Shadow_2, Fused_Shadow_3 };
 
-        const uint32_t listLength = sizeof( progressiveFusedShadowList ) / sizeof( progressiveFusedShadowList[0] );
+        static const uint8_t progressiveFusedShadowList[] { Fused_Shadow_1, Fused_Shadow_2, Fused_Shadow_3 };
+
+        constexpr uint32_t listLength = sizeof( progressiveFusedShadowList ) / sizeof( progressiveFusedShadowList[0] );
         for ( uint32_t i = 0; i < listLength; i++ )
         {
-            uint32_t item = progressiveFusedShadowList[i];
+            const uint32_t item = progressiveFusedShadowList[i];
             if ( !events::haveItem( item ) )
             {
                 return item;
@@ -151,6 +156,7 @@ namespace mod::game_patch
     {
         using namespace libtp::data::items;
         using namespace rando::customItems;
+
         if ( randoIsEnabled( randomizer ) )
         {
             switch ( itemID )

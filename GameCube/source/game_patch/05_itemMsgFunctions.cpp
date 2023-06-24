@@ -120,7 +120,7 @@ namespace mod::game_patch
             }
 
             // If the current character is NULL, then write it and go to the next character
-            char currentCharacter = format[i];
+            const char currentCharacter = format[i];
             if ( currentCharacter == '\0' )
             {
                 buf[currentIndex++] = currentCharacter;
@@ -129,7 +129,7 @@ namespace mod::game_patch
 
             // Handle all of the characters up to a NULL character
             const uint32_t currentMaxSize = sizeof( buf ) - currentIndex;
-            int32_t len = vsnprintf( &buf[currentIndex], currentMaxSize, &format[i], args );
+            const int32_t len = vsnprintf( &buf[currentIndex], currentMaxSize, &format[i], args );
 
             // Make sure the characters were handled correctly
             if ( len < 0 )     // Do not need to check if the correct amount of bytes were written
@@ -806,27 +806,27 @@ namespace mod::game_patch
         }
 
         // Make sure the custom text is loaded
-        uint32_t msgTableInfoRaw = reinterpret_cast<uint32_t>( m_MsgTableInfo );
+        const uint32_t msgTableInfoRaw = reinterpret_cast<uint32_t>( m_MsgTableInfo );
         if ( !msgTableInfoRaw )
         {
             return nullptr;
         }
 
         // Get a pointer to the message ids to search for
-        uint16_t* msgIds = reinterpret_cast<uint16_t*>( msgTableInfoRaw );
+        const uint16_t* msgIds = reinterpret_cast<uint16_t*>( msgTableInfoRaw );
 
         // Get the total size of the message ids
-        uint32_t totalMessages = m_TotalMsgEntries;
+        const uint32_t totalMessages = m_TotalMsgEntries;
         uint32_t msgIdTableSize = totalMessages * sizeof( uint16_t );
 
         // Round msgIdTableSize up to the size of the offset type to make sure the offsets are properly aligned
         msgIdTableSize = ( msgIdTableSize + sizeof( uint32_t ) - 1 ) & ~( sizeof( uint32_t ) - 1 );
 
         // Get a pointer to the message offsets
-        uint32_t* msgOffsets = reinterpret_cast<uint32_t*>( msgTableInfoRaw + msgIdTableSize );
+        const uint32_t* msgOffsets = reinterpret_cast<uint32_t*>( msgTableInfoRaw + msgIdTableSize );
 
         // Get the total size of the message offsets
-        uint32_t msgOffsetTableSize = totalMessages * sizeof( uint32_t );
+        const uint32_t msgOffsetTableSize = totalMessages * sizeof( uint32_t );
 
         // Get a pointer to the messages
         const char* messages = reinterpret_cast<const char*>( msgTableInfoRaw + msgIdTableSize + msgOffsetTableSize );

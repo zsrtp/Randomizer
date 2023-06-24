@@ -19,30 +19,30 @@ namespace mod::assembly
     {
         if ( dmc->mModule )
         {
-            events::onRELLink( mod::randomizer, dmc );
+            events::onRELLink( randomizer, dmc );
         }
     }
 
     int32_t handleAdjustPoeItem( void* e_hp_class )
     {
         uint8_t flag = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( e_hp_class ) + 0x77B );
-        return events::onPoe( mod::randomizer, flag );
+        return events::onPoe( randomizer, flag );
     }
 
     int32_t handleAdjustAGPoeItem( void* e_po_class )
     {
         uint8_t flag = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( e_po_class ) + 0x5BD );
-        return events::onPoe( mod::randomizer, flag );
+        return events::onPoe( randomizer, flag );
     }
 
     void handleAdjustBugReward( uint32_t msgEventAddress, uint8_t bugID )
     {
-        events::onBugReward( mod::randomizer, msgEventAddress, bugID );
+        events::onBugReward( randomizer, msgEventAddress, bugID );
     }
 
     uint8_t handleAdjustSkyCharacter()
     {
-        return events::onSkyCharacter( mod::randomizer );
+        return events::onSkyCharacter( randomizer );
     }
 
     void handleAdjustFieldItemParams( libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife )
@@ -52,9 +52,10 @@ namespace mod::assembly
 
     void handleTransformFromWolf()
     {
-        if ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm == 1 )
+        libtp::tp::d_com_inf_game::dComIfG_inf_c* gameInfoPtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo;
+        if ( gameInfoPtr->save.save_file.player.player_status_a.currentForm == 1 )
         {
-            libtp::tp::d_a_alink::procCoMetamorphoseInit( libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer );
+            libtp::tp::d_a_alink::procCoMetamorphoseInit( gameInfoPtr->play.mPlayer );
         }
     }
 
@@ -62,13 +63,13 @@ namespace mod::assembly
     {
         // We check to see if the flag being set is for the Upper Zora's River Portal as a safety precaution since we don't want
         // to set the flags too early.
-        if ( ( flag == 0x15 ) &&
-             ( libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentForm == 1 ) )
+        libtp::tp::d_save::dSv_info_c* savePtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save;
+        if ( ( flag == 0x15 ) && ( savePtr->save_file.player.player_status_a.currentForm == 1 ) )
         {
             // Set the event flag to make Iza 1 available and set the memory bit for having talked to her after opening the
             // portal as human.
             events::setSaveFileEventFlag( 0xB02 );
-            libtp::tp::d_save::onSwitch_dSv_memBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x37 );
+            libtp::tp::d_save::onSwitch_dSv_memBit( &savePtr->memory.temp_flags, 0x37 );
         }
     }
 
@@ -104,7 +105,7 @@ namespace mod::assembly
     {
         // The flag index is signed, but it should always be positive if this code runs
         const uint32_t flagIndex = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daNpcGWolf ) + 0xE11 );
-        int16_t delFlag = l_delFlag[flagIndex];
+        const int16_t delFlag = l_delFlag[flagIndex];
 
         const bool flagIsSet = libtp::tp::d_a_npc::daNpcT_chkEvtBit( delFlag );
         if ( flagIsSet )
@@ -117,10 +118,10 @@ namespace mod::assembly
         const int16_t* l_warpAppearFlag = reinterpret_cast<const int16_t*>( reinterpret_cast<uint32_t>( l_delFlag ) - 0xEC );
 
         // If appearFlag is -1, then the wolf should be spawned without howling. This is used for the Faron wolf.
-        int16_t appearFlag = l_warpAppearFlag[flagIndex];
+        const int16_t appearFlag = l_warpAppearFlag[flagIndex];
         if ( ( appearFlag == -1 ) || libtp::tp::d_a_npc::daNpcT_chkEvtBit( appearFlag ) )
         {
-            uint32_t markerFlag = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daNpcGWolf ) + 0xE1E );
+            const uint32_t markerFlag = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daNpcGWolf ) + 0xE1E );
             events::onHiddenSkill( mod::randomizer, daNpcGWolf, delFlag, markerFlag );
         }
 

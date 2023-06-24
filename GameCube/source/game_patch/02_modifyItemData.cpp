@@ -47,7 +47,7 @@ namespace mod::game_patch
                                const libtp::data::items::NodeDungeonItemType type )
     {
         using namespace libtp::data::items;
-        int32_t currentAreaNodeId = events::getCurrentAreaNodeId();
+        const int32_t currentAreaNodeId = events::getCurrentAreaNodeId();
 
         // Make sure the node id is valid
         if ( currentAreaNodeId >= 0 )
@@ -136,8 +136,8 @@ namespace mod::game_patch
 
         for ( uint32_t i = 0; i < loopCount; i++ )
         {
-            uint32_t randomIndex = getFoolishModelRandomIndex( foolishModelIndexes, i );
-            uint32_t fieldModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
+            const uint32_t randomIndex = getFoolishModelRandomIndex( foolishModelIndexes, i );
+            const uint32_t fieldModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
             itemModelIds[i] = static_cast<uint8_t>( fieldModelItemID );
 
             libtp::tp::d_item_data::FieldItemRes* currentFieldItemPtr = &fieldItemResPtr[foolishItemIds[i]];
@@ -155,8 +155,8 @@ namespace mod::game_patch
         using namespace libtp::tp::d_a_shop_item_static;
 
         // Set the shop model of the Foolish Item ID to the model of a random important item.
-        uint32_t randomIndex = getFoolishModelRandomIndex( foolishModelIndexes, loopCurrentCount );
-        uint32_t shopModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
+        const uint32_t randomIndex = getFoolishModelRandomIndex( foolishModelIndexes, loopCurrentCount );
+        const uint32_t shopModelItemID = _04_verifyProgressiveItem( randomizer, foolishModelItemList[randomIndex] );
 
         libtp::tp::d_item_data::ItemResource* fieldItemResPtr = &libtp::tp::d_item_data::item_resource[shopModelItemID];
         ShopItemData* shopItemDataPtr = &shopItemData[shopID];
@@ -179,7 +179,7 @@ namespace mod::game_patch
         using namespace libtp::tp::d_a_shop_item_static;
 
         ShopItemData* shopItemDataPtr = &shopItemData[shopID];
-        uint32_t shopModelItemID = _04_verifyProgressiveItem( randomizer, itemID );
+        const uint32_t shopModelItemID = _04_verifyProgressiveItem( randomizer, itemID );
 
         switch ( shopModelItemID )
         {
@@ -445,32 +445,38 @@ namespace mod::game_patch
 
     KEEP_FUNC void _02_poweredDominionRodItemFunc()
     {
+        // Dominion Rod powered up.
         events::setSaveFileEventFlag( libtp::data::flags::SHAD_CASTS_UNFINISHED_SPELL_ON_STATUE );
-    }     // Dominion Rod powered up.
+    }
 
     KEEP_FUNC void _02_auruMemoItemFunc()
     {
+        // Put Auru's Memo in slot 7 because it is unused
         libtp::tp::d_save::setItem( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_item,
                                     0x7,
                                     libtp::data::items::Aurus_Memo );
-    }     // Put Auru's Memo in slot 7 because it is unused
+    }
 
     KEEP_FUNC void _02_ordonPumpkinItemFunc()
     {
         events::setSaveFileEventFlag( libtp::data::flags::TOLD_YETA_ABOUT_PUMPKIN );     // Told Yeta about Pumpkin
         events::setSaveFileEventFlag( libtp::data::flags::PUMPKIN_PUT_IN_SOUP );         // Yeto put Pumpkin in soup
+
         events::setSaveFileEventFlag(
             libtp::data::flags::TALKED_WITH_YETA_AFTER_GIVING_PUMPKIN );     // SPR Lobby Door Unlocked
-        if ( libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) ||
-             libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Darkhammer] ) ||
-             libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Blizzeta] ) )
+
+        const auto stagesPtr = &libtp::data::stage::allStages[0];
+        libtp::tp::d_save::dSv_info_c* savePtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save;
+
+        if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) ||
+             libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Darkhammer] ) ||
+             libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Blizzeta] ) )
         {
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x9] |= 0x4;
+            savePtr->memory.temp_flags.memoryFlags[0x9] |= 0x4;
         }
         else
         {
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x14].temp_flags.memoryFlags[0x9] |= 0x4;
+            savePtr->save_file.area_flags[0x14].temp_flags.memoryFlags[0x9] |= 0x4;
         }
     }
 
@@ -478,24 +484,29 @@ namespace mod::game_patch
     {
         events::setSaveFileEventFlag( libtp::data::flags::TOLD_YETA_ABOUT_CHEESE );     // Told Yeta about Cheese
         events::setSaveFileEventFlag( libtp::data::flags::CHEESE_PUT_IN_SOUP );         // Yeto put cheese in soup
+
         events::setSaveFileEventFlag(
             libtp::data::flags::TALKED_WITH_YETA_AFTER_GIVING_CHEESE );     // SPR Lobby West Door Unlocked
-        if ( libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) ||
-             libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Darkhammer] ) ||
-             libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Blizzeta] ) )
+
+        const auto stagesPtr = &libtp::data::stage::allStages[0];
+        libtp::tp::d_save::dSv_info_c* savePtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save;
+
+        if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) ||
+             libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Darkhammer] ) ||
+             libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Blizzeta] ) )
         {
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags.memoryFlags[0x9] |= 0x8;
+            savePtr->memory.temp_flags.memoryFlags[0x9] |= 0x8;
         }
         else
         {
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x14].temp_flags.memoryFlags[0x9] |= 0x8;
+            savePtr->save_file.area_flags[0x14].temp_flags.memoryFlags[0x9] |= 0x8;
         }
     }
 
     KEEP_FUNC void _02_filledSkybookItemFunc()
     {
         events::setSaveFileEventFlag( libtp::data::flags::SKY_CANNON_REPAIRED );     // Repaired Cannon at Lake
+
         libtp::tp::d_save::setItem( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_item,
                                     22,
                                     libtp::data::items::Ancient_Sky_Book_Completed );     // Add Skybook to the Item Wheel
@@ -505,15 +516,18 @@ namespace mod::game_patch
     {
         libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentWallet =
             libtp::data::items::BIG_WALLET;
-        for ( uint16_t rupee = 0x1038; rupee <= 0x1044; rupee += 0x4 )
+
+        libtp::tp::J2DWindow::J2DWindow* windowPtr =
+            libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow;
+
+        if ( !windowPtr )
         {
-            if ( libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow != nullptr )
-            {
-                ( *reinterpret_cast<uint32_t*>(
-                    reinterpret_cast<uint32_t>(
-                        libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
-                    rupee ) ) = 0xff0000ff;
-            }
+            return;
+        }
+
+        for ( uint32_t rupee = 0x1038; rupee <= 0x1044; rupee += 0x4 )
+        {
+            *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( windowPtr ) + rupee ) = 0xff0000ff;
         }
     }
 
@@ -521,15 +535,18 @@ namespace mod::game_patch
     {
         libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_a.currentWallet =
             libtp::data::items::GIANT_WALLET;
-        for ( uint16_t rupee = 0x1038; rupee <= 0x1044; rupee += 0x4 )
+
+        libtp::tp::J2DWindow::J2DWindow* windowPtr =
+            libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow;
+
+        if ( !windowPtr )
         {
-            if ( libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow != nullptr )
-            {
-                ( *reinterpret_cast<uint32_t*>(
-                    reinterpret_cast<uint32_t>(
-                        libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mpBigHeart->mWindow ) +
-                    rupee ) ) = 0xaf00ffff;
-            }
+            return;
+        }
+
+        for ( uint32_t rupee = 0x1038; rupee <= 0x1044; rupee += 0x4 )
+        {
+            *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( windowPtr ) + rupee ) = 0xaf00ffff;
         }
     }
 
@@ -537,133 +554,154 @@ namespace mod::game_patch
     {
         events::setSaveFileEventFlag( libtp::data::flags::WAGON_ESCORT_STARTED );     // Started Zora Escort
         events::setSaveFileEventFlag( libtp::data::flags::ZORA_ESCORT_CLEARED );      // Completed Zora Escort
-        if ( libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Village] ) ||
-             libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Graveyard] ) ||
-             libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Death_Mountain] ) ||
-             libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Village] ) ||
-             libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Village_Interiors] ) )
+
+        const auto stagesPtr = &libtp::data::stage::allStages[0];
+        if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Kakariko_Village] ) ||
+             libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Kakariko_Graveyard] ) ||
+             libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Death_Mountain] ) ||
+             libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Hidden_Village] ) ||
+             libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Kakariko_Village_Interiors] ) )
         {
-            libtp::tp::d_save::onSwitch_dSv_memBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x69 );
-            libtp::tp::d_save::onSwitch_dSv_memBit( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x65 );
+            libtp::tp::d_save::dSv_memBit_c* tempFlagsPtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags;
+
+            libtp::tp::d_save::onSwitch_dSv_memBit( tempFlagsPtr, 0x69 );
+            libtp::tp::d_save::onSwitch_dSv_memBit( tempFlagsPtr, 0x65 );
         }
         else
         {
-            libtp::tp::d_save::onSwitch_dSv_memBit(
-                &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x3].temp_flags,
-                0x69 );
-            libtp::tp::d_save::onSwitch_dSv_memBit(
-                &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x3].temp_flags,
-                0x65 );
+            libtp::tp::d_save::dSv_memBit_c* tempFlagsPtr =
+                &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x3].temp_flags;
+
+            libtp::tp::d_save::onSwitch_dSv_memBit( tempFlagsPtr, 0x69 );
+            libtp::tp::d_save::onSwitch_dSv_memBit( tempFlagsPtr, 0x65 );
         }
     }
 
     KEEP_FUNC void _02_firstFusedShadowItemFunc()
     {
+        // Give player first fused shadow.
         libtp::tp::d_save::onCollectCrystal( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect,
                                              '\0' );
-    }     // Give player first fused shadow.
+    }
 
     KEEP_FUNC void _02_secondFusedShadowItemFunc()
     {
+        // Give player second fused shadow.
         libtp::tp::d_save::onCollectCrystal( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect,
                                              '\x01' );
-    }     // Give player second fused shadow.
+    }
 
     KEEP_FUNC void _02_thirdFusedShadowItemFunc()
     {
+        // Give player third fused shadow.
         libtp::tp::d_save::onCollectCrystal( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect,
                                              '\x02' );
-        if ( randoIsEnabled( randomizer ) )
+
+        rando::Randomizer* rando = randomizer;
+        if ( randoIsEnabled( rando ) )
         {
+            rando::Header* headerPtr = rando->m_Seed->m_Header;
+
             // If the player has the castle requirement set to Fused Shadows.
-            if ( randomizer->m_Seed->m_Header->castleRequirements == 1 )
+            if ( headerPtr->castleRequirements == 1 )
             {
                 events::setSaveFileEventFlag( libtp::data::flags::BARRIER_GONE );
             }
+
             // If the player has the palace requirement set to Fused Shadows.
-            if ( randomizer->m_Seed->m_Header->palaceRequirements == 1 )
+            if ( headerPtr->palaceRequirements == 1 )
             {
                 events::setSaveFileEventFlag( libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT );
             }
         }
-    }     // Give player third fused shadow.
+    }
 
     KEEP_FUNC void _02_secondMirrorShardItemFunc()
     {
+        // Give player second mirror shard.
         libtp::tp::d_save::onCollectMirror( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect,
                                             '\x01' );
-    }     // Give player second mirror shard.
+    }
 
     KEEP_FUNC void _02_thirdMirrorShardItemFunc()
     {
+        // Give player third mirror shard.
         libtp::tp::d_save::onCollectMirror( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect,
                                             '\x02' );
-    }     // Give player third mirror shard.
+    }
 
     KEEP_FUNC void _02_fourthMirrorShardItemFunc()
     {
+        // Give player fourth mirror shard.
         libtp::tp::d_save::onCollectMirror( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect,
                                             '\x03' );
-        if ( randoIsEnabled( randomizer ) )
+
+        rando::Randomizer* rando = randomizer;
+        if ( randoIsEnabled( rando ) )
         {
+            rando::Header* headerPtr = rando->m_Seed->m_Header;
+
             // If the player has the castle requirement set to Mirror Shards.
-            if ( randomizer->m_Seed->m_Header->castleRequirements == 2 )
+            if ( headerPtr->castleRequirements == 2 )
             {
                 events::setSaveFileEventFlag( libtp::data::flags::BARRIER_GONE );
             }
             // If the player has the palace requirement set to Mirror Shards.
-            if ( randomizer->m_Seed->m_Header->palaceRequirements == 2 )
+            if ( headerPtr->palaceRequirements == 2 )
             {
                 events::setSaveFileEventFlag( libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT );
             }
         }
-    }     // Give player fourth mirror shard.
+    }
 
     KEEP_FUNC void _02_endingBlowItemFunc()
     {
+        // Learned Ending Blow.
         events::setSaveFileEventFlag( libtp::data::flags::ENDING_BLOW_UNLOCKED );
-    }     // Learned Ending Blow.
+    }
 
     KEEP_FUNC void _02_shieldAttackItemFunc()
     {
+        // Learned Shield Attack.
         events::setSaveFileEventFlag( libtp::data::flags::SHIELD_ATTACK_UNLOCKED );
-    }     // Learned Shield Attack.
+    }
 
     KEEP_FUNC void _02_backSliceItemFunc()
     {
+        // Learned Back Slice.
         events::setSaveFileEventFlag( libtp::data::flags::BACKSLICE_UNLOCKED );
-    }     // Learned Back Slice.
+    }
 
     KEEP_FUNC void _02_helmSplitterItemFunc()
     {
+        // Learned Helm Splitter.
         events::setSaveFileEventFlag( libtp::data::flags::HELM_SPLITTER_UNLOCKED );
-    }     // Learned Helm Splitter.
+    }
 
     KEEP_FUNC void _02_mortalDrawItemFunc()
     {
+        // Learned Mortal Draw.
         events::setSaveFileEventFlag( libtp::data::flags::MORTAL_DRAW_UNLOCKED );
-    }     // Learned Mortal Draw.
+    }
 
     KEEP_FUNC void _02_jumpStrikeItemFunc()
     {
+        // Learned Jump Strike.
         events::setSaveFileEventFlag( libtp::data::flags::JUMP_STRIKE_UNLOCKED );
-    }     // Learned Jump Strike.
+    }
 
     KEEP_FUNC void _02_greatSpinItemFunc()
     {
+        // Learned Great Spin.
         events::setSaveFileEventFlag( libtp::data::flags::GREAT_SPIN_UNLOCKED );
-    }     // Learned Great Spin.
+    }
 
     KEEP_FUNC void _02_lanayruVesselItemFunc()
     {
         // Set the flag for lanayru twilight to be cleared.
         libtp::tp::d_save::onLightDropGetFlag( &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.light_drop,
                                                '\x02' );
+
         events::setSaveFileEventFlag( libtp::data::flags::MALO_MART_FUNDRAISING_STARTS );     // Enable Malo Mart Donation
     }
 
@@ -671,7 +709,7 @@ namespace mod::game_patch
     {
         // Failsafe: Make sure the count does not somehow exceed 100
         uint8_t* triggerCount = &rando::foolishItems.triggerCount;
-        uint32_t count = *triggerCount;
+        const uint32_t count = *triggerCount;
         if ( count < 100 )
         {
             *triggerCount = count + 1;
@@ -682,6 +720,7 @@ namespace mod::game_patch
     {
         bool result =
             libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Ancient_Sky_Book_First_Character );
+
         return static_cast<int32_t>( result );
     }
 
@@ -689,6 +728,7 @@ namespace mod::game_patch
     {
         bool result =
             libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Ancient_Sky_Book_Second_Character );
+
         return static_cast<int32_t>( result );
     }
 
@@ -696,6 +736,7 @@ namespace mod::game_patch
     {
         bool result =
             libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Ancient_Sky_Book_Third_Character );
+
         return static_cast<int32_t>( result );
     }
 
@@ -703,6 +744,7 @@ namespace mod::game_patch
     {
         bool result =
             libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Ancient_Sky_Book_Fourth_Character );
+
         return static_cast<int32_t>( result );
     }
 
@@ -710,6 +752,7 @@ namespace mod::game_patch
     {
         bool result =
             libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit( rando::customItems::Ancient_Sky_Book_Fifth_Character );
+
         return static_cast<int32_t>( result );
     }
 

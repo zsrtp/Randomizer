@@ -94,7 +94,7 @@ namespace mod::item_wheel_menu
         using namespace libtp::tp::m_do_controller_pad;
         using namespace libtp::data::items;
 
-        ItemWheelMenuData* data = &itemWheelMenuData;
+        const ItemWheelMenuData* data = &itemWheelMenuData;
 
         // Failsafe: If textData is not defined, then none of the strings are loaded
         if ( !data->textData )
@@ -121,8 +121,8 @@ namespace mod::item_wheel_menu
             }
         }
 
-        ItemWheelMenuStrings* strings = &data->strings;
-        ItemWheelMenuOffsets* offsets = &data->offsets;
+        const ItemWheelMenuStrings* strings = &data->strings;
+        const ItemWheelMenuOffsets* offsets = &data->offsets;
 
         // Get the current position of the ring
         const float* ringPos = reinterpret_cast<float*>( reinterpret_cast<uint32_t>( dMenuRing ) + 0x568 );
@@ -188,9 +188,11 @@ namespace mod::item_wheel_menu
 
         // Get the current seed
         bool seedIsLoaded = false;
-        if ( randoIsEnabled( randomizer ) )
+        rando::Randomizer* rando = randomizer;
+
+        if ( randoIsEnabled( rando ) )
         {
-            rando::MinSeedInfo* minSeedInfo = randomizer->m_SeedInfo.minSeedInfo;
+            rando::MinSeedInfo* minSeedInfo = rando->m_SeedInfo.minSeedInfo;
             if ( minSeedInfo )
             {
                 snprintf( buf, sizeof( buf ), "%s: %s", strings->seedIsLoaded, minSeedInfo->fileName );
@@ -234,8 +236,8 @@ namespace mod::item_wheel_menu
 
         uint32_t shadowsCount = 0;
         uint32_t shardsCount = 0;
-        uint8_t collectedShadows = playerCollectPtr->crystal;
-        uint8_t collectedShards = playerCollectPtr->mirror;
+        const uint32_t collectedShadows = playerCollectPtr->crystal;
+        const uint32_t collectedShards = playerCollectPtr->mirror;
 
         for ( uint32_t b = 5; b < 8; b++ )
         {
@@ -276,7 +278,7 @@ namespace mod::item_wheel_menu
                           textSize );
 
         // Get the offset for the pumpkin value
-        bool hasPumpkin = libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::TOLD_YETA_ABOUT_PUMPKIN );
+        const bool hasPumpkin = libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::TOLD_YETA_ABOUT_PUMPKIN );
         uint32_t pumpkinValueOffset;
 
         if ( hasPumpkin )
@@ -301,7 +303,7 @@ namespace mod::item_wheel_menu
         events::drawText( strings->cheese, ringPosX + cheesePosXOffset, ringPosY + cheesePosYOffset, mainTextColor, textSize );
 
         // Get the offset for the cheese value
-        bool hasCheese = libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::TOLD_YETA_ABOUT_CHEESE );
+        const bool hasCheese = libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::TOLD_YETA_ABOUT_CHEESE );
         uint32_t cheeseValueOffset;
 
         if ( hasCheese )
@@ -331,7 +333,7 @@ namespace mod::item_wheel_menu
                           textSize );
 
         // Get the offset for the gate keys value
-        bool hasGateKeys = events::haveItem( libtp::data::items::Gate_Keys );
+        const bool hasGateKeys = events::haveItem( libtp::data::items::Gate_Keys );
         uint32_t gateKeysValueOffset;
 
         if ( hasGateKeys )
@@ -430,15 +432,17 @@ namespace mod::item_wheel_menu
         // constexpr int32_t compassCountsPosYOffset = areasPosYOffset;
 
         // Get the node id for the current area
-        int32_t currentAreaNodeId = events::getCurrentAreaNodeId();
+        const int32_t currentAreaNodeId = events::getCurrentAreaNodeId();
 
         // Temporary variable to keep track of current y coordinate
         int32_t tempPosY = ringPosY + areasPosYOffset;
 
-        const char** areas = strings->areasBeingTracked;
+        const char* const* areas = strings->areasBeingTracked;
+        const uint8_t* areaColorsPtr = &areaColorIds[0];
+
         for ( uint32_t i = 0; i < TrackedAreas::TRACKED_AREAS_END; i++ )
         {
-            uint32_t currentColor = libtp::tp::d_msg_class::getFontGCColorTable( areaColorIds[i], 0 );
+            const uint32_t currentColor = libtp::tp::d_msg_class::getFontGCColorTable( areaColorsPtr[i], 0 );
 
             // Draw the current area
             events::drawText( areas[i], ringPosX + areasPosXOffset, tempPosY, currentColor, textSize );
@@ -447,13 +451,13 @@ namespace mod::item_wheel_menu
             if ( currentAreaNodeId >= 0 )
             {
                 // Get the small key count for the current area
-                uint8_t* memoryFlags =
+                const uint8_t* memoryFlags =
                     events::getNodeMemoryFlags( smallKeyAreaNodes[i], static_cast<AreaNodesID>( currentAreaNodeId ) );
 
-                uint8_t smallKeyCount = memoryFlags[0x1C];
-                uint8_t dungeonBits = memoryFlags[0x1D];
+                const uint32_t smallKeyCount = memoryFlags[0x1C];
+                const uint32_t dungeonBits = memoryFlags[0x1D];
 
-                snprintf( buf, sizeof( buf ), "%" PRIu8, smallKeyCount );
+                snprintf( buf, sizeof( buf ), "%" PRIu32, smallKeyCount );
 
                 // Draw the small key count for the current area
                 events::drawText( buf, ringPosX + smallKeyCountsPosXOffset, tempPosY, currentColor, textSize );
@@ -463,13 +467,13 @@ namespace mod::item_wheel_menu
                 {
                     // Get the big key text
                     // Goron Mines has its big key split into 3 parts
-                    bool hasBigKey = dungeonBits & 0x4;
+                    const bool hasBigKey = dungeonBits & 0x4;
                     int32_t bigKeyValueOffset;
                     const char* bigKeyText;
 
                     if ( i == TrackedAreas::GORON_MINES )
                     {
-                        bigKeyValueOffset = offsets->valuesBigKeysMinesOffset;
+                        bigKeyValueOffset = static_cast<int32_t>( offsets->valuesBigKeysMinesOffset );
                         uint32_t bigKeyCount = 0;
 
                         // If the big key dungeon flag is set, then assume all 3 pieces have been obtained
@@ -516,7 +520,7 @@ namespace mod::item_wheel_menu
                                       textSize );
 
                     // Get the value for the dungeon map
-                    bool hasMap = dungeonBits & 0x1;
+                    const bool hasMap = dungeonBits & 0x1;
                     uint32_t mapValueOffset;
 
                     if ( hasMap )
@@ -536,7 +540,7 @@ namespace mod::item_wheel_menu
                                       textSize );
 
                     // Get the value for the compass
-                    bool hasCompass = dungeonBits & 0x2;
+                    const bool hasCompass = dungeonBits & 0x2;
                     uint32_t compassValueOffset;
 
                     if ( hasCompass )

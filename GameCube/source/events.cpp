@@ -45,13 +45,19 @@ namespace mod::events
 
     libtp::tp::dzx::ACTR AuruActr =
         { "Rafrel", 0x00001D01, -116486.945f, -13860.f, 58533.0078f, 0, static_cast<int16_t>( 0xCCCD ), 0, 0xFFFF };
+
     libtp::tp::dzx::ACTR ItemActr =
         { "item", 0xF3FFFF04, -108290.086f, -18654.748f, 45935.2969f, 0, static_cast<int16_t>( 0x1 ), 0x3F, 0xFFFF };
+
     libtp::tp::dzx::ACTR EponaActr = { "Horse", 0x00000F0D, -1200.f, 367.f, 6100.f, 0, -180, 0, 0xFFFF };
+
     libtp::tp::dzx::SCOB HorseJumpScob =
         { "Hjump", 0x044FFF02, 5600.f, -5680.f, 52055.f, 0, static_cast<int16_t>( 0x4000 ), 0, 0xFFFF, 0x20, 0x2D, 0x2D, 0xFF };
+
     libtp::tp::dzx::ACTR ForestGWolfActr = { "GWolf", 0x05FF01FF, -35178.f, 430.21f, -21503.6f, 0, -0x4000, 0xFF, 0xFFFF };
+
     libtp::tp::dzx::ACTR ImpPoeActr = { "E_hp", 0xFF031E00, 4531.19f, -30.f, 2631.961f, 0, 0, 0x0, 0xFFFF };
+
     libtp::tp::dzx::ACTR CampBoarActr =
         { "E_wb", 0xFFFFFFFF, 1650.f, 0.f, 1250.f, 0, static_cast<int16_t>( 0xA000 ), 0x0, 0xFFFF };
 
@@ -94,7 +100,7 @@ namespace mod::events
         if ( ( strcmp( playPtr->mNextStage.stageValues.mStage, "F_SP103" ) == 0 ) && ( currentRoom == 1 ) &&
              ( currentPoint == 0x1 ) )     // If we are spawning in Ordon for the first time.
         {
-            savePtr->save_file.player.player_status_b.skyAngle = 180;
+            savePtr->save_file.player.player_status_b.skyAngle = 180.f;
 
             if ( d_a_alink::dComIfGs_isEventBit( flags::ORDON_DAY_2_OVER ) )
             {
@@ -110,6 +116,7 @@ namespace mod::events
         {
             d_save::offSwitch_dSv_memBit( &savePtr->memory.temp_flags,
                                           0xA );     // Fan in main room active
+
             d_save::offSwitch_dSv_memBit( &savePtr->memory.temp_flags,
                                           0xF );     // Main Room 1F explored
         }
@@ -123,15 +130,16 @@ namespace mod::events
         randomizer->overrideREL();
 
         // Static REL overrides and patches
-        uint32_t relPtrRaw = reinterpret_cast<uint32_t>( dmc->mModule );
+        const libtp::gc_wii::os_module::OSModuleInfo* modulePtr = dmc->mModule;
+        const uint32_t relPtrRaw = reinterpret_cast<uint32_t>( modulePtr );
+        const auto stagesPtr = &libtp::data::stage::allStages[0];
 
-        switch ( dmc->mModule->id )
+        switch ( modulePtr->id )
         {
             // Door - Shutter
             case D_A_DOOR_SHUTTER:
             {
-                if ( libtp::tp::d_a_alink::checkStageName(
-                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) )
+                if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) )
                 {
                     // Set the call to checkOpenDoor to always return true when in SPR
                     performStaticASMReplacement( relPtrRaw + 0xD68, ASM_LOAD_IMMEDIATE( 3, 1 ) );
@@ -151,8 +159,7 @@ namespace mod::events
             // d_kankyo tag 11
             case D_A_KYTAG11:
             {
-                if ( libtp::tp::d_a_alink::checkStageName(
-                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hyrule_Field] ) )
+                if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Hyrule_Field] ) )
                 {
                     // Nop out the instruction that causes the time flow to not consider the mTimeSpeed variable in Field.
                     performStaticASMReplacement( relPtrRaw + 0x2CC, ASM_NOP );
@@ -191,9 +198,7 @@ namespace mod::events
             {
                 // Nop out the instruction that stores the new total small key value when the game attempts to
                 // remove a small key from the inventory when opening the boss door
-                if ( libtp::tools::playerIsInRoomStage(
-                         2,
-                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Lakebed_Temple] ) )
+                if ( libtp::tools::playerIsInRoomStage( 2, stagesPtr[libtp::data::stage::stageIDs::Lakebed_Temple] ) )
                 {
                     performStaticASMReplacement( relPtrRaw + 0x1198, ASM_NOP );     // Previous: subi r0,r3,1
                 }
@@ -244,7 +249,6 @@ namespace mod::events
                 libtp::patch::writeStandardBranches( relPtrRaw + 0xB9C,
                                                      assembly::asmAdjustSkyCharacterStart,
                                                      assembly::asmAdjustSkyCharacterEnd );
-
                 break;
             }
 
@@ -259,11 +263,12 @@ namespace mod::events
                         using namespace libtp::data;
                         using namespace rando;
 
-                        uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x92A );
+                        uint32_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x92A );
 
                         // Must check for foolish items first, as they will use the item id of the item they are copying
-                        itemID = rando::getFoolishItemModelId( itemID );
+                        itemID = rando::getFoolishItemModelId( static_cast<uint8_t>( itemID ) );
 
+                        const float height = *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 );
                         switch ( itemID )
                         {
                             case items::Master_Sword:
@@ -273,12 +278,12 @@ namespace mod::events
                             case items::Ordon_Shield:
                             case items::Spinner:
                             {
-                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 30.f;
+                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) = height + 30.f;
                                 break;
                             }
                             case items::Wooden_Sword:
                             {
-                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 60.f;
+                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) = height + 60.f;
                                 break;
                             }
                             case items::Ordon_Sword:
@@ -291,13 +296,13 @@ namespace mod::events
                             case items::Dominion_Rod_Uncharged:
                             case items::Dominion_Rod:
                             {
-                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 50.f;
+                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) = height + 50.f;
                                 break;
                             }
 
                             case items::Heros_Bow:
                             {
-                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 55.f;
+                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) = height + 55.f;
                                 break;
                             }
                             case items::Boomerang:
@@ -305,7 +310,7 @@ namespace mod::events
                             case items::Big_Quiver:
                             case items::Giant_Quiver:
                             {
-                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 40.f;
+                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) = height + 40.f;
                                 break;
                             }
                             case customItems::Forest_Temple_Small_Key:
@@ -335,13 +340,13 @@ namespace mod::events
                             case items::Bomb_Bag_Regular_Bombs:
                             case items::Poe_Soul:
                             {
-                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 20.f;
+                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) = height + 20.f;
                                 break;
                             }
 
                             case items::Magic_Armor:
                             {
-                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) += 25.f;
+                                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x4D4 ) = height + 25.f;
                                 break;
                             }
                             default:
@@ -361,7 +366,9 @@ namespace mod::events
                     {
                         using namespace libtp::data;
 
-                        uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x92A );
+                        const uint32_t itemID =
+                            *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daObjLifePtr ) + 0x92A );
+
                         switch ( itemID )
                         {
                             case items::Green_Rupee:
@@ -434,9 +441,9 @@ namespace mod::events
             // Post-Boss Portal
             case D_A_OBJ_BOSSWARP:
             {
+                // Replace dungeon reward that is given after beating a boss and show the appropriate text.
                 libtp::patch::writeBranchBL( relPtrRaw + 0x1884, libtp::tp::d_item::execItemGet );
                 performStaticASMReplacement( relPtrRaw + 0x1888, ASM_BRANCH( 0xA8 ) );
-                // Replace dungeon reward that is given after beating a boss and show the appropriate text.
                 break;
             }
 
@@ -475,8 +482,7 @@ namespace mod::events
             // SPR Suit of Armor
             case D_A_E_MD:
             {
-                if ( libtp::tp::d_a_alink::checkStageName(
-                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) )
+                if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Snowpeak_Ruins] ) )
                 {
                     // Branch to code to create actor if we are in snowpeak ruins, regardless of BossFlags value.
                     performStaticASMReplacement( relPtrRaw + 0x14B8, ASM_BRANCH( 0x1C ) );
@@ -547,9 +553,9 @@ namespace mod::events
                         // This implementation reduces instruction count to 49 compared to naive
                         // approach's 86.
 
-                        const int16_t collisionRotY = lv5KeyPtr->mCollisionRot.y;
-                        bool isCompareX = collisionRotY & 0x4000;
-                        bool isCompareGreater = collisionRotY & 0x8000;
+                        const int32_t collisionRotY = lv5KeyPtr->mCollisionRot.y;
+                        const bool isCompareX = collisionRotY & 0x4000;
+                        const bool isCompareGreater = collisionRotY & 0x8000;
 
                         float* playerAxisPos = nullptr;
                         float* lockPos = nullptr;
@@ -607,8 +613,7 @@ namespace mod::events
             // Shadow Beast
             case D_A_E_S1:
             {
-                if ( libtp::tp::d_a_alink::checkStageName(
-                         libtp::data::stage::allStages[libtp::data::stage::stageIDs::Upper_Zoras_River] ) )
+                if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[libtp::data::stage::stageIDs::Upper_Zoras_River] ) )
                 {
                     // Set human flags After Defeating Shadow Beasts By Iza
                     libtp::patch::writeBranchBL( relPtrRaw + 0x407C, assembly::asmAdjustIzaWolf );
@@ -749,15 +754,13 @@ namespace mod::events
     {
         if ( getCurrentSeed( randomizer ) )
         {
-            uint8_t itemID = randomizer->overrideBugReward( bugID );
-            *reinterpret_cast<uint16_t*>( ( *reinterpret_cast<uint32_t*>( msgEventAddress + 0xA04 ) + 0x3580 ) + 0x6 ) =
-                itemID;     // Change Big Wallet Item
-            *reinterpret_cast<uint16_t*>( ( *reinterpret_cast<uint32_t*>( msgEventAddress + 0xA04 ) + 0x3628 ) + 0x6 ) =
-                itemID;     // Change Giant Wallet Item
-            *reinterpret_cast<uint16_t*>( ( *reinterpret_cast<uint32_t*>( msgEventAddress + 0xA04 ) + 0x35c8 ) + 0x6 ) =
-                itemID;     // Change Purple Rupee Item
-            *reinterpret_cast<uint16_t*>( ( *reinterpret_cast<uint32_t*>( msgEventAddress + 0xA04 ) + 0x35F0 ) + 0x6 ) =
-                itemID;     // Change Orange Rupee Item
+            const uint8_t itemID = randomizer->overrideBugReward( bugID );
+            uint32_t addressRaw = *reinterpret_cast<uint32_t*>( msgEventAddress + 0xA04 );
+
+            *reinterpret_cast<uint16_t*>( ( addressRaw + 0x3580 ) + 0x6 ) = itemID;     // Change Big Wallet Item
+            *reinterpret_cast<uint16_t*>( ( addressRaw + 0x3628 ) + 0x6 ) = itemID;     // Change Giant Wallet Item
+            *reinterpret_cast<uint16_t*>( ( addressRaw + 0x35c8 ) + 0x6 ) = itemID;     // Change Purple Rupee Item
+            *reinterpret_cast<uint16_t*>( ( addressRaw + 0x35F0 ) + 0x6 ) = itemID;     // Change Orange Rupee Item
         }
     }
 
@@ -773,28 +776,31 @@ namespace mod::events
 
     void onAdjustFieldItemParams( libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife )
     {
+        using namespace libtp::data::stage;
+        using namespace libtp::data::items;
+
         if ( !getCurrentSeed( randomizer ) )
         {
             return;
         }
 
-        using namespace libtp::data::stage;
-        using namespace libtp::data::items;
+        const auto stagesPtr = &libtp::data::stage::allStages[0];
 
-        if ( libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Hyrule_Field] ) ||
-             libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Upper_Zoras_River] ) ||
-             libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Sacred_Grove] ) ||
-             libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Stallord] ) ||
-             libtp::tp::d_a_alink::checkStageName( allStages[stageIDs::Zant_Main_Room] ) )
+        if ( libtp::tp::d_a_alink::checkStageName( stagesPtr[stageIDs::Hyrule_Field] ) ||
+             libtp::tp::d_a_alink::checkStageName( stagesPtr[stageIDs::Upper_Zoras_River] ) ||
+             libtp::tp::d_a_alink::checkStageName( stagesPtr[stageIDs::Sacred_Grove] ) ||
+             libtp::tp::d_a_alink::checkStageName( stagesPtr[stageIDs::Stallord] ) ||
+             libtp::tp::d_a_alink::checkStageName( stagesPtr[stageIDs::Zant_Main_Room] ) )
         {
             *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( fopAC ) + 0x962 ) =
                 0x226;                  // Y Rotation Speed modifier. 0x226 is the value used when the item is on the ground.
+
             fopAC->mGravity = 0.0f;     // gravity
         }
-        uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( fopAC ) + 0x92A );
+        uint32_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( fopAC ) + 0x92A );
 
         // Must check for foolish items first, as they will use the item id of the item they are copying
-        itemID = rando::getFoolishItemModelId( itemID );
+        itemID = rando::getFoolishItemModelId( static_cast<uint8_t>( itemID ) );
 
         switch ( itemID )
         {
@@ -820,7 +826,7 @@ namespace mod::events
             case Mirror_Piece_3:
             case Mirror_Piece_4:
             {
-                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 0.7;     // scale
+                *reinterpret_cast<float*>( reinterpret_cast<uint32_t>( daObjLife ) + 0x7c ) = 0.7f;     // scale
                 break;
             }
             default:
@@ -840,7 +846,7 @@ namespace mod::events
 
         using namespace libtp::data::items;
 
-        uint8_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daDitem ) + 0x92A );
+        const uint32_t itemID = *reinterpret_cast<uint8_t*>( reinterpret_cast<uint32_t>( daDitem ) + 0x92A );
         switch ( itemID )
         {
             case Mirror_Piece_2:
@@ -871,7 +877,7 @@ namespace mod::events
                  libtp::data::stage::allStages[libtp::data::stage::stageIDs::Ordon_Village_Interiors] ) )
         {
             // Check to see if ckecking for the Iron Boots
-            uint16_t item = *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( unk2 ) + 0x4 );
+            const uint32_t item = *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( unk2 ) + 0x4 );
 
             if ( item == libtp::data::items::Iron_Boots )
             {
@@ -886,7 +892,7 @@ namespace mod::events
     int32_t proc_query023( void* unk1, void* unk2, int32_t unk3 )
     {
         // Call the original function immediately as we need its value
-        int32_t numBombs = mod::return_query023( unk1, unk2, unk3 );
+        const int32_t numBombs = mod::return_query023( unk1, unk2, unk3 );
 
         // Check to see if currently in one of the Kakariko interiors
         if ( libtp::tools::playerIsInRoomStage(
@@ -988,11 +994,13 @@ namespace mod::events
     void loadCustomActors()
     {
         using namespace libtp;
-        if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) )
+
+        const auto stagesPtr = &data::stage::allStages[0];
+        if ( tp::d_a_alink::checkStageName( stagesPtr[data::stage::stageIDs::Faron_Woods] ) )
         {
             tools::SpawnActor( 0, EponaActr );
         }
-        else if ( ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Ordon_Village] ) &&
+        else if ( ( tp::d_a_alink::checkStageName( stagesPtr[data::stage::stageIDs::Ordon_Village] ) &&
                     ( libtp::tools::getCurrentRoomNo() == 0 ) ) )
         {
             libtp::tp::dzx::ACTR localEponaActor;
@@ -1006,7 +1014,9 @@ namespace mod::events
     void loadCustomRoomActors()
     {
         using namespace libtp;
-        if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Lake_Hylia] ) )
+
+        const auto stagesPtr = &data::stage::allStages[0];
+        if ( tp::d_a_alink::checkStageName( stagesPtr[data::stage::stageIDs::Lake_Hylia] ) )
         {
             if ( libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::SKY_CANNON_REPAIRED ) )
             {
@@ -1019,7 +1029,7 @@ namespace mod::events
             // softlock.
             tools::SpawnActor( 0, ItemActr );
         }
-        else if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Hyrule_Field] ) &&
+        else if ( tp::d_a_alink::checkStageName( stagesPtr[data::stage::stageIDs::Hyrule_Field] ) &&
                   ( !tp::d_save::isEventBit( &tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags,
                                              data::flags::CLEARED_ELDIN_TWILIGHT ) ) )
         {
@@ -1034,17 +1044,17 @@ namespace mod::events
             localGanonBarrierActor.pos.z -= 270.f;
             tools::SpawnActor( 7, localGanonBarrierActor );
         }
-        else if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Faron_Woods] ) &&
+        else if ( tp::d_a_alink::checkStageName( stagesPtr[data::stage::stageIDs::Faron_Woods] ) &&
                   ( tp::d_save::isEventBit( &tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags,
                                             data::flags::ORDON_DAY_2_OVER ) ) )
         {
             tools::SpawnActor( 6, ForestGWolfActr );
         }
-        else if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Castle_Town_Shops] ) )
+        else if ( tp::d_a_alink::checkStageName( stagesPtr[data::stage::stageIDs::Castle_Town_Shops] ) )
         {
             tools::SpawnActor( 6, ImpPoeActr );
         }
-        else if ( tp::d_a_alink::checkStageName( data::stage::allStages[data::stage::stageIDs::Bulblin_Camp] ) &&
+        else if ( tp::d_a_alink::checkStageName( stagesPtr[data::stage::stageIDs::Bulblin_Camp] ) &&
                   !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::ESCAPED_BURNING_TENT_IN_BULBLIN_CAMP ) )
         {
             tools::SpawnActor( 1, CampBoarActr );
@@ -1112,7 +1122,7 @@ namespace mod::events
         }
 
         // Ensure that the Z Button is not dimmed
-        float zButtonAlpha = *reinterpret_cast<float*>( zButtonAlphaPtr + 0x720 );
+        const float zButtonAlpha = *reinterpret_cast<float*>( zButtonAlphaPtr + 0x720 );
         if ( zButtonAlpha != 1.f )
         {
             return;
@@ -1165,32 +1175,38 @@ namespace mod::events
     void handleTimeOfDayChange()
     {
         using namespace libtp::tp::d_com_inf_game;
+
         if ( libtp::tp::d_stage::GetTimePass() )
         {
             if ( timeChange == 0 )     // No point in changing the values if we are already changing the time
             {
+                libtp::tp::d_kankyo::EnvLight* envLightPtr = &libtp::tp::d_kankyo::env_light;
+
                 if ( !libtp::tp::d_kankyo::dKy_daynight_check() )     // Day time
                 {
-                    timeChange = 1;                                      // Changing to night
-                    libtp::tp::d_kankyo::env_light.mTimeSpeed = 1.f;     // Increase time speed
+                    timeChange = 1;                                   // Changing to night
+                    envLightPtr->mTimeSpeed = 1.f;                    // Increase time speed
                 }
                 else
                 {
-                    timeChange = 2;                                      // Changing to day
-                    libtp::tp::d_kankyo::env_light.mTimeSpeed = 1.f;     // Increase time speed
+                    timeChange = 2;                    // Changing to day
+                    envLightPtr->mTimeSpeed = 1.f;     // Increase time speed
                 }
             }
         }
         else
         {
+            libtp::tp::d_save::dSv_player_status_b_c* playerStatusPtr = &dComIfG_gameInfo.save.save_file.player.player_status_b;
+
             if ( !libtp::tp::d_kankyo::dKy_daynight_check() )     // Day time
             {
-                dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle = 285;
+                playerStatusPtr->skyAngle = 285;
             }
             else
             {
-                dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle = 105;
+                playerStatusPtr->skyAngle = 105;
             }
+
             dComIfG_gameInfo.play.mNextStage.enabled |= 0x1;
         }
     }
@@ -1198,19 +1214,21 @@ namespace mod::events
     void handleTimeSpeed()
     {
         using namespace libtp::tp::d_com_inf_game;
+
+        libtp::tp::d_kankyo::EnvLight* envLightPtr = &libtp::tp::d_kankyo::env_light;
         if ( !libtp::tp::d_kankyo::dKy_daynight_check() )     // Day time
         {
-            if ( timeChange == 2 )     // We want it to be day time
+            if ( timeChange == 2 )                            // We want it to be day time
             {
-                libtp::tp::d_kankyo::env_light.mTimeSpeed = 0.012f;     // Set time speed to normal
+                envLightPtr->mTimeSpeed = 0.012f;             // Set time speed to normal
                 timeChange = 0;
             }
         }
         else
         {
-            if ( timeChange == 1 )     // We want it to be night time
+            if ( timeChange == 1 )                    // We want it to be night time
             {
-                libtp::tp::d_kankyo::env_light.mTimeSpeed = 0.012f;     // Set time speed to normal
+                envLightPtr->mTimeSpeed = 0.012f;     // Set time speed to normal
                 timeChange = 0;
             }
         }
@@ -1256,7 +1274,7 @@ namespace mod::events
             }
 
             // Ensure that the Z Button is not dimmed
-            float zButtonAlpha = *reinterpret_cast<float*>( zButtonAlphaPtr + 0x720 );
+            const float zButtonAlpha = *reinterpret_cast<float*>( zButtonAlphaPtr + 0x720 );
             if ( zButtonAlpha != 1.f )
             {
                 return false;
@@ -1287,7 +1305,7 @@ namespace mod::events
 
         // Convert x, y, width, and height to floats
         constexpr int32_t numValues = 4;
-        int32_t values[numValues] = { x, y, width, height };
+        const int32_t values[numValues] = { x, y, width, height };
         float valuesOut[numValues];
 
         for ( int32_t i = 0; i < numValues; i++ )
@@ -1317,7 +1335,7 @@ namespace mod::events
 
         if ( drawBorder )
         {
-            uint8_t alpha = color & 0xFF;
+            const uint8_t alpha = color & 0xFF;
             uint32_t borderColor;
 
             if ( color < 0x80000000 )

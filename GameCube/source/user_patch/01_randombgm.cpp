@@ -25,15 +25,15 @@ namespace mod
         }
 
         // Make sure id is a bgm
-        uint32_t bgmId = BGMid.id;
+        const uint32_t bgmId = BGMid.id;
         if ( ( bgmId < 0x1000000 ) || ( bgmId >= 0x2000000 ) )
         {
             // Call the original function
             return return_sceneChange( sceneMgr, BGMid, SeWave1, SeWave2, BgmWave1, BgmWave2, DemoWave, param_7 );
         }
 
-        uint32_t entries = seed->m_BgmTableEntries;
-        uint32_t bgmIdCheck = bgmId - 0x1000000;
+        const uint32_t entries = seed->m_BgmTableEntries;
+        const uint32_t bgmIdCheck = bgmId - 0x1000000;
 
         for ( uint32_t i = 0; i < entries; i++ )
         {
@@ -73,7 +73,7 @@ namespace mod
             return return_startSound( soundMgr, soundId, soundHandle, pos );
         }
 
-        uint32_t id = soundId.id;
+        const uint32_t id = soundId.id;
         if ( ( id < 0x1000000 ) || ( id >= 0x2000000 ) )
         {
             // Call the original function
@@ -81,8 +81,8 @@ namespace mod
         }
 
         // Sound playing is part of the bgm table
-        uint32_t entries = seed->m_FanfareTableEntries;
-        uint32_t idCheck = id - 0x1000000;
+        const uint32_t entries = seed->m_FanfareTableEntries;
+        const uint32_t idCheck = id - 0x1000000;
 
         for ( uint32_t i = 0; i < entries; i++ )
         {
