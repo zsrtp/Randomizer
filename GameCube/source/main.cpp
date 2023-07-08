@@ -49,6 +49,7 @@
 #include "gc_wii/OSInterrupt.h"
 #include "tp/d_kankyo.h"
 #include "rando/customItems.h"
+#include "cxx.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"

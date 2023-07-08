@@ -22,6 +22,7 @@
 #include "tp/d_a_shop_item_static.h"
 #include "game_patch/game_patch.h"
 #include "rando/customItems.h"
+#include "cxx.h"
 
 namespace mod::rando
 {
