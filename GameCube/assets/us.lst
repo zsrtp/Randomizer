@@ -61,6 +61,7 @@
 8003422c:onCollectCrystal
 80032fb8:setItem
 80034934:isDungeonItem
+80034918:onDungeonItem
 800349bc:isEventBit
 800352b0:offSwitch_dSv_info
 80034810:onSwitch_dSv_memBit

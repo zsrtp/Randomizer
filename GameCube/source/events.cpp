@@ -991,6 +991,42 @@ namespace mod::events
         return mod::return_isDungeonItem( memBitPtr, memBit );
     }
 
+    void proc_onDungeonItem( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit )
+    {
+        using namespace libtp::data::flags;
+        switch ( memBit )
+        {
+            case BOSS_DEFEATED:
+            {
+                if ( randomizer->m_Seed->m_Header->castleRequirements == 3 )     // All Dungeons
+                {
+                    // Check to see if the player has completed all of the other dungeons, if so, destroy the barrier.
+                    uint8_t numDungeons = 0x0;
+                    for ( int32_t i = 0x10; i < 0x18; i++ )
+                    {
+                        if ( libtp::tp::d_save::isDungeonItem(
+                                 &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[i].temp_flags,
+                                 3 ) )
+                        {
+                            numDungeons++;
+                        }
+                    }
+                    if ( numDungeons == 0x7 )     // We check for 7 instead of 8 because when this code runs, the temp_flags for
+                                                  // the current stage has not been updated with the boss flag value yet.
+                    {
+                        events::setSaveFileEventFlag( libtp::data::flags::BARRIER_GONE );
+                    }
+                }
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+        mod::return_onDungeonItem( memBitPtr, memBit );
+    }
+
     void loadCustomActors()
     {
         using namespace libtp;

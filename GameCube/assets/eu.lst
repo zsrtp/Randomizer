@@ -61,6 +61,7 @@
 800333a0:setLineUpItem
 80034aec:isEventBit
 80034a64:isDungeonItem
+80034a48:onDungeonItem
 80034318:onCollectMirror
 800342d4:onCollectCrystal
 80034940:onSwitch_dSv_memBit

@@ -212,6 +212,7 @@ namespace mod
 
     // Save flag functions
     KEEP_VAR bool ( *return_isDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit ) = nullptr;
+    KEEP_VAR void ( *return_onDungeonItem )( libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit ) = nullptr;
     KEEP_VAR bool ( *return_daNpcT_chkEvtBit )( int16_t flag ) = nullptr;
     KEEP_VAR bool ( *return_isEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
     KEEP_VAR void ( *return_onEventBit )( libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag ) = nullptr;
@@ -1265,6 +1266,11 @@ namespace mod
         return events::proc_isDungeonItem( membitPtr, memBit );
     }
 
+    KEEP_FUNC void handle_onDungeonItem( libtp::tp::d_save::dSv_memBit_c* membitPtr, const int32_t memBit )
+    {
+        return events::proc_onDungeonItem( membitPtr, memBit );
+    }
+
     KEEP_FUNC bool handle_daNpcT_chkEvtBit( int16_t flag )
     {
         const auto stagesPtr = &libtp::data::stage::allStages[0];
@@ -1411,47 +1417,6 @@ namespace mod
                 break;
             }
 
-            case PALACE_OF_TWILIGHT_CLEARED:     // Zant Defeated (PoT Story Flag)
-            {
-                if ( checkStageName( stagesPtr[stageIDs::Castle_Town] ) )
-                {
-                    if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( libtp::data::flags::BARRIER_GONE ) )
-                    {
-                        using namespace libtp::data;
-                        if ( randoIsEnabled( rando ) )
-                        {
-                            switch ( rando->m_Seed->m_Header->castleRequirements )
-                            {
-                                case 3:     // All Dungeons
-                                {
-                                    uint8_t numDungeons = 0x0;
-                                    for ( int32_t i = 0x10; i < 0x18; i++ )
-                                    {
-                                        if ( libtp::tp::d_save::isDungeonItem(
-                                                 &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[i]
-                                                      .temp_flags,
-                                                 3 ) )
-                                        {
-                                            numDungeons++;
-                                        }
-                                    }
-                                    if ( numDungeons == 0x8 )
-                                    {
-                                        events::setSaveFileEventFlag( libtp::data::flags::BARRIER_GONE );
-                                    }
-                                    break;
-                                }
-                                default:
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-                break;
-            }
-
             case CITY_IN_THE_SKY_CLEARED:     // City in the Sky Story flag
             {
                 if ( checkStageName( stagesPtr[stageIDs::Mirror_Chamber] ) )
@@ -1583,14 +1548,6 @@ namespace mod
                             return return_onEventBit( eventPtr, flag );     // set PoT story flag
                         }
                     }
-                    break;
-                }
-
-                case BARRIER_GONE:
-                {
-                    libtp::tp::d_save::onSwitch_dSv_memBit(
-                        &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[9].temp_flags,
-                        0x0F );
                     break;
                 }
 

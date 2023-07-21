@@ -154,9 +154,7 @@ namespace mod::rando
             const uint16_t versionMajor = header.versionMajor;
             const uint16_t versionMinor = header.versionMinor;
 
-            if ( CHECK_MIN_SUPPORTED_SEED_DATA_VER_MAJOR( versionMajor ) &&
-                 CHECK_MIN_SUPPORTED_SEED_DATA_VER_MINOR( versionMinor ) &&
-                 CHECK_MAX_FULLY_SUPPORTED_SEED_DATA_VER_MAJOR( versionMajor ) )
+            if ( CHECK_SUPPORTED_SEED_DATA_VER_MAJOR( versionMajor ) && CHECK_SUPPORTED_SEED_DATA_VER_MINOR( versionMinor ) )
             {
                 MinSeedInfo* currentMinSeedInfo = &minSeedInfoBuffer[index];
 

@@ -184,6 +184,7 @@ namespace mod
 
         // Save flag functions
         return_isDungeonItem = patch::hookFunction( tp::d_save::isDungeonItem, mod::handle_isDungeonItem );
+        return_onDungeonItem = patch::hookFunction( tp::d_save::onDungeonItem, mod::handle_onDungeonItem );
         return_daNpcT_chkEvtBit = patch::hookFunction( libtp::tp::d_a_npc::daNpcT_chkEvtBit, mod::handle_daNpcT_chkEvtBit );
         return_isEventBit = patch::hookFunction( libtp::tp::d_save::isEventBit, mod::handle_isEventBit );
         return_onEventBit = patch::hookFunction( libtp::tp::d_save::onEventBit, mod::handle_onEventBit );

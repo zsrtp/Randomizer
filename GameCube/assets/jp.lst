@@ -56,6 +56,7 @@
 800349A4:offEventBit
 800332f8:setLineUpItem
 80034934:isDungeonItem
+80034918:onDungeonItem
 800349bc:isEventBit
 80034860:isSwitch_dSv_memBit
 80034810:onSwitch_dSv_memBit
