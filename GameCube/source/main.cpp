@@ -455,7 +455,7 @@ namespace mod
                 getConsole() << "\r"
                              << "Press X/Y to select a seed\n"
                              << "Press R + Z to close the console\n"
-                             << "[" << selectedSeed + 1 << "/" << static_cast<int32_t>( numSeeds )
+                             << "[" << static_cast<int32_t>( selectedSeed ) + 1 << "/" << static_cast<int32_t>( numSeeds )
                              << "] Seed: " << seedList->m_minSeedInfo[selectedSeed].fileName << "\n";
             }
         }
