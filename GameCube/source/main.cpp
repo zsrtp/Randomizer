@@ -621,6 +621,9 @@ namespace mod
                     {
                         seedRelAction = SEED_ACTION_FATAL;
                     }
+
+                    // The randomizer pointer may have updated by the seed rel, so update the local pointer
+                    rando = randomizer;
                 }
                 else
                 {
@@ -643,6 +646,9 @@ namespace mod
                         {
                             seedRelAction = SEED_ACTION_FATAL;
                         }
+
+                        // The randomizer pointer may have updated by the seed rel, so update the local pointer
+                        rando = randomizer;
                     }
                     else
                     {
