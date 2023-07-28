@@ -25,15 +25,15 @@
 // comparison is always true due to limited range of data type
 // [-Werror=type-limits]" when the macro values are 0.
 #if SUPPORTED_SEED_DATA_VER_MAJOR == 0
-#define CHECK_SUPPORTED_SEED_DATA_VER_MAJOR( version ) 1
+#define CHECK_SUPPORTED_SEED_DATA_VER_MAJOR(version) 1
 #else
-#define CHECK_SUPPORTED_SEED_DATA_VER_MAJOR( version ) static_cast<uint16_t>( version ) == SUPPORTED_SEED_DATA_VER_MAJOR
+#define CHECK_SUPPORTED_SEED_DATA_VER_MAJOR(version) static_cast<uint16_t>(version) == SUPPORTED_SEED_DATA_VER_MAJOR
 #endif
 
 #if SUPPORTED_SEED_DATA_VER_MINOR == 0
-#define CHECK_SUPPORTED_SEED_DATA_VER_MINOR( version ) 1
+#define CHECK_SUPPORTED_SEED_DATA_VER_MINOR(version) 1
 #else
-#define CHECK_SUPPORTED_SEED_DATA_VER_MINOR( version ) static_cast<uint16_t>( version ) == SUPPORTED_SEED_DATA_VER_MINOR
+#define CHECK_SUPPORTED_SEED_DATA_VER_MINOR(version) static_cast<uint16_t>(version) == SUPPORTED_SEED_DATA_VER_MINOR
 #endif
 
 namespace mod::rando
@@ -41,13 +41,13 @@ namespace mod::rando
     class SeedList
     {
        public:
-        SeedList( void );
-        ~SeedList( void );
+        SeedList(void);
+        ~SeedList(void);
 
 #ifdef DVD
-        void GetSeedFiles( const char* seedDirectory, MinSeedInfo* minSeedInfoBuffer );
+        void GetSeedFiles(const char* seedDirectory, MinSeedInfo* minSeedInfoBuffer);
 #else
-        void GetSeedFiles( int32_t chan, MinSeedInfo* minSeedInfoBuffer );
+        void GetSeedFiles(int32_t chan, MinSeedInfo* minSeedInfoBuffer);
 #endif
         // SeedInfo FindSeed( uint64_t seed );
 
@@ -56,5 +56,5 @@ namespace mod::rando
 
         MinSeedInfo* m_minSeedInfo = nullptr;
     };
-}     // namespace mod::rando
+} // namespace mod::rando
 #endif

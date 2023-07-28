@@ -14,20 +14,20 @@ namespace mod::user_patch
 {
     namespace bgm::enemybgm
     {
-        KEEP_VAR void ( *return_startBattleBgm )( libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1 ) = nullptr;
-    }     // namespace bgm::enemybgm
+        KEEP_VAR void (*return_startBattleBgm)(libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1) = nullptr;
+    } // namespace bgm::enemybgm
 
     // Handles if enemy BGM should be enabled
     KEEP_VAR bool disableEnemyBgm = false;
 
-    KEEP_FUNC void handle_startBattleBgm( libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1 )
+    KEEP_FUNC void handle_startBattleBgm(libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1)
     {
-        if ( disableEnemyBgm )
+        if (disableEnemyBgm)
         {
             return;
         }
 
         // Call the original function
-        bgm::enemybgm::return_startBattleBgm( seqMgr, param_1 );
+        bgm::enemybgm::return_startBattleBgm(seqMgr, param_1);
     }
-}     // namespace mod::user_patch
+} // namespace mod::user_patch

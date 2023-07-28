@@ -8,4 +8,4 @@ namespace mod::game_patch
     {
         libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect.poe_count++;
     }
-}     // namespace mod::game_patch
+} // namespace mod::game_patch

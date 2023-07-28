@@ -48,19 +48,18 @@ namespace mod::game_patch
     /**
      * @brief Patches the unused itemFunc corresponding to the poe itemID
      */
-    void _00_poe( void );
+    void _00_poe(void);
     void _00_handle_poeItem();
 
     // 01 - Function definitions used for setting up the custom state function(s)
-    int32_t _01_getLayerNo( const char* stageName, int32_t roomId, int32_t layerOverride );
+    int32_t _01_getLayerNo(const char* stageName, int32_t roomId, int32_t layerOverride);
 
     // 02 - Function definitions for custom items and patched vanilla items
     void _02_modifyItemData();
     void _02_modifyFoolishFieldModel();
-    void _02_modifyFoolishShopModel( uint8_t* foolishModelIndexes, uint32_t loopCurrentCount, uint32_t shopID );
-    void _02_modifyShopModelScale( uint32_t shopID, uint32_t itemID );
-    void giveNodeDungeonItems( const libtp::data::stage::AreaNodesID nodeId,
-                               const libtp::data::items::NodeDungeonItemType type );
+    void _02_modifyFoolishShopModel(uint8_t* foolishModelIndexes, uint32_t loopCurrentCount, uint32_t shopID);
+    void _02_modifyShopModelScale(uint32_t shopID, uint32_t itemID);
+    void giveNodeDungeonItems(const libtp::data::stage::AreaNodesID nodeId, const libtp::data::items::NodeDungeonItemType type);
 
     extern const char* _02_hiddenSkillArc;
     extern const char* _02_mirrorShardArc;
@@ -158,7 +157,7 @@ namespace mod::game_patch
     void _03_increaseClimbSpeed();
 
     // 04 - Function definitions to patch out progressive items
-    uint32_t _04_verifyProgressiveItem( rando::Randomizer* randomizer, uint32_t itemID );
+    uint32_t _04_verifyProgressiveItem(rando::Randomizer* randomizer, uint32_t itemID);
     uint32_t _04_getProgressiveSword();
     uint32_t _04_getProgressiveBow();
     uint32_t _04_getProgressiveSkill();
@@ -168,21 +167,21 @@ namespace mod::game_patch
     uint32_t _04_getProgressiveFusedShadow();
 
     // 05 - Function definitions related to custom messages
-    void _05_setCustomItemMessage( libtp::tp::control::TControl* control,
-                                   const void* TProcessor,
-                                   uint16_t unk3,
-                                   uint16_t msgId,
-                                   rando::Randomizer* randomizer );
+    void _05_setCustomItemMessage(libtp::tp::control::TControl* control,
+                                  const void* TProcessor,
+                                  uint16_t unk3,
+                                  uint16_t msgId,
+                                  rando::Randomizer* randomizer);
 
-    uint32_t _05_getCustomMsgColor( uint8_t colorId );
-    const char* _05_getMsgById( uint32_t msgId );
-    const char* _05_getMsgById( uint32_t msgId, uint16_t* msgSizeOut );
-    const char** _05_replaceMessageString( const char** text );
+    uint32_t _05_getCustomMsgColor(uint8_t colorId);
+    const char* _05_getMsgById(uint32_t msgId);
+    const char* _05_getMsgById(uint32_t msgId, uint16_t* msgSizeOut);
+    const char** _05_replaceMessageString(const char** text);
 
     // 06 - Function definitions for assembly patches
     void _06_writeASMPatches();
 
     // 07 - Function definitions for modifying where the player spawns in specific circumstances.
     void _07_checkPlayerStageReturn();
-}     // namespace mod::game_patch
+} // namespace mod::game_patch
 #endif

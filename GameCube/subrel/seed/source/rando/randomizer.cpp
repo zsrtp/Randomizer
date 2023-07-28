@@ -14,13 +14,13 @@
 
 namespace mod::rando
 {
-    Randomizer::Randomizer( MinSeedInfo* minSeedInfo, uint8_t selectedSeed )
+    Randomizer::Randomizer(MinSeedInfo* minSeedInfo, uint8_t selectedSeed)
     {
         // getConsole() << "Rando loading...\n";
-        loadSeed( minSeedInfo, selectedSeed );
+        loadSeed(minSeedInfo, selectedSeed);
     }
 
-    Randomizer::~Randomizer( void )
+    Randomizer::~Randomizer(void)
     {
         // getConsole() << "Rando unloading...\n";
 
@@ -28,9 +28,9 @@ namespace mod::rando
         delete m_Seed;
     }
 
-    void Randomizer::loadSeed( MinSeedInfo* minSeedInfo, uint8_t selectedSeed )
+    void Randomizer::loadSeed(MinSeedInfo* minSeedInfo, uint8_t selectedSeed)
     {
-        if ( minSeedInfo->fileIndex == 0xFF )
+        if (minSeedInfo->fileIndex == 0xFF)
         {
             getConsole() << "<Randomizer> Error: No such seed (0xFF)\n";
         }
@@ -43,12 +43,12 @@ namespace mod::rando
             m_CurrentSeed = selectedSeed;
 
             // Align to void*, as pointers use the largest variable type in the Seed class
-            m_Seed = new ( sizeof( void* ) ) Seed( CARD_SLOT_A, &m_SeedInfo );
+            m_Seed = new (sizeof(void*)) Seed(CARD_SLOT_A, &m_SeedInfo);
 
-            if ( m_Seed->checkIfSeedLoaded() )
+            if (m_Seed->checkIfSeedLoaded())
             {
                 // Update transformAnywhereEnabled now that a seed is loaded
-                transformAnywhereEnabled = static_cast<bool>( m_Seed->m_Header->transformAnywhere );
+                transformAnywhereEnabled = static_cast<bool>(m_Seed->m_Header->transformAnywhere);
 
                 // Load checks for first load
                 onStageLoad();
@@ -57,24 +57,24 @@ namespace mod::rando
             {
                 // The seed failed to load, so clear the seed
                 delete m_Seed;
-                libtp::memory::clearMemory( &m_SeedInfo, sizeof( m_SeedInfo ) );
+                libtp::memory::clearMemory(&m_SeedInfo, sizeof(m_SeedInfo));
                 m_Seed = nullptr;
                 m_CurrentSeed = 0xFF;
             }
         }
     }
 
-    void Randomizer::changeSeed( MinSeedInfo* minSeedInfo, uint8_t newSeed )
+    void Randomizer::changeSeed(MinSeedInfo* minSeedInfo, uint8_t newSeed)
     {
         getConsole() << "Seed unloading...\n";
 
         delete m_Seed;
-        libtp::memory::clearMemory( &m_SeedInfo, sizeof( m_SeedInfo ) );
+        libtp::memory::clearMemory(&m_SeedInfo, sizeof(m_SeedInfo));
         m_Seed = nullptr;
         m_SeedInit = false;
         m_CurrentSeed = 0xFF;
 
         getConsole() << "Seed Loading...\n";
-        loadSeed( minSeedInfo, newSeed );
+        loadSeed(minSeedInfo, newSeed);
     }
-}     // namespace mod::rando
+} // namespace mod::rando

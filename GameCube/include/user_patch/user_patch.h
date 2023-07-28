@@ -19,11 +19,11 @@ namespace mod::user_patch
      *  @param randomizer Pointer to currently active Randomizer
      *  @param set If true we apply the patch, otherwise restore original behavior
      */
-    typedef void ( *GamePatch )( rando::Randomizer* randomizer, bool set );
+    typedef void (*GamePatch)(rando::Randomizer* randomizer, bool set);
 
     // Available Game patches accessible by index
     extern GamePatch volatilePatches[6];
     extern GamePatch oneTimePatches[6];
 
-}     // namespace mod::user_patch
+} // namespace mod::user_patch
 #endif

@@ -9,7 +9,7 @@ namespace mod::link_house_sign
 {
 #define TOTAL_POSSIBLE_DUNGEONS 8
 
-    void createRequiredDungeonsString( rando::Seed* seed, uint32_t requiredDungeonFlags );
+    void createRequiredDungeonsString(rando::Seed* seed, uint32_t requiredDungeonFlags);
 
 #ifndef TP_JP
     // English
@@ -39,6 +39,6 @@ namespace mod::link_house_sign
     extern const char* dungeonsIt[TOTAL_POSSIBLE_DUNGEONS];
     extern const char* noDungeonsRequiredIt;
 #endif
-}     // namespace mod::link_house_sign
+} // namespace mod::link_house_sign
 
 #endif

@@ -16,7 +16,7 @@ namespace mod::user_patch
     /**
      * @brief Updates the cosmetics for the user interface (Buttons, Hearts, etc.)
      */
-    void setHUDCosmetics( rando::Randomizer* randomizer );
-}     // namespace mod::user_patch
+    void setHUDCosmetics(rando::Randomizer* randomizer);
+} // namespace mod::user_patch
 
 #endif

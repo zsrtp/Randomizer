@@ -18,4 +18,4 @@ namespace mod::game_patch
         WallMoveVars->moveSidewaysStickNotHeld = 2.0;
         WallMoveVars->movesidewaysStickHeld = 2.0;
     }
-}     // namespace mod::game_patch
+} // namespace mod::game_patch

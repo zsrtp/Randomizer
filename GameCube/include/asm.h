@@ -36,24 +36,24 @@ namespace mod::assembly
 {
     extern "C"
     {
-        void asmDoLinkHookStart( void );
-        void asmDoLinkHookEnd( void );
-        void handleDoLinkHook( libtp::tp::dynamic_link::DynamicModuleControl* dmc );
+        void asmDoLinkHookStart(void);
+        void asmDoLinkHookEnd(void);
+        void handleDoLinkHook(libtp::tp::dynamic_link::DynamicModuleControl* dmc);
 
         // d_e_hp.rel
-        void asmAdjustPoeItemStart( void );
-        void asmAdjustPoeItemEnd( void );
-        int32_t handleAdjustPoeItem( void* );
+        void asmAdjustPoeItemStart(void);
+        void asmAdjustPoeItemEnd(void);
+        int32_t handleAdjustPoeItem(void*);
 
         // d_e_po.rel
-        void asmAdjustAGPoeItemStart( void );
-        void asmAdjustAGPoeItemEnd( void );
-        int32_t handleAdjustAGPoeItem( void* );
+        void asmAdjustAGPoeItemStart(void);
+        void asmAdjustAGPoeItemEnd(void);
+        int32_t handleAdjustAGPoeItem(void*);
 
         // d_a_npc_ins.rel
         void asmAdjustBugRewardStart();
         void asmAdjustBugRewardEnd();
-        void handleAdjustBugReward( uint32_t msgEventAddress, uint8_t bugID );
+        void handleAdjustBugReward(uint32_t msgEventAddress, uint8_t bugID);
 
         void asmAdjustSkyCharacterStart();
         void asmAdjustSkyCharacterEnd();
@@ -61,7 +61,7 @@ namespace mod::assembly
 
         // d_a_obj_life_container.rel
         void asmAdjustFieldItemParams();
-        void handleAdjustFieldItemParams( libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife );
+        void handleAdjustFieldItemParams(libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife);
 
         // d_a_e_mk.rel
         void asmTransformOokWolf();
@@ -73,24 +73,24 @@ namespace mod::assembly
 
         // d_a_npc_hoz.rel
         void asmAdjustIzaWolf();
-        void handleAdjustIzaWolf( int32_t flag );
+        void handleAdjustIzaWolf(int32_t flag);
 
         // d_kankyo_rain.o
         void asmShowReekfishPath();
-        uint8_t handleShowReekfishPath( uint8_t scent );
+        uint8_t handleShowReekfishPath(uint8_t scent);
 
         // d_a_demo_item.o
         void asmAdjustCreateItemParamsStart();
         void asmAdjustCreateItemParamsEnd();
-        void handleAdjustCreateItemParams( void* daDitem );
+        void handleAdjustCreateItemParams(void* daDitem);
 
         // d_a_npc_pouya.o
         void asmCheck60PoeReward();
-        bool handleCheck60PoeReward( uint8_t poeCount );
+        bool handleCheck60PoeReward(uint8_t poeCount);
 
         // d_a_npc_GWolf.o
-        void asmReplaceGWolfWithItem( void );
-        bool handleReplaceGWolfWithItem( const int16_t* l_delFlag, void* daNpcGWolf );
+        void asmReplaceGWolfWithItem(void);
+        bool handleReplaceGWolfWithItem(const int16_t* l_delFlag, void* daNpcGWolf);
 
         // vi.o
         void asmCallCodehandler();
@@ -99,9 +99,9 @@ namespace mod::assembly
 #ifdef TP_JP
         void asmUnpatchMapGlitchStart();
         void asmUnpatchMapGlitchEnd();
-        void unpatchMapGlitch( libtp::tp::d_a_alink::daAlink* d_a_alink );
+        void unpatchMapGlitch(libtp::tp::d_a_alink::daAlink* d_a_alink);
 #endif
     }
-}     // namespace mod::assembly
+} // namespace mod::assembly
 
 #endif

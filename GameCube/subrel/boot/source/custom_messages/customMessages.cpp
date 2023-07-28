@@ -21,7 +21,7 @@ namespace mod::customMessages
 
     void getCurrentLanguage()
     {
-        currentLanguage = getPalLanguage2( nullptr );
+        currentLanguage = getPalLanguage2(nullptr);
     }
 #endif
 
@@ -37,10 +37,10 @@ namespace mod::customMessages
         entries = entriesJp;
         totalCustomMessages = totalCustomMessagesJp;
 #elif defined TP_EU
-        switch ( currentLanguage )
+        switch (currentLanguage)
         {
             case Languages::uk:
-            default:     // The language is invalid/unsupported, so the game defaults to English
+            default: // The language is invalid/unsupported, so the game defaults to English
             {
                 entries = entriesUs;
                 totalCustomMessages = totalCustomMessagesUs;
@@ -74,38 +74,38 @@ namespace mod::customMessages
 #endif
         // Get the total size to allocate for the table
         // Get the space used by the message ids
-        uint32_t messageIdsSize = totalCustomMessages * sizeof( uint16_t );
+        uint32_t messageIdsSize = totalCustomMessages * sizeof(uint16_t);
 
         // Round messageIdsSize up to the size of the offsets to make sure the offsets are properly aligned
-        messageIdsSize = ( messageIdsSize + sizeof( uint32_t ) - 1 ) & ~( sizeof( uint32_t ) - 1 );
+        messageIdsSize = (messageIdsSize + sizeof(uint32_t) - 1) & ~(sizeof(uint32_t) - 1);
 
         // Get the space used by the message offsets
-        uint32_t messageOffsetsSize = totalCustomMessages * sizeof( uint32_t );
+        uint32_t messageOffsetsSize = totalCustomMessages * sizeof(uint32_t);
 
         // Get the total size of all of the strings
         uint32_t totalMessagesSize = 0;
-        for ( uint32_t i = 0; i < totalCustomMessages; i++ )
+        for (uint32_t i = 0; i < totalCustomMessages; i++)
         {
             totalMessagesSize += entries[i].size;
         }
 
         // Allocate memory for the table
         // Align to uint32_t, as it is the largest variable type used in the table
-        uint8_t* buf = new ( sizeof( uint32_t ) ) uint8_t[messageIdsSize + messageOffsetsSize + totalMessagesSize];
+        uint8_t* buf = new (sizeof(uint32_t)) uint8_t[messageIdsSize + messageOffsetsSize + totalMessagesSize];
 
         // Get the address for the ids
-        uint16_t* msgIdTable = reinterpret_cast<uint16_t*>( buf );
+        uint16_t* msgIdTable = reinterpret_cast<uint16_t*>(buf);
 
         // Get the address for the offsets
-        uint32_t bufRaw = reinterpret_cast<uint32_t>( buf );
-        uint32_t* msgOffsetTable = reinterpret_cast<uint32_t*>( bufRaw + messageIdsSize );
+        uint32_t bufRaw = reinterpret_cast<uint32_t>(buf);
+        uint32_t* msgOffsetTable = reinterpret_cast<uint32_t*>(bufRaw + messageIdsSize);
 
         // Get the address for the messages
-        char* msgTable = reinterpret_cast<char*>( bufRaw + messageIdsSize + messageOffsetsSize );
+        char* msgTable = reinterpret_cast<char*>(bufRaw + messageIdsSize + messageOffsetsSize);
 
         // Write the dataSrc to the table
         uint32_t msgTableWrittenSize = 0;
-        for ( uint32_t i = 0; i < totalCustomMessages; i++ )
+        for (uint32_t i = 0; i < totalCustomMessages; i++)
         {
             const MsgEntry* entry = &entries[i];
 
@@ -114,7 +114,7 @@ namespace mod::customMessages
 
             // Must use memcpy instead of strncpy since message commands have NULL characters
             uint32_t entrySize = entry->size;
-            memcpy( &msgTable[msgTableWrittenSize], entry->msg, entrySize );
+            memcpy(&msgTable[msgTableWrittenSize], entry->msg, entrySize);
 
             // Increment msgTableWrittenSize to go to the next string
             msgTableWrittenSize += entrySize;
@@ -137,10 +137,10 @@ namespace mod::customMessages
         entries = entriesJp;
         totalCustomMessages = totalCustomMessagesJp;
 #elif defined TP_EU
-        switch ( currentLanguage )
+        switch (currentLanguage)
         {
             case Languages::uk:
-            default:     // The language is invalid/unsupported, so the game defaults to English
+            default: // The language is invalid/unsupported, so the game defaults to English
             {
                 entries = entriesUs;
                 totalCustomMessages = totalCustomMessagesUs;
@@ -176,10 +176,10 @@ namespace mod::customMessages
         const char* smallKeyText = nullptr;
         uint32_t textSize;
 
-        for ( uint32_t i = 0; i < totalCustomMessages; i++ )
+        for (uint32_t i = 0; i < totalCustomMessages; i++)
         {
             const MsgEntry* entry = &entries[i];
-            if ( entry->id == ITEM_TO_ID( rando::customItems::Forest_Temple_Small_Key ) )
+            if (entry->id == ITEM_TO_ID(rando::customItems::Forest_Temple_Small_Key))
             {
                 smallKeyText = entry->msg;
                 textSize = entry->size;
@@ -188,7 +188,7 @@ namespace mod::customMessages
         }
 
         // Make sure the text was found
-        if ( !smallKeyText )
+        if (!smallKeyText)
         {
             return;
         }
@@ -197,27 +197,27 @@ namespace mod::customMessages
         // it
 
         // Get the area and color text to search for
-        static char areaTextAndColor[] = MSG_COLOR( MSG_COLOR_GREEN );
-        constexpr uint32_t areaTextAndColorSize = sizeof( areaTextAndColor );
+        static char areaTextAndColor[] = MSG_COLOR(MSG_COLOR_GREEN);
+        constexpr uint32_t areaTextAndColorSize = sizeof(areaTextAndColor);
 
         // Get a pointer to the end of the string, minus the size of the color text
         const char* smallKeyTextEnd = &smallKeyText[textSize - areaTextAndColorSize];
 
 #ifdef TP_JP
         // Loop through the string until the area and color are found
-        for ( const char* currentText = smallKeyText; currentText <= smallKeyTextEnd; currentText++ )
+        for (const char* currentText = smallKeyText; currentText <= smallKeyTextEnd; currentText++)
 #else
         // The area text and color should be closer to the end of the string, so start searching from the end
         // Loop through the string backwards until the area and color are found
-        for ( const char* currentText = smallKeyTextEnd; currentText >= smallKeyText; currentText-- )
+        for (const char* currentText = smallKeyTextEnd; currentText >= smallKeyText; currentText--)
 #endif
         {
             // Must use memcmp instead of strncmp since message commands have NULL characters
-            if ( memcmp( currentText, areaTextAndColor, areaTextAndColorSize - 1 ) == 0 )
+            if (memcmp(currentText, areaTextAndColor, areaTextAndColorSize - 1) == 0)
             {
                 // Set the index to where the color id is
                 game_patch::dungeonItemAreaColorIndex =
-                    static_cast<uint8_t>( ( currentText - smallKeyText ) + areaTextAndColorSize - 2 );
+                    static_cast<uint8_t>((currentText - smallKeyText) + areaTextAndColorSize - 2);
 
                 return;
             }
@@ -238,10 +238,10 @@ namespace mod::customMessages
         stringsSrc = &itemWheelMenuStringsJp;
         offsetsSrc = &itemWheelMenuOffsetsJp;
 #elif defined TP_EU
-        switch ( currentLanguage )
+        switch (currentLanguage)
         {
             case Languages::uk:
-            default:     // The language is invalid/unsupported, so the game defaults to English
+            default: // The language is invalid/unsupported, so the game defaults to English
             {
                 stringsSrc = &itemWheelMenuStringsUs;
                 offsetsSrc = &itemWheelMenuOffsetsUs;
@@ -275,29 +275,29 @@ namespace mod::customMessages
 #endif
         // Get the total length used for the strings
         // The menu strings struct should only contain const char* pointers, so can just cast that to an array
-        const char** menuStringsSrc = reinterpret_cast<const char**>( const_cast<ItemWheelMenuStrings*>( stringsSrc ) );
-        constexpr uint32_t menuStringsEntries = sizeof( struct ItemWheelMenuStrings ) / sizeof( const char* );
+        const char** menuStringsSrc = reinterpret_cast<const char**>(const_cast<ItemWheelMenuStrings*>(stringsSrc));
+        constexpr uint32_t menuStringsEntries = sizeof(struct ItemWheelMenuStrings) / sizeof(const char*);
 
         uint32_t totalStringsLength = 0;
-        for ( uint32_t i = 0; i < menuStringsEntries; i++ )
+        for (uint32_t i = 0; i < menuStringsEntries; i++)
         {
-            totalStringsLength += strlen( menuStringsSrc[i] );
+            totalStringsLength += strlen(menuStringsSrc[i]);
         }
 
         // Allocate memory for the strings
         // Add menuStringsEntries to account for each string being NULL terminated
         // Align to char, as strings don't have specific alignment requirements
-        char* textData = new ( sizeof( char ) ) char[totalStringsLength + menuStringsEntries];
+        char* textData = new (sizeof(char)) char[totalStringsLength + menuStringsEntries];
 
         // Set up itemWheelMenuData variables
         ItemWheelMenuData* dataDest = &itemWheelMenuData;
 
         // Set up the strings
         // The menu strings struct should only contain const char* pointers, so can just cast that to an array
-        const char** menuStringsDest = reinterpret_cast<const char**>( &dataDest->strings );
+        const char** menuStringsDest = reinterpret_cast<const char**>(&dataDest->strings);
 
         uint32_t writtenSize = 0;
-        for ( uint32_t i = 0; i < menuStringsEntries; i++ )
+        for (uint32_t i = 0; i < menuStringsEntries; i++)
         {
             // Set the current entry
             char* currentStringEntry = &textData[writtenSize];
@@ -305,8 +305,8 @@ namespace mod::customMessages
 
             // Copy the current string to textData
             const char* currentSrcEntry = menuStringsSrc[i];
-            uint32_t currentSrcEntryLength = strlen( currentSrcEntry );
-            strncpy( currentStringEntry, currentSrcEntry, currentSrcEntryLength );
+            uint32_t currentSrcEntryLength = strlen(currentSrcEntry);
+            strncpy(currentStringEntry, currentSrcEntry, currentSrcEntryLength);
 
             // Make sure the string is properly NULL terminated
             currentStringEntry[currentSrcEntryLength] = '\0';
@@ -317,7 +317,7 @@ namespace mod::customMessages
         }
 
         // Set up the offsets
-        memcpy( &dataDest->offsets, offsetsSrc, sizeof( dataDest->offsets ) );
+        memcpy(&dataDest->offsets, offsetsSrc, sizeof(dataDest->offsets));
 
         // Assign textData
         dataDest->textData = textData;
@@ -333,10 +333,10 @@ namespace mod::customMessages
 #elif defined TP_JP
         donationEntry = &charloDonationEntryJp;
 #elif defined TP_EU
-        switch ( currentLanguage )
+        switch (currentLanguage)
         {
             case Languages::uk:
-            default:     // The language is invalid/unsupported, so the game defaults to English
+            default: // The language is invalid/unsupported, so the game defaults to English
             {
                 donationEntry = &charloDonationEntryUs;
                 break;
@@ -367,10 +367,10 @@ namespace mod::customMessages
         // Must use memcpy instead of strncpy since message commands have NULL characters
         // Align to char, as strings don't have specific alignment requirements
         uint32_t donationEntrySize = donationEntry->size;
-        char* buf = new ( sizeof( char ) ) char[donationEntrySize];
-        memcpy( buf, donationEntry->msg, donationEntrySize );
+        char* buf = new (sizeof(char)) char[donationEntrySize];
+        memcpy(buf, donationEntry->msg, donationEntrySize);
 
         // Assign the buffer
         m_DonationText = buf;
     }
-}     // namespace mod::customMessages
+} // namespace mod::customMessages

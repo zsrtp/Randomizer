@@ -25,7 +25,7 @@ NamespaceIndentation: All
 PointerAlignment: Left
 SortIncludes: 'false'
 SortUsingDeclarations: 'true'
-SpaceAfterCStyleCast: 'true'
+SpaceAfterCStyleCast: 'false'
 SpaceAfterLogicalNot: 'false'
 SpaceAfterTemplateKeyword: 'false'
 SpaceBeforeAssignmentOperators: 'true'
@@ -35,10 +35,10 @@ SpaceBeforeInheritanceColon: 'false'
 SpaceBeforeParens: ControlStatements
 SpaceBeforeRangeBasedForLoopColon: 'true'
 SpaceInEmptyParentheses: 'false'
-SpacesBeforeTrailingComments: '5'
-SpacesInAngles: 'false'
+SpacesBeforeTrailingComments: '1'
+SpacesInAngles: 'Never'
 SpacesInCStyleCastParentheses: 'false'
-SpacesInContainerLiterals: 'true'
-SpacesInParentheses: 'true'
+SpacesInContainerLiterals: 'false'
+SpacesInParentheses: 'false'
 TabWidth: '4'
 UseTab: Never

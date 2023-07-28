@@ -384,213 +384,213 @@ namespace mod::customMessages
     const MsgEntry entriesDe[] = {
         // Forest Temple small key
         forestSmallKeyDe,
-        sizeof( forestSmallKeyDe ),
+        sizeof(forestSmallKeyDe),
         0x00E9,
 
         // Shadow Crystal
         shadowCrystalDe,
-        sizeof( shadowCrystalDe ),
+        sizeof(shadowCrystalDe),
         0x0096,
 
         // Ending Blow hidden skill
         endingBlowDe,
-        sizeof( endingBlowDe ),
+        sizeof(endingBlowDe),
         0x0145,
 
         // Shield Attack hidden skill
         shieldAttackDe,
-        sizeof( shieldAttackDe ),
+        sizeof(shieldAttackDe),
         0x0146,
 
         // Back Slice hidden skill
         backSliceDe,
-        sizeof( backSliceDe ),
+        sizeof(backSliceDe),
         0x0147,
 
         // Helm Splitter hidden skill
         helmSplitterDe,
-        sizeof( helmSplitterDe ),
+        sizeof(helmSplitterDe),
         0x0148,
 
         // Mortal Draw hidden skill
         mortalDrawDe,
-        sizeof( mortalDrawDe ),
+        sizeof(mortalDrawDe),
         0x0149,
 
         // Jump Strike hidden skill
         jumpStrikeDe,
-        sizeof( jumpStrikeDe ),
+        sizeof(jumpStrikeDe),
         0x014A,
 
         // Great Spin hidden skill
         greatSpinDe,
-        sizeof( greatSpinDe ),
+        sizeof(greatSpinDe),
         0x014B,
 
         // Powered up Dominion Rod
         poweredRodDe,
-        sizeof( poweredRodDe ),
+        sizeof(poweredRodDe),
         0x00B0,
 
         // First Ancient Sky Book character
         skyBookCharacterDe,
-        sizeof( skyBookCharacterDe ),
+        sizeof(skyBookCharacterDe),
         0x013F,
 
         // First Fused Shadow
         firstFusedShadowDe,
-        sizeof( firstFusedShadowDe ),
+        sizeof(firstFusedShadowDe),
         0x013C,
 
         // Second Fused Shadow
         secondFusedShadowDe,
-        sizeof( secondFusedShadowDe ),
+        sizeof(secondFusedShadowDe),
         0x013D,
 
         // Third Fused Shadow
         thirdFusedShadowDe,
-        sizeof( thirdFusedShadowDe ),
+        sizeof(thirdFusedShadowDe),
         0x013E,
 
         // Second Mirror Shard
         secondMirrorShardDe,
-        sizeof( secondMirrorShardDe ),
+        sizeof(secondMirrorShardDe),
         0x0109,
 
         // Third Mirror Shard
         thirdMirrorShardDe,
-        sizeof( thirdMirrorShardDe ),
+        sizeof(thirdMirrorShardDe),
         0x010A,
 
         // Fourth Mirror Shard
         fourthMirrorShardDe,
-        sizeof( fourthMirrorShardDe ),
+        sizeof(fourthMirrorShardDe),
         0x010B,
 
         // Foolish Item
         foolishItemDe,
-        sizeof( foolishItemDe ),
+        sizeof(foolishItemDe),
         0x0077,
 
         // Talking to Midna
         talkToMidnaDe,
-        sizeof( talkToMidnaDe ),
+        sizeof(talkToMidnaDe),
         0x0BBB,
 
         // Big Wallet
         bigWalletDe,
-        sizeof( bigWalletDe ),
+        sizeof(bigWalletDe),
         0x0099,
 
         // Giant Wallet
         giantWalletDe,
-        sizeof( giantWalletDe ),
+        sizeof(giantWalletDe),
         0x009A,
 
         // Small Wallet Menu Text
         smallWalletPauseDe,
-        sizeof( smallWalletPauseDe ),
+        sizeof(smallWalletPauseDe),
         0x0298,
 
         // Big Wallet Menu Text
         bigWalletPauseDe,
-        sizeof( bigWalletPauseDe ),
+        sizeof(bigWalletPauseDe),
         0x0299,
 
         // Giant Wallet Menu Text
         giantWalletPauseDe,
-        sizeof( giantWalletPauseDe ),
+        sizeof(giantWalletPauseDe),
         0x029a,
 
         // Poe Soul
         poeSoulDe,
-        sizeof( poeSoulDe ),
+        sizeof(poeSoulDe),
         0x0144,
 
         // Sky Book Item Wheel Description
         skyBookDescriptionDe,
-        sizeof( skyBookDescriptionDe ),
+        sizeof(skyBookDescriptionDe),
         0x34d,
 
         // Recognition text
         recognitionDe,
-        sizeof( recognitionDe ),
+        sizeof(recognitionDe),
         0x0b44,
 
         // Special invalid-id texts
         // for
         forTextDe,
-        sizeof( forTextDe ),
+        sizeof(forTextDe),
         game_patch::SpecialMessageIds::FOR,
 
         // Small Key
         smallKeyTextDe,
-        sizeof( smallKeyTextDe ),
+        sizeof(smallKeyTextDe),
         game_patch::SpecialMessageIds::SMALL_KEY,
 
         // Dungeon Map
         dungeonMapTextDe,
-        sizeof( dungeonMapTextDe ),
+        sizeof(dungeonMapTextDe),
         game_patch::SpecialMessageIds::DUNGEON_MAP,
 
         // Compass
         compassTextDe,
-        sizeof( compassTextDe ),
+        sizeof(compassTextDe),
         game_patch::SpecialMessageIds::COMPASS,
 
         // Big Key
         bigKeyTextDe,
-        sizeof( bigKeyTextDe ),
+        sizeof(bigKeyTextDe),
         game_patch::SpecialMessageIds::BIG_KEY,
 
         // Forest Temple
         forestTempleTextDe,
-        sizeof( forestTempleTextDe ),
+        sizeof(forestTempleTextDe),
         game_patch::SpecialMessageIds::FOREST_TEMPLE,
 
         // Goron Mines
         goronMinesTextDe,
-        sizeof( goronMinesTextDe ),
+        sizeof(goronMinesTextDe),
         game_patch::SpecialMessageIds::GORON_MINES,
 
         // Lakebed Temple
         lakebedTempleTextDe,
-        sizeof( lakebedTempleTextDe ),
+        sizeof(lakebedTempleTextDe),
         game_patch::SpecialMessageIds::LAKEBED_TEMPLE,
 
         // Arbiter's Grounds
         arbitersGroundsTextDe,
-        sizeof( arbitersGroundsTextDe ),
+        sizeof(arbitersGroundsTextDe),
         game_patch::SpecialMessageIds::ARBITERS_GROUNDS,
 
         // Snowpeak Ruins
         snowpeakRuinsTextDe,
-        sizeof( snowpeakRuinsTextDe ),
+        sizeof(snowpeakRuinsTextDe),
         game_patch::SpecialMessageIds::SNOWPEAK_RUINS,
 
         // Temple of Time
         templeOfTimeTextDe,
-        sizeof( templeOfTimeTextDe ),
+        sizeof(templeOfTimeTextDe),
         game_patch::SpecialMessageIds::TEMPLE_OF_TIME,
 
         // City in the Sky
         cityInTheSkyTextDe,
-        sizeof( cityInTheSkyTextDe ),
+        sizeof(cityInTheSkyTextDe),
         game_patch::SpecialMessageIds::CITY_IN_THE_SKY,
 
         // Palace of Twilight
         palaceOfTwilightTextDe,
-        sizeof( palaceOfTwilightTextDe ),
+        sizeof(palaceOfTwilightTextDe),
         game_patch::SpecialMessageIds::PALACE_OF_TWILIGHT,
 
         // Hyrule Castle
         hyruleCastleTextDe,
-        sizeof( hyruleCastleTextDe ),
+        sizeof(hyruleCastleTextDe),
         game_patch::SpecialMessageIds::HYRULE_CASTLE,
 
         // Bulblin Camp
         bulblinCampTextDe,
-        sizeof( bulblinCampTextDe ),
+        sizeof(bulblinCampTextDe),
         game_patch::SpecialMessageIds::BULBLIN_CAMP,
 
         // This is an extra section that should go unused, and is only needed for _05_getMsgById in 05_itemMsgFunctions.cpp to
@@ -600,8 +600,8 @@ namespace mod::customMessages
         0xFFFF,
     };
 
-    const uint32_t totalCustomMessagesDe = sizeof( entriesDe ) / sizeof( MsgEntry );
-    const MsgEntry charloDonationEntryDe = { charloDonationDe, sizeof( charloDonationDe ), 0x0355 };
+    const uint32_t totalCustomMessagesDe = sizeof(entriesDe) / sizeof(MsgEntry);
+    const MsgEntry charloDonationEntryDe = {charloDonationDe, sizeof(charloDonationDe), 0x0355};
 
     const ItemWheelMenuStrings itemWheelMenuStringsDe = {
         // areasBeingTracked
@@ -769,5 +769,5 @@ namespace mod::customMessages
         31,
         22,
     };
-}     // namespace mod::customMessages
+} // namespace mod::customMessages
 #endif

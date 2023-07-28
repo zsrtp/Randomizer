@@ -30,4 +30,4 @@ namespace mod::rando
         delete[] m_minSeedInfo;
     }
 
-}     // namespace mod::rando
+} // namespace mod::rando

@@ -58,45 +58,45 @@ namespace mod::item_wheel_menu
     struct ItemWheelMenuOffsets
     {
         // Fused Shadows
-        uint8_t shadowsShardsOffset;     // Fused Shadows text to the start of the values
+        uint8_t shadowsShardsOffset; // Fused Shadows text to the start of the values
 
         // Pumpkin
-        uint8_t pumpkinOffset;        // Fused Shadows values to the start of the text
-        uint8_t pumpkinYesOffset;     // Pumpkin text to the start of the value
-        uint8_t pumpkinNoOffset;      // Pumpkin text to the start of the value
+        uint8_t pumpkinOffset;    // Fused Shadows values to the start of the text
+        uint8_t pumpkinYesOffset; // Pumpkin text to the start of the value
+        uint8_t pumpkinNoOffset;  // Pumpkin text to the start of the value
 
         // Cheese
-        uint8_t cheeseOffset;        // Pumpkin text to the start of the text
-        uint8_t cheeseYesOffset;     // Cheese text to the start of the value
-        uint8_t cheeseNoOffset;      // Cheese text to the start of the value
+        uint8_t cheeseOffset;    // Pumpkin text to the start of the text
+        uint8_t cheeseYesOffset; // Cheese text to the start of the value
+        uint8_t cheeseNoOffset;  // Cheese text to the start of the value
 
         // Gate Keys
-        uint8_t gateKeysOffset;        // Cheese text to the start of the text
-        uint8_t gateKeysYesOffset;     // Gate Keys text to the start of the value
-        uint8_t gateKeysNoOffset;      // Gate Keys text to the start of the value
+        uint8_t gateKeysOffset;    // Cheese text to the start of the text
+        uint8_t gateKeysYesOffset; // Gate Keys text to the start of the value
+        uint8_t gateKeysNoOffset;  // Gate Keys text to the start of the value
 
         // Headers
-        uint8_t headerSmallKeysOffset;     // Areas text to the start of the text
-        uint8_t headerBigKeysOffset;       // Small keys text to the start of the text
-        uint8_t headerMapsOffset;          // Big keys text to the start of the text
-        uint8_t headerCompassesOffset;     // Maps text to the start of the text
+        uint8_t headerSmallKeysOffset; // Areas text to the start of the text
+        uint8_t headerBigKeysOffset;   // Small keys text to the start of the text
+        uint8_t headerMapsOffset;      // Big keys text to the start of the text
+        uint8_t headerCompassesOffset; // Maps text to the start of the text
 
         // Header values
         // Small Keys
-        uint8_t valuesSmallKeysOffset;     // Small keys text to the start of the values
+        uint8_t valuesSmallKeysOffset; // Small keys text to the start of the values
 
         // Big Keys
-        uint8_t valuesBigKeysYesOffset;       // Big keys text to the start of the values
-        uint8_t valuesBigKeysNoOffset;        // Big keys text to the start of the values
-        uint8_t valuesBigKeysMinesOffset;     // Big keys text to the start of the values
+        uint8_t valuesBigKeysYesOffset;   // Big keys text to the start of the values
+        uint8_t valuesBigKeysNoOffset;    // Big keys text to the start of the values
+        uint8_t valuesBigKeysMinesOffset; // Big keys text to the start of the values
 
         // Maps
-        uint8_t valuesMapsYesOffset;     // Maps text to the start of the values
-        uint8_t valuesMapsNoOffset;      // Maps text to the start of the values
+        uint8_t valuesMapsYesOffset; // Maps text to the start of the values
+        uint8_t valuesMapsNoOffset;  // Maps text to the start of the values
 
         // Compasses
-        uint8_t valuesCompassesYesOffset;     // Compasses text to the start of the values
-        uint8_t valuesCompassesNoOffset;      // Compasses text to the start of the values
+        uint8_t valuesCompassesYesOffset; // Compasses text to the start of the values
+        uint8_t valuesCompassesNoOffset;  // Compasses text to the start of the values
     };
 
     // Set up a struct for holding the strings and offsets
@@ -122,12 +122,12 @@ namespace mod::item_wheel_menu
     extern bool displayMenu;
 
     // Function hook handlers & trampolines
-    extern void ( *return_dMenuRing__create )( void* dMenuRing );
-    extern void ( *return_dMenuRing__delete )( void* dMenuRing );
-    extern void ( *return_dMenuRing__draw )( void* dMenuRing );
-    void handle_dMenuRing__create( void* dMenuRing );
-    void handle_dMenuRing__delete( void* dMenuRing );
-    void handle_dMenuRing__draw( void* dMenuRing );
-}     // namespace mod::item_wheel_menu
+    extern void (*return_dMenuRing__create)(void* dMenuRing);
+    extern void (*return_dMenuRing__delete)(void* dMenuRing);
+    extern void (*return_dMenuRing__draw)(void* dMenuRing);
+    void handle_dMenuRing__create(void* dMenuRing);
+    void handle_dMenuRing__delete(void* dMenuRing);
+    void handle_dMenuRing__draw(void* dMenuRing);
+} // namespace mod::item_wheel_menu
 
 #endif

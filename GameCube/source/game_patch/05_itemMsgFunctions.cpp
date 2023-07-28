@@ -75,67 +75,67 @@ namespace mod::game_patch
     // check
     void* getZel00BmgInf()
     {
-        uint32_t infPtrRaw = reinterpret_cast<uint32_t>( libtp::tp::JKRArchivePub::JKRArchivePub_getGlbResource(
-            0x524F4F54,     // ROOT
+        uint32_t infPtrRaw = reinterpret_cast<uint32_t>(libtp::tp::JKRArchivePub::JKRArchivePub_getGlbResource(
+            0x524F4F54, // ROOT
             "zel_00.bmg",
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mMsgDtArchive[0] ) );
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mMsgDtArchive[0]));
 
         // getGlbResource gets a pointer to MESGbmg1, but we need a pointer to INF1, which is just past MESGbmg1, and MESGbmg1
         // has a size of 0x20
-        return reinterpret_cast<void*>( infPtrRaw + 0x20 );
+        return reinterpret_cast<void*>(infPtrRaw + 0x20);
     }
 
-    void* getInf1Ptr( const char* file )
+    void* getInf1Ptr(const char* file)
     {
         uint32_t infPtrRaw = reinterpret_cast<uint32_t>(
-            libtp::tp::JKRArchivePub::JKRArchivePub_getGlbResource( /* ROOT */ 0x524F4F54, file, nullptr ) );
+            libtp::tp::JKRArchivePub::JKRArchivePub_getGlbResource(/* ROOT */ 0x524F4F54, file, nullptr));
 
         // getGlbResource gets a pointer to MESGbmg1, but we need a pointer to INF1, which is just past MESGbmg1, and MESGbmg1
         // has a size of 0x20
-        return reinterpret_cast<void*>( infPtrRaw + 0x20 );
+        return reinterpret_cast<void*>(infPtrRaw + 0x20);
     }
 
-    const char* createString( const char* format, uint32_t size, ... )
+    const char* createString(const char* format, uint32_t size, ...)
     {
         // Make sure format and size are valid
-        if ( !format || ( size == 0 ) )
+        if (!format || (size == 0))
         {
             return nullptr;
         }
 
         static char buf[192];
-        constexpr uint32_t maxIndex = sizeof( buf ) - 1;
+        constexpr uint32_t maxIndex = sizeof(buf) - 1;
         uint32_t currentIndex = 0;
 
         va_list args;
-        va_start( args, size );
+        va_start(args, size);
 
         // Loop through each character in the format string
-        for ( uint32_t i = 0; i < ( size - 1 ); i++ )
+        for (uint32_t i = 0; i < (size - 1); i++)
         {
             // If currentIndex reaches the end of the buffer, then there is no more room for characters
-            if ( currentIndex >= maxIndex )
+            if (currentIndex >= maxIndex)
             {
                 break;
             }
 
             // If the current character is NULL, then write it and go to the next character
             const char currentCharacter = format[i];
-            if ( currentCharacter == '\0' )
+            if (currentCharacter == '\0')
             {
                 buf[currentIndex++] = currentCharacter;
                 continue;
             }
 
             // Handle all of the characters up to a NULL character
-            const uint32_t currentMaxSize = sizeof( buf ) - currentIndex;
-            const int32_t len = vsnprintf( &buf[currentIndex], currentMaxSize, &format[i], args );
+            const uint32_t currentMaxSize = sizeof(buf) - currentIndex;
+            const int32_t len = vsnprintf(&buf[currentIndex], currentMaxSize, &format[i], args);
 
             // Make sure the characters were handled correctly
-            if ( len < 0 )     // Do not need to check if the correct amount of bytes were written
+            if (len < 0) // Do not need to check if the correct amount of bytes were written
             {
                 // Error occured
-                snprintf( buf, sizeof( buf ), "Error: String could not be\nwritten at index 0x%" PRIx32 ".", currentIndex );
+                snprintf(buf, sizeof(buf), "Error: String could not be\nwritten at index 0x%" PRIx32 ".", currentIndex);
                 break;
             }
 
@@ -143,33 +143,33 @@ namespace mod::game_patch
             // Assume that the NULL character was written as well, so it can be skipped in the loop
             // If not all characters were written, then currentIndex will be >= maxIndex, so the loop will end
             currentIndex += len + 1;
-            i += strlen( &format[i] );
+            i += strlen(&format[i]);
         }
 
-        va_end( args );
+        va_end(args);
 
         // Clear the cache for buf to be safe
-        libtp::gc_wii::os_cache::DCFlushRange( buf, sizeof( buf ) );
+        libtp::gc_wii::os_cache::DCFlushRange(buf, sizeof(buf));
         return buf;
     }
 
-    const char* getSkyBookMessage( uint32_t msgId )
+    const char* getSkyBookMessage(uint32_t msgId)
     {
         using namespace rando::customItems;
 
         // Check if this is for the individual characters or the Item Wheel description
         bool isForCharacter = false;
-        if ( msgId != 0x34D )     // Item Wheel description
+        if (msgId != 0x34D) // Item Wheel description
         {
             // Not for the Item Wheel description, so assume this is for the individual characters
-            msgId = ITEM_TO_ID( Ancient_Sky_Book_First_Character );
+            msgId = ITEM_TO_ID(Ancient_Sky_Book_First_Character);
             isForCharacter = true;
         }
 
         uint16_t msgSize;
-        const char* format = _05_getMsgById( msgId, &msgSize );
+        const char* format = _05_getMsgById(msgId, &msgSize);
 
-        if ( !format )
+        if (!format)
         {
             return nullptr;
         }
@@ -179,21 +179,21 @@ namespace mod::game_patch
 
         // If this is for the individual characters, then the flag for the current character won't update until the textbox has
         // closed, so add one
-        if ( isForCharacter )
+        if (isForCharacter)
         {
             skyCharacterCount++;
         }
 
-        for ( uint32_t i = 0; i < 5; i++ )
+        for (uint32_t i = 0; i < 5; i++)
         {
-            if ( !events::haveItem( Ancient_Sky_Book_First_Character + i ) )
+            if (!events::haveItem(Ancient_Sky_Book_First_Character + i))
             {
                 break;
             }
             skyCharacterCount++;
         }
 
-        return createString( format, msgSize, skyCharacterCount );
+        return createString(format, msgSize, skyCharacterCount);
     }
 
     const char* getPoeSoulMessage()
@@ -201,26 +201,26 @@ namespace mod::game_patch
         using namespace libtp::data::items;
 
         uint16_t msgSize;
-        const char* format = _05_getMsgById( ITEM_TO_ID( Poe_Soul ), &msgSize );
+        const char* format = _05_getMsgById(ITEM_TO_ID(Poe_Soul), &msgSize);
 
-        if ( !format )
+        if (!format)
         {
             return nullptr;
         }
 
         // This project changes the poe count to increment after the message is displayed, so add one to get the new count
         uint32_t poeCount = libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect.poe_count + 1;
-        return createString( format, msgSize, poeCount );
+        return createString(format, msgSize, poeCount);
     };
 
 #ifdef TP_EU
-    bool __attribute__( ( noinline ) ) shouldGetTheText()
+    bool __attribute__((noinline)) shouldGetTheText()
     {
         using namespace libtp::tp::d_s_logo;
-        switch ( currentLanguage )
+        switch (currentLanguage)
         {
             case Languages::uk:
-            default:     // The language is invalid/unsupported, so the game defaults to English
+            default: // The language is invalid/unsupported, so the game defaults to English
             {
                 return true;
             }
@@ -235,7 +235,7 @@ namespace mod::game_patch
     }
 #endif
 
-    const char* getDungeonItemMessage( int32_t itemId )
+    const char* getDungeonItemMessage(int32_t itemId)
     {
         using namespace libtp::data::items;
         using namespace rando::customItems;
@@ -245,7 +245,7 @@ namespace mod::game_patch
         // Get the text and size of the format text
         uint32_t itemIdForBase;
 #ifdef TP_JP
-        switch ( itemId )
+        switch (itemId)
         {
             case Snowpeak_Ruins_Small_Key:
             case Snowpeak_Ruins_Compass:
@@ -268,8 +268,8 @@ namespace mod::game_patch
         itemIdForBase = Forest_Temple_Small_Key;
 #endif
         uint16_t msgSize;
-        const char* format = _05_getMsgById( ITEM_TO_ID( itemIdForBase ), &msgSize );
-        if ( !format )
+        const char* format = _05_getMsgById(ITEM_TO_ID(itemIdForBase), &msgSize);
+        if (!format)
         {
             return nullptr;
         }
@@ -277,7 +277,7 @@ namespace mod::game_patch
         auto checkIfSnowpeakRuinsText = [&]()
         {
 #ifdef TP_JP
-            return static_cast<bool>( itemIdForBase == Snowpeak_Ruins_Small_Key );
+            return static_cast<bool>(itemIdForBase == Snowpeak_Ruins_Small_Key);
 #else
             return false;
 #endif
@@ -287,12 +287,12 @@ namespace mod::game_patch
         auto getForText = []()
         {
 #ifdef TP_EU
-            switch ( currentLanguage )
+            switch (currentLanguage)
             {
                 case Languages::uk:
                 case Languages::de:
                 case Languages::it:
-                default:     // The language is invalid/unsupported, so the game defaults to English
+                default: // The language is invalid/unsupported, so the game defaults to English
                 {
                     return true;
                 }
@@ -328,7 +328,7 @@ namespace mod::game_patch
         const char* areaText = nullptr;
         bool addTheText;
 
-        if ( !checkIfSnowpeakRuinsText() )
+        if (!checkIfSnowpeakRuinsText())
         {
             // Figure out what dungeon area this is for
             // Also figure out what color to use for each area name, as well as what areas should have 'the' infront
@@ -337,7 +337,7 @@ namespace mod::game_patch
             uint32_t dungeonAreaMsgId;
             addTheText = false;
 
-            switch ( itemId )
+            switch (itemId)
             {
                 case Forest_Temple_Small_Key:
                 case Forest_Temple_Big_Key:
@@ -438,8 +438,8 @@ namespace mod::game_patch
             }
 
             // Get the text for the area
-            areaText = _05_getMsgById( dungeonAreaMsgId );
-            if ( !areaText )
+            areaText = _05_getMsgById(dungeonAreaMsgId);
+            if (!areaText)
             {
                 return nullptr;
             }
@@ -447,19 +447,19 @@ namespace mod::game_patch
             // Replace the dungeon area color
             // Make sure the index was properly adjusted
             uint32_t colorIndex = dungeonItemAreaColorIndex;
-            if ( colorIndex != 0 )
+            if (colorIndex != 0)
             {
-                char* colorAddress = const_cast<char*>( &format[colorIndex] );
-                *colorAddress = static_cast<char>( areaColorId );
+                char* colorAddress = const_cast<char*>(&format[colorIndex]);
+                *colorAddress = static_cast<char>(areaColorId);
 
                 // Clear the cache for the changed character
-                libtp::gc_wii::os_cache::DCFlushRange( colorAddress, sizeof( char ) );
+                libtp::gc_wii::os_cache::DCFlushRange(colorAddress, sizeof(char));
             }
         }
 
         // Figure out what dungeon item this is for
         uint32_t dungeonItemMsgId;
-        switch ( itemId )
+        switch (itemId)
         {
             case Forest_Temple_Small_Key:
             case Goron_Mines_Small_Key:
@@ -520,18 +520,18 @@ namespace mod::game_patch
         }
 
         // Get the text for the item
-        const char* dungeonItemText = _05_getMsgById( dungeonItemMsgId );
-        if ( !dungeonItemText )
+        const char* dungeonItemText = _05_getMsgById(dungeonItemMsgId);
+        if (!dungeonItemText)
         {
             return nullptr;
         }
 #ifndef TP_JP
         // Get the 'for' text
         const char* forText;
-        if ( getForText() )
+        if (getForText())
         {
-            forText = _05_getMsgById( SpecialMessageIds::FOR );
-            if ( !forText )
+            forText = _05_getMsgById(SpecialMessageIds::FOR);
+            if (!forText)
             {
                 return nullptr;
             }
@@ -543,10 +543,10 @@ namespace mod::game_patch
 
         // Get the 'the' text
         const char* theText;
-        if ( addTheText )
+        if (addTheText)
         {
-            theText = _05_getMsgById( SpecialMessageIds::THE );
-            if ( !theText )
+            theText = _05_getMsgById(SpecialMessageIds::THE);
+            if (!theText)
             {
                 return nullptr;
             }
@@ -556,83 +556,83 @@ namespace mod::game_patch
             theText = nullptr;
         }
 
-        return createString( format, msgSize, dungeonItemText, forText, theText, areaText );
+        return createString(format, msgSize, dungeonItemText, forText, theText, areaText);
 #else
         // Prevent the compiler from complaining about getForText and addTheText being unused
-        (void) getForText();
-        (void) addTheText;
+        (void)getForText();
+        (void)addTheText;
 
         // JP doesn't use `for` nor `the` and the params are in a different order
-        if ( checkIfSnowpeakRuinsText() )
+        if (checkIfSnowpeakRuinsText())
         {
-            return createString( format, msgSize, dungeonItemText );
+            return createString(format, msgSize, dungeonItemText);
         }
         else
         {
-            return createString( format, msgSize, areaText, dungeonItemText );
+            return createString(format, msgSize, areaText, dungeonItemText);
         }
 #endif
     }
 
-    const char* getCustomMessage( uint32_t msgId )
+    const char* getCustomMessage(uint32_t msgId)
     {
         using namespace libtp::data::items;
         using namespace rando::customItems;
 
-        switch ( msgId )
+        switch (msgId)
         {
-            case ITEM_TO_ID( Forest_Temple_Small_Key ):
-            case ITEM_TO_ID( Goron_Mines_Small_Key ):
-            case ITEM_TO_ID( Lakebed_Temple_Small_Key ):
-            case ITEM_TO_ID( Arbiters_Grounds_Small_Key ):
-            case ITEM_TO_ID( Snowpeak_Ruins_Small_Key ):
-            case ITEM_TO_ID( Temple_of_Time_Small_Key ):
-            case ITEM_TO_ID( City_in_The_Sky_Small_Key ):
-            case ITEM_TO_ID( Palace_of_Twilight_Small_Key ):
-            case ITEM_TO_ID( Hyrule_Castle_Small_Key ):
-            case ITEM_TO_ID( Bulblin_Camp_Key ):
-            case ITEM_TO_ID( Forest_Temple_Big_Key ):
-            case ITEM_TO_ID( Lakebed_Temple_Big_Key ):
-            case ITEM_TO_ID( Arbiters_Grounds_Big_Key ):
-            case ITEM_TO_ID( Temple_of_Time_Big_Key ):
-            case ITEM_TO_ID( City_in_The_Sky_Big_Key ):
-            case ITEM_TO_ID( Palace_of_Twilight_Big_Key ):
-            case ITEM_TO_ID( Hyrule_Castle_Big_Key ):
-            case ITEM_TO_ID( Forest_Temple_Compass ):
-            case ITEM_TO_ID( Goron_Mines_Compass ):
-            case ITEM_TO_ID( Lakebed_Temple_Compass ):
-            case ITEM_TO_ID( Arbiters_Grounds_Compass ):
-            case ITEM_TO_ID( Snowpeak_Ruins_Compass ):
-            case ITEM_TO_ID( Temple_of_Time_Compass ):
-            case ITEM_TO_ID( City_in_The_Sky_Compass ):
-            case ITEM_TO_ID( Palace_of_Twilight_Compass ):
-            case ITEM_TO_ID( Hyrule_Castle_Compass ):
-            case ITEM_TO_ID( Forest_Temple_Dungeon_Map ):
-            case ITEM_TO_ID( Goron_Mines_Dungeon_Map ):
-            case ITEM_TO_ID( Lakebed_Temple_Dungeon_Map ):
-            case ITEM_TO_ID( Arbiters_Grounds_Dungeon_Map ):
-            case ITEM_TO_ID( Snowpeak_Ruins_Dungeon_Map ):
-            case ITEM_TO_ID( Temple_of_Time_Dungeon_Map ):
-            case ITEM_TO_ID( City_in_The_Sky_Dungeon_Map ):
-            case ITEM_TO_ID( Palace_of_Twilight_Dungeon_Map ):
-            case ITEM_TO_ID( Hyrule_Castle_Dungeon_Map ):
+            case ITEM_TO_ID(Forest_Temple_Small_Key):
+            case ITEM_TO_ID(Goron_Mines_Small_Key):
+            case ITEM_TO_ID(Lakebed_Temple_Small_Key):
+            case ITEM_TO_ID(Arbiters_Grounds_Small_Key):
+            case ITEM_TO_ID(Snowpeak_Ruins_Small_Key):
+            case ITEM_TO_ID(Temple_of_Time_Small_Key):
+            case ITEM_TO_ID(City_in_The_Sky_Small_Key):
+            case ITEM_TO_ID(Palace_of_Twilight_Small_Key):
+            case ITEM_TO_ID(Hyrule_Castle_Small_Key):
+            case ITEM_TO_ID(Bulblin_Camp_Key):
+            case ITEM_TO_ID(Forest_Temple_Big_Key):
+            case ITEM_TO_ID(Lakebed_Temple_Big_Key):
+            case ITEM_TO_ID(Arbiters_Grounds_Big_Key):
+            case ITEM_TO_ID(Temple_of_Time_Big_Key):
+            case ITEM_TO_ID(City_in_The_Sky_Big_Key):
+            case ITEM_TO_ID(Palace_of_Twilight_Big_Key):
+            case ITEM_TO_ID(Hyrule_Castle_Big_Key):
+            case ITEM_TO_ID(Forest_Temple_Compass):
+            case ITEM_TO_ID(Goron_Mines_Compass):
+            case ITEM_TO_ID(Lakebed_Temple_Compass):
+            case ITEM_TO_ID(Arbiters_Grounds_Compass):
+            case ITEM_TO_ID(Snowpeak_Ruins_Compass):
+            case ITEM_TO_ID(Temple_of_Time_Compass):
+            case ITEM_TO_ID(City_in_The_Sky_Compass):
+            case ITEM_TO_ID(Palace_of_Twilight_Compass):
+            case ITEM_TO_ID(Hyrule_Castle_Compass):
+            case ITEM_TO_ID(Forest_Temple_Dungeon_Map):
+            case ITEM_TO_ID(Goron_Mines_Dungeon_Map):
+            case ITEM_TO_ID(Lakebed_Temple_Dungeon_Map):
+            case ITEM_TO_ID(Arbiters_Grounds_Dungeon_Map):
+            case ITEM_TO_ID(Snowpeak_Ruins_Dungeon_Map):
+            case ITEM_TO_ID(Temple_of_Time_Dungeon_Map):
+            case ITEM_TO_ID(City_in_The_Sky_Dungeon_Map):
+            case ITEM_TO_ID(Palace_of_Twilight_Dungeon_Map):
+            case ITEM_TO_ID(Hyrule_Castle_Dungeon_Map):
             {
-                return getDungeonItemMessage( ID_TO_ITEM( msgId ) );
+                return getDungeonItemMessage(ID_TO_ITEM(msgId));
             }
-            case ITEM_TO_ID( Poe_Soul ):
-            case 0x4CE:     // 20 Poe souls
-            case 0x4CF:     // 60 Poe souls
+            case ITEM_TO_ID(Poe_Soul):
+            case 0x4CE: // 20 Poe souls
+            case 0x4CF: // 60 Poe souls
             {
                 return getPoeSoulMessage();
             }
-            case ITEM_TO_ID( Ancient_Sky_Book_First_Character ):
-            case ITEM_TO_ID( Ancient_Sky_Book_Second_Character ):
-            case ITEM_TO_ID( Ancient_Sky_Book_Third_Character ):
-            case ITEM_TO_ID( Ancient_Sky_Book_Fourth_Character ):
-            case ITEM_TO_ID( Ancient_Sky_Book_Fifth_Character ):
-            case 0x34D:     // Sky Book Item Wheel description
+            case ITEM_TO_ID(Ancient_Sky_Book_First_Character):
+            case ITEM_TO_ID(Ancient_Sky_Book_Second_Character):
+            case ITEM_TO_ID(Ancient_Sky_Book_Third_Character):
+            case ITEM_TO_ID(Ancient_Sky_Book_Fourth_Character):
+            case ITEM_TO_ID(Ancient_Sky_Book_Fifth_Character):
+            case 0x34D: // Sky Book Item Wheel description
             {
-                return getSkyBookMessage( msgId );
+                return getSkyBookMessage(msgId);
             }
             default:
             {
@@ -640,23 +640,23 @@ namespace mod::game_patch
             }
         }
 
-        return _05_getMsgById( msgId );
+        return _05_getMsgById(msgId);
     }
 
-    void _05_setCustomItemMessage( libtp::tp::control::TControl* control,
-                                   const void* TProcessor,
-                                   uint16_t unk3,
-                                   uint16_t msgId,
-                                   rando::Randomizer* randomizer )
+    void _05_setCustomItemMessage(libtp::tp::control::TControl* control,
+                                  const void* TProcessor,
+                                  uint16_t unk3,
+                                  uint16_t msgId,
+                                  rando::Randomizer* randomizer)
     {
         using namespace libtp::data::stage;
         using namespace libtp::data::items;
         using namespace rando::customItems;
 
-        auto setMessageText = [=]( const char* text )
+        auto setMessageText = [=](const char* text)
         {
             // Only replace the message if a valid string was retrieved
-            if ( text )
+            if (text)
             {
                 control->msg = text;
                 control->wMsgRender = text;
@@ -664,22 +664,22 @@ namespace mod::game_patch
         };
 
         auto checkForSpecificMsg =
-            [=]( uint32_t desiredMsgId, int32_t room, const char* stage, const void* currentInf1, const char* desiredFile )
+            [=](uint32_t desiredMsgId, int32_t room, const char* stage, const void* currentInf1, const char* desiredFile)
         {
             // Check if the message ids are the same
-            if ( msgId != desiredMsgId )
+            if (msgId != desiredMsgId)
             {
                 return false;
             }
 
             // Check if the stage and room are correct
-            if ( !libtp::tools::playerIsInRoomStage( room, stage ) )
+            if (!libtp::tools::playerIsInRoomStage(room, stage))
             {
                 return false;
             }
 
             // Check if the desired file is being used
-            return currentInf1 == getInf1Ptr( desiredFile );
+            return currentInf1 == getInf1Ptr(desiredFile);
         };
 
         // Get message ids for specific checks
@@ -688,20 +688,20 @@ namespace mod::game_patch
 
         // Get a pointer to the current BMG file being used
         // The pointer is to INF1
-        const void* unk = libtp::tp::processor::getResource_groupID( TProcessor, unk3 );
-        if ( !unk )
+        const void* unk = libtp::tp::processor::getResource_groupID(TProcessor, unk3);
+        if (!unk)
         {
             return;
         }
-        const void* currentInf1 = *reinterpret_cast<void**>( reinterpret_cast<uint32_t>( unk ) + 0xC );
+        const void* currentInf1 = *reinterpret_cast<void**>(reinterpret_cast<uint32_t>(unk) + 0xC);
 
         rando::Seed* seed;
 
         // Most text replacements are for zel_00.bmg, so check that first
-        if ( currentInf1 == getZel00BmgInf() )
+        if (currentInf1 == getZel00BmgInf())
         {
             // If msgId is for a foolish item, then only use the value from the first one to avoid duplicate entries
-            switch ( ID_TO_ITEM( msgId ) )
+            switch (ID_TO_ITEM(msgId))
             {
                 case Foolish_Item_2:
                 case Foolish_Item_3:
@@ -709,7 +709,7 @@ namespace mod::game_patch
                 case Foolish_Item_5:
                 case Foolish_Item_6:
                 {
-                    msgId = ITEM_TO_ID( Foolish_Item_1 );
+                    msgId = ITEM_TO_ID(Foolish_Item_1);
                     break;
                 }
                 default:
@@ -718,31 +718,31 @@ namespace mod::game_patch
                 }
             }
 
-            const char* newMessage = getCustomMessage( msgId );
-            setMessageText( newMessage );
+            const char* newMessage = getCustomMessage(msgId);
+            setMessageText(newMessage);
             return;
         }
-        else if ( checkForSpecificMsg( charloDonationMsgId, 2, allStages[stageIDs::Castle_Town], currentInf1, "zel_04.bmg" ) )
+        else if (checkForSpecificMsg(charloDonationMsgId, 2, allStages[stageIDs::Castle_Town], currentInf1, "zel_04.bmg"))
         {
-            setMessageText( m_DonationText );
+            setMessageText(m_DonationText);
             return;
         }
 
         // Make sure the randomizer is loaded/enabled and a seed is loaded for seed-specific checks
-        else if ( seed = getCurrentSeed( randomizer ), seed )
+        else if (seed = getCurrentSeed(randomizer), seed)
         {
-            if ( checkForSpecificMsg( linkHouseMsgId, 1, allStages[stageIDs::Ordon_Village], currentInf1, "zel_01.bmg" ) )
+            if (checkForSpecificMsg(linkHouseMsgId, 1, allStages[stageIDs::Ordon_Village], currentInf1, "zel_01.bmg"))
             {
-                setMessageText( seed->m_RequiredDungeons );
+                setMessageText(seed->m_RequiredDungeons);
                 return;
             }
         }
     }
 
-    uint32_t _05_getCustomMsgColor( uint8_t colorId )
+    uint32_t _05_getCustomMsgColor(uint8_t colorId)
     {
-        uint32_t newColorCode;     // RGBA
-        switch ( colorId )
+        uint32_t newColorCode; // RGBA
+        switch (colorId)
         {
             case CUSTOM_MSG_COLOR_DARK_GREEN_HEX:
             {
@@ -769,25 +769,25 @@ namespace mod::game_patch
         return newColorCode;
     }
 
-    const char* _05_getMsgById( uint32_t msgId )
+    const char* _05_getMsgById(uint32_t msgId)
     {
-        return _05_getMsgById( msgId, nullptr );
+        return _05_getMsgById(msgId, nullptr);
     }
 
-    const char* _05_getMsgById( uint32_t msgId, uint16_t* msgSizeOut )
+    const char* _05_getMsgById(uint32_t msgId, uint16_t* msgSizeOut)
     {
         using namespace libtp::data::items;
 
         // If there are any special message IDs that require additional logic, we handle them here.
-        switch ( msgId )
+        switch (msgId)
         {
-            case ITEM_TO_ID( Big_Wallet ):       // Big Wallet Item Get Text
-            case ITEM_TO_ID( Giant_Wallet ):     // Giant Wallet Item Get Text
-            case 0x298:                          // Small Wallet Pause Menu Text
-            case 0x299:                          // Big Wallet Pause Menu Text
-            case 0x29A:                          // Giant Wallet Pause Menu Text
+            case ITEM_TO_ID(Big_Wallet):   // Big Wallet Item Get Text
+            case ITEM_TO_ID(Giant_Wallet): // Giant Wallet Item Get Text
+            case 0x298:                    // Small Wallet Pause Menu Text
+            case 0x299:                    // Big Wallet Pause Menu Text
+            case 0x29A:                    // Giant Wallet Pause Menu Text
             {
-                if ( !walletsPatched )
+                if (!walletsPatched)
                 {
                     return nullptr;
                 }
@@ -806,41 +806,41 @@ namespace mod::game_patch
         }
 
         // Make sure the custom text is loaded
-        const uint32_t msgTableInfoRaw = reinterpret_cast<uint32_t>( m_MsgTableInfo );
-        if ( !msgTableInfoRaw )
+        const uint32_t msgTableInfoRaw = reinterpret_cast<uint32_t>(m_MsgTableInfo);
+        if (!msgTableInfoRaw)
         {
             return nullptr;
         }
 
         // Get a pointer to the message ids to search for
-        const uint16_t* msgIds = reinterpret_cast<uint16_t*>( msgTableInfoRaw );
+        const uint16_t* msgIds = reinterpret_cast<uint16_t*>(msgTableInfoRaw);
 
         // Get the total size of the message ids
         const uint32_t totalMessages = m_TotalMsgEntries;
-        uint32_t msgIdTableSize = totalMessages * sizeof( uint16_t );
+        uint32_t msgIdTableSize = totalMessages * sizeof(uint16_t);
 
         // Round msgIdTableSize up to the size of the offset type to make sure the offsets are properly aligned
-        msgIdTableSize = ( msgIdTableSize + sizeof( uint32_t ) - 1 ) & ~( sizeof( uint32_t ) - 1 );
+        msgIdTableSize = (msgIdTableSize + sizeof(uint32_t) - 1) & ~(sizeof(uint32_t) - 1);
 
         // Get a pointer to the message offsets
-        const uint32_t* msgOffsets = reinterpret_cast<uint32_t*>( msgTableInfoRaw + msgIdTableSize );
+        const uint32_t* msgOffsets = reinterpret_cast<uint32_t*>(msgTableInfoRaw + msgIdTableSize);
 
         // Get the total size of the message offsets
-        const uint32_t msgOffsetTableSize = totalMessages * sizeof( uint32_t );
+        const uint32_t msgOffsetTableSize = totalMessages * sizeof(uint32_t);
 
         // Get a pointer to the messages
-        const char* messages = reinterpret_cast<const char*>( msgTableInfoRaw + msgIdTableSize + msgOffsetTableSize );
+        const char* messages = reinterpret_cast<const char*>(msgTableInfoRaw + msgIdTableSize + msgOffsetTableSize);
 
         // Get the custom message
-        for ( uint32_t i = 0; i < totalMessages; i++ )
+        for (uint32_t i = 0; i < totalMessages; i++)
         {
-            if ( msgIds[i] == msgId )
+            if (msgIds[i] == msgId)
             {
                 const char* currentMsg = &messages[msgOffsets[i]];
 
-                if ( msgSizeOut )
+                if (msgSizeOut)
                 {
-                    *msgSizeOut = static_cast<uint16_t>( &messages[msgOffsets[i + 1]] - currentMsg );
+                    *msgSizeOut = static_cast<uint16_t>(&messages[msgOffsets[i + 1]] - currentMsg);
                 }
 
                 return currentMsg;
@@ -850,4 +850,4 @@ namespace mod::game_patch
         // Didn't find msgId
         return nullptr;
     }
-}     // namespace mod::game_patch
+} // namespace mod::game_patch

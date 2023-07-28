@@ -5,13 +5,13 @@
 
 namespace mod
 {
-    void handleSeedPatches( rando::Randomizer* rando )
+    void handleSeedPatches(rando::Randomizer* rando)
     {
         rando::Seed* seed;
-        if ( seed = getCurrentSeed( rando ), seed )
+        if (seed = getCurrentSeed(rando), seed)
         {
             // getConsole() << "Applying one-time patches:\n";
-            seed->applyOneTimePatches( true );
+            seed->applyOneTimePatches(true);
             seedRelAction = SEED_ACTION_NONE;
         }
         else
@@ -24,12 +24,12 @@ namespace mod
     void main()
     {
         uint8_t selectedSeed = seedList->m_selectedSeed;
-        switch ( seedRelAction )
+        switch (seedRelAction)
         {
             case SEED_ACTION_LOAD_SEED:
             {
                 // Make sure the randomizer doesn't already have memory allocated
-                if ( randomizer )
+                if (randomizer)
                 {
                     delete randomizer;
                 }
@@ -39,10 +39,10 @@ namespace mod
 
                 // The randomizer constructor sets m_Enabled to true
                 // Align to void*, as pointers use the largest variable type in the Randomizer class
-                randomizer = new ( sizeof( void* ) ) rando::Randomizer( &seedList->m_minSeedInfo[selectedSeed], selectedSeed );
+                randomizer = new (sizeof(void*)) rando::Randomizer(&seedList->m_minSeedInfo[selectedSeed], selectedSeed);
 
                 // One-time patches need to be applied whenever a seed is loaded
-                handleSeedPatches( randomizer );
+                handleSeedPatches(randomizer);
                 break;
             }
             case SEED_ACTION_CHANGE_SEED:
@@ -50,10 +50,10 @@ namespace mod
                 // Make sure transformAnywhereEnabled is reset between seeds
                 transformAnywhereEnabled = false;
 
-                randomizer->changeSeed( &seedList->m_minSeedInfo[selectedSeed], selectedSeed );
+                randomizer->changeSeed(&seedList->m_minSeedInfo[selectedSeed], selectedSeed);
 
                 // One-time patches need to be applied whenever a seed is loaded
-                handleSeedPatches( randomizer );
+                handleSeedPatches(randomizer);
                 break;
             }
             default:
@@ -65,4 +65,4 @@ namespace mod
 
     void exit() {}
 
-}     // namespace mod
+} // namespace mod

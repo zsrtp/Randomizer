@@ -10,13 +10,13 @@ namespace mod::game_patch
     uint32_t _04_getProgressiveSword()
     {
         using namespace libtp::data::items;
-        static const uint8_t progressiveSwordsList[] = { Wooden_Sword, Ordon_Sword, Master_Sword };
+        static const uint8_t progressiveSwordsList[] = {Wooden_Sword, Ordon_Sword, Master_Sword};
 
-        constexpr uint32_t listLength = sizeof( progressiveSwordsList ) / sizeof( progressiveSwordsList[0] );
-        for ( uint32_t i = 0; i < listLength; i++ )
+        constexpr uint32_t listLength = sizeof(progressiveSwordsList) / sizeof(progressiveSwordsList[0]);
+        for (uint32_t i = 0; i < listLength; i++)
         {
             const uint32_t item = progressiveSwordsList[i];
-            if ( !events::haveItem( item ) )
+            if (!events::haveItem(item))
             {
                 return item;
             }
@@ -29,13 +29,13 @@ namespace mod::game_patch
     uint32_t _04_getProgressiveBow()
     {
         using namespace libtp::data::items;
-        static const uint8_t progressiveBowsList[] = { Heros_Bow, Big_Quiver };
+        static const uint8_t progressiveBowsList[] = {Heros_Bow, Big_Quiver};
 
-        constexpr uint32_t listLength = sizeof( progressiveBowsList ) / sizeof( progressiveBowsList[0] );
-        for ( uint32_t i = 0; i < listLength; i++ )
+        constexpr uint32_t listLength = sizeof(progressiveBowsList) / sizeof(progressiveBowsList[0]);
+        for (uint32_t i = 0; i < listLength; i++)
         {
             const uint32_t item = progressiveBowsList[i];
-            if ( !events::haveItem( item ) )
+            if (!events::haveItem(item))
             {
                 return item;
             }
@@ -50,13 +50,13 @@ namespace mod::game_patch
         using namespace rando::customItems;
 
         static const uint8_t progressiveSkillsList[] =
-            { Ending_Blow, Shield_Attack, Back_Slice, Helm_Splitter, Mortal_Draw, Jump_Strike };
+            {Ending_Blow, Shield_Attack, Back_Slice, Helm_Splitter, Mortal_Draw, Jump_Strike};
 
-        constexpr uint32_t listLength = sizeof( progressiveSkillsList ) / sizeof( progressiveSkillsList[0] );
-        for ( uint32_t i = 0; i < listLength; i++ )
+        constexpr uint32_t listLength = sizeof(progressiveSkillsList) / sizeof(progressiveSkillsList[0]);
+        for (uint32_t i = 0; i < listLength; i++)
         {
             const uint32_t item = progressiveSkillsList[i];
-            if ( !events::haveItem( item ) )
+            if (!events::haveItem(item))
             {
                 return item;
             }
@@ -71,18 +71,18 @@ namespace mod::game_patch
         using namespace rando::customItems;
         using namespace libtp::data::items;
 
-        static const uint8_t progressiveSkyBooksList[] = { Ancient_Sky_Book_Empty,
-                                                           Ancient_Sky_Book_First_Character,
-                                                           Ancient_Sky_Book_Second_Character,
-                                                           Ancient_Sky_Book_Third_Character,
-                                                           Ancient_Sky_Book_Fourth_Character,
-                                                           Ancient_Sky_Book_Fifth_Character };
+        static const uint8_t progressiveSkyBooksList[] = {Ancient_Sky_Book_Empty,
+                                                          Ancient_Sky_Book_First_Character,
+                                                          Ancient_Sky_Book_Second_Character,
+                                                          Ancient_Sky_Book_Third_Character,
+                                                          Ancient_Sky_Book_Fourth_Character,
+                                                          Ancient_Sky_Book_Fifth_Character};
 
-        constexpr uint32_t listLength = sizeof( progressiveSkyBooksList ) / sizeof( progressiveSkyBooksList[0] );
-        for ( uint32_t i = 0; i < listLength; i++ )
+        constexpr uint32_t listLength = sizeof(progressiveSkyBooksList) / sizeof(progressiveSkyBooksList[0]);
+        for (uint32_t i = 0; i < listLength; i++)
         {
             const uint32_t item = progressiveSkyBooksList[i];
-            if ( !events::haveItem( item ) )
+            if (!events::haveItem(item))
             {
                 return item;
             }
@@ -96,13 +96,13 @@ namespace mod::game_patch
     {
         using namespace libtp::data::items;
 
-        static const uint8_t progressiveKeyShardsList[] { Key_Shard_1, Key_Shard_2 };
+        static const uint8_t progressiveKeyShardsList[] {Key_Shard_1, Key_Shard_2};
 
-        constexpr uint32_t listLength = sizeof( progressiveKeyShardsList ) / sizeof( progressiveKeyShardsList[0] );
-        for ( uint32_t i = 0; i < listLength; i++ )
+        constexpr uint32_t listLength = sizeof(progressiveKeyShardsList) / sizeof(progressiveKeyShardsList[0]);
+        for (uint32_t i = 0; i < listLength; i++)
         {
             const uint32_t item = progressiveKeyShardsList[i];
-            if ( !events::haveItem( item ) )
+            if (!events::haveItem(item))
             {
                 return item;
             }
@@ -116,13 +116,13 @@ namespace mod::game_patch
     {
         using namespace libtp::data::items;
 
-        static const uint8_t progressiveMirrorShardsList[] { Mirror_Piece_2, Mirror_Piece_3, Mirror_Piece_4 };
+        static const uint8_t progressiveMirrorShardsList[] {Mirror_Piece_2, Mirror_Piece_3, Mirror_Piece_4};
 
-        constexpr uint32_t listLength = sizeof( progressiveMirrorShardsList ) / sizeof( progressiveMirrorShardsList[0] );
-        for ( uint32_t i = 0; i < listLength; i++ )
+        constexpr uint32_t listLength = sizeof(progressiveMirrorShardsList) / sizeof(progressiveMirrorShardsList[0]);
+        for (uint32_t i = 0; i < listLength; i++)
         {
             const uint32_t item = progressiveMirrorShardsList[i];
-            if ( !events::haveItem( item ) )
+            if (!events::haveItem(item))
             {
                 return item;
             }
@@ -136,30 +136,30 @@ namespace mod::game_patch
     {
         using namespace rando::customItems;
 
-        static const uint8_t progressiveFusedShadowList[] { Fused_Shadow_1, Fused_Shadow_2, Fused_Shadow_3 };
+        static const uint8_t progressiveFusedShadowList[] {Fused_Shadow_1, Fused_Shadow_2, Fused_Shadow_3};
 
-        constexpr uint32_t listLength = sizeof( progressiveFusedShadowList ) / sizeof( progressiveFusedShadowList[0] );
-        for ( uint32_t i = 0; i < listLength; i++ )
+        constexpr uint32_t listLength = sizeof(progressiveFusedShadowList) / sizeof(progressiveFusedShadowList[0]);
+        for (uint32_t i = 0; i < listLength; i++)
         {
             const uint32_t item = progressiveFusedShadowList[i];
-            if ( !events::haveItem( item ) )
+            if (!events::haveItem(item))
             {
                 return item;
             }
         }
 
         // All previous obtained, so return last upgrade
-        return static_cast<uint32_t>( Fused_Shadow_3 );
+        return static_cast<uint32_t>(Fused_Shadow_3);
     };
 
-    KEEP_FUNC uint32_t _04_verifyProgressiveItem( rando::Randomizer* randomizer, uint32_t itemID )
+    KEEP_FUNC uint32_t _04_verifyProgressiveItem(rando::Randomizer* randomizer, uint32_t itemID)
     {
         using namespace libtp::data::items;
         using namespace rando::customItems;
 
-        if ( randoIsEnabled( randomizer ) )
+        if (randoIsEnabled(randomizer))
         {
-            switch ( itemID )
+            switch (itemID)
             {
                 case Wooden_Sword:
                 case Ordon_Sword:
@@ -181,7 +181,7 @@ namespace mod::game_patch
                 case Big_Wallet:
                 case Giant_Wallet:
                 {
-                    if ( events::haveItem( Big_Wallet ) )
+                    if (events::haveItem(Big_Wallet))
                     {
                         itemID = Giant_Wallet;
                     }
@@ -207,7 +207,7 @@ namespace mod::game_patch
                 case Clawshot:
                 case Double_Clawshots:
                 {
-                    if ( events::haveItem( Clawshot ) )
+                    if (events::haveItem(Clawshot))
                     {
                         itemID = Double_Clawshots;
                     }
@@ -241,7 +241,7 @@ namespace mod::game_patch
                 case Dominion_Rod_Uncharged:
                 case Dominion_Rod:
                 {
-                    if ( events::haveItem( Dominion_Rod_Uncharged ) )
+                    if (events::haveItem(Dominion_Rod_Uncharged))
                     {
                         itemID = Dominion_Rod;
                     }
@@ -255,7 +255,7 @@ namespace mod::game_patch
                 case Fishing_Rod:
                 case Coral_Earring:
                 {
-                    if ( events::haveItem( Fishing_Rod ) )
+                    if (events::haveItem(Fishing_Rod))
                     {
                         itemID = Coral_Earring;
                     }
@@ -294,7 +294,7 @@ namespace mod::game_patch
                     uint32_t count = foolishItemsPtr->spawnCount;
 
                     // Make sure the current count is valid before using
-                    if ( count >= MAX_SPAWNED_FOOLISH_ITEMS )
+                    if (count >= MAX_SPAWNED_FOOLISH_ITEMS)
                     {
                         count = 0;
                     }
@@ -303,12 +303,12 @@ namespace mod::game_patch
                     count++;
 
                     // Make sure the new count is valid before saving
-                    if ( count >= MAX_SPAWNED_FOOLISH_ITEMS )
+                    if (count >= MAX_SPAWNED_FOOLISH_ITEMS)
                     {
                         count = 0;
                     }
 
-                    foolishItemsPtr->spawnCount = static_cast<uint8_t>( count );
+                    foolishItemsPtr->spawnCount = static_cast<uint8_t>(count);
                     break;
                 }
 
@@ -320,4 +320,4 @@ namespace mod::game_patch
         }
         return itemID;
     }
-}     // namespace mod::game_patch
+} // namespace mod::game_patch

@@ -15,5 +15,5 @@
 namespace mod::user_patch
 {
     GamePatch oneTimePatches[6] =
-        { patchWallet, removeIBLimit, loadShopModels, disableBattleMusic, setInstantText, increaseSpinnerVelocity };
+        {patchWallet, removeIBLimit, loadShopModels, disableBattleMusic, setInstantText, increaseSpinnerVelocity};
 }

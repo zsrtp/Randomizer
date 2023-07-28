@@ -69,5 +69,5 @@ namespace mod::customMessages
     extern const ItemWheelMenuStrings itemWheelMenuStringsIt;
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsIt;
 #endif
-}     // namespace mod::customMessages
+} // namespace mod::customMessages
 #endif

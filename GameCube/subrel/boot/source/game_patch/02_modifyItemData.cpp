@@ -10,167 +10,167 @@
 
 namespace mod::game_patch
 {
-    static const uint8_t itemsWithNoFieldModel[] = { libtp::data::items::Bombs_5,
-                                                     libtp::data::items::Bombs_10,
-                                                     libtp::data::items::Bombs_20,
-                                                     libtp::data::items::Bombs_30,
-                                                     libtp::data::items::Water_Bombs_5,
-                                                     libtp::data::items::Water_Bombs_10,
-                                                     libtp::data::items::Water_Bombs_15,
-                                                     libtp::data::items::Water_Bombs_3,
-                                                     libtp::data::items::Bomblings_5,
-                                                     libtp::data::items::Bomblings_10,
-                                                     libtp::data::items::Bomblings_3,
-                                                     libtp::data::items::Bombling_1,
-                                                     libtp::data::items::Magic_Armor,
-                                                     libtp::data::items::Zora_Armor,
-                                                     libtp::data::items::Wooden_Sword,
-                                                     libtp::data::items::Master_Sword,
-                                                     libtp::data::items::Ordon_Shield,
-                                                     libtp::data::items::Wooden_Shield,
-                                                     libtp::data::items::Hylian_Shield,
-                                                     libtp::data::items::Shadow_Crystal,
-                                                     libtp::data::items::Big_Wallet,
-                                                     libtp::data::items::Giant_Wallet,
-                                                     libtp::data::items::Coral_Earring,
-                                                     libtp::data::items::Hawkeye,
-                                                     libtp::data::items::Boomerang,
-                                                     libtp::data::items::Spinner,
-                                                     libtp::data::items::Ball_and_Chain,
-                                                     libtp::data::items::Heros_Bow,
-                                                     libtp::data::items::Clawshot,
-                                                     libtp::data::items::Ordon_Sword,
-                                                     libtp::data::items::Iron_Boots,
-                                                     libtp::data::items::Dominion_Rod,
-                                                     libtp::data::items::Double_Clawshots,
-                                                     libtp::data::items::Master_Sword_Light,
-                                                     libtp::data::items::Fishing_Rod,
-                                                     libtp::data::items::Slingshot,
-                                                     libtp::data::items::Dominion_Rod_Uncharged,
-                                                     libtp::data::items::Giant_Bomb_Bag,
-                                                     libtp::data::items::Empty_Bomb_Bag,
-                                                     libtp::data::items::Goron_Bomb_Bag,
-                                                     libtp::data::items::Bomb_Bag_Regular_Bombs,
-                                                     libtp::data::items::Big_Quiver,
-                                                     libtp::data::items::Giant_Quiver,
-                                                     libtp::data::items::Empty_Bottle,
-                                                     libtp::data::items::Red_Potion_Shop,
-                                                     libtp::data::items::Blue_Potion,
-                                                     libtp::data::items::Milk,
-                                                     libtp::data::items::Sera_Bottle,
-                                                     libtp::data::items::Lantern_Oil_Shop,
-                                                     libtp::data::items::Water,
-                                                     libtp::data::items::Hot_Spring_Water_Shop,
-                                                     libtp::data::items::Lantern_Refill_Shop,
-                                                     libtp::data::items::Jovani_Bottle,
-                                                     libtp::data::items::Renardos_Letter,
-                                                     libtp::data::items::Invoice,
-                                                     libtp::data::items::Ilias_Charm,
-                                                     libtp::data::items::Horse_Call,
-                                                     rando::customItems::Forest_Temple_Small_Key,
-                                                     rando::customItems::Goron_Mines_Small_Key,
-                                                     rando::customItems::Lakebed_Temple_Small_Key,
-                                                     rando::customItems::Arbiters_Grounds_Small_Key,
-                                                     rando::customItems::Snowpeak_Ruins_Small_Key,
-                                                     rando::customItems::Temple_of_Time_Small_Key,
-                                                     rando::customItems::City_in_The_Sky_Small_Key,
-                                                     rando::customItems::Palace_of_Twilight_Small_Key,
-                                                     rando::customItems::Hyrule_Castle_Small_Key,
-                                                     rando::customItems::Bulblin_Camp_Key,
-                                                     rando::customItems::Foolish_Item_1,
-                                                     rando::customItems::Foolish_Item_2,
-                                                     rando::customItems::Foolish_Item_3,
-                                                     rando::customItems::Foolish_Item_4,
-                                                     rando::customItems::Foolish_Item_5,
-                                                     rando::customItems::Foolish_Item_6,
-                                                     libtp::data::items::Aurus_Memo,
-                                                     libtp::data::items::Asheis_Sketch,
-                                                     rando::customItems::Forest_Temple_Big_Key,
-                                                     rando::customItems::Lakebed_Temple_Big_Key,
-                                                     rando::customItems::Arbiters_Grounds_Big_Key,
-                                                     rando::customItems::Temple_of_Time_Big_Key,
-                                                     rando::customItems::City_in_The_Sky_Big_Key,
-                                                     rando::customItems::Palace_of_Twilight_Big_Key,
-                                                     rando::customItems::Hyrule_Castle_Big_Key,
-                                                     rando::customItems::Forest_Temple_Compass,
-                                                     rando::customItems::Goron_Mines_Compass,
-                                                     rando::customItems::Lakebed_Temple_Compass,
-                                                     libtp::data::items::Coro_Bottle,
-                                                     libtp::data::items::Bee_Larva_Shop,
-                                                     libtp::data::items::Vessel_Of_Light_Faron,
-                                                     libtp::data::items::Vessel_Of_Light_Eldin,
-                                                     libtp::data::items::Vessel_Of_Light_Lanayru,
-                                                     rando::customItems::Arbiters_Grounds_Compass,
-                                                     rando::customItems::Snowpeak_Ruins_Compass,
-                                                     rando::customItems::Temple_of_Time_Compass,
-                                                     rando::customItems::City_in_The_Sky_Compass,
-                                                     rando::customItems::Palace_of_Twilight_Compass,
-                                                     rando::customItems::Hyrule_Castle_Compass,
-                                                     rando::customItems::Forest_Temple_Dungeon_Map,
-                                                     rando::customItems::Goron_Mines_Dungeon_Map,
-                                                     rando::customItems::Lakebed_Temple_Dungeon_Map,
-                                                     rando::customItems::Arbiters_Grounds_Dungeon_Map,
-                                                     rando::customItems::Snowpeak_Ruins_Dungeon_Map,
-                                                     rando::customItems::Temple_of_Time_Dungeon_Map,
-                                                     rando::customItems::City_in_The_Sky_Dungeon_Map,
-                                                     rando::customItems::Palace_of_Twilight_Dungeon_Map,
-                                                     rando::customItems::Hyrule_Castle_Dungeon_Map,
-                                                     libtp::data::items::Male_Beetle,
-                                                     libtp::data::items::Female_Beetle,
-                                                     libtp::data::items::Male_Butterfly,
-                                                     libtp::data::items::Female_Butterfly,
-                                                     libtp::data::items::Male_Stag_Beetle,
-                                                     libtp::data::items::Female_Stag_Beetle,
-                                                     libtp::data::items::Male_Grasshopper,
-                                                     libtp::data::items::Female_Grasshopper,
-                                                     libtp::data::items::Male_Phasmid,
-                                                     libtp::data::items::Female_Phasmid,
-                                                     libtp::data::items::Male_Pill_Bug,
-                                                     libtp::data::items::Female_Pill_Bug,
-                                                     libtp::data::items::Male_Mantis,
-                                                     libtp::data::items::Female_Mantis,
-                                                     libtp::data::items::Male_Ladybug,
-                                                     libtp::data::items::Female_Ladybug,
-                                                     libtp::data::items::Male_Snail,
-                                                     libtp::data::items::Female_Snail,
-                                                     libtp::data::items::Male_Dragonfly,
-                                                     libtp::data::items::Female_Dragonfly,
-                                                     libtp::data::items::Male_Ant,
-                                                     libtp::data::items::Female_Ant,
-                                                     libtp::data::items::Male_Dayfly,
-                                                     libtp::data::items::Female_Dayfly,
-                                                     libtp::data::items::Poe_Soul,
-                                                     rando::customItems::Ending_Blow,
-                                                     rando::customItems::Shield_Attack,
-                                                     rando::customItems::Back_Slice,
-                                                     rando::customItems::Helm_Splitter,
-                                                     rando::customItems::Mortal_Draw,
-                                                     rando::customItems::Jump_Strike,
-                                                     rando::customItems::Great_Spin,
-                                                     libtp::data::items::Ancient_Sky_Book_Empty,
-                                                     rando::customItems::Ancient_Sky_Book_First_Character,
-                                                     rando::customItems::Ancient_Sky_Book_Second_Character,
-                                                     rando::customItems::Ancient_Sky_Book_Third_Character,
-                                                     rando::customItems::Ancient_Sky_Book_Fourth_Character,
-                                                     rando::customItems::Ancient_Sky_Book_Fifth_Character,
-                                                     libtp::data::items::Ancient_Sky_Book_Completed,
-                                                     libtp::data::items::Purple_Rupee_Links_House,
-                                                     libtp::data::items::Small_Key_N_Faron_Gate,
-                                                     libtp::data::items::Gate_Keys,
-                                                     libtp::data::items::Ordon_Pumpkin,
-                                                     libtp::data::items::Ordon_Goat_Cheese,
-                                                     libtp::data::items::Bed_Key,
-                                                     libtp::data::items::Key_Shard_1,
-                                                     libtp::data::items::Key_Shard_2,
-                                                     libtp::data::items::Key_Shard_3,
-                                                     libtp::data::items::Big_Key_Goron_Mines,
-                                                     libtp::data::items::Coro_Key,
-                                                     libtp::data::items::Mirror_Piece_2,
-                                                     libtp::data::items::Mirror_Piece_3,
-                                                     libtp::data::items::Mirror_Piece_4,
-                                                     rando::customItems::Fused_Shadow_1,
-                                                     rando::customItems::Fused_Shadow_2,
-                                                     rando::customItems::Fused_Shadow_3 };
+    static const uint8_t itemsWithNoFieldModel[] = {libtp::data::items::Bombs_5,
+                                                    libtp::data::items::Bombs_10,
+                                                    libtp::data::items::Bombs_20,
+                                                    libtp::data::items::Bombs_30,
+                                                    libtp::data::items::Water_Bombs_5,
+                                                    libtp::data::items::Water_Bombs_10,
+                                                    libtp::data::items::Water_Bombs_15,
+                                                    libtp::data::items::Water_Bombs_3,
+                                                    libtp::data::items::Bomblings_5,
+                                                    libtp::data::items::Bomblings_10,
+                                                    libtp::data::items::Bomblings_3,
+                                                    libtp::data::items::Bombling_1,
+                                                    libtp::data::items::Magic_Armor,
+                                                    libtp::data::items::Zora_Armor,
+                                                    libtp::data::items::Wooden_Sword,
+                                                    libtp::data::items::Master_Sword,
+                                                    libtp::data::items::Ordon_Shield,
+                                                    libtp::data::items::Wooden_Shield,
+                                                    libtp::data::items::Hylian_Shield,
+                                                    libtp::data::items::Shadow_Crystal,
+                                                    libtp::data::items::Big_Wallet,
+                                                    libtp::data::items::Giant_Wallet,
+                                                    libtp::data::items::Coral_Earring,
+                                                    libtp::data::items::Hawkeye,
+                                                    libtp::data::items::Boomerang,
+                                                    libtp::data::items::Spinner,
+                                                    libtp::data::items::Ball_and_Chain,
+                                                    libtp::data::items::Heros_Bow,
+                                                    libtp::data::items::Clawshot,
+                                                    libtp::data::items::Ordon_Sword,
+                                                    libtp::data::items::Iron_Boots,
+                                                    libtp::data::items::Dominion_Rod,
+                                                    libtp::data::items::Double_Clawshots,
+                                                    libtp::data::items::Master_Sword_Light,
+                                                    libtp::data::items::Fishing_Rod,
+                                                    libtp::data::items::Slingshot,
+                                                    libtp::data::items::Dominion_Rod_Uncharged,
+                                                    libtp::data::items::Giant_Bomb_Bag,
+                                                    libtp::data::items::Empty_Bomb_Bag,
+                                                    libtp::data::items::Goron_Bomb_Bag,
+                                                    libtp::data::items::Bomb_Bag_Regular_Bombs,
+                                                    libtp::data::items::Big_Quiver,
+                                                    libtp::data::items::Giant_Quiver,
+                                                    libtp::data::items::Empty_Bottle,
+                                                    libtp::data::items::Red_Potion_Shop,
+                                                    libtp::data::items::Blue_Potion,
+                                                    libtp::data::items::Milk,
+                                                    libtp::data::items::Sera_Bottle,
+                                                    libtp::data::items::Lantern_Oil_Shop,
+                                                    libtp::data::items::Water,
+                                                    libtp::data::items::Hot_Spring_Water_Shop,
+                                                    libtp::data::items::Lantern_Refill_Shop,
+                                                    libtp::data::items::Jovani_Bottle,
+                                                    libtp::data::items::Renardos_Letter,
+                                                    libtp::data::items::Invoice,
+                                                    libtp::data::items::Ilias_Charm,
+                                                    libtp::data::items::Horse_Call,
+                                                    rando::customItems::Forest_Temple_Small_Key,
+                                                    rando::customItems::Goron_Mines_Small_Key,
+                                                    rando::customItems::Lakebed_Temple_Small_Key,
+                                                    rando::customItems::Arbiters_Grounds_Small_Key,
+                                                    rando::customItems::Snowpeak_Ruins_Small_Key,
+                                                    rando::customItems::Temple_of_Time_Small_Key,
+                                                    rando::customItems::City_in_The_Sky_Small_Key,
+                                                    rando::customItems::Palace_of_Twilight_Small_Key,
+                                                    rando::customItems::Hyrule_Castle_Small_Key,
+                                                    rando::customItems::Bulblin_Camp_Key,
+                                                    rando::customItems::Foolish_Item_1,
+                                                    rando::customItems::Foolish_Item_2,
+                                                    rando::customItems::Foolish_Item_3,
+                                                    rando::customItems::Foolish_Item_4,
+                                                    rando::customItems::Foolish_Item_5,
+                                                    rando::customItems::Foolish_Item_6,
+                                                    libtp::data::items::Aurus_Memo,
+                                                    libtp::data::items::Asheis_Sketch,
+                                                    rando::customItems::Forest_Temple_Big_Key,
+                                                    rando::customItems::Lakebed_Temple_Big_Key,
+                                                    rando::customItems::Arbiters_Grounds_Big_Key,
+                                                    rando::customItems::Temple_of_Time_Big_Key,
+                                                    rando::customItems::City_in_The_Sky_Big_Key,
+                                                    rando::customItems::Palace_of_Twilight_Big_Key,
+                                                    rando::customItems::Hyrule_Castle_Big_Key,
+                                                    rando::customItems::Forest_Temple_Compass,
+                                                    rando::customItems::Goron_Mines_Compass,
+                                                    rando::customItems::Lakebed_Temple_Compass,
+                                                    libtp::data::items::Coro_Bottle,
+                                                    libtp::data::items::Bee_Larva_Shop,
+                                                    libtp::data::items::Vessel_Of_Light_Faron,
+                                                    libtp::data::items::Vessel_Of_Light_Eldin,
+                                                    libtp::data::items::Vessel_Of_Light_Lanayru,
+                                                    rando::customItems::Arbiters_Grounds_Compass,
+                                                    rando::customItems::Snowpeak_Ruins_Compass,
+                                                    rando::customItems::Temple_of_Time_Compass,
+                                                    rando::customItems::City_in_The_Sky_Compass,
+                                                    rando::customItems::Palace_of_Twilight_Compass,
+                                                    rando::customItems::Hyrule_Castle_Compass,
+                                                    rando::customItems::Forest_Temple_Dungeon_Map,
+                                                    rando::customItems::Goron_Mines_Dungeon_Map,
+                                                    rando::customItems::Lakebed_Temple_Dungeon_Map,
+                                                    rando::customItems::Arbiters_Grounds_Dungeon_Map,
+                                                    rando::customItems::Snowpeak_Ruins_Dungeon_Map,
+                                                    rando::customItems::Temple_of_Time_Dungeon_Map,
+                                                    rando::customItems::City_in_The_Sky_Dungeon_Map,
+                                                    rando::customItems::Palace_of_Twilight_Dungeon_Map,
+                                                    rando::customItems::Hyrule_Castle_Dungeon_Map,
+                                                    libtp::data::items::Male_Beetle,
+                                                    libtp::data::items::Female_Beetle,
+                                                    libtp::data::items::Male_Butterfly,
+                                                    libtp::data::items::Female_Butterfly,
+                                                    libtp::data::items::Male_Stag_Beetle,
+                                                    libtp::data::items::Female_Stag_Beetle,
+                                                    libtp::data::items::Male_Grasshopper,
+                                                    libtp::data::items::Female_Grasshopper,
+                                                    libtp::data::items::Male_Phasmid,
+                                                    libtp::data::items::Female_Phasmid,
+                                                    libtp::data::items::Male_Pill_Bug,
+                                                    libtp::data::items::Female_Pill_Bug,
+                                                    libtp::data::items::Male_Mantis,
+                                                    libtp::data::items::Female_Mantis,
+                                                    libtp::data::items::Male_Ladybug,
+                                                    libtp::data::items::Female_Ladybug,
+                                                    libtp::data::items::Male_Snail,
+                                                    libtp::data::items::Female_Snail,
+                                                    libtp::data::items::Male_Dragonfly,
+                                                    libtp::data::items::Female_Dragonfly,
+                                                    libtp::data::items::Male_Ant,
+                                                    libtp::data::items::Female_Ant,
+                                                    libtp::data::items::Male_Dayfly,
+                                                    libtp::data::items::Female_Dayfly,
+                                                    libtp::data::items::Poe_Soul,
+                                                    rando::customItems::Ending_Blow,
+                                                    rando::customItems::Shield_Attack,
+                                                    rando::customItems::Back_Slice,
+                                                    rando::customItems::Helm_Splitter,
+                                                    rando::customItems::Mortal_Draw,
+                                                    rando::customItems::Jump_Strike,
+                                                    rando::customItems::Great_Spin,
+                                                    libtp::data::items::Ancient_Sky_Book_Empty,
+                                                    rando::customItems::Ancient_Sky_Book_First_Character,
+                                                    rando::customItems::Ancient_Sky_Book_Second_Character,
+                                                    rando::customItems::Ancient_Sky_Book_Third_Character,
+                                                    rando::customItems::Ancient_Sky_Book_Fourth_Character,
+                                                    rando::customItems::Ancient_Sky_Book_Fifth_Character,
+                                                    libtp::data::items::Ancient_Sky_Book_Completed,
+                                                    libtp::data::items::Purple_Rupee_Links_House,
+                                                    libtp::data::items::Small_Key_N_Faron_Gate,
+                                                    libtp::data::items::Gate_Keys,
+                                                    libtp::data::items::Ordon_Pumpkin,
+                                                    libtp::data::items::Ordon_Goat_Cheese,
+                                                    libtp::data::items::Bed_Key,
+                                                    libtp::data::items::Key_Shard_1,
+                                                    libtp::data::items::Key_Shard_2,
+                                                    libtp::data::items::Key_Shard_3,
+                                                    libtp::data::items::Big_Key_Goron_Mines,
+                                                    libtp::data::items::Coro_Key,
+                                                    libtp::data::items::Mirror_Piece_2,
+                                                    libtp::data::items::Mirror_Piece_3,
+                                                    libtp::data::items::Mirror_Piece_4,
+                                                    rando::customItems::Fused_Shadow_1,
+                                                    rando::customItems::Fused_Shadow_2,
+                                                    rando::customItems::Fused_Shadow_3};
 
     void modifyItemModels()
     {
@@ -184,38 +184,34 @@ namespace mod::game_patch
 
         int16_t bombBagIcon = itemResourcePtr[items::Bomb_Bag_Regular_Bombs].ringTexResIdx;
 
-        memcpy( &itemResourcePtr[items::Bomb_Bag_Regular_Bombs],
-                &itemResourcePtr[items::Goron_Bomb_Bag],
-                sizeof( d_item_data::ItemResource ) );
+        memcpy(&itemResourcePtr[items::Bomb_Bag_Regular_Bombs],
+               &itemResourcePtr[items::Goron_Bomb_Bag],
+               sizeof(d_item_data::ItemResource));
 
         itemResourcePtr[items::Bomb_Bag_Regular_Bombs].ringTexResIdx = bombBagIcon;
 
         // First we copy over the Ordon Sword data to the Master/Light Sword as a base and then modify the model appropriately
-        memcpy( &itemResourcePtr[items::Master_Sword],
-                &itemResourcePtr[items::Ordon_Sword],
-                sizeof( d_item_data::ItemResource ) );
-        memcpy( &itemResourcePtr[items::Master_Sword_Light],
-                &itemResourcePtr[items::Ordon_Sword],
-                sizeof( d_item_data::ItemResource ) );
+        memcpy(&itemResourcePtr[items::Master_Sword], &itemResourcePtr[items::Ordon_Sword], sizeof(d_item_data::ItemResource));
+        memcpy(&itemResourcePtr[items::Master_Sword_Light],
+               &itemResourcePtr[items::Ordon_Sword],
+               sizeof(d_item_data::ItemResource));
         itemResourcePtr[items::Master_Sword].arcName = _02_masterSwordArc;
         itemResourcePtr[items::Master_Sword_Light].arcName = _02_masterSwordArc;
         itemResourcePtr[items::Master_Sword].modelResIdx = 0x5;
         itemResourcePtr[items::Master_Sword_Light].modelResIdx = 0x5;
 
-        memcpy( &itemResourcePtr[items::Horse_Call],
-                &itemResourcePtr[items::Ilias_Charm],
-                sizeof( d_item_data::ItemResource ) );
+        memcpy(&itemResourcePtr[items::Horse_Call], &itemResourcePtr[items::Ilias_Charm], sizeof(d_item_data::ItemResource));
 
-        memcpy( &itemResourcePtr[items::Purple_Rupee_Links_House],
-                &itemResourcePtr[items::Purple_Rupee],
-                sizeof( d_item_data::ItemResource ) );
+        memcpy(&itemResourcePtr[items::Purple_Rupee_Links_House],
+               &itemResourcePtr[items::Purple_Rupee],
+               sizeof(d_item_data::ItemResource));
 
-        uint32_t loopCount = sizeof( itemsWithNoFieldModel ) / sizeof( itemsWithNoFieldModel[0] );
-        for ( uint32_t i = 0; i < loopCount; i++ )
+        uint32_t loopCount = sizeof(itemsWithNoFieldModel) / sizeof(itemsWithNoFieldModel[0]);
+        for (uint32_t i = 0; i < loopCount; i++)
         {
             uint32_t item = itemsWithNoFieldModel[i];
             // Set the shadow size to 0xFF for items that don't cast a proper shadow.
-            switch ( item )
+            switch (item)
             {
                 case items::Ordon_Shield:
                 case items::Boomerang:
@@ -270,58 +266,58 @@ namespace mod::game_patch
         uint8_t compassSeType = getSeTypePtr[items::Compass];
         uint8_t skyBookSeType = getSeTypePtr[items::Ancient_Sky_Book_Empty];
 
-        uint8_t customSmallKeyItemIDs[] = { customItems::Forest_Temple_Small_Key,
-                                            customItems::Goron_Mines_Small_Key,
-                                            customItems::Lakebed_Temple_Small_Key,
-                                            customItems::Arbiters_Grounds_Small_Key,
-                                            customItems::Snowpeak_Ruins_Small_Key,
-                                            customItems::Temple_of_Time_Small_Key,
-                                            customItems::City_in_The_Sky_Small_Key,
-                                            customItems::Palace_of_Twilight_Small_Key,
-                                            customItems::Hyrule_Castle_Small_Key,
-                                            customItems::Bulblin_Camp_Key };
+        uint8_t customSmallKeyItemIDs[] = {customItems::Forest_Temple_Small_Key,
+                                           customItems::Goron_Mines_Small_Key,
+                                           customItems::Lakebed_Temple_Small_Key,
+                                           customItems::Arbiters_Grounds_Small_Key,
+                                           customItems::Snowpeak_Ruins_Small_Key,
+                                           customItems::Temple_of_Time_Small_Key,
+                                           customItems::City_in_The_Sky_Small_Key,
+                                           customItems::Palace_of_Twilight_Small_Key,
+                                           customItems::Hyrule_Castle_Small_Key,
+                                           customItems::Bulblin_Camp_Key};
 
-        uint8_t customBigKeyItemIDs[] = { customItems::Forest_Temple_Big_Key,
-                                          customItems::Lakebed_Temple_Big_Key,
-                                          customItems::Arbiters_Grounds_Big_Key,
-                                          customItems::Temple_of_Time_Big_Key,
-                                          customItems::City_in_The_Sky_Big_Key,
-                                          customItems::Palace_of_Twilight_Big_Key,
-                                          customItems::Hyrule_Castle_Big_Key };
+        uint8_t customBigKeyItemIDs[] = {customItems::Forest_Temple_Big_Key,
+                                         customItems::Lakebed_Temple_Big_Key,
+                                         customItems::Arbiters_Grounds_Big_Key,
+                                         customItems::Temple_of_Time_Big_Key,
+                                         customItems::City_in_The_Sky_Big_Key,
+                                         customItems::Palace_of_Twilight_Big_Key,
+                                         customItems::Hyrule_Castle_Big_Key};
 
-        uint8_t customDungeonMapItemIDs[] = { customItems::Forest_Temple_Dungeon_Map,
-                                              customItems::Goron_Mines_Dungeon_Map,
-                                              customItems::Lakebed_Temple_Dungeon_Map,
-                                              customItems::Arbiters_Grounds_Dungeon_Map,
-                                              customItems::Snowpeak_Ruins_Dungeon_Map,
-                                              customItems::Temple_of_Time_Dungeon_Map,
-                                              customItems::City_in_The_Sky_Dungeon_Map,
-                                              customItems::Palace_of_Twilight_Dungeon_Map,
-                                              customItems::Hyrule_Castle_Dungeon_Map };
+        uint8_t customDungeonMapItemIDs[] = {customItems::Forest_Temple_Dungeon_Map,
+                                             customItems::Goron_Mines_Dungeon_Map,
+                                             customItems::Lakebed_Temple_Dungeon_Map,
+                                             customItems::Arbiters_Grounds_Dungeon_Map,
+                                             customItems::Snowpeak_Ruins_Dungeon_Map,
+                                             customItems::Temple_of_Time_Dungeon_Map,
+                                             customItems::City_in_The_Sky_Dungeon_Map,
+                                             customItems::Palace_of_Twilight_Dungeon_Map,
+                                             customItems::Hyrule_Castle_Dungeon_Map};
 
-        uint8_t customCompassItemIDs[] = { customItems::Forest_Temple_Compass,
-                                           customItems::Goron_Mines_Compass,
-                                           customItems::Lakebed_Temple_Compass,
-                                           customItems::Arbiters_Grounds_Compass,
-                                           customItems::Snowpeak_Ruins_Compass,
-                                           customItems::Temple_of_Time_Compass,
-                                           customItems::City_in_The_Sky_Compass,
-                                           customItems::Palace_of_Twilight_Compass,
-                                           customItems::Hyrule_Castle_Compass };
+        uint8_t customCompassItemIDs[] = {customItems::Forest_Temple_Compass,
+                                          customItems::Goron_Mines_Compass,
+                                          customItems::Lakebed_Temple_Compass,
+                                          customItems::Arbiters_Grounds_Compass,
+                                          customItems::Snowpeak_Ruins_Compass,
+                                          customItems::Temple_of_Time_Compass,
+                                          customItems::City_in_The_Sky_Compass,
+                                          customItems::Palace_of_Twilight_Compass,
+                                          customItems::Hyrule_Castle_Compass};
 
-        uint8_t customHiddenSkillItemIDs[] = { customItems::Ending_Blow,
-                                               customItems::Shield_Attack,
-                                               customItems::Back_Slice,
-                                               customItems::Helm_Splitter,
-                                               customItems::Mortal_Draw,
-                                               customItems::Jump_Strike,
-                                               customItems::Great_Spin };
+        uint8_t customHiddenSkillItemIDs[] = {customItems::Ending_Blow,
+                                              customItems::Shield_Attack,
+                                              customItems::Back_Slice,
+                                              customItems::Helm_Splitter,
+                                              customItems::Mortal_Draw,
+                                              customItems::Jump_Strike,
+                                              customItems::Great_Spin};
 
-        uint8_t customSkyCharacterItemIDs[] = { customItems::Ancient_Sky_Book_First_Character,
-                                                customItems::Ancient_Sky_Book_Second_Character,
-                                                customItems::Ancient_Sky_Book_Third_Character,
-                                                customItems::Ancient_Sky_Book_Fourth_Character,
-                                                customItems::Ancient_Sky_Book_Fifth_Character };
+        uint8_t customSkyCharacterItemIDs[] = {customItems::Ancient_Sky_Book_First_Character,
+                                               customItems::Ancient_Sky_Book_Second_Character,
+                                               customItems::Ancient_Sky_Book_Third_Character,
+                                               customItems::Ancient_Sky_Book_Fourth_Character,
+                                               customItems::Ancient_Sky_Book_Fifth_Character};
 
         uint8_t customShardsIDs[] = {
             items::Mirror_Piece_2,
@@ -336,69 +332,62 @@ namespace mod::game_patch
         };
 
         // Set the item info for the custom small keys to that of the current Small Key
-        listLength = ( sizeof( customSmallKeyItemIDs ) / sizeof( customSmallKeyItemIDs[0] ) );
-        uint32_t smallKeyItemInfo =
-            *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( &itemInfoPtr[items::Small_Key] ) );
-        for ( uint32_t i = 0; i < listLength; i++ )
+        listLength = (sizeof(customSmallKeyItemIDs) / sizeof(customSmallKeyItemIDs[0]));
+        uint32_t smallKeyItemInfo = *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[items::Small_Key]));
+        for (uint32_t i = 0; i < listLength; i++)
         {
-            *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( &itemInfoPtr[customSmallKeyItemIDs[i]] ) ) =
-                smallKeyItemInfo;
+            *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[customSmallKeyItemIDs[i]])) = smallKeyItemInfo;
             getSeTypePtr[customSmallKeyItemIDs[i]] = smallKeySeType;
-            memcpy( &itemResourcePtr[customSmallKeyItemIDs[i]], smallKeyItemResourcePtr, sizeof( d_item_data::ItemResource ) );
+            memcpy(&itemResourcePtr[customSmallKeyItemIDs[i]], smallKeyItemResourcePtr, sizeof(d_item_data::ItemResource));
         }
 
         // Set the item info for the custom big keys to that of the current Big Key
-        listLength = ( sizeof( customBigKeyItemIDs ) / sizeof( customBigKeyItemIDs[0] ) );
-        uint32_t bigKeyItemInfo = *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( &itemInfoPtr[items::Big_Key] ) );
-        for ( uint32_t i = 0; i < listLength; i++ )
+        listLength = (sizeof(customBigKeyItemIDs) / sizeof(customBigKeyItemIDs[0]));
+        uint32_t bigKeyItemInfo = *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[items::Big_Key]));
+        for (uint32_t i = 0; i < listLength; i++)
         {
-            *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( &itemInfoPtr[customBigKeyItemIDs[i]] ) ) = bigKeyItemInfo;
+            *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[customBigKeyItemIDs[i]])) = bigKeyItemInfo;
             getSeTypePtr[customBigKeyItemIDs[i]] = bigKeySeType;
-            memcpy( &itemResourcePtr[customBigKeyItemIDs[i]], bigKeyItemResourcePtr, sizeof( d_item_data::ItemResource ) );
+            memcpy(&itemResourcePtr[customBigKeyItemIDs[i]], bigKeyItemResourcePtr, sizeof(d_item_data::ItemResource));
         }
 
         // Set the item info for the custom dungeon map to that of the current Dungeon Map
-        listLength = ( sizeof( customDungeonMapItemIDs ) / sizeof( customDungeonMapItemIDs[0] ) );
+        listLength = (sizeof(customDungeonMapItemIDs) / sizeof(customDungeonMapItemIDs[0]));
         uint32_t dungeonMapItemInfo =
-            *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( &itemInfoPtr[items::Dungeon_Map] ) );
-        for ( uint32_t i = 0; i < listLength; i++ )
+            *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[items::Dungeon_Map]));
+        for (uint32_t i = 0; i < listLength; i++)
         {
-            *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( &itemInfoPtr[customDungeonMapItemIDs[i]] ) ) =
+            *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[customDungeonMapItemIDs[i]])) =
                 dungeonMapItemInfo;
             getSeTypePtr[customDungeonMapItemIDs[i]] = dungeonMapSeType;
-            memcpy( &itemResourcePtr[customDungeonMapItemIDs[i]],
-                    dungeonMapItemResourcePtr,
-                    sizeof( d_item_data::ItemResource ) );
+            memcpy(&itemResourcePtr[customDungeonMapItemIDs[i]], dungeonMapItemResourcePtr, sizeof(d_item_data::ItemResource));
         }
 
         // Set the item info for the custom compass to that of the current compass
-        listLength = ( sizeof( customCompassItemIDs ) / sizeof( customCompassItemIDs[0] ) );
-        uint32_t compassItemInfo = *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( &itemInfoPtr[items::Compass] ) );
-        for ( uint32_t i = 0; i < listLength; i++ )
+        listLength = (sizeof(customCompassItemIDs) / sizeof(customCompassItemIDs[0]));
+        uint32_t compassItemInfo = *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[items::Compass]));
+        for (uint32_t i = 0; i < listLength; i++)
         {
-            *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( &itemInfoPtr[customCompassItemIDs[i]] ) ) =
-                compassItemInfo;
+            *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[customCompassItemIDs[i]])) = compassItemInfo;
             getSeTypePtr[customCompassItemIDs[i]] = compassSeType;
-            memcpy( &itemResourcePtr[customCompassItemIDs[i]], compassItemResourcePtr, sizeof( d_item_data::ItemResource ) );
+            memcpy(&itemResourcePtr[customCompassItemIDs[i]], compassItemResourcePtr, sizeof(d_item_data::ItemResource));
         }
 
         // Set the item info for the custom skybook characters to that of the current Sky Book
-        listLength = ( sizeof( customSkyCharacterItemIDs ) / sizeof( customSkyCharacterItemIDs[0] ) );
+        listLength = (sizeof(customSkyCharacterItemIDs) / sizeof(customSkyCharacterItemIDs[0]));
         uint32_t skybookItemInfo =
-            *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( &itemInfoPtr[items::Ancient_Sky_Book_Empty] ) );
-        for ( uint32_t i = 0; i < listLength; i++ )
+            *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[items::Ancient_Sky_Book_Empty]));
+        for (uint32_t i = 0; i < listLength; i++)
         {
-            *reinterpret_cast<uint32_t*>( reinterpret_cast<uint32_t>( &itemInfoPtr[customSkyCharacterItemIDs[i]] ) ) =
+            *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[customSkyCharacterItemIDs[i]])) =
                 skybookItemInfo;
             getSeTypePtr[customSkyCharacterItemIDs[i]] = skyBookSeType;
-            memcpy( &itemResourcePtr[customSkyCharacterItemIDs[i]],
-                    skybookItemResourcePtr,
-                    sizeof( d_item_data::ItemResource ) );
+            memcpy(&itemResourcePtr[customSkyCharacterItemIDs[i]], skybookItemResourcePtr, sizeof(d_item_data::ItemResource));
         }
 
         // Set the item info for the custom hidden skill items
-        listLength = sizeof( customHiddenSkillItemIDs ) / sizeof( customHiddenSkillItemIDs[0] );
-        for ( uint32_t i = 0; i < listLength; i++ )
+        listLength = sizeof(customHiddenSkillItemIDs) / sizeof(customHiddenSkillItemIDs[0]);
+        for (uint32_t i = 0; i < listLength; i++)
         {
             itemResourcePtr[customHiddenSkillItemIDs[i]].arcName = _02_hiddenSkillArc;
             itemResourcePtr[customHiddenSkillItemIDs[i]].ringTexResIdx = 0x003D;
@@ -408,8 +397,8 @@ namespace mod::game_patch
             getSeTypePtr[customHiddenSkillItemIDs[i]] = 0x2;
         }
 
-        listLength = sizeof( customShardsIDs ) / sizeof( customShardsIDs[0] );
-        for ( uint32_t i = 0; i < listLength; i++ )
+        listLength = sizeof(customShardsIDs) / sizeof(customShardsIDs[0]);
+        for (uint32_t i = 0; i < listLength; i++)
         {
             itemResourcePtr[customShardsIDs[i]].arcName = _02_mirrorShardArc;
             itemResourcePtr[customShardsIDs[i]].modelResIdx = 0x0009;
@@ -418,8 +407,8 @@ namespace mod::game_patch
             getSeTypePtr[customShardsIDs[i]] = getSeTypePtr[items::Clawshot];
         }
 
-        listLength = sizeof( customShadowsIDs ) / sizeof( customShadowsIDs[0] );
-        for ( uint32_t i = 0; i < listLength; i++ )
+        listLength = sizeof(customShadowsIDs) / sizeof(customShadowsIDs[0]);
+        for (uint32_t i = 0; i < listLength; i++)
         {
             itemResourcePtr[customShadowsIDs[i]].brkResIdx = 0xFFFF;
             itemResourcePtr[customShadowsIDs[i]].tevFrm = 0x00;
@@ -559,4 +548,4 @@ namespace mod::game_patch
         modifyItemModels();
         setCustomItemFunctions();
     }
-}     // namespace mod::game_patch
+} // namespace mod::game_patch

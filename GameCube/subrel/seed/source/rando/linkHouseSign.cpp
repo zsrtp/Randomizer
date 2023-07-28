@@ -14,14 +14,14 @@
 namespace mod::link_house_sign
 {
     // Set up an array to hold each area's color id
-    const uint8_t areaColorIds[TOTAL_POSSIBLE_DUNGEONS] = { MSG_COLOR_GREEN_HEX,
-                                                            MSG_COLOR_RED_HEX,
-                                                            CUSTOM_MSG_COLOR_BLUE_HEX,
-                                                            MSG_COLOR_ORANGE_HEX,
-                                                            MSG_COLOR_LIGHT_BLUE_HEX,
-                                                            CUSTOM_MSG_COLOR_DARK_GREEN_HEX,
-                                                            MSG_COLOR_YELLOW_HEX,
-                                                            MSG_COLOR_PURPLE_HEX };
+    const uint8_t areaColorIds[TOTAL_POSSIBLE_DUNGEONS] = {MSG_COLOR_GREEN_HEX,
+                                                           MSG_COLOR_RED_HEX,
+                                                           CUSTOM_MSG_COLOR_BLUE_HEX,
+                                                           MSG_COLOR_ORANGE_HEX,
+                                                           MSG_COLOR_LIGHT_BLUE_HEX,
+                                                           CUSTOM_MSG_COLOR_DARK_GREEN_HEX,
+                                                           MSG_COLOR_YELLOW_HEX,
+                                                           MSG_COLOR_PURPLE_HEX};
 
 #ifndef TP_JP
     // English
@@ -238,10 +238,10 @@ namespace mod::link_house_sign
         "\x4E\x65\x73\x73\x75\x6E\x20\x73\x61\x6E\x74\x75\x61\x72\x69\x6F\x20\x72\x69\x63\x68\x69\x65\x73\x74\x6F";
 #endif
 
-    void createRequiredDungeonsString( rando::Seed* seed, uint32_t requiredDungeonFlags )
+    void createRequiredDungeonsString(rando::Seed* seed, uint32_t requiredDungeonFlags)
     {
         // Make sure a seed is actually loaded
-        if ( !seed )
+        if (!seed)
         {
             return;
         }
@@ -258,10 +258,10 @@ namespace mod::link_house_sign
 #elif defined TP_EU
         using namespace libtp::tp::d_s_logo;
 
-        switch ( currentLanguage )
+        switch (currentLanguage)
         {
             case Languages::uk:
-            default:     // The language is invalid/unsupported, so the game defaults to English
+            default: // The language is invalid/unsupported, so the game defaults to English
             {
                 dungeons = dungeonsUs;
                 noDungeonsRequired = noDungeonsRequiredUs;
@@ -302,31 +302,31 @@ namespace mod::link_house_sign
 
         const uint8_t* areaColors = areaColorIds;
 #ifdef TP_JP
-        constexpr uint32_t snowpeakRuinsSpecialCharLength = sizeof( MSG_SP_CHAR_KYO ) - 1;
+        constexpr uint32_t snowpeakRuinsSpecialCharLength = sizeof(MSG_SP_CHAR_KYO) - 1;
         const char* snowpeakRuinsText = snowpeakRuinsJp;
 
-        auto isCurrentTextSnowpeakRuins = [=]( const char* currentArea )
-        { return strncmp( currentArea, snowpeakRuinsText, snowpeakRuinsSpecialCharLength ) == 0; };
+        auto isCurrentTextSnowpeakRuins = [=](const char* currentArea)
+        { return strncmp(currentArea, snowpeakRuinsText, snowpeakRuinsSpecialCharLength) == 0; };
 #endif
         // It's possible that there will be no required dungeons
-        constexpr uint32_t maxBitsValue = ( 1 << TOTAL_POSSIBLE_DUNGEONS ) - 1;
-        if ( ( requiredDungeonFlags & maxBitsValue ) != 0 )
+        constexpr uint32_t maxBitsValue = (1 << TOTAL_POSSIBLE_DUNGEONS) - 1;
+        if ((requiredDungeonFlags & maxBitsValue) != 0)
         {
             // At least one dungeon is required
-            for ( uint32_t i = 0; i < TOTAL_POSSIBLE_DUNGEONS; i++ )
+            for (uint32_t i = 0; i < TOTAL_POSSIBLE_DUNGEONS; i++)
             {
-                if ( requiredDungeonFlags & ( 1 << i ) )
+                if (requiredDungeonFlags & (1 << i))
                 {
                     const char* currentDungeon = dungeons[i];
 
                     requiredDungeons[requiredDungeonsLength] = currentDungeon;
-                    requiredDungeonsColor[requiredDungeonsLength] = static_cast<char>( areaColors[i] );
+                    requiredDungeonsColor[requiredDungeonsLength] = static_cast<char>(areaColors[i]);
                     requiredDungeonsLength++;
 
-                    totalStringsLength += strlen( currentDungeon );
+                    totalStringsLength += strlen(currentDungeon);
 #ifdef TP_JP
                     // If the current text is for Snowpeak Ruins, then add the length of the special character for it
-                    if ( isCurrentTextSnowpeakRuins( currentDungeon ) )
+                    if (isCurrentTextSnowpeakRuins(currentDungeon))
                     {
                         totalStringsLength += snowpeakRuinsSpecialCharLength;
                     }
@@ -341,20 +341,20 @@ namespace mod::link_house_sign
             requiredDungeonsColor[0] = MSG_COLOR_WHITE_HEX;
             requiredDungeonsLength = 1;
 
-            totalStringsLength += strlen( noDungeonsRequired );
+            totalStringsLength += strlen(noDungeonsRequired);
         }
 
         // Get the font size command string and it's length
         // Subtract one to remove the NULL terminator since the command is not NULL terminated
-        const char* fontSizeString = MSG_FONT_SIZE( "\x45" );
-        constexpr uint32_t fontSizeStringLength = sizeof( MSG_FONT_SIZE( "\x45" ) ) - 1;
+        const char* fontSizeString = MSG_FONT_SIZE("\x45");
+        constexpr uint32_t fontSizeStringLength = sizeof(MSG_FONT_SIZE("\x45")) - 1;
 
         // Account for the string having the size command
         totalStringsLength += fontSizeStringLength;
 
         // Get the size of the color command excluding the NULL terminator
         // Subtract one to remove the NULL terminator since the command is not NULL terminated
-        constexpr uint32_t colorCommandLength = sizeof( MSG_COLOR( MSG_COLOR_WHITE ) ) - 1;
+        constexpr uint32_t colorCommandLength = sizeof(MSG_COLOR(MSG_COLOR_WHITE)) - 1;
 
         // Account for each string having a color command
         totalStringsLength += requiredDungeonsLength * colorCommandLength;
@@ -365,14 +365,14 @@ namespace mod::link_house_sign
         // Allocate memory for the strings
         // Add one to account for the NULL terminator
         // Align to char, as strings don't have specific alignment requirements
-        char* buf = new ( sizeof( char ) ) char[totalStringsLength + 1];
+        char* buf = new (sizeof(char)) char[totalStringsLength + 1];
 
         // Set up a variable to keep track of how many characters were written to the buffer
         uint32_t writtenSize = 0;
 
         // Set the font size for the string
         // Subtract one to remove the NULL terminator since the command is not NULL terminated
-        memcpy( buf, fontSizeString, fontSizeStringLength );
+        memcpy(buf, fontSizeString, fontSizeStringLength);
 
         // Increment writtenSize to go to the next string
         writtenSize += fontSizeStringLength;
@@ -380,34 +380,34 @@ namespace mod::link_house_sign
         // Get the color command string
         // Must use memcpy instead of strncpy since message commands have NULL characters
         char colorCommand[colorCommandLength];
-        memcpy( colorCommand, MSG_COLOR( MSG_COLOR_WHITE ), colorCommandLength );
+        memcpy(colorCommand, MSG_COLOR(MSG_COLOR_WHITE), colorCommandLength);
 
         // Write each string to the buffer
-        for ( uint32_t i = 0; i < requiredDungeonsLength; i++ )
+        for (uint32_t i = 0; i < requiredDungeonsLength; i++)
         {
             // Replace the current color with the color for the current area
             colorCommand[colorCommandLength - 1] = requiredDungeonsColor[i];
 
             // Write the color command for the current string
             // Must use memcpy instead of strncpy since message commands have NULL characters
-            memcpy( &buf[writtenSize], colorCommand, colorCommandLength );
+            memcpy(&buf[writtenSize], colorCommand, colorCommandLength);
 
             // Increment writtenSize to go to the next string
             writtenSize += colorCommandLength;
 
             // Get the length of the current string
             const char* currentString = requiredDungeons[i];
-            uint32_t currentStringLength = strlen( currentString );
+            uint32_t currentStringLength = strlen(currentString);
 
             // Copy the current string to the buffer
             // Must use memcpy instead of strncpy since message commands have NULL characters
-            memcpy( &buf[writtenSize], currentString, currentStringLength );
+            memcpy(&buf[writtenSize], currentString, currentStringLength);
 #ifdef TP_JP
             // If the current text is for Snowpeak Ruins, then add the special character to the end of it
-            if ( isCurrentTextSnowpeakRuins( currentString ) )
+            if (isCurrentTextSnowpeakRuins(currentString))
             {
                 // Must use memcpy instead of strncpy since message commands have NULL characters
-                memcpy( &buf[writtenSize + currentStringLength], MSG_SP_CHAR_KYO, snowpeakRuinsSpecialCharLength );
+                memcpy(&buf[writtenSize + currentStringLength], MSG_SP_CHAR_KYO, snowpeakRuinsSpecialCharLength);
 
                 // Increment currentStringLength to account for the new length
                 currentStringLength += snowpeakRuinsSpecialCharLength;
@@ -427,4 +427,4 @@ namespace mod::link_house_sign
         // Assign the buffer
         seed->m_RequiredDungeons = buf;
     }
-}     // namespace mod::link_house_sign
+} // namespace mod::link_house_sign

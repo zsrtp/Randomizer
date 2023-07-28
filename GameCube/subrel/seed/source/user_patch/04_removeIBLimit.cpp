@@ -13,12 +13,12 @@
 
 namespace mod::user_patch
 {
-    void removeIBLimit( rando::Randomizer* randomizer, bool set )
+    void removeIBLimit(rando::Randomizer* randomizer, bool set)
     {
-        (void) randomizer;
+        (void)randomizer;
 
         float* heavyStateSpeed = &libtp::tp::d_a_alink::ironBootsVars.heavyStateSpeed;
-        if ( set )
+        if (set)
         {
             // Set the float that Link's actor references when heavy to be the default value.
             *heavyStateSpeed = 1.f;
@@ -29,6 +29,6 @@ namespace mod::user_patch
         }
 
         // Clear the cache for the modified value
-        libtp::gc_wii::os_cache::DCFlushRange( heavyStateSpeed, sizeof( float ) );
+        libtp::gc_wii::os_cache::DCFlushRange(heavyStateSpeed, sizeof(float));
     }
-}     // namespace mod::user_patch
+} // namespace mod::user_patch

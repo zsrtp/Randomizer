@@ -19,8 +19,8 @@ namespace mod::user_patch
         /**
          * @brief startBattleBgm function hook handler
          */
-        extern void ( *return_startBattleBgm )( libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1 );
-    }     // namespace bgm::enemybgm
+        extern void (*return_startBattleBgm)(libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1);
+    } // namespace bgm::enemybgm
 
     /**
      * @brief Handles if enemy BGM should be enabled
@@ -30,12 +30,12 @@ namespace mod::user_patch
     /**
      * @brief Patches the game to allow for optional enemy BGM
      */
-    void disableBattleMusic( rando::Randomizer* randomizer, bool set );
+    void disableBattleMusic(rando::Randomizer* randomizer, bool set);
 
     /**
      * @brief Handles Enemy Background Music
      */
-    void handle_startBattleBgm( libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1 );
-}     // namespace mod::user_patch
+    void handle_startBattleBgm(libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1);
+} // namespace mod::user_patch
 
 #endif

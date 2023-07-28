@@ -379,208 +379,208 @@ namespace mod::customMessages
     const MsgEntry entriesJp[] = {
         // Forest Temple small key
         forestSmallKeyJp,
-        sizeof( forestSmallKeyJp ),
+        sizeof(forestSmallKeyJp),
         0x00E9,
 
         // Snowpeak Ruins small key
         snowpeakSmallKeyJp,
-        sizeof( snowpeakSmallKeyJp ),
+        sizeof(snowpeakSmallKeyJp),
         0x00ED,
 
         // Shadow Crystal
         shadowCrystalJp,
-        sizeof( shadowCrystalJp ),
+        sizeof(shadowCrystalJp),
         0x0096,
 
         // Ending Blow hidden skill
         endingBlowJp,
-        sizeof( endingBlowJp ),
+        sizeof(endingBlowJp),
         0x0145,
 
         // Shield Attack hidden skill
         shieldAttackJp,
-        sizeof( shieldAttackJp ),
+        sizeof(shieldAttackJp),
         0x0146,
 
         // Back Slice hidden skill
         backSliceJp,
-        sizeof( backSliceJp ),
+        sizeof(backSliceJp),
         0x0147,
 
         // Helm Splitter hidden skill
         helmSplitterJp,
-        sizeof( helmSplitterJp ),
+        sizeof(helmSplitterJp),
         0x0148,
 
         // Mortal Draw hidden skill
         mortalDrawJp,
-        sizeof( mortalDrawJp ),
+        sizeof(mortalDrawJp),
         0x0149,
 
         // Jump Strike hidden skill
         jumpStrikeJp,
-        sizeof( jumpStrikeJp ),
+        sizeof(jumpStrikeJp),
         0x014A,
 
         // Great Spin hidden skill
         greatSpinJp,
-        sizeof( greatSpinJp ),
+        sizeof(greatSpinJp),
         0x014B,
 
         // Powered up Dominion Rod
         poweredRodJp,
-        sizeof( poweredRodJp ),
+        sizeof(poweredRodJp),
         0x00B0,
 
         // First Ancient Sky Book character
         skyBookCharacterJp,
-        sizeof( skyBookCharacterJp ),
+        sizeof(skyBookCharacterJp),
         0x013F,
 
         // First Fused Shadow
         firstFusedShadowJp,
-        sizeof( firstFusedShadowJp ),
+        sizeof(firstFusedShadowJp),
         0x013C,
 
         // Second Fused Shadow
         secondFusedShadowJp,
-        sizeof( secondFusedShadowJp ),
+        sizeof(secondFusedShadowJp),
         0x013D,
 
         // Third Fused Shadow
         thirdFusedShadowJp,
-        sizeof( thirdFusedShadowJp ),
+        sizeof(thirdFusedShadowJp),
         0x013E,
 
         // Second Mirror Shard
         secondMirrorShardJp,
-        sizeof( secondMirrorShardJp ),
+        sizeof(secondMirrorShardJp),
         0x0109,
 
         // Third Mirror Shard
         thirdMirrorShardJp,
-        sizeof( thirdMirrorShardJp ),
+        sizeof(thirdMirrorShardJp),
         0x010A,
 
         // Fourth Mirror Shard
         fourthMirrorShardJp,
-        sizeof( fourthMirrorShardJp ),
+        sizeof(fourthMirrorShardJp),
         0x010B,
 
         // Foolish Item
         foolishItemJp,
-        sizeof( foolishItemJp ),
+        sizeof(foolishItemJp),
         0x0077,
 
         // Talking to Midna
         talkToMidnaJp,
-        sizeof( talkToMidnaJp ),
+        sizeof(talkToMidnaJp),
         0x0BBB,
 
         // Big Wallet
         bigWalletJp,
-        sizeof( bigWalletJp ),
+        sizeof(bigWalletJp),
         0x0099,
 
         // Giant Wallet
         giantWalletJp,
-        sizeof( giantWalletJp ),
+        sizeof(giantWalletJp),
         0x009A,
 
         // Small Wallet Menu Text
         smallWalletPauseJp,
-        sizeof( smallWalletPauseJp ),
+        sizeof(smallWalletPauseJp),
         0x0298,
 
         // Big Wallet Menu Text
         bigWalletPauseJp,
-        sizeof( bigWalletPauseJp ),
+        sizeof(bigWalletPauseJp),
         0x0299,
 
         // Giant Wallet Menu Text
         giantWalletPauseJp,
-        sizeof( giantWalletPauseJp ),
+        sizeof(giantWalletPauseJp),
         0x029a,
 
         // Poe Soul
         poeSoulJp,
-        sizeof( poeSoulJp ),
+        sizeof(poeSoulJp),
         0x0144,
 
         // Sky Book Item Wheel Description
         skyBookDescriptionJp,
-        sizeof( skyBookDescriptionJp ),
+        sizeof(skyBookDescriptionJp),
         0x34d,
 
         // Recognition text
         recognitionJp,
-        sizeof( recognitionJp ),
+        sizeof(recognitionJp),
         0x0b44,
 
         // Special invalid-id texts
         // Small Key
         smallKeyTextJp,
-        sizeof( smallKeyTextJp ),
+        sizeof(smallKeyTextJp),
         game_patch::SpecialMessageIds::SMALL_KEY,
 
         // Dungeon Map
         dungeonMapTextJp,
-        sizeof( dungeonMapTextJp ),
+        sizeof(dungeonMapTextJp),
         game_patch::SpecialMessageIds::DUNGEON_MAP,
 
         // Compass
         compassTextJp,
-        sizeof( compassTextJp ),
+        sizeof(compassTextJp),
         game_patch::SpecialMessageIds::COMPASS,
 
         // Big Key
         bigKeyTextJp,
-        sizeof( bigKeyTextJp ),
+        sizeof(bigKeyTextJp),
         game_patch::SpecialMessageIds::BIG_KEY,
 
         // Forest Temple
         forestTempleTextJp,
-        sizeof( forestTempleTextJp ),
+        sizeof(forestTempleTextJp),
         game_patch::SpecialMessageIds::FOREST_TEMPLE,
 
         // Goron Mines
         goronMinesTextJp,
-        sizeof( goronMinesTextJp ),
+        sizeof(goronMinesTextJp),
         game_patch::SpecialMessageIds::GORON_MINES,
 
         // Lakebed Temple
         lakebedTempleTextJp,
-        sizeof( lakebedTempleTextJp ),
+        sizeof(lakebedTempleTextJp),
         game_patch::SpecialMessageIds::LAKEBED_TEMPLE,
 
         // Arbiter's Grounds
         arbitersGroundsTextJp,
-        sizeof( arbitersGroundsTextJp ),
+        sizeof(arbitersGroundsTextJp),
         game_patch::SpecialMessageIds::ARBITERS_GROUNDS,
 
         // Temple of Time
         templeOfTimeTextJp,
-        sizeof( templeOfTimeTextJp ),
+        sizeof(templeOfTimeTextJp),
         game_patch::SpecialMessageIds::TEMPLE_OF_TIME,
 
         // City in the Sky
         cityInTheSkyTextJp,
-        sizeof( cityInTheSkyTextJp ),
+        sizeof(cityInTheSkyTextJp),
         game_patch::SpecialMessageIds::CITY_IN_THE_SKY,
 
         // Palace of Twilight
         palaceOfTwilightTextJp,
-        sizeof( palaceOfTwilightTextJp ),
+        sizeof(palaceOfTwilightTextJp),
         game_patch::SpecialMessageIds::PALACE_OF_TWILIGHT,
 
         // Hyrule Castle
         hyruleCastleTextJp,
-        sizeof( hyruleCastleTextJp ),
+        sizeof(hyruleCastleTextJp),
         game_patch::SpecialMessageIds::HYRULE_CASTLE,
 
         // Bulblin Camp
         bulblinCampTextJp,
-        sizeof( bulblinCampTextJp ),
+        sizeof(bulblinCampTextJp),
         game_patch::SpecialMessageIds::BULBLIN_CAMP,
 
         // This is an extra section that should go unused, and is only needed for _05_getMsgById in 05_itemMsgFunctions.cpp to
@@ -590,8 +590,8 @@ namespace mod::customMessages
         0xFFFF,
     };
 
-    const uint32_t totalCustomMessagesJp = sizeof( entriesJp ) / sizeof( MsgEntry );
-    const MsgEntry charloDonationEntryJp = { charloDonationJp, sizeof( charloDonationJp ), 0x0355 };
+    const uint32_t totalCustomMessagesJp = sizeof(entriesJp) / sizeof(MsgEntry);
+    const MsgEntry charloDonationEntryJp = {charloDonationJp, sizeof(charloDonationJp), 0x0355};
 
     const ItemWheelMenuStrings itemWheelMenuStringsJp = {
         // areasBeingTracked
@@ -758,5 +758,5 @@ namespace mod::customMessages
         13,
         13,
     };
-}     // namespace mod::customMessages
+} // namespace mod::customMessages
 #endif

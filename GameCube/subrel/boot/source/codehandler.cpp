@@ -223,5 +223,5 @@ namespace mod::codehandler
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     };
 
-    const uint16_t codehandlerSize = sizeof( codehandler );
-}     // namespace mod::codehandler
+    const uint16_t codehandlerSize = sizeof(codehandler);
+} // namespace mod::codehandler

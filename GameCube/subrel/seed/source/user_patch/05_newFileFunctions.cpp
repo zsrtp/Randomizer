@@ -5,21 +5,21 @@
 
 namespace mod::user_patch
 {
-    void loadShopModels( rando::Randomizer* randomizer, bool set )
+    void loadShopModels(rando::Randomizer* randomizer, bool set)
     {
-        (void) randomizer;
+        (void)randomizer;
         modifyShopModels = set;
     }
 
-    void setInstantText( rando::Randomizer* randomizer, bool set )
+    void setInstantText(rando::Randomizer* randomizer, bool set)
     {
-        (void) randomizer;
+        (void)randomizer;
         instantTextEnabled = set;
     }
 
-    void increaseSpinnerVelocity( rando::Randomizer* randomizer, bool set )
+    void increaseSpinnerVelocity(rando::Randomizer* randomizer, bool set)
     {
-        (void) randomizer;
+        (void)randomizer;
         increaseSpinnerSpeed = set;
     }
-}     // namespace mod::user_patch
+} // namespace mod::user_patch
