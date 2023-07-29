@@ -1,25 +1,30 @@
 # Twilight Princess Randomizer
-[Homepage](https://rando.zeldatp.net) | [Dev Info](https://wiki.zeldatp.net/Dev) | [Mirror](https://git.aecx.cc) | [Discord](https://discord.zeldatp.net) | [Docs](https://zsrtp.github.io/Randomizer)
+[Homepage](https://tprandomizer.com) | [Dev Info](https://wiki.tprandomizer.com/index.php?title=Dev) | [Discord](https://discord.tprandomizer.com) | [Docs](https://zsrtp.github.io/Randomizer)
 
 Like other Randomizers, the **Twilight Princess Randomizer** (TPR) shuffles the contents of chests and other collectibles, thus bringing new life to a classic game. It also comes with a bunch of QoL changes and settings!
 
 # Main Contributors
 |Name|Role|
 |----------------|-------------------------------|
-|[AECX](//github.com/AECX)|Server Hosting, development, and various code additions|
+|[AECX](//github.com/AECX)|Framework development, and various code additions|
 |[Zephiles](//github.com/Zephiles)|Reverse engineering and various code additions|
 |[lunarsoap5](//github.com/lunarsoap5)|Project leadership, Community Manager, and Head of Development|
 |[vbn598](//github.com/vbn598)|Developer|
+|[Isaac](//github.com/icogn)|Various Cosmetic Implementations and Generator Design|
 
 # Roadmap
+There is no specific order to this implementation, these are just a number of features that we have planned for the randomizer in the future.
 |Name            |Description|Status|
 |----------------|--------------|-------------------------------|
 |Fast climbing|TP Climbing is slooooooooooow|✔️Implemented|
 |Random BGM|Randomized background music|✔️Implemented|
 |Treasure Chest Randomizer|Typical treasure chests can be entirely random|✔️Implemented|
-|Freestanding Items|Items render as what they are after pickup even outside chests|🔧Planned|
-|Texture/Color mods|Change things like tunic color|🔧In the works by isaac|
+|Freestanding Items|Items render as what they are after pickup even outside chests|✔️Implemented|
+|Texture/Color mods|Change things like tunic color|✔️Implemented|
 |Custom Models|e.g. Toon Link from ww, different clothing, etc.|❌Not going to be implemented|
+|Entrance Randomizer|Being able to travel through entrances to unexpected areas.|🔧Planned|
+|Custom Midna Colors|Hair Color, charge circle color, etc.|✔️Implemented|
+|Logical Tricks List|A list of toggleable tricks and techniques to add more dynamic logic to your seed.|🔧Planned|
 
 # Features
 * Item Randomizer
@@ -50,23 +55,3 @@ Like other Randomizers, the **Twilight Princess Randomizer** (TPR) shuffles the 
 
 * [PistonMiner](//github.com/PistonMiner)
     * For creating [ttyd-tools](//github.com/PistonMiner/ttyd-tools) which parts of this project are based on
-
-# Supporters
-* [TheBruce](//twitter.com/The_Bruce1)
-* Takirito
-* [Syloh](https://twitter.com/Syloh11)
-* SumTr011
-* Raziel_Stratton
-* [NesmaN88](//twitter.com/NesmaN88j)
-* Linkman124
-* JustRyland
-* CHL_IceStorm
-* [Asxce](//twitter.com/dAsxce2)
-* Sushi
-* XModxGodX
-* Epic Bonington
-* Jared Swensen
-* clabrus
-* XModxGodX
-* Zushi
-* Giraudet Evan

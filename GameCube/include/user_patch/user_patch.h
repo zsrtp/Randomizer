@@ -11,10 +11,6 @@
 
 #include "rando/randomizer.h"
 
-// Instruction templates
-#define ASM_LOAD_IMMEDIATE( register, value ) ( 0x38000000 + ( register * 0x200000 ) ) | ( value & 0xFFFF )
-#define ASM_COMPARE_WORD_IMMEDIATE( register, value ) ( 0x2C000000 + ( register * 0x10000 ) ) | ( value & 0xFFFF )
-
 namespace mod::user_patch
 {
     /**
@@ -23,10 +19,11 @@ namespace mod::user_patch
      *  @param randomizer Pointer to currently active Randomizer
      *  @param set If true we apply the patch, otherwise restore original behavior
      */
-    typedef void ( *UserPatch )( rando::Randomizer* randomizer, bool set );
+    typedef void (*GamePatch)(rando::Randomizer* randomizer, bool set);
 
     // Available Game patches accessible by index
-    extern UserPatch patches[3];
+    extern GamePatch volatilePatches[6];
+    extern GamePatch oneTimePatches[6];
 
-}     // namespace mod::user_patch
+} // namespace mod::user_patch
 #endif

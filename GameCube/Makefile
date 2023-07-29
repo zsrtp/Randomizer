@@ -9,19 +9,19 @@ endif
 
 include $(DEVKITPPC)/gamecube_rules
 
-# Format: short commit Tag
-BUILDID:='"$(shell git rev-parse --short HEAD)"'
+# Format: YYYYMMDDHHmm + 2 char Game Region
+export BUILDID:='"$(shell date +'%Y%m%d%H%M')"'
 
 # Version
-_VERSION_MAJOR:=1
-_VERSION_MINOR:=0
-_VERSION_PATCH:=0
-_VERSION:='"$(_VERSION_MAJOR).$(_VERSION_MINOR).$(_VERSION_PATCH)"'
+export _VERSION_MAJOR:=1
+export _VERSION_MINOR:=0
+export _VERSION_PATCH:=0
+export _VERSION:='"$(_VERSION_MAJOR).$(_VERSION_MINOR).$(_VERSION_PATCH)"'
 # Variant: i.e. Public, NoLogic, Race, etc.
-_VARIANT:=public
+#export _VARIANT:= public
 
 # This shows up in the memory card (manager) and can contain spaces
-PROJECT_NAME := Randomizer
+export PROJECT_NAME := Randomizer
 # This will be the resulting .gci file - No spaces
 OUTPUT_FILENAME := Randomizer
 
@@ -29,16 +29,25 @@ OUTPUT_FILENAME := Randomizer
 # DON'T TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
 LIBTP_REL := externals/libtp_rel
 
-GCIPACK := python3 ../bin/gcipack.py
+export ROOT_DIR ?= $(CURDIR)
+
+export GCIPACK := python3 $(realpath ../bin/gcipack.py)
 
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
-	ELF2REL := ../bin/elf2rel
+	export ELF2REL := $(realpath ../bin/elf2rel)
 else
-	ELF2REL := ../bin/elf2rel.exe
+	export ELF2REL := $(realpath ../bin/elf2rel.exe)
 endif
 
+JSON_READ := python3 $(realpath ../bin/json_read.py)
+MAPPER := python3 $(realpath ../bin/relmapper.py)
+
+DVD ?= ""
+ifneq ($(DVD),"")
+	export DVD_DEF := "-DDVD"
+endif
 
 ifeq ($(VERSION),)
 all: us jp eu
@@ -96,7 +105,7 @@ TARGET		:=	$(OUTPUT_FILENAME).$(VERSION)
 BUILD		:=	build.$(VERSION)
 SOURCES		:=	source $(wildcard source/*) $(LIBTP_REL)/source $(wildcard $(LIBTP_REL)/source/*)
 DATA		:=	data
-INCLUDES	:=	include $(LIBTP_REL)/include
+INCLUDES	:=	$(CURDIR)/include $(CURDIR)/$(LIBTP_REL)/include
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -104,10 +113,10 @@ INCLUDES	:=	include $(LIBTP_REL)/include
 
 MACHDEP		= -mno-sdata -mgcn -DGEKKO -mcpu=750 -meabi -mhard-float
 
-CFLAGS		= -nostdlib -ffreestanding -ffunction-sections -fdata-sections -g -Os -Wall -Werror -Wno-address-of-packed-member $(MACHDEP) $(INCLUDE) -D_PROJECT_NAME='"$(PROJECT_NAME)"' -D_VERSION_MAJOR='$(_VERSION_MAJOR)' -D_VERSION_MINOR='$(_VERSION_MINOR)' -D_VERSION_PATCH='$(_VERSION_PATCH)'  -D_VERSION='"$(_VERSION)"' -D_VARIANT='"$(_VARIANT)"'
+CFLAGS		= -nostdlib -ffreestanding -ffunction-sections -fdata-sections -g -Os -fvisibility=hidden -Wall -Werror -Wextra -Wshadow -Wno-address-of-packed-member $(MACHDEP) $(INCLUDE) $(DVD_DEF) -D_PROJECT_NAME='"$(PROJECT_NAME)"' -D_VERSION_MAJOR='$(_VERSION_MAJOR)' -D_VERSION_MINOR='$(_VERSION_MINOR)' -D_VERSION_PATCH='$(_VERSION_PATCH)'  -D_VERSION='"$(_VERSION)"' -D_VARIANT='"$(_VARIANT)"'
 CXXFLAGS	= -fno-exceptions -fno-rtti -std=gnu++17 $(CFLAGS)
 
-LDFLAGS		= -r -e _prolog -u _prolog -u _epilog -u _unresolved -Wl,--gc-sections -nostdlib -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
+LDFLAGS		= -r -e _prolog -u _prolog -u _epilog -u _unresolved -Wl,--gc-sections,--gc-keep-exported -nostdlib -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
 
 # Platform options
 ifeq ($(VERSION),us)
@@ -182,16 +191,22 @@ export HFILES := $(addsuffix .h,$(subst .,_,$(BINFILES)))
 
 # For REL linking
 export LDFILES		:= $(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.ld)))
-export MAPFILE		:= $(realpath assets/$(VERSION).lst)
+export MAPFILE		:= $(ROOT_DIR)/$(BUILD)/temp.$(VERSION).lst
+export MODIDS		:= $(realpath assets/modids.json)
+export BASE_MAPFILE	:= $(realpath assets/$(VERSION).lst)
 export BANNERFILE	:= $(realpath assets/banner.raw)
 export ICONFILE		:= $(realpath assets/icon.raw)
+
+export SUBREL		:= $(notdir $(wildcard subrel/*))
+export SUBREL_CLEAN	:= $(addsuffix /clean,$(SUBREL))
+export SUBRELS		:= $(foreach dir,$(SUBREL),$(ROOT_DIR)/subrel/$(dir)/$(dir).$(VERSION).rel)
 
 #---------------------------------------------------------------------------------
 # build a list of include paths
 #---------------------------------------------------------------------------------
-export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
+export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(dir)) \
 			$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
-			-I$(CURDIR)/$(BUILD) \
+			-I$(ROOT_DIR)/$(BUILD) \
 			-I$(LIBOGC_INC)
 
 #---------------------------------------------------------------------------------
@@ -209,9 +224,12 @@ $(BUILD):
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------
-clean_target:
-	@echo clean ... $(VERSION)
+clean_target: $(SUBREL_CLEAN)
+	@echo clean ... $(OUTPUT_FILENAME) $(VERSION)
 	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).dol $(OUTPUT).rel $(OUTPUT).gci
+
+$(SUBREL_CLEAN):
+	@$(MAKE) -C $(abspath subrel/$(patsubst %/,%,$(dir $@))) clean_target
 
 #---------------------------------------------------------------------------------
 else
@@ -222,19 +240,28 @@ DEPENDS	:=	$(OFILES:.o=.d)
 # main targets
 #---------------------------------------------------------------------------------
 $(OUTPUT).gci: $(OUTPUT).rel $(BANNERFILE) $(ICONFILE)
-$(OUTPUT).rel: $(OUTPUT).elf $(MAPFILE)
+$(OUTPUT).rel: $(OUTPUT).elf $(MAPFILE) $(SUBREL)
 $(OUTPUT).elf: $(LDFILES) $(OFILES)
 
 $(OFILES_SOURCES) : $(HFILES)
 
+$(MAPFILE): $(OUTPUT).elf $(BASE_MAPFILE) $(MODIDS)
+	@echo module mapping ... $(notdir $@)
+	@$(MAPPER) -o $(MAPFILE) -i $(BASE_MAPFILE) -m $(MODIDS) $(OUTPUT).elf
+
+$(SUBREL): $(MAPFILE)
+	@echo making $@ ...
+	@$(MAKE) -C $(abspath $(ROOT_DIR)/subrel/$@)
+	@echo $@ ... Done
+
 # REL linking
 %.rel: %.elf
 	@echo output ... $(notdir $@)
-	@$(ELF2REL) $< -s $(MAPFILE)
+	@$(ELF2REL) $< -s $(MAPFILE) --rel-id $(shell $(JSON_READ) $(MODIDS) "$(OUTPUT_FILENAME)")
 
 %.gci: %.rel
 	@echo packing ... $(notdir $@)
-	@$(GCIPACK) $< "Custom REL File" "Twilight Princess" "($(PRINTVER)) $(PROJECT_NAME)" $(BANNERFILE) $(ICONFILE) $(GAMECODE)
+	@$(GCIPACK) $< "Custom REL File" "Twilight Princess" "($(PRINTVER)) $(PROJECT_NAME)" $(BANNERFILE) $(ICONFILE) $(GAMECODE) $(addprefix --rel ,$(SUBRELS))
 
 #---------------------------------------------------------------------------------
 # This rule links in binary data with the .jpg extension
