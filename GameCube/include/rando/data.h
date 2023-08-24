@@ -34,7 +34,7 @@ namespace mod::rando
         /* 0x0C */ uint32_t requiredDungeons; // Bitfield containing which dungeons are required to beat the seed. Only 8
                                               // bits are used, while the rest are reserved for future updates
 
-                                              // BitArray where each bit represents a patch/modification to be applied for this
+        // BitArray where each bit represents a patch/modification to be applied for this
         // playthrough; these patchs/modifications must be applied every time a file is loaded
         /* 0x10 */ entryInfo volatilePatchInfo;
 
@@ -83,7 +83,7 @@ namespace mod::rando
         MinSeedInfo* minSeedInfo;
     };
 
-    struct bgmHeader
+    struct BGMHeader
     {
         uint16_t bgmTableSize;
         uint16_t fanfareTableSize;
@@ -94,7 +94,7 @@ namespace mod::rando
         uint8_t padding[2];
     } __attribute__((__packed__));
 
-    struct bgmReplacement
+    struct BGMReplacement
     {
         uint8_t originalBgmTrack;
         uint8_t replacementBgmTrack;
@@ -102,19 +102,19 @@ namespace mod::rando
         uint8_t padding;
     } __attribute__((__packed__));
 
-    struct regionFlag
+    struct RegionFlag
     {
         uint8_t region_id;
         uint8_t bit_id;
     } __attribute__((__packed__));
 
-    struct eventFlag
+    struct EventFlag
     {
         uint8_t offset;
         uint8_t flag;
     } __attribute__((__packed__));
 
-    struct dzxCheck
+    struct DZXCheck
     {
         uint16_t hash;
         uint8_t stageIDX;
@@ -122,7 +122,7 @@ namespace mod::rando
         uint8_t data[0x20];
     } __attribute__((__packed__));
 
-    struct shopCheck
+    struct ShopCheck
     {
         uint16_t shopItemID;        // target item id
         uint16_t replacementItemID; // replacement item id
@@ -137,7 +137,7 @@ namespace mod::rando
         uint32_t override;
     } __attribute__((__packed__));
 
-    struct POECheck
+    struct PoeCheck
     {
         uint8_t stageIDX;
         uint8_t flag;  // Flag used for identification
@@ -177,10 +177,10 @@ namespace mod::rando
         int32_t offset;            // The offset where the item is stored from the message flow header.
         uint32_t replacementValue; // Used to be item, but can be more now.
         char fileName[15];
-        uint8_t stageIDX;          // The name of the file where the check is stored
+        uint8_t stageIDX; // The name of the file where the check is stored
     } __attribute__((__packed__));
 
-    struct BOSSCheck
+    struct BossCheck
     {
         uint16_t stageIDX; // The stage where the replacement is taking place.
         uint16_t item;     // New item id
@@ -232,7 +232,7 @@ namespace mod::rando
         /* 0x0A */ uint16_t rawRGBOffset;     // Offset to the list of raw RGB entries
     } __attribute__((__packed__));
 
-    struct BmdEntry
+    struct BMDEntry
     {
         /* 0x00 */ uint8_t recolorType;        // 0: CMPR, 1: MAT, etc.
         /* 0x01 */ uint8_t archiveIndex;       // The index of the archive used to load the texture replacement.

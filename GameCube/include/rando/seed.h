@@ -32,21 +32,21 @@ namespace mod::rando
         uint32_t m_AreaFlagsModified = 0;
 
         Header* m_Header = nullptr;
-        uint32_t m_StageIDX = 0xFF;                  // StageIDX from last Checkload
+        uint32_t m_StageIDX = 0xFF; // StageIDX from last Checkload
 
-        dzxCheck* m_DZXChecks = nullptr;             // DZX replacement checks for current stage
-        uint32_t m_numLoadedDZXChecks = 0;           // Number of currently loaded DZXCheck
+        DZXCheck* m_DZXChecks = nullptr;   // DZX replacement checks for current stage
+        uint32_t m_numLoadedDZXChecks = 0; // Number of currently loaded DZXCheck
 
-        RELCheck* m_RELChecks = nullptr;             // REL Modifications for current stage
-        uint32_t m_numLoadedRELChecks = 0;           // Number of currently loaded RELCheck
+        RELCheck* m_RELChecks = nullptr;   // REL Modifications for current stage
+        uint32_t m_numLoadedRELChecks = 0; // Number of currently loaded RELCheck
 
-        POECheck* m_POEChecks = nullptr;             // POE Checks for current stage
-        uint32_t m_numLoadedPOEChecks = 0;           // Number of currently loaded POEChecks
+        PoeCheck* m_PoeChecks = nullptr;   // Poe Checks for current stage
+        uint32_t m_numLoadedPOEChecks = 0; // Number of currently loaded POEChecks
 
         ARCReplacement* m_ArcReplacements = nullptr; // Checks for the currently loaded .arc file
         uint32_t m_numLoadedArcReplacements = 0;     // Number of currently loaded ArcChecks
 
-        BOSSCheck* m_BossChecks = nullptr;
+        BossCheck* m_BossChecks = nullptr;
         uint32_t m_numLoadedBossChecks = 0;
 
         HiddenSkillCheck* m_HiddenSkillChecks = nullptr;
@@ -58,7 +58,7 @@ namespace mod::rando
         SkyCharacter* m_SkyBookChecks = nullptr;
         uint32_t m_numSkyBookChecks = 0;
 
-        shopCheck* m_ShopChecks = nullptr;
+        ShopCheck* m_ShopChecks = nullptr;
         uint32_t m_numShopChecks = 0;
 
         ObjectArchiveReplacement* m_ObjectArcReplacements = nullptr;
@@ -66,14 +66,14 @@ namespace mod::rando
 
         const char* m_RequiredDungeons = nullptr; // Displayed when reading the sign in front of Link's house
 
-        bgmReplacement* m_BgmTable = nullptr;     // Bgm replacement data
-        bgmReplacement* m_FanfareTable = nullptr; // Fanfare replacement data
+        BGMReplacement* m_BgmTable = nullptr;     // Bgm replacement data
+        BGMReplacement* m_FanfareTable = nullptr; // Fanfare replacement data
         uint8_t m_BgmTableEntries;
         uint8_t m_FanfareTableEntries;
 
         CLR0Header* m_CLR0 = nullptr;
         RawRGBTable* m_RawRGBTable = nullptr;
-        BmdEntry* m_BmdEntries = nullptr;
+        BMDEntry* m_BmdEntries = nullptr;
 
         // Member functions
        public:
@@ -142,7 +142,7 @@ namespace mod::rando
         uint8_t* m_GCIData = nullptr; // GCI Data including header
         uint8_t m_fileIndex = 0xFF;   // GCI Fileindex
         int32_t m_CardSlot = 0;       // Selected Card slot
-        void ClearChecks(void);
+        void clearChecks(void);
         void loadBgmData(uint8_t* data);
 
         // Main

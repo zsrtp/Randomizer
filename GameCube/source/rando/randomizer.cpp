@@ -193,7 +193,7 @@ namespace mod::rando
 
         // Local vars
         const uint32_t numReplacements = seed->m_numLoadedDZXChecks;
-        dzxCheck* dzxReplacements = seed->m_DZXChecks;
+        DZXCheck* dzxReplacements = seed->m_DZXChecks;
 
         const uint32_t numChunks = chunkTypeInfo->numChunks;
         ACTR* dzxData = reinterpret_cast<ACTR*>(chunkTypeInfo->chunkDataPtr);
@@ -213,7 +213,7 @@ namespace mod::rando
             // Compare to all available replacements
             for (uint32_t j = 0; j < numReplacements; j++)
             {
-                rando::dzxCheck* currentDzxReplacement = &dzxReplacements[j];
+                rando::DZXCheck* currentDzxReplacement = &dzxReplacements[j];
                 if (currentDzxReplacement->hash == actorHash)
                 {
                     // Temporary enum for actor types
@@ -282,11 +282,11 @@ namespace mod::rando
     int32_t Randomizer::getPoeItem(uint8_t flag)
     {
         const uint32_t numLoadedPOEChecks = m_Seed->m_numLoadedPOEChecks;
-        POECheck* poeChecks = &m_Seed->m_POEChecks[0];
+        PoeCheck* poeChecks = &m_Seed->m_PoeChecks[0];
 
         for (uint32_t i = 0; i < numLoadedPOEChecks; i++)
         {
-            POECheck* currentPOECheck = &poeChecks[i];
+            PoeCheck* currentPOECheck = &poeChecks[i];
             if (flag == currentPOECheck->flag)
             {
                 // Return new item
@@ -545,18 +545,18 @@ namespace mod::rando
     }
 
     // NOTE: This function returns dynamic memory
-    BmdEntry* Randomizer::generateBmdEntries(DvdEntryNumId entryNum, uint32_t numEntries)
+    BMDEntry* Randomizer::generateBmdEntries(DvdEntryNumId entryNum, uint32_t numEntries)
     {
-        BmdEntry* allEntries = m_Seed->m_BmdEntries;
-        BmdEntry* loadedBmdEntries = new (-sizeof(uint16_t)) BmdEntry[numEntries];
+        BMDEntry* allEntries = m_Seed->m_BmdEntries;
+        BMDEntry* loadedBmdEntries = new (-sizeof(uint16_t)) BMDEntry[numEntries];
         uint32_t j = 0;
 
         for (uint32_t i = 0; i < numEntries; i++)
         {
             if (allEntries[i].archiveIndex == entryNum)
             {
-                // Store the i'th BmdEntry into the j'th loaded BmdEntry if the entryNum matches
-                memcpy(&loadedBmdEntries[j], &allEntries[i], sizeof(BmdEntry));
+                // Store the i'th BMDEntry into the j'th loaded BMDEntry if the entryNum matches
+                memcpy(&loadedBmdEntries[j], &allEntries[i], sizeof(BMDEntry));
                 j++;
             }
         }
@@ -588,7 +588,7 @@ namespace mod::rando
             }
 
             // The currently loaded archive is an archive we are looking for
-            BmdEntry* loadedBmdEntries = generateBmdEntries(static_cast<DvdEntryNumId>(res), numEntries);
+            BMDEntry* loadedBmdEntries = generateBmdEntries(static_cast<DvdEntryNumId>(res), numEntries);
             if (!loadedBmdEntries)
             {
                 continue;
@@ -597,7 +597,7 @@ namespace mod::rando
             // If we have a populated list, this means we have textures that we can recolor.
             for (uint32_t i = 0; i < numEntries; i++)
             {
-                BmdEntry* currentBmdEntry = &loadedBmdEntries[i];
+                BMDEntry* currentBmdEntry = &loadedBmdEntries[i];
                 char buf[64]; // A little extra to be safe
 
                 switch (currentBmdEntry->archiveIndex)

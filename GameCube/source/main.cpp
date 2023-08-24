@@ -84,7 +84,7 @@ namespace mod
     KEEP_VAR libtp::tp::d_s_logo::Languages currentLanguage = libtp::tp::d_s_logo::Languages::uk;
 #endif
 
-    void* Z2ScenePtr = nullptr;
+    void* z2ScenePtr = nullptr;
     uint32_t randState = 0;
     KEEP_VAR const char* m_DonationText = nullptr;
 
@@ -1495,7 +1495,7 @@ namespace mod
                     break;
                 }
 
-                case CLEARED_ELDIN_TWILIGHT:                            // Cleared Eldin Twilight
+                case CLEARED_ELDIN_TWILIGHT: // Cleared Eldin Twilight
                 {
                     events::setSaveFileEventFlag(MAP_WARPING_UNLOCKED); // in glitched Logic, you can skip the gorge bridge.
                     if (libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
@@ -1516,7 +1516,7 @@ namespace mod
                 {
                     if (libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
                     {
-                        if (darkClearLevelFlag == 0x7)                    // All twilights completed
+                        if (darkClearLevelFlag == 0x7) // All twilights completed
                         {
                             playerStatusPtr->transform_level_flag |= 0x8; // Set the flag for the last transformed twilight.
                                                                           // Also puts Midna on the player's back
@@ -1736,10 +1736,10 @@ namespace mod
         return return_searchBouDoor(actrPtr);
     }
 
-    KEEP_FUNC void handle_loadSeWave(void* Z2SceneMgr, uint32_t waveID)
+    KEEP_FUNC void handle_loadSeWave(void* z2SceneMgr, uint32_t waveID)
     {
-        Z2ScenePtr = Z2SceneMgr;
-        return return_loadSeWave(Z2SceneMgr, waveID);
+        z2ScenePtr = z2SceneMgr;
+        return return_loadSeWave(z2SceneMgr, waveID);
     }
 
     KEEP_FUNC void* handle_dScnLogo_c_dt(void* dScnLogo_c, int16_t bFreeThis)
@@ -1807,7 +1807,7 @@ namespace mod
         const uint32_t seWave1 = sceneMgrPtr->SeWaveToErase_1;
         const uint32_t seWave2 = sceneMgrPtr->SeWaveToErase_2;
 
-        void* scenePtr = Z2ScenePtr;
+        void* scenePtr = z2ScenePtr;
         eraseSeWave(scenePtr, seWave1);
         eraseSeWave(scenePtr, seWave2);
         loadSeWave(scenePtr, 0x46);
