@@ -63,13 +63,18 @@ namespace mod
     KEEP_VAR rando::SeedList* seedList = nullptr;
 
     // Variables
+    void* z2ScenePtr = nullptr;
+    uint32_t randState = 0;
+    KEEP_VAR const char* m_DonationText = nullptr;
+
     // Analog L is currently not being used, so commented out
     // float prevFrameAnalogL = 0.f;
     float prevFrameAnalogR = 0.f;
+
     KEEP_VAR uint8_t* m_MsgTableInfo = nullptr;
-    KEEP_VAR uint32_t m_TotalMsgEntries = 0;
     libtp::tp::J2DPicture::J2DPicture* bgWindow = nullptr;
-    uint32_t lastButtonInput = 0;
+    uint16_t lastButtonInput = 0;
+    KEEP_VAR uint16_t m_TotalMsgEntries = 0;
     bool roomReloadingState = false;
     bool consoleState = true;
     uint8_t gameState = GAME_BOOT;
@@ -83,10 +88,6 @@ namespace mod
 #ifdef TP_EU
     KEEP_VAR libtp::tp::d_s_logo::Languages currentLanguage = libtp::tp::d_s_logo::Languages::uk;
 #endif
-
-    void* z2ScenePtr = nullptr;
-    uint32_t randState = 0;
-    KEEP_VAR const char* m_DonationText = nullptr;
 
     // Function hook return trampolines
     KEEP_VAR void (*return_fapGm_Execute)(void) = nullptr;
@@ -538,7 +539,7 @@ namespace mod
         if (currentButtons != lastButtonInput)
         {
             // Store before processing since we (potentially) un-set the padInfo values later
-            lastButtonInput = currentButtons;
+            lastButtonInput = static_cast<uint16_t>(currentButtons);
 
             // Special combo to (de)activate the console should be handled first
             if (checkBtn(currentButtons, PadInputs::Button_R | PadInputs::Button_Z))

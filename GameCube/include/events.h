@@ -38,7 +38,9 @@ namespace mod::events
     extern libtp::tp::dzx::ACTR ForestGWolfActr;
     extern libtp::tp::dzx::ACTR ImpPoeActr;
     extern libtp::tp::dzx::ACTR CampBoarActr;
+
     extern uint8_t timeChange;
+
     /**
      * @brief Runs when loading just started
      *

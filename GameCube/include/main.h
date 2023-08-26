@@ -73,10 +73,10 @@ namespace mod
     extern const char* m_DonationText;
 
     // Variables
-    extern uint8_t* m_MsgTableInfo;    // Custom message string data
-    extern uint32_t m_TotalMsgEntries; // Number of currently loaded custom string
+    extern uint8_t* m_MsgTableInfo; // Custom message string data
     extern libtp::tp::J2DPicture::J2DPicture* bgWindow;
-    extern uint32_t lastButtonInput;
+    extern uint16_t lastButtonInput;
+    extern uint16_t m_TotalMsgEntries; // Number of currently loaded custom string
     extern bool roomReloadingState;
     extern bool consoleState;
     extern uint8_t gameState;

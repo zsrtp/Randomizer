@@ -350,10 +350,10 @@ namespace mod::rando
             return;
         }
 
-        seed->LoadARCChecks(seed->m_StageIDX, fileDirectory, roomNo);
-        const uint32_t numReplacements = seed->m_numLoadedArcReplacements;
+        const uint8_t stageIdx = seed->m_StageIDX;
+        seed->LoadARCChecks(stageIdx, fileDirectory, roomNo);
 
-        if (seed->m_StageIDX == libtp::data::stage::stageIDs::Ordon_Village && fileDirectory == FileDirectory::Room)
+        if ((stageIdx == libtp::data::stage::stageIDs::Ordon_Village) && (fileDirectory == FileDirectory::Room))
         {
             // Unlock the right door to Bo's House
             uint32_t replacementAddress = fileAddr + 0x2F58;
@@ -367,6 +367,7 @@ namespace mod::rando
         }
 
         // Loop through all ArcChecks and replace the item at an offset given the fileIndex.
+        const uint32_t numReplacements = seed->m_numLoadedArcReplacements;
         for (uint32_t i = 0; i < numReplacements; i++)
         {
             ARCReplacement* arcReplacement = &seed->m_ArcReplacements[i];

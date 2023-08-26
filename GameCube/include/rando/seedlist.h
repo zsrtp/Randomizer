@@ -45,16 +45,15 @@ namespace mod::rando
         ~SeedList(void);
 
 #ifdef DVD
-        void GetSeedFiles(const char* seedDirectory, MinSeedInfo* minSeedInfoBuffer);
+        void getSeedFiles(const char* seedDirectory, MinSeedInfo* minSeedInfoBuffer);
 #else
-        void GetSeedFiles(int32_t chan, MinSeedInfo* minSeedInfoBuffer);
+        void getSeedFiles(int32_t chan, MinSeedInfo* minSeedInfoBuffer);
 #endif
         // SeedInfo FindSeed( uint64_t seed );
 
+        MinSeedInfo* m_minSeedInfo = nullptr;
         uint8_t m_numSeeds;
         uint8_t m_selectedSeed;
-
-        MinSeedInfo* m_minSeedInfo = nullptr;
     };
 } // namespace mod::rando
 #endif
