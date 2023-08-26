@@ -466,9 +466,9 @@ namespace mod::game_patch
         const auto stagesPtr = &libtp::data::stage::allStages[0];
         libtp::tp::d_save::dSv_info_c* savePtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save;
 
-        if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Snowpeak_Ruins]) ||
-            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Darkhammer]) ||
-            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Blizzeta]))
+        if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Snowpeak_Ruins]) ||
+            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Darkhammer]) ||
+            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Blizzeta]))
         {
             savePtr->memory.temp_flags.memoryFlags[0x9] |= 0x4;
         }
@@ -488,9 +488,9 @@ namespace mod::game_patch
         const auto stagesPtr = &libtp::data::stage::allStages[0];
         libtp::tp::d_save::dSv_info_c* savePtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save;
 
-        if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Snowpeak_Ruins]) ||
-            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Darkhammer]) ||
-            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Blizzeta]))
+        if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Snowpeak_Ruins]) ||
+            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Darkhammer]) ||
+            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Blizzeta]))
         {
             savePtr->memory.temp_flags.memoryFlags[0x9] |= 0x8;
         }
@@ -553,11 +553,11 @@ namespace mod::game_patch
         events::setSaveFileEventFlag(libtp::data::flags::ZORA_ESCORT_CLEARED);  // Completed Zora Escort
 
         const auto stagesPtr = &libtp::data::stage::allStages[0];
-        if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Kakariko_Village]) ||
-            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Kakariko_Graveyard]) ||
-            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Death_Mountain]) ||
-            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Hidden_Village]) ||
-            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Kakariko_Village_Interiors]))
+        if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Kakariko_Village]) ||
+            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Kakariko_Graveyard]) ||
+            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Death_Mountain]) ||
+            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Hidden_Village]) ||
+            libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Kakariko_Village_Interiors]))
         {
             libtp::tp::d_save::dSv_memBit_c* tempFlagsPtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags;
 

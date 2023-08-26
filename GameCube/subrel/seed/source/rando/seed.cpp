@@ -60,7 +60,7 @@ namespace mod::rando
         constexpr int32_t resultComparison = DVD_STATE_END;
 #else
         // The memory card should already be mounted
-        m_CARDResult = libtp::tools::ReadGCIMounted(m_CardSlot, fileName, totalSize, 0, data, true);
+        m_CARDResult = libtp::tools::readGCIMounted(m_CardSlot, fileName, totalSize, 0, data, true);
         constexpr int32_t resultComparison = CARD_RESULT_READY;
 #endif
         // Restore interrupts

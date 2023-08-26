@@ -142,7 +142,7 @@ namespace mod::rando
             }
 
             // Try to open the file and get the header data
-            if (CARD_RESULT_READY != libtp::tools::ReadGCIMounted(chan, currentFileName, sizeof(header), 0, &header, true))
+            if (CARD_RESULT_READY != libtp::tools::readGCIMounted(chan, currentFileName, sizeof(header), 0, &header, true))
             {
 #endif
                 // The file could not be opened

@@ -78,26 +78,26 @@ namespace mod::rando
         const int32_t stageIDX = libtp::tools::getStageIndex(stage);
         switch (stageIDX)
         {
-            case libtp::data::stage::stageIDs::Hyrule_Field:
-            case libtp::data::stage::stageIDs::Kakariko_Village:
-            case libtp::data::stage::stageIDs::Kakariko_Graveyard:
-            case libtp::data::stage::stageIDs::Fishing_Pond:
-            case libtp::data::stage::stageIDs::Zoras_Domain:
-            case libtp::data::stage::stageIDs::Sacred_Grove:
-            case libtp::data::stage::stageIDs::Lake_Hylia:
-            case libtp::data::stage::stageIDs::Bulblin_Camp:
-            case libtp::data::stage::stageIDs::Outside_Castle_Town:
-            case libtp::data::stage::stageIDs::Gerudo_Desert:
-            case libtp::data::stage::stageIDs::Upper_Zoras_River:
-            case libtp::data::stage::stageIDs::Hidden_Village:
+            case libtp::data::stage::StageIDs::Hyrule_Field:
+            case libtp::data::stage::StageIDs::Kakariko_Village:
+            case libtp::data::stage::StageIDs::Kakariko_Graveyard:
+            case libtp::data::stage::StageIDs::Fishing_Pond:
+            case libtp::data::stage::StageIDs::Zoras_Domain:
+            case libtp::data::stage::StageIDs::Sacred_Grove:
+            case libtp::data::stage::StageIDs::Lake_Hylia:
+            case libtp::data::stage::StageIDs::Bulblin_Camp:
+            case libtp::data::stage::StageIDs::Outside_Castle_Town:
+            case libtp::data::stage::StageIDs::Gerudo_Desert:
+            case libtp::data::stage::StageIDs::Upper_Zoras_River:
+            case libtp::data::stage::StageIDs::Hidden_Village:
             {
                 game_patch::_02_modifyFoolishFieldModel();
                 break;
             }
 
-            case libtp::data::stage::stageIDs::Ordon_Village_Interiors:
-            case libtp::data::stage::stageIDs::Kakariko_Village_Interiors:
-            case libtp::data::stage::stageIDs::Castle_Town_Shops:
+            case libtp::data::stage::StageIDs::Ordon_Village_Interiors:
+            case libtp::data::stage::StageIDs::Kakariko_Village_Interiors:
+            case libtp::data::stage::StageIDs::Castle_Town_Shops:
             {
                 if (modifyShopModels)
                 {
@@ -353,7 +353,7 @@ namespace mod::rando
         const uint8_t stageIdx = seed->m_StageIDX;
         seed->LoadARCChecks(stageIdx, fileDirectory, roomNo);
 
-        if ((stageIdx == libtp::data::stage::stageIDs::Ordon_Village) && (fileDirectory == FileDirectory::Room))
+        if ((stageIdx == libtp::data::stage::StageIDs::Ordon_Village) && (fileDirectory == FileDirectory::Room))
         {
             // Unlock the right door to Bo's House
             uint32_t replacementAddress = fileAddr + 0x2F58;

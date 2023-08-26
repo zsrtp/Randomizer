@@ -75,7 +75,7 @@ namespace mod::assembly
 
     uint8_t handleShowReekfishPath(uint8_t scent)
     {
-        if ((libtp::tp::d_a_alink::checkStageName(libtp::data::stage::allStages[libtp::data::stage::stageIDs::Snowpeak])) &&
+        if ((libtp::tp::d_a_alink::checkStageName(libtp::data::stage::allStages[libtp::data::stage::StageIDs::Snowpeak])) &&
             libtp::tp::d_a_alink::dComIfGs_isEventBit(
                 libtp::data::flags::GOT_REEKFISH_SCENT)) // If we are currently at Snowpeak and the flag for having
                                                          // smelled a Reekfish is set

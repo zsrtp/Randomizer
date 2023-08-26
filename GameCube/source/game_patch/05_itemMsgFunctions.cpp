@@ -722,7 +722,7 @@ namespace mod::game_patch
             setMessageText(newMessage);
             return;
         }
-        else if (checkForSpecificMsg(charloDonationMsgId, 2, allStages[stageIDs::Castle_Town], currentInf1, "zel_04.bmg"))
+        else if (checkForSpecificMsg(charloDonationMsgId, 2, allStages[StageIDs::Castle_Town], currentInf1, "zel_04.bmg"))
         {
             setMessageText(m_DonationText);
             return;
@@ -731,7 +731,7 @@ namespace mod::game_patch
         // Make sure the randomizer is loaded/enabled and a seed is loaded for seed-specific checks
         else if (seed = getCurrentSeed(randomizer), seed)
         {
-            if (checkForSpecificMsg(linkHouseMsgId, 1, allStages[stageIDs::Ordon_Village], currentInf1, "zel_01.bmg"))
+            if (checkForSpecificMsg(linkHouseMsgId, 1, allStages[StageIDs::Ordon_Village], currentInf1, "zel_01.bmg"))
             {
                 setMessageText(seed->m_RequiredDungeons);
                 return;

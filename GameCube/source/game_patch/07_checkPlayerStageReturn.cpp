@@ -20,13 +20,13 @@ namespace mod::game_patch
         libtp::tp::d_save::dSv_player_c* playerPtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player;
         libtp::tp::d_save::dSv_player_return_place_c* playerReturnPlacePtr = &playerPtr->player_return_place;
 
-        if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::stageIDs::Gerudo_Desert]) ||
-            libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::stageIDs::Bulblin_Camp]))
+        if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::StageIDs::Gerudo_Desert]) ||
+            libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::StageIDs::Bulblin_Camp]))
         {
             if (!events::haveItem(items::Shadow_Crystal))
             {
                 strncpy(playerReturnPlacePtr->link_current_stage,
-                        stagesPtr[stage::stageIDs::Lake_Hylia],
+                        stagesPtr[stage::StageIDs::Lake_Hylia],
                         sizeof(playerReturnPlacePtr->link_current_stage) - 1);
 
                 playerReturnPlacePtr->link_spawn_point_id = 0x85;
@@ -34,7 +34,7 @@ namespace mod::game_patch
             }
         }
         // If we are in Lake Hylia during Lanayru Twilight and we cannot transform, set link's spawn point to Hyrule Field.
-        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::stageIDs::Lake_Hylia]))
+        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::StageIDs::Lake_Hylia]))
         {
             if (events::haveItem(items::Shadow_Crystal) || libtp::tp::d_save::isDarkClearLV(&playerPtr->player_status_b, 2))
             {
@@ -43,19 +43,19 @@ namespace mod::game_patch
             else
             {
                 strncpy(playerReturnPlacePtr->link_current_stage,
-                        stagesPtr[stage::stageIDs::Hyrule_Field],
+                        stagesPtr[stage::StageIDs::Hyrule_Field],
                         sizeof(playerReturnPlacePtr->link_current_stage) - 1);
 
                 playerReturnPlacePtr->link_spawn_point_id = 0x0;
                 playerReturnPlacePtr->link_room_id = 0x6;
             }
         }
-        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::stageIDs::Sacred_Grove]))
+        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::StageIDs::Sacred_Grove]))
         {
             if (!events::haveItem(items::Shadow_Crystal))
             {
                 strncpy(playerReturnPlacePtr->link_current_stage,
-                        stagesPtr[stage::stageIDs::Faron_Woods],
+                        stagesPtr[stage::StageIDs::Faron_Woods],
                         sizeof(playerReturnPlacePtr->link_current_stage) - 1);
 
                 playerReturnPlacePtr->link_spawn_point_id = 0xFE;

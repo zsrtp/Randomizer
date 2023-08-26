@@ -803,7 +803,7 @@ namespace mod
                                                  int32_t wipSpeedT )
     {
         if ( libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Skill] ) &&
+                 libtp::data::stage::allStages[libtp::data::stage::StageIDs::Hidden_Skill] ) &&
              ( roomNo == 6 ) )
         {
             // If we are in the hidden skill area and the wolf is trying to force load room 6, we know that we are trying to
@@ -886,7 +886,7 @@ namespace mod
                 case 0xD0:
                 {
                     if (libtp::tp::d_a_alink::checkStageName(
-                            libtp::data::stage::allStages[libtp::data::stage::stageIDs::Lake_Hylia]) &&
+                            libtp::data::stage::allStages[libtp::data::stage::StageIDs::Lake_Hylia]) &&
                         !libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::CLEARED_LANAYRU_TWILIGHT))
                     {
                         *entranceType = 0x50;
@@ -925,7 +925,7 @@ namespace mod
 
         // If we are in hyrule field then the function is running to give us the Hot Springwater heart piece and we want it to
         // spawn on the ground.
-        if (libtp::tp::d_a_alink::checkStageName(libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hyrule_Field]))
+        if (libtp::tp::d_a_alink::checkStageName(libtp::data::stage::allStages[libtp::data::stage::StageIDs::Hyrule_Field]))
         {
             *const_cast<float*>(&pos[1]) = -190.f;
         }
@@ -1051,7 +1051,7 @@ namespace mod
             case items::Hylian_Shield:
             {
                 // Check if we are at Kakariko Malo mart and verify that we have not bought the shield.
-                if (libtp::tools::playerIsInRoomStage(3, stagesPtr[stageIDs::Kakariko_Village_Interiors]) &&
+                if (libtp::tools::playerIsInRoomStage(3, stagesPtr[StageIDs::Kakariko_Village_Interiors]) &&
                     !tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::BOUGHT_HYLIAN_SHIELD_AT_MALO_MART))
                 {
                     // Return false so we can buy the shield.
@@ -1062,7 +1062,7 @@ namespace mod
             case items::Hawkeye:
             {
                 // Check if we are at Kakariko Village and that the hawkeye is currently not for sale.
-                if ((tp::d_a_alink::checkStageName(stagesPtr[stageIDs::Kakariko_Village]) &&
+                if ((tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Kakariko_Village]) &&
                      !libtp::tp::d_save::isSwitch_dSv_memBit(&d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x3E)))
                 {
                     // Return false so we can buy the hawkeye.
@@ -1074,7 +1074,7 @@ namespace mod
             case items::Ordon_Goat_Cheese:
             {
                 // Check to see if currently in Snowpeak Ruins
-                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stageIDs::Snowpeak_Ruins]))
+                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Snowpeak_Ruins]))
                 {
                     // Return false so that yeta will give the map item no matter what.
                     return 0;
@@ -1084,7 +1084,7 @@ namespace mod
             case items::Ball_and_Chain:
             {
                 // Check to see if currently in Snowpeak Ruins
-                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stageIDs::Darkhammer]))
+                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Darkhammer]))
                 {
                     if (libtp::tp::d_save::isSwitch_dSv_memBit(&d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
                                                                0x5F)) // Picked up the Ball and Chain check.
@@ -1156,7 +1156,7 @@ namespace mod
 
     KEEP_FUNC uint8_t handle_checkEmptyBottle(libtp::tp::d_save::dSv_player_item_c* playerItem)
     {
-        if (libtp::tp::d_a_alink::checkStageName(libtp::data::stage::allStages[libtp::data::stage::stageIDs::Cave_of_Ordeals]))
+        if (libtp::tp::d_a_alink::checkStageName(libtp::data::stage::allStages[libtp::data::stage::StageIDs::Cave_of_Ordeals]))
         {
             // Return 1 to allow the player to collect the item from the floor 50 reward, as this will make the game think that
             // the player has an empty bottle.
@@ -1200,7 +1200,7 @@ namespace mod
     KEEP_FUNC int32_t handle_event000( void* messageFlow, void* nodeEvent, void* actrPtr )
     {
         // Prevent the hidden skill CS from setting the proper flags
-        if ( libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::stageIDs::Hidden_Skill] ) )
+        if ( libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::StageIDs::Hidden_Skill] ) )
         {
             *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 ) = 0x0000;
         }
@@ -1271,7 +1271,7 @@ namespace mod
         {
             case 0x153: // Checking if the player has Ending Blow
             {
-                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Hidden_Skill]))
+                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Hidden_Skill]))
                 {
                     return true;
                 }
@@ -1280,7 +1280,7 @@ namespace mod
 
             case 0x40: // Checking if the player has completed Goron Mines
             {
-                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Kakariko_Village_Interiors]))
+                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Kakariko_Village_Interiors]))
                 {
                     return true; // Return true so Barnes will sell bombs no matter what
                 }
@@ -1307,7 +1307,7 @@ namespace mod
         {
             case ENDING_BLOW_UNLOCKED: // Checking for ending blow.
             {
-                if (checkStageName(stagesPtr[stageIDs::Hidden_Skill]))
+                if (checkStageName(stagesPtr[StageIDs::Hidden_Skill]))
                 {
                     return true; // If we don't have the flag, the game sends us to Faron by default. Which we don't
                                  // want.
@@ -1317,7 +1317,7 @@ namespace mod
 
             case GREAT_SPIN_UNLOCKED:
             {
-                if (checkStageName(stagesPtr[stageIDs::Hidden_Skill]))
+                if (checkStageName(stagesPtr[StageIDs::Hidden_Skill]))
                 {
                     return false; // Tell the game we don't have great spin to
                                   // not softlock in hidden skill training.
@@ -1327,7 +1327,7 @@ namespace mod
 
             case BO_TALKED_TO_YOU_AFTER_OPENING_IRON_BOOTS_CHEST: // Has Bo been defeated in wrestling
             {
-                if (checkStageName(stagesPtr[stageIDs::Ordon_Village_Interiors]))
+                if (checkStageName(stagesPtr[StageIDs::Ordon_Village_Interiors]))
                 {
                     if (dComIfGs_isEventBit(
                             libtp::data::flags::HEARD_BO_TEXT_AFTER_SUMO_FIGHT)) // Talked to Bo after chest is spawned
@@ -1345,7 +1345,7 @@ namespace mod
             case GAVE_ILIA_HER_CHARM:    // Gave Ilia the charm
             case CITY_OOCCOO_CS_WATCHED: // CiTS Intro CS watched
             {
-                if (checkStageName(stagesPtr[stageIDs::Hidden_Village]))
+                if (checkStageName(stagesPtr[StageIDs::Hidden_Village]))
                 {
                     if (!dComIfGs_isEventBit(libtp::data::flags::GOT_ILIAS_CHARM))
                     {
@@ -1358,7 +1358,7 @@ namespace mod
 
             case GORON_MINES_CLEARED: // Goron Mines Story Flag
             {
-                if (checkStageName(stagesPtr[stageIDs::Goron_Mines]))
+                if (checkStageName(stagesPtr[StageIDs::Goron_Mines]))
                 {
                     return false; // The elders will not spawn if the flag is set.
                 }
@@ -1367,14 +1367,14 @@ namespace mod
 
             case ZORA_ESCORT_CLEARED: // Escort Completed
             {
-                if (checkStageName(stagesPtr[stageIDs::Castle_Town]))
+                if (checkStageName(stagesPtr[StageIDs::Castle_Town]))
                 {
                     return true; // If flag isn't set, the player will be thrown into escort when they open the
                                  // door.
                 }
                 else if (libtp::tools::playerIsInRoomStage(
                              0,
-                             stagesPtr[stageIDs::Kakariko_Village_Interiors])) // Return true to prevent Renado/Illia
+                             stagesPtr[StageIDs::Kakariko_Village_Interiors])) // Return true to prevent Renado/Illia
                                                                                // crash after ToT
                 {
                     return true;
@@ -1384,7 +1384,7 @@ namespace mod
 
             case ARBITERS_GROUNDS_CLEARED: // AG story flag.
             {
-                if (checkStageName(stagesPtr[stageIDs::Stallord]))
+                if (checkStageName(stagesPtr[StageIDs::Stallord]))
                 {
                     return false; // If the flag is set, the post boss music plays during the boss fight.
                 }
@@ -1393,7 +1393,7 @@ namespace mod
 
             case SNOWPEAK_RUINS_CLEARED: // Snowpeak Ruins Story flag
             {
-                if (checkStageName(stagesPtr[stageIDs::Kakariko_Graveyard]))
+                if (checkStageName(stagesPtr[StageIDs::Kakariko_Graveyard]))
                 {
                     return false; // If the flag is set, Ralis will no longer spawn in the graveyard.
                 }
@@ -1402,7 +1402,7 @@ namespace mod
 
             case FOREST_TEMPLE_CLEARED: // Forest Temple Story Flag
             {
-                if (checkStageName(stagesPtr[stageIDs::Diababa]))
+                if (checkStageName(stagesPtr[StageIDs::Diababa]))
                 {
                     return false; // If the flag is set, the post boss music plays during the boss fight.
                 }
@@ -1411,7 +1411,7 @@ namespace mod
 
             case CITY_IN_THE_SKY_CLEARED: // City in the Sky Story flag
             {
-                if (checkStageName(stagesPtr[stageIDs::Mirror_Chamber]))
+                if (checkStageName(stagesPtr[StageIDs::Mirror_Chamber]))
                 {
                     if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT))
                     {
@@ -1429,7 +1429,7 @@ namespace mod
             }
             case HOWLED_AT_SNOWPEAK_STONE:
             {
-                if (checkStageName(stagesPtr[stageIDs::Snowpeak]))
+                if (checkStageName(stagesPtr[StageIDs::Snowpeak]))
                 {
                     return false; // Return false so the player can howl at the stone multiple times to remove map glitch
                 }
@@ -1438,7 +1438,7 @@ namespace mod
 
             case WATCHED_CUTSCENE_AFTER_GOATS_2:
             {
-                if (libtp::tools::playerIsInRoomStage(1, stagesPtr[stageIDs::Ordon_Village_Interiors]))
+                if (libtp::tools::playerIsInRoomStage(1, stagesPtr[StageIDs::Ordon_Village_Interiors]))
                 {
                     if (libtp::tp::d_a_alink::dComIfGs_isEventBit(SERAS_CAT_RETURNED_TO_SHOP))
                     {
@@ -1555,7 +1555,7 @@ namespace mod
     {
         const auto stagesPtr = &libtp::data::stage::allStages[0];
 
-        if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Kakariko_Graveyard]))
+        if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Kakariko_Graveyard]))
         {
             if (flag == 0x66) // Check for escort completed flag
             {
@@ -1567,7 +1567,7 @@ namespace mod
                 }
             }
         }
-        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Hidden_Village_Interiors]))
+        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Hidden_Village_Interiors]))
         {
             if (flag == 0x61) // Is Impaz in her house
             {
@@ -1575,7 +1575,7 @@ namespace mod
             }
         }
 
-        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Ordon_Village]))
+        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Ordon_Village]))
         {
             if ((flag == 0x21) &&
                 !libtp::tp::d_kankyo::dKy_daynight_check()) // Midna jumps to shield house are active and it is daytime
@@ -1592,14 +1592,14 @@ namespace mod
         {
             const auto stagesPtr = &libtp::data::stage::allStages[0];
 
-            if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Forest_Temple]))
+            if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Forest_Temple]))
             {
                 if (flag == 0x52)
                 {
                     return; // Don't set the flag for all monkeys freed in the lobby of Forest Temple
                 }
             }
-            else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Arbiters_Grounds]))
+            else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Arbiters_Grounds]))
             {
                 if (flag == 0x26)
                 {
@@ -1626,7 +1626,7 @@ namespace mod
     {
         if ((twilightNode == 0) && libtp::tools::playerIsInRoomStage(
                                        1,
-                                       libtp::data::stage::allStages[libtp::data::stage::stageIDs::Ordon_Village_Interiors]))
+                                       libtp::data::stage::allStages[libtp::data::stage::StageIDs::Ordon_Village_Interiors]))
 
         {
             return false; // Return false so Sera will give us the bottle if we have rescued the cat.
@@ -1647,7 +1647,7 @@ namespace mod
 
         // If we are in Iza's hut and we have the bow, we want to update the save file bow item stored in g_meter2_info just in
         // case the player started the minigame without it and somehow broke out of the minigame.
-        if (d_a_alink::checkStageName(libtp::data::stage::allStages[libtp::data::stage::stageIDs::Zoras_River]))
+        if (d_a_alink::checkStageName(libtp::data::stage::allStages[libtp::data::stage::StageIDs::Zoras_River]))
         {
             if (events::haveItem(libtp::data::items::Heros_Bow))
             {
@@ -1729,7 +1729,7 @@ namespace mod
         rando::Seed* seed;
         if (seed = getCurrentSeed(randomizer), seed)
         {
-            if (seed->m_StageIDX == libtp::data::stage::stageIDs::Ordon_Village)
+            if (seed->m_StageIDX == libtp::data::stage::StageIDs::Ordon_Village)
             {
                 return nullptr;
             }
