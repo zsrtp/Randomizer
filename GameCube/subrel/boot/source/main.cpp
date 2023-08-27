@@ -60,10 +60,6 @@ namespace mod
         game_patch::_03_increaseClimbSpeed();
         game_patch::_06_writeASMPatches();
 
-#ifdef TP_EU
-        customMessages::getCurrentLanguage();
-#endif
-
         // Load custom messages
         customMessages::createMsgTable();
         customMessages::setDungeonItemAreaColorIndex();
@@ -257,7 +253,7 @@ namespace mod
         rando::lookupTable[rando::ResObjectKmdl] = DVDConvertPathToEntrynum("/res/Object/Kmdl.arc"); // Hero's Clothes
         rando::lookupTable[rando::ResObjectZmdl] = DVDConvertPathToEntrynum("/res/Object/Zmdl.arc"); // Zora Armor
         rando::lookupTable[rando::ResObjectOgZORA] =
-            DVDConvertPathToEntrynum("/res/Object/O_gD_zora.arc");                                   // Zora Armor - Get Item
+            DVDConvertPathToEntrynum("/res/Object/O_gD_zora.arc"); // Zora Armor - Get Item
         // lookupTable[ResObjectWmdl] = DVDConvertPathToEntrynum( "/res/Object/Wmdl.arc" );
         // lookupTable[ResObjectCWShd] = DVDConvertPathToEntrynum( "/res/Object/CWShd.arc" );
         // lookupTable[ResObjectSWShd] = DVDConvertPathToEntrynum( "/res/Object/SWShd.arc" );
