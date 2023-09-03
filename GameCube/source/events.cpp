@@ -789,7 +789,7 @@ namespace mod::events
             libtp::tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Zant_Main_Room]))
         {
             *reinterpret_cast<uint16_t*>(reinterpret_cast<uint32_t>(fopAC) + 0x962) =
-                0x226;              // Y Rotation Speed modifier. 0x226 is the value used when the item is on the ground.
+                0x226; // Y Rotation Speed modifier. 0x226 is the value used when the item is on the ground.
 
             fopAC->mGravity = 0.0f; // gravity
         }
@@ -1096,8 +1096,8 @@ namespace mod::events
     void loadCustomRoomSCOBs()
     {
         using namespace libtp;
-        if (tp::d_a_alink::checkStageName(data::stage::allStages[data::stage::StageIDs::Hyrule_Field]) &&
-            libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::MIDNAS_DESPERATE_HOUR_COMPLETED))
+
+        if (tp::d_a_alink::checkStageName(data::stage::allStages[data::stage::StageIDs::Hyrule_Field]))
         {
             tools::spawnSCOB(3, HorseJumpScob);
         }
@@ -1216,8 +1216,8 @@ namespace mod::events
 
                 if (!libtp::tp::d_kankyo::dKy_daynight_check()) // Day time
                 {
-                    timeChange = 1;                             // Changing to night
-                    envLightPtr->mTimeSpeed = 1.f;              // Increase time speed
+                    timeChange = 1;                // Changing to night
+                    envLightPtr->mTimeSpeed = 1.f; // Increase time speed
                 }
                 else
                 {
@@ -1250,15 +1250,15 @@ namespace mod::events
         libtp::tp::d_kankyo::EnvLight* envLightPtr = &libtp::tp::d_kankyo::env_light;
         if (!libtp::tp::d_kankyo::dKy_daynight_check()) // Day time
         {
-            if (timeChange == 2)                        // We want it to be day time
+            if (timeChange == 2) // We want it to be day time
             {
-                envLightPtr->mTimeSpeed = 0.012f;       // Set time speed to normal
+                envLightPtr->mTimeSpeed = 0.012f; // Set time speed to normal
                 timeChange = 0;
             }
         }
         else
         {
-            if (timeChange == 1)                  // We want it to be night time
+            if (timeChange == 1) // We want it to be night time
             {
                 envLightPtr->mTimeSpeed = 0.012f; // Set time speed to normal
                 timeChange = 0;
