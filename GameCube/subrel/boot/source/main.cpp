@@ -47,7 +47,6 @@ namespace mod
         // Align to uint8_t, as that's the largest variable type in the Console class
         mod::console = new (sizeof(uint8_t)) libtp::display::Console(CONSOLE_PROTECTED_LINES);
 
-// Update the PAL language being used immediately just to be safe.
 #ifdef TP_EU
         // Set the current language being used
         currentLanguage = libtp::tp::d_s_logo::getPalLanguage2(nullptr);
