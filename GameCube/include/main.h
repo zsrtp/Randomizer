@@ -68,11 +68,15 @@ namespace mod
     extern rando::Randomizer* randomizer;
     extern rando::SeedList* seedList;
 
+    extern void* z2ScenePtr;
+    extern uint32_t randState;
+    extern const char* m_DonationText;
+
     // Variables
-    extern uint8_t* m_MsgTableInfo;    // Custom message string data
-    extern uint32_t m_TotalMsgEntries; // Number of currently loaded custom string
+    extern uint8_t* m_MsgTableInfo; // Custom message string data
     extern libtp::tp::J2DPicture::J2DPicture* bgWindow;
-    extern uint32_t lastButtonInput;
+    extern uint16_t lastButtonInput;
+    extern uint16_t m_TotalMsgEntries; // Number of currently loaded custom string
     extern bool roomReloadingState;
     extern bool consoleState;
     extern uint8_t gameState;
@@ -86,10 +90,6 @@ namespace mod
 #ifdef TP_EU
     extern libtp::tp::d_s_logo::Languages currentLanguage;
 #endif
-
-    extern void* Z2ScenePtr;
-    extern uint32_t randState;
-    extern const char* m_DonationText;
 
     rando::Seed* getCurrentSeed(rando::Randomizer* rando);
     void setScreen(bool state); // Sets visibility of console

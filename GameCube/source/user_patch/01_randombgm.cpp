@@ -16,7 +16,7 @@ namespace mod
                                       bool param_7)
     {
         rando::Seed* seed;
-        const rando::bgmReplacement* bgmTable;
+        const rando::BGMReplacement* bgmTable;
 
         if ((seed = getCurrentSeed(randomizer), !seed) || (bgmTable = seed->m_BgmTable, !bgmTable))
         {
@@ -37,7 +37,7 @@ namespace mod
 
         for (uint32_t i = 0; i < entries; i++)
         {
-            const rando::bgmReplacement* tempBgmTable = &bgmTable[i];
+            const rando::BGMReplacement* tempBgmTable = &bgmTable[i];
             if (tempBgmTable->originalBgmTrack == bgmIdCheck)
             {
                 // Original ids are the same, return the function with replaced values
@@ -65,7 +65,7 @@ namespace mod
                                      void* pos)
     {
         rando::Seed* seed;
-        const rando::bgmReplacement* fanfareTable;
+        const rando::BGMReplacement* fanfareTable;
 
         if ((seed = getCurrentSeed(randomizer), !seed) || (fanfareTable = seed->m_FanfareTable, !fanfareTable))
         {
@@ -86,7 +86,7 @@ namespace mod
 
         for (uint32_t i = 0; i < entries; i++)
         {
-            const rando::bgmReplacement* tempfanfareTable = &fanfareTable[i];
+            const rando::BGMReplacement* tempfanfareTable = &fanfareTable[i];
             if (tempfanfareTable->originalBgmTrack == idCheck)
             {
                 // Both have the same ID, so play the replacement

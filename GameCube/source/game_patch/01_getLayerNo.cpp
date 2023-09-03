@@ -49,49 +49,49 @@ namespace mod::game_patch
             condition = libtp::tp::d_kankyo::dKy_darkworld_stage_check(stageName, roomId);
             if (condition == true)
             {
-                chosenLayer = stage::twilightStateIDs::Default_Twilight_State;
+                chosenLayer = stage::TwilightStateIDs::Default_Twilight_State;
             }
 
             if (chosenLayer < 0xD)
             {
                 switch (stageID)
                 {
-                    case stage::stageIDs::Snowpeak_Ruins:
+                    case stage::StageIDs::Snowpeak_Ruins:
                     {
                         condition =
                             libtp::tp::d_a_alink::dComIfGs_isEventBit(SNOWPEAK_RUINS_CLEARED); // Snowpeak Ruins Completed
 
                         if (condition)
                         {
-                            chosenLayer = stage::snowpeakStateIDs::SPR_Dungeon_Completed;
+                            chosenLayer = stage::SnowpeakStateIDs::SPR_Dungeon_Completed;
                         }
                         break;
                     }
-                    case stage::stageIDs::Snowpeak:
+                    case stage::StageIDs::Snowpeak:
                     {
                         condition =
                             libtp::tp::d_a_alink::dComIfGs_isEventBit(SNOWPEAK_RUINS_CLEARED); // Snowpeak Ruins Completed
 
                         if (condition && (roomId != 0))
                         {
-                            chosenLayer = stage::snowpeakStateIDs::SPR_Dungeon_Completed;
+                            chosenLayer = stage::SnowpeakStateIDs::SPR_Dungeon_Completed;
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Faron_Woods:
-                    case stage::stageIDs::Faron_Woods_Interiors:
+                    case stage::StageIDs::Faron_Woods:
+                    case stage::StageIDs::Faron_Woods_Interiors:
                     {
-                        if ((roomId == 5) || (roomId == 6))                                          // North Faron or Mist Area
+                        if ((roomId == 5) || (roomId == 6)) // North Faron or Mist Area
                         {
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(ORDON_DAY_2_OVER); // Talo Saved
                             if (condition)
                             {
-                                chosenLayer = stage::faronStateIDs::Faron_MDH_Completed;
+                                chosenLayer = stage::FaronStateIDs::Faron_MDH_Completed;
                             }
                             else
                             {
-                                chosenLayer = stage::faronStateIDs::Faron_Talo_Captured;
+                                chosenLayer = stage::FaronStateIDs::Faron_Talo_Captured;
                             }
                         }
                         else
@@ -104,18 +104,18 @@ namespace mod::game_patch
 
                                 if (condition)
                                 {
-                                    chosenLayer = stage::faronStateIDs::Faron_Snowpeak_Completed;
+                                    chosenLayer = stage::FaronStateIDs::Faron_Snowpeak_Completed;
                                 }
                             }
                             else
                             {
-                                chosenLayer = stage::faronStateIDs::Faron_Talo_Captured;
+                                chosenLayer = stage::FaronStateIDs::Faron_Talo_Captured;
                             }
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Kakariko_Village:
+                    case stage::StageIDs::Kakariko_Village:
                     {
                         condition =
                             libtp::tp::d_a_alink::dComIfGs_isEventBit(WATCHED_CUTSCENE_AFTER_GORON_MINES); // Cutscene after GM
@@ -126,25 +126,25 @@ namespace mod::game_patch
 
                             if (condition == false)
                             {
-                                chosenLayer = stage::kakarikoStateIDs::Kakariko_KB1_Completed;
+                                chosenLayer = stage::KakarikoStateIDs::Kakariko_KB1_Completed;
 
                                 // If it is night, the layer is different.
                                 libtp::tp::d_com_inf_game::dComIfG_get_timelayer(&chosenLayer);
                             }
                             else
                             {
-                                chosenLayer = stage::kakarikoStateIDs::Kakariko_Goron_Mines_Completed;
+                                chosenLayer = stage::KakarikoStateIDs::Kakariko_Goron_Mines_Completed;
                             }
                         }
                         else
                         {
-                            chosenLayer = stage::kakarikoStateIDs::Kakariko_KB1_Completed;
+                            chosenLayer = stage::KakarikoStateIDs::Kakariko_KB1_Completed;
                             libtp::tp::d_com_inf_game::dComIfG_get_timelayer(&chosenLayer);
                         }
 
                         break;
                     }
-                    case stage::stageIDs::Kakariko_Graveyard:
+                    case stage::StageIDs::Kakariko_Graveyard:
                     {
                         condition =
                             libtp::tp::d_a_alink::dComIfGs_isEventBit(GOT_ZORA_ARMOR_FROM_RUTELA); // Got Zora Armor from Rutela
@@ -165,84 +165,84 @@ namespace mod::game_patch
 
                                     if (condition == false)
                                     {
-                                        chosenLayer = stage::kakarikoStateIDs::Kakariko_KB1_Completed;
+                                        chosenLayer = stage::KakarikoStateIDs::Kakariko_KB1_Completed;
 
                                         // If it is night, the layer is different.
                                         libtp::tp::d_com_inf_game::dComIfG_get_timelayer(&chosenLayer);
                                     }
                                     else
                                     {
-                                        chosenLayer = stage::kakarikoStateIDs::Kakariko_Goron_Mines_Completed;
+                                        chosenLayer = stage::KakarikoStateIDs::Kakariko_Goron_Mines_Completed;
                                     }
                                 }
                                 else
                                 {
-                                    chosenLayer = stage::kakarikoStateIDs::Kakariko_KB1_Completed;
+                                    chosenLayer = stage::KakarikoStateIDs::Kakariko_KB1_Completed;
                                     libtp::tp::d_com_inf_game::dComIfG_get_timelayer(&chosenLayer);
                                 }
                             }
                             else
                             {
-                                chosenLayer = stage::kakarikoStateIDs::Kakariko_Zora_Escort_Cleared;
+                                chosenLayer = stage::KakarikoStateIDs::Kakariko_Zora_Escort_Cleared;
                             }
                         }
                         else
                         {
-                            chosenLayer = stage::kakarikoStateIDs::Kakariko_KB1_Completed;
+                            chosenLayer = stage::KakarikoStateIDs::Kakariko_KB1_Completed;
                             libtp::tp::d_com_inf_game::dComIfG_get_timelayer(&chosenLayer);
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Kakariko_Graveyard_Interiors:
+                    case stage::StageIDs::Kakariko_Graveyard_Interiors:
                     {
                         if (((roomId == 1 && (condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(LAKEBED_TEMPLE_CLEARED),
                                               condition != false)))) // Lakebed Completed
                         {
-                            chosenLayer = stage::kakarikoInteriorStateIDs::Kakariko_Int_Lakebed_Completed;
+                            chosenLayer = stage::KakarikoInteriorStateIDs::Kakariko_Int_Lakebed_Completed;
                             libtp::tp::d_com_inf_game::dComIfG_get_timelayer(&chosenLayer);
                         }
                         else
                         {
-                            chosenLayer = stage::kakarikoInteriorStateIDs::Kakariko_Int_KB1_Completed;
+                            chosenLayer = stage::KakarikoInteriorStateIDs::Kakariko_Int_KB1_Completed;
                             libtp::tp::d_com_inf_game::dComIfG_get_timelayer(&chosenLayer);
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Kakariko_Village_Interiors:
+                    case stage::StageIDs::Kakariko_Village_Interiors:
                     {
                         if (roomId == 1) // Lakebed Completed
                         {
-                            chosenLayer = stage::kakarikoInteriorStateIDs::Kakariko_Int_Lakebed_Completed;
+                            chosenLayer = stage::KakarikoInteriorStateIDs::Kakariko_Int_Lakebed_Completed;
                             libtp::tp::d_com_inf_game::dComIfG_get_timelayer(&chosenLayer);
                         }
                         else
                         {
-                            chosenLayer = stage::kakarikoInteriorStateIDs::Kakariko_Int_KB1_Completed;
+                            chosenLayer = stage::KakarikoInteriorStateIDs::Kakariko_Int_KB1_Completed;
                             libtp::tp::d_com_inf_game::dComIfG_get_timelayer(&chosenLayer);
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Death_Mountain:
+                    case stage::StageIDs::Death_Mountain:
                     {
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(GORON_MINES_CLEARED); // Goron Mines Completed
 
                         if (condition)
                         {
-                            chosenLayer = stage::deathMountainStateIDs::Death_Mountain_Goron_Mines_Completed;
+                            chosenLayer = stage::DeathMountainStateIDs::Death_Mountain_Goron_Mines_Completed;
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Death_Mountain_Interiors:
+                    case stage::StageIDs::Death_Mountain_Interiors:
                     {
                         chosenLayer = 0;
                         break;
                     }
 
-                    case stage::stageIDs::Lake_Hylia:
+                    case stage::StageIDs::Lake_Hylia:
                     {
                         if (roomId == 1) // Lanayru Spring
                         {
@@ -256,11 +256,11 @@ namespace mod::game_patch
 
                                 if (condition == false)
                                 {
-                                    chosenLayer = stage::lakeHyliaStateIDs::Lake_Int_Lakebed_Completed;
+                                    chosenLayer = stage::LakeHyliaStateIDs::Lake_Int_Lakebed_Completed;
                                 }
                                 else
                                 {
-                                    chosenLayer = stage::lakeHyliaStateIDs::Lake_Int_MDH_Started;
+                                    chosenLayer = stage::LakeHyliaStateIDs::Lake_Int_MDH_Started;
                                 }
                             }
                         }
@@ -275,41 +275,41 @@ namespace mod::game_patch
 
                                 if (condition == false)
                                 {
-                                    chosenLayer = stage::lakeHyliaStateIDs::Lake_Hylia_Lakebed_Completed;
+                                    chosenLayer = stage::LakeHyliaStateIDs::Lake_Hylia_Lakebed_Completed;
                                 }
                                 else
                                 {
-                                    chosenLayer = stage::lakeHyliaStateIDs::Lake_Hylia_Warped_Cannon_To_Lake;
+                                    chosenLayer = stage::LakeHyliaStateIDs::Lake_Hylia_Warped_Cannon_To_Lake;
                                 }
                             }
                             else
                             {
-                                chosenLayer = stage::lakeHyliaStateIDs::Lake_Hylia_Cannon_Repaired;
+                                chosenLayer = stage::LakeHyliaStateIDs::Lake_Hylia_Cannon_Repaired;
                             }
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Castle_Town_Interiors:
+                    case stage::StageIDs::Castle_Town_Interiors:
                     {
                         if (condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(LAKEBED_TEMPLE_CLEARED),
                             condition) // Lakebed Temple Completed
                         {
-                            chosenLayer = stage::castleTownInteriorsStateIDs::Castle_Town_Int_Lakebed_Completed;
+                            chosenLayer = stage::CastleTownInteriorsStateIDs::Castle_Town_Int_Lakebed_Completed;
                             if (condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED),
                                 condition) // MDH Completed
                             {
-                                chosenLayer = stage::castleTownInteriorsStateIDs::Castle_Town_Int_Twilight_Cleared;
+                                chosenLayer = stage::CastleTownInteriorsStateIDs::Castle_Town_Int_Twilight_Cleared;
                             }
                         }
                         if (roomId == 5) // Telma's Bar
                         {
-                            chosenLayer = stage::castleTownInteriorsStateIDs::Castle_Town_Int_Watched_MS_Cutscene;
+                            chosenLayer = stage::CastleTownInteriorsStateIDs::Castle_Town_Int_Watched_MS_Cutscene;
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Castle_Town:
+                    case stage::StageIDs::Castle_Town:
                     {
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED); // MDH Completed
 
@@ -324,69 +324,69 @@ namespace mod::game_patch
                                     (condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(ZORA_ESCORT_CLEARED),
                                      condition != false)) // Zora Escort Cleared
                                 {
-                                    chosenLayer = stage::castleTownStateIDs::Castle_Town_Finished_Zora_Escort;
+                                    chosenLayer = stage::CastleTownStateIDs::Castle_Town_Finished_Zora_Escort;
                                 }
                                 else if (roomId == 4)
                                 {
-                                    chosenLayer = stage::castleTownStateIDs::Castle_Town_MDH_Clear;
+                                    chosenLayer = stage::CastleTownStateIDs::Castle_Town_MDH_Clear;
                                 }
                             }
                             else
                             {
-                                chosenLayer = stage::castleTownStateIDs::Castle_Town_Lakebed_Completed;
+                                chosenLayer = stage::CastleTownStateIDs::Castle_Town_Lakebed_Completed;
                             }
                         }
                         else
                         {
                             if (((roomId == 4) || (roomId == 3)) || (roomId == 1))
                             {
-                                chosenLayer = stage::castleTownStateIDs::Castle_Town_MDH_Clear;
+                                chosenLayer = stage::CastleTownStateIDs::Castle_Town_MDH_Clear;
                             }
                             else
                             {
-                                chosenLayer = stage::castleTownStateIDs::Castle_Town_West_MDH_Clear;
+                                chosenLayer = stage::CastleTownStateIDs::Castle_Town_West_MDH_Clear;
                             }
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Zoras_Domain:
+                    case stage::StageIDs::Zoras_Domain:
                     {
                         condition =
                             libtp::tp::d_a_alink::dComIfGs_isEventBit(SNOWPEAK_RUINS_CLEARED); // Snowpeak Ruins Completed
 
                         if (condition != false)
                         {
-                            chosenLayer = stage::zorasDomainStateIDs::Domain_Snowpeak_Ruins_Completed;
+                            chosenLayer = stage::ZorasDomainStateIDs::Domain_Snowpeak_Ruins_Completed;
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Upper_Zoras_River:
+                    case stage::StageIDs::Upper_Zoras_River:
                     {
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(IZA_1_MINIGAME_UNLOCKED); // Iza 1 Unlocked
                         if (condition != false)
                         {
-                            chosenLayer = stage::upperZorasRiverStateIDs::Upper_Zoras_River_Iza_1_Started;
+                            chosenLayer = stage::UpperZorasRiverStateIDs::Upper_Zoras_River_Iza_1_Started;
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Gerudo_Desert:
+                    case stage::StageIDs::Gerudo_Desert:
                     {
-                        chosenLayer = stage::gerudoDesertStateIDs::Desert_Entrance_Cutscene_Not_Watched;
+                        chosenLayer = stage::GerudoDesertStateIDs::Desert_Entrance_Cutscene_Not_Watched;
 
                         condition =
                             libtp::tp::d_a_alink::dComIfGs_isEventBit(VISITED_DESERT_FOR_THE_FIRST_TIME); // Have been to desert
 
                         if (condition != false)
                         {
-                            chosenLayer = stage::gerudoDesertStateIDs::Desert_Entrance_Cutscene_Watched;
+                            chosenLayer = stage::GerudoDesertStateIDs::Desert_Entrance_Cutscene_Watched;
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Zoras_River:
+                    case stage::StageIDs::Zoras_River:
                     {
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(IZA_1_MINIGAME_DONE); // Iza 1 Minigame Completed
 
@@ -397,17 +397,17 @@ namespace mod::game_patch
 
                             if (condition != false)
                             {
-                                chosenLayer = stage::zorasRiverStateIDs::Zoras_River_Iza_1_Started;
+                                chosenLayer = stage::ZorasRiverStateIDs::Zoras_River_Iza_1_Started;
                             }
                         }
                         else
                         {
-                            chosenLayer = stage::zorasRiverStateIDs::Zoras_River_Iza_1_Completed;
+                            chosenLayer = stage::ZorasRiverStateIDs::Zoras_River_Iza_1_Completed;
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Ordon_Village:
+                    case stage::StageIDs::Ordon_Village:
                     {
                         if (roomId == 0)
                         {
@@ -426,33 +426,33 @@ namespace mod::game_patch
                                         darkIsClear = libtp::tp::d_save::isDarkClearLV(playerStatusBPtr, 0);
                                         if (darkIsClear == false)
                                         {
-                                            chosenLayer = stage::ordonVillageStateIDs::Ordon_Finished_Sewers;
+                                            chosenLayer = stage::OrdonVillageStateIDs::Ordon_Finished_Sewers;
                                         }
                                         else
                                         {
                                             if (!libtp::tp::d_kankyo::dKy_daynight_check())
                                             {
-                                                chosenLayer = stage::ordonVillageStateIDs::Ordon_Goats_1_Completed;
+                                                chosenLayer = stage::OrdonVillageStateIDs::Ordon_Goats_1_Completed;
                                             }
                                             else
                                             {
-                                                chosenLayer = stage::ordonVillageStateIDs::Ordon_Epona_Tamed_Night;
+                                                chosenLayer = stage::OrdonVillageStateIDs::Ordon_Epona_Tamed_Night;
                                             }
                                         }
                                     }
                                     else
                                     {
-                                        chosenLayer = stage::ordonVillageStateIDs::Ordon_Talo_Rescued;
+                                        chosenLayer = stage::OrdonVillageStateIDs::Ordon_Talo_Rescued;
                                     }
                                 }
                                 else
                                 {
-                                    chosenLayer = stage::ordonVillageStateIDs::Ordon_Goats_1_Completed;
+                                    chosenLayer = stage::OrdonVillageStateIDs::Ordon_Goats_1_Completed;
                                 }
                             }
                             else
                             {
-                                chosenLayer = stage::ordonVillageStateIDs::Ordon_New_Game;
+                                chosenLayer = stage::OrdonVillageStateIDs::Ordon_New_Game;
                             }
                         }
                         else
@@ -474,33 +474,33 @@ namespace mod::game_patch
                                             darkIsClear = libtp::tp::d_save::isDarkClearLV(playerStatusBPtr, 0);
                                             if (darkIsClear == false)
                                             {
-                                                chosenLayer = stage::ordonVillageStateIDs::Ordon_Finished_Sewers;
+                                                chosenLayer = stage::OrdonVillageStateIDs::Ordon_Finished_Sewers;
                                             }
                                             else
                                             {
-                                                chosenLayer = stage::ordonVillageStateIDs::Ordon_Faron_Twilight_Cleared;
+                                                chosenLayer = stage::OrdonVillageStateIDs::Ordon_Faron_Twilight_Cleared;
                                             }
                                         }
                                         else
                                         {
-                                            chosenLayer = stage::ordonVillageStateIDs::Ordon_Link_House_Talo_Rescued;
+                                            chosenLayer = stage::OrdonVillageStateIDs::Ordon_Link_House_Talo_Rescued;
                                         }
                                     }
                                     else
                                     {
-                                        chosenLayer = stage::ordonVillageStateIDs::Ordon_Link_House_Goats_1_Completed;
+                                        chosenLayer = stage::OrdonVillageStateIDs::Ordon_Link_House_Goats_1_Completed;
                                     }
                                 }
                                 else
                                 {
-                                    chosenLayer = stage::ordonVillageStateIDs::Ordon_Link_House_New_Game;
+                                    chosenLayer = stage::OrdonVillageStateIDs::Ordon_Link_House_New_Game;
                                 }
                             }
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Ordon_Village_Interiors:
+                    case stage::StageIDs::Ordon_Village_Interiors:
                     {
                         /* not used in randomizer anymore. keeping for documentation sake
                         if ( roomId == 1 )     // Sera's Shop
@@ -510,7 +510,7 @@ namespace mod::game_patch
 
                             if ( condition )
                             {
-                                chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
+                                chosenLayer = stage::OrdonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
                             }
                         }*/
                         if (roomId == 2) // Jaggle's House
@@ -523,12 +523,12 @@ namespace mod::game_patch
 
                                 if (condition != false)
                                 {
-                                    chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Finished_Sewers;
+                                    chosenLayer = stage::OrdonInteriorsStateIDs::Ordon_Int_Finished_Sewers;
                                 }
                             }
                             else
                             {
-                                chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Finished_Sewers;
+                                chosenLayer = stage::OrdonInteriorsStateIDs::Ordon_Int_Finished_Sewers;
                             }
                         }
                         /* not used in randomizer anymore. keeping for documentation sake
@@ -539,7 +539,7 @@ namespace mod::game_patch
                                 darkIsClear = libtp::tp::d_save::isDarkClearLV( playerStatusBPtr, 0 );
                                 if ( darkIsClear != false )
                                 {
-                                    chosenLayer = stage::ordonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
+                                    chosenLayer = stage::OrdonInteriorsStateIDs::Ordon_Int_Faron_Twilight_Cleared;
                                 }
                             }
                         }*/
@@ -547,7 +547,7 @@ namespace mod::game_patch
                         break;
                     }
 
-                    case stage::stageIDs::Ordon_Spring:
+                    case stage::StageIDs::Ordon_Spring:
                     {
                         if (roomId == 1)
                         {
@@ -567,32 +567,32 @@ namespace mod::game_patch
                                         darkIsClear = libtp::tp::d_save::isDarkClearLV(playerStatusBPtr, 0);
                                         if (darkIsClear != false)
                                         {
-                                            chosenLayer = stage::ordonSpringStateIDs::Ordon_Spring_Faron_Twilight_Cleared;
+                                            chosenLayer = stage::OrdonSpringStateIDs::Ordon_Spring_Faron_Twilight_Cleared;
                                         }
                                         else
                                         {
-                                            chosenLayer = stage::ordonSpringStateIDs::Ordon_Spring_Finished_Sewers;
+                                            chosenLayer = stage::OrdonSpringStateIDs::Ordon_Spring_Finished_Sewers;
                                         }
                                     }
                                     else
                                     {
-                                        chosenLayer = stage::ordonSpringStateIDs::Ordon_Spring_Talo_Rescued;
+                                        chosenLayer = stage::OrdonSpringStateIDs::Ordon_Spring_Talo_Rescued;
                                     }
                                 }
                                 else
                                 {
-                                    chosenLayer = stage::ordonSpringStateIDs::Ordon_Spring_Sword_Tutorial_Completed;
+                                    chosenLayer = stage::OrdonSpringStateIDs::Ordon_Spring_Sword_Tutorial_Completed;
                                 }
                             }
                             else
                             {
-                                chosenLayer = stage::ordonSpringStateIDs::Ordon_Spring_New_Game;
+                                chosenLayer = stage::OrdonSpringStateIDs::Ordon_Spring_New_Game;
                             }
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Ordon_Ranch:
+                    case stage::StageIDs::Ordon_Ranch:
                     {
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(ORDON_DAY_1_FINISHED); // Day 1 done
                         if (condition)
@@ -613,71 +613,64 @@ namespace mod::game_patch
                                         darkIsClear = libtp::tp::d_save::isDarkClearLV(playerStatusBPtr, 0);
                                         if (darkIsClear == true)
                                         {
-                                            chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Faron_Twilight_Cleared;
+                                            chosenLayer = stage::OrdonRanchStateIDs::Ordon_Ranch_Faron_Twilight_Cleared;
                                             libtp::tp::d_com_inf_game::dComIfG_get_timelayer(&chosenLayer);
                                         }
                                         else
                                         {
-                                            chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Finished_Sewers;
+                                            chosenLayer = stage::OrdonRanchStateIDs::Ordon_Ranch_Finished_Sewers;
                                         }
                                     }
                                     else
                                     {
-                                        chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Goats_2_Completed;
+                                        chosenLayer = stage::OrdonRanchStateIDs::Ordon_Ranch_Goats_2_Completed;
                                     }
                                 }
                                 else
                                 {
-                                    chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Talo_Rescued;
+                                    chosenLayer = stage::OrdonRanchStateIDs::Ordon_Ranch_Talo_Rescued;
                                 }
                             }
                             else
                             {
-                                chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_Goats_1_Completed;
+                                chosenLayer = stage::OrdonRanchStateIDs::Ordon_Ranch_Goats_1_Completed;
                             }
                         }
                         else
                         {
-                            chosenLayer = stage::ordonRanchStateIDs::Ordon_Ranch_New_Game;
+                            chosenLayer = stage::OrdonRanchStateIDs::Ordon_Ranch_New_Game;
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Hyrule_Field:
+                    case stage::StageIDs::Hyrule_Field:
                     {
-                        if (libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
-                                .dark_clear_level_flag >= 0x7)
+                        condition =
+                            libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_STARTED); // MDH State Activated
+
+                        if (condition)
                         {
                             condition =
-                                libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_STARTED); // MDH State Activated
+                                libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED); // MDH Completed
 
                             if (condition)
                             {
-                                condition =
-                                    libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED); // MDH Completed
-
-                                if (condition)
-                                {
-                                    chosenLayer = stage::hyruleFieldStateIDs::Hyrule_Field_MDH_Completed;
-                                }
-                                else
-                                {
-                                    chosenLayer = stage::hyruleFieldStateIDs::Hyrule_Field_MDH_Started;
-                                }
+                                chosenLayer = stage::HyruleFieldStateIDs::Hyrule_Field_MDH_Completed;
                             }
                             else
                             {
-                                chosenLayer = stage::hyruleFieldStateIDs::Hyrule_Field_New_Game;
+                                chosenLayer = stage::HyruleFieldStateIDs::Hyrule_Field_MDH_Started;
                             }
                         }
                         else
                         {
-                            chosenLayer = stage::hyruleFieldStateIDs::Hyrule_Field_New_Game;
+                            chosenLayer = stage::HyruleFieldStateIDs::Hyrule_Field_MDH_Completed;
                         }
+
                         break;
                     }
 
-                    case stage::stageIDs::Outside_Castle_Town:
+                    case stage::StageIDs::Outside_Castle_Town:
                     {
                         if (roomId == 8)
                         {
@@ -691,12 +684,12 @@ namespace mod::game_patch
 
                                 if (condition != false)
                                 {
-                                    chosenLayer = stage::outsideCastleTownStateIDs::Outside_Castle_Town_MDH_Started;
+                                    chosenLayer = stage::OutsideCastleTownStateIDs::Outside_Castle_Town_MDH_Started;
                                 }
                             }
                             else
                             {
-                                chosenLayer = stage::outsideCastleTownStateIDs::Outside_Castle_Town_MDH_Completed;
+                                chosenLayer = stage::OutsideCastleTownStateIDs::Outside_Castle_Town_MDH_Completed;
                             }
                         }
                         else
@@ -722,28 +715,28 @@ namespace mod::game_patch
 
                                             if (condition != false)
                                             {
-                                                chosenLayer = stage::outsideCastleTownStateIDs::Outside_Castle_Town_MDH_Started;
+                                                chosenLayer = stage::OutsideCastleTownStateIDs::Outside_Castle_Town_MDH_Started;
                                             }
                                             else
                                             {
                                                 chosenLayer =
-                                                    stage::outsideCastleTownStateIDs::Outside_Castle_Town_MDH_Completed;
+                                                    stage::OutsideCastleTownStateIDs::Outside_Castle_Town_MDH_Completed;
                                             }
                                         }
                                         else
                                         {
-                                            chosenLayer = stage::outsideCastleTownStateIDs::Outside_Castle_Town_MDH_Completed;
+                                            chosenLayer = stage::OutsideCastleTownStateIDs::Outside_Castle_Town_MDH_Completed;
                                         }
                                     }
                                     else
                                     {
-                                        chosenLayer = stage::outsideCastleTownStateIDs::
+                                        chosenLayer = stage::OutsideCastleTownStateIDs::
                                             Outside_Castle_Town_Talked_To_Louise_Before_Statue;
                                     }
                                 }
                                 else
                                 {
-                                    chosenLayer = stage::outsideCastleTownStateIDs::Outside_Castle_Town_Got_Wooden_Statue_South;
+                                    chosenLayer = stage::OutsideCastleTownStateIDs::Outside_Castle_Town_Got_Wooden_Statue_South;
                                 }
                             }
                             else
@@ -760,12 +753,12 @@ namespace mod::game_patch
 
                                         if (condition != false)
                                         {
-                                            chosenLayer = stage::outsideCastleTownStateIDs::Outside_Castle_Town_MDH_Started;
+                                            chosenLayer = stage::OutsideCastleTownStateIDs::Outside_Castle_Town_MDH_Started;
                                         }
                                     }
                                     else
                                     {
-                                        chosenLayer = stage::outsideCastleTownStateIDs::Outside_Castle_Town_MDH_Completed_East;
+                                        chosenLayer = stage::OutsideCastleTownStateIDs::Outside_Castle_Town_MDH_Completed_East;
                                     }
                                 }
                             }
@@ -773,30 +766,30 @@ namespace mod::game_patch
                         break;
                     }
 
-                    case stage::stageIDs::Hidden_Village:
+                    case stage::StageIDs::Hidden_Village:
                     {
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(GAVE_ILIA_HER_CHARM); // Ilia shown Ilia's Charm
 
                         if (condition != false)
                         {
-                            chosenLayer = stage::hiddenVillageStateIDs::Hidden_Village_Showed_Ilia_Charm;
+                            chosenLayer = stage::HiddenVillageStateIDs::Hidden_Village_Showed_Ilia_Charm;
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Castle_Town_Shops:
+                    case stage::StageIDs::Castle_Town_Shops:
                     {
                         if (roomId == 5)
                         {
-                            chosenLayer = stage::castleTownShopsStateIDs::Castle_Town_Int_Jovani_MDH_Completed;
+                            chosenLayer = stage::CastleTownShopsStateIDs::Castle_Town_Int_Jovani_MDH_Completed;
                             condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_STARTED);
                             if (condition)
                             {
-                                chosenLayer = stage::castleTownShopsStateIDs::Castle_Town_Int_Jovani_New_Game;
+                                chosenLayer = stage::CastleTownShopsStateIDs::Castle_Town_Int_Jovani_New_Game;
                                 condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED);
                                 if (condition)
                                 {
-                                    chosenLayer = stage::castleTownShopsStateIDs::Castle_Town_Int_Jovani_MDH_Completed;
+                                    chosenLayer = stage::CastleTownShopsStateIDs::Castle_Town_Int_Jovani_MDH_Completed;
                                 }
                             }
                         }
@@ -807,19 +800,19 @@ namespace mod::game_patch
 
                             if (condition != false)
                             {
-                                chosenLayer = stage::castleTownShopsStateIDs::Castle_Town_Int_Malo_Mart;
+                                chosenLayer = stage::CastleTownShopsStateIDs::Castle_Town_Int_Malo_Mart;
                             }
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Sacred_Grove:
+                    case stage::StageIDs::Sacred_Grove:
                     {
-                        chosenLayer = stage::sacredGroveStateIDs::Grove_2;
+                        chosenLayer = stage::SacredGroveStateIDs::Grove_2;
                         break;
                     }
 
-                    case stage::stageIDs::Bulblin_Camp:
+                    case stage::StageIDs::Bulblin_Camp:
                     {
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                             ESCAPED_BURNING_TENT_IN_BULBLIN_CAMP); // Escaped Burning Tent in Bulblin Camp
@@ -832,11 +825,11 @@ namespace mod::game_patch
                             if (roomId == 3) // Other states for this room are very similar, but do not have the boar
                                              // in the dzx.
                             { // Setting state 1 solves for any potential softlocks regarding the boar in that area.
-                                chosenLayer = stage::bulblinCampStateIDs::Bulblin_Camp_KB3_Completed;
+                                chosenLayer = stage::BulblinCampStateIDs::Bulblin_Camp_KB3_Completed;
                             }
                             else
                             {
-                                chosenLayer = stage::bulblinCampStateIDs::Bulblin_Camp_Watched_Mirror_Cutscene;
+                                chosenLayer = stage::BulblinCampStateIDs::Bulblin_Camp_Watched_Mirror_Cutscene;
                                 memoryFlagsPtr[0x1C] = 0x0;
                             }
                         }
@@ -851,46 +844,46 @@ namespace mod::game_patch
                         break;
                     }
 
-                    case stage::stageIDs::Faron_Woods_Cave:
+                    case stage::StageIDs::Faron_Woods_Cave:
                     {
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(ORDON_DAY_2_OVER); // Talo saved
                         if (condition != false)
                         {
-                            chosenLayer = stage::faronWoodsCaveStateIDs::Faron_Woods_Cave_Talo_Rescued;
+                            chosenLayer = stage::FaronWoodsCaveStateIDs::Faron_Woods_Cave_Talo_Rescued;
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Hyrule_Castle_Sewers:
+                    case stage::StageIDs::Hyrule_Castle_Sewers:
                     {
                         condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(FINISHED_SEWERS); // Sewers Finished
                         if (condition)
                         {
-                            chosenLayer = stage::sewersStateIDs::Sewers_Midna_On_Back;
+                            chosenLayer = stage::SewersStateIDs::Sewers_Midna_On_Back;
                         }
                         else
                         {
-                            chosenLayer = stage::twilightStateIDs::Default_Twilight_State;
+                            chosenLayer = stage::TwilightStateIDs::Default_Twilight_State;
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Hyrule_Castle:
+                    case stage::StageIDs::Hyrule_Castle:
                     {
                         if (((roomId != 0xb) && (roomId != 0xd)) && (roomId != 0xe))
                         {
-                            chosenLayer = stage::hyruleCastleStateIDs::Hyrule_Castle_Interior_State;
+                            chosenLayer = stage::HyruleCastleStateIDs::Hyrule_Castle_Interior_State;
                         }
                         break;
                     }
 
-                    case stage::stageIDs::Fishing_Pond:
-                    case stage::stageIDs::Fishing_Pond_Interiors:
+                    case stage::StageIDs::Fishing_Pond:
+                    case stage::StageIDs::Fishing_Pond_Interiors:
                     {
                         const uint32_t envLightVar = libtp::tp::d_kankyo::env_light.unk_1250[0xAE];
                         if (envLightVar == 3)
                         {
-                            chosenLayer = stage::fishingHoleStateIDs::Fishing_Hole_Autumn;
+                            chosenLayer = stage::FishingHoleStateIDs::Fishing_Hole_Autumn;
                         }
                         else
                         {
@@ -898,13 +891,13 @@ namespace mod::game_patch
                             {
                                 if (envLightVar == 1)
                                 {
-                                    chosenLayer = stage::fishingHoleStateIDs::Fishing_Hole_Spring;
+                                    chosenLayer = stage::FishingHoleStateIDs::Fishing_Hole_Spring;
                                 }
                                 else
                                 {
                                     if (envLightVar != 0)
                                     {
-                                        chosenLayer = stage::fishingHoleStateIDs::Fishing_Hole_Summer;
+                                        chosenLayer = stage::FishingHoleStateIDs::Fishing_Hole_Summer;
                                     }
                                 }
                             }
@@ -912,7 +905,7 @@ namespace mod::game_patch
                             {
                                 if (envLightVar < 5)
                                 {
-                                    chosenLayer = stage::fishingHoleStateIDs::Fishing_Hole_Winter;
+                                    chosenLayer = stage::FishingHoleStateIDs::Fishing_Hole_Winter;
                                 }
                             }
                         }
@@ -922,50 +915,50 @@ namespace mod::game_patch
             }
         }
 
-        if (chosenLayer == stage::twilightStateIDs::Default_Twilight_State)
+        if (chosenLayer == stage::TwilightStateIDs::Default_Twilight_State)
         {
             condition =
                 libtp::tp::d_a_alink::dComIfGs_isEventBit(WARPED_METEOR_TO_ZORAS_DOMAIN); // Warped meteor to Zora's Domain
 
             switch (stageID)
             {
-                case stage::stageIDs::Zoras_River:
-                case stage::stageIDs::Zoras_Domain:
-                case stage::stageIDs::Lake_Hylia:
-                case stage::stageIDs::Castle_Town:
-                case stage::stageIDs::Castle_Town_Interiors:
-                case stage::stageIDs::Upper_Zoras_River:
-                case stage::stageIDs::Outside_Castle_Town:
+                case stage::StageIDs::Zoras_River:
+                case stage::StageIDs::Zoras_Domain:
+                case stage::StageIDs::Lake_Hylia:
+                case stage::StageIDs::Castle_Town:
+                case stage::StageIDs::Castle_Town_Interiors:
+                case stage::StageIDs::Upper_Zoras_River:
+                case stage::StageIDs::Outside_Castle_Town:
                 {
                     if (condition != false)
                     {
-                        chosenLayer = stage::zorasDomainStateIDs::Domain_Meteor_Warped;
+                        chosenLayer = stage::ZorasDomainStateIDs::Domain_Meteor_Warped;
                     }
                     break;
                 }
 
-                case stage::stageIDs::Hyrule_Field:
+                case stage::StageIDs::Hyrule_Field:
                 {
                     if ((8 < roomId) && (roomId < 0xf) && (condition != false))
                     {
-                        chosenLayer = stage::hyruleFieldStateIDs::Hyrule_Field_Meteor_Warped;
+                        chosenLayer = stage::HyruleFieldStateIDs::Hyrule_Field_Meteor_Warped;
                     }
                     break;
                 }
 
-                case stage::stageIDs::Hyrule_Castle_Sewers:
+                case stage::StageIDs::Hyrule_Castle_Sewers:
                 {
                     condition = libtp::tp::d_a_alink::dComIfGs_isEventBit(
                         WATCHED_CUTSCENE_AFTER_BEING_CAPTURED_IN_FARON_TWILIGHT); // Watched CS after being captured in
                                                                                   // Faron Twilight
                     if (condition == false)
                     {
-                        chosenLayer = stage::sewersStateIDs::Sewers_First_Time;
+                        chosenLayer = stage::SewersStateIDs::Sewers_First_Time;
                     }
                     break;
                 }
 
-                case stage::stageIDs::Zant_Main_Room:
+                case stage::StageIDs::Zant_Main_Room:
                 {
                     if (roomId == 10)
                     {
@@ -973,11 +966,11 @@ namespace mod::game_patch
 
                         if (condition == false)
                         {
-                            chosenLayer = stage::twilightStateIDs::Palace_of_Twilight_Zant_Fight;
+                            chosenLayer = stage::TwilightStateIDs::Palace_of_Twilight_Zant_Fight;
                         }
                         else
                         {
-                            chosenLayer = stage::twilightStateIDs::Palace_of_Twilight_Zant_Defeated;
+                            chosenLayer = stage::TwilightStateIDs::Palace_of_Twilight_Zant_Defeated;
                         }
                     }
                     break;

@@ -60,7 +60,7 @@ namespace mod::rando
         constexpr int32_t resultComparison = DVD_STATE_END;
 #else
         // The memory card should already be mounted
-        m_CARDResult = libtp::tools::ReadGCIMounted(m_CardSlot, fileName, totalSize, 0, data, true);
+        m_CARDResult = libtp::tools::readGCIMounted(m_CardSlot, fileName, totalSize, 0, data, true);
         constexpr int32_t resultComparison = CARD_RESULT_READY;
 #endif
         // Restore interrupts
@@ -86,7 +86,7 @@ namespace mod::rando
             loadBgmData(data);
             m_CLR0 = reinterpret_cast<CLR0Header*>(m_GCIData + headerPtr->clr0Offset);
             m_RawRGBTable = reinterpret_cast<RawRGBTable*>(m_GCIData + headerPtr->clr0Offset + m_CLR0->rawRGBOffset);
-            m_BmdEntries = reinterpret_cast<BmdEntry*>(m_GCIData + headerPtr->clr0Offset + m_CLR0->bmdEntriesOffset);
+            m_BmdEntries = reinterpret_cast<BMDEntry*>(m_GCIData + headerPtr->clr0Offset + m_CLR0->bmdEntriesOffset);
 
             // Set the static pointers for the Seed Header and Data
             void** ptrTable = reinterpret_cast<void**>(0x800042BC);
@@ -99,7 +99,7 @@ namespace mod::rando
     Seed::~Seed()
     {
         // Make sure to delete tempcheck buffers
-        this->ClearChecks();
+        this->clearChecks();
 
         // Clear the static pointers for the Seed Header and Data
         void** ptrTable = reinterpret_cast<void**>(0x800042BC);
@@ -163,7 +163,7 @@ namespace mod::rando
         uint32_t headerOffset = m_Header->headerSize + m_Header->bgmHeaderOffset;
 
         // Get the Bgm Header
-        bgmHeader* customBgmHeader = reinterpret_cast<bgmHeader*>(&data[headerOffset]);
+        BGMHeader* customBgmHeader = reinterpret_cast<BGMHeader*>(&data[headerOffset]);
 
         // Handle any bgm entries
         uint32_t bgmTableEntries = customBgmHeader->bgmTableNumEntries;
@@ -177,7 +177,7 @@ namespace mod::rando
 
             // Assign the entry count and buffer
             m_BgmTableEntries = static_cast<uint8_t>(bgmTableEntries);
-            m_BgmTable = reinterpret_cast<bgmReplacement*>(buf);
+            m_BgmTable = reinterpret_cast<BGMReplacement*>(buf);
         }
 
         // Handle any fanfare entries
@@ -192,7 +192,7 @@ namespace mod::rando
 
             // Assign the entry count and buffer
             m_FanfareTableEntries = static_cast<uint8_t>(fanfareTableEntries);
-            m_FanfareTable = reinterpret_cast<bgmReplacement*>(buf);
+            m_FanfareTable = reinterpret_cast<BGMReplacement*>(buf);
         }
     }
 } // namespace mod::rando

@@ -10,7 +10,9 @@
 #ifndef RANDO_ASM_H
 #define RANDO_ASM_H
 
+#include <cstddef>
 #include <cstdint>
+#include <cstdarg>
 #include "tp/dynamic_link.h"
 #include "tp/f_op_actor.h"
 #include "tp/d_a_alink.h"
@@ -36,6 +38,9 @@ namespace mod::assembly
 {
     extern "C"
     {
+        int32_t asm_handle_snprintf(char* buffer, std::size_t bufferSize, const char* format, ...);
+        int32_t asm_handle_vsnprintf(char* buffer, std::size_t bufferSize, const char* format, va_list args);
+
         void asmDoLinkHookStart(void);
         void asmDoLinkHookEnd(void);
         void handleDoLinkHook(libtp::tp::dynamic_link::DynamicModuleControl* dmc);

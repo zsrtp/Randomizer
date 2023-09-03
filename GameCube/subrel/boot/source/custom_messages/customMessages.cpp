@@ -18,11 +18,6 @@ namespace mod::customMessages
 
 #ifdef TP_EU
     using namespace libtp::tp::d_s_logo;
-
-    void getCurrentLanguage()
-    {
-        currentLanguage = getPalLanguage2(nullptr);
-    }
 #endif
 
     void createMsgTable()
@@ -122,7 +117,7 @@ namespace mod::customMessages
 
         // Assign the buffer and total entries
         m_MsgTableInfo = buf;
-        m_TotalMsgEntries = totalCustomMessages;
+        m_TotalMsgEntries = static_cast<uint16_t>(totalCustomMessages);
     }
 
     void setDungeonItemAreaColorIndex()

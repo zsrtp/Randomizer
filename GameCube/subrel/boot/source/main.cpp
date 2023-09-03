@@ -36,6 +36,8 @@
 
 #include <cstdint>
 #include <cstring>
+#include <cstdio>
+#include <cinttypes>
 
 namespace mod
 {
@@ -44,6 +46,14 @@ namespace mod
         // Set up the console
         // Align to uint8_t, as that's the largest variable type in the Console class
         mod::console = new (sizeof(uint8_t)) libtp::display::Console(CONSOLE_PROTECTED_LINES);
+
+#ifdef TP_EU
+        // Set the current language being used
+        currentLanguage = libtp::tp::d_s_logo::getPalLanguage2(nullptr);
+#endif
+
+        // Handle the main function hooks
+        hookFunctions();
 
         // Set up the codehandler
         // writeCodehandlerToMemory();
@@ -59,10 +69,6 @@ namespace mod
         game_patch::_02_modifyItemData();
         game_patch::_03_increaseClimbSpeed();
         game_patch::_06_writeASMPatches();
-
-#ifdef TP_EU
-        customMessages::getCurrentLanguage();
-#endif
 
         // Load custom messages
         customMessages::createMsgTable();
@@ -87,9 +93,6 @@ namespace mod
 
         // Initialize the table of archive file entries that are used for texture recoloring.
         initArcLookupTable();
-
-        // Handle the main function hooks
-        hookFunctions();
     }
 
     void exit() {}
@@ -101,6 +104,8 @@ namespace mod
         using namespace libtp::tp::d_com_inf_game;
 
         // Hook functions
+        patch::writeBranch(snprintf, assembly::asm_handle_snprintf);
+        patch::writeBranch(vsnprintf, assembly::asm_handle_vsnprintf);
         return_fapGm_Execute = patch::hookFunction(libtp::tp::f_ap_game::fapGm_Execute, mod::handle_fapGm_Execute);
 
         // DMC
@@ -257,7 +262,7 @@ namespace mod
         rando::lookupTable[rando::ResObjectKmdl] = DVDConvertPathToEntrynum("/res/Object/Kmdl.arc"); // Hero's Clothes
         rando::lookupTable[rando::ResObjectZmdl] = DVDConvertPathToEntrynum("/res/Object/Zmdl.arc"); // Zora Armor
         rando::lookupTable[rando::ResObjectOgZORA] =
-            DVDConvertPathToEntrynum("/res/Object/O_gD_zora.arc");                                   // Zora Armor - Get Item
+            DVDConvertPathToEntrynum("/res/Object/O_gD_zora.arc"); // Zora Armor - Get Item
         // lookupTable[ResObjectWmdl] = DVDConvertPathToEntrynum( "/res/Object/Wmdl.arc" );
         // lookupTable[ResObjectCWShd] = DVDConvertPathToEntrynum( "/res/Object/CWShd.arc" );
         // lookupTable[ResObjectSWShd] = DVDConvertPathToEntrynum( "/res/Object/SWShd.arc" );

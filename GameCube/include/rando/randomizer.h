@@ -42,7 +42,7 @@ namespace mod::rando
         void replaceWolfLockDomeColor(libtp::tp::d_a_alink::daAlink* linkActrPtr);
 
         // NOTE: This function returns dynamic memory
-        BmdEntry* generateBmdEntries(mod::rando::DvdEntryNumId arcIndex, uint32_t numEntries);
+        BMDEntry* generateBmdEntries(mod::rando::DvdEntryNumId arcIndex, uint32_t numEntries);
 
         void recolorArchiveTextures(libtp::tp::m_Do_dvd_thread::mDoDvdThd_mountArchive_c* mountArchive);
 

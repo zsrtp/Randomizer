@@ -16,9 +16,6 @@ namespace mod::customMessages
         uint16_t id;
     };
 
-#ifdef TP_EU
-    void getCurrentLanguage();
-#endif
     void createMsgTable();
     void setDungeonItemAreaColorIndex();
     void createItemWheelMenuData();

@@ -40,10 +40,10 @@ namespace mod::rando
 
         // Get a list of all seeds available
 #ifdef DVD
-        GetSeedFiles("/mod/seed", minSeedInfoBuffer);
+        getSeedFiles("/mod/seed", minSeedInfoBuffer);
 #else
         // The memory card should already be mounted
-        GetSeedFiles(CARD_SLOT_A, minSeedInfoBuffer);
+        getSeedFiles(CARD_SLOT_A, minSeedInfoBuffer);
 #endif
         uint32_t numSeeds = m_numSeeds;
         if (numSeeds > 0)
@@ -67,7 +67,7 @@ namespace mod::rando
     }
 
 #ifdef DVD
-    void SeedList::GetSeedFiles(const char* seedDirectory, MinSeedInfo* minSeedInfoBuffer)
+    void SeedList::getSeedFiles(const char* seedDirectory, MinSeedInfo* minSeedInfoBuffer)
     {
         using namespace libtp::gc_wii::dvd;
 
@@ -76,7 +76,7 @@ namespace mod::rando
         char filePath[96];
 #else
     // This function assumes that the memory card is already mounted
-    void SeedList::GetSeedFiles(int32_t chan, MinSeedInfo* minSeedInfoBuffer)
+    void SeedList::getSeedFiles(int32_t chan, MinSeedInfo* minSeedInfoBuffer)
     {
         using namespace libtp::gc_wii::card;
 
@@ -142,7 +142,7 @@ namespace mod::rando
             }
 
             // Try to open the file and get the header data
-            if (CARD_RESULT_READY != libtp::tools::ReadGCIMounted(chan, currentFileName, sizeof(header), 0, &header, true))
+            if (CARD_RESULT_READY != libtp::tools::readGCIMounted(chan, currentFileName, sizeof(header), 0, &header, true))
             {
 #endif
                 // The file could not be opened

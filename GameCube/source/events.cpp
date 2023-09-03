@@ -108,7 +108,7 @@ namespace mod::events
         }
 
         // Check to see if currently in City and our last visited stage was not City.
-        if ((strcmp(currentStage, stage::allStages[stage::stageIDs::City_in_the_Sky]) == 0) && (currentRoom == 0x0) &&
+        if ((strcmp(currentStage, stage::allStages[stage::StageIDs::City_in_the_Sky]) == 0) && (currentRoom == 0x0) &&
             (currentPoint == 0x3))
         {
             d_save::offSwitch_dSv_memBit(&savePtr->memory.temp_flags,
@@ -136,7 +136,7 @@ namespace mod::events
             // Door - Shutter
             case D_A_DOOR_SHUTTER:
             {
-                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Snowpeak_Ruins]))
+                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Snowpeak_Ruins]))
                 {
                     // Set the call to checkOpenDoor to always return true when in SPR
                     performStaticASMReplacement(relPtrRaw + 0xD68, ASM_LOAD_IMMEDIATE(3, 1));
@@ -156,7 +156,7 @@ namespace mod::events
             // d_kankyo tag 11
             case D_A_KYTAG11:
             {
-                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Hyrule_Field]))
+                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Hyrule_Field]))
                 {
                     // Nop out the instruction that causes the time flow to not consider the mTimeSpeed variable in Field.
                     performStaticASMReplacement(relPtrRaw + 0x2CC, ASM_NOP);
@@ -195,7 +195,7 @@ namespace mod::events
             {
                 // Nop out the instruction that stores the new total small key value when the game attempts to
                 // remove a small key from the inventory when opening the boss door
-                if (libtp::tools::playerIsInRoomStage(2, stagesPtr[libtp::data::stage::stageIDs::Lakebed_Temple]))
+                if (libtp::tools::playerIsInRoomStage(2, stagesPtr[libtp::data::stage::StageIDs::Lakebed_Temple]))
                 {
                     performStaticASMReplacement(relPtrRaw + 0x1198, ASM_NOP); // Previous: subi r0,r3,1
                 }
@@ -478,7 +478,7 @@ namespace mod::events
             // SPR Suit of Armor
             case D_A_E_MD:
             {
-                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Snowpeak_Ruins]))
+                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Snowpeak_Ruins]))
                 {
                     // Branch to code to create actor if we are in snowpeak ruins, regardless of BossFlags value.
                     performStaticASMReplacement(relPtrRaw + 0x14B8, ASM_BRANCH(0x1C));
@@ -609,7 +609,7 @@ namespace mod::events
             // Shadow Beast
             case D_A_E_S1:
             {
-                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::stageIDs::Upper_Zoras_River]))
+                if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Upper_Zoras_River]))
                 {
                     // Set human flags After Defeating Shadow Beasts By Iza
                     libtp::patch::writeBranchBL(relPtrRaw + 0x407C, assembly::asmAdjustIzaWolf);
@@ -782,14 +782,14 @@ namespace mod::events
 
         const auto stagesPtr = &libtp::data::stage::allStages[0];
 
-        if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stageIDs::Hyrule_Field]) ||
-            libtp::tp::d_a_alink::checkStageName(stagesPtr[stageIDs::Upper_Zoras_River]) ||
-            libtp::tp::d_a_alink::checkStageName(stagesPtr[stageIDs::Sacred_Grove]) ||
-            libtp::tp::d_a_alink::checkStageName(stagesPtr[stageIDs::Stallord]) ||
-            libtp::tp::d_a_alink::checkStageName(stagesPtr[stageIDs::Zant_Main_Room]))
+        if (libtp::tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Hyrule_Field]) ||
+            libtp::tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Upper_Zoras_River]) ||
+            libtp::tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Sacred_Grove]) ||
+            libtp::tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Stallord]) ||
+            libtp::tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Zant_Main_Room]))
         {
             *reinterpret_cast<uint16_t*>(reinterpret_cast<uint32_t>(fopAC) + 0x962) =
-                0x226;              // Y Rotation Speed modifier. 0x226 is the value used when the item is on the ground.
+                0x226; // Y Rotation Speed modifier. 0x226 is the value used when the item is on the ground.
 
             fopAC->mGravity = 0.0f; // gravity
         }
@@ -870,7 +870,7 @@ namespace mod::events
     {
         // Check to see if currently in one of the Ordon interiors
         if (libtp::tp::d_a_alink::checkStageName(
-                libtp::data::stage::allStages[libtp::data::stage::stageIDs::Ordon_Village_Interiors]))
+                libtp::data::stage::allStages[libtp::data::stage::StageIDs::Ordon_Village_Interiors]))
         {
             // Check to see if ckecking for the Iron Boots
             const uint32_t item = *reinterpret_cast<uint16_t*>(reinterpret_cast<uint32_t>(unk2) + 0x4);
@@ -893,7 +893,7 @@ namespace mod::events
         // Check to see if currently in one of the Kakariko interiors
         if (libtp::tools::playerIsInRoomStage(
                 1,
-                libtp::data::stage::allStages[libtp::data::stage::stageIDs::Kakariko_Village_Interiors]))
+                libtp::data::stage::allStages[libtp::data::stage::StageIDs::Kakariko_Village_Interiors]))
         {
             // If player has not bought Barnes' Bomb Bag, we want to allow them to be able to get the check.
             if ((!libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::BOUGHT_BARNES_BOMB_BAG)))
@@ -932,23 +932,23 @@ namespace mod::events
         {
             case BOSS_DEFEATED:
             {
-                static const char* dungeonStages[] = {allStages[stageIDs::Forest_Temple],
-                                                      allStages[stageIDs::Ook],
-                                                      allStages[stageIDs::Goron_Mines],
-                                                      allStages[stageIDs::Dangoro],
-                                                      allStages[stageIDs::Lakebed_Temple],
-                                                      allStages[stageIDs::Deku_Toad],
-                                                      allStages[stageIDs::Arbiters_Grounds],
-                                                      allStages[stageIDs::Death_Sword],
-                                                      allStages[stageIDs::Snowpeak_Ruins],
-                                                      allStages[stageIDs::Darkhammer],
-                                                      allStages[stageIDs::Temple_of_Time],
-                                                      allStages[stageIDs::Darknut],
-                                                      allStages[stageIDs::City_in_the_Sky],
-                                                      allStages[stageIDs::Aeralfos],
-                                                      allStages[stageIDs::Palace_of_Twilight],
-                                                      allStages[stageIDs::Phantom_Zant_1],
-                                                      allStages[stageIDs::Phantom_Zant_2]};
+                static const char* dungeonStages[] = {allStages[StageIDs::Forest_Temple],
+                                                      allStages[StageIDs::Ook],
+                                                      allStages[StageIDs::Goron_Mines],
+                                                      allStages[StageIDs::Dangoro],
+                                                      allStages[StageIDs::Lakebed_Temple],
+                                                      allStages[StageIDs::Deku_Toad],
+                                                      allStages[StageIDs::Arbiters_Grounds],
+                                                      allStages[StageIDs::Death_Sword],
+                                                      allStages[StageIDs::Snowpeak_Ruins],
+                                                      allStages[StageIDs::Darkhammer],
+                                                      allStages[StageIDs::Temple_of_Time],
+                                                      allStages[StageIDs::Darknut],
+                                                      allStages[StageIDs::City_in_the_Sky],
+                                                      allStages[StageIDs::Aeralfos],
+                                                      allStages[StageIDs::Palace_of_Twilight],
+                                                      allStages[StageIDs::Phantom_Zant_1],
+                                                      allStages[StageIDs::Phantom_Zant_2]};
 
                 constexpr uint32_t totalDungeonStages = sizeof(dungeonStages) / sizeof(dungeonStages[0]);
                 for (uint32_t i = 0; i < totalDungeonStages; i++)
@@ -968,7 +968,7 @@ namespace mod::events
 
             case MINIBOSS_DEFEATED:
             {
-                if (libtp::tp::d_a_alink::checkStageName(allStages[stageIDs::Forest_Temple]))
+                if (libtp::tp::d_a_alink::checkStageName(allStages[StageIDs::Forest_Temple]))
                 {
                     if (libtp::tools::getCurrentRoomNo() < 4)
                     {
@@ -1028,18 +1028,18 @@ namespace mod::events
         using namespace libtp;
 
         const auto stagesPtr = &data::stage::allStages[0];
-        if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::stageIDs::Faron_Woods]))
+        if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Faron_Woods]))
         {
-            tools::SpawnActor(0, EponaActr);
+            tools::spawnActor(0, EponaActr);
         }
-        else if ((tp::d_a_alink::checkStageName(stagesPtr[data::stage::stageIDs::Ordon_Village]) &&
+        else if ((tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Ordon_Village]) &&
                   (libtp::tools::getCurrentRoomNo() == 0)))
         {
             libtp::tp::dzx::ACTR localEponaActor;
             memcpy(&localEponaActor, &EponaActr, sizeof(libtp::tp::dzx::ACTR));
 
             localEponaActor.parameters = 0x148;
-            tools::SpawnActor(0, localEponaActor);
+            tools::spawnActor(0, localEponaActor);
         }
     }
 
@@ -1048,58 +1048,58 @@ namespace mod::events
         using namespace libtp;
 
         const auto stagesPtr = &data::stage::allStages[0];
-        if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::stageIDs::Lake_Hylia]))
+        if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Lake_Hylia]))
         {
             if (libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::SKY_CANNON_REPAIRED))
             {
                 // Manually spawn Auru if the Lake is in the Repaired Cannon state as his actor is not in the DZX for that
                 // layer.
-                tools::SpawnActor(0, AuruActr);
+                tools::spawnActor(0, AuruActr);
             }
 
             // Spawn a red rupee behind Fyer's house that allows the player to use his cannon to leave the lake which prevents a
             // softlock.
-            tools::SpawnActor(0, ItemActr);
+            tools::spawnActor(0, ItemActr);
         }
-        else if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::stageIDs::Hyrule_Field]) &&
+        else if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Hyrule_Field]) &&
                  (!tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags,
                                           data::flags::CLEARED_ELDIN_TWILIGHT)))
         {
             libtp::tp::dzx::ACTR localGanonBarrierActor;
             memcpy(&localGanonBarrierActor, &GanonBarrierActor, sizeof(libtp::tp::dzx::ACTR));
 
-            tools::SpawnActor(7, localGanonBarrierActor);
+            tools::spawnActor(7, localGanonBarrierActor);
 
             localGanonBarrierActor.pos.z -= 270.f;
-            tools::SpawnActor(7, localGanonBarrierActor);
+            tools::spawnActor(7, localGanonBarrierActor);
 
             localGanonBarrierActor.pos.z -= 270.f;
-            tools::SpawnActor(7, localGanonBarrierActor);
+            tools::spawnActor(7, localGanonBarrierActor);
         }
-        else if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::stageIDs::Faron_Woods]) &&
+        else if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Faron_Woods]) &&
                  (tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags,
                                          data::flags::ORDON_DAY_2_OVER)))
         {
-            tools::SpawnActor(6, ForestGWolfActr);
+            tools::spawnActor(6, ForestGWolfActr);
         }
-        else if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::stageIDs::Castle_Town_Shops]))
+        else if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Castle_Town_Shops]))
         {
-            tools::SpawnActor(6, ImpPoeActr);
+            tools::spawnActor(6, ImpPoeActr);
         }
-        else if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::stageIDs::Bulblin_Camp]) &&
+        else if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Bulblin_Camp]) &&
                  !libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::ESCAPED_BURNING_TENT_IN_BULBLIN_CAMP))
         {
-            tools::SpawnActor(1, CampBoarActr);
+            tools::spawnActor(1, CampBoarActr);
         }
     }
 
     void loadCustomRoomSCOBs()
     {
         using namespace libtp;
-        if (tp::d_a_alink::checkStageName(data::stage::allStages[data::stage::stageIDs::Hyrule_Field]) &&
-            libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::MIDNAS_DESPERATE_HOUR_COMPLETED))
+
+        if (tp::d_a_alink::checkStageName(data::stage::allStages[data::stage::StageIDs::Hyrule_Field]))
         {
-            tools::SpawnSCOB(3, HorseJumpScob);
+            tools::spawnSCOB(3, HorseJumpScob);
         }
     }
 
@@ -1216,8 +1216,8 @@ namespace mod::events
 
                 if (!libtp::tp::d_kankyo::dKy_daynight_check()) // Day time
                 {
-                    timeChange = 1;                             // Changing to night
-                    envLightPtr->mTimeSpeed = 1.f;              // Increase time speed
+                    timeChange = 1;                // Changing to night
+                    envLightPtr->mTimeSpeed = 1.f; // Increase time speed
                 }
                 else
                 {
@@ -1250,15 +1250,15 @@ namespace mod::events
         libtp::tp::d_kankyo::EnvLight* envLightPtr = &libtp::tp::d_kankyo::env_light;
         if (!libtp::tp::d_kankyo::dKy_daynight_check()) // Day time
         {
-            if (timeChange == 2)                        // We want it to be day time
+            if (timeChange == 2) // We want it to be day time
             {
-                envLightPtr->mTimeSpeed = 0.012f;       // Set time speed to normal
+                envLightPtr->mTimeSpeed = 0.012f; // Set time speed to normal
                 timeChange = 0;
             }
         }
         else
         {
-            if (timeChange == 1)                  // We want it to be night time
+            if (timeChange == 1) // We want it to be night time
             {
                 envLightPtr->mTimeSpeed = 0.012f; // Set time speed to normal
                 timeChange = 0;

@@ -78,26 +78,26 @@ namespace mod::rando
         const int32_t stageIDX = libtp::tools::getStageIndex(stage);
         switch (stageIDX)
         {
-            case libtp::data::stage::stageIDs::Hyrule_Field:
-            case libtp::data::stage::stageIDs::Kakariko_Village:
-            case libtp::data::stage::stageIDs::Kakariko_Graveyard:
-            case libtp::data::stage::stageIDs::Fishing_Pond:
-            case libtp::data::stage::stageIDs::Zoras_Domain:
-            case libtp::data::stage::stageIDs::Sacred_Grove:
-            case libtp::data::stage::stageIDs::Lake_Hylia:
-            case libtp::data::stage::stageIDs::Bulblin_Camp:
-            case libtp::data::stage::stageIDs::Outside_Castle_Town:
-            case libtp::data::stage::stageIDs::Gerudo_Desert:
-            case libtp::data::stage::stageIDs::Upper_Zoras_River:
-            case libtp::data::stage::stageIDs::Hidden_Village:
+            case libtp::data::stage::StageIDs::Hyrule_Field:
+            case libtp::data::stage::StageIDs::Kakariko_Village:
+            case libtp::data::stage::StageIDs::Kakariko_Graveyard:
+            case libtp::data::stage::StageIDs::Fishing_Pond:
+            case libtp::data::stage::StageIDs::Zoras_Domain:
+            case libtp::data::stage::StageIDs::Sacred_Grove:
+            case libtp::data::stage::StageIDs::Lake_Hylia:
+            case libtp::data::stage::StageIDs::Bulblin_Camp:
+            case libtp::data::stage::StageIDs::Outside_Castle_Town:
+            case libtp::data::stage::StageIDs::Gerudo_Desert:
+            case libtp::data::stage::StageIDs::Upper_Zoras_River:
+            case libtp::data::stage::StageIDs::Hidden_Village:
             {
                 game_patch::_02_modifyFoolishFieldModel();
                 break;
             }
 
-            case libtp::data::stage::stageIDs::Ordon_Village_Interiors:
-            case libtp::data::stage::stageIDs::Kakariko_Village_Interiors:
-            case libtp::data::stage::stageIDs::Castle_Town_Shops:
+            case libtp::data::stage::StageIDs::Ordon_Village_Interiors:
+            case libtp::data::stage::StageIDs::Kakariko_Village_Interiors:
+            case libtp::data::stage::StageIDs::Castle_Town_Shops:
             {
                 if (modifyShopModels)
                 {
@@ -193,7 +193,7 @@ namespace mod::rando
 
         // Local vars
         const uint32_t numReplacements = seed->m_numLoadedDZXChecks;
-        dzxCheck* dzxReplacements = seed->m_DZXChecks;
+        DZXCheck* dzxReplacements = seed->m_DZXChecks;
 
         const uint32_t numChunks = chunkTypeInfo->numChunks;
         ACTR* dzxData = reinterpret_cast<ACTR*>(chunkTypeInfo->chunkDataPtr);
@@ -213,7 +213,7 @@ namespace mod::rando
             // Compare to all available replacements
             for (uint32_t j = 0; j < numReplacements; j++)
             {
-                rando::dzxCheck* currentDzxReplacement = &dzxReplacements[j];
+                rando::DZXCheck* currentDzxReplacement = &dzxReplacements[j];
                 if (currentDzxReplacement->hash == actorHash)
                 {
                     // Temporary enum for actor types
@@ -282,11 +282,11 @@ namespace mod::rando
     int32_t Randomizer::getPoeItem(uint8_t flag)
     {
         const uint32_t numLoadedPOEChecks = m_Seed->m_numLoadedPOEChecks;
-        POECheck* poeChecks = &m_Seed->m_POEChecks[0];
+        PoeCheck* poeChecks = &m_Seed->m_PoeChecks[0];
 
         for (uint32_t i = 0; i < numLoadedPOEChecks; i++)
         {
-            POECheck* currentPOECheck = &poeChecks[i];
+            PoeCheck* currentPOECheck = &poeChecks[i];
             if (flag == currentPOECheck->flag)
             {
                 // Return new item
@@ -350,10 +350,10 @@ namespace mod::rando
             return;
         }
 
-        seed->LoadARCChecks(seed->m_StageIDX, fileDirectory, roomNo);
-        const uint32_t numReplacements = seed->m_numLoadedArcReplacements;
+        const uint8_t stageIdx = seed->m_StageIDX;
+        seed->LoadARCChecks(stageIdx, fileDirectory, roomNo);
 
-        if (seed->m_StageIDX == libtp::data::stage::stageIDs::Ordon_Village && fileDirectory == FileDirectory::Room)
+        if ((stageIdx == libtp::data::stage::StageIDs::Ordon_Village) && (fileDirectory == FileDirectory::Room))
         {
             // Unlock the right door to Bo's House
             uint32_t replacementAddress = fileAddr + 0x2F58;
@@ -367,6 +367,7 @@ namespace mod::rando
         }
 
         // Loop through all ArcChecks and replace the item at an offset given the fileIndex.
+        const uint32_t numReplacements = seed->m_numLoadedArcReplacements;
         for (uint32_t i = 0; i < numReplacements; i++)
         {
             ARCReplacement* arcReplacement = &seed->m_ArcReplacements[i];
@@ -545,18 +546,18 @@ namespace mod::rando
     }
 
     // NOTE: This function returns dynamic memory
-    BmdEntry* Randomizer::generateBmdEntries(DvdEntryNumId entryNum, uint32_t numEntries)
+    BMDEntry* Randomizer::generateBmdEntries(DvdEntryNumId entryNum, uint32_t numEntries)
     {
-        BmdEntry* allEntries = m_Seed->m_BmdEntries;
-        BmdEntry* loadedBmdEntries = new (-sizeof(uint16_t)) BmdEntry[numEntries];
+        BMDEntry* allEntries = m_Seed->m_BmdEntries;
+        BMDEntry* loadedBmdEntries = new (-sizeof(uint16_t)) BMDEntry[numEntries];
         uint32_t j = 0;
 
         for (uint32_t i = 0; i < numEntries; i++)
         {
             if (allEntries[i].archiveIndex == entryNum)
             {
-                // Store the i'th BmdEntry into the j'th loaded BmdEntry if the entryNum matches
-                memcpy(&loadedBmdEntries[j], &allEntries[i], sizeof(BmdEntry));
+                // Store the i'th BMDEntry into the j'th loaded BMDEntry if the entryNum matches
+                memcpy(&loadedBmdEntries[j], &allEntries[i], sizeof(BMDEntry));
                 j++;
             }
         }
@@ -588,7 +589,7 @@ namespace mod::rando
             }
 
             // The currently loaded archive is an archive we are looking for
-            BmdEntry* loadedBmdEntries = generateBmdEntries(static_cast<DvdEntryNumId>(res), numEntries);
+            BMDEntry* loadedBmdEntries = generateBmdEntries(static_cast<DvdEntryNumId>(res), numEntries);
             if (!loadedBmdEntries)
             {
                 continue;
@@ -597,7 +598,7 @@ namespace mod::rando
             // If we have a populated list, this means we have textures that we can recolor.
             for (uint32_t i = 0; i < numEntries; i++)
             {
-                BmdEntry* currentBmdEntry = &loadedBmdEntries[i];
+                BMDEntry* currentBmdEntry = &loadedBmdEntries[i];
                 char buf[64]; // A little extra to be safe
 
                 switch (currentBmdEntry->archiveIndex)

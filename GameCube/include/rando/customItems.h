@@ -14,7 +14,6 @@
 
 namespace mod::rando::customItems
 {
-
     enum CustomItemIDs : uint8_t
     {
         Foolish_Item_1 = 0x13,                    // Custom Item added for the Randomizer.
@@ -83,15 +82,13 @@ namespace mod::rando::customItems
             Foolish_Item_3,
             Foolish_Item_4,
             Foolish_Item_5,
-            Foolish_Item_6};                            // Array holding the IDs of all the ice traps
+            Foolish_Item_6}; // Array holding the IDs of all the ice traps
 
         uint8_t itemModelId[MAX_SPAWNED_FOOLISH_ITEMS]; // Array holding the IDs of the item that the ice trap is copying
 
-        uint8_t spawnCount;                             // How many ice traps are currently spawned
-        uint8_t triggerCount;                           // How many ice traps have been triggered and have yet to occur
+        uint8_t spawnCount;   // How many ice traps are currently spawned
+        uint8_t triggerCount; // How many ice traps have been triggered and have yet to occur
     };
-
-    extern int32_t lookupTable[DvdEntryNumIdSize];
 
 } // namespace mod::rando::customItems
 #endif
