@@ -1,72 +1,65 @@
 # Twilight Princess Randomizer
-[Homepage](https://rando.zeldatp.net) | [Dev Info](https://wiki.zeldatp.net/Dev) | [Mirror](https://git.aecx.cc) | [Discord](https://discord.zeldatp.net) | [Docs](https://zsrtp.github.io/Randomizer)
+[Homepage](https://tprandomizer.com) | [Dev Info](https://wiki.tprandomizer.com/index.php?title=Dev) | [Discord](https://discord.tprandomizer.com) | [Docs](https://zsrtp.github.io/Randomizer) | [Generator Repo](//github.com/zsrtp/Randomizer-Web-Generator)
 
 Like other Randomizers, the **Twilight Princess Randomizer** (TPR) shuffles the contents of chests and other collectibles, thus bringing new life to a classic game. It also comes with a bunch of QoL changes and settings!
 
 # Main Contributors
 |Name|Role|
 |----------------|-------------------------------|
-|[AECX](//github.com/AECX)|Server Hosting, development, and various code additions|
-|[Zephiles](//github.com/Zephiles)|Reverse engineering and various code additions|
-|[lunarsoap5](//github.com/lunarsoap5)|Project leadership, Community Manager, and Head of Development|
-|[vbn598](//github.com/vbn598)|Developer|
-
-# Roadmap
-|Name            |Description|Status|
-|----------------|--------------|-------------------------------|
-|Fast climbing|TP Climbing is slooooooooooow|✔️Implemented|
-|Random BGM|Randomized background music|✔️Implemented|
-|Treasure Chest Randomizer|Typical treasure chests can be entirely random|✔️Implemented|
-|Freestanding Items|Items render as what they are after pickup even outside chests|🔧Planned|
-|Texture/Color mods|Change things like tunic color|🔧In the works by isaac|
-|Custom Models|e.g. Toon Link from ww, different clothing, etc.|❌Not going to be implemented|
+|[AECX](//github.com/AECX)|Founder, framework development, and various code additions|
+|[Zephiles](//github.com/Zephiles)|Reverse engineering, code management, and various additions|
+|[lunarsoap5](//github.com/lunarsoap5)|Project leadership, Generator development, and various additions|
+|[vbn598](//github.com/vbn598)|General development and various additions|
+|[Isaac](//github.com/icogn)|Various cosmetic implementations, Generator development, and various additions|
 
 # Features
 * Item Randomizer
-  * treasure chests
-  * poe souls
-  * shop items
-  * NPC gifts
-  * golden bugs
-  * dungeon rewards
+  * Treasure Chests
+  * Poe Souls
+  * Shop Items
+  * NPC Gifts
+  * Golden Bugs
+  * Dungeon Rewards
+  * Sky Characters
+  * Hidden Skills
 * Quality of Life (optional)
-  * Fast Iron boots
-  * Fast climbing
+  * Fast Iron Boots
+  * Fast Climbing
   * Random Background Music
-  * Disable Enemy Background
-  * Bigger wallets
-  * More skippable cutscenes
+  * Disable Enemy Background Music
+  * Bigger Wallets
+  * More Skippable Cutscenes
+  * Quick Transforming
+  * Transforming Anywhere
+  * Custom Cosmetics
 
 # Honorable Mentions
 * [dragonbane0](//github.com/dragonbane0)
     * Inventor of TP modding. Seriously.
+      
+* [Taka](//github.com/takarikka)
+    * Numerous contributions and hours of research that help make the Randomizer what it is today.
+    * JP Translator
+ 
+* [Luzagar](//github.com/luzagar)
+    * Various programming and Quality of Life contributions.
+ 
+* [Zushi](//github.com/zushi11)
+    * Multiple logic additions and setting implementation testing.
+
+* [ChrisIsAwesome](//github.com/chrisisawesome)
+    * Hours of testing, feedback, implementation, and contribution to the project.
+
+* [pokemongenius](https://www.youtube.com/channel/UCYLDKIanJNTeRQiJN3xP2Qw)
+    * Various logic additions.
+    * Known for breaking the Randomizer 5 minutes after getting a hold of it.
 
 * [jdflyer](//github.com/jdflyer)
     * Randomized Background Music
 
 * [Pheenoh](//github.com/Pheenoh)
-    * [tpgz](//github.com/zsrtp/tpgz)
-    * [decomp](//github.com/zsrtp/decomp)
+    * [TPGZ](//github.com/zsrtp/tpgz)
+    * [Decomp](//github.com/zeldaret/tp)
 
 * [PistonMiner](//github.com/PistonMiner)
     * For creating [ttyd-tools](//github.com/PistonMiner/ttyd-tools) which parts of this project are based on
-
-# Supporters
-* [TheBruce](//twitter.com/The_Bruce1)
-* Takirito
-* [Syloh](https://twitter.com/Syloh11)
-* SumTr011
-* Raziel_Stratton
-* [NesmaN88](//twitter.com/NesmaN88j)
-* Linkman124
-* JustRyland
-* CHL_IceStorm
-* [Asxce](//twitter.com/dAsxce2)
-* Sushi
-* XModxGodX
-* Epic Bonington
-* Jared Swensen
-* clabrus
-* XModxGodX
-* Zushi
-* Giraudet Evan

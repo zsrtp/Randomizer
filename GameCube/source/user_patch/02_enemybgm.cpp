@@ -7,31 +7,27 @@
  */
 #include "user_patch/02_enemybgm.h"
 
+#include "Z2AudioLib/Z2SeqMgr.h"
 #include "main.h"
-#include "patch.h"
-#include "tp/Z2SeqMgr.h"
 
 namespace mod::user_patch
 {
     namespace bgm::enemybgm
     {
-        void ( *return_startBattleBgm )( libtp::tp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1 ) = nullptr;
-    }     // namespace bgm::enemybgm
-    void patchBattleMusic( rando::Randomizer* randomizer, bool set )
+        KEEP_VAR void (*return_startBattleBgm)(libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1) = nullptr;
+    } // namespace bgm::enemybgm
+
+    // Handles if enemy BGM should be enabled
+    KEEP_VAR bool disableEnemyBgm = false;
+
+    KEEP_FUNC void handle_startBattleBgm(libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, bool param_1)
     {
-        mod::console << "[2] EnemyBgmDisabled [" << ( set ? "x" : " " ) << "]\n";
-        if ( set )
+        if (disableEnemyBgm)
         {
-            bgm::enemybgm::return_startBattleBgm = libtp::patch::hookFunction(
-                libtp::tp::z2audiolib::z2seqmgr::startBattleBgm,
-                []( libtp::tp::z2audiolib::z2seqmgr::Z2SeqMgr* Z2SequenceMgr, bool param_1 ) { return; } );
+            return;
         }
-        else
-        {
-            if ( bgm::enemybgm::return_startBattleBgm != nullptr )
-            {
-                libtp::patch::unhookFunction( bgm::enemybgm::return_startBattleBgm );
-            }
-        }
+
+        // Call the original function
+        bgm::enemybgm::return_startBattleBgm(seqMgr, param_1);
     }
-}     // namespace mod::user_patch
+} // namespace mod::user_patch

@@ -1,6 +1,6 @@
 # Building TP Randomizer
 
-For more information about developing for the Randomizer, please check the [wiki](https://wiki.zeldatp.net/Dev).
+For more information about developing for the Randomizer, please check the [wiki](https://wiki.tprandomizer.com/index.php?title=Dev).
 
 ## Table of contents
 
@@ -20,7 +20,7 @@ Install [devkitPro](https://devkitpro.org/wiki/Getting_Started) which is used to
 
 1. Download the graphical installer by following the above link.
 
-1. Within the installer, the following selections are recommended:
+2. Within the installer, the following selections are recommended:
 
    - "Download and install/install from downloaded files"
    - "Remove downloaded files"
@@ -32,12 +32,12 @@ Install [devkitPro](https://devkitpro.org/wiki/Getting_Started) which is used to
    - Click "Install".
      Installation may take a few minutes.
 
-1. Once installation finishes, navigate to the devkitPro folder (likely `C:\devkitPro`).
+3. Once installation finishes, navigate to the devkitPro folder (likely `C:\devkitPro`).
 
-1. Change to the `msys2` folder, then run `msys2.exe` by double-clicking.<br>
+4. Change to the `msys2` folder, then run `msys2.exe` by double-clicking.<br>
    _([MSYS2](https://www.msys2.org) is a collection of tools and libraries providing you with an easy-to-use environment for building, installing and running native Windows software.)_
 
-1. Within the `msys2` shell, run the following to install `python3` and `git` for the msys2 environment:
+5. Within the `msys2` shell, run the following to install `python3` and `git` for the msys2 environment:
 
    ```
    pacman -S python3 git
@@ -147,24 +147,22 @@ Normally the steps to load the Randomizer REL are as follows:
 Repeating these steps every time you want to test a change is a little cumbersome, so we can do the following instead:
 
 1. Right-click your TP game in Dolphin and select `Properties`.
-1. In the popup, change to the `Gecko Codes` tab.
-1. Click the `Add New Code...` button.
-1. In the new popup, set `Name:` to `Randomizer REL Loader`.
-1. Set `Creator:` to `Zephiles`
-1. In `Notes:`, you can put the following:
+2. In the popup, change to the `Gecko Codes` tab.
+3. Click the `Add New Code...` button.
+4. In the new popup, set `Name:` to `Randomizer REL Loader`.
+5. Set `Creator:` to `Zephiles`
+6. In `Notes:`, you can put the following:
 
    ```
    Automatically loads the TP Randomizer REL when starting up the game.
    ```
 
-1. In `Code:`, copy and paste one of the following depending on your TP version:
+7. In `Code:`, copy and paste the Gecko Code that matches your TP version:
 
-   - [US](https://pastebin.com/ES58EG3Z)
-   - [EU](https://pastebin.com/MvaeFAyV)
-   - [JP](https://pastebin.com/uRXqGGiq)
+   - [REL Loader](https://wiki.tprandomizer.com/index.php?title=REL_Loader)
 
-1. Click the `Save` button.
-1. Make sure the checkbox next to the new `Randomizer REL Loader` entry is checked, then close the popup.
+8. Click the `Save` button.
+9. Make sure the checkbox next to the new `Randomizer REL Loader` entry is checked, then close the popup.
 
 Now whenever you start up the game, the Randomizer code will automatically load.
 
