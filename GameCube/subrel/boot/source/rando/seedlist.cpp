@@ -123,7 +123,7 @@ namespace mod::rando
             snprintf(filePath, sizeof(filePath), "/mod/seed/%s", currentFileName);
 
             // Try to open the file and get the header data
-            if (DVD_STATE_END != libtp::tools::ReadFile(filePath, sizeof(header), 0, &header))
+            if (DVD_STATE_END != libtp::tools::readFile(filePath, sizeof(header), 0, &header))
             {
 #else
             // Try to get the status of an arbitrary file slot

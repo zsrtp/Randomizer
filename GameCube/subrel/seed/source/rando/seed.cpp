@@ -56,7 +56,7 @@ namespace mod::rando
         char filePath[96];
         snprintf(filePath, sizeof(filePath), "/mod/seed/%s", fileName);
 
-        m_CARDResult = libtp::tools::ReadFile(filePath, totalSize, 0, data);
+        m_CARDResult = libtp::tools::readFile(filePath, totalSize, 0, data);
         constexpr int32_t resultComparison = DVD_STATE_END;
 #else
         // The memory card should already be mounted
