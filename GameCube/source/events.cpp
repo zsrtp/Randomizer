@@ -914,7 +914,7 @@ namespace mod::events
 
     int32_t proc_query042(void* unk1, void* unk2, int32_t unk3)
     {
-        if (transformAnywhereEnabled)
+        if (checkValidTransformAnywhere())
         {
             // Return false to allow transforming infront of NPCs using Midna's transform option
             return 0;
@@ -1111,6 +1111,7 @@ namespace mod::events
     void handleQuickTransform()
     {
         rando::Seed* seed;
+        using namespace libtp::tp::d_com_inf_game;
         if (seed = getCurrentSeed(randomizer), !seed)
         {
             return;
@@ -1122,7 +1123,7 @@ namespace mod::events
         }
 
         // Ensure that Link is loaded on the map.
-        libtp::tp::d_a_alink::daAlink* linkMapPtr = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer;
+        libtp::tp::d_a_alink::daAlink* linkMapPtr = dComIfG_gameInfo.play.mPlayer;
         if (!linkMapPtr)
         {
             return;
@@ -1178,7 +1179,7 @@ namespace mod::events
             return;
         }
 
-        if (!transformAnywhereEnabled)
+        if (!checkValidTransformAnywhere())
         {
             if (daMidna_c__checkMetamorphoseEnableBase)
             {
@@ -1490,7 +1491,7 @@ namespace mod::events
 
     void* handleTransformAnywhere(libtp::tp::f_op_actor_iter::fopAcIt_JudgeFunc unk1, void* unk2)
     {
-        if (transformAnywhereEnabled)
+        if (checkValidTransformAnywhere())
         {
             // Return nullptr to make the calling function return true
             return nullptr;
@@ -1498,6 +1499,39 @@ namespace mod::events
 
         // Restore the overwritten instruction
         return libtp::tp::f_op_actor_iter::fopAcIt_Judge(unk1, unk2);
+    }
+
+    bool checkValidTransformAnywhere()
+    {
+        using namespace libtp::data::stage;
+        using namespace libtp::tp::d_com_inf_game;
+
+        if (!transformAnywhereEnabled)
+        {
+            return false;
+        }
+
+        // Check if the player is currently playing the Goats minigame
+        if (libtp::tp::d_a_alink::checkStageName(allStages[StageIDs::Ordon_Ranch]))
+        {
+            switch (dComIfG_gameInfo.play.mStartStage.mLayer)
+            {
+                // Layer 4 or 5 is used when the minigame is taking place
+                case 4:
+                case 5:
+                {
+                    // Return false, as the game will crash if the player is in wolf form after the minigame ends
+                    return false;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+        }
+
+        // Return true, as the bool is set and there are no conflicting scenarios to prevent transformation
+        return true;
     }
 
     KEEP_FUNC void performStaticASMReplacement(uint32_t memoryOffset, uint32_t value)
