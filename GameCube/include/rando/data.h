@@ -56,14 +56,15 @@ namespace mod::rando
         /* 0x40 */ entryInfo skyCharacterCheckInfo;
         /* 0x44 */ entryInfo shopItemCheckInfo;
         /* 0x48 */ entryInfo startingItemInfo;
-        /* 0x4C */ uint16_t bgmHeaderOffset;
-        /* 0x4E */ uint16_t clr0Offset;
-        /* 0x50 */ uint8_t transformAnywhere;
-        /* 0x51 */ uint8_t quickTransform;
-        /* 0x52 */ uint8_t castleRequirements;
-        /* 0x53 */ uint8_t palaceRequirements;
-        /* 0x54 */ uint8_t mapClearBits;
-        /* 0x55 */ uint8_t padding[3];
+        /* 0x4C */ entryInfo EntranceTableInfo;
+        /* 0x50 */ uint16_t bgmHeaderOffset;
+        /* 0x52 */ uint16_t clr0Offset;
+        /* 0x54 */ uint8_t transformAnywhere;
+        /* 0x55 */ uint8_t quickTransform;
+        /* 0x56 */ uint8_t castleRequirements;
+        /* 0x57 */ uint8_t palaceRequirements;
+        /* 0x58 */ uint8_t mapClearBits;
+        /* 0x59 */ uint8_t padding[3];
     } __attribute__((__packed__));
 
     // Minimum amount of data needed for keeping track of a seed
@@ -302,6 +303,20 @@ namespace mod::rando
         int16_t flag;        // Flag associated with the current golden wolf
         uint8_t markerFlag;  // Flag associated with the current golden wolf's marker on the map
     };
+
+    struct ShuffledEntrance
+    {
+        uint8_t origStageIDX;
+        uint8_t origRoomIDX;
+        uint8_t origSpawn;
+        uint8_t origType;
+        uint16_t origParams;
+        uint8_t newStageIDX;
+        uint8_t newRoomIDX;
+        uint8_t newSpawn;
+        uint8_t newType;
+        uint16_t newParams;
+    } __attribute__((__packed__));
 
     extern int32_t lookupTable[DvdEntryNumIdSize];
 

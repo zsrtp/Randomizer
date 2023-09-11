@@ -195,4 +195,22 @@ namespace mod::rando
             m_FanfareTable = reinterpret_cast<BGMReplacement*>(buf);
         }
     }
+
+    void Seed::loadShuffledEntrances()
+    {
+        using namespace libtp::tp;
+        using namespace libtp::data;
+
+        entryInfo* shuffledEntranceInfo = &m_Header->EntranceTableInfo;
+        const uint32_t num_shuffledEntrances = shuffledEntranceInfo->numEntries;
+        const uint32_t gci_offset = shuffledEntranceInfo->dataOffset;
+
+        // Set the pointer as offset into our buffer
+        m_ShuffledEntrances = reinterpret_cast<ShuffledEntrance*>(&m_GCIData[gci_offset]);
+        m_numShuffledEntrances = num_shuffledEntrances;
+
+        getConsole() << reinterpret_cast<uint32_t>(m_ShuffledEntrances) << "\n";
+        getConsole() << reinterpret_cast<uint32_t>(m_GCIData) << "\n";
+        getConsole() << reinterpret_cast<uint32_t>(num_shuffledEntrances) << "\n";
+    }
 } // namespace mod::rando

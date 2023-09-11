@@ -50,6 +50,8 @@ namespace mod::rando
                 // Update transformAnywhereEnabled now that a seed is loaded
                 transformAnywhereEnabled = static_cast<bool>(m_Seed->m_Header->transformAnywhere);
 
+                m_Seed->loadShuffledEntrances();
+
                 // Load checks for first load
                 onStageLoad();
             }

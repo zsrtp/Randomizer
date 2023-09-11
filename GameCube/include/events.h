@@ -153,6 +153,7 @@ namespace mod::events
     uint16_t getPauseRupeeMax(libtp::tp::d_save::dSv_player_status_a_c* plyrStatus);
     uint32_t autoMashThroughText(libtp::tp::m_do_controller_pad::CPadInfo* padInfo);
     void* handleTransformAnywhere(libtp::tp::f_op_actor_iter::fopAcIt_JudgeFunc unk1, void* unk2);
+    bool checkValidTransformAnywhere();
 
     void performStaticASMReplacement(uint32_t memoryOffset, uint32_t value);
 
