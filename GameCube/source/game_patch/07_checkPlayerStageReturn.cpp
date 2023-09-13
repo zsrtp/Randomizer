@@ -56,5 +56,23 @@ namespace mod::game_patch
                 dComIfG_gameInfo.save.save_file.player.player_return_place.link_room_id = 0x6;
             }
         }
+         else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::stageIDs::Fyrus]))
+        {
+            strncpy(playerReturnPlacePtr->link_current_stage,
+                    stagesPtr[stage::stageIDs::Goron_Mines],
+                    sizeof(playerReturnPlacePtr->link_current_stage) - 1);
+
+            playerReturnPlacePtr->link_spawn_point_id = 0x0;
+            playerReturnPlacePtr->link_room_id = 0x1;
+        }
+        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::stageIDs::Argorok]))
+        {
+            strncpy(playerReturnPlacePtr->link_current_stage,
+                    stagesPtr[stage::stageIDs::City_in_the_Sky],
+                    sizeof(playerReturnPlacePtr->link_current_stage) - 1);
+
+            playerReturnPlacePtr->link_spawn_point_id = 0x0;
+            playerReturnPlacePtr->link_room_id = 0x0;
+        }
     }
 }     // namespace mod::game_patch
