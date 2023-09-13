@@ -645,28 +645,35 @@ namespace mod::game_patch
 
                     case stage::StageIDs::Hyrule_Field:
                     {
-                        condition =
-                            libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_STARTED); // MDH State Activated
-
-                        if (condition)
+                        if (libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_status_b
+                                .dark_clear_level_flag >= 0x7)
                         {
                             condition =
-                                libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED); // MDH Completed
+                                libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_STARTED); // MDH State Activated
 
                             if (condition)
                             {
-                                chosenLayer = stage::HyruleFieldStateIDs::Hyrule_Field_MDH_Completed;
+                                condition =
+                                    libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED); // MDH Completed
+
+                                if (condition)
+                                {
+                                    chosenLayer = stage::HyruleFieldStateIDs::Hyrule_Field_MDH_Completed;
+                                }
+                                else
+                                {
+                                    chosenLayer = stage::HyruleFieldStateIDs::Hyrule_Field_MDH_Started;
+                                }
                             }
                             else
                             {
-                                chosenLayer = stage::HyruleFieldStateIDs::Hyrule_Field_MDH_Started;
+                                chosenLayer = stage::HyruleFieldStateIDs::Hyrule_Field_New_Game;
                             }
                         }
                         else
                         {
-                            chosenLayer = stage::HyruleFieldStateIDs::Hyrule_Field_MDH_Completed;
+                            chosenLayer = stage::HyruleFieldStateIDs::Hyrule_Field_New_Game;
                         }
-
                         break;
                     }
 
