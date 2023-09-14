@@ -1096,8 +1096,8 @@ namespace mod::events
     void loadCustomRoomSCOBs()
     {
         using namespace libtp;
-
-        if (tp::d_a_alink::checkStageName(data::stage::allStages[data::stage::StageIDs::Hyrule_Field]))
+        if (tp::d_a_alink::checkStageName(data::stage::allStages[data::stage::StageIDs::Hyrule_Field]) &&
+            libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::MIDNAS_DESPERATE_HOUR_COMPLETED))
         {
             tools::spawnSCOB(3, HorseJumpScob);
         }
