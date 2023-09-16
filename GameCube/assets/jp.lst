@@ -329,6 +329,7 @@
 803a7ee8:field_item_res
 803a92d8:item_func_ptr
 803a8ed8:item_info
+800992c4:item_func_ASHS_SCRIBBLING
 
 // d_menu_ring.o
 801eb424:dMenuRing__draw
