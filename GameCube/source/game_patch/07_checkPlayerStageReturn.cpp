@@ -62,19 +62,19 @@ namespace mod::game_patch
                 playerReturnPlacePtr->link_room_id = 0x6;
             }
         }
-         else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::stageIDs::Fyrus]))
+         else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::StageIDs::Fyrus]))
         {
             strncpy(playerReturnPlacePtr->link_current_stage,
-                    stagesPtr[stage::stageIDs::Goron_Mines],
+                    stagesPtr[stage::StageIDs::Goron_Mines],
                     sizeof(playerReturnPlacePtr->link_current_stage) - 1);
 
             playerReturnPlacePtr->link_spawn_point_id = 0x0;
             playerReturnPlacePtr->link_room_id = 0x1;
         }
-        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::stageIDs::Argorok]))
+        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::StageIDs::Argorok]))
         {
             strncpy(playerReturnPlacePtr->link_current_stage,
-                    stagesPtr[stage::stageIDs::City_in_the_Sky],
+                    stagesPtr[stage::StageIDs::City_in_the_Sky],
                     sizeof(playerReturnPlacePtr->link_current_stage) - 1);
 
             playerReturnPlacePtr->link_spawn_point_id = 0x0;

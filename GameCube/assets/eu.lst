@@ -338,6 +338,7 @@
 803ae280:item_resource
 803b0a58:item_info
 803afa68:field_item_res
+800993b4:item_func_ASHS_SCRIBBLING
 
 //processor.o
 802a8a54:getResource_groupID

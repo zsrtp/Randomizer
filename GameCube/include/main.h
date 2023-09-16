@@ -289,6 +289,9 @@ namespace mod
 
     int32_t handle_checkItemGet(uint8_t item, int32_t defaultValue);
     extern int32_t (*return_checkItemGet)(uint8_t item, int32_t defaultValue);
+    
+    void handle_item_func_ASHS_SCRIBBLING();
+    extern void ( *return_item_func_ASHS_SCRIBBLING )();
 
     // Message functions
     bool handle_setMessageCode_inSequence(libtp::tp::control::TControl* control,

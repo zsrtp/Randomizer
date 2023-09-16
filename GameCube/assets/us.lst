@@ -116,6 +116,7 @@
 803AC5A0:item_resource
 803ADD88:field_item_res
 803AED78:item_info
+80099284:item_func_ASHS_SCRIBBLING
 
 // d_a_alink.h
 800B271C:setStickData
