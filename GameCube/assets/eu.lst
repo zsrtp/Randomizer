@@ -137,6 +137,7 @@
 80138ec4:setWolfLockDomeModel
 800d0434:getSpinnerActor
 800b7f58:searchBouDoor
+800d7414:damageMagnification
 
 // data
 8039038C:climbVars
