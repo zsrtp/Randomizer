@@ -389,6 +389,9 @@ namespace mod
     libtp::tp::f_op_actor::fopAc_ac_c* handle_searchBouDoor(libtp::tp::f_op_actor::fopAc_ac_c* actrPtr);
     extern libtp::tp::f_op_actor::fopAc_ac_c* (*return_searchBouDoor)(libtp::tp::f_op_actor::fopAc_ac_c* actrPtr);
 
+    bool handle_checkCastleTownUseItem(uint16_t item_id);
+    extern bool(*return_checkCastleTownUseItem)(uint16_t item_id);
+
     // Audio functions
     void handle_loadSeWave(void* Z2SceneMgr, uint32_t waveID);
     extern void (*return_loadSeWave)(void* Z2SceneMgr, uint32_t waveID);

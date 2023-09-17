@@ -180,7 +180,7 @@ namespace mod
     // ItemGet functions.
     KEEP_VAR void (*return_execItemGet)(uint8_t item) = nullptr;
     KEEP_VAR int32_t (*return_checkItemGet)(uint8_t item, int32_t defaultValue) = nullptr;
-    KEEP_VAR void ( *return_item_func_ASHS_SCRIBBLING )() = nullptr;
+    KEEP_VAR void (*return_item_func_ASHS_SCRIBBLING)() = nullptr;
 
     // Message functions
     KEEP_VAR bool (*return_setMessageCode_inSequence)(libtp::tp::control::TControl* control,
@@ -231,6 +231,7 @@ namespace mod
     KEEP_VAR void (*return_setGetItemFace)(libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID) = nullptr;
     KEEP_VAR void (*return_setWolfLockDomeModel)(libtp::tp::d_a_alink::daAlink* daALink) = nullptr;
     KEEP_VAR libtp::tp::f_op_actor::fopAc_ac_c* (*return_searchBouDoor)(libtp::tp::f_op_actor::fopAc_ac_c* actrPtr) = nullptr;
+    KEEP_VAR bool (*return_checkCastleTownUseItem)(uint16_t item_id) = nullptr;
 
     // Audio functions
     KEEP_VAR void (*return_loadSeWave)(void* Z2SceneMgr, uint32_t waveID) = nullptr;
@@ -1105,15 +1106,14 @@ namespace mod
 
         return return_checkItemGet(item, defaultValue);
     }
-     KEEP_FUNC void handle_item_func_ASHS_SCRIBBLING()
+    KEEP_FUNC void handle_item_func_ASHS_SCRIBBLING()
     {
         using namespace libtp::data::flags;
-        if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( GOT_CORAL_EARRING_FROM_RALIS ) )
+        if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(GOT_CORAL_EARRING_FROM_RALIS))
         {
             return_item_func_ASHS_SCRIBBLING();
         }
     }
-
 
     KEEP_FUNC bool handle_setMessageCode_inSequence(libtp::tp::control::TControl* control,
                                                     const void* TProcessor,
@@ -1507,7 +1507,7 @@ namespace mod
                     break;
                 }
 
-                case CLEARED_ELDIN_TWILIGHT: // Cleared Eldin Twilight
+                case CLEARED_ELDIN_TWILIGHT:                            // Cleared Eldin Twilight
                 {
                     events::setSaveFileEventFlag(MAP_WARPING_UNLOCKED); // in glitched Logic, you can skip the gorge bridge.
                     if (libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
@@ -1528,7 +1528,7 @@ namespace mod
                 {
                     if (libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
                     {
-                        if (darkClearLevelFlag == 0x7) // All twilights completed
+                        if (darkClearLevelFlag == 0x7)                    // All twilights completed
                         {
                             playerStatusPtr->transform_level_flag |= 0x8; // Set the flag for the last transformed twilight.
                                                                           // Also puts Midna on the player's back
@@ -1748,157 +1748,196 @@ namespace mod
         return return_searchBouDoor(actrPtr);
     }
 
-    KEEP_FUNC void handle_loadSeWave(void* z2SceneMgr, uint32_t waveID)
+    KEEP_FUNC bool handle_checkCastleTownUseItem(uint16_t item_id)
     {
-        z2ScenePtr = z2SceneMgr;
-        return return_loadSeWave(z2SceneMgr, waveID);
-    }
+        using namespace libtp::data::items;
+        using namespace libtp::tp::d_a_alink;
+        using namespace libtp::tp::d_com_inf_game;
 
-    KEEP_FUNC void* handle_dScnLogo_c_dt(void* dScnLogo_c, int16_t bFreeThis)
-    {
-        // Call the original function immediately, as certain values need to be set first
-        void* ret = return_dScnLogo_c_dt(dScnLogo_c, bFreeThis);
+        int32_t roomID = libtp::tools::getCurrentRoomNo();
 
-        // Initialize bgWindow since mMain2DArchive should now be set
-        if (!bgWindow)
+        if (checkStageName(libtp::data::stage::allStages[libtp::data::stage::StageIDs::Sacred_Grove]) &&
+            roomID == 0x2) // check if the player is in past area
         {
-            void* main2DArchive = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mMain2DArchive;
-            if (main2DArchive)
+            if (item_id == Ooccoo_Jr)
             {
-                // Get the image to use for the background window
-                void* bg = libtp::tp::JKRArchive::JKRArchive_getResource2(main2DArchive,
-                                                                          0x54494D47, // TIMG
-                                                                          "tt_block_grade.bti");
-
-                if (bg)
+                return false; // remove the ability to use oocoo in past area
+            }
+        }
+        else if (checkStageName(libtp::data::stage::allStages[libtp::data::stage::StageIDs::Temple_of_Time]) && roomID == 0)
+        {
+            
+                switch (item_id)
                 {
-                    bgWindow = new libtp::tp::J2DPicture::J2DPicture(bg);
+                    case Ooccoo_Jr:
+                    case Ooccoo_FT:
+                    case Ooccoo_Dungeon:
+                    {
+                        if (!libtp::tp::d_save::isDungeonItem(
+                                &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
+                                0x6)) // check if the player hasn't taken ooccoo at tot entrance
+                        {
+                            return false;
+                        }
+                        break;
+                    }
+                }
+        }
+
+            return return_checkCastleTownUseItem(item_id);
+        }
+
+        KEEP_FUNC void handle_loadSeWave(void* z2SceneMgr, uint32_t waveID)
+        {
+            z2ScenePtr = z2SceneMgr;
+            return return_loadSeWave(z2SceneMgr, waveID);
+        }
+
+        KEEP_FUNC void* handle_dScnLogo_c_dt(void* dScnLogo_c, int16_t bFreeThis)
+        {
+            // Call the original function immediately, as certain values need to be set first
+            void* ret = return_dScnLogo_c_dt(dScnLogo_c, bFreeThis);
+
+            // Initialize bgWindow since mMain2DArchive should now be set
+            if (!bgWindow)
+            {
+                void* main2DArchive = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mMain2DArchive;
+                if (main2DArchive)
+                {
+                    // Get the image to use for the background window
+                    void* bg = libtp::tp::JKRArchive::JKRArchive_getResource2(main2DArchive,
+                                                                              0x54494D47, // TIMG
+                                                                              "tt_block_grade.bti");
+
+                    if (bg)
+                    {
+                        bgWindow = new libtp::tp::J2DPicture::J2DPicture(bg);
+                    }
                 }
             }
+
+            return ret;
         }
 
-        return ret;
-    }
-
-    KEEP_FUNC void handleFoolishItem()
-    {
-        using namespace libtp::z2audiolib;
-        using namespace libtp::z2audiolib::z2scenemgr;
-        using namespace libtp::tp;
-
-        if (!randoIsEnabled(randomizer))
+        KEEP_FUNC void handleFoolishItem()
         {
-            return;
-        }
+            using namespace libtp::z2audiolib;
+            using namespace libtp::z2audiolib::z2scenemgr;
+            using namespace libtp::tp;
 
-        // Get the trigger count
-        uint8_t* triggerCount = &rando::foolishItems.triggerCount;
-        uint32_t count = *triggerCount;
-        if (count == 0)
-        {
-            return;
-        }
-
-        if (!events::checkFoolItemFreeze())
-        {
-            return;
-        }
-
-        // Failsafe: Make sure the count does not somehow exceed 100
-        if (count > 100)
-        {
-            count = 100;
-        }
-        // reset trigger counter to 0
-        *triggerCount = 0;
-
-        /* Store the currently loaded sound wave to local variables as we will need to load them back later.
-         * We use this method because if we just loaded the sound waves every time the item was gotten, we'd
-         * eventually run out of memory so it is safer to unload everything and load it back in. */
-        z2scenemgr::Z2SceneMgr* sceneMgrPtr = &z2audiomgr::g_mDoAud_zelAudio.mSceneMgr;
-        const uint32_t seWave1 = sceneMgrPtr->SeWaveToErase_1;
-        const uint32_t seWave2 = sceneMgrPtr->SeWaveToErase_2;
-
-        void* scenePtr = z2ScenePtr;
-        eraseSeWave(scenePtr, seWave1);
-        eraseSeWave(scenePtr, seWave2);
-        loadSeWave(scenePtr, 0x46);
-        m_Do_Audio::mDoAud_seStartLevel(0x10040, nullptr, 0, 0);
-        loadSeWave(scenePtr, seWave1);
-        loadSeWave(scenePtr, seWave2);
-
-        d_com_inf_game::dComIfG_inf_c* gameInfoPtr = &d_com_inf_game::dComIfG_gameInfo;
-        libtp::tp::d_save::dSv_player_status_a_c* playerStatusPtr = &gameInfoPtr->save.save_file.player.player_status_a;
-        d_a_alink::daAlink* linkMapPtr = gameInfoPtr->play.mPlayer;
-        int32_t newHealthValue;
-
-        if (playerStatusPtr->currentForm == 1)
-        {
-            newHealthValue = playerStatusPtr->currentHealth - (2 * count);
-            d_a_alink::procWolfDamageInit(linkMapPtr, nullptr);
-        }
-        else
-        {
-            newHealthValue = playerStatusPtr->currentHealth - count;
-            d_a_alink::procDamageInit(linkMapPtr, nullptr, 0);
-        }
-
-        // Make sure an underflow doesn't occur
-        if (newHealthValue < 0)
-        {
-            newHealthValue = 0;
-        }
-
-        playerStatusPtr->currentHealth = static_cast<uint16_t>(newHealthValue);
-    }
-
-    KEEP_FUNC libtp::tp::d_resource::dRes_info_c* handle_getResInfo(const char* arcName,
-                                                                    libtp::tp::d_resource::dRes_info_c* objectInfo,
-                                                                    int32_t size)
-    {
-        libtp::tp::d_resource::dRes_info_c* resourcePtr = return_getResInfo(arcName, objectInfo, size);
-
-        rando::Randomizer* rando = randomizer;
-        if (getCurrentSeed(rando) && resourcePtr)
-        {
-            rando->overrideObjectARC(resourcePtr, arcName);
-        }
-
-        return resourcePtr;
-    }
-
-    // This is called in the NON-MAIN thread which is loading the archive where
-    // `mountArchive->mIsDone = true;` would be called normally (this is the
-    // last thing that gets called before the archive is considered loaded). The
-    // archive is no longer automatically marked as loaded, so we need to do
-    // this ourselves when we are done. (This indicates that the archive is
-    // loaded, and whatever was waiting on it will see this byte change the next
-    // time it polls the completion status (polling happens once per frame?))
-    KEEP_FUNC bool handle_mountArchive__execute(libtp::tp::m_Do_dvd_thread::mDoDvdThd_mountArchive_c* mountArchive)
-    {
-        const bool ret = return_mountArchive__execute(mountArchive);
-
-        if (ret)
-        {
-            // Make sure the randomizer is loaded/enabled and a seed is loaded
-            rando::Seed* seed;
-            rando::Randomizer* rando = randomizer;
-
-            if (seed = getCurrentSeed(rando), seed)
+            if (!randoIsEnabled(randomizer))
             {
-                rando->recolorArchiveTextures(mountArchive);
+                return;
             }
+
+            // Get the trigger count
+            uint8_t* triggerCount = &rando::foolishItems.triggerCount;
+            uint32_t count = *triggerCount;
+            if (count == 0)
+            {
+                return;
+            }
+
+            if (!events::checkFoolItemFreeze())
+            {
+                return;
+            }
+
+            // Failsafe: Make sure the count does not somehow exceed 100
+            if (count > 100)
+            {
+                count = 100;
+            }
+            // reset trigger counter to 0
+            *triggerCount = 0;
+
+            /* Store the currently loaded sound wave to local variables as we will need to load them back later.
+             * We use this method because if we just loaded the sound waves every time the item was gotten, we'd
+             * eventually run out of memory so it is safer to unload everything and load it back in. */
+            z2scenemgr::Z2SceneMgr* sceneMgrPtr = &z2audiomgr::g_mDoAud_zelAudio.mSceneMgr;
+            const uint32_t seWave1 = sceneMgrPtr->SeWaveToErase_1;
+            const uint32_t seWave2 = sceneMgrPtr->SeWaveToErase_2;
+
+            void* scenePtr = z2ScenePtr;
+            eraseSeWave(scenePtr, seWave1);
+            eraseSeWave(scenePtr, seWave2);
+            loadSeWave(scenePtr, 0x46);
+            m_Do_Audio::mDoAud_seStartLevel(0x10040, nullptr, 0, 0);
+            loadSeWave(scenePtr, seWave1);
+            loadSeWave(scenePtr, seWave2);
+
+            d_com_inf_game::dComIfG_inf_c* gameInfoPtr = &d_com_inf_game::dComIfG_gameInfo;
+            libtp::tp::d_save::dSv_player_status_a_c* playerStatusPtr = &gameInfoPtr->save.save_file.player.player_status_a;
+            d_a_alink::daAlink* linkMapPtr = gameInfoPtr->play.mPlayer;
+            int32_t newHealthValue;
+
+            if (playerStatusPtr->currentForm == 1)
+            {
+                newHealthValue = playerStatusPtr->currentHealth - (2 * count);
+                d_a_alink::procWolfDamageInit(linkMapPtr, nullptr);
+            }
+            else
+            {
+                newHealthValue = playerStatusPtr->currentHealth - count;
+                d_a_alink::procDamageInit(linkMapPtr, nullptr, 0);
+            }
+
+            // Make sure an underflow doesn't occur
+            if (newHealthValue < 0)
+            {
+                newHealthValue = 0;
+            }
+
+            playerStatusPtr->currentHealth = static_cast<uint16_t>(newHealthValue);
         }
 
-        // Need to mark the archive as loaded once we are done modifying its
-        // contents.
-        mountArchive->mIsDone = true;
+        KEEP_FUNC libtp::tp::d_resource::dRes_info_c* handle_getResInfo(const char* arcName,
+                                                                        libtp::tp::d_resource::dRes_info_c* objectInfo,
+                                                                        int32_t size)
+        {
+            libtp::tp::d_resource::dRes_info_c* resourcePtr = return_getResInfo(arcName, objectInfo, size);
 
-        return ret;
-    };
+            rando::Randomizer* rando = randomizer;
+            if (getCurrentSeed(rando) && resourcePtr)
+            {
+                rando->overrideObjectARC(resourcePtr, arcName);
+            }
 
-    float __attribute__((noinline)) intToFloat(int32_t value)
-    {
-        return static_cast<float>(value);
-    }
-} // namespace mod
+            return resourcePtr;
+        }
+
+        // This is called in the NON-MAIN thread which is loading the archive where
+        // `mountArchive->mIsDone = true;` would be called normally (this is the
+        // last thing that gets called before the archive is considered loaded). The
+        // archive is no longer automatically marked as loaded, so we need to do
+        // this ourselves when we are done. (This indicates that the archive is
+        // loaded, and whatever was waiting on it will see this byte change the next
+        // time it polls the completion status (polling happens once per frame?))
+        KEEP_FUNC bool handle_mountArchive__execute(libtp::tp::m_Do_dvd_thread::mDoDvdThd_mountArchive_c * mountArchive)
+        {
+            const bool ret = return_mountArchive__execute(mountArchive);
+
+            if (ret)
+            {
+                // Make sure the randomizer is loaded/enabled and a seed is loaded
+                rando::Seed* seed;
+                rando::Randomizer* rando = randomizer;
+
+                if (seed = getCurrentSeed(rando), seed)
+                {
+                    rando->recolorArchiveTextures(mountArchive);
+                }
+            }
+
+            // Need to mark the archive as loaded once we are done modifying its
+            // contents.
+            mountArchive->mIsDone = true;
+
+            return ret;
+        };
+
+        float __attribute__((noinline)) intToFloat(int32_t value)
+        {
+            return static_cast<float>(value);
+        }
+    } // namespace mod

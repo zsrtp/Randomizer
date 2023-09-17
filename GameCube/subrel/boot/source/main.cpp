@@ -219,6 +219,7 @@ patch::hookFunction( libtp::tp::d_item::item_func_ASHS_SCRIBBLING, mod::handle_i
             patch::hookFunction(libtp::tp::d_a_alink::setWolfLockDomeModel, mod::handle_setWolfLockDomeModel);
 
         return_searchBouDoor = patch::hookFunction(libtp::tp::d_a_alink::searchBouDoor, mod::handle_searchBouDoor);
+        return_checkCastleTownUseItem = patch::hookFunction(libtp::tp::d_a_alink::checkCastleTownUseItem, mod::handle_checkCastleTownUseItem);
 
         // Audio functions
         return_loadSeWave = patch::hookFunction(libtp::z2audiolib::z2scenemgr::loadSeWave, mod::handle_loadSeWave);
