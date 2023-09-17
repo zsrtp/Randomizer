@@ -1850,7 +1850,7 @@ namespace mod
 
         if (playerStatusPtr->currentForm == 1)
         {
-            newHealthValue = playerStatusPtr->currentHealth - (2 * count * damageMultiplier);
+            newHealthValue = playerStatusPtr->currentHealth - ((2 * count) * damageMultiplier);
             d_a_alink::procWolfDamageInit(linkMapPtr, nullptr);
         }
         else
