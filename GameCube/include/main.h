@@ -390,6 +390,9 @@ namespace mod
     libtp::tp::f_op_actor::fopAc_ac_c* handle_searchBouDoor(libtp::tp::f_op_actor::fopAc_ac_c* actrPtr);
     extern libtp::tp::f_op_actor::fopAc_ac_c* (*return_searchBouDoor)(libtp::tp::f_op_actor::fopAc_ac_c* actrPtr);
 
+    bool handle_checkCastleTownUseItem(uint16_t item_id);
+    extern bool(*return_checkCastleTownUseItem)(uint16_t item_id);
+
     float handle_damageMagnification(libtp::tp::d_a_alink::daAlink* daALink, int32_t param_1, int32_t param_2);
     extern float (*return_damageMagnification)(libtp::tp::d_a_alink::daAlink* daALink, int32_t param_1, int32_t param_2);
 
