@@ -138,6 +138,7 @@
 800d0260:getSpinnerActor
 800b7d84:searchBouDoor
 800c06b0:checkCastleTownUseItem
+800d7240:damageMagnification
 
 // data
 80388C0C:climbVars

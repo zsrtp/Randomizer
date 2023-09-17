@@ -221,6 +221,9 @@ patch::hookFunction( libtp::tp::d_item::item_func_ASHS_SCRIBBLING, mod::handle_i
         return_searchBouDoor = patch::hookFunction(libtp::tp::d_a_alink::searchBouDoor, mod::handle_searchBouDoor);
         return_checkCastleTownUseItem = patch::hookFunction(libtp::tp::d_a_alink::checkCastleTownUseItem, mod::handle_checkCastleTownUseItem);
 
+        return_damageMagnification =
+            patch::hookFunction(libtp::tp::d_a_alink::damageMagnification, mod::handle_damageMagnification);
+
         // Audio functions
         return_loadSeWave = patch::hookFunction(libtp::z2audiolib::z2scenemgr::loadSeWave, mod::handle_loadSeWave);
         return_sceneChange = patch::hookFunction(libtp::z2audiolib::z2scenemgr::sceneChange, mod::handle_sceneChange);

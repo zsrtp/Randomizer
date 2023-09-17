@@ -63,7 +63,8 @@ namespace mod::rando
         /* 0x52 */ uint8_t castleRequirements;
         /* 0x53 */ uint8_t palaceRequirements;
         /* 0x54 */ uint8_t mapClearBits;
-        /* 0x55 */ uint8_t padding[3];
+        /* 0x55 */ uint8_t damageMagnification;
+        /* 0x56 */ uint8_t padding[2];
     } __attribute__((__packed__));
 
     // Minimum amount of data needed for keeping track of a seed

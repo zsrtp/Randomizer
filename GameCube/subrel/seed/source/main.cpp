@@ -37,6 +37,9 @@ namespace mod
                 // Make sure transformAnywhereEnabled is properly initialized
                 transformAnywhereEnabled = false;
 
+                // Make sure the damage multiplier is properly initialized
+                damageMultiplier = 1;
+
                 // The randomizer constructor sets m_Enabled to true
                 // Align to void*, as pointers use the largest variable type in the Randomizer class
                 randomizer = new (sizeof(void*)) rando::Randomizer(&seedList->m_minSeedInfo[selectedSeed], selectedSeed);

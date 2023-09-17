@@ -84,6 +84,7 @@ namespace mod
     bool instantTextEnabled = false;
     bool increaseSpinnerSpeed = false;
     bool transformAnywhereEnabled = false;
+    uint8_t damageMultiplier = 1;
 
 #ifdef TP_EU
     KEEP_VAR libtp::tp::d_s_logo::Languages currentLanguage = libtp::tp::d_s_logo::Languages::uk;
@@ -180,7 +181,7 @@ namespace mod
     // ItemGet functions.
     KEEP_VAR void (*return_execItemGet)(uint8_t item) = nullptr;
     KEEP_VAR int32_t (*return_checkItemGet)(uint8_t item, int32_t defaultValue) = nullptr;
-    KEEP_VAR void (*return_item_func_ASHS_SCRIBBLING)() = nullptr;
+    KEEP_VAR void ( *return_item_func_ASHS_SCRIBBLING )() = nullptr;
 
     // Message functions
     KEEP_VAR bool (*return_setMessageCode_inSequence)(libtp::tp::control::TControl* control,
@@ -231,6 +232,9 @@ namespace mod
     KEEP_VAR void (*return_setGetItemFace)(libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID) = nullptr;
     KEEP_VAR void (*return_setWolfLockDomeModel)(libtp::tp::d_a_alink::daAlink* daALink) = nullptr;
     KEEP_VAR libtp::tp::f_op_actor::fopAc_ac_c* (*return_searchBouDoor)(libtp::tp::f_op_actor::fopAc_ac_c* actrPtr) = nullptr;
+    KEEP_VAR float (*return_damageMagnification)(libtp::tp::d_a_alink::daAlink* daALink,
+                                                 int32_t param_1,
+                                                 int32_t param_2) = nullptr;
     KEEP_VAR bool (*return_checkCastleTownUseItem)(uint16_t item_id) = nullptr;
 
     // Audio functions
@@ -835,8 +839,8 @@ namespace mod
             events::onARC(rando, data, roomNo, rando::FileDirectory::Room); // Replace room based checks.
 
             void* filePtr =
-                libtp::tp::d_com_inf_game::dComIfG_getStageRes("stage.dzs");    // Could hook stageLoader instead since it takes
-                                                                                // the first param as a pointer to the stage.dzs
+                libtp::tp::d_com_inf_game::dComIfG_getStageRes("stage.dzs"); // Could hook stageLoader instead since it takes
+                                                                             // the first param as a pointer to the stage.dzs
 
             events::onARC(rando, filePtr, roomNo, rando::FileDirectory::Stage); // Replace stage based checks.
         }
@@ -1106,10 +1110,10 @@ namespace mod
 
         return return_checkItemGet(item, defaultValue);
     }
-    KEEP_FUNC void handle_item_func_ASHS_SCRIBBLING()
+     KEEP_FUNC void handle_item_func_ASHS_SCRIBBLING()
     {
         using namespace libtp::data::flags;
-        if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(GOT_CORAL_EARRING_FROM_RALIS))
+        if ( !libtp::tp::d_a_alink::dComIfGs_isEventBit( GOT_CORAL_EARRING_FROM_RALIS ) )
         {
             return_item_func_ASHS_SCRIBBLING();
         }
@@ -1748,6 +1752,19 @@ namespace mod
         return return_searchBouDoor(actrPtr);
     }
 
+    KEEP_FUNC float handle_damageMagnification(libtp::tp::d_a_alink::daAlink* linkActrPtr, int32_t param_1, int32_t param_2)
+    {
+        // Call the original function immediately, as we only need the current damage magnification value.
+        float ret = return_damageMagnification(linkActrPtr, param_1, param_2);
+
+        rando::Seed* seed;
+        if (seed = getCurrentSeed(randomizer), seed)
+        {
+            ret = ret * static_cast<float>(damageMultiplier);
+        }
+        return ret;
+    }
+
     KEEP_FUNC bool handle_checkCastleTownUseItem(uint16_t item_id)
     {
         using namespace libtp::data::items;
@@ -1871,16 +1888,16 @@ namespace mod
             d_a_alink::daAlink* linkMapPtr = gameInfoPtr->play.mPlayer;
             int32_t newHealthValue;
 
-            if (playerStatusPtr->currentForm == 1)
-            {
-                newHealthValue = playerStatusPtr->currentHealth - (2 * count);
-                d_a_alink::procWolfDamageInit(linkMapPtr, nullptr);
-            }
-            else
-            {
-                newHealthValue = playerStatusPtr->currentHealth - count;
-                d_a_alink::procDamageInit(linkMapPtr, nullptr, 0);
-            }
+        if (playerStatusPtr->currentForm == 1)
+        {
+            newHealthValue = playerStatusPtr->currentHealth - ((2 * count) * damageMultiplier);
+            d_a_alink::procWolfDamageInit(linkMapPtr, nullptr);
+        }
+        else
+        {
+            newHealthValue = playerStatusPtr->currentHealth - (count * damageMultiplier);
+            d_a_alink::procDamageInit(linkMapPtr, nullptr, 0);
+        }
 
             // Make sure an underflow doesn't occur
             if (newHealthValue < 0)

@@ -49,6 +49,7 @@ namespace mod::rando
             {
                 // Update transformAnywhereEnabled now that a seed is loaded
                 transformAnywhereEnabled = static_cast<bool>(m_Seed->m_Header->transformAnywhere);
+                damageMultiplier = m_Seed->m_Header->damageMagnification;
 
                 // Load checks for first load
                 onStageLoad();
