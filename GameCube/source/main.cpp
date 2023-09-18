@@ -1778,10 +1778,10 @@ namespace mod
         {
             if (item_id == Ooccoo_Jr)
             {
-                return false; // remove the ability to use oocoo in past area
+                return false; // remove the ability to use ooccoo in past area
             }
         }
-        else if (checkStageName(libtp::data::stage::allStages[libtp::data::stage::StageIDs::Temple_of_Time]) && roomID == 0)
+        else if (checkStageName(libtp::data::stage::allStages[libtp::data::stage::StageIDs::Temple_of_Time]) && roomID == 0x0)
         {
             
                 switch (item_id)
