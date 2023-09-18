@@ -70,7 +70,7 @@ namespace mod::game_patch
     {
         using namespace rando::customItems;
         using namespace libtp::data::items;
-        if (events::haveItem(Ancient_Sky_Book_Completed))
+        if (!events::haveItem(Ancient_Sky_Book_Completed))
         {
             static const uint8_t progressiveSkyBooksList[] = {Ancient_Sky_Book_Empty,
                                                               Ancient_Sky_Book_First_Character,
