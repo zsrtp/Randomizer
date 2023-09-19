@@ -389,6 +389,12 @@
 8042a2c8:g_meter2_info
 8021e81c:resetMiniGameItem
 
+//d_meter2_draw.o
+80215584:drawKanteraScreen
+
+//d_pane_class.o
+802567d0:setBlackWhite
+
 // d_a_player.o
 8044b158:m_midnaActor
 

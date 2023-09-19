@@ -338,6 +338,12 @@
 804301A4:wZButtonPtr
 8021e0c4:resetMiniGameItem
 
+//d_meter2_draw.o
+80214eb4:drawKanteraScreen
+
+//d_pane_class.o
+80254458:setBlackWhite
+
 //d_a_shop_item_static.o
 803792e8:shopItemData
 
