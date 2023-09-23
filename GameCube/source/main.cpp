@@ -1772,7 +1772,7 @@ namespace mod
         using namespace libtp::tp::d_com_inf_game;
          const auto stagesPtr = &libtp::data::stage::allStages[0];
 
-        if (libtp::tools::playerIsInRoomStage(2, stagesPtr[libtp::data::stage::StageIDs::Temple_of_Time])) // check if the player is in past area
+        if (libtp::tools::playerIsInRoomStage(2, stagesPtr[libtp::data::stage::StageIDs::Sacred_Grove])) // check if the player is in past area
         {
             if (item_id == Ooccoo_Jr)
             {
