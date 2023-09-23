@@ -213,17 +213,6 @@ namespace mod::events
                 performStaticASMReplacement(relPtrRaw + 0x8EC, ASM_NOP); // Previous: bfadds f0,f0,f1
                 break;
             }
-            // Bo
-            case D_A_NPC_WRESTLER:
-            {
-                 if (libtp::tools::playerIsInRoomStage(0, stagesPtr[libtp::data::stage::StageIDs::Ordon_Village_Interiors]))
-                {
-                // nop out the multiplication of f1 (the random number of frames) to f0 (the base number of frames) so
-                // bo always do the sidestep attack
-                   performStaticASMReplacement(relPtrRaw + 0x41B0, ASM_NOP); // Previous : fmuls f31,f0,f1
-                }
-                break;
-            }
 
             // Agitha
             case D_A_NPC_INS:
