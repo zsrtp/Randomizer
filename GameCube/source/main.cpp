@@ -1770,18 +1770,16 @@ namespace mod
         using namespace libtp::data::items;
         using namespace libtp::tp::d_a_alink;
         using namespace libtp::tp::d_com_inf_game;
+         const auto stagesPtr = &libtp::data::stage::allStages[0];
 
-        int32_t roomID = libtp::tools::getCurrentRoomNo();
-
-        if (checkStageName(libtp::data::stage::allStages[libtp::data::stage::StageIDs::Sacred_Grove]) &&
-            roomID == 0x2) // check if the player is in past area
+        if (libtp::tools::playerIsInRoomStage(2, stagesPtr[libtp::data::stage::StageIDs::Temple_of_Time])) // check if the player is in past area
         {
             if (item_id == Ooccoo_Jr)
             {
                 return false; // remove the ability to use ooccoo in past area
             }
         }
-        else if (checkStageName(libtp::data::stage::allStages[libtp::data::stage::StageIDs::Temple_of_Time]) && roomID == 0x0)
+        else if (libtp::tools::playerIsInRoomStage(0, stagesPtr[libtp::data::stage::StageIDs::Temple_of_Time]))
         {
             
                 switch (item_id)
