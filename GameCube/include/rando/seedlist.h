@@ -19,7 +19,7 @@
 // SeedData version (Major.Minor) which this version of the Randomizer
 // supports.
 #define SUPPORTED_SEED_DATA_VER_MAJOR 1
-#define SUPPORTED_SEED_DATA_VER_MINOR 0
+#define SUPPORTED_SEED_DATA_VER_MINOR 1
 
 // Defines to help with version comparisions, as otherwise we get: "error:
 // comparison is always true due to limited range of data type
