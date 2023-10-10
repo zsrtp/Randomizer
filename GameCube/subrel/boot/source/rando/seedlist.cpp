@@ -150,16 +150,17 @@ namespace mod::rando
             }
 
             // Make sure the seed version is supported
-            const uint16_t versionMajor = header.versionMajor;
-            const uint16_t versionMinor = header.versionMinor;
+            const uint32_t currentSeedVersion = header.version;
 
-            if (CHECK_SUPPORTED_SEED_DATA_VER_MAJOR(versionMajor) && CHECK_SUPPORTED_SEED_DATA_VER_MINOR(versionMinor))
+            // The major and minor seed versions use 2 bytes each, so merge both into a single 4 byte variable
+            constexpr uint32_t supportedSeedVersion = (SUPPORTED_SEED_DATA_VER_MAJOR << 16) | SUPPORTED_SEED_DATA_VER_MINOR;
+
+            if (currentSeedVersion == supportedSeedVersion)
             {
                 MinSeedInfo* currentMinSeedInfo = &minSeedInfoBuffer[index];
 
                 // Copy the seed version
-                currentMinSeedInfo->versionMajor = versionMajor;
-                currentMinSeedInfo->versionMinor = versionMinor;
+                currentMinSeedInfo->version = currentSeedVersion;
 
                 // Copy the total number of bytes in the GCI
                 currentMinSeedInfo->totalSize = header.totalSize;
