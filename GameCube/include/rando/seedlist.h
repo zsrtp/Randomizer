@@ -16,6 +16,7 @@
 
 #define SEED_MAX_ENTRIES CARD_MAX_FILE
 
+
 namespace mod::rando
 {
     class SeedList

@@ -152,6 +152,12 @@
 80432164:wZButtonPtr
 8021e388:resetMiniGameItem
 
+//d_meter2_draw.o
+80215178:drawKanteraScreen
+
+//d_pane_class.o
+80254ee0:setBlackWhite
+
 // d_menu_collect.o
 801B3598:setWalletMaxNum
 801b09a4:dMenuCollect_screenSet
