@@ -16,25 +16,6 @@
 
 #define SEED_MAX_ENTRIES CARD_MAX_FILE
 
-// SeedData version (Major.Minor) which this version of the Randomizer
-// supports.
-#define SUPPORTED_SEED_DATA_VER_MAJOR 1
-#define SUPPORTED_SEED_DATA_VER_MINOR 1
-
-// Defines to help with version comparisions, as otherwise we get: "error:
-// comparison is always true due to limited range of data type
-// [-Werror=type-limits]" when the macro values are 0.
-#if SUPPORTED_SEED_DATA_VER_MAJOR == 0
-#define CHECK_SUPPORTED_SEED_DATA_VER_MAJOR(version) 1
-#else
-#define CHECK_SUPPORTED_SEED_DATA_VER_MAJOR(version) static_cast<uint16_t>(version) == SUPPORTED_SEED_DATA_VER_MAJOR
-#endif
-
-#if SUPPORTED_SEED_DATA_VER_MINOR == 0
-#define CHECK_SUPPORTED_SEED_DATA_VER_MINOR(version) 1
-#else
-#define CHECK_SUPPORTED_SEED_DATA_VER_MINOR(version) static_cast<uint16_t>(version) == SUPPORTED_SEED_DATA_VER_MINOR
-#endif
 
 namespace mod::rando
 {
