@@ -153,7 +153,7 @@ namespace mod::rando
             const uint32_t currentSeedVersion = header.version;
 
             // The major and minor seed versions use 2 bytes each, so merge both into a single 4 byte variable
-            constexpr uint32_t supportedSeedVersion = (SUPPORTED_SEED_DATA_VER_MAJOR << 16) | SUPPORTED_SEED_DATA_VER_MINOR;
+            constexpr uint32_t supportedSeedVersion = (_VERSION_MAJOR << 16) | _VERSION_MINOR;
 
             if (currentSeedVersion == supportedSeedVersion)
             {

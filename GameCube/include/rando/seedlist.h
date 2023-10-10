@@ -16,11 +16,6 @@
 
 #define SEED_MAX_ENTRIES CARD_MAX_FILE
 
-// SeedData version (Major.Minor) which this version of the Randomizer
-// supports.
-#define SUPPORTED_SEED_DATA_VER_MAJOR 1
-#define SUPPORTED_SEED_DATA_VER_MINOR 1
-
 namespace mod::rando
 {
     class SeedList
