@@ -85,6 +85,7 @@ namespace mod
     bool increaseSpinnerSpeed = false;
     bool transformAnywhereEnabled = false;
     uint8_t damageMultiplier = 1;
+    bool bonksDoDamage = false;
 
 #ifdef TP_EU
     KEEP_VAR libtp::tp::d_s_logo::Languages currentLanguage = libtp::tp::d_s_logo::Languages::uk;
@@ -231,6 +232,9 @@ namespace mod
     KEEP_VAR bool (*return_checkDamageAction)(libtp::tp::d_a_alink::daAlink* linkMapPtr) = nullptr;
     KEEP_VAR void (*return_setGetItemFace)(libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID) = nullptr;
     KEEP_VAR void (*return_setWolfLockDomeModel)(libtp::tp::d_a_alink::daAlink* daALink) = nullptr;
+    KEEP_VAR bool (*return_procFrontRollCrashInit)(libtp::tp::d_a_alink::daAlink* daALink) = nullptr;
+    KEEP_VAR bool (*return_procWolfAttackReverseInit)(libtp::tp::d_a_alink::daAlink* daALink) = nullptr;
+    KEEP_VAR bool (*return_procWolfDashReverseInit)(libtp::tp::d_a_alink::daAlink* daALink, bool param_1) = nullptr;
     KEEP_VAR libtp::tp::f_op_actor::fopAc_ac_c* (*return_searchBouDoor)(libtp::tp::f_op_actor::fopAc_ac_c* actrPtr) = nullptr;
     KEEP_VAR float (*return_damageMagnification)(libtp::tp::d_a_alink::daAlink* daALink,
                                                  int32_t param_1,
@@ -1739,6 +1743,24 @@ namespace mod
         return;
     }
 
+    KEEP_FUNC bool handle_procFrontRollCrashInit(libtp::tp::d_a_alink::daAlink* linkActrPtr)
+    {
+        handleBonkDamage();
+        return return_procFrontRollCrashInit(linkActrPtr);
+    }
+
+    KEEP_FUNC bool handle_procWolfDashReverseInit(libtp::tp::d_a_alink::daAlink* linkActrPtr, bool param_1)
+    {
+        handleBonkDamage();
+        return return_procWolfDashReverseInit(linkActrPtr, param_1);
+    }
+
+    KEEP_FUNC bool handle_procWolfAttackReverseInit(libtp::tp::d_a_alink::daAlink* linkActrPtr)
+    {
+        handleBonkDamage();
+        return return_procWolfAttackReverseInit(linkActrPtr);
+    }
+
     KEEP_FUNC libtp::tp::f_op_actor::fopAc_ac_c* handle_searchBouDoor(libtp::tp::f_op_actor::fopAc_ac_c* actrPtr)
     {
         rando::Seed* seed;
@@ -1904,6 +1926,34 @@ namespace mod
         }
 
         playerStatusPtr->currentHealth = static_cast<uint16_t>(newHealthValue);
+    }
+
+    KEEP_FUNC void handleBonkDamage()
+    {
+        if (bonksDoDamage)
+        {
+            using namespace libtp::tp;
+            d_com_inf_game::dComIfG_inf_c* gameInfoPtr = &d_com_inf_game::dComIfG_gameInfo;
+            libtp::tp::d_save::dSv_player_status_a_c* playerStatusPtr = &gameInfoPtr->save.save_file.player.player_status_a;
+            int32_t newHealthValue;
+
+            if (playerStatusPtr->currentForm == 1)
+            {
+                newHealthValue = playerStatusPtr->currentHealth - (2 * damageMultiplier);
+            }
+            else
+            {
+                newHealthValue = playerStatusPtr->currentHealth - damageMultiplier; // Damage multiplier is 1 by default
+            }
+
+            // Make sure an underflow doesn't occur
+            if (newHealthValue < 0)
+            {
+                newHealthValue = 0;
+            }
+
+            playerStatusPtr->currentHealth = static_cast<uint16_t>(newHealthValue);
+        }
     }
 
     KEEP_FUNC libtp::tp::d_resource::dRes_info_c* handle_getResInfo(const char* arcName,

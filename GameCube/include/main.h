@@ -87,6 +87,7 @@ namespace mod
     extern bool increaseSpinnerSpeed;
     extern bool transformAnywhereEnabled;
     extern uint8_t damageMultiplier;
+    extern bool bonksDoDamage;
 
 #ifdef TP_EU
     extern libtp::tp::d_s_logo::Languages currentLanguage;
@@ -99,6 +100,7 @@ namespace mod
     float intToFloat(int32_t value);
     void handleInput(uint32_t inputs);
     void handleFoolishItem();
+    void handleBonkDamage();
 
     // Inline getConsole, as it's just a shortcut to get a reference to the console variable
     inline libtp::display::Console& getConsole()
@@ -386,6 +388,15 @@ namespace mod
 
     void handle_setWolfLockDomeModel(libtp::tp::d_a_alink::daAlink* daALink);
     extern void (*return_setWolfLockDomeModel)(libtp::tp::d_a_alink::daAlink* daALink);
+
+    bool handle_procFrontRollCrashInit(libtp::tp::d_a_alink::daAlink* daALink);
+    extern bool (*return_procFrontRollCrashInit)(libtp::tp::d_a_alink::daAlink* daALink);
+
+    bool handle_procWolfDashReverseInit(libtp::tp::d_a_alink::daAlink* daALink, bool param_1);
+    extern bool (*return_procWolfDashReverseInit)(libtp::tp::d_a_alink::daAlink* daALink, bool param_1);
+
+    bool handle_procWolfAttackReverseInit(libtp::tp::d_a_alink::daAlink* daALink);
+    extern bool (*return_procWolfAttackReverseInit)(libtp::tp::d_a_alink::daAlink* daALink);
 
     libtp::tp::f_op_actor::fopAc_ac_c* handle_searchBouDoor(libtp::tp::f_op_actor::fopAc_ac_c* actrPtr);
     extern libtp::tp::f_op_actor::fopAc_ac_c* (*return_searchBouDoor)(libtp::tp::f_op_actor::fopAc_ac_c* actrPtr);

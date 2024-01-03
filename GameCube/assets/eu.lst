@@ -139,6 +139,9 @@
 800b7f58:searchBouDoor
 800c0884:checkCastleTownUseItem
 800d7414:damageMagnification
+800c5120:procFrontRollCrashInit
+8012dacc:procWolfDashReverseInit
+8013cad4:procWolfAttackReverseInit
 
 // data
 8039038C:climbVars
