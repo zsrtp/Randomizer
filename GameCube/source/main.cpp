@@ -1782,7 +1782,7 @@ namespace mod
         rando::Seed* seed;
         if (seed = getCurrentSeed(randomizer), seed)
         {
-            ret = ret * static_cast<float>(damageMultiplier);
+            ret *= intToFloat(static_cast<int32_t>(damageMultiplier));
         }
         return ret;
     }
@@ -1793,7 +1793,7 @@ namespace mod
         using namespace libtp::tp::d_a_alink;
         using namespace libtp::tp::d_com_inf_game;
 
-        int32_t roomID = libtp::tools::getCurrentRoomNo();
+        const int32_t roomID = libtp::tools::getCurrentRoomNo();
 
         if (checkStageName(libtp::data::stage::allStages[libtp::data::stage::StageIDs::Sacred_Grove]) &&
             roomID == 0x2) // check if the player is in past area
@@ -1862,6 +1862,8 @@ namespace mod
         using namespace libtp::z2audiolib::z2scenemgr;
         using namespace libtp::tp;
 
+        const uint8_t currentDamageMultiplier = damageMultiplier;
+
         if (!randoIsEnabled(randomizer))
         {
             return;
@@ -1910,12 +1912,12 @@ namespace mod
 
         if (playerStatusPtr->currentForm == 1)
         {
-            newHealthValue = playerStatusPtr->currentHealth - ((2 * count) * damageMultiplier);
+            newHealthValue = playerStatusPtr->currentHealth - ((2 * count) * currentDamageMultiplier);
             d_a_alink::procWolfDamageInit(linkMapPtr, nullptr);
         }
         else
         {
-            newHealthValue = playerStatusPtr->currentHealth - (count * damageMultiplier);
+            newHealthValue = playerStatusPtr->currentHealth - (count * currentDamageMultiplier);
             d_a_alink::procDamageInit(linkMapPtr, nullptr, 0);
         }
 
@@ -1936,14 +1938,15 @@ namespace mod
             d_com_inf_game::dComIfG_inf_c* gameInfoPtr = &d_com_inf_game::dComIfG_gameInfo;
             libtp::tp::d_save::dSv_player_status_a_c* playerStatusPtr = &gameInfoPtr->save.save_file.player.player_status_a;
             int32_t newHealthValue;
+            const uint8_t currentDamageMultiplier = damageMultiplier;
 
             if (playerStatusPtr->currentForm == 1)
             {
-                newHealthValue = playerStatusPtr->currentHealth - (2 * damageMultiplier);
+                newHealthValue = playerStatusPtr->currentHealth - (2 * currentDamageMultiplier);
             }
             else
             {
-                newHealthValue = playerStatusPtr->currentHealth - damageMultiplier; // Damage multiplier is 1 by default
+                newHealthValue = playerStatusPtr->currentHealth - currentDamageMultiplier; // Damage multiplier is 1 by default
             }
 
             // Make sure an underflow doesn't occur
