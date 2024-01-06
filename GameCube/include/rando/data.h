@@ -59,14 +59,16 @@ namespace mod::rando
         /* 0x48 */ entryInfo startingItemInfo;
         /* 0x4C */ uint16_t bgmHeaderOffset;
         /* 0x4E */ uint16_t clr0Offset;
-        /* 0x50 */ uint8_t transformAnywhere;
-        /* 0x51 */ uint8_t quickTransform;
-        /* 0x52 */ uint8_t castleRequirements;
-        /* 0x53 */ uint8_t palaceRequirements;
-        /* 0x54 */ uint8_t mapClearBits;
-        /* 0x55 */ uint8_t damageMagnification;
-        /* 0x56 */ uint8_t bonksDoDamage;
-        /* 0x57 */ uint8_t padding;
+        /* 0x50 */ uint16_t customTextHeaderSize;
+        /* 0x52 */ uint16_t customTextHeaderOffset;
+        /* 0x54 */ uint8_t transformAnywhere;
+        /* 0x55 */ uint8_t quickTransform;
+        /* 0x56 */ uint8_t castleRequirements;
+        /* 0x57 */ uint8_t palaceRequirements;
+        /* 0x58 */ uint8_t mapClearBits;
+        /* 0x59 */ uint8_t damageMagnification;
+        /* 0x5A */ uint8_t bonksDoDamage;
+        /* 0x5B */ uint8_t padding;
     } __attribute__((__packed__));
 
     // Minimum amount of data needed for keeping track of a seed
@@ -214,7 +216,7 @@ namespace mod::rando
     struct CustomMessageEntryInfo
     {
         uint8_t language;
-        uint8_t padding[1];
+        uint8_t padding;
         uint16_t totalEntries;
         uint32_t msgTableSize;
         uint32_t msgIdTableOffset;
@@ -226,6 +228,13 @@ namespace mod::rando
         uint8_t totalLanguages;
         uint8_t padding[1];
         CustomMessageEntryInfo entry[]; // Size is totalLanguages
+    } __attribute__((__packed__));
+
+    struct CustomMessageData
+    {
+        uint8_t stageIDX;
+        uint8_t roomIDX;
+        uint16_t msgID;
     } __attribute__((__packed__));
 
     struct CLR0Header

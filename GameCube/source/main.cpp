@@ -72,9 +72,11 @@ namespace mod
     float prevFrameAnalogR = 0.f;
 
     KEEP_VAR uint8_t* m_MsgTableInfo = nullptr;
+    KEEP_VAR uint8_t* m_HintMsgTableInfo = nullptr;
     libtp::tp::J2DPicture::J2DPicture* bgWindow = nullptr;
     uint16_t lastButtonInput = 0;
     KEEP_VAR uint16_t m_TotalMsgEntries = 0;
+    KEEP_VAR uint16_t m_TotalHintMsgEntries = 0;
     bool roomReloadingState = false;
     bool consoleState = true;
     uint8_t gameState = GAME_BOOT;

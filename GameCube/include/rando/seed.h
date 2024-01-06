@@ -148,6 +148,7 @@ namespace mod::rando
         void LoadSkyCharacter(uint8_t stageIDX);
         void LoadHiddenSkill();
         void LoadBugReward();
+        bool loadCustomText(uint8_t* data);
     };
 } // namespace mod::rando
 #endif

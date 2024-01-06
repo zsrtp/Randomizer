@@ -88,6 +88,9 @@ namespace mod::rando
             m_RawRGBTable = reinterpret_cast<RawRGBTable*>(m_GCIData + headerPtr->clr0Offset + m_CLR0->rawRGBOffset);
             m_BmdEntries = reinterpret_cast<BMDEntry*>(m_GCIData + headerPtr->clr0Offset + m_CLR0->bmdEntriesOffset);
 
+            // Load the custom text data
+            this->loadCustomText(data);
+
             // Set the static pointers for the Seed Header and Data
             void** ptrTable = reinterpret_cast<void**>(0x800042BC);
             ptrTable[0] = m_Header;
@@ -195,4 +198,40 @@ namespace mod::rando
             m_FanfareTable = reinterpret_cast<BGMReplacement*>(buf);
         }
     }
+
+    bool Seed::loadCustomText(uint8_t* data)
+    {
+        if (m_CARDResult == CARD_RESULT_READY)
+        {
+            uint32_t headerOffset = m_Header->headerSize + m_Header->customTextHeaderOffset;
+            // Get the custom message header
+            CustomMessageHeaderInfo* customMessageHeader = reinterpret_cast<CustomMessageHeaderInfo*>(&data[headerOffset]);
+
+            // Get the text for the current language
+            // US/JP should only have one language included
+            CustomMessageEntryInfo* customMessageInfo = &customMessageHeader->entry[0];
+
+            // Allocate memory for the ids, message offsets, and messages
+            m_TotalHintMsgEntries = customMessageInfo->totalEntries;
+            uint32_t msgIdTableSize = m_TotalHintMsgEntries * sizeof(CustomMessageData);
+            uint32_t msgOffsetTableSize = m_TotalHintMsgEntries * sizeof(uint32_t);
+            // Round msgIdTableSize up to the size of the offsets to make sure the offsets are properly aligned
+            msgIdTableSize = (msgIdTableSize + sizeof(uint32_t) - 1) & ~(sizeof(uint32_t) - 1);
+            uint32_t msgTableInfoSize = msgIdTableSize + msgOffsetTableSize + customMessageInfo->msgTableSize;
+
+            m_HintMsgTableInfo = new uint8_t[msgTableInfoSize];
+            // When calculating the offset the the message table information, we are assuming that the message header is
+            // followed by the entry information for all of the languages in the seed data.
+            uint32_t offset = headerOffset + customMessageInfo->msgIdTableOffset;
+
+            // Copy the data to the pointers
+            memcpy(m_HintMsgTableInfo, &data[offset], msgTableInfoSize);
+            getConsole() << &m_HintMsgTableInfo << " " << headerOffset << " " << customMessageInfo->msgIdTableOffset << " "
+                         << msgTableInfoSize << "\n";
+            return true;
+        }
+
+        return false;
+    }
+
 } // namespace mod::rando
