@@ -159,6 +159,8 @@ namespace mod
         // ItemGet functions
         return_execItemGet = patch::hookFunction(libtp::tp::d_item::execItemGet, mod::handle_execItemGet);
         return_checkItemGet = patch::hookFunction(libtp::tp::d_item::checkItemGet, mod::handle_checkItemGet);
+        return_item_func_ASHS_SCRIBBLING =
+            patch::hookFunction(libtp::tp::d_item::item_func_ASHS_SCRIBBLING, mod::handle_item_func_ASHS_SCRIBBLING);
 
         // Message Functions
         return_setMessageCode_inSequence =
@@ -216,7 +218,21 @@ namespace mod
         return_setWolfLockDomeModel =
             patch::hookFunction(libtp::tp::d_a_alink::setWolfLockDomeModel, mod::handle_setWolfLockDomeModel);
 
+        return_procFrontRollCrashInit =
+            patch::hookFunction(libtp::tp::d_a_alink::procFrontRollCrashInit, mod::handle_procFrontRollCrashInit);
+
+        return_procWolfDashReverseInit =
+            patch::hookFunction(libtp::tp::d_a_alink::procWolfDashReverseInit, mod::handle_procWolfDashReverseInit);
+
+        return_procWolfAttackReverseInit =
+            patch::hookFunction(libtp::tp::d_a_alink::procWolfAttackReverseInit, mod::handle_procWolfAttackReverseInit);
+
         return_searchBouDoor = patch::hookFunction(libtp::tp::d_a_alink::searchBouDoor, mod::handle_searchBouDoor);
+        return_checkCastleTownUseItem =
+            patch::hookFunction(libtp::tp::d_a_alink::checkCastleTownUseItem, mod::handle_checkCastleTownUseItem);
+
+        return_damageMagnification =
+            patch::hookFunction(libtp::tp::d_a_alink::damageMagnification, mod::handle_damageMagnification);
 
         // Audio functions
         return_loadSeWave = patch::hookFunction(libtp::z2audiolib::z2scenemgr::loadSeWave, mod::handle_loadSeWave);

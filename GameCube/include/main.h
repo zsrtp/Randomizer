@@ -86,6 +86,8 @@ namespace mod
     extern bool instantTextEnabled;
     extern bool increaseSpinnerSpeed;
     extern bool transformAnywhereEnabled;
+    extern uint8_t damageMultiplier;
+    extern bool bonksDoDamage;
 
 #ifdef TP_EU
     extern libtp::tp::d_s_logo::Languages currentLanguage;
@@ -98,6 +100,7 @@ namespace mod
     float intToFloat(int32_t value);
     void handleInput(uint32_t inputs);
     void handleFoolishItem();
+    void handleBonkDamage();
 
     // Inline getConsole, as it's just a shortcut to get a reference to the console variable
     inline libtp::display::Console& getConsole()
@@ -290,6 +293,9 @@ namespace mod
     int32_t handle_checkItemGet(uint8_t item, int32_t defaultValue);
     extern int32_t (*return_checkItemGet)(uint8_t item, int32_t defaultValue);
 
+    void handle_item_func_ASHS_SCRIBBLING();
+    extern void (*return_item_func_ASHS_SCRIBBLING)();
+
     // Message functions
     bool handle_setMessageCode_inSequence(libtp::tp::control::TControl* control,
                                           const void* TProcessor,
@@ -383,8 +389,23 @@ namespace mod
     void handle_setWolfLockDomeModel(libtp::tp::d_a_alink::daAlink* daALink);
     extern void (*return_setWolfLockDomeModel)(libtp::tp::d_a_alink::daAlink* daALink);
 
+    bool handle_procFrontRollCrashInit(libtp::tp::d_a_alink::daAlink* daALink);
+    extern bool (*return_procFrontRollCrashInit)(libtp::tp::d_a_alink::daAlink* daALink);
+
+    bool handle_procWolfDashReverseInit(libtp::tp::d_a_alink::daAlink* daALink, bool param_1);
+    extern bool (*return_procWolfDashReverseInit)(libtp::tp::d_a_alink::daAlink* daALink, bool param_1);
+
+    bool handle_procWolfAttackReverseInit(libtp::tp::d_a_alink::daAlink* daALink);
+    extern bool (*return_procWolfAttackReverseInit)(libtp::tp::d_a_alink::daAlink* daALink);
+
     libtp::tp::f_op_actor::fopAc_ac_c* handle_searchBouDoor(libtp::tp::f_op_actor::fopAc_ac_c* actrPtr);
     extern libtp::tp::f_op_actor::fopAc_ac_c* (*return_searchBouDoor)(libtp::tp::f_op_actor::fopAc_ac_c* actrPtr);
+
+    bool handle_checkCastleTownUseItem(uint16_t item_id);
+    extern bool (*return_checkCastleTownUseItem)(uint16_t item_id);
+
+    float handle_damageMagnification(libtp::tp::d_a_alink::daAlink* daALink, int32_t param_1, int32_t param_2);
+    extern float (*return_damageMagnification)(libtp::tp::d_a_alink::daAlink* daALink, int32_t param_1, int32_t param_2);
 
     // Audio functions
     void handle_loadSeWave(void* Z2SceneMgr, uint32_t waveID);

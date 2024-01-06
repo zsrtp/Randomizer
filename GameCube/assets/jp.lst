@@ -137,6 +137,11 @@
 80138d04:setWolfLockDomeModel
 800d0260:getSpinnerActor
 800b7d84:searchBouDoor
+800c06b0:checkCastleTownUseItem
+800d7240:damageMagnification
+800c4f4c:procFrontRollCrashInit
+8012d90c:procWolfDashReverseInit
+8013c914:procWolfAttackReverseInit
 
 // data
 80388C0C:climbVars
@@ -329,6 +334,7 @@
 803a7ee8:field_item_res
 803a92d8:item_func_ptr
 803a8ed8:item_info
+800992c4:item_func_ASHS_SCRIBBLING
 
 // d_menu_ring.o
 801eb424:dMenuRing__draw
@@ -385,6 +391,12 @@
 8042A2E4:wZButtonPtr
 8042a2c8:g_meter2_info
 8021e81c:resetMiniGameItem
+
+//d_meter2_draw.o
+80215584:drawKanteraScreen
+
+//d_pane_class.o
+802567d0:setBlackWhite
 
 // d_a_player.o
 8044b158:m_midnaActor

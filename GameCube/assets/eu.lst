@@ -137,6 +137,11 @@
 80138ec4:setWolfLockDomeModel
 800d0434:getSpinnerActor
 800b7f58:searchBouDoor
+800c0884:checkCastleTownUseItem
+800d7414:damageMagnification
+800c5120:procFrontRollCrashInit
+8012dacc:procWolfDashReverseInit
+8013cad4:procWolfAttackReverseInit
 
 // data
 8039038C:climbVars
@@ -149,6 +154,12 @@
 80432148:g_meter2_info
 80432164:wZButtonPtr
 8021e388:resetMiniGameItem
+
+//d_meter2_draw.o
+80215178:drawKanteraScreen
+
+//d_pane_class.o
+80254ee0:setBlackWhite
 
 // d_menu_collect.o
 801B3598:setWalletMaxNum
@@ -338,6 +349,7 @@
 803ae280:item_resource
 803b0a58:item_info
 803afa68:field_item_res
+800993b4:item_func_ASHS_SCRIBBLING
 
 //processor.o
 802a8a54:getResource_groupID

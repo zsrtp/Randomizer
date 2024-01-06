@@ -26,8 +26,9 @@ namespace mod::rando
 
     struct Header
     {
-        /* 0x00 */ uint16_t versionMajor;     // SeedData version major
-        /* 0x02 */ uint16_t versionMinor;     // SeedData version minor
+        /* 0x00 */ uint32_t version; // SeedData version major and minor; uint16_t for each. Need to handle as a single variable
+                                     // to get around a compiler warning about comparing an unsigned value to 0
+
         /* 0x04 */ uint16_t headerSize;       // Total size of the header in bytes
         /* 0x06 */ uint16_t dataSize;         // Total number of bytes of seed data
         /* 0x08 */ uint32_t totalSize;        // Total number of bytes in the GCI
@@ -63,16 +64,19 @@ namespace mod::rando
         /* 0x52 */ uint8_t castleRequirements;
         /* 0x53 */ uint8_t palaceRequirements;
         /* 0x54 */ uint8_t mapClearBits;
-        /* 0x55 */ uint8_t padding[3];
+        /* 0x55 */ uint8_t damageMagnification;
+        /* 0x56 */ uint8_t bonksDoDamage;
+        /* 0x57 */ uint8_t padding;
     } __attribute__((__packed__));
 
     // Minimum amount of data needed for keeping track of a seed
     struct MinSeedInfo
     {
-        uint16_t versionMajor; // SeedData version major
-        uint16_t versionMinor; // SeedData version minor
-        uint32_t totalSize;    // Total number of bytes in the GCI
-        uint8_t fileIndex;     // (0-126)
+        uint32_t version; // SeedData version major and minor; uint16_t for each. Need to handle as a single variable
+                          // to get around a compiler warning about comparing an unsigned value to 0
+
+        uint32_t totalSize; // Total number of bytes in the GCI
+        uint8_t fileIndex;  // (0-126)
         char fileName[CARD_FILENAME_MAX + 1];
         uint8_t padding[2];
     } __attribute__((__packed__));
