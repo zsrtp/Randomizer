@@ -126,19 +126,17 @@ namespace mod
                                                  int32_t num,
                                                  void* raw_data) = nullptr;
 
-    /*
-    KEEP_VAR void ( *return_dComIfGp_setNextStage )( const char* stage,
-                                                     int16_t point,
-                                                     int8_t roomNo,
-                                                     int8_t layer,
-                                                     float lastSpeed,
-                                                     uint32_t lastMode,
-                                                     int32_t setPoint,
-                                                     int8_t wipe,
-                                                     int16_t lastAngle,
-                                                     int32_t param_9,
-                                                     int32_t wipSpeedT ) = nullptr;
-    */
+    KEEP_VAR void (*return_dComIfGp_setNextStage)(const char* stage,
+                                                  int16_t point,
+                                                  int8_t roomNo,
+                                                  int8_t layer,
+                                                  float lastSpeed,
+                                                  uint32_t lastMode,
+                                                  int32_t setPoint,
+                                                  int8_t wipe,
+                                                  int16_t lastAngle,
+                                                  int32_t param_9,
+                                                  int32_t wipSpeedT) = nullptr;
 
     // GetLayerNo trampoline
     KEEP_VAR int32_t (*return_getLayerNo_common_common)(const char* stageName, int32_t roomId, int32_t layerOverride) = nullptr;
@@ -802,40 +800,69 @@ namespace mod
         return return_tgscInfoInit(stageDt, i_data, entryNum, param_3);
     }
 
-    /*
-    KEEP_FUNC void handle_dComIfGp_setNextStage( const char* stage,
-                                                 int16_t point,
-                                                 int8_t roomNo,
-                                                 int8_t layer,
-                                                 float lastSpeed,
-                                                 uint32_t lastMode,
-                                                 int32_t setPoint,
-                                                 int8_t wipe,
-                                                 int16_t lastAngle,
-                                                 int32_t param_9,
-                                                 int32_t wipSpeedT )
+    KEEP_FUNC void handle_dComIfGp_setNextStage(const char* stage,
+                                                int16_t point,
+                                                int8_t roomNo,
+                                                int8_t layer,
+                                                float lastSpeed,
+                                                uint32_t lastMode,
+                                                int32_t setPoint,
+                                                int8_t wipe,
+                                                int16_t lastAngle,
+                                                int32_t param_9,
+                                                int32_t wipSpeedT)
     {
-        if ( libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::StageIDs::Hidden_Skill] ) &&
-             ( roomNo == 6 ) )
+        rando::Randomizer* rando = randomizer;
+        if (getCurrentSeed(rando))
         {
-            // If we are in the hidden skill area and the wolf is trying to force load room 6, we know that we are trying to
-            // go back to faron so we want to use the default state instead of forcing 0.
-            layer = 0xff;
+            const int32_t stageIDX = libtp::tools::getStageIndex(stage);
+            const uint32_t numShuffledEntrances = rando->m_Seed->m_numShuffledEntrances;
+            rando::ShuffledEntrance* shuffledEntrances = &rando->m_Seed->m_ShuffledEntrances[0];
+
+            getConsole() << stageIDX << "," << roomNo << "," << point << "\n";
+
+            for (uint32_t i = 0; i < numShuffledEntrances; i++)
+            {
+                rando::ShuffledEntrance* currentEntrance = &shuffledEntrances[i];
+                if (stageIDX == currentEntrance->origStageIDX)
+                {
+                    if (roomNo == currentEntrance->origRoomIDX)
+                    {
+                        if (point == currentEntrance->origSpawn)
+                        {
+                            getConsole() << "Shuffling Entrance"
+                                         << "\n";
+                            return return_dComIfGp_setNextStage(libtp::data::stage::allStages[currentEntrance->newStageIDX],
+                                                                currentEntrance->newSpawn,
+                                                                currentEntrance->newRoomIDX,
+                                                                layer,
+                                                                lastSpeed,
+                                                                lastMode,
+                                                                setPoint,
+                                                                wipe,
+                                                                lastAngle,
+                                                                param_9,
+                                                                wipSpeedT);
+                        }
+                    }
+                }
+            }
         }
-        return return_dComIfGp_setNextStage( stage,
-                                             point,
-                                             roomNo,
-                                             layer,
-                                             lastSpeed,
-                                             lastMode,
-                                             setPoint,
-                                             wipe,
-                                             lastAngle,
-                                             param_9,
-                                             wipSpeedT );
+
+        getConsole() << "No match found."
+                     << "\n";
+        return return_dComIfGp_setNextStage(stage,
+                                            point,
+                                            roomNo,
+                                            layer,
+                                            lastSpeed,
+                                            lastMode,
+                                            setPoint,
+                                            wipe,
+                                            lastAngle,
+                                            param_9,
+                                            wipSpeedT);
     }
-    */
 
     KEEP_FUNC void handle_roomLoader(void* data, void* stageDt, int32_t roomNo)
     {

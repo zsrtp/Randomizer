@@ -458,8 +458,8 @@ namespace mod::game_patch
 
     KEEP_FUNC void _02_ordonPumpkinItemFunc()
     {
-        events::setSaveFileEventFlag(libtp::data::flags::TOLD_YETA_ABOUT_PUMPKIN);               // Told Yeta about Pumpkin
-        events::setSaveFileEventFlag(libtp::data::flags::PUMPKIN_PUT_IN_SOUP);                   // Yeto put Pumpkin in soup
+        events::setSaveFileEventFlag(libtp::data::flags::TOLD_YETA_ABOUT_PUMPKIN); // Told Yeta about Pumpkin
+        events::setSaveFileEventFlag(libtp::data::flags::PUMPKIN_PUT_IN_SOUP);     // Yeto put Pumpkin in soup
 
         events::setSaveFileEventFlag(libtp::data::flags::TALKED_WITH_YETA_AFTER_GIVING_PUMPKIN); // SPR Lobby Door Unlocked
 
@@ -480,8 +480,8 @@ namespace mod::game_patch
 
     KEEP_FUNC void _02_ordonGoatCheeseItemFunc()
     {
-        events::setSaveFileEventFlag(libtp::data::flags::TOLD_YETA_ABOUT_CHEESE);               // Told Yeta about Cheese
-        events::setSaveFileEventFlag(libtp::data::flags::CHEESE_PUT_IN_SOUP);                   // Yeto put cheese in soup
+        events::setSaveFileEventFlag(libtp::data::flags::TOLD_YETA_ABOUT_CHEESE); // Told Yeta about Cheese
+        events::setSaveFileEventFlag(libtp::data::flags::CHEESE_PUT_IN_SOUP);     // Yeto put cheese in soup
 
         events::setSaveFileEventFlag(libtp::data::flags::TALKED_WITH_YETA_AFTER_GIVING_CHEESE); // SPR Lobby West Door Unlocked
 
