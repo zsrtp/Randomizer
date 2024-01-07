@@ -116,6 +116,7 @@
 803AC5A0:item_resource
 803ADD88:field_item_res
 803AED78:item_info
+80099284:item_func_ASHS_SCRIBBLING
 
 // d_a_alink.h
 800B271C:setStickData
@@ -144,6 +145,11 @@
 80138cb8:setWolfLockDomeModel
 800d0228:getSpinnerActor
 800b7d4c:searchBouDoor
+800c0678:checkCastleTownUseItem
+800d7208:damageMagnification
+800c4f14:procFrontRollCrashInit
+8012d8c0:procWolfDashReverseInit
+8013c8c8:procWolfAttackReverseInit
 
 // data
 8038EB8C:climbVars
@@ -334,6 +340,12 @@
 80430188:g_meter2_info
 804301A4:wZButtonPtr
 8021e0c4:resetMiniGameItem
+
+//d_meter2_draw.o
+80214eb4:drawKanteraScreen
+
+//d_pane_class.o
+80254458:setBlackWhite
 
 //d_a_shop_item_static.o
 803792e8:shopItemData

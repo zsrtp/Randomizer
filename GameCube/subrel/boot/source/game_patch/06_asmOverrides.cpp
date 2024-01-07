@@ -15,6 +15,7 @@
 #include "tp/m_Do_dvd_thread.h"
 #include "Z2AudioLib/Z2SceneMgr.h"
 #include "tp/d_msg_object.h"
+#include "tp/d_meter2_draw.h"
 
 namespace mod::game_patch
 {
@@ -97,6 +98,10 @@ namespace mod::game_patch
         libtp::patch::writeBranchBL(isSendAddress + 0xE4, events::autoMashThroughText);
         libtp::patch::writeBranchBL(isSendAddress + 0x160, events::autoMashThroughText);
         libtp::patch::writeBranchBL(isSendAddress + 0x1B8, events::autoMashThroughText);
+
+        // Modify drawKanteraScreen to change the lantern meter color to match lantern light color from seed.
+        uint32_t drawKanteraAddress = reinterpret_cast<uint32_t>(libtp::tp::d_meter2_draw::drawKanteraScreen);
+        libtp::patch::writeBranchBL(drawKanteraAddress + 0xE4, events::modifyLanternMeterColor);
 #ifdef TP_JP
         uint32_t checkWarpStartAddress = reinterpret_cast<uint32_t>(libtp::tp::d_a_alink::checkWarpStart);
 

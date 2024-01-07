@@ -123,7 +123,7 @@ namespace mod::rando
             snprintf(filePath, sizeof(filePath), "/mod/seed/%s", currentFileName);
 
             // Try to open the file and get the header data
-            if (DVD_STATE_END != libtp::tools::ReadFile(filePath, sizeof(header), 0, &header))
+            if (DVD_STATE_END != libtp::tools::readFile(filePath, sizeof(header), 0, &header))
             {
 #else
             // Try to get the status of an arbitrary file slot
@@ -150,16 +150,17 @@ namespace mod::rando
             }
 
             // Make sure the seed version is supported
-            const uint16_t versionMajor = header.versionMajor;
-            const uint16_t versionMinor = header.versionMinor;
+            const uint32_t currentSeedVersion = header.version;
 
-            if (CHECK_SUPPORTED_SEED_DATA_VER_MAJOR(versionMajor) && CHECK_SUPPORTED_SEED_DATA_VER_MINOR(versionMinor))
+            // The major and minor seed versions use 2 bytes each, so merge both into a single 4 byte variable
+            constexpr uint32_t supportedSeedVersion = (_VERSION_MAJOR << 16) | _VERSION_MINOR;
+
+            if (currentSeedVersion == supportedSeedVersion)
             {
                 MinSeedInfo* currentMinSeedInfo = &minSeedInfoBuffer[index];
 
                 // Copy the seed version
-                currentMinSeedInfo->versionMajor = versionMajor;
-                currentMinSeedInfo->versionMinor = versionMinor;
+                currentMinSeedInfo->version = currentSeedVersion;
 
                 // Copy the total number of bytes in the GCI
                 currentMinSeedInfo->totalSize = header.totalSize;

@@ -30,6 +30,7 @@
 #include "tp/rel/ids.h"
 #include "rando/customItems.h"
 #include "tp/f_op_actor_iter.h"
+#include "tp/d_pane_class.h"
 
 namespace mod::events
 {
@@ -1096,8 +1097,8 @@ namespace mod::events
     void loadCustomRoomSCOBs()
     {
         using namespace libtp;
-
-        if (tp::d_a_alink::checkStageName(data::stage::allStages[data::stage::StageIDs::Hyrule_Field]))
+        if (tp::d_a_alink::checkStageName(data::stage::allStages[data::stage::StageIDs::Hyrule_Field]) &&
+            libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::MIDNAS_DESPERATE_HOUR_COMPLETED))
         {
             tools::spawnSCOB(3, HorseJumpScob);
         }
@@ -1111,7 +1112,6 @@ namespace mod::events
     void handleQuickTransform()
     {
         rando::Seed* seed;
-        using namespace libtp::data::stage;
         using namespace libtp::tp::d_com_inf_game;
         if (seed = getCurrentSeed(randomizer), !seed)
         {
@@ -1492,8 +1492,6 @@ namespace mod::events
 
     void* handleTransformAnywhere(libtp::tp::f_op_actor_iter::fopAcIt_JudgeFunc unk1, void* unk2)
     {
-        using namespace libtp::data::stage;
-        using namespace libtp::tp::d_com_inf_game;
         if (checkValidTransformAnywhere())
         {
             // Return nullptr to make the calling function return true
@@ -1535,6 +1533,27 @@ namespace mod::events
 
         // Return true, as the bool is set and there are no conflicting scenarios to prevent transformation
         return true;
+    }
+
+    KEEP_FUNC void modifyLanternMeterColor(libtp::tp::d_pane_class::CPaneMgr* panePtr,
+                                           libtp::tp::JUtility::TColor* color1,
+                                           libtp::tp::JUtility::TColor* color2)
+    {
+        mod::rando::Seed* seed;
+
+        if (seed = getCurrentSeed(randomizer), seed)
+        {
+            rando::RawRGBTable* rawRGBListPtr = randomizer->m_Seed->m_RawRGBTable;
+
+            uint8_t* lanternColor = reinterpret_cast<uint8_t*>(&rawRGBListPtr->lanternColor);
+            color1->r = lanternColor[0];
+            color1->g = lanternColor[1];
+            color1->b = lanternColor[2];
+            color2->r = lanternColor[0];
+            color2->g = lanternColor[1];
+            color2->b = lanternColor[2];
+        }
+        libtp::tp::d_pane_class::setBlackWhite(panePtr, color1, color2);
     }
 
     KEEP_FUNC void performStaticASMReplacement(uint32_t memoryOffset, uint32_t value)

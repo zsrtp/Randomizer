@@ -70,21 +70,23 @@ namespace mod::game_patch
     {
         using namespace rando::customItems;
         using namespace libtp::data::items;
-
-        static const uint8_t progressiveSkyBooksList[] = {Ancient_Sky_Book_Empty,
-                                                          Ancient_Sky_Book_First_Character,
-                                                          Ancient_Sky_Book_Second_Character,
-                                                          Ancient_Sky_Book_Third_Character,
-                                                          Ancient_Sky_Book_Fourth_Character,
-                                                          Ancient_Sky_Book_Fifth_Character};
-
-        constexpr uint32_t listLength = sizeof(progressiveSkyBooksList) / sizeof(progressiveSkyBooksList[0]);
-        for (uint32_t i = 0; i < listLength; i++)
+        if (!events::haveItem(Ancient_Sky_Book_Completed))
         {
-            const uint32_t item = progressiveSkyBooksList[i];
-            if (!events::haveItem(item))
+            static const uint8_t progressiveSkyBooksList[] = {Ancient_Sky_Book_Empty,
+                                                              Ancient_Sky_Book_First_Character,
+                                                              Ancient_Sky_Book_Second_Character,
+                                                              Ancient_Sky_Book_Third_Character,
+                                                              Ancient_Sky_Book_Fourth_Character,
+                                                              Ancient_Sky_Book_Fifth_Character};
+
+            constexpr uint32_t listLength = sizeof(progressiveSkyBooksList) / sizeof(progressiveSkyBooksList[0]);
+            for (uint32_t i = 0; i < listLength; i++)
             {
-                return item;
+                const uint32_t item = progressiveSkyBooksList[i];
+                if (!events::haveItem(item))
+                {
+                    return item;
+                }
             }
         }
 
@@ -207,7 +209,7 @@ namespace mod::game_patch
                 case Clawshot:
                 case Double_Clawshots:
                 {
-                    if (events::haveItem(Clawshot))
+                    if (events::haveItem(Clawshot) || events::haveItem(Double_Clawshots))
                     {
                         itemID = Double_Clawshots;
                     }
@@ -309,6 +311,49 @@ namespace mod::game_patch
                     }
 
                     foolishItemsPtr->spawnCount = static_cast<uint8_t>(count);
+                    break;
+                }
+
+                // For ammo, if we don't have the item that can use the ammo, turn it into a blue rupee so that the check
+                // doesn't completely go to waste.
+                case Arrows_10:
+                case Arrows_20:
+                case Arrows_30:
+                {
+                    if (!events::haveItem(Heros_Bow))
+                    {
+                        itemID = Blue_Rupee;
+                    }
+                    break;
+                }
+
+                case Bombling_1:
+                case Bomblings_10:
+                case Bomblings_3:
+                case Bomblings_5:
+                case Water_Bombs_10:
+                case Water_Bombs_15:
+                case Water_Bombs_3:
+                case Water_Bombs_5:
+                case Bombs_10:
+                case Bombs_20:
+                case Bombs_30:
+                case Bombs_5:
+                {
+                    if (!events::haveItem(Goron_Bomb_Bag)) // This is the specific bomb bag that the rando uses when giving
+                                                           // bombs to the player.
+                    {
+                        itemID = Blue_Rupee;
+                    }
+                    break;
+                }
+
+                case Seeds_50:
+                {
+                    if (!events::haveItem(Slingshot))
+                    {
+                        itemID = Blue_Rupee;
+                    }
                     break;
                 }
 

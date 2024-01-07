@@ -72,9 +72,11 @@ namespace mod
     float prevFrameAnalogR = 0.f;
 
     KEEP_VAR uint8_t* m_MsgTableInfo = nullptr;
+    KEEP_VAR uint8_t* m_HintMsgTableInfo = nullptr;
     libtp::tp::J2DPicture::J2DPicture* bgWindow = nullptr;
     uint16_t lastButtonInput = 0;
     KEEP_VAR uint16_t m_TotalMsgEntries = 0;
+    KEEP_VAR uint16_t m_TotalHintMsgEntries = 0;
     bool roomReloadingState = false;
     bool consoleState = true;
     uint8_t gameState = GAME_BOOT;
@@ -84,6 +86,8 @@ namespace mod
     bool instantTextEnabled = false;
     bool increaseSpinnerSpeed = false;
     bool transformAnywhereEnabled = false;
+    uint8_t damageMultiplier = 1;
+    bool bonksDoDamage = false;
 
 #ifdef TP_EU
     KEEP_VAR libtp::tp::d_s_logo::Languages currentLanguage = libtp::tp::d_s_logo::Languages::uk;
@@ -178,6 +182,7 @@ namespace mod
     // ItemGet functions.
     KEEP_VAR void (*return_execItemGet)(uint8_t item) = nullptr;
     KEEP_VAR int32_t (*return_checkItemGet)(uint8_t item, int32_t defaultValue) = nullptr;
+    KEEP_VAR void (*return_item_func_ASHS_SCRIBBLING)() = nullptr;
 
     // Message functions
     KEEP_VAR bool (*return_setMessageCode_inSequence)(libtp::tp::control::TControl* control,
@@ -227,7 +232,14 @@ namespace mod
     KEEP_VAR bool (*return_checkDamageAction)(libtp::tp::d_a_alink::daAlink* linkMapPtr) = nullptr;
     KEEP_VAR void (*return_setGetItemFace)(libtp::tp::d_a_alink::daAlink* daALink, uint16_t itemID) = nullptr;
     KEEP_VAR void (*return_setWolfLockDomeModel)(libtp::tp::d_a_alink::daAlink* daALink) = nullptr;
+    KEEP_VAR bool (*return_procFrontRollCrashInit)(libtp::tp::d_a_alink::daAlink* daALink) = nullptr;
+    KEEP_VAR bool (*return_procWolfAttackReverseInit)(libtp::tp::d_a_alink::daAlink* daALink) = nullptr;
+    KEEP_VAR bool (*return_procWolfDashReverseInit)(libtp::tp::d_a_alink::daAlink* daALink, bool param_1) = nullptr;
     KEEP_VAR libtp::tp::f_op_actor::fopAc_ac_c* (*return_searchBouDoor)(libtp::tp::f_op_actor::fopAc_ac_c* actrPtr) = nullptr;
+    KEEP_VAR float (*return_damageMagnification)(libtp::tp::d_a_alink::daAlink* daALink,
+                                                 int32_t param_1,
+                                                 int32_t param_2) = nullptr;
+    KEEP_VAR bool (*return_checkCastleTownUseItem)(uint16_t item_id) = nullptr;
 
     // Audio functions
     KEEP_VAR void (*return_loadSeWave)(void* Z2SceneMgr, uint32_t waveID) = nullptr;
@@ -1131,6 +1143,14 @@ namespace mod
 
         return return_checkItemGet(item, defaultValue);
     }
+    KEEP_FUNC void handle_item_func_ASHS_SCRIBBLING()
+    {
+        using namespace libtp::data::flags;
+        if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(GOT_CORAL_EARRING_FROM_RALIS))
+        {
+            return_item_func_ASHS_SCRIBBLING();
+        }
+    }
 
     KEEP_FUNC bool handle_setMessageCode_inSequence(libtp::tp::control::TControl* control,
                                                     const void* TProcessor,
@@ -1752,6 +1772,24 @@ namespace mod
         return;
     }
 
+    KEEP_FUNC bool handle_procFrontRollCrashInit(libtp::tp::d_a_alink::daAlink* linkActrPtr)
+    {
+        handleBonkDamage();
+        return return_procFrontRollCrashInit(linkActrPtr);
+    }
+
+    KEEP_FUNC bool handle_procWolfDashReverseInit(libtp::tp::d_a_alink::daAlink* linkActrPtr, bool param_1)
+    {
+        handleBonkDamage();
+        return return_procWolfDashReverseInit(linkActrPtr, param_1);
+    }
+
+    KEEP_FUNC bool handle_procWolfAttackReverseInit(libtp::tp::d_a_alink::daAlink* linkActrPtr)
+    {
+        handleBonkDamage();
+        return return_procWolfAttackReverseInit(linkActrPtr);
+    }
+
     KEEP_FUNC libtp::tp::f_op_actor::fopAc_ac_c* handle_searchBouDoor(libtp::tp::f_op_actor::fopAc_ac_c* actrPtr)
     {
         rando::Seed* seed;
@@ -1763,6 +1801,56 @@ namespace mod
             }
         }
         return return_searchBouDoor(actrPtr);
+    }
+
+    KEEP_FUNC float handle_damageMagnification(libtp::tp::d_a_alink::daAlink* linkActrPtr, int32_t param_1, int32_t param_2)
+    {
+        // Call the original function immediately, as we only need the current damage magnification value.
+        float ret = return_damageMagnification(linkActrPtr, param_1, param_2);
+
+        rando::Seed* seed;
+        if (seed = getCurrentSeed(randomizer), seed)
+        {
+            ret *= intToFloat(static_cast<int32_t>(damageMultiplier));
+        }
+        return ret;
+    }
+
+    KEEP_FUNC bool handle_checkCastleTownUseItem(uint16_t item_id)
+    {
+        using namespace libtp::data::items;
+        using namespace libtp::tp::d_a_alink;
+        using namespace libtp::tp::d_com_inf_game;
+
+        const int32_t roomID = libtp::tools::getCurrentRoomNo();
+
+        if (checkStageName(libtp::data::stage::allStages[libtp::data::stage::StageIDs::Sacred_Grove]) &&
+            roomID == 0x2) // check if the player is in past area
+        {
+            if (item_id == Ooccoo_Jr)
+            {
+                return false; // remove the ability to use ooccoo in past area
+            }
+        }
+        else if (checkStageName(libtp::data::stage::allStages[libtp::data::stage::StageIDs::Temple_of_Time]) && roomID == 0x0)
+        {
+            switch (item_id)
+            {
+                case Ooccoo_Jr:
+                case Ooccoo_FT:
+                case Ooccoo_Dungeon:
+                {
+                    if (!libtp::tp::d_save::isDungeonItem(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags,
+                                                          0x6)) // check if the player hasn't taken ooccoo at tot entrance
+                    {
+                        return false;
+                    }
+                    break;
+                }
+            }
+        }
+
+        return return_checkCastleTownUseItem(item_id);
     }
 
     KEEP_FUNC void handle_loadSeWave(void* z2SceneMgr, uint32_t waveID)
@@ -1802,6 +1890,8 @@ namespace mod
         using namespace libtp::z2audiolib;
         using namespace libtp::z2audiolib::z2scenemgr;
         using namespace libtp::tp;
+
+        const uint8_t currentDamageMultiplier = damageMultiplier;
 
         if (!randoIsEnabled(randomizer))
         {
@@ -1851,12 +1941,12 @@ namespace mod
 
         if (playerStatusPtr->currentForm == 1)
         {
-            newHealthValue = playerStatusPtr->currentHealth - (2 * count);
+            newHealthValue = playerStatusPtr->currentHealth - ((2 * count) * currentDamageMultiplier);
             d_a_alink::procWolfDamageInit(linkMapPtr, nullptr);
         }
         else
         {
-            newHealthValue = playerStatusPtr->currentHealth - count;
+            newHealthValue = playerStatusPtr->currentHealth - (count * currentDamageMultiplier);
             d_a_alink::procDamageInit(linkMapPtr, nullptr, 0);
         }
 
@@ -1867,6 +1957,35 @@ namespace mod
         }
 
         playerStatusPtr->currentHealth = static_cast<uint16_t>(newHealthValue);
+    }
+
+    KEEP_FUNC void handleBonkDamage()
+    {
+        if (bonksDoDamage)
+        {
+            using namespace libtp::tp;
+            d_com_inf_game::dComIfG_inf_c* gameInfoPtr = &d_com_inf_game::dComIfG_gameInfo;
+            libtp::tp::d_save::dSv_player_status_a_c* playerStatusPtr = &gameInfoPtr->save.save_file.player.player_status_a;
+            int32_t newHealthValue;
+            const uint8_t currentDamageMultiplier = damageMultiplier;
+
+            if (playerStatusPtr->currentForm == 1)
+            {
+                newHealthValue = playerStatusPtr->currentHealth - (2 * currentDamageMultiplier);
+            }
+            else
+            {
+                newHealthValue = playerStatusPtr->currentHealth - currentDamageMultiplier; // Damage multiplier is 1 by default
+            }
+
+            // Make sure an underflow doesn't occur
+            if (newHealthValue < 0)
+            {
+                newHealthValue = 0;
+            }
+
+            playerStatusPtr->currentHealth = static_cast<uint16_t>(newHealthValue);
+        }
     }
 
     KEEP_FUNC libtp::tp::d_resource::dRes_info_c* handle_getResInfo(const char* arcName,

@@ -51,6 +51,11 @@ namespace mod::rando
                 transformAnywhereEnabled = static_cast<bool>(m_Seed->m_Header->transformAnywhere);
 
                 m_Seed->loadShuffledEntrances();
+                // Update the damage multiplier to the value stored in the seed
+                damageMultiplier = m_Seed->m_Header->damageMagnification;
+
+                // Update bonksDoDamage now that a seed is loaded
+                bonksDoDamage = static_cast<bool>(m_Seed->m_Header->bonksDoDamage);
 
                 // Load checks for first load
                 onStageLoad();

@@ -21,6 +21,7 @@
 #include "tp/m_do_controller_pad.h"
 #include "tp/rel/d_a_obj_Lv5Key.h"
 #include "tp/f_op_actor_iter.h"
+#include "tp/d_meter2_draw.h"
 
 namespace mod::events
 {
@@ -128,6 +129,10 @@ namespace mod::events
      * @param flag The event flag that we want to set
      */
     void setSaveFileEventFlag(uint16_t flag);
+
+    void modifyLanternMeterColor(libtp::tp::d_pane_class::CPaneMgr* panePtr,
+                                 libtp::tp::JUtility::TColor* color1,
+                                 libtp::tp::JUtility::TColor* color2);
 
     void onAdjustFieldItemParams(libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife);
 

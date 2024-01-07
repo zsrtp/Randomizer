@@ -535,7 +535,7 @@ namespace mod::rando
             goldenWolfItemReplacementPtr->flag = flag;
 
             goldenWolfItemReplacementPtr->itemActorId =
-                initCreatePlayerItem(currentHiddenSkillCheck->itemID,
+                initCreatePlayerItem(game_patch::_04_verifyProgressiveItem(this, currentHiddenSkillCheck->itemID),
                                      0xFF,
                                      reinterpret_cast<float*>(reinterpret_cast<uint32_t>(daNpcGWolfPtr) + 0x4d0),
                                      currentRoom,
