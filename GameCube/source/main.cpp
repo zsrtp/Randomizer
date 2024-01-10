@@ -1518,14 +1518,41 @@ namespace mod
         libtp::tp::d_save::dSv_save_c* saveFilePtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file;
         if (eventPtr == &saveFilePtr->event_flags)
         {
-            libtp::tp::d_save::dSv_player_status_b_c* playerStatusPtr = &saveFilePtr->player.player_status_b;
-            const uint32_t darkClearLevelFlag = playerStatusPtr->dark_clear_level_flag;
+            libtp::tp::d_save::dSv_player_status_a_c* playerStatusAPtr = &saveFilePtr->player.player_status_a;
+            libtp::tp::d_save::dSv_player_status_b_c* playerStatusBPtr = &saveFilePtr->player.player_status_b;
+            const uint32_t darkClearLevelFlag = playerStatusBPtr->dark_clear_level_flag;
 
             switch (flag)
             {
+                // Case block for Wolf -> Human crash patches/bug fixes. Some cutscenes/events either crash or act weird if Link
+                // is Human but needs to be Wolf and the game no longer attempts to auto-transform Link once the Shadow Crystal
+                // has been obtained.
+                case ENTERED_ORDON_SPRING_DAY_3:
+                {
+                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(TRANSFORMING_UNLOCKED))
+                    {
+                        playerStatusAPtr->currentForm ==
+                            0; // Set player to Human as the game will not do so if Shadow Crystal has been obtained.
+                    }
+                    break;
+                }
+
+                // Case block for Human -> Wolf crash patches/bug fixes. Some cutscenes/events either crash or act weird if Link
+                // is Wolf but needs to be human and the game no longer attempts to auto-transform Link once the Shadow Crystal
+                // has been obtained.
+                case WATCHED_CUTSCENE_AFTER_BEING_CAPTURED_IN_FARON_TWILIGHT:
+                {
+                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(TRANSFORMING_UNLOCKED))
+                    {
+                        playerStatusAPtr->currentForm ==
+                            1; // Set player to Wolf as the game will not do so if Shadow Crystal has been obtained.
+                    }
+                    break;
+                }
+
                 case MIDNAS_DESPERATE_HOUR_COMPLETED: // MDH Completed
                 {
-                    playerStatusPtr->dark_clear_level_flag |= 0x8;
+                    playerStatusBPtr->dark_clear_level_flag |= 0x8;
                     break;
                 }
 
@@ -1535,10 +1562,10 @@ namespace mod
                     {
                         if (darkClearLevelFlag == 0x6)
                         {
-                            playerStatusPtr->transform_level_flag = 0x8; // Set the flag for the last transformed twilight.
-                                                                         // Also puts Midna on the player's back
+                            playerStatusBPtr->transform_level_flag = 0x8; // Set the flag for the last transformed twilight.
+                                                                          // Also puts Midna on the player's back
 
-                            playerStatusPtr->dark_clear_level_flag |= 0x8;
+                            playerStatusBPtr->dark_clear_level_flag |= 0x8;
                         }
                     }
                     break;
@@ -1551,10 +1578,10 @@ namespace mod
                     {
                         if (darkClearLevelFlag == 0x5)
                         {
-                            playerStatusPtr->transform_level_flag |= 0x8; // Set the flag for the last transformed twilight.
-                                                                          // Also puts Midna on the player's back
+                            playerStatusBPtr->transform_level_flag |= 0x8; // Set the flag for the last transformed twilight.
+                                                                           // Also puts Midna on the player's back
 
-                            playerStatusPtr->dark_clear_level_flag |= 0x8;
+                            playerStatusBPtr->dark_clear_level_flag |= 0x8;
                         }
                     }
 
@@ -1567,10 +1594,10 @@ namespace mod
                     {
                         if (darkClearLevelFlag == 0x7) // All twilights completed
                         {
-                            playerStatusPtr->transform_level_flag |= 0x8; // Set the flag for the last transformed twilight.
-                                                                          // Also puts Midna on the player's back
+                            playerStatusBPtr->transform_level_flag |= 0x8; // Set the flag for the last transformed twilight.
+                                                                           // Also puts Midna on the player's back
 
-                            playerStatusPtr->dark_clear_level_flag |= 0x8;
+                            playerStatusBPtr->dark_clear_level_flag |= 0x8;
                         }
                     }
 
@@ -1654,6 +1681,21 @@ namespace mod
                     libtp::tp::d_save::offSwitch_dSv_memBit(memoryBit,
                                                             0x45); // Open the Poe gate
 
+                    return;
+                }
+            }
+            else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Lake_Hylia]))
+            {
+                if (flag == 0xD) // Lanayru Twilight End CS trigger.
+                {
+                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::TRANSFORMING_UNLOCKED))
+                    {
+                        libtp::tp::d_save::dSv_save_c* saveFilePtr =
+                            &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file;
+                        libtp::tp::d_save::dSv_player_status_a_c* playerStatusAPtr = &saveFilePtr->player.player_status_a;
+                        playerStatusAPtr->currentForm ==
+                            0; // Set player to Human as the game will not do so if Shadow Crystal has been obtained.
+                    }
                     return;
                 }
             }
