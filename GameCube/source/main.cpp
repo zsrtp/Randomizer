@@ -819,30 +819,35 @@ namespace mod
             const uint32_t numShuffledEntrances = rando->m_Seed->m_numShuffledEntrances;
             rando::ShuffledEntrance* shuffledEntrances = &rando->m_Seed->m_ShuffledEntrances[0];
 
-            getConsole() << stageIDX << "," << roomNo << "," << point << "\n";
+            // getConsole() << stageIDX << "," << roomNo << "," << point << "\n";
 
-            for (uint32_t i = 0; i < numShuffledEntrances; i++)
+            if (stageIDX !=
+                libtp::data::stage::StageIDs::Title_Screen) // We won't want to shuffle if we are loading a save since some
+                                                            // stages use their default spawn for their entrances.
             {
-                rando::ShuffledEntrance* currentEntrance = &shuffledEntrances[i];
-                if (stageIDX == currentEntrance->origStageIDX)
+                for (uint32_t i = 0; i < numShuffledEntrances; i++)
                 {
-                    if (roomNo == currentEntrance->origRoomIDX)
+                    rando::ShuffledEntrance* currentEntrance = &shuffledEntrances[i];
+                    if (stageIDX == currentEntrance->origStageIDX)
                     {
-                        if (point == currentEntrance->origSpawn)
+                        if (roomNo == currentEntrance->origRoomIDX)
                         {
-                            getConsole() << "Shuffling Entrance"
-                                         << "\n";
-                            return return_dComIfGp_setNextStage(libtp::data::stage::allStages[currentEntrance->newStageIDX],
-                                                                currentEntrance->newSpawn,
-                                                                currentEntrance->newRoomIDX,
-                                                                layer,
-                                                                lastSpeed,
-                                                                lastMode,
-                                                                setPoint,
-                                                                wipe,
-                                                                lastAngle,
-                                                                param_9,
-                                                                wipSpeedT);
+                            if (point == currentEntrance->origSpawn)
+                            {
+                                getConsole() << "Shuffling Entrance"
+                                             << "\n";
+                                return return_dComIfGp_setNextStage(libtp::data::stage::allStages[currentEntrance->newStageIDX],
+                                                                    currentEntrance->newSpawn,
+                                                                    currentEntrance->newRoomIDX,
+                                                                    layer,
+                                                                    lastSpeed,
+                                                                    lastMode,
+                                                                    setPoint,
+                                                                    wipe,
+                                                                    lastAngle,
+                                                                    param_9,
+                                                                    wipSpeedT);
+                            }
                         }
                     }
                 }
@@ -1531,7 +1536,7 @@ namespace mod
                 {
                     if (libtp::tp::d_a_alink::dComIfGs_isEventBit(TRANSFORMING_UNLOCKED))
                     {
-                        playerStatusAPtr->currentForm ==
+                        playerStatusAPtr->currentForm =
                             0; // Set player to Human as the game will not do so if Shadow Crystal has been obtained.
                     }
                     break;
@@ -1544,7 +1549,7 @@ namespace mod
                 {
                     if (libtp::tp::d_a_alink::dComIfGs_isEventBit(TRANSFORMING_UNLOCKED))
                     {
-                        playerStatusAPtr->currentForm ==
+                        playerStatusAPtr->currentForm =
                             1; // Set player to Wolf as the game will not do so if Shadow Crystal has been obtained.
                     }
                     break;
@@ -1693,7 +1698,7 @@ namespace mod
                         libtp::tp::d_save::dSv_save_c* saveFilePtr =
                             &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file;
                         libtp::tp::d_save::dSv_player_status_a_c* playerStatusAPtr = &saveFilePtr->player.player_status_a;
-                        playerStatusAPtr->currentForm ==
+                        playerStatusAPtr->currentForm =
                             0; // Set player to Human as the game will not do so if Shadow Crystal has been obtained.
                     }
                     return;

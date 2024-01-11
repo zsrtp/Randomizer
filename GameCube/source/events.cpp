@@ -869,14 +869,15 @@ namespace mod::events
 
     int32_t proc_query022(void* unk1, void* unk2, int32_t unk3)
     {
+        using namespace libtp::data;
+        using namespace libtp::tp;
         // Check to see if currently in one of the Ordon interiors
-        if (libtp::tp::d_a_alink::checkStageName(
-                libtp::data::stage::allStages[libtp::data::stage::StageIDs::Ordon_Village_Interiors]))
+        if (d_a_alink::checkStageName(stage::allStages[stage::StageIDs::Ordon_Village_Interiors]))
         {
-            // Check to see if ckecking for the Iron Boots
+            // Check to see if checking for the Iron Boots
             const uint32_t item = *reinterpret_cast<uint16_t*>(reinterpret_cast<uint32_t>(unk2) + 0x4);
 
-            if (item == libtp::data::items::Iron_Boots)
+            if (item == items::Iron_Boots)
             {
                 // Return false so that the door in Bo's house can be opened without having the
                 // Iron Boots

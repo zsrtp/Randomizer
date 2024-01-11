@@ -851,7 +851,7 @@ namespace mod::game_patch
                     *msgSizeOut = static_cast<uint16_t>(&messages[msgOffsets[i + 1]] - currentMsg);
                 }
 
-                // return currentMsg;
+                return currentMsg;
             }
         }
 
