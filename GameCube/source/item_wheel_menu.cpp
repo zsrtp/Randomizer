@@ -86,6 +86,10 @@ namespace mod::item_wheel_menu
         // Hardcode false since the ring isn't being drawn anymore
         setHUDButtonsAlpha(false);
 
+        // If the item wheel is being closed, we also want to close the menu. This way, if the player forgets to close it or
+        // cannot remember how, closing the item wheel will also close the menu.
+        displayMenu = false;
+
         // dMenuRing__delete is an empty function, so don't need to call the original function
     }
 

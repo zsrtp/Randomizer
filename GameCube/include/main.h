@@ -21,12 +21,14 @@
 #include "tp/d_stage.h"
 #include "tp/control.h"
 #include "Z2AudioLib/Z2SceneMgr.h"
+#include "Z2AudioLib/Z2SeqMgr.h"
 #include "events.h"
 #include "tp/d_resource.h"
 #include "tp/JKRMemArchive.h"
 #include "tp/m_Do_dvd_thread.h"
 #include "tp/d_meter2_info.h"
 #include "tp/d_menu_fmap2D.h"
+#include "tp/d_gameover.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -430,11 +432,13 @@ namespace mod
                                       bool param_7);
 
     void handle_startSound(void* soungMgr, libtp::z2audiolib::z2scenemgr::JAISoundID soundId, void* soundHandle, void* pos);
-
     extern void (*return_startSound)(void* soundMgr,
                                      libtp::z2audiolib::z2scenemgr::JAISoundID soundId,
                                      void* soundHandle,
                                      void* pos);
+
+    bool handle_checkBgmIDPlaying(libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, uint32_t sfx_id);
+    extern bool (*return_checkBgmIDPlaying)(libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, uint32_t sfx_id);
 
     // Title Screen functions
     void* handle_dScnLogo_c_dt(void* dScnLogo_c, int16_t bFreeThis);
@@ -454,5 +458,9 @@ namespace mod
     // d_meter functions
     void handle_resetMiniGameItem(libtp::tp::d_meter2_info::G_Meter2_Info* gMeter2InfoPtr, bool minigameFlag);
     extern void (*return_resetMiniGameItem)(libtp::tp::d_meter2_info::G_Meter2_Info* gMeter2InfoPtr, bool minigameFlag);
+
+    // Game Over functions
+    void handle_dispWait_init(libtp::tp::d_gameover::dGameOver* ptr);
+    extern void (*return_dispWait_init)(libtp::tp::d_gameover::dGameOver* ptr);
 } // namespace mod
 #endif

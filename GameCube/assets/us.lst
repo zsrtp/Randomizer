@@ -317,6 +317,7 @@
 
 // Z2SeqMgr.o
 802B4EB0:startBattleBgm
+802b3eac:checkBgmIDPlaying
 
 // Z2SoundMgr.o
 802A9EE8:startSound
@@ -459,3 +460,6 @@
 
 // f_op_actor_iter.o
 800197F8:fopAcIt_Judge
+
+// d_gameover.o
+8019b40c:dispWait_init

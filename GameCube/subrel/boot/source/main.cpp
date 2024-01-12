@@ -236,6 +236,8 @@ namespace mod
         return_loadSeWave = patch::hookFunction(libtp::z2audiolib::z2scenemgr::loadSeWave, mod::handle_loadSeWave);
         return_sceneChange = patch::hookFunction(libtp::z2audiolib::z2scenemgr::sceneChange, mod::handle_sceneChange);
         return_startSound = patch::hookFunction(libtp::z2audiolib::z2soundmgr::startSound, mod::handle_startSound);
+        return_checkBgmIDPlaying =
+            patch::hookFunction(libtp::z2audiolib::z2seqmgr::checkBgmIDPlaying, mod::handle_checkBgmIDPlaying);
 
         // Title Screen functions
         return_dScnLogo_c_dt = patch::hookFunction(libtp::tp::d_s_logo::dScnLogo_c_dt, mod::handle_dScnLogo_c_dt);
@@ -253,6 +255,9 @@ namespace mod
         // d_meter functions
         return_resetMiniGameItem =
             patch::hookFunction(libtp::tp::d_meter2_info::resetMiniGameItem, mod::handle_resetMiniGameItem);
+
+        // Game Over functions
+        return_dispWait_init = patch::hookFunction(libtp::tp::d_gameover::dispWait_init, mod::handle_dispWait_init);
     }
 
     void initRandState()

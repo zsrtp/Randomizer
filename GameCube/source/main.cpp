@@ -256,6 +256,8 @@ namespace mod
                                        void* soundHandle,
                                        void* pos) = nullptr;
 
+    KEEP_VAR bool (*return_checkBgmIDPlaying)(libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, uint32_t sfx_id) = nullptr;
+
     // Title Screen functions
     KEEP_VAR void* (*return_dScnLogo_c_dt)(void* dScnLogo_c, int16_t bFreeThis) = nullptr;
 
@@ -268,6 +270,9 @@ namespace mod
     // d_meter functions
     KEEP_VAR void (*return_resetMiniGameItem)(libtp::tp::d_meter2_info::G_Meter2_Info* gMeter2InfoPtr,
                                               bool minigameFlag) = nullptr;
+
+    // Game Over functions
+    KEEP_VAR void (*return_dispWait_init)(libtp::tp::d_gameover::dGameOver* ptr) = nullptr;
 
     void main()
     {
@@ -1904,6 +1909,25 @@ namespace mod
     {
         z2ScenePtr = z2SceneMgr;
         return return_loadSeWave(z2SceneMgr, waveID);
+    }
+
+    KEEP_FUNC bool handle_checkBgmIDPlaying(libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, uint32_t sfx_id)
+    {
+        // Call original function immediately as it sets necessary values.
+        bool ret = return_checkBgmIDPlaying(seqMgr, sfx_id);
+
+        if (sfx_id == 0x01000013) // Game Over sfx
+        {
+            return false;
+        }
+        return ret;
+    }
+
+    KEEP_FUNC void handle_dispWait_init(libtp::tp::d_gameover::dGameOver* ptr)
+    {
+        // Set the timer
+        ptr->mTimer = 0x0;
+        return return_dispWait_init(ptr);
     }
 
     KEEP_FUNC void* handle_dScnLogo_c_dt(void* dScnLogo_c, int16_t bFreeThis)
