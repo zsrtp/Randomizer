@@ -31,6 +31,7 @@
 #include "tp/f_op_actor_mng.h"
 #include "tp/f_op_actor.h"
 #include "tp/f_op_scene_req.h"
+#include "tp/f_op_msg_mng.h"
 #include "tp/f_pc_node_req.h"
 #include "tp/m_do_controller_pad.h"
 #include "tp/m_do_audio.h"
@@ -50,6 +51,8 @@
 #include "tp/d_kankyo.h"
 #include "rando/customItems.h"
 #include "cxx.h"
+#include "tp/f_pc_executor.h"
+#include "tp/d_msg_flow.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -212,6 +215,13 @@ namespace mod
     // KEEP_VAR int32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
     KEEP_VAR int32_t (*return_event017)(void* messageFlow, void* nodeEvent, void* actrPtr) = nullptr;
     KEEP_VAR int32_t (*return_event003)(void* messageFlow, void* nodeEvent, void* actrPtr) = nullptr;
+    KEEP_VAR int32_t (*return_doFlow)(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                                      libtp::tp::f_op_actor::fopAc_ac_c* actrPtr,
+                                      libtp::tp::f_op_actor::fopAc_ac_c** actrValue,
+                                      int32_t i_flow) = nullptr;
+    KEEP_VAR int32_t (*return_setNormalMsg)(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                                            void* flowNode,
+                                            libtp::tp::f_op_actor::fopAc_ac_c* actrPtr) = nullptr;
 
     // Save flag functions
     KEEP_VAR bool (*return_isDungeonItem)(libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit) = nullptr;
@@ -273,6 +283,11 @@ namespace mod
 
     // Game Over functions
     KEEP_VAR void (*return_dispWait_init)(libtp::tp::d_gameover::dGameOver* ptr) = nullptr;
+
+    // Shop Functions
+    KEEP_VAR int32_t (*return_seq_decide_yes)(libtp::tp::d_shop_system::dShopSystem* shopPtr,
+                                              libtp::tp::f_op_actor::fopAc_ac_c* actor,
+                                              void* msgFlow) = nullptr;
 
     void main()
     {
@@ -795,7 +810,7 @@ namespace mod
     {
         // Load DZX based checks that are stored in the current layer DZX
         events::onDZX(randomizer, chunkTypeInfo);
-        events::loadCustomRoomActors();
+        events::loadCustomRoomActors(randomizer);
         return return_actorCommonLayerInit(mStatus_roomControl, chunkTypeInfo, unk3, unk4);
     }
 
@@ -859,8 +874,8 @@ namespace mod
             }
         }
 
-        getConsole() << "No match found."
-                     << "\n";
+        // getConsole() << "No match found."
+        //              << "\n";
         return return_dComIfGp_setNextStage(stage,
                                             point,
                                             roomNo,
@@ -1279,6 +1294,55 @@ namespace mod
         return return_event017(messageFlow, nodeEvent, actrPtr);
     }
 
+    KEEP_FUNC int32_t handle_doFlow(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                                    libtp::tp::f_op_actor::fopAc_ac_c* actrPtr,
+                                    libtp::tp::f_op_actor::fopAc_ac_c** actrValue,
+                                    int32_t i_flow)
+    {
+        if (msgFlow->mFlow == 0xFFFE) // check if it equals our custom flow value
+        {
+            if (msgFlow->mMsg == 0xFFFFFFFF)
+            {
+                msgFlow->mMsg = 0; // Clear the invalid msg value since it will be set by the game once our text is loaded.
+                msgFlow->field_0x26 = 0x0; // When this byte is set, the current event is aborted. With unused nodes, it is set
+                                           // to 1 by default so we need to unset it.
+
+                if (libtp::tp::d_a_alink::checkStageName(
+                        libtp::data::stage::allStages[libtp::data::stage::StageIDs::Hyrule_Field]) ||
+                    libtp::tp::d_a_alink::checkStageName(
+                        libtp::data::stage::allStages[libtp::data::stage::StageIDs::Outside_Castle_Town]))
+                {
+                    msgFlow->field_0x10 =
+                        0x8; // Hyrule Field does not have a valid flow node for node 0 so we want it to use its native node (8)
+                }
+                else
+                {
+                    msgFlow->field_0x10 =
+                        0x0; // Sets the flow to use the same flow grouping as the standard flow that getItem text uses.
+                }
+            }
+        }
+        return return_doFlow(msgFlow, actrPtr, actrValue, i_flow);
+    }
+
+    KEEP_FUNC int32_t handle_setNormalMsg(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                                          void* flowNode,
+                                          libtp::tp::f_op_actor::fopAc_ac_c* actrPtr)
+    {
+        if (msgFlow->mFlow == 0xFFFE) // check if it equals our custom flow value
+        {
+            uint32_t var1 = libtp::tp::f_op_msg_mng::fopMsgM_messageSet(
+                0x1360,
+                1000); // set the msg id in the node to that of our specified message.
+            msgFlow->mMsg = var1;
+            return 1;
+        }
+        else
+        {
+            return return_setNormalMsg(msgFlow, flowNode, actrPtr);
+        }
+    }
+
     KEEP_FUNC void handle_jmessage_tSequenceProcessor__do_begin(void* seqProcessor, const void* unk2, const char* text)
     {
         // Call the original function immediately as it sets necessary values needed later on.
@@ -1686,7 +1750,7 @@ namespace mod
             }
             else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Arbiters_Grounds]))
             {
-                if (flag == 0x26)
+                if (flag == 0x26) // Poe flame CS trigger
                 {
                     libtp::tp::d_save::offSwitch_dSv_memBit(memoryBit,
                                                             0x45); // Open the Poe gate
@@ -1706,7 +1770,14 @@ namespace mod
                         playerStatusAPtr->currentForm =
                             0; // Set player to Human as the game will not do so if Shadow Crystal has been obtained.
                     }
-                    return;
+                }
+            }
+            else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Kakariko_Village]))
+            {
+                if (flag == 0x3E) // Hawkeye is for sell.
+                {
+                    libtp::tp::d_save::offSwitch_dSv_memBit(memoryBit,
+                                                            0xB); // Remove the coming soon sign so the hawkeye can be bought.
                 }
             }
         }
@@ -1928,6 +1999,16 @@ namespace mod
         // Set the timer
         ptr->mTimer = 0x0;
         return return_dispWait_init(ptr);
+    }
+
+    KEEP_FUNC int32_t handle_seq_decide_yes(libtp::tp::d_shop_system::dShopSystem* shopPtr,
+                                            libtp::tp::f_op_actor::fopAc_ac_c* actor,
+                                            void* msgFlow)
+    {
+        // We want the shop item to have its flag updated no matter what.
+        libtp::tp::d_shop_system::setSoldOutFlag(shopPtr);
+
+        return return_seq_decide_yes(shopPtr, actor, msgFlow);
     }
 
     KEEP_FUNC void* handle_dScnLogo_c_dt(void* dScnLogo_c, int16_t bFreeThis)

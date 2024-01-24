@@ -719,7 +719,17 @@ namespace mod::game_patch
                 }
             }
 
-            const char* newMessage = getCustomMessage(msgId);
+            const char* newMessage;
+
+            if (msgId == 0x1369) // The custom message ID used for hints on custom signs
+            {
+                newMessage = _05_getSpecialMsgById(msgId);
+            }
+            else
+            {
+                newMessage = getCustomMessage(msgId);
+            }
+
             setMessageText(newMessage);
             return;
         }
@@ -866,7 +876,7 @@ namespace mod::game_patch
         using namespace rando;
 
         uint32_t hintmsgTableInfoRaw = reinterpret_cast<uint32_t>(m_HintMsgTableInfo);
-        getConsole() << msgId << " " << m_HintMsgTableInfo << " " << &m_HintMsgTableInfo << "\n";
+        // getConsole() << msgId << " " << m_HintMsgTableInfo << " " << &m_HintMsgTableInfo << "\n";
         if (!hintmsgTableInfoRaw)
         {
             return nullptr;

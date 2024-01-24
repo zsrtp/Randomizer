@@ -184,6 +184,8 @@ namespace mod
         return_query042 = patch::hookFunction(libtp::tp::d_msg_flow::query042, mod::handle_query042);
         // return_event000 = patch::hookFunction( libtp::tp::d_msg_flow::event000, mod::handle_event000 );
         return_event017 = patch::hookFunction(libtp::tp::d_msg_flow::event017, mod::handle_event017);
+        return_doFlow = patch::hookFunction(libtp::tp::d_msg_flow::doFlow, mod::handle_doFlow);
+        return_setNormalMsg = patch::hookFunction(libtp::tp::d_msg_flow::setNormalMsg, mod::handle_setNormalMsg);
 
         // Save flag functions
         return_isDungeonItem = patch::hookFunction(tp::d_save::isDungeonItem, mod::handle_isDungeonItem);
@@ -258,6 +260,9 @@ namespace mod
 
         // Game Over functions
         return_dispWait_init = patch::hookFunction(libtp::tp::d_gameover::dispWait_init, mod::handle_dispWait_init);
+
+        // Shop Functions
+        return_seq_decide_yes = patch::hookFunction(libtp::tp::d_shop_system::seq_decide_yes, mod::handle_seq_decide_yes);
     }
 
     void initRandState()

@@ -613,6 +613,12 @@ namespace mod::game_patch
         }
     }
 
+    KEEP_FUNC void _02_firstMirrorShardItemFunc()
+    {
+        // Update the pause menu to show the first shard.
+        events::setSaveFileEventFlag(libtp::data::flags::UPDATE_SHARDS_TO_HAVE_AT_LEAST_ARBITERS_SHARD);
+    }
+
     KEEP_FUNC void _02_secondMirrorShardItemFunc()
     {
         // Give player second mirror shard.
@@ -775,6 +781,12 @@ namespace mod::game_patch
     KEEP_FUNC int32_t _02_thirdFusedShadowItemGetCheck()
     {
         bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit(rando::customItems::Fused_Shadow_3);
+        return static_cast<int32_t>(result);
+    }
+
+    KEEP_FUNC int32_t _02_firstMirrorShardItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit(rando::customItems::Mirror_Piece_1);
         return static_cast<int32_t>(result);
     }
 

@@ -98,6 +98,9 @@
 80019D98:fopAcM_create
 8001bb14:fopAcM_getTalkEventPartner
 
+// f_op_msg_mng.o
+8001fe84:fopMsgM_messageSet
+
 // f_pc_node_req
 803A3A38:l_fpcNdRq_Queue
 
@@ -359,6 +362,7 @@
 
 // d_msg_object.o
 802369D8:isSend
+802383d0:getMessageID
 
 // processor.o
 802A7C54:getResource_groupID
@@ -376,6 +380,9 @@
 8024da78:event041
 8024bc80:query037
 8024c2a0:query049
+8024a2d8:doFlow
+8024a528:getEventId
+8024aa50:setNormalMsg
 
 //d_menu_window.o
 801fa590:collect_save_open_init
@@ -384,6 +391,7 @@
 8014ca2c:daNpcT_onEvtBit
 8014caac:daNpcT_chkEvtBit
 80155634:daNpcF_chkEvtBit
+8014a224:evtChange
 
 //resource.o
 802a9490:parseCharacter_1Byte
@@ -463,3 +471,13 @@
 
 // d_gameover.o
 8019b40c:dispWait_init
+
+// d_shop_system.o
+80199e28:seq_decide_yes
+801975dc:offFlag
+8019a4f4:setSoldOutItemHide
+8019a344:setSeq
+8019a354:setSoldOutFlag
+
+// f_pc_executor.o
+8002139c:fpcEx_IsExist

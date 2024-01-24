@@ -29,6 +29,9 @@
 #include "tp/d_meter2_info.h"
 #include "tp/d_menu_fmap2D.h"
 #include "tp/d_gameover.h"
+#include "tp/d_shop_system.h"
+#include "tp/f_op_actor.h"
+#include "tp/d_msg_flow.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -349,6 +352,22 @@ namespace mod
     int32_t handle_event017(void* messageFlow, void* nodeEvent, void* actrPtr);
     extern int32_t (*return_event017)(void* messageFlow, void* nodeEvent, void* actrPtr);
 
+    int32_t handle_doFlow(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                          libtp::tp::f_op_actor::fopAc_ac_c* actrPtr,
+                          libtp::tp::f_op_actor::fopAc_ac_c** actrValue,
+                          int32_t i_flow);
+    extern int32_t (*return_doFlow)(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                                    libtp::tp::f_op_actor::fopAc_ac_c* actrPtr,
+                                    libtp::tp::f_op_actor::fopAc_ac_c** actrValue,
+                                    int32_t i_flow);
+
+    int32_t handle_setNormalMsg(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                                void* flowNode,
+                                libtp::tp::f_op_actor::fopAc_ac_c* actrPtr);
+    extern int32_t (*return_setNormalMsg)(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                                          void* flowNode,
+                                          libtp::tp::f_op_actor::fopAc_ac_c* actrPtr);
+
     // Save flag functions
     bool handle_isDungeonItem(libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit);
     extern bool (*return_isDungeonItem)(libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit);
@@ -462,5 +481,13 @@ namespace mod
     // Game Over functions
     void handle_dispWait_init(libtp::tp::d_gameover::dGameOver* ptr);
     extern void (*return_dispWait_init)(libtp::tp::d_gameover::dGameOver* ptr);
+
+    // Shop Functions
+    int32_t handle_seq_decide_yes(libtp::tp::d_shop_system::dShopSystem* shopPtr,
+                                  libtp::tp::f_op_actor::fopAc_ac_c* actor,
+                                  void* msgFlow);
+    extern int32_t (*return_seq_decide_yes)(libtp::tp::d_shop_system::dShopSystem* shopPtr,
+                                            libtp::tp::f_op_actor::fopAc_ac_c* actor,
+                                            void* msgFlow);
 } // namespace mod
 #endif
