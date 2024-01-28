@@ -44,12 +44,6 @@ namespace mod::game_patch
         // Nop out the instruction that causes a miscalculation in message resources.
         *patchMessageCalculation = ASM_NOP;
 
-        // Modify the skipper function to check whether or not a cutscene is skippable instead of whether the player skips the
-        // CS. This effectively auto-skips all skippable cutscenes.
-        uint32_t skipperFunctionAddress = reinterpret_cast<uint32_t>(libtp::tp::d_event::skipper);
-        *reinterpret_cast<uint32_t*>(skipperFunctionAddress + 0x54) =
-            ASM_COMPARE_LOGICAL_WORD_IMMEDIATE(30, 0); // Previous rlwinm r0,r0,0,19,19
-
         // Modify the Wooden Sword function to not set a region flag by default by nopping out the function call to isSwitch
         uint32_t woodenSwordFunctionAddress = reinterpret_cast<uint32_t>(libtp::tp::d_item::item_func_WOOD_STICK);
         *reinterpret_cast<uint32_t*>(woodenSwordFunctionAddress + 0x40) = ASM_NOP; // Previous 0x4bf9cafd
