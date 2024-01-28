@@ -234,6 +234,8 @@ namespace mod
         return_damageMagnification =
             patch::hookFunction(libtp::tp::d_a_alink::damageMagnification, mod::handle_damageMagnification);
 
+        return_procCoGetItemInit = patch::hookFunction(libtp::tp::d_a_alink::procCoGetItemInit, mod::handle_procCoGetItemInit);
+
         // Audio functions
         return_loadSeWave = patch::hookFunction(libtp::z2audiolib::z2scenemgr::loadSeWave, mod::handle_loadSeWave);
         return_sceneChange = patch::hookFunction(libtp::z2audiolib::z2scenemgr::sceneChange, mod::handle_sceneChange);

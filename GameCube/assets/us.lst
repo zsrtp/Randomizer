@@ -75,6 +75,9 @@
 80042778:defaultSkipStb
 800429D4:skipper
 
+// d_event_manager.o
+80047758:getEventIdx
+
 // DynamicLink.o
 80262660:DynamicModuleControl_ct
 80262C5C:do_link
@@ -97,6 +100,7 @@
 80019AA8:CreateAppend
 80019D98:fopAcM_create
 8001bb14:fopAcM_getTalkEventPartner
+8001b5e4:fopAcM_orderChangeEventId
 
 // f_op_msg_mng.o
 8001fe84:fopMsgM_messageSet
@@ -133,7 +137,6 @@
 800d29d4:checkDownAttackState
 800c77f4:procCoMetamorphoseInit
 80115c20:checkEventRun
-803DCE54:linkStatus
 800e251c:checkBootsMoveAnime
 80119d98:procCoTalkInit
 800d8f3c:procDamageInit
@@ -142,6 +145,7 @@
 801181a0:setGetItemFace
 800d96dc:procCoLargeDamageInit
 8011ac28:procCoGetItem
+8011a798:procCoGetItemInit
 800cffa4:dComIfGp_setItemLifeCount
 800be3e4:checkRestartRoom
 8011f9ec:checkWarpStart
@@ -342,7 +346,6 @@
 
 //d_meter2_info.o
 80430188:g_meter2_info
-804301A4:wZButtonPtr
 8021e0c4:resetMiniGameItem
 
 //d_meter2_draw.o

@@ -95,6 +95,7 @@ namespace mod
     extern bool transformAnywhereEnabled;
     extern uint8_t damageMultiplier;
     extern bool bonksDoDamage;
+    extern bool giveItemToPlayer;
 
 #ifdef TP_EU
     extern libtp::tp::d_s_logo::Languages currentLanguage;
@@ -427,6 +428,9 @@ namespace mod
 
     float handle_damageMagnification(libtp::tp::d_a_alink::daAlink* daALink, int32_t param_1, int32_t param_2);
     extern float (*return_damageMagnification)(libtp::tp::d_a_alink::daAlink* daALink, int32_t param_1, int32_t param_2);
+
+    void handle_procCoGetItemInit(libtp::tp::d_a_alink::daAlink* linkActrPtr);
+    extern void (*return_procCoGetItemInit)(libtp::tp::d_a_alink::daAlink* linkActrPtr);
 
     // Audio functions
     void handle_loadSeWave(void* Z2SceneMgr, uint32_t waveID);

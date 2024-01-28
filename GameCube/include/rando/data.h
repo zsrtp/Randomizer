@@ -56,20 +56,21 @@ namespace mod::rando
         /* 0x3C */ entryInfo bugRewardCheckInfo;
         /* 0x40 */ entryInfo skyCharacterCheckInfo;
         /* 0x44 */ entryInfo shopItemCheckInfo;
-        /* 0x48 */ entryInfo startingItemInfo;
-        /* 0x4C */ entryInfo EntranceTableInfo;
-        /* 0x50 */ uint16_t bgmHeaderOffset;
-        /* 0x52 */ uint16_t clr0Offset;
-        /* 0x54 */ uint16_t customTextHeaderSize;
-        /* 0x56 */ uint16_t customTextHeaderOffset;
-        /* 0x58 */ uint8_t transformAnywhere;
-        /* 0x59 */ uint8_t quickTransform;
-        /* 0x5A */ uint8_t castleRequirements;
-        /* 0x5B */ uint8_t palaceRequirements;
-        /* 0x5C */ uint8_t mapClearBits;
-        /* 0x5D */ uint8_t damageMagnification;
-        /* 0x5E */ uint8_t bonksDoDamage;
-        /* 0x5F */ uint8_t padding;
+        /* 0x48 */ entryInfo eventItemCheckInfo;
+        /* 0x4C */ entryInfo startingItemInfo;
+        /* 0x50 */ entryInfo EntranceTableInfo;
+        /* 0x54 */ uint16_t bgmHeaderOffset;
+        /* 0x56 */ uint16_t clr0Offset;
+        /* 0x58 */ uint16_t customTextHeaderSize;
+        /* 0x5A */ uint16_t customTextHeaderOffset;
+        /* 0x5C */ uint8_t transformAnywhere;
+        /* 0x5D */ uint8_t quickTransform;
+        /* 0x5E */ uint8_t castleRequirements;
+        /* 0x5F */ uint8_t palaceRequirements;
+        /* 0x60 */ uint8_t mapClearBits;
+        /* 0x61 */ uint8_t damageMagnification;
+        /* 0x62 */ uint8_t bonksDoDamage;
+        /* 0x63 */ uint8_t padding;
     } __attribute__((__packed__));
 
     // Minimum amount of data needed for keeping track of a seed
@@ -214,6 +215,15 @@ namespace mod::rando
         uint8_t roomID;    // The room that the Owl Statue is located in.
     } __attribute__((__packed__));
 
+    // These items are given either during cutscenes or at a specific time.
+    struct EventItem
+    {
+        uint8_t itemID;   // The item to be given.
+        uint8_t stageIDX; // The stage that the event is in.
+        uint8_t roomID;   // The room that the event is in.
+        uint8_t flag;     // The unique identifier used to disinguish between checks in the same room.
+    } __attribute__((__packed__));
+
     struct CustomMessageEntryInfo
     {
         uint8_t language;
@@ -277,6 +287,23 @@ namespace mod::rando
         XBtn,
         YBtn,
         ZBtn
+    };
+
+    enum CastleEntryRequirements : uint8_t
+    {
+        HC_Open = 0,
+        HC_Fused_Shadows = 1,
+        HC_Mirror_Shards,
+        HC_All_Dungeons,
+        HC_Vanilla
+    };
+
+    enum PalaceEntryRequirements : uint8_t
+    {
+        PoT_Open = 0,
+        PoT_Fused_Shadows = 1,
+        PoT_Mirror_Shards,
+        PoT_Vanilla
     };
 
     struct RawRGBTable

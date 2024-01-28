@@ -188,6 +188,7 @@ namespace mod::rando
             this->LoadBugReward();
             this->LoadSkyCharacter(stageIDX);
             this->LoadHiddenSkill();
+            this->LoadEventChecks(stageIDX);
 
             // Save current stageIDX for next time
             this->m_StageIDX = stageIDX;
@@ -204,6 +205,7 @@ namespace mod::rando
         m_numBugRewardChecks = 0;
         m_numSkyBookChecks = 0;
         m_numHiddenSkillChecks = 0;
+        m_numLoadedEventChecks = 0;
 
         delete[] m_DZXChecks;
         delete[] m_RELChecks;
@@ -212,6 +214,7 @@ namespace mod::rando
         delete[] m_BugRewardChecks;
         delete[] m_SkyBookChecks;
         delete[] m_HiddenSkillChecks;
+        delete[] m_EventChecks;
     }
 
     void Seed::LoadDZX(uint8_t stageIDX)
@@ -466,6 +469,39 @@ namespace mod::rando
                 memcpy(bossChecksPtr, currentBossCheck, sizeof(BossCheck));
                 break;
             }
+        }
+    }
+
+    void Seed::LoadEventChecks(uint8_t stageIDX)
+    {
+        using namespace libtp;
+
+        Header* headerPtr = m_Header;
+        const uint32_t num_eventchecks = headerPtr->eventItemCheckInfo.numEntries;
+        const uint32_t gci_offset = headerPtr->eventItemCheckInfo.dataOffset;
+
+        // Set the pointer as offset into our buffer
+        EventItem* eventChecksPtr = new EventItem[num_eventchecks];
+        m_EventChecks = eventChecksPtr;
+        EventItem* allEvent = reinterpret_cast<EventItem*>(&m_GCIData[gci_offset]);
+
+        // offset into m_SkyBookChecks
+        uint32_t j = 0;
+
+        for (uint32_t i = 0; i < num_eventchecks; i++)
+        {
+            EventItem* currentEventCheck = &allEvent[i];
+            EventItem* globalEventCheck = &eventChecksPtr[j];
+
+            uint32_t numEventChecks = m_numLoadedEventChecks;
+            if ((currentEventCheck->stageIDX == stageIDX))
+            {
+                getConsole() << "we have a check\n";
+                memcpy(globalEventCheck, currentEventCheck, sizeof(EventItem));
+                numEventChecks++;
+                j++;
+            }
+            m_numLoadedEventChecks = static_cast<uint16_t>(numEventChecks);
         }
     }
 

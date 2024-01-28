@@ -41,6 +41,7 @@ namespace mod::events
     extern libtp::tp::dzx::ACTR CampBoarActr;
     extern libtp::tp::dzx::ACTR KakShopSlot2Actr;
     extern libtp::tp::dzx::ACTR SignActr;
+    extern libtp::tp::dzx::ACTR MstrSrdActr;
 
     extern uint8_t timeChange;
 

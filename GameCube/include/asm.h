@@ -97,6 +97,10 @@ namespace mod::assembly
         void asmReplaceGWolfWithItem(void);
         bool handleReplaceGWolfWithItem(const int16_t* l_delFlag, void* daNpcGWolf);
 
+        // d_a_obj_master_sword.o
+        void asmGiveMasterSwordItems();
+        void handleGiveMasterSwordItems();
+
         // vi.o
         void asmCallCodehandler();
 

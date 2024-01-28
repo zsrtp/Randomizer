@@ -91,6 +91,7 @@ namespace mod
     bool transformAnywhereEnabled = false;
     uint8_t damageMultiplier = 1;
     bool bonksDoDamage = false;
+    bool giveItemToPlayer = false;
 
 #ifdef TP_EU
     KEEP_VAR libtp::tp::d_s_logo::Languages currentLanguage = libtp::tp::d_s_logo::Languages::uk;
@@ -250,6 +251,7 @@ namespace mod
                                                  int32_t param_1,
                                                  int32_t param_2) = nullptr;
     KEEP_VAR bool (*return_checkCastleTownUseItem)(uint16_t item_id) = nullptr;
+    KEEP_VAR void (*return_procCoGetItemInit)(libtp::tp::d_a_alink::daAlink* linkActrPtr) = nullptr;
 
     // Audio functions
     KEEP_VAR void (*return_loadSeWave)(void* Z2SceneMgr, uint32_t waveID) = nullptr;
@@ -755,6 +757,74 @@ namespace mod
         {
             events::handleTimeSpeed();
         }
+
+        // Giving items at any point
+
+        if (libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer)
+        {
+            // Probably change this to checking mProc to make sure we are "waiting"
+            switch (libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mProcID)
+            {
+                case libtp::tp::d_a_alink::PROC_WAIT:
+                case libtp::tp::d_a_alink::PROC_MOVE:
+                case libtp::tp::d_a_alink::PROC_WOLF_WAIT:
+                case libtp::tp::d_a_alink::PROC_WOLF_MOVE:
+                case libtp::tp::d_a_alink::PROC_SERVICE_WAIT:
+                case libtp::tp::d_a_alink::PROC_WOLF_SERVICE_WAIT:
+                {
+                    using namespace libtp::tp;
+
+                    // Check if link is currently in a cutscene
+                    if (!d_a_alink::checkEventRun(linkMapPtr))
+                    {
+                        // Ensure that link is not currently in a message-based event.
+                        if (d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mMsgFlow.mEventId == 0)
+                        {
+                            uint8_t itemToGive = 0xFF;
+                            for (int i = 0; i < 4; i++)
+                            {
+                                if (d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve[i] != 0)
+                                {
+                                    itemToGive = d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve[i];
+                                    d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve[i] = 0x0;
+                                    break;
+                                }
+                            }
+
+                            // if there is no item to give, break out of the case.
+                            if (itemToGive == 0xFF)
+                            {
+                                break;
+                            }
+
+                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mEvent.mGtItm = itemToGive;
+
+                            // Set the process value for getting an item to start the "get item" cutscene when next available.
+                            d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mProcID = libtp::tp::d_a_alink::PROC_GET_ITEM;
+
+                            //  Get the event index for the "Get Item" event.
+                            int16_t eventIdx = d_event_manager::getEventIdx(
+                                &d_com_inf_game::dComIfG_gameInfo.play.mEvtManager,
+                                reinterpret_cast<f_op_actor::fopAc_ac_c*>(d_com_inf_game::dComIfG_gameInfo.play.mPlayer),
+                                "DEFAULT_GETITEM",
+                                0xff);
+
+                            // Finally we want to modify the event stack to prioritize our custom event so that it happens next.
+                            libtp::tp::f_op_actor_mng::fopAcM_orderChangeEventId(
+                                reinterpret_cast<void*>(d_com_inf_game::dComIfG_gameInfo.play.mPlayer),
+                                eventIdx,
+                                1,
+                                0xFFFF);
+
+                            // Once we are done, we set a global bool that is checked in procCoGetItemInit to give the player
+                            // the item.
+                            giveItemToPlayer = true;
+                        }
+                    }
+                }
+            }
+        }
+
         // End of custom events
 
         // Call the original function
@@ -1682,7 +1752,8 @@ namespace mod
                 {
                     if (randoIsEnabled(randomizer))
                     {
-                        if (randomizer->m_Seed->m_Header->castleRequirements == 4) // Vanilla
+                        if (randomizer->m_Seed->m_Header->castleRequirements ==
+                            rando::CastleEntryRequirements::HC_Vanilla) // Vanilla
                         {
                             events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
                             return return_onEventBit(eventPtr, flag); // set PoT story flag
@@ -2009,6 +2080,20 @@ namespace mod
         libtp::tp::d_shop_system::setSoldOutFlag(shopPtr);
 
         return return_seq_decide_yes(shopPtr, actor, msgFlow);
+    }
+
+    KEEP_FUNC void handle_procCoGetItemInit(libtp::tp::d_a_alink::daAlink* linkActrPtr)
+    {
+        // If we are giving a custom item, we want to set mParam0 to 0x100 so that instead of trying to search for an item actor
+        // that doesnt exist we want the game to create one using the item id in mGtItm.
+        if (giveItemToPlayer)
+        {
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mDemo.mParam0 = 0x100;
+            giveItemToPlayer = false;
+        }
+        return_procCoGetItemInit(linkActrPtr);
+
+        return;
     }
 
     KEEP_FUNC void* handle_dScnLogo_c_dt(void* dScnLogo_c, int16_t bFreeThis)

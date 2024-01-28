@@ -31,6 +31,7 @@
 #include "rando/customItems.h"
 #include "tp/f_op_actor_iter.h"
 #include "tp/d_pane_class.h"
+#include "game_patch/game_patch.h"
 
 namespace mod::events
 {
@@ -85,6 +86,8 @@ namespace mod::events
                                       static_cast<int16_t>(0xD556),
                                       0,
                                       0xFFFF};
+
+    libtp::tp::dzx::ACTR MstrSrdActr = {"mstrsrd", 0x000020110, 0.f, 1700.f, -5435.f, 0x147, 0x0, 0x0, 0xFFFF};
 
     uint8_t timeChange = 0;
 
@@ -702,6 +705,16 @@ namespace mod::events
                 performStaticASMReplacement(relPtrRaw + 0x20B8, ASM_BRANCH_EQUAL_MINUS(0x38));
                 break;
             }
+
+            // d_obj_master_sword.rel
+            // Master Sword Freestanding Actor
+            case D_A_OBJ_MASTER_SWORD:
+            {
+                // Apply an ASM patch to d_a_Obj_Master_Sword::executeWait to give the player two items and delete the Master
+                // Sword actor instead of trying to play the purification cutscene.
+                libtp::patch::writeBranchBL(relPtrRaw + 0x254, assembly::asmGiveMasterSwordItems);
+                break;
+            }
         }
     }
 
@@ -1025,34 +1038,48 @@ namespace mod::events
     void proc_onDungeonItem(libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit)
     {
         using namespace libtp::data::flags;
-        switch (memBit)
+        using namespace libtp;
+        using namespace libtp::data::stage;
+
+        const auto stagesPtr = &allStages[0];
+        if (memBitPtr == &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags)
         {
-            case BOSS_DEFEATED:
+            switch (memBit)
             {
-                if (randomizer->m_Seed->m_Header->castleRequirements == 3) // All Dungeons
+                case BOSS_DEFEATED:
                 {
-                    // Check to see if the player has completed all of the other dungeons, if so, destroy the barrier.
-                    uint8_t numDungeons = 0x0;
-                    for (int32_t i = 0x10; i < 0x18; i++)
+                    if (randomizer->m_Seed->m_Header->castleRequirements ==
+                        rando::CastleEntryRequirements::HC_All_Dungeons) // All Dungeons
                     {
-                        if (libtp::tp::d_save::isDungeonItem(
-                                &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[i].temp_flags,
-                                3))
+                        // Check to see if the player has completed all of the other dungeons, if so, destroy the barrier.
+                        uint8_t numDungeons = 0x0;
+                        for (int32_t i = 0x10; i < 0x18; i++)
                         {
-                            numDungeons++;
+                            if (libtp::tp::d_save::isDungeonItem(
+                                    &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[i].temp_flags,
+                                    3))
+                            {
+                                numDungeons++;
+                            }
+                        }
+                        if (numDungeons == 0x7) // We check for 7 instead of 8 because when this code runs, the temp_flags for
+                                                // the current stage has not been updated with the boss flag value yet.
+                        {
+                            events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
                         }
                     }
-                    if (numDungeons == 0x7) // We check for 7 instead of 8 because when this code runs, the temp_flags for
-                                            // the current stage has not been updated with the boss flag value yet.
+                    if (tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Stallord]))
                     {
-                        events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
+                        uint8_t agDungeonReward = randomizer->getEventItem(rando::customItems::Mirror_Piece_1);
+                        agDungeonReward = game_patch::_04_verifyProgressiveItem(randomizer, agDungeonReward);
+                        randomizer->addItemToEventQueue(agDungeonReward);
                     }
+                    break;
                 }
-                break;
-            }
-            default:
-            {
-                break;
+                default:
+                {
+                    break;
+                }
             }
         }
         mod::return_onDungeonItem(memBitPtr, memBit);
@@ -1272,6 +1299,11 @@ namespace mod::events
                 localSignActor.pos.z = 4178.08252f;
                 localSignActor.rot[1] = static_cast<int16_t>(0xD556);
                 tools::spawnActor(3, localSignActor);
+
+                if (roomIDX == 1)
+                {
+                    tools::spawnActor(1, MstrSrdActr);
+                }
                 break;
             }
 
@@ -1531,30 +1563,42 @@ namespace mod::events
             return;
         }
 
-        // Ensure there is a proper pointer to the Z Button Alpha.
-        uint32_t zButtonAlphaPtr = reinterpret_cast<uint32_t>(libtp::tp::d_meter2_info::wZButtonPtr);
-        if (!zButtonAlphaPtr)
+        // Ensure there is a proper pointer to the mMeterClass and mpMeterDraw structs in g_meter2_info.
+        if (!libtp::tp::d_meter2_info::g_meter2_info.mMeterClass)
         {
             return;
         }
 
-        zButtonAlphaPtr = *reinterpret_cast<uint32_t*>(zButtonAlphaPtr + 0x10C);
-        if (!zButtonAlphaPtr)
+        if (!libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw)
         {
             return;
         }
 
         // Ensure that the Z Button is not dimmed
-        const float zButtonAlpha = *reinterpret_cast<float*>(zButtonAlphaPtr + 0x720);
+        const float zButtonAlpha = libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mZButtonAlpha;
         if (zButtonAlpha != 1.f)
         {
             return;
         }
 
         // Make sure Link is not underwater or talking to someone.
-        if (libtp::tp::d_a_alink::linkStatus->status != 0x1)
+        switch (linkMapPtr->mProcID)
         {
-            return;
+            case libtp::tp::d_a_alink::PROC_TALK:
+            case libtp::tp::d_a_alink::PROC_WOLF_SWIM_MOVE:
+            case libtp::tp::d_a_alink::PROC_SWIM_MOVE:
+            case libtp::tp::d_a_alink::PROC_SWIM_WAIT:
+            case libtp::tp::d_a_alink::PROC_WOLF_SWIM_WAIT:
+            case libtp::tp::d_a_alink::PROC_SWIM_UP:
+            case libtp::tp::d_a_alink::PROC_SWIM_DIVE:
+            {
+                return;
+                break;
+            }
+            default:
+            {
+                break;
+            }
         }
 
         // The game will crash if trying to quick transform while holding the Ball and Chain
@@ -1683,21 +1727,19 @@ namespace mod::events
         // This is needed because the Z button will always be dimmed if she has not been unlocked
         if (libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::MIDNA_ACCOMPANIES_WOLF))
         {
-            // Ensure there is a proper pointer to the Z Button Alpha.
-            uint32_t zButtonAlphaPtr = reinterpret_cast<uint32_t>(libtp::tp::d_meter2_info::wZButtonPtr);
-            if (!zButtonAlphaPtr)
+            // Ensure there is a proper pointer to the mMeterClass and mpMeterDraw structs in g_meter2_info.
+            if (!libtp::tp::d_meter2_info::g_meter2_info.mMeterClass)
             {
                 return false;
             }
 
-            zButtonAlphaPtr = *reinterpret_cast<uint32_t*>(zButtonAlphaPtr + 0x10C);
-            if (!zButtonAlphaPtr)
+            if (!libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw)
             {
                 return false;
             }
 
             // Ensure that the Z Button is not dimmed
-            const float zButtonAlpha = *reinterpret_cast<float*>(zButtonAlphaPtr + 0x720);
+            const float zButtonAlpha = libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mZButtonAlpha;
             if (zButtonAlpha != 1.f)
             {
                 return false;
@@ -1705,9 +1747,23 @@ namespace mod::events
         }
 
         // Make sure Link is not underwater or talking to someone.
-        if (libtp::tp::d_a_alink::linkStatus->status != 0x1)
+        switch (linkMapPtr->mProcID)
         {
-            return false;
+            case libtp::tp::d_a_alink::PROC_TALK:
+            case libtp::tp::d_a_alink::PROC_WOLF_SWIM_MOVE:
+            case libtp::tp::d_a_alink::PROC_SWIM_MOVE:
+            case libtp::tp::d_a_alink::PROC_SWIM_WAIT:
+            case libtp::tp::d_a_alink::PROC_WOLF_SWIM_WAIT:
+            case libtp::tp::d_a_alink::PROC_SWIM_UP:
+            case libtp::tp::d_a_alink::PROC_SWIM_DIVE:
+            {
+                return false;
+                break;
+            }
+            default:
+            {
+                break;
+            }
         }
 
         return true;

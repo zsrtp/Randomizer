@@ -600,13 +600,13 @@ namespace mod::game_patch
             rando::Header* headerPtr = rando->m_Seed->m_Header;
 
             // If the player has the castle requirement set to Fused Shadows.
-            if (headerPtr->castleRequirements == 1)
+            if (headerPtr->castleRequirements == rando::CastleEntryRequirements::HC_Fused_Shadows)
             {
                 events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
             }
 
             // If the player has the palace requirement set to Fused Shadows.
-            if (headerPtr->palaceRequirements == 1)
+            if (headerPtr->palaceRequirements == rando::PalaceEntryRequirements::PoT_Fused_Shadows)
             {
                 events::setSaveFileEventFlag(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT);
             }
@@ -645,12 +645,12 @@ namespace mod::game_patch
             rando::Header* headerPtr = rando->m_Seed->m_Header;
 
             // If the player has the castle requirement set to Mirror Shards.
-            if (headerPtr->castleRequirements == 2)
+            if (headerPtr->castleRequirements == rando::CastleEntryRequirements::HC_Mirror_Shards)
             {
                 events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
             }
             // If the player has the palace requirement set to Mirror Shards.
-            if (headerPtr->palaceRequirements == 2)
+            if (headerPtr->palaceRequirements == rando::PalaceEntryRequirements::PoT_Mirror_Shards)
             {
                 events::setSaveFileEventFlag(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT);
             }
