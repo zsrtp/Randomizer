@@ -577,6 +577,9 @@ namespace mod
             // Special combo to (de)activate the console should be handled first
             if (checkBtn(currentButtons, PadInputs::Button_R | PadInputs::Button_Z))
             {
+                // Disable the input that was just pressed, as sometimes it could cause talking to Midna when in-game
+                padInfo->mPressedButtonFlags = 0;
+
                 // Disallow during boot as we print info etc.
                 // Will automatically disappear if there is no seeds to select from
                 setScreen(!consoleState);
@@ -605,6 +608,10 @@ namespace mod
             // Handle generic button checks
             if (checkButtonCombo(PadInputs::Button_R | PadInputs::Button_Y, true))
             {
+                // Disable the input that was just pressed, as sometimes it could cause items to be used or Wolf Link to dig.
+                padInfo->mPressedButtonFlags = 0;
+
+                // Handle transforming
                 events::handleQuickTransform();
             }
 
@@ -766,8 +773,10 @@ namespace mod
             switch (libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mProcID)
             {
                 case libtp::tp::d_a_alink::PROC_WAIT:
+                case libtp::tp::d_a_alink::PROC_TIRED_WAIT:
                 case libtp::tp::d_a_alink::PROC_MOVE:
                 case libtp::tp::d_a_alink::PROC_WOLF_WAIT:
+                case libtp::tp::d_a_alink::PROC_WOLF_TIRED_WAIT:
                 case libtp::tp::d_a_alink::PROC_WOLF_MOVE:
                 case libtp::tp::d_a_alink::PROC_SERVICE_WAIT:
                 case libtp::tp::d_a_alink::PROC_WOLF_SERVICE_WAIT:

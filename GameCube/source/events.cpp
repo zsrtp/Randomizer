@@ -713,6 +713,9 @@ namespace mod::events
                 // Apply an ASM patch to d_a_Obj_Master_Sword::executeWait to give the player two items and delete the Master
                 // Sword actor instead of trying to play the purification cutscene.
                 libtp::patch::writeBranchBL(relPtrRaw + 0x254, assembly::asmGiveMasterSwordItems);
+
+                // Branch over the code that gives Link the master sword if it has been pulled
+                performStaticASMReplacement(relPtrRaw + 0xCA0, ASM_BRANCH(0x80));
                 break;
             }
         }

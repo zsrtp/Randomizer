@@ -51,9 +51,10 @@ namespace mod::game_patch
             }
         }
 
-        // If for some reason we find ourselves in Sacred Grove and cannot transform/warp, we want the player to be able to save
-        // warp to Faron. This is mostly usefull for Glitched Logic.
-        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::StageIDs::Sacred_Grove]))
+        // If for some reason we find ourselves outside Sacred Grove and cannot transform/warp, we want the player to be able to
+        // save warp to Faron. This is mostly usefull for Glitched Logic.
+        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::StageIDs::Faron_Woods]) &&
+                 (libtp::tools::getCurrentRoomNo() == 6))
         {
             if (!events::haveItem(items::Shadow_Crystal))
             {

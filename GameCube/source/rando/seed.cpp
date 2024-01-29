@@ -496,7 +496,6 @@ namespace mod::rando
             uint32_t numEventChecks = m_numLoadedEventChecks;
             if ((currentEventCheck->stageIDX == stageIDX))
             {
-                getConsole() << "we have a check\n";
                 memcpy(globalEventCheck, currentEventCheck, sizeof(EventItem));
                 numEventChecks++;
                 j++;

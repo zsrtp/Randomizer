@@ -142,6 +142,7 @@ namespace mod::assembly
 
         // Set the local event flag to make the sword de-spawn and set the save file event flag.
         libtp::tp::d_save::onEventBit(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.events, 0x820);
+        libtp::tp::d_save::onEventBit(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags, 0x2120);
 
         return;
     }
