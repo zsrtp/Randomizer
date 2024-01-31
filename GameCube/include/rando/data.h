@@ -70,7 +70,7 @@ namespace mod::rando
         /* 0x60 */ uint8_t mapClearBits;
         /* 0x61 */ uint8_t damageMagnification;
         /* 0x62 */ uint8_t bonksDoDamage;
-        /* 0x63 */ uint8_t padding;
+        /* 0x63 */ uint8_t startingTimeOfDay;
     } __attribute__((__packed__));
 
     // Minimum amount of data needed for keeping track of a seed
@@ -224,21 +224,12 @@ namespace mod::rando
         uint8_t flag;     // The unique identifier used to disinguish between checks in the same room.
     } __attribute__((__packed__));
 
-    struct CustomMessageEntryInfo
-    {
-        uint8_t language;
-        uint8_t padding;
-        uint16_t totalEntries;
-        uint32_t msgTableSize;
-        uint32_t msgIdTableOffset;
-    } __attribute__((__packed__));
-
     struct CustomMessageHeaderInfo
     {
         uint16_t headerSize;
-        uint8_t totalLanguages;
-        uint8_t padding[1];
-        CustomMessageEntryInfo entry[]; // Size is totalLanguages
+        uint16_t totalEntries;
+        uint32_t msgTableSize;
+        uint32_t msgIdTableOffset;
     } __attribute__((__packed__));
 
     struct CustomMessageData
@@ -304,6 +295,14 @@ namespace mod::rando
         PoT_Fused_Shadows = 1,
         PoT_Mirror_Shards,
         PoT_Vanilla
+    };
+
+    enum StartingTimeOfDay : uint8_t
+    {
+        Morning = 0,
+        Noon = 1,
+        Evening = 2,
+        Night = 3
     };
 
     struct RawRGBTable

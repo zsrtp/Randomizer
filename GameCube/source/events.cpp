@@ -127,7 +127,31 @@ namespace mod::events
         if ((strcmp(playPtr->mNextStage.stageValues.mStage, "F_SP103") == 0) && (currentRoom == 1) &&
             (currentPoint == 0x1)) // If we are spawning in Ordon for the first time.
         {
-            savePtr->save_file.player.player_status_b.skyAngle = 180.f;
+            switch (randomizer->m_Seed->m_Header->startingTimeOfDay)
+            {
+                case rando::StartingTimeOfDay::Morning:
+                {
+                    savePtr->save_file.player.player_status_b.skyAngle = 105;
+                    break;
+                }
+
+                case rando::StartingTimeOfDay::Noon:
+                {
+                    savePtr->save_file.player.player_status_b.skyAngle = 180;
+                    break;
+                }
+
+                case rando::StartingTimeOfDay::Night:
+                {
+                    savePtr->save_file.player.player_status_b.skyAngle = 0;
+                    break;
+                }
+
+                default: // Evening
+                {
+                    break;
+                }
+            }
 
             if (d_a_alink::dComIfGs_isEventBit(flags::ORDON_DAY_2_OVER))
             {
