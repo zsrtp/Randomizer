@@ -348,13 +348,11 @@ namespace mod::rando
         uint8_t origStageIDX;
         uint8_t origRoomIDX;
         uint8_t origSpawn;
-        uint8_t origType;
-        uint16_t origParams;
+        int8_t origState;
         uint8_t newStageIDX;
         uint8_t newRoomIDX;
         uint8_t newSpawn;
-        uint8_t newType;
-        uint16_t newParams;
+        int8_t newState;
     } __attribute__((__packed__));
 
     extern int32_t lookupTable[DvdEntryNumIdSize];

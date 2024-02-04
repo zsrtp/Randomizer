@@ -918,7 +918,7 @@ namespace mod
             const uint32_t numShuffledEntrances = rando->m_Seed->m_numShuffledEntrances;
             rando::ShuffledEntrance* shuffledEntrances = &rando->m_Seed->m_ShuffledEntrances[0];
 
-            // getConsole() << stageIDX << "," << roomNo << "," << point << "\n";
+            getConsole() << stageIDX << "," << roomNo << "," << point << "," << layer << "\n";
 
             if (stageIDX !=
                 libtp::data::stage::StageIDs::Title_Screen) // We won't want to shuffle if we are loading a save since some
@@ -933,19 +933,23 @@ namespace mod
                         {
                             if (point == currentEntrance->origSpawn)
                             {
-                                getConsole() << "Shuffling Entrance"
-                                             << "\n";
-                                return return_dComIfGp_setNextStage(libtp::data::stage::allStages[currentEntrance->newStageIDX],
-                                                                    currentEntrance->newSpawn,
-                                                                    currentEntrance->newRoomIDX,
-                                                                    layer,
-                                                                    lastSpeed,
-                                                                    lastMode,
-                                                                    setPoint,
-                                                                    wipe,
-                                                                    lastAngle,
-                                                                    param_9,
-                                                                    wipSpeedT);
+                                if (layer == currentEntrance->origState)
+                                {
+                                    getConsole() << "Shuffling Entrance"
+                                                 << "\n";
+                                    return return_dComIfGp_setNextStage(
+                                        libtp::data::stage::allStages[currentEntrance->newStageIDX],
+                                        currentEntrance->newSpawn,
+                                        currentEntrance->newRoomIDX,
+                                        currentEntrance->newState,
+                                        lastSpeed,
+                                        lastMode,
+                                        setPoint,
+                                        wipe,
+                                        lastAngle,
+                                        param_9,
+                                        wipSpeedT);
+                                }
                             }
                         }
                     }
