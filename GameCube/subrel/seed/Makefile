@@ -216,10 +216,19 @@ $(OUTPUT).elf: $(LDFILES) $(OFILES)
 
 $(OFILES_SOURCES) : $(HFILES)
 
+ifndef SKIP_PACK
 # REL linking
 %.rel: %.elf
 	@echo output ... $(notdir $@)
 	@$(ELF2REL) $< -s $(abspath $(MAPFILE)) --rel-id $(shell $(JSON_READ) $(MODIDS) "$(OUTPUT_FILENAME)")
+else
+# REL linking
+%.rel: %.elf
+	@echo output ... $(notdir $@)
+	@$(ELF2REL) $< -s $(abspath $(MAPFILE)) --rel-id $(shell $(JSON_READ) $(MODIDS) "$(OUTPUT_FILENAME)")
+	@echo renaming $(notdir $@) to $(OUTPUT_FILENAME).rel
+	@cp $@ $(OUTPUT_FILENAME).rel
+endif
 
 #---------------------------------------------------------------------------------
 # This rule links in binary data with the .jpg extension

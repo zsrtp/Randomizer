@@ -12,6 +12,8 @@
 
 #ifdef DVD
 #include "gc_wii/dvd.h"
+#elif defined PLATFORM_WII
+#include "gc_wii/nand.h"
 #else
 #include "gc_wii/card.h"
 #endif
@@ -58,6 +60,9 @@ namespace mod::rando
 
         m_CARDResult = libtp::tools::readFile(filePath, totalSize, 0, data);
         constexpr int32_t resultComparison = DVD_STATE_END;
+#elif defined PLATFORM_WII
+        m_CARDResult = libtp::tools::readNAND(fileName, totalSize, 0, data);
+        constexpr int32_t resultComparison = NAND_RESULT_READY;
 #else
         // The memory card should already be mounted
         m_CARDResult = libtp::tools::readGCIMounted(m_CardSlot, fileName, totalSize, 0, data, true);

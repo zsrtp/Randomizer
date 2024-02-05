@@ -110,7 +110,7 @@ endif
 MACHDEP		= -mno-sdata -m$(MACHDEP_PLATFORM) -DGEKKO -mcpu=750 -meabi -mhard-float
 
 CFLAGS		= -nostdlib -ffunction-sections -fdata-sections -g -Oz -fvisibility=hidden -Wall -Werror -Wextra -Wshadow -Wno-address-of-packed-member -Wno-stringop-truncation $(MACHDEP) $(INCLUDE) $(DVD_DEF) -D_PROJECT_NAME='"$(PROJECT_NAME)"' -D_VERSION_MAJOR='$(_VERSION_MAJOR)' -D_VERSION_MINOR='$(_VERSION_MINOR)' -D_VERSION_PATCH='$(_VERSION_PATCH)'  -D_VERSION='"$(_VERSION)"' -D_VARIANT='"$(_VARIANT)"'
-CXXFLAGS	= -fno-exceptions -fno-rtti -std=gnu++20 $(CFLAGS)
+CXXFLAGS	= -fno-exceptions -fno-rtti -std=gnu++23 $(CFLAGS)
 
 LDFLAGS		= -r -e _prolog -u _prolog -u _epilog -u _unresolved -Wl,--gc-sections,--gc-keep-exported -nostdlib -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
 
@@ -247,11 +247,11 @@ $(BUILD):
 
 #---------------------------------------------------------------------------------
 ifeq ($(PLATFORM),gcn)
-clean_target:
+clean_target: $(SUBREL_CLEAN)
 	@echo clean ... $(VERSION)
 	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).dol $(OUTPUT).rel $(OUTPUT).gci
 else ifeq ($(PLATFORM),wii)
-clean_target:
+clean_target: $(SUBREL_CLEAN)
 	@echo clean ... $(VERSION)
 	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).dol $(OUTPUT).rel $(OUTPUT).bin
 endif
@@ -300,7 +300,7 @@ ifndef SKIP_PACK
 %.bin: %.rel
 	@echo packing ... $(notdir $@)
 	@$(NANDPACK) generate -g $(PACKVER) -l 2 -f "$(PROJECT_NAME)" $< $(BANNERFILE) $@
-	@$(NANDPACK) files add $@ $(SUBRELS)
+	@$(NANDPACK) files add $@ $(SUBRELS) $(addprefix --map ,$(foreach subrel,$(SUBRELS),$(notdir $(subrel)):$(notdir $(subrel:%.$(VERSION).rel=%.rel))))
 else
 %.bin: %.rel
 	@echo renaming $(notdir $<) to mod.rel

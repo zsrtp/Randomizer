@@ -1,5 +1,6 @@
 #include <cstdint>
 
+#include "06_asmOverrides.h"
 #include "game_patch/game_patch.h"
 #include "asm_templates.h"
 #include "tp/d_item.h"
@@ -22,16 +23,8 @@ namespace mod::game_patch
     void _06_writeASMPatches()
     {
         // Get the addresses to overwrite
-#ifdef TP_US
-        uint32_t* enableCrashScreen = reinterpret_cast<uint32_t*>(0x8000B8A4);
-        uint32_t* patchMessageCalculation = reinterpret_cast<uint32_t*>(0x80238F58);
-#elif defined TP_EU
-        uint32_t* enableCrashScreen = reinterpret_cast<uint32_t*>(0x8000B878);
-        uint32_t* patchMessageCalculation = reinterpret_cast<uint32_t*>(0x802395D8);
-#elif defined TP_JP
-        uint32_t* enableCrashScreen = reinterpret_cast<uint32_t*>(0x8000B8A4);
-        uint32_t* patchMessageCalculation = reinterpret_cast<uint32_t*>(0x802398E0);
-#endif
+        uint32_t* enableCrashScreen = &libtp::boot::enableCrashScreen;
+        uint32_t* patchMessageCalculation = &libtp::boot::patchMessageCalculation;
 
         // Perform the overwrites
 
@@ -39,7 +32,11 @@ namespace mod::game_patch
         then the cache will need to be cleared after the overwrite */
 
         // Enable the crash screen
+#ifndef PLATFORM_WII
         *enableCrashScreen = ASM_BRANCH(0x14);
+#else
+        *enableCrashScreen = ASM_BRANCH(0x190);
+#endif
 
         // Nop out the instruction that causes a miscalculation in message resources.
         *patchMessageCalculation = ASM_NOP;
@@ -47,8 +44,13 @@ namespace mod::game_patch
         // Modify the skipper function to check whether or not a cutscene is skippable instead of whether the player skips the
         // CS. This effectively auto-skips all skippable cutscenes.
         uint32_t skipperFunctionAddress = reinterpret_cast<uint32_t>(libtp::tp::d_event::skipper);
+#ifndef PLATFORM_WII
         *reinterpret_cast<uint32_t*>(skipperFunctionAddress + 0x54) =
             ASM_COMPARE_LOGICAL_WORD_IMMEDIATE(30, 0); // Previous rlwinm r0,r0,0,19,19
+#else
+        *reinterpret_cast<uint32_t*>(skipperFunctionAddress + 0x74) =
+            ASM_COMPARE_WORD_IMMEDIATE(29, 0); // Previous cmpwi r3,0x0
+#endif
 
         // Modify the Wooden Sword function to not set a region flag by default by nopping out the function call to isSwitch
         uint32_t woodenSwordFunctionAddress = reinterpret_cast<uint32_t>(libtp::tp::d_item::item_func_WOOD_STICK);
@@ -56,7 +58,11 @@ namespace mod::game_patch
 
         // Modify the Heart Container function to not set the dungeon flag for the heart container upon collection
         uint32_t heartContainerFunctionAddress = reinterpret_cast<uint32_t>(libtp::tp::d_item::item_func_UTUWA_HEART);
+#ifndef PLATFORM_WII
         *reinterpret_cast<uint32_t*>(heartContainerFunctionAddress + 0x7C) = ASM_NOP; // Previous 0x4bf9c5e9
+#else
+        *reinterpret_cast<uint32_t*>(heartContainerFunctionAddress + 0x74) = ASM_NOP; // Previous 0x4bfa6a99
+#endif
 
         // Modify event035 to not remove Auru's Memo from inventory after talking to Fyer.
         uint32_t event035MemoAddress = reinterpret_cast<uint32_t>(libtp::tp::d_msg_flow::event035);

@@ -69,7 +69,7 @@ namespace mod::rando
             return;
         }
 
-        const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mStage;
+        const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.mStage;
         seed->LoadChecks(stage);
 
         // Make sure the foolish items spawn count is reset before randomizing foolish item models

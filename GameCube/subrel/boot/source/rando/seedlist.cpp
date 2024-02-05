@@ -11,6 +11,8 @@
 
 #ifdef DVD
 #include "gc_wii/dvd.h"
+#elif defined PLATFORM_WII
+#include "gc_wii/nand.h"
 #else
 #include "gc_wii/card.h"
 #endif
@@ -41,6 +43,8 @@ namespace mod::rando
         // Get a list of all seeds available
 #ifdef DVD
         getSeedFiles("/mod/seed", minSeedInfoBuffer);
+#elif defined PLATFORM_WII
+        getSeedFiles(minSeedInfoBuffer);
 #else
         // The memory card should already be mounted
         getSeedFiles(CARD_SLOT_A, minSeedInfoBuffer);
@@ -73,6 +77,12 @@ namespace mod::rando
 
         DVDDirectory dir;
         DVDDirectoryEntry entry;
+        char filePath[96];
+#elif defined PLATFORM_WII
+    void SeedList::getSeedFiles(MinSeedInfo* minSeedInfoBuffer)
+    {
+        using namespace libtp::gc_wii::nand;
+
         char filePath[96];
 #else
     // This function assumes that the memory card is already mounted
@@ -124,6 +134,12 @@ namespace mod::rando
 
             // Try to open the file and get the header data
             if (DVD_STATE_END != libtp::tools::readFile(filePath, sizeof(header), 0, &header))
+            {
+#elif defined PLATFORM_WII
+            snprintf(filePath, sizeof(filePath), "seed%d", i);
+            currentFileName = filePath;
+
+            if (NAND_RESULT_READY != libtp::tools::readNAND(filePath, sizeof(header), 0, &header))
             {
 #else
             // Try to get the status of an arbitrary file slot

@@ -26,6 +26,7 @@
 #include "tp/d_a_itembase.h"
 #include "tp/JKRMemArchive.h"
 #include "tp/m_Do_dvd_thread.h"
+#include "tp/m_do_printf.h"
 #include "gc_wii/dvdfs.h"
 #include "gc_wii/OSCache.h"
 #include "codehandler.h"
@@ -43,6 +44,7 @@ namespace mod
 {
     void main()
     {
+        libtp::tp::m_Do_printf::OSReport("Randomizer | boot.rel\n");
         // Set up the console
         // Align to uint8_t, as that's the largest variable type in the Console class
         mod::console = new (sizeof(uint8_t)) libtp::display::Console(CONSOLE_PROTECTED_LINES);
@@ -79,13 +81,17 @@ namespace mod
         customMessages::createItemWheelMenuData();
 
         // Display some info
-#ifndef DVD
+#if not defined DVD && not defined PLATFORM_WII
         getConsole() << "Note:\n"
                      << "Please avoid [re]starting rando unnecessarily\n"
                      << "on ORIGINAL HARDWARE as it wears down your\n"
                      << "Memory Card!\n";
 #endif
+#ifndef PLATFORM_WII
         getConsole() << "Press R + Z to close the console.\n\n";
+#else
+        getConsole() << "Press Z + C + Minus to close the console.\n\n";
+#endif
 
         // Generate our seedList
         // Align to void*, as pointers use the largest variable type in the SeedList class

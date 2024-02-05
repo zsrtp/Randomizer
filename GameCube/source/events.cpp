@@ -31,6 +31,7 @@
 #include "rando/customItems.h"
 #include "tp/f_op_actor_iter.h"
 #include "tp/d_pane_class.h"
+#include "tp/m_do_printf.h"
 
 namespace mod::events
 {
@@ -96,12 +97,12 @@ namespace mod::events
             randomizer->initSave();
         }
 
-        if ((strcmp(playPtr->mNextStage.stageValues.mStage, "F_SP103") == 0) && (currentRoom == 1) &&
+        if ((strcmp(playPtr->mNextStage.mStage, "F_SP103") == 0) && (currentRoom == 1) &&
             (currentPoint == 0x1)) // If we are spawning in Ordon for the first time.
         {
             savePtr->save_file.player.player_status_b.skyAngle = 180.f;
 
-            if (d_a_alink::dComIfGs_isEventBit(flags::ORDON_DAY_2_OVER))
+            if (d_com_inf_game::dComIfGs_isEventBit(flags::ORDON_DAY_2_OVER))
             {
                 savePtr->save_file.player.horse_place.mPos.y = -1000.f; // Place Epona out of bounds in Faron if Talo has been
                                                                         // rescued since the game will spawn her in the air.
@@ -768,7 +769,7 @@ namespace mod::events
 
     void setSaveFileEventFlag(uint16_t flag)
     {
-        libtp::tp::d_save::onEventBit(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags, flag);
+        libtp::tp::d_save::onEventBit(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mEvent, flag);
     }
 
     void onAdjustFieldItemParams(libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife)
@@ -897,7 +898,7 @@ namespace mod::events
                 libtp::data::stage::allStages[libtp::data::stage::StageIDs::Kakariko_Village_Interiors]))
         {
             // If player has not bought Barnes' Bomb Bag, we want to allow them to be able to get the check.
-            if ((!libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::BOUGHT_BARNES_BOMB_BAG)))
+            if ((!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::BOUGHT_BARNES_BOMB_BAG)))
             {
                 return 0;
             }
@@ -1002,7 +1003,7 @@ namespace mod::events
                     for (int32_t i = 0x10; i < 0x18; i++)
                     {
                         if (libtp::tp::d_save::isDungeonItem(
-                                &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[i].temp_flags,
+                                &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mSave[i].temp_flags,
                                 3))
                         {
                             numDungeons++;
@@ -1051,7 +1052,7 @@ namespace mod::events
         const auto stagesPtr = &data::stage::allStages[0];
         if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Lake_Hylia]))
         {
-            if (libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::SKY_CANNON_REPAIRED))
+            if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::SKY_CANNON_REPAIRED))
             {
                 // Manually spawn Auru if the Lake is in the Repaired Cannon state as his actor is not in the DZX for that
                 // layer.
@@ -1063,7 +1064,7 @@ namespace mod::events
             tools::spawnActor(0, ItemActr);
         }
         else if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Hyrule_Field]) &&
-                 (!tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags,
+                 (!tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mEvent,
                                           data::flags::CLEARED_ELDIN_TWILIGHT)))
         {
             libtp::tp::dzx::ACTR localGanonBarrierActor;
@@ -1078,7 +1079,7 @@ namespace mod::events
             tools::spawnActor(7, localGanonBarrierActor);
         }
         else if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Faron_Woods]) &&
-                 (tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags,
+                 (tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mEvent,
                                          data::flags::ORDON_DAY_2_OVER)))
         {
             tools::spawnActor(6, ForestGWolfActr);
@@ -1088,7 +1089,7 @@ namespace mod::events
             tools::spawnActor(6, ImpPoeActr);
         }
         else if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Bulblin_Camp]) &&
-                 !libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::ESCAPED_BURNING_TENT_IN_BULBLIN_CAMP))
+                 !libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::ESCAPED_BURNING_TENT_IN_BULBLIN_CAMP))
         {
             tools::spawnActor(1, CampBoarActr);
         }
@@ -1098,7 +1099,7 @@ namespace mod::events
     {
         using namespace libtp;
         if (tp::d_a_alink::checkStageName(data::stage::allStages[data::stage::StageIDs::Hyrule_Field]) &&
-            libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::MIDNAS_DESPERATE_HOUR_COMPLETED))
+            libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::MIDNAS_DESPERATE_HOUR_COMPLETED))
         {
             tools::spawnSCOB(3, HorseJumpScob);
         }
@@ -1137,35 +1138,42 @@ namespace mod::events
         }
 
         // Check to see if Link has the ability to transform.
-        if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::TRANSFORMING_UNLOCKED))
+        if (!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::TRANSFORMING_UNLOCKED))
         {
             return;
         }
 
         // Ensure there is a proper pointer to the Z Button Alpha.
-        uint32_t zButtonAlphaPtr = reinterpret_cast<uint32_t>(libtp::tp::d_meter2_info::wZButtonPtr);
-        if (!zButtonAlphaPtr)
-        {
-            return;
-        }
-
-        zButtonAlphaPtr = *reinterpret_cast<uint32_t*>(zButtonAlphaPtr + 0x10C);
-        if (!zButtonAlphaPtr)
+        if (!libtp::tp::d_meter2_info::g_meter2_info.mMeterClass ||
+            !libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw ||
+            !libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mZButtonAlpha)
         {
             return;
         }
 
         // Ensure that the Z Button is not dimmed
-        const float zButtonAlpha = *reinterpret_cast<float*>(zButtonAlphaPtr + 0x720);
-        if (zButtonAlpha != 1.f)
+        if (libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mZButtonAlpha != 1.f)
         {
             return;
         }
 
         // Make sure Link is not underwater or talking to someone.
-        if (libtp::tp::d_a_alink::linkStatus->status != 0x1)
+        switch (libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mProcID)
         {
-            return;
+            case libtp::tp::d_a_alink::PROC_TALK:
+            case libtp::tp::d_a_alink::PROC_WOLF_SWIM_MOVE:
+            case libtp::tp::d_a_alink::PROC_SWIM_MOVE:
+            case libtp::tp::d_a_alink::PROC_SWIM_WAIT:
+            case libtp::tp::d_a_alink::PROC_WOLF_SWIM_WAIT:
+            case libtp::tp::d_a_alink::PROC_SWIM_UP:
+            case libtp::tp::d_a_alink::PROC_SWIM_DIVE:
+            {
+                return;
+            }
+            default:
+            {
+                break;
+            }
         }
 
         // The game will crash if trying to quick transform while holding the Ball and Chain
@@ -1230,7 +1238,8 @@ namespace mod::events
         }
         else
         {
-            libtp::tp::d_save::dSv_player_status_b_c* playerStatusPtr = &dComIfG_gameInfo.save.save_file.player.player_status_b;
+            libtp::tp::d_save::dSv_player_status_b_c* playerStatusPtr =
+                &dComIfG_gameInfo.save.save_file.player.player_status_b;
 
             if (!libtp::tp::d_kankyo::dKy_daynight_check()) // Day time
             {
@@ -1292,23 +1301,21 @@ namespace mod::events
 
         // Check if Midna has actually been unlocked and is on the Z button
         // This is needed because the Z button will always be dimmed if she has not been unlocked
-        if (libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::MIDNA_ACCOMPANIES_WOLF))
+        if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::MIDNA_ACCOMPANIES_WOLF))
         {
-            // Ensure there is a proper pointer to the Z Button Alpha.
-            uint32_t zButtonAlphaPtr = reinterpret_cast<uint32_t>(libtp::tp::d_meter2_info::wZButtonPtr);
-            if (!zButtonAlphaPtr)
+            // Ensure there is a proper pointer to the mMeterClass and mpMeterDraw structs in g_meter2_info.
+            if (!libtp::tp::d_meter2_info::g_meter2_info.mMeterClass)
             {
                 return false;
             }
 
-            zButtonAlphaPtr = *reinterpret_cast<uint32_t*>(zButtonAlphaPtr + 0x10C);
-            if (!zButtonAlphaPtr)
+            if (!libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw)
             {
                 return false;
             }
 
             // Ensure that the Z Button is not dimmed
-            const float zButtonAlpha = *reinterpret_cast<float*>(zButtonAlphaPtr + 0x720);
+            const float zButtonAlpha = libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mZButtonAlpha;
             if (zButtonAlpha != 1.f)
             {
                 return false;
@@ -1316,9 +1323,22 @@ namespace mod::events
         }
 
         // Make sure Link is not underwater or talking to someone.
-        if (libtp::tp::d_a_alink::linkStatus->status != 0x1)
+        switch (libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mProcID)
         {
-            return false;
+            case libtp::tp::d_a_alink::PROC_TALK:
+            case libtp::tp::d_a_alink::PROC_WOLF_SWIM_MOVE:
+            case libtp::tp::d_a_alink::PROC_SWIM_MOVE:
+            case libtp::tp::d_a_alink::PROC_SWIM_WAIT:
+            case libtp::tp::d_a_alink::PROC_WOLF_SWIM_WAIT:
+            case libtp::tp::d_a_alink::PROC_SWIM_UP:
+            case libtp::tp::d_a_alink::PROC_SWIM_DIVE:
+            {
+                return false;
+            }
+            default:
+            {
+                break;
+            }
         }
 
         return true;
@@ -1403,6 +1423,10 @@ namespace mod::events
         tempTextBox->setFontSize(textSize, textSize);
         tempTextBox->setString(text);
         J2DTextBox_setFont(tempTextBox, font);
+        // bool bIsDolphin = IsDolphin();
+
+        // libtp::tp::m_Do_printf::OSReport_System("Randomizer | drawText | %x; %p; %s; %x\n",
+        //     ((uintptr_t)&tempTextBox->mStringPtr - (uintptr_t)tempTextBox), &tempTextBox->mStringPtr, bIsDolphin ? "Dolphin" : "Console", mfspr(SPR_ECID_U));
 
         J2DTextBox_draw1(tempTextBox, intToFloat(x), intToFloat(y));
 
@@ -1442,7 +1466,7 @@ namespace mod::events
         }
         else // We are not in the correct node, so use the appropriate region node
         {
-            memoryFlags = saveDataPtr->save_file.area_flags[static_cast<uint32_t>(nodeId)].temp_flags.memoryFlags;
+            memoryFlags = saveDataPtr->save_file.mSave[static_cast<uint32_t>(nodeId)].temp_flags.memoryFlags;
         }
 
         return memoryFlags;

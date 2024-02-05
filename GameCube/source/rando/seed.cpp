@@ -74,7 +74,7 @@ namespace mod::rando
                 const uint32_t offset = eventFlags[i].offset;
                 const uint8_t flag = eventFlags[i].flag;
 
-                gameInfo->save.save_file.event_flags.event_flags[offset] |= flag;
+                gameInfo->save.save_file.mEvent.mEvent[offset] |= flag;
                 eventFlagsModified++;
             }
 

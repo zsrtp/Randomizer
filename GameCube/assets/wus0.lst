@@ -1,6 +1,10 @@
+800018A8:codehandlerStartAddress
+80011f90:enableCrashScreen
+8022657c:patchMessageCalculation
+
 // special
 // right before m_Do_graphic::mDoGph_gInf_c::m_aspect
-80537628:isWidescreen
+80537628:m_isWide
 80011f90:dbg_inst
 
 // memory
@@ -520,6 +524,70 @@
 8053ae1d:sPauseTimer
 
 CC008000:wgPipe
+
+800298d8:dStage_playerInit
+8003b900:CheckFieldItemCreateHeap
+80092a70:item_func_ASHS_SCRIBBLING
+80219704:jmessage_tSequenceProcessor__do_begin
+8021a1c8:jmessage_tSequenceProcessor__do_tag
+80037c54:checkEmptyBottle
+80238920:query037
+80238f00:query049
+802395a8:event017
+80038b6c:onDungeonItem
+801399ac:daNpcT_chkEvtBit
+8010b938:setGetItemFace
+8012a3a4:setWolfLockDomeModel
+800bb8a0:procFrontRollCrashInit
+80120140:procWolfDashReverseInit
+8012d98c:procWolfAttackReverseInit
+800aed54:searchBouDoor
+800b6d6c:checkCastleTownUseItem
+800cdaa0:damageMagnification
+8029d258:loadSeWave
+80243384:dScnLogo_c_dt
+8001b160:mountArchive__execute
+8020ac64:resetMiniGameItem
+80092060:item_func_UTUWA_HEART
+8010e01c:procCoGetItem
+80031f8c:dComIfGs_onStageBossEnemy
+8029a1c4:setSceneName
+80069f70:dKyr_odour_draw
+80224164:isSend
+801fd808:drawKanteraScreen
+80311cf4:J2DTextBox_ct1
+80312830:J2DTextBox_setFont
+803128a4:J2DTextBox_draw1
+80312794:J2DTextBox_dt
+8001f460:fopAcIt_Judge
+80240690:setBlackWhite
+803c3780:strchr
+803c3108:vsnprintf
+8013996c:daNpcT_onEvtBit
+800394b4:offSwitch_dSv_info
+80038a90:offSwitch_dSv_memBit
+801903cc:GetTimePass
+80310278:J2DPicture_draw
+800198e4:mDoExt_getMesgFont
+8003b8a8:CheckItemCreateHeap
+80021274:fopAcM_getTalkEventPartner
+802e9ba0:JKRArchive_getResource2
+8030ef10:J2DPicture_ct4
+8029d0b4:eraseSeWave
+801cfbd0:dMenuRing__create
+801cfc3c:dMenuRing__delete
+801cfd1c:dMenuRing__draw
+8028ec88:startSound
+801943dc:dMenuCollect_screenSet
+802e9a70:JKRArchivePub_getGlbResource
+802ea524:JKRArchive_findFsResource
+803e48fc:huLightVars
+801278e0:procWolfDamageInit
+800cf71c:procDamageInit
+800b4bd0:checkRestartRoom
+800c6e4c:getSpinnerActor
+80291488:z2SeMgr_seStartLevel
+8053a994:mStayNo
 
 80006920:SECallback_int__int_
 80006974:drawCallback_J2DOrthoGraph____void___

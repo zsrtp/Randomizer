@@ -9,7 +9,11 @@
 
 #include <cstdint>
 
+#ifdef PLATFORM_WII
+#include "gc_wii/nand.h"
+#else
 #include "gc_wii/card.h"
+#endif
 #include "rando/data.h"
 #include "rando/seed.h"
 #include "rando/seedlist.h"
@@ -27,6 +31,8 @@ namespace mod::rando
 
 #ifdef DVD
         void getSeedFiles(const char* seedDirectory, MinSeedInfo* minSeedInfoBuffer);
+#elif defined PLATFORM_WII
+        void getSeedFiles(MinSeedInfo* minSeedInfoBuffer);
 #else
         void getSeedFiles(int32_t chan, MinSeedInfo* minSeedInfoBuffer);
 #endif

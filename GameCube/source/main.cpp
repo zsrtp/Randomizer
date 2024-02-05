@@ -32,8 +32,13 @@
 #include "tp/f_op_actor.h"
 #include "tp/f_op_scene_req.h"
 #include "tp/f_pc_node_req.h"
+#ifndef PLATFORM_WII
 #include "tp/m_do_controller_pad.h"
+#else
+#include "tp/m_re_controller_pad.h"
+#endif
 #include "tp/m_do_audio.h"
+#include "tp/m_do_printf.h"
 #include "item_wheel_menu.h"
 #include "user_patch/03_customCosmetics.h"
 #include "data/flags.h"
@@ -67,9 +72,11 @@ namespace mod
     uint32_t randState = 0;
     KEEP_VAR const char* m_DonationText = nullptr;
 
+#ifndef PLATFORM_WII
     // Analog L is currently not being used, so commented out
     // float prevFrameAnalogL = 0.f;
     float prevFrameAnalogR = 0.f;
+#endif
 
     KEEP_VAR uint8_t* m_MsgTableInfo = nullptr;
     libtp::tp::J2DPicture::J2DPicture* bgWindow = nullptr;
@@ -271,19 +278,29 @@ namespace mod
 
     void main()
     {
+        libtp::tp::m_Do_printf::OSReportEnable();
+        libtp::tp::m_Do_printf::OSReport("TP Randomizer is starting...\n");
         // do_link needs to be hooked immediately, as otherwise we may not be able to modify f_pc_profile_lst.rel, which gets
         // linked via a callback function that gets called at boot, and this may occur before the boot REL's prolog function
         // gets called
         uint32_t do_link_address = reinterpret_cast<uint32_t>(libtp::tp::dynamic_link::do_link);
 
+#ifndef PLATFORM_WII
         libtp::patch::writeStandardBranches(do_link_address + 0x250, assembly::asmDoLinkHookStart, assembly::asmDoLinkHookEnd);
+#else
+        libtp::patch::writeStandardBranches(do_link_address + 0x220, assembly::asmDoLinkHookStart, assembly::asmDoLinkHookEnd);
+#endif
 
         // Call the boot REL
-        // Interrupts are required to be enabled for CARD/DVD functions to work properly
+        // Interrupts are required to be enabled for CARD/NAND/DVD functions to work properly
         const bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
+        libtp::tp::m_Do_printf::OSReport("Randomizer | Loading boot.rel...\n");
 #ifdef DVD
         // The seedlist will be generated in the boot REL
         libtp::tools::callRelProlog("/mod/boot.rel");
+#elif defined PLATFORM_WII
+        // The seedlist will be generated in the boot REL
+        libtp::tools::callRelProlog("boot.rel");
 #else
         // The seedlist will be generated in the boot REL, so avoid mounting/unmounting the memory card multiple times
         libtp::tools::callRelProlog(CARD_SLOT_A, SUBREL_BOOT_ID);
@@ -352,24 +369,41 @@ namespace mod
 
     bool checkButtonsPressedThisFrame(uint32_t buttons)
     {
+#ifndef PLATFORM_WII
         using namespace libtp::tp::m_do_controller_pad;
         CPadInfo* padInfo = &cpadInfo[PAD_1];
 
         return padInfo->mPressedButtonFlags & buttons;
+#else
+        using namespace libtp::tp::m_re_controller_pad;
+        ReCPad* padInfo = &mReCPd::m_pad[PAD_1];
+
+        return padInfo->down & buttons;
+#endif
     }
 
     bool checkButtonCombo(uint32_t combo, bool checkAnalog)
     {
+#ifndef PLATFORM_WII
         using namespace libtp::tp::m_do_controller_pad;
         CPadInfo* padInfo = &cpadInfo[PAD_1];
 
         // Get the buttons that are currently held and were pressed this frame
         uint32_t buttonsHeld = padInfo->mButtonFlags;
         uint32_t buttonsPressedThisFrame = padInfo->mPressedButtonFlags;
+#else
+        using namespace libtp::tp::m_re_controller_pad;
+        ReCPad* padInfo = &mReCPd::m_pad[PAD_1];
+
+        // Get the buttons that are currently held and were pressed this frame
+        uint32_t buttonsHeld = padInfo->held;
+        uint32_t buttonsPressedThisFrame = padInfo->down;
+#endif
 
         // Check if analog L and R should be checked
         if (checkAnalog)
         {
+#ifndef PLATFORM_WII
             // Get the threshold for the analog buttons
             constexpr float analogThreshold = 0.7f; // 70%
 
@@ -409,6 +443,7 @@ namespace mod
                     }
                 }
             }
+#endif
         }
 
         // Check if the button combo is held
@@ -423,7 +458,11 @@ namespace mod
 
     void doInput(uint32_t input)
     {
+#ifndef PLATFORM_WII
         using namespace libtp::tp::m_do_controller_pad;
+#else
+        using namespace libtp::tp::m_re_controller_pad;
+#endif
         auto checkBtn = [&input](uint32_t combo) { return static_cast<bool>((input & combo) == combo); };
 
         if (input && gameState == GAME_TITLE)
@@ -434,7 +473,14 @@ namespace mod
             {
                 uint32_t selectedSeed = seedList->m_selectedSeed;
 
-                if (checkBtn(Button_X))
+#ifndef PLATFORM_WII
+                constexpr const uint32_t incBtn = Button_X;
+                constexpr const uint32_t decBtn = Button_Y;
+#else
+                constexpr const uint32_t incBtn = Button_DPad_Up;
+                constexpr const uint32_t decBtn = Button_DPad_Down;
+#endif
+                if (checkBtn(incBtn))
                 {
                     selectedSeed++;
                     seedList->m_selectedSeed = static_cast<uint8_t>(selectedSeed);
@@ -445,7 +491,7 @@ namespace mod
                         seedList->m_selectedSeed = static_cast<uint8_t>(selectedSeed);
                     }
                 }
-                else if (checkBtn(Button_Y))
+                else if (checkBtn(decBtn))
                 {
                     if (selectedSeed == 0)
                     {
@@ -459,8 +505,13 @@ namespace mod
 
                 getConsole().setLine(CONSOLE_PROTECTED_LINES - 1);
                 getConsole() << "\r"
+#ifndef PLATFORM_WII
                              << "Press X/Y to select a seed\n"
                              << "Press R + Z to close the console\n"
+#else
+                             << "Press DPad Up/Down to select a seed\n"
+                             << "Press Z + C + Minus to close the console\n"
+#endif
                              << "[" << static_cast<int32_t>(selectedSeed) + 1 << "/" << static_cast<int32_t>(numSeeds)
                              << "] Seed: " << seedList->m_minSeedInfo[selectedSeed].fileName << "\n";
             }
@@ -471,7 +522,11 @@ namespace mod
     KEEP_FUNC void handle_fapGm_Execute()
     {
         using namespace libtp;
+#ifndef PLATFORM_WII
         using namespace tp::m_do_controller_pad;
+#else
+        using namespace tp::m_re_controller_pad;
+#endif
         using namespace tp::f_pc_node_req;
         using namespace tp::d_com_inf_game;
 
@@ -486,7 +541,11 @@ namespace mod
         item_wheel_menu::ringDrawnThisFrame = false;
 
         dComIfG_inf_c* gameInfo = &dComIfG_gameInfo;
+#ifndef PLATFORM_WII
         CPadInfo* padInfo = &cpadInfo[PAD_1];
+#else
+        ReCPad* padInfo = &mReCPd::m_pad[PAD_1];
+#endif
 
         // Handle game state updates
         if (l_fpcNdRq_Queue)
@@ -499,7 +558,7 @@ namespace mod
             if (prevState != GAME_ACTIVE && state == 11)
             {
                 // check whether we're in title screen CS
-                if (0 != strcmp("S_MV000", gameInfo->play.mNextStage.stageValues.mStage))
+                if (0 != strcmp("S_MV000", gameInfo->play.mNextStage.mStage))
                 {
                     gameState = GAME_ACTIVE;
                 }
@@ -529,7 +588,7 @@ namespace mod
                             // User has to select one of the seeds
 
                             // trigger a dummy input to print the current selection
-                            doInput(Button_Start);
+                            doInput(Button_A);
 
                             setScreen(true);
                             break;
@@ -541,7 +600,11 @@ namespace mod
 
         // Handle button inputs only if buttons are being held that weren't held last time
         auto checkBtn = [](uint32_t input, uint32_t combo) { return static_cast<bool>((input & combo) == combo); };
+#ifndef PLATFORM_WII
         uint32_t currentButtons = padInfo->mButtonFlags;
+#else
+        uint32_t currentButtons = padInfo->held;
+#endif
 
         // Generic button checks need to occur outside the following conditional, so use a bool to determine if they should be
         // checked or not
@@ -552,8 +615,13 @@ namespace mod
             // Store before processing since we (potentially) un-set the padInfo values later
             lastButtonInput = static_cast<uint16_t>(currentButtons);
 
+#ifndef PLATFORM_WII
+            constexpr const uint32_t consoleCombo = PadInputs::Button_R | PadInputs::Button_Z;
+#else
+            constexpr const uint32_t consoleCombo = ReCPadInputs::Button_Z | ReCPadInputs::Button_C | ReCPadInputs::Button_Minus;
+#endif
             // Special combo to (de)activate the console should be handled first
-            if (checkBtn(currentButtons, PadInputs::Button_R | PadInputs::Button_Z))
+            if (checkBtn(currentButtons, consoleCombo))
             {
                 // Disallow during boot as we print info etc.
                 // Will automatically disappear if there is no seeds to select from
@@ -569,8 +637,13 @@ namespace mod
                 {
                     // Disable input so game doesn't notice
                     currentButtons = 0;
+#ifndef PLATFORM_WII
                     padInfo->mButtonFlags = 0;
                     padInfo->mPressedButtonFlags = 0;
+#else
+                    padInfo->held = 0;
+                    padInfo->down = 0;
+#endif
                 }
 
                 handledSpecialInputs = true;
@@ -580,13 +653,20 @@ namespace mod
         tp::d_a_alink::daAlink* linkMapPtr = gameInfo->play.mPlayer;
         if (!handledSpecialInputs)
         {
+#ifndef PLATFORM_WII
+            constexpr const uint32_t quickTransformCombo = PadInputs::Button_R | PadInputs::Button_Y;
+            constexpr const uint32_t swiftSpinnerCombo = PadInputs::Button_R;
+#else
+            constexpr const uint32_t quickTransformCombo = ReCPadInputs::Button_Z | ReCPadInputs::Button_C | ReCPadInputs::Button_B;
+            constexpr const uint32_t swiftSpinnerCombo = ReCPadInputs::Button_C;
+#endif
             // Handle generic button checks
-            if (checkButtonCombo(PadInputs::Button_R | PadInputs::Button_Y, true))
+            if (checkButtonCombo(quickTransformCombo, true))
             {
                 events::handleQuickTransform();
             }
 
-            else if (checkBtn(currentButtons, PadInputs::Button_R) && increaseSpinnerSpeed && linkMapPtr)
+            else if (checkBtn(currentButtons, swiftSpinnerCombo) && increaseSpinnerSpeed && linkMapPtr)
             {
                 libtp::tp::f_op_actor::fopAc_ac_c* spinnerActor = libtp::tp::d_a_alink::getSpinnerActor(linkMapPtr);
 
@@ -610,7 +690,7 @@ namespace mod
             {
                 // Interrupts are required to be enabled for CARD/DVD functions to work properly
                 const bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
-#ifndef DVD
+#if not defined DVD && not defined PLATFORM_WII
                 constexpr int32_t chan = CARD_SLOT_A;
 #endif
                 if (!rando || !rando->m_Seed)
@@ -621,6 +701,8 @@ namespace mod
                     // The seed REL will set seedRelAction to SEED_ACTION_NONE if it ran successfully
 #ifdef DVD
                     if (!tools::callRelProlog("/mod/seed.rel"))
+#elif defined PLATFORM_WII
+                    if (!tools::callRelProlog("seed.rel"))
 #else
                     // Only mount/unmount the memory card once
                     if (!tools::callRelProlog(chan, SUBREL_SEED_ID))
@@ -646,6 +728,8 @@ namespace mod
                         // The seed REL will set seedRelAction to SEED_ACTION_NONE if it ran successfully
 #ifdef DVD
                         if (!tools::callRelProlog("/mod/seed.rel"))
+#elif defined PLATFORM_WII
+                        if (!tools::callRelProlog("seed.rel"))
 #else
                         // Only mount/unmount the memory card once
                         if (!tools::callRelProlog(chan, SUBREL_SEED_ID))
@@ -740,10 +824,12 @@ namespace mod
         // Call the original function
         return_fapGm_Execute();
 
+#ifndef PLATFORM_WII
         // Main code has ran, so update previous frame variables
         // Analog L is currently not being used, so commented out
         // prevFrameAnalogL = padInfo->mTriggerLeft;
         prevFrameAnalogR = padInfo->mTriggerRight;
+#endif
     }
 
     int32_t initCreatePlayerItem(uint32_t itemID,
@@ -898,7 +984,7 @@ namespace mod
                 {
                     if (libtp::tp::d_a_alink::checkStageName(
                             libtp::data::stage::allStages[libtp::data::stage::StageIDs::Lake_Hylia]) &&
-                        !libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::CLEARED_LANAYRU_TWILIGHT))
+                        !libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::CLEARED_LANAYRU_TWILIGHT))
                     {
                         *entranceType = 0x50;
                     }
@@ -1063,7 +1149,7 @@ namespace mod
             {
                 // Check if we are at Kakariko Malo mart and verify that we have not bought the shield.
                 if (libtp::tools::playerIsInRoomStage(3, stagesPtr[StageIDs::Kakariko_Village_Interiors]) &&
-                    !tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::BOUGHT_HYLIAN_SHIELD_AT_MALO_MART))
+                    !tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::BOUGHT_HYLIAN_SHIELD_AT_MALO_MART))
                 {
                     // Return false so we can buy the shield.
                     return 0;
@@ -1117,7 +1203,7 @@ namespace mod
     KEEP_FUNC void handle_item_func_ASHS_SCRIBBLING()
     {
         using namespace libtp::data::flags;
-        if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(GOT_CORAL_EARRING_FROM_RALIS))
+        if (!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(GOT_CORAL_EARRING_FROM_RALIS))
         {
             return_item_func_ASHS_SCRIBBLING();
         }
@@ -1202,7 +1288,7 @@ namespace mod
     {
         const int32_t poeFlag = return_query049(unk1, unk2, unk3);
 
-        if ((poeFlag == 4) && !libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::GOT_BOTTLE_FROM_JOVANI))
+        if ((poeFlag == 4) && !libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::GOT_BOTTLE_FROM_JOVANI))
         {
             return 3;
         }
@@ -1316,6 +1402,7 @@ namespace mod
     KEEP_FUNC bool handle_isEventBit(libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag)
     {
         using namespace libtp::tp::d_a_alink;
+        using namespace libtp::tp::d_com_inf_game;
         using namespace libtp::data::stage;
         using namespace libtp::data::flags;
 
@@ -1432,7 +1519,7 @@ namespace mod
             {
                 if (checkStageName(stagesPtr[StageIDs::Mirror_Chamber]))
                 {
-                    if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT))
+                    if (!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT))
                     {
                         using namespace libtp::data;
                         if (randoIsEnabled(rando))
@@ -1459,7 +1546,7 @@ namespace mod
             {
                 if (libtp::tools::playerIsInRoomStage(1, stagesPtr[StageIDs::Ordon_Village_Interiors]))
                 {
-                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(SERAS_CAT_RETURNED_TO_SHOP))
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(SERAS_CAT_RETURNED_TO_SHOP))
                     {
                         return false; // Return false so Sera will give the milk item to the player once they help the cat.
                     }
@@ -1487,7 +1574,7 @@ namespace mod
         using namespace libtp::data::flags;
 
         libtp::tp::d_save::dSv_save_c* saveFilePtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file;
-        if (eventPtr == &saveFilePtr->event_flags)
+        if (eventPtr == &saveFilePtr->mEvent)
         {
             libtp::tp::d_save::dSv_player_status_b_c* playerStatusPtr = &saveFilePtr->player.player_status_b;
             const uint32_t darkClearLevelFlag = playerStatusPtr->dark_clear_level_flag;
@@ -1502,7 +1589,7 @@ namespace mod
 
                 case CLEARED_FARON_TWILIGHT: // Cleared Faron Twilight
                 {
-                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
                     {
                         if (darkClearLevelFlag == 0x6)
                         {
@@ -1518,7 +1605,7 @@ namespace mod
                 case CLEARED_ELDIN_TWILIGHT: // Cleared Eldin Twilight
                 {
                     events::setSaveFileEventFlag(MAP_WARPING_UNLOCKED); // in glitched Logic, you can skip the gorge bridge.
-                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
                     {
                         if (darkClearLevelFlag == 0x5)
                         {
@@ -1534,7 +1621,7 @@ namespace mod
 
                 case CLEARED_LANAYRU_TWILIGHT: // Cleared Lanayru Twilight
                 {
-                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
                     {
                         if (darkClearLevelFlag == 0x7) // All twilights completed
                         {
@@ -1578,7 +1665,7 @@ namespace mod
         {
             if (flag == 0x66) // Check for escort completed flag
             {
-                if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(
+                if (!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(
                         libtp::data::flags::GOT_ZORA_ARMOR_FROM_RUTELA)) // return false if we haven't gotten the item
                                                                          // from Rutella.
                 {
@@ -1832,15 +1919,19 @@ namespace mod
 
     KEEP_FUNC void* handle_dScnLogo_c_dt(void* dScnLogo_c, int16_t bFreeThis)
     {
+        libtp::tp::m_Do_printf::OSReport("Randomizer | handle_dScnLogo_c_dt\n");
         // Call the original function immediately, as certain values need to be set first
         void* ret = return_dScnLogo_c_dt(dScnLogo_c, bFreeThis);
 
+        libtp::tp::m_Do_printf::OSReport("Randomizer | handle_dScnLogo_c_dt | bgWindow: %p\n", bgWindow);
         // Initialize bgWindow since mMain2DArchive should now be set
         if (!bgWindow)
         {
             void* main2DArchive = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mMain2DArchive;
+            libtp::tp::m_Do_printf::OSReport("Randomizer | handle_dScnLogo_c_dt | No bgWindow; initializing... [%p]\n", main2DArchive);
             if (main2DArchive)
             {
+                libtp::tp::m_Do_printf::OSReport("Randomizer | handle_dScnLogo_c_dt | main2DArchive exists\n");
                 // Get the image to use for the background window
                 void* bg = libtp::tp::JKRArchive::JKRArchive_getResource2(main2DArchive,
                                                                           0x54494D47, // TIMG
@@ -1848,6 +1939,7 @@ namespace mod
 
                 if (bg)
                 {
+                    libtp::tp::m_Do_printf::OSReport("Randomizer | handle_dScnLogo_c_dt | bg obtained\n");
                     bgWindow = new libtp::tp::J2DPicture::J2DPicture(bg);
                 }
             }

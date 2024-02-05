@@ -5,6 +5,7 @@
 #include "data/items.h"
 #include "tp/resource.h"
 #include "rando/customItems.h"
+#include "tp/m_do_printf.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -226,13 +227,13 @@ namespace mod::customMessages
         // Get the ItemWheelMenuData and itemWheeleStringsSize to use
         const ItemWheelMenuStrings* stringsSrc;
         const ItemWheelMenuOffsets* offsetsSrc;
-#ifdef TP_US
+#if defined TP_US && not defined TP_WUS2
         stringsSrc = &itemWheelMenuStringsUs;
         offsetsSrc = &itemWheelMenuOffsetsUs;
 #elif defined TP_JP
         stringsSrc = &itemWheelMenuStringsJp;
         offsetsSrc = &itemWheelMenuOffsetsJp;
-#elif defined TP_EU
+#elif defined TP_EU || defined TP_WUS2
         switch (currentLanguage)
         {
             case Languages::uk:

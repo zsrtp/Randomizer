@@ -33,6 +33,7 @@ import secrets
 import json
 import base64
 from datetime import datetime
+import re
 
 # +----------------------+
 # | Constants definition |
@@ -1316,6 +1317,22 @@ def main():
                     "The output has to be a file; Got a directory")
         return string
 
+    file_map_parser_re = re.compile("^([^\\:]*?)\\:([^\\:]*?)$")
+    def fileMapParser(string):
+        if not file_map_parser_re.match(string):
+            raise argparse.ArgumentTypeError(f'"{string}" is not a valid mapping')
+        return string
+
+    class NameMapping:
+        def __init__(self, old, new):
+            self.old = old
+            self.new = new
+
+        @staticmethod
+        def parse(string):
+            m = file_map_parser_re.match(string)
+            return NameMapping(m.group(1), m.group(2))
+
     # Functions only used in the main function
     # (shouldn't be defined in the root scope, since there
     # is no need to make them available when imported as library)
@@ -1462,6 +1479,8 @@ def main():
         "save", type=argparse.FileType('rb'), metavar="<save>", help="Path to the save file")
     files_add_parser.add_argument("-o", "--output", nargs='?', type=argparse.FileType(
         'wb'), default=None, help="Path to where to store the result (default: overwrites 'save')")
+    files_add_parser.add_argument(
+        "-m", "--map", action="extend", nargs='*', type=fileMapParser, help="Map a file name to an other one")
     files_add_parser.add_argument("file", type=argparse.FileType(
         'rb'), nargs="+", metavar="<file>", help="Path to the file(s) to add to the save")
     # Files; List
@@ -1510,6 +1529,15 @@ def main():
     numeric_level = getattr(logging, loglevel.upper(), logging.CRITICAL)
     logging.basicConfig(
         level=numeric_level, format="[%(levelname)s]\t[%(asctime)s]\t%(pathname)s:%(lineno)d %(funcName)s: %(message)s")
+
+    mappings = {}
+    if args.command == "files" and args.files_cmd == "add":
+        if args.map is None:
+            args.map = []
+        for m in args.map:
+            mapping = NameMapping.parse(m)
+            logging.debug(f"parsed mapping '{mapping.old}' to '{mapping.new}'")
+            mappings[mapping.old] = mapping.new
 
     # Phase 2: Load files and data/options
 
@@ -1671,6 +1699,8 @@ def main():
                 with file as f:
                     file_data = f.read()
                 logging.debug(f"Adding '{file_name}'...")
+                if file_name in mappings.keys():
+                    file_name = mappings.get(file_name)
                 save_bin.add_file(file_name, file_data)
             if args.output is None:
                 logging.info(

@@ -1,6 +1,10 @@
+800018A8:codehandlerStartAddress
+800120bc:enableCrashScreen
+80226318:patchMessageCalculation
+
 // special
 // right before m_Do_graphic::mDoGph_gInf_c::m_aspect
-8051d6c8:isWidescreen
+8051d6c8:m_isWide
 800120bc:dbg_inst
 
 // memory

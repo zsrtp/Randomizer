@@ -29,6 +29,12 @@ beq- printf_invalid_params
 cmpwi %r4,0
 ble- printf_invalid_params
 
+#ifdef PLATFORM_WII
+vsnprintf_offset = -0x30
+#else
+vsnprintf_offset = -0x20
+#endif
+
 # Restore the overwritten instruction
-stwu %sp,-0x20(%sp)
+stwu %sp,vsnprintf_offset(%sp)
 b vsnprintf + 0x4

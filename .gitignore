@@ -3,6 +3,7 @@
 **/*.rel
 **/*.elf
 **/*.gci
+**/*.bin
 **/build.*
 **/codehandler/*.bin
 **/codehandler/*.h
