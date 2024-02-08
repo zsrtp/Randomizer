@@ -918,7 +918,7 @@ namespace mod
             const uint32_t numShuffledEntrances = rando->m_Seed->m_numShuffledEntrances;
             rando::ShuffledEntrance* shuffledEntrances = &rando->m_Seed->m_ShuffledEntrances[0];
 
-            getConsole() << stageIDX << "," << roomNo << "," << point << "," << layer << "\n";
+            // getConsole() << stageIDX << "," << roomNo << "," << point << "," << layer << "\n";
 
             if (stageIDX !=
                 libtp::data::stage::StageIDs::Title_Screen) // We won't want to shuffle if we are loading a save since some

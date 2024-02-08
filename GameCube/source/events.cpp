@@ -1166,10 +1166,10 @@ namespace mod::events
                 localSignActor.pos.x = -109203.461f;
                 localSignActor.pos.y = -7220.f;
                 localSignActor.pos.z = 33083.7344f;
-                localSignActor.rot[1] = static_cast<int16_t>(0x8556);
+                localSignActor.rot[1] = static_cast<int16_t>(0x6556);
                 tools::spawnActor(0, localSignActor);
 
-                if (roomIDX == 1)
+                if (roomIDX == 1) // needs to rotate left
                 {
                     localSignActor.pos.x = -324.1757f;
                     localSignActor.pos.y = -1627.872f;
@@ -1198,14 +1198,14 @@ namespace mod::events
                         localGanonBarrierActor.pos.z -= 270.f;
                         tools::spawnActor(7, localGanonBarrierActor);
                     }
-                    localSignActor.pos.x = -12275.1543f;
+                    localSignActor.pos.x = -12275.1543f; // needs to rotate left
                     localSignActor.pos.y = -1001.9508;
                     localSignActor.pos.z = 20293.6855f;
                     localSignActor.rot[1] = static_cast<int16_t>(0xD556);
                     tools::spawnActor(0, localSignActor);
                 }
 
-                if (roomIDX == 6)
+                if (roomIDX == 6) // needs to rotate left
                 {
                     localSignActor.pos.x = -46039.4922f;
                     localSignActor.pos.y = -9250.f;
@@ -1214,7 +1214,7 @@ namespace mod::events
                     tools::spawnActor(6, localSignActor);
                 }
 
-                if (roomIDX == 3)
+                if (roomIDX == 3) // nees to rotate left
                 {
                     localSignActor.pos.x = -10906.2344f;
                     localSignActor.pos.y = -3190.27808f;
@@ -1223,7 +1223,7 @@ namespace mod::events
                     tools::spawnActor(3, localSignActor);
                 }
 
-                if (roomIDX == 7)
+                if (roomIDX == 7) // neds to rotate left
                 {
                     localSignActor.pos.x = 29691.0742f;
                     localSignActor.pos.y = 661.668;
@@ -1232,7 +1232,7 @@ namespace mod::events
                     tools::spawnActor(7, localSignActor);
                 }
 
-                if (roomIDX == 10)
+                if (roomIDX == 10) // needs to rotate left
                 {
                     localSignActor.pos.x = -46711.957f;
                     localSignActor.pos.y = 268.4848f;
@@ -1241,7 +1241,7 @@ namespace mod::events
                     tools::spawnActor(10, localSignActor);
                 }
 
-                if (roomIDX == 13)
+                if (roomIDX == 13) // needs to rotate right
                 {
                     localSignActor.pos.x = -94678.8672f;
                     localSignActor.pos.y = -3900.f;
@@ -1261,11 +1261,11 @@ namespace mod::events
                     tools::spawnActor(6, ForestGWolfActr);
                 }
 
-                if ((roomIDX == 8) || (roomIDX == 4))
+                if (roomIDX == 4)
                 {
-                    localSignActor.pos.x = -16173.2764f;
-                    localSignActor.pos.y = -348.143036f;
-                    localSignActor.pos.z = -17432.4785f;
+                    localSignActor.pos.x = -12420.0508f;
+                    localSignActor.pos.y = -274.354553f;
+                    localSignActor.pos.z = -11469.2881f;
                     localSignActor.rot[1] = static_cast<int16_t>(0xD556);
                     tools::spawnActor(8, localSignActor);
                 }
@@ -1288,7 +1288,7 @@ namespace mod::events
                 localSignActor.pos.x = -2119.33057f;
                 localSignActor.pos.y = 260.f;
                 localSignActor.pos.z = -3915.6517f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0xD556); // needs to rotate right
                 tools::spawnActor(1, localSignActor);
                 break;
             }
@@ -1299,7 +1299,7 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Kakariko_Village:
+            case StageIDs::Kakariko_Village: // needs to rotate right a lot
             {
                 localSignActor.pos.x = -6277.372f;
                 localSignActor.pos.y = 2850.f;
@@ -1309,7 +1309,7 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Ordon_Village:
+            case StageIDs::Ordon_Village: // needs to rotate left slightly
             {
                 localSignActor.pos.x = 687.89f;
                 localSignActor.pos.y = 800.f;
@@ -1321,11 +1321,11 @@ namespace mod::events
 
             case StageIDs::Sacred_Grove:
             {
-                localSignActor.pos.x = -8715.3418f;
-                localSignActor.pos.y = 2000.f;
-                localSignActor.pos.z = 4178.08252f;
+                localSignActor.pos.x = -1510.01062f;
+                localSignActor.pos.y = 1725.f;
+                localSignActor.pos.z = 7811.07715f;
                 localSignActor.rot[1] = static_cast<int16_t>(0xD556);
-                tools::spawnActor(3, localSignActor);
+                tools::spawnActor(1, localSignActor);
 
                 if (roomIDX == 1)
                 {
@@ -1334,7 +1334,7 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Kakariko_Graveyard:
+            case StageIDs::Kakariko_Graveyard: // needs to rotate left slightly
             {
                 localSignActor.pos.x = 21765.9863f;
                 localSignActor.pos.y = 500.f;
@@ -1344,7 +1344,7 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Death_Mountain:
+            case StageIDs::Death_Mountain: // needs to rotate right
             {
                 localSignActor.pos.x = -5459.5757f;
                 localSignActor.pos.y = 0.f;
@@ -1354,7 +1354,7 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Hidden_Village:
+            case StageIDs::Hidden_Village: // needs to rotate right
             {
                 localSignActor.pos.x = 5161.03f;
                 localSignActor.pos.y = 0.f;
@@ -1366,7 +1366,7 @@ namespace mod::events
 
             case StageIDs::Outside_Castle_Town:
             {
-                if (roomIDX == 8)
+                if (roomIDX == 8) // needs to rotate left
                 {
                     localSignActor.pos.x = -68194.2109f;
                     localSignActor.pos.y = -1050.f;
@@ -1374,7 +1374,7 @@ namespace mod::events
                     localSignActor.rot[1] = static_cast<int16_t>(0xD556);
                     tools::spawnActor(8, localSignActor);
                 }
-                else if (roomIDX == 16)
+                else if (roomIDX == 16) // needs to rotate right
                 {
                     localSignActor.pos.x = -51491.0234f;
                     localSignActor.pos.y = -5500.f;
@@ -1385,7 +1385,7 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Lake_Hylia_Long_Cave:
+            case StageIDs::Lake_Hylia_Long_Cave: // needs to make a 180
             {
                 localSignActor.pos.x = -1006.33252f;
                 localSignActor.pos.y = -1703.19995f;
@@ -1395,7 +1395,7 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Zoras_Domain:
+            case StageIDs::Zoras_Domain: // needs to rotate slightly right
             {
                 localSignActor.pos.x = -3981.957f;
                 localSignActor.pos.y = -2500.f;
@@ -1405,7 +1405,7 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Fishing_Pond:
+            case StageIDs::Fishing_Pond: // needs to rotate slightly left
             {
                 localSignActor.pos.x = -2921.2417f;
                 localSignActor.pos.y = 35.f;
@@ -1415,7 +1415,7 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Gerudo_Desert:
+            case StageIDs::Gerudo_Desert: // needs to rotate right
             {
                 localSignActor.pos.x = 20356.23f;
                 localSignActor.pos.y = 556.7;
@@ -1425,7 +1425,7 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Snowpeak:
+            case StageIDs::Snowpeak: // needs to rotate right a lot
             {
                 localSignActor.pos.x = 14804.874f;
                 localSignActor.pos.y = -14450.0908f;
@@ -1435,7 +1435,7 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Cave_of_Ordeals:
+            case StageIDs::Cave_of_Ordeals: // needs to rotate just barely right
             {
                 localSignActor.pos.x = -1191.42f;
                 localSignActor.pos.y = 1100.f;

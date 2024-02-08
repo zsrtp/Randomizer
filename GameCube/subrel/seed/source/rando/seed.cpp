@@ -91,7 +91,7 @@ namespace mod::rando
             // Load the custom text data
             this->loadCustomText(data);
 
-            // Set the static pointers for the Seed Header and Data
+            // Set the static pointers for the Seed Header and Data. These are used by TPO
             void** ptrTable = reinterpret_cast<void**>(0x800042BC);
             ptrTable[0] = m_Header;
             ptrTable[1] = m_GCIData;
@@ -104,7 +104,7 @@ namespace mod::rando
         // Make sure to delete tempcheck buffers
         this->clearChecks();
 
-        // Clear the static pointers for the Seed Header and Data
+        // Clear the static pointers for the Seed Header and Data.  These are used by TPO
         void** ptrTable = reinterpret_cast<void**>(0x800042BC);
         ptrTable[0] = nullptr;
         ptrTable[1] = nullptr;
