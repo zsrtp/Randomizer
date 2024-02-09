@@ -29,3 +29,7 @@ To use a custom banner and icon(s) in the resulting save file, you want to look 
 
 1. Edit the template files in [gimp](https://www.gimp.org/)
 2. Export as a `PNG`.
+
+`./bin/img2wibn.py -t "Twilight Princess" -s "Randomizer" -f 0 -a 43690 assets/wii_banner.raw assets/wii_banner.png assets/icons/tpr_*`
+
+the animation speed `43690` is `0xAAAA`. This is a 16 bit number that contains 2-bit speed value for each frame (8 frames max)
