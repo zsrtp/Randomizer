@@ -264,6 +264,9 @@
 //dvdfs.o
 8034bfec:DVDConvertPathToEntrynum
 
+// d_s_logo.o
+80243a7c:getPalLanguage2
+
 //d_meter2_info.o
 804a41a0:g_meter2_info
 //804bcb94:wZButtonPtr

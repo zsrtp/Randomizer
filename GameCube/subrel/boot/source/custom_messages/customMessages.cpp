@@ -7,7 +7,7 @@
 #include "rando/customItems.h"
 #include "tp/m_do_printf.h"
 
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
 #include "tp/d_s_logo.h"
 #endif
 
@@ -17,7 +17,7 @@
 namespace mod::customMessages
 {
 
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
     using namespace libtp::tp::d_s_logo;
 #endif
 

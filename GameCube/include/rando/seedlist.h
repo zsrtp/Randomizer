@@ -29,10 +29,8 @@ namespace mod::rando
         SeedList(void);
         ~SeedList(void);
 
-#ifdef DVD
+#if defined(DVD) || defined(PLATFORM_WII)
         void getSeedFiles(const char* seedDirectory, MinSeedInfo* minSeedInfoBuffer);
-#elif defined PLATFORM_WII
-        void getSeedFiles(MinSeedInfo* minSeedInfoBuffer);
 #else
         void getSeedFiles(int32_t chan, MinSeedInfo* minSeedInfoBuffer);
 #endif

@@ -1020,10 +1020,12 @@ class SaveFile:
         self.data = data
 
     def __repr__(self) -> str:
-        return f"SaveFile(path={repr(self.path)}, node_type={self.node_type}, mode={self.mode}, attributes={self.attributes}, data={self.data})"
+        data = f", data={self.data}" if self.data is not None else ""
+        return f"SaveFile(path={repr(self.path)}, node_type={self.node_type}, mode={self.mode}, attributes={self.attributes}{data})"
 
     def __str__(self) -> str:
-        return f"SaveFile(path=\"{self.path}\", node_type={self.node_type.name[:1].upper() + self.node_type.name.lower()[1:]}, mode={self.mode}, attributes={self.attributes}, data={self.data.__class__.__name__}({len(self.data)}))"
+        data = f", data={self.data.__class__.__name__}({len(self.data)})" if self.data is not None else ""
+        return f"SaveFile(path=\"{self.path}\", node_type={self.node_type.name[:1].upper() + self.node_type.name.lower()[1:]}, mode={self.mode}, attributes={self.attributes}{data})"
 
     @staticmethod
     def unpack(reader: FileIO):

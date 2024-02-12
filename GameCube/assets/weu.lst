@@ -76,6 +76,9 @@
 // f_op_draw_tag.o
 80466268:matrixInfo
 
+// d_s_logo.o
+80243e9c:getPalLanguage2
+
 // f_op_scene_req.o
 // data
 80521190:g_dComIfAc_gameInfo

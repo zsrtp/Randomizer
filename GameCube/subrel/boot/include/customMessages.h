@@ -37,7 +37,7 @@ namespace mod::customMessages
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsJp;
 #endif
 
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
     // German
     extern const MsgEntry entriesDe[];
     extern const uint32_t totalCustomMessagesDe;

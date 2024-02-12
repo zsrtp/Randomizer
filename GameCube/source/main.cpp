@@ -56,7 +56,7 @@
 #include "rando/customItems.h"
 #include "cxx.h"
 
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
 #include "tp/d_s_logo.h"
 #endif
 
@@ -94,7 +94,7 @@ namespace mod
     uint8_t damageMultiplier = 1;
     bool bonksDoDamage = false;
 
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
     KEEP_VAR libtp::tp::d_s_logo::Languages currentLanguage = libtp::tp::d_s_logo::Languages::uk;
 #endif
 

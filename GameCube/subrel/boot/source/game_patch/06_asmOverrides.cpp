@@ -64,6 +64,7 @@ namespace mod::game_patch
         *reinterpret_cast<uint32_t*>(heartContainerFunctionAddress + 0x74) = ASM_NOP; // Previous 0x4bfa6a99
 #endif
 
+#ifndef PLATFORM_WII
         // Modify event035 to not remove Auru's Memo from inventory after talking to Fyer.
         uint32_t event035MemoAddress = reinterpret_cast<uint32_t>(libtp::tp::d_msg_flow::event035);
 
@@ -118,6 +119,7 @@ namespace mod::game_patch
         libtp::patch::writeStandardBranches(checkWarpStartAddress + 0x64,
                                             assembly::asmUnpatchMapGlitchStart,
                                             assembly::asmUnpatchMapGlitchEnd);
+#endif
 #endif
     }
 } // namespace mod::game_patch

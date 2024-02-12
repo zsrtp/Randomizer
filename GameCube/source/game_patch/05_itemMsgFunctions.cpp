@@ -1,7 +1,7 @@
 #include "game_patch/game_patch.h"
 #include "data/items.h"
 #include "data/stages.h"
-#include "gc_wii/bmgres.h"
+#include "tp/bmgres.h"
 #include "main.h"
 #include "tp/control.h"
 #include "tp/d_a_alink.h"
@@ -13,7 +13,7 @@
 #include "gc_wii/OSCache.h"
 #include "rando/customItems.h"
 
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
 #include "tp/d_s_logo.h"
 #endif
 
@@ -35,10 +35,10 @@ namespace mod::game_patch
             return -1;
         }
 
-        libtp::gc::bmgres::TextIndexTable* textIndexTable =
-            *reinterpret_cast<libtp::gc::bmgres::TextIndexTable**>( reinterpret_cast<uint32_t>( unk ) + 0xC );
+        libtp::tp::bmgres::TextIndexTable* textIndexTable =
+            *reinterpret_cast<libtp::tp::bmgres::TextIndexTable**>( reinterpret_cast<uint32_t>( unk ) + 0xC );
 
-        libtp::gc::bmgres::MessageEntry* entry = &textIndexTable->entry[0];
+        libtp::tp::bmgres::MessageEntry* entry = &textIndexTable->entry[0];
         uint32_t loopCount = textIndexTable->numEntries;
 
         // Loop through the item IDs until msgId is found
@@ -213,7 +213,7 @@ namespace mod::game_patch
         return createString(format, msgSize, poeCount);
     };
 
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
     bool __attribute__((noinline)) shouldGetTheText()
     {
         using namespace libtp::tp::d_s_logo;
@@ -239,7 +239,7 @@ namespace mod::game_patch
     {
         using namespace libtp::data::items;
         using namespace rando::customItems;
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
         using namespace libtp::tp::d_s_logo;
 #endif
         // Get the text and size of the format text
@@ -286,7 +286,7 @@ namespace mod::game_patch
         // 'for' text is only used for some languages
         auto getForText = []()
         {
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
             switch (currentLanguage)
             {
                 case Languages::uk:
@@ -313,7 +313,7 @@ namespace mod::game_patch
         // 'the' text is only used for some languages
         auto getTheText = []()
         {
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
             return shouldGetTheText();
 #elif defined TP_US
             return true;

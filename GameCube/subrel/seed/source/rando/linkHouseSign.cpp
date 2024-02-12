@@ -4,7 +4,7 @@
 #include "main.h"
 #include "cxx.h"
 
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
 #include "tp/d_s_logo.h"
 #endif
 
@@ -81,7 +81,7 @@ namespace mod::link_house_sign
     const char* noDungeonsRequiredJp = "\x83\x5F\x83\x93\x83\x57\x83\x87\x83\x93\x82\xCD\x95\x4B\x97\x76\x82\xC8\x82\xA2";
 #endif
 
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
     // German
     const char* dungeonsDe[TOTAL_POSSIBLE_DUNGEONS] = {
         // Forest Temple

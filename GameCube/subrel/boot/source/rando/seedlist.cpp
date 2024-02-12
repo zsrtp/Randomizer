@@ -25,6 +25,14 @@
 #include "memory.h"
 #include "cxx.h"
 #include "gc_wii/OSInterrupt.h"
+#include "tp/m_do_printf.h"
+
+#define MIN(x, y) ((x) > (y) ? (y) : (x))
+
+// TODO Move this to libtp_rel
+#ifdef PLATFORM_WII
+extern "C" const char* nandGetHomeDir();
+#endif
 
 namespace mod::rando
 {
@@ -44,7 +52,11 @@ namespace mod::rando
 #ifdef DVD
         getSeedFiles("/mod/seed", minSeedInfoBuffer);
 #elif defined PLATFORM_WII
-        getSeedFiles(minSeedInfoBuffer);
+        char dirBuf[96];
+        snprintf(dirBuf, sizeof(dirBuf), "%s", nandGetHomeDir());
+        libtp::tp::m_Do_printf::OSReport("nand home dir + seed: \"%s\"\n", dirBuf);
+
+        getSeedFiles(dirBuf, minSeedInfoBuffer);
 #else
         // The memory card should already be mounted
         getSeedFiles(CARD_SLOT_A, minSeedInfoBuffer);
@@ -79,7 +91,7 @@ namespace mod::rando
         DVDDirectoryEntry entry;
         char filePath[96];
 #elif defined PLATFORM_WII
-    void SeedList::getSeedFiles(MinSeedInfo* minSeedInfoBuffer)
+    void SeedList::getSeedFiles(const char* seedDirectory, MinSeedInfo* minSeedInfoBuffer)
     {
         using namespace libtp::gc_wii::nand;
 
@@ -109,9 +121,37 @@ namespace mod::rando
             return;
         }
 #endif
+
+#ifdef PLATFORM_WII
+        // Get the total number of files/folders in the folder
+        uint32_t numFiles;
+        if (NANDReadDir(seedDirectory, nullptr, &numFiles) != NAND_RESULT_READY)
+        {
+            return;
+        }
+
+        numFiles = MIN(numFiles, SEED_MAX_ENTRIES);
+
+        // Allocate memory for the list
+        // Allocate the memory to the back of the heap to avoid fragmentation
+        char* fileList = new (-0x20) char[numFiles * (NAND_FILENAME_MAX + 1)];
+
+        // Get the list of files/folders
+        if (NANDReadDir(seedDirectory, fileList, &numFiles) != NAND_RESULT_READY)
+        {
+            return;
+        }
+
+        libtp::tp::m_Do_printf::OSReport("nand seed file(s) count: %d\n", numFiles);
+
+        uint8_t cursor = 0;
+        for (uint32_t i = 0; i < numFiles; ++i)
+        {
+#else
         // Loop through all possible files
         for (int32_t i = 0; i < SEED_MAX_ENTRIES; i++)
         {
+#endif
 #ifdef DVD
             // Loop through the files in the directory
             // DVDReadDir will return false once all files have been looped through
@@ -136,7 +176,11 @@ namespace mod::rando
             if (DVD_STATE_END != libtp::tools::readFile(filePath, sizeof(header), 0, &header))
             {
 #elif defined PLATFORM_WII
-            snprintf(filePath, sizeof(filePath), "seed%d", i);
+            // Loop through the files in the directory
+            size_t filenameLength = strlen(fileList + cursor);
+
+            snprintf(filePath, sizeof(filePath), "%s", fileList + cursor);
+            cursor += filenameLength + 1;
             currentFileName = filePath;
 
             if (NAND_RESULT_READY != libtp::tools::readNAND(filePath, sizeof(header), 0, &header))
@@ -201,6 +245,8 @@ namespace mod::rando
 #ifdef DVD
         // Close the directory that has the seeds
         DVDCloseDir(&dir);
+#elif defined(PLATFORM_WII)
+        delete fileList;
 #endif
         // Restore interrupts
         libtp::gc_wii::os_interrupt::OSRestoreInterrupts(enable);

@@ -30,6 +30,12 @@
 #include "user_patch/user_patch.h"
 #include "gc_wii/OSInterrupt.h"
 
+#ifndef PLATFORM_WII
+#define BUF_ADDR 0x800042BC
+#else
+#define BUF_ADDR 0x80005498
+#endif
+
 namespace mod::rando
 {
     Seed::Seed(int32_t chan, SeedInfo* seedInfo): m_CardSlot(chan)
@@ -94,7 +100,7 @@ namespace mod::rando
             m_BmdEntries = reinterpret_cast<BMDEntry*>(m_GCIData + headerPtr->clr0Offset + m_CLR0->bmdEntriesOffset);
 
             // Set the static pointers for the Seed Header and Data
-            void** ptrTable = reinterpret_cast<void**>(0x800042BC);
+            void** ptrTable = reinterpret_cast<void**>(BUF_ADDR);
             ptrTable[0] = m_Header;
             ptrTable[1] = m_GCIData;
         }
@@ -107,7 +113,7 @@ namespace mod::rando
         this->clearChecks();
 
         // Clear the static pointers for the Seed Header and Data
-        void** ptrTable = reinterpret_cast<void**>(0x800042BC);
+        void** ptrTable = reinterpret_cast<void**>(BUF_ADDR);
         ptrTable[0] = nullptr;
         ptrTable[1] = nullptr;
 

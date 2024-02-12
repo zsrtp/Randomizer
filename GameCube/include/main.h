@@ -28,7 +28,7 @@
 #include "tp/d_meter2_info.h"
 #include "tp/d_menu_fmap2D.h"
 
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
 #include "tp/d_s_logo.h"
 #endif
 
@@ -89,7 +89,7 @@ namespace mod
     extern uint8_t damageMultiplier;
     extern bool bonksDoDamage;
 
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
     extern libtp::tp::d_s_logo::Languages currentLanguage;
 #endif
 

@@ -22,7 +22,7 @@ namespace mod::link_house_sign
     extern const char* noDungeonsRequiredJp;
 #endif
 
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
     // German
     extern const char* dungeonsDe[TOTAL_POSSIBLE_DUNGEONS];
     extern const char* noDungeonsRequiredDe;
