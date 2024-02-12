@@ -76,7 +76,7 @@
 80042B04:skipper
 
 // d_event_manager.o
-80047888:getEventIdx
+80047888:getEventIdx3
 
 // DynamicLink.o
 80263460:DynamicModuleControl_ct
@@ -101,6 +101,9 @@
 80019e40:fopAcM_create
 8001bbbc:fopAcM_getTalkEventPartner
 8001b68c:fopAcM_orderChangeEventId
+
+// f_op_msg_mng.o
+8001ff2c:fopMsgM_messageSet
 
 // f_pc_node_req
 803A5718:l_fpcNdRq_Queue
@@ -361,6 +364,10 @@
 //d_a_shop_item_static.o
 8037a178:shopItemData
 
+//d_shop_system.o
+8019a080:seq_decide_yes
+8019a5ac:setSoldOutFlag
+
 //d_menu_window.o
 801fa854:collect_save_open_init
 
@@ -377,6 +384,8 @@
 8024e11c:event041
 8024d138:event017
 8024c944:query049
+8024a97c:doFlow
+8024b0f4:setNormalMsg
 
 
 //d_a_npc.o

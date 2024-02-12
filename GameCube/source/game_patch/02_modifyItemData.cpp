@@ -474,7 +474,7 @@ namespace mod::game_patch
         }
         else
         {
-            savePtr->save_file.area_flags[0x14].temp_flags.memoryFlags[0x9] |= 0x4;
+            savePtr->save_file.mSave[0x14].temp_flags.memoryFlags[0x9] |= 0x4;
         }
     }
 
@@ -496,7 +496,7 @@ namespace mod::game_patch
         }
         else
         {
-            savePtr->save_file.area_flags[0x14].temp_flags.memoryFlags[0x9] |= 0x8;
+            savePtr->save_file.mSave[0x14].temp_flags.memoryFlags[0x9] |= 0x8;
         }
     }
 
@@ -567,7 +567,7 @@ namespace mod::game_patch
         else
         {
             libtp::tp::d_save::dSv_memBit_c* tempFlagsPtr =
-                &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[0x3].temp_flags;
+                &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mSave[0x3].temp_flags;
 
             libtp::tp::d_save::onSwitch_dSv_memBit(tempFlagsPtr, 0x69);
             libtp::tp::d_save::onSwitch_dSv_memBit(tempFlagsPtr, 0x65);

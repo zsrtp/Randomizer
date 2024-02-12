@@ -274,7 +274,7 @@ namespace mod::item_wheel_menu
         events::drawText(strings->pumpkin, ringPosX + pumpkinPosXOffset, ringPosY + pumpkinPosYOffset, mainTextColor, textSize);
 
         // Get the offset for the pumpkin value
-        const bool hasPumpkin = libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::TOLD_YETA_ABOUT_PUMPKIN);
+        const bool hasPumpkin = libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::TOLD_YETA_ABOUT_PUMPKIN);
         uint32_t pumpkinValueOffset;
 
         if (hasPumpkin)
@@ -299,7 +299,7 @@ namespace mod::item_wheel_menu
         events::drawText(strings->cheese, ringPosX + cheesePosXOffset, ringPosY + cheesePosYOffset, mainTextColor, textSize);
 
         // Get the offset for the cheese value
-        const bool hasCheese = libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::TOLD_YETA_ABOUT_CHEESE);
+        const bool hasCheese = libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::TOLD_YETA_ABOUT_CHEESE);
         uint32_t cheeseValueOffset;
 
         if (hasCheese)

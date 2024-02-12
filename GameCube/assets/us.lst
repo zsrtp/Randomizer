@@ -76,7 +76,7 @@
 800429D4:skipper
 
 // d_event_manager.o
-80047758:getEventIdx
+80047758:getEventIdx3
 
 // DynamicLink.o
 80262660:DynamicModuleControl_ct

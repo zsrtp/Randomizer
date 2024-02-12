@@ -211,10 +211,6 @@ namespace mod::rando
         // Set the pointer as offset into our buffer
         m_ShuffledEntrances = reinterpret_cast<ShuffledEntrance*>(&m_GCIData[gci_offset]);
         m_numShuffledEntrances = num_shuffledEntrances;
-
-        getConsole() << reinterpret_cast<uint32_t>(m_ShuffledEntrances) << "\n";
-        getConsole() << reinterpret_cast<uint32_t>(m_GCIData) << "\n";
-        getConsole() << reinterpret_cast<uint32_t>(num_shuffledEntrances) << "\n";
     }
     bool Seed::loadCustomText(uint8_t* data)
     {
@@ -242,8 +238,6 @@ namespace mod::rando
 
             // Copy the data to the pointers
             memcpy(m_HintMsgTableInfo, &data[offset], msgTableInfoSize);
-            getConsole() << &m_HintMsgTableInfo << " " << headerOffset << " " << customMessageHeader->msgIdTableOffset << " "
-                         << msgTableInfoSize << "\n";
             return true;
         }
 

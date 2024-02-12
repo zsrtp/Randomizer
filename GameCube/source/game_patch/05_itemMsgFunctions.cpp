@@ -1,7 +1,7 @@
 #include "game_patch/game_patch.h"
 #include "data/items.h"
 #include "data/stages.h"
-#include "gc_wii/bmgres.h"
+#include "tp/bmgres.h"
 #include "main.h"
 #include "tp/control.h"
 #include "tp/d_a_alink.h"

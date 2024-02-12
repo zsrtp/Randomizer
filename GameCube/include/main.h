@@ -429,8 +429,8 @@ namespace mod
     float handle_damageMagnification(libtp::tp::d_a_alink::daAlink* daALink, int32_t param_1, int32_t param_2);
     extern float (*return_damageMagnification)(libtp::tp::d_a_alink::daAlink* daALink, int32_t param_1, int32_t param_2);
 
-    void handle_procCoGetItemInit(libtp::tp::d_a_alink::daAlink* linkActrPtr);
-    extern void (*return_procCoGetItemInit)(libtp::tp::d_a_alink::daAlink* linkActrPtr);
+    int32_t handle_procCoGetItemInit(libtp::tp::d_a_alink::daAlink* linkActrPtr);
+    extern int32_t (*return_procCoGetItemInit)(libtp::tp::d_a_alink::daAlink* linkActrPtr);
 
     // Audio functions
     void handle_loadSeWave(void* Z2SceneMgr, uint32_t waveID);

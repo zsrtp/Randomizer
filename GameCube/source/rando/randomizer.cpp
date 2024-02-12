@@ -69,7 +69,7 @@ namespace mod::rando
             return;
         }
 
-        const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mStage;
+        const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.mStage;
         seed->LoadChecks(stage);
 
         // Make sure the foolish items spawn count is reset before randomizing foolish item models
@@ -680,7 +680,7 @@ namespace mod::rando
         if (rawRGBListPtr->wolfDomeAttackColor != 0xFFFFFFFF) // Don't do anything if the value is default
         {
             uint8_t* domeRGBA = reinterpret_cast<uint8_t*>(&rawRGBListPtr->wolfDomeAttackColor);
-            uint8_t** chromaRegisterTable = reinterpret_cast<uint8_t**>(&linkActrPtr->field_0x0724->chromaRPtr);
+            uint8_t** chromaRegisterTable = reinterpret_cast<uint8_t**>(&linkActrPtr->tevRegKey->chromaRPtr);
 
             for (uint32_t i = 0; i < 3; i++)
             {
@@ -702,9 +702,9 @@ namespace mod::rando
         using namespace libtp::tp;
         for (int i = 0; i < 4; i++)
         {
-            if (d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve[i] == 0)
+            if (d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk[i] == 0)
             {
-                d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve[i] = itemToAdd;
+                d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk[i] = itemToAdd;
                 break;
             }
         }

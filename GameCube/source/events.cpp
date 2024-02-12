@@ -124,7 +124,7 @@ namespace mod::events
             randomizer->initSave();
         }
 
-        if ((strcmp(playPtr->mNextStage.stageValues.mStage, "F_SP103") == 0) && (currentRoom == 1) &&
+        if ((strcmp(playPtr->mNextStage.mStage, "F_SP103") == 0) && (currentRoom == 1) &&
             (currentPoint == 0x1)) // If we are spawning in Ordon for the first time.
         {
             switch (randomizer->m_Seed->m_Header->startingTimeOfDay)
@@ -153,7 +153,7 @@ namespace mod::events
                 }
             }
 
-            if (d_a_alink::dComIfGs_isEventBit(flags::ORDON_DAY_2_OVER))
+            if (d_com_inf_game::dComIfGs_isEventBit(flags::ORDON_DAY_2_OVER))
             {
                 savePtr->save_file.player.horse_place.mPos.y = -1000.f; // Place Epona out of bounds in Faron if Talo has been
                                                                         // rescued since the game will spawn her in the air.
@@ -837,7 +837,7 @@ namespace mod::events
 
     void setSaveFileEventFlag(uint16_t flag)
     {
-        libtp::tp::d_save::onEventBit(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags, flag);
+        libtp::tp::d_save::onEventBit(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mEvent, flag);
     }
 
     void onAdjustFieldItemParams(libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife)
@@ -971,7 +971,7 @@ namespace mod::events
                 libtp::data::stage::allStages[libtp::data::stage::StageIDs::Kakariko_Village_Interiors]))
         {
             // If player has not bought Barnes' Bomb Bag, we want to allow them to be able to get the check.
-            if ((!libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::BOUGHT_BARNES_BOMB_BAG)))
+            if ((!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::BOUGHT_BARNES_BOMB_BAG)))
             {
                 return 0;
             }
@@ -1083,7 +1083,7 @@ namespace mod::events
                         for (int32_t i = 0x10; i < 0x18; i++)
                         {
                             if (libtp::tp::d_save::isDungeonItem(
-                                    &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[i].temp_flags,
+                                    &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mSave[i].temp_flags,
                                     3))
                             {
                                 numDungeons++;
@@ -1152,7 +1152,7 @@ namespace mod::events
         {
             case StageIDs::Lake_Hylia:
             {
-                if (libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::SKY_CANNON_REPAIRED))
+                if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::SKY_CANNON_REPAIRED))
                 {
                     // Manually spawn Auru if the Lake is in the Repaired Cannon state as his actor is not in the DZX for that
                     // layer.
@@ -1184,7 +1184,7 @@ namespace mod::events
             {
                 if (roomIDX == 0)
                 {
-                    if (!tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags,
+                    if (!tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mEvent,
                                                 data::flags::CLEARED_ELDIN_TWILIGHT))
                     {
                         libtp::tp::dzx::ACTR localGanonBarrierActor;
@@ -1255,7 +1255,7 @@ namespace mod::events
 
             case StageIDs::Faron_Woods:
             {
-                if (tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags,
+                if (tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mEvent,
                                            data::flags::ORDON_DAY_2_OVER))
                 {
                     tools::spawnActor(6, ForestGWolfActr);
@@ -1280,7 +1280,7 @@ namespace mod::events
 
             case StageIDs::Bulblin_Camp:
             {
-                if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::ESCAPED_BURNING_TENT_IN_BULBLIN_CAMP))
+                if (!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::ESCAPED_BURNING_TENT_IN_BULBLIN_CAMP))
                 {
                     tools::spawnActor(1, CampBoarActr);
                 }
@@ -1546,7 +1546,7 @@ namespace mod::events
     {
         using namespace libtp;
         if (tp::d_a_alink::checkStageName(data::stage::allStages[data::stage::StageIDs::Hyrule_Field]) &&
-            libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::MIDNAS_DESPERATE_HOUR_COMPLETED))
+            libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::MIDNAS_DESPERATE_HOUR_COMPLETED))
         {
             tools::spawnSCOB(3, HorseJumpScob);
         }
@@ -1585,7 +1585,7 @@ namespace mod::events
         }
 
         // Check to see if Link has the ability to transform.
-        if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::TRANSFORMING_UNLOCKED))
+        if (!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::TRANSFORMING_UNLOCKED))
         {
             return;
         }
@@ -1752,7 +1752,7 @@ namespace mod::events
 
         // Check if Midna has actually been unlocked and is on the Z button
         // This is needed because the Z button will always be dimmed if she has not been unlocked
-        if (libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::MIDNA_ACCOMPANIES_WOLF))
+        if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::MIDNA_ACCOMPANIES_WOLF))
         {
             // Ensure there is a proper pointer to the mMeterClass and mpMeterDraw structs in g_meter2_info.
             if (!libtp::tp::d_meter2_info::g_meter2_info.mMeterClass)
@@ -1914,7 +1914,7 @@ namespace mod::events
         }
         else // We are not in the correct node, so use the appropriate region node
         {
-            memoryFlags = saveDataPtr->save_file.area_flags[static_cast<uint32_t>(nodeId)].temp_flags.memoryFlags;
+            memoryFlags = saveDataPtr->save_file.mSave[static_cast<uint32_t>(nodeId)].temp_flags.memoryFlags;
         }
 
         return memoryFlags;

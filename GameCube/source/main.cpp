@@ -251,7 +251,7 @@ namespace mod
                                                  int32_t param_1,
                                                  int32_t param_2) = nullptr;
     KEEP_VAR bool (*return_checkCastleTownUseItem)(uint16_t item_id) = nullptr;
-    KEEP_VAR void (*return_procCoGetItemInit)(libtp::tp::d_a_alink::daAlink* linkActrPtr) = nullptr;
+    KEEP_VAR int32_t (*return_procCoGetItemInit)(libtp::tp::d_a_alink::daAlink* linkActrPtr) = nullptr;
 
     // Audio functions
     KEEP_VAR void (*return_loadSeWave)(void* Z2SceneMgr, uint32_t waveID) = nullptr;
@@ -521,7 +521,7 @@ namespace mod
             if (prevState != GAME_ACTIVE && state == 11)
             {
                 // check whether we're in title screen CS
-                if (0 != strcmp("S_MV000", gameInfo->play.mNextStage.stageValues.mStage))
+                if (0 != strcmp("S_MV000", gameInfo->play.mNextStage.mStage))
                 {
                     gameState = GAME_ACTIVE;
                 }
@@ -792,10 +792,10 @@ namespace mod
                             uint8_t itemToGive = 0xFF;
                             for (int i = 0; i < 4; i++)
                             {
-                                if (d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve[i] != 0)
+                                if (d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk[i] != 0)
                                 {
-                                    itemToGive = d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve[i];
-                                    d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve[i] = 0x0;
+                                    itemToGive = d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk[i];
+                                    d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk[i] = 0x0;
                                     break;
                                 }
                             }
@@ -812,7 +812,7 @@ namespace mod
                             d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mProcID = libtp::tp::d_a_alink::PROC_GET_ITEM;
 
                             //  Get the event index for the "Get Item" event.
-                            int16_t eventIdx = d_event_manager::getEventIdx(
+                            int16_t eventIdx = d_event_manager::getEventIdx3(
                                 &d_com_inf_game::dComIfG_gameInfo.play.mEvtManager,
                                 reinterpret_cast<f_op_actor::fopAc_ac_c*>(d_com_inf_game::dComIfG_gameInfo.play.mPlayer),
                                 "DEFAULT_GETITEM",
@@ -1035,7 +1035,7 @@ namespace mod
                 {
                     if (libtp::tp::d_a_alink::checkStageName(
                             libtp::data::stage::allStages[libtp::data::stage::StageIDs::Lake_Hylia]) &&
-                        !libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::CLEARED_LANAYRU_TWILIGHT))
+                        !libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::CLEARED_LANAYRU_TWILIGHT))
                     {
                         *entranceType = 0x50;
                     }
@@ -1200,7 +1200,7 @@ namespace mod
             {
                 // Check if we are at Kakariko Malo mart and verify that we have not bought the shield.
                 if (libtp::tools::playerIsInRoomStage(3, stagesPtr[StageIDs::Kakariko_Village_Interiors]) &&
-                    !tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::BOUGHT_HYLIAN_SHIELD_AT_MALO_MART))
+                    !tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::BOUGHT_HYLIAN_SHIELD_AT_MALO_MART))
                 {
                     // Return false so we can buy the shield.
                     return 0;
@@ -1254,7 +1254,7 @@ namespace mod
     KEEP_FUNC void handle_item_func_ASHS_SCRIBBLING()
     {
         using namespace libtp::data::flags;
-        if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(GOT_CORAL_EARRING_FROM_RALIS))
+        if (!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(GOT_CORAL_EARRING_FROM_RALIS))
         {
             return_item_func_ASHS_SCRIBBLING();
         }
@@ -1339,7 +1339,7 @@ namespace mod
     {
         const int32_t poeFlag = return_query049(unk1, unk2, unk3);
 
-        if ((poeFlag == 4) && !libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::GOT_BOTTLE_FROM_JOVANI))
+        if ((poeFlag == 4) && !libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::GOT_BOTTLE_FROM_JOVANI))
         {
             return 3;
         }
@@ -1502,6 +1502,7 @@ namespace mod
     KEEP_FUNC bool handle_isEventBit(libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag)
     {
         using namespace libtp::tp::d_a_alink;
+        using namespace libtp::tp::d_com_inf_game;
         using namespace libtp::data::stage;
         using namespace libtp::data::flags;
 
@@ -1618,7 +1619,7 @@ namespace mod
             {
                 if (checkStageName(stagesPtr[StageIDs::Mirror_Chamber]))
                 {
-                    if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT))
+                    if (!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT))
                     {
                         using namespace libtp::data;
                         if (randoIsEnabled(rando))
@@ -1645,7 +1646,7 @@ namespace mod
             {
                 if (libtp::tools::playerIsInRoomStage(1, stagesPtr[StageIDs::Ordon_Village_Interiors]))
                 {
-                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(SERAS_CAT_RETURNED_TO_SHOP))
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(SERAS_CAT_RETURNED_TO_SHOP))
                     {
                         return false; // Return false so Sera will give the milk item to the player once they help the cat.
                     }
@@ -1673,7 +1674,7 @@ namespace mod
         using namespace libtp::data::flags;
 
         libtp::tp::d_save::dSv_save_c* saveFilePtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file;
-        if (eventPtr == &saveFilePtr->event_flags)
+        if (eventPtr == &saveFilePtr->mEvent)
         {
             libtp::tp::d_save::dSv_player_status_a_c* playerStatusAPtr = &saveFilePtr->player.player_status_a;
             libtp::tp::d_save::dSv_player_status_b_c* playerStatusBPtr = &saveFilePtr->player.player_status_b;
@@ -1686,7 +1687,7 @@ namespace mod
                 // has been obtained.
                 case ENTERED_ORDON_SPRING_DAY_3:
                 {
-                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(TRANSFORMING_UNLOCKED))
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(TRANSFORMING_UNLOCKED))
                     {
                         playerStatusAPtr->currentForm =
                             0; // Set player to Human as the game will not do so if Shadow Crystal has been obtained.
@@ -1699,7 +1700,7 @@ namespace mod
                 // has been obtained.
                 case WATCHED_CUTSCENE_AFTER_BEING_CAPTURED_IN_FARON_TWILIGHT:
                 {
-                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(TRANSFORMING_UNLOCKED))
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(TRANSFORMING_UNLOCKED))
                     {
                         playerStatusAPtr->currentForm =
                             1; // Set player to Wolf as the game will not do so if Shadow Crystal has been obtained.
@@ -1715,7 +1716,7 @@ namespace mod
 
                 case CLEARED_FARON_TWILIGHT: // Cleared Faron Twilight
                 {
-                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
                     {
                         if (darkClearLevelFlag == 0x6)
                         {
@@ -1731,7 +1732,7 @@ namespace mod
                 case CLEARED_ELDIN_TWILIGHT: // Cleared Eldin Twilight
                 {
                     events::setSaveFileEventFlag(MAP_WARPING_UNLOCKED); // in glitched Logic, you can skip the gorge bridge.
-                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
                     {
                         if (darkClearLevelFlag == 0x5)
                         {
@@ -1747,7 +1748,7 @@ namespace mod
 
                 case CLEARED_LANAYRU_TWILIGHT: // Cleared Lanayru Twilight
                 {
-                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
                     {
                         if (darkClearLevelFlag == 0x7) // All twilights completed
                         {
@@ -1792,7 +1793,7 @@ namespace mod
         {
             if (flag == 0x66) // Check for escort completed flag
             {
-                if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(
+                if (!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(
                         libtp::data::flags::GOT_ZORA_ARMOR_FROM_RUTELA)) // return false if we haven't gotten the item
                                                                          // from Rutella.
                 {
@@ -1846,7 +1847,7 @@ namespace mod
             {
                 if (flag == 0xD) // Lanayru Twilight End CS trigger.
                 {
-                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::TRANSFORMING_UNLOCKED))
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::TRANSFORMING_UNLOCKED))
                     {
                         libtp::tp::d_save::dSv_save_c* saveFilePtr =
                             &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file;
@@ -2095,7 +2096,7 @@ namespace mod
         return return_seq_decide_yes(shopPtr, actor, msgFlow);
     }
 
-    KEEP_FUNC void handle_procCoGetItemInit(libtp::tp::d_a_alink::daAlink* linkActrPtr)
+    KEEP_FUNC int32_t handle_procCoGetItemInit(libtp::tp::d_a_alink::daAlink* linkActrPtr)
     {
         // If we are giving a custom item, we want to set mParam0 to 0x100 so that instead of trying to search for an item actor
         // that doesnt exist we want the game to create one using the item id in mGtItm.
@@ -2104,9 +2105,7 @@ namespace mod
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mDemo.mParam0 = 0x100;
             giveItemToPlayer = false;
         }
-        return_procCoGetItemInit(linkActrPtr);
-
-        return;
+        return return_procCoGetItemInit(linkActrPtr);
     }
 
     KEEP_FUNC void* handle_dScnLogo_c_dt(void* dScnLogo_c, int16_t bFreeThis)
