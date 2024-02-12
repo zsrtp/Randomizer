@@ -69,7 +69,7 @@ namespace mod::rando
             return;
         }
 
-        const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mStage;
+        const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.mStage;
         seed->LoadChecks(stage);
 
         // Make sure the foolish items spawn count is reset before randomizing foolish item models
@@ -339,6 +339,25 @@ namespace mod::rando
             // the item
             return seed->m_BossChecks[0].item;
         }
+    }
+
+    int8_t Randomizer::getEventItem(uint8_t flag)
+    {
+        const uint32_t numLoadedEventChecks = m_Seed->m_numLoadedEventChecks;
+        EventItem* eventChecks = &m_Seed->m_EventChecks[0];
+
+        for (uint32_t i = 0; i < numLoadedEventChecks; i++)
+        {
+            EventItem* currentEventCheck = &eventChecks[i];
+            if (flag == currentEventCheck->flag)
+            {
+                // Return new item
+                return currentEventCheck->itemID;
+            }
+        }
+
+        // Currently we just use the vanilla item ID as the flag since the scope of these checks are limited at the moment.
+        return flag;
     }
 
     void Randomizer::overrideARC(uint32_t fileAddr, FileDirectory fileDirectory, int32_t roomNo)
@@ -676,5 +695,19 @@ namespace mod::rando
                 currentTable[0x2B] = currentColor; // Set Alpha for darkworld ring wave 2
             }
         }
+    }
+
+    void Randomizer::addItemToEventQueue(uint8_t itemToAdd)
+    {
+        using namespace libtp::tp;
+        for (int i = 0; i < 4; i++)
+        {
+            if (d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk[i] == 0)
+            {
+                d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk[i] = itemToAdd;
+                break;
+            }
+        }
+        return;
     }
 } // namespace mod::rando

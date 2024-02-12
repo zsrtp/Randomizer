@@ -86,6 +86,10 @@ namespace mod::item_wheel_menu
         // Hardcode false since the ring isn't being drawn anymore
         setHUDButtonsAlpha(false);
 
+        // If the item wheel is being closed, we also want to close the menu. This way, if the player forgets to close it or
+        // cannot remember how, closing the item wheel will also close the menu.
+        displayMenu = false;
+
         // dMenuRing__delete is an empty function, so don't need to call the original function
     }
 
@@ -270,7 +274,7 @@ namespace mod::item_wheel_menu
         events::drawText(strings->pumpkin, ringPosX + pumpkinPosXOffset, ringPosY + pumpkinPosYOffset, mainTextColor, textSize);
 
         // Get the offset for the pumpkin value
-        const bool hasPumpkin = libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::TOLD_YETA_ABOUT_PUMPKIN);
+        const bool hasPumpkin = libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::TOLD_YETA_ABOUT_PUMPKIN);
         uint32_t pumpkinValueOffset;
 
         if (hasPumpkin)
@@ -295,7 +299,7 @@ namespace mod::item_wheel_menu
         events::drawText(strings->cheese, ringPosX + cheesePosXOffset, ringPosY + cheesePosYOffset, mainTextColor, textSize);
 
         // Get the offset for the cheese value
-        const bool hasCheese = libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::TOLD_YETA_ABOUT_CHEESE);
+        const bool hasCheese = libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::TOLD_YETA_ABOUT_CHEESE);
         uint32_t cheeseValueOffset;
 
         if (hasCheese)

@@ -152,6 +152,18 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         " and\nsmells like fish.."
     MSG_END();
+    MSG_BEGIN_ARRAY( firstMirrorShardEn )
+        MSG_SPEED(MSG_SPEED_FAST)
+        "You got the first shard of\nthe "
+        MSG_COLOR(MSG_COLOR_RED)
+        "Mirror of Twilight"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        "! It\nis covered in "
+        MSG_COLOR(MSG_COLOR_ORANGE)
+        "sand"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        ".."
+    MSG_END();
     MSG_BEGIN_ARRAY( secondMirrorShardEn )
         MSG_SPEED(MSG_SPEED_FAST)
         "You got the second shard of\nthe "
@@ -366,6 +378,11 @@ namespace mod::customMessages
         thirdFusedShadowEn,
         sizeof(thirdFusedShadowEn),
         0x013E,
+
+        // First Mirror Shard
+        firstMirrorShardEn,
+        sizeof(firstMirrorShardEn),
+        0x0B7,
 
         // Second Mirror Shard
         secondMirrorShardEn,

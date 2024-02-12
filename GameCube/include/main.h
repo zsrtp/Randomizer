@@ -21,12 +21,17 @@
 #include "tp/d_stage.h"
 #include "tp/control.h"
 #include "Z2AudioLib/Z2SceneMgr.h"
+#include "Z2AudioLib/Z2SeqMgr.h"
 #include "events.h"
 #include "tp/d_resource.h"
 #include "tp/JKRMemArchive.h"
 #include "tp/m_Do_dvd_thread.h"
 #include "tp/d_meter2_info.h"
 #include "tp/d_menu_fmap2D.h"
+#include "tp/d_gameover.h"
+#include "tp/d_shop_system.h"
+#include "tp/f_op_actor.h"
+#include "tp/d_msg_flow.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -73,10 +78,12 @@ namespace mod
     extern const char* m_DonationText;
 
     // Variables
-    extern uint8_t* m_MsgTableInfo; // Custom message string data
+    extern uint8_t* m_MsgTableInfo;     // Custom message string data
+    extern uint8_t* m_HintMsgTableInfo; // Custom message string data
     extern libtp::tp::J2DPicture::J2DPicture* bgWindow;
     extern uint16_t lastButtonInput;
-    extern uint16_t m_TotalMsgEntries; // Number of currently loaded custom string
+    extern uint16_t m_TotalMsgEntries;     // Number of currently loaded custom string
+    extern uint16_t m_TotalHintMsgEntries; // Number of currently loaded custom string
     extern bool roomReloadingState;
     extern bool consoleState;
     extern uint8_t gameState;
@@ -88,6 +95,7 @@ namespace mod
     extern bool transformAnywhereEnabled;
     extern uint8_t damageMultiplier;
     extern bool bonksDoDamage;
+    extern bool giveItemToPlayer;
 
 #ifdef TP_EU
     extern libtp::tp::d_s_logo::Languages currentLanguage;
@@ -168,31 +176,29 @@ namespace mod
                                                int32_t unk3,
                                                void* unk4);
 
-    /*
-    void handle_dComIfGp_setNextStage( const char* stage,
-                                       int16_t point,
-                                       int8_t roomNo,
-                                       int8_t layer,
-                                       float lastSpeed,
-                                       uint32_t lastMode,
-                                       int32_t setPoint,
-                                       int8_t wipe,
-                                       int16_t lastAngle,
-                                       int32_t param_9,
-                                       int32_t wipSpeedT );
+    void handle_dComIfGp_setNextStage(const char* stage,
+                                      int16_t point,
+                                      int8_t roomNo,
+                                      int8_t layer,
+                                      float lastSpeed,
+                                      uint32_t lastMode,
+                                      int32_t setPoint,
+                                      int8_t wipe,
+                                      int16_t lastAngle,
+                                      int32_t param_9,
+                                      int32_t wipSpeedT);
 
-    extern void ( *return_dComIfGp_setNextStage )( const char* stage,
-                                                   int16_t point,
-                                                   int8_t roomNo,
-                                                   int8_t layer,
-                                                   float lastSpeed,
-                                                   uint32_t lastMode,
-                                                   int32_t setPoint,
-                                                   int8_t wipe,
-                                                   int16_t lastAngle,
-                                                   int32_t param_9,
-                                                   int32_t wipSpeedT );
-    */
+    extern void (*return_dComIfGp_setNextStage)(const char* stage,
+                                                int16_t point,
+                                                int8_t roomNo,
+                                                int8_t layer,
+                                                float lastSpeed,
+                                                uint32_t lastMode,
+                                                int32_t setPoint,
+                                                int8_t wipe,
+                                                int16_t lastAngle,
+                                                int32_t param_9,
+                                                int32_t wipSpeedT);
 
     int32_t handle_tgscInfoInit(void* stageDt, void* i_data, int32_t entryNum, void* param_3);
     extern int32_t (*return_tgscInfoInit)(void* stageDt, void* i_data, int32_t entryNum, void* param_3);
@@ -347,6 +353,22 @@ namespace mod
     int32_t handle_event017(void* messageFlow, void* nodeEvent, void* actrPtr);
     extern int32_t (*return_event017)(void* messageFlow, void* nodeEvent, void* actrPtr);
 
+    int32_t handle_doFlow(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                          libtp::tp::f_op_actor::fopAc_ac_c* actrPtr,
+                          libtp::tp::f_op_actor::fopAc_ac_c** actrValue,
+                          int32_t i_flow);
+    extern int32_t (*return_doFlow)(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                                    libtp::tp::f_op_actor::fopAc_ac_c* actrPtr,
+                                    libtp::tp::f_op_actor::fopAc_ac_c** actrValue,
+                                    int32_t i_flow);
+
+    int32_t handle_setNormalMsg(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                                void* flowNode,
+                                libtp::tp::f_op_actor::fopAc_ac_c* actrPtr);
+    extern int32_t (*return_setNormalMsg)(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                                          void* flowNode,
+                                          libtp::tp::f_op_actor::fopAc_ac_c* actrPtr);
+
     // Save flag functions
     bool handle_isDungeonItem(libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit);
     extern bool (*return_isDungeonItem)(libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit);
@@ -407,6 +429,9 @@ namespace mod
     float handle_damageMagnification(libtp::tp::d_a_alink::daAlink* daALink, int32_t param_1, int32_t param_2);
     extern float (*return_damageMagnification)(libtp::tp::d_a_alink::daAlink* daALink, int32_t param_1, int32_t param_2);
 
+    int32_t handle_procCoGetItemInit(libtp::tp::d_a_alink::daAlink* linkActrPtr);
+    extern int32_t (*return_procCoGetItemInit)(libtp::tp::d_a_alink::daAlink* linkActrPtr);
+
     // Audio functions
     void handle_loadSeWave(void* Z2SceneMgr, uint32_t waveID);
     extern void (*return_loadSeWave)(void* Z2SceneMgr, uint32_t waveID);
@@ -430,11 +455,13 @@ namespace mod
                                       bool param_7);
 
     void handle_startSound(void* soungMgr, libtp::z2audiolib::z2scenemgr::JAISoundID soundId, void* soundHandle, void* pos);
-
     extern void (*return_startSound)(void* soundMgr,
                                      libtp::z2audiolib::z2scenemgr::JAISoundID soundId,
                                      void* soundHandle,
                                      void* pos);
+
+    bool handle_checkBgmIDPlaying(libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, uint32_t sfx_id);
+    extern bool (*return_checkBgmIDPlaying)(libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, uint32_t sfx_id);
 
     // Title Screen functions
     void* handle_dScnLogo_c_dt(void* dScnLogo_c, int16_t bFreeThis);
@@ -454,5 +481,17 @@ namespace mod
     // d_meter functions
     void handle_resetMiniGameItem(libtp::tp::d_meter2_info::G_Meter2_Info* gMeter2InfoPtr, bool minigameFlag);
     extern void (*return_resetMiniGameItem)(libtp::tp::d_meter2_info::G_Meter2_Info* gMeter2InfoPtr, bool minigameFlag);
+
+    // Game Over functions
+    void handle_dispWait_init(libtp::tp::d_gameover::dGameOver* ptr);
+    extern void (*return_dispWait_init)(libtp::tp::d_gameover::dGameOver* ptr);
+
+    // Shop Functions
+    int32_t handle_seq_decide_yes(libtp::tp::d_shop_system::dShopSystem* shopPtr,
+                                  libtp::tp::f_op_actor::fopAc_ac_c* actor,
+                                  void* msgFlow);
+    extern int32_t (*return_seq_decide_yes)(libtp::tp::d_shop_system::dShopSystem* shopPtr,
+                                            libtp::tp::f_op_actor::fopAc_ac_c* actor,
+                                            void* msgFlow);
 } // namespace mod
 #endif

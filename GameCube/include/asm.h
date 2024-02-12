@@ -32,7 +32,7 @@
 // 0xBC is offset to the text section relative to the start of the decompressed
 // REL. 0x4E4 is offset to Wait function relative to the start of the text
 // section (as seen on line 14 of d_a_obj_Lv5Key.map).
-#define d_a_obj_Lv5Key__Wait_offset 0xBC + 0x4E4
+#define d_a_obj_Lv5Key__Wait_offset (0xBC + 0x4E4)
 
 namespace mod::assembly
 {
@@ -96,6 +96,10 @@ namespace mod::assembly
         // d_a_npc_GWolf.o
         void asmReplaceGWolfWithItem(void);
         bool handleReplaceGWolfWithItem(const int16_t* l_delFlag, void* daNpcGWolf);
+
+        // d_a_obj_master_sword.o
+        void asmGiveMasterSwordItems();
+        void handleGiveMasterSwordItems();
 
         // vi.o
         void asmCallCodehandler();

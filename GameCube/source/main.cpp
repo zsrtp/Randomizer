@@ -31,6 +31,7 @@
 #include "tp/f_op_actor_mng.h"
 #include "tp/f_op_actor.h"
 #include "tp/f_op_scene_req.h"
+#include "tp/f_op_msg_mng.h"
 #include "tp/f_pc_node_req.h"
 #include "tp/m_do_controller_pad.h"
 #include "tp/m_do_audio.h"
@@ -50,6 +51,8 @@
 #include "tp/d_kankyo.h"
 #include "rando/customItems.h"
 #include "cxx.h"
+#include "tp/f_pc_executor.h"
+#include "tp/d_msg_flow.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -72,9 +75,11 @@ namespace mod
     float prevFrameAnalogR = 0.f;
 
     KEEP_VAR uint8_t* m_MsgTableInfo = nullptr;
+    KEEP_VAR uint8_t* m_HintMsgTableInfo = nullptr;
     libtp::tp::J2DPicture::J2DPicture* bgWindow = nullptr;
     uint16_t lastButtonInput = 0;
     KEEP_VAR uint16_t m_TotalMsgEntries = 0;
+    KEEP_VAR uint16_t m_TotalHintMsgEntries = 0;
     bool roomReloadingState = false;
     bool consoleState = true;
     uint8_t gameState = GAME_BOOT;
@@ -86,6 +91,7 @@ namespace mod
     bool transformAnywhereEnabled = false;
     uint8_t damageMultiplier = 1;
     bool bonksDoDamage = false;
+    bool giveItemToPlayer = false;
 
 #ifdef TP_EU
     KEEP_VAR libtp::tp::d_s_logo::Languages currentLanguage = libtp::tp::d_s_logo::Languages::uk;
@@ -124,19 +130,17 @@ namespace mod
                                                  int32_t num,
                                                  void* raw_data) = nullptr;
 
-    /*
-    KEEP_VAR void ( *return_dComIfGp_setNextStage )( const char* stage,
-                                                     int16_t point,
-                                                     int8_t roomNo,
-                                                     int8_t layer,
-                                                     float lastSpeed,
-                                                     uint32_t lastMode,
-                                                     int32_t setPoint,
-                                                     int8_t wipe,
-                                                     int16_t lastAngle,
-                                                     int32_t param_9,
-                                                     int32_t wipSpeedT ) = nullptr;
-    */
+    KEEP_VAR void (*return_dComIfGp_setNextStage)(const char* stage,
+                                                  int16_t point,
+                                                  int8_t roomNo,
+                                                  int8_t layer,
+                                                  float lastSpeed,
+                                                  uint32_t lastMode,
+                                                  int32_t setPoint,
+                                                  int8_t wipe,
+                                                  int16_t lastAngle,
+                                                  int32_t param_9,
+                                                  int32_t wipSpeedT) = nullptr;
 
     // GetLayerNo trampoline
     KEEP_VAR int32_t (*return_getLayerNo_common_common)(const char* stageName, int32_t roomId, int32_t layerOverride) = nullptr;
@@ -212,6 +216,13 @@ namespace mod
     // KEEP_VAR int32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
     KEEP_VAR int32_t (*return_event017)(void* messageFlow, void* nodeEvent, void* actrPtr) = nullptr;
     KEEP_VAR int32_t (*return_event003)(void* messageFlow, void* nodeEvent, void* actrPtr) = nullptr;
+    KEEP_VAR int32_t (*return_doFlow)(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                                      libtp::tp::f_op_actor::fopAc_ac_c* actrPtr,
+                                      libtp::tp::f_op_actor::fopAc_ac_c** actrValue,
+                                      int32_t i_flow) = nullptr;
+    KEEP_VAR int32_t (*return_setNormalMsg)(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                                            void* flowNode,
+                                            libtp::tp::f_op_actor::fopAc_ac_c* actrPtr) = nullptr;
 
     // Save flag functions
     KEEP_VAR bool (*return_isDungeonItem)(libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit) = nullptr;
@@ -240,6 +251,7 @@ namespace mod
                                                  int32_t param_1,
                                                  int32_t param_2) = nullptr;
     KEEP_VAR bool (*return_checkCastleTownUseItem)(uint16_t item_id) = nullptr;
+    KEEP_VAR int32_t (*return_procCoGetItemInit)(libtp::tp::d_a_alink::daAlink* linkActrPtr) = nullptr;
 
     // Audio functions
     KEEP_VAR void (*return_loadSeWave)(void* Z2SceneMgr, uint32_t waveID) = nullptr;
@@ -256,6 +268,8 @@ namespace mod
                                        void* soundHandle,
                                        void* pos) = nullptr;
 
+    KEEP_VAR bool (*return_checkBgmIDPlaying)(libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, uint32_t sfx_id) = nullptr;
+
     // Title Screen functions
     KEEP_VAR void* (*return_dScnLogo_c_dt)(void* dScnLogo_c, int16_t bFreeThis) = nullptr;
 
@@ -268,6 +282,14 @@ namespace mod
     // d_meter functions
     KEEP_VAR void (*return_resetMiniGameItem)(libtp::tp::d_meter2_info::G_Meter2_Info* gMeter2InfoPtr,
                                               bool minigameFlag) = nullptr;
+
+    // Game Over functions
+    KEEP_VAR void (*return_dispWait_init)(libtp::tp::d_gameover::dGameOver* ptr) = nullptr;
+
+    // Shop Functions
+    KEEP_VAR int32_t (*return_seq_decide_yes)(libtp::tp::d_shop_system::dShopSystem* shopPtr,
+                                              libtp::tp::f_op_actor::fopAc_ac_c* actor,
+                                              void* msgFlow) = nullptr;
 
     void main()
     {
@@ -499,7 +521,7 @@ namespace mod
             if (prevState != GAME_ACTIVE && state == 11)
             {
                 // check whether we're in title screen CS
-                if (0 != strcmp("S_MV000", gameInfo->play.mNextStage.stageValues.mStage))
+                if (0 != strcmp("S_MV000", gameInfo->play.mNextStage.mStage))
                 {
                     gameState = GAME_ACTIVE;
                 }
@@ -555,6 +577,9 @@ namespace mod
             // Special combo to (de)activate the console should be handled first
             if (checkBtn(currentButtons, PadInputs::Button_R | PadInputs::Button_Z))
             {
+                // Disable the input that was just pressed, as sometimes it could cause talking to Midna when in-game
+                padInfo->mPressedButtonFlags = 0;
+
                 // Disallow during boot as we print info etc.
                 // Will automatically disappear if there is no seeds to select from
                 setScreen(!consoleState);
@@ -583,6 +608,10 @@ namespace mod
             // Handle generic button checks
             if (checkButtonCombo(PadInputs::Button_R | PadInputs::Button_Y, true))
             {
+                // Disable the input that was just pressed, as sometimes it could cause items to be used or Wolf Link to dig.
+                padInfo->mPressedButtonFlags = 0;
+
+                // Handle transforming
                 events::handleQuickTransform();
             }
 
@@ -735,6 +764,76 @@ namespace mod
         {
             events::handleTimeSpeed();
         }
+
+        // Giving items at any point
+
+        if (libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer)
+        {
+            // Probably change this to checking mProc to make sure we are "waiting"
+            switch (libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mProcID)
+            {
+                case libtp::tp::d_a_alink::PROC_WAIT:
+                case libtp::tp::d_a_alink::PROC_TIRED_WAIT:
+                case libtp::tp::d_a_alink::PROC_MOVE:
+                case libtp::tp::d_a_alink::PROC_WOLF_WAIT:
+                case libtp::tp::d_a_alink::PROC_WOLF_TIRED_WAIT:
+                case libtp::tp::d_a_alink::PROC_WOLF_MOVE:
+                case libtp::tp::d_a_alink::PROC_SERVICE_WAIT:
+                case libtp::tp::d_a_alink::PROC_WOLF_SERVICE_WAIT:
+                {
+                    using namespace libtp::tp;
+
+                    // Check if link is currently in a cutscene
+                    if (!d_a_alink::checkEventRun(linkMapPtr))
+                    {
+                        // Ensure that link is not currently in a message-based event.
+                        if (d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mMsgFlow.mEventId == 0)
+                        {
+                            uint8_t itemToGive = 0xFF;
+                            for (int i = 0; i < 4; i++)
+                            {
+                                if (d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk[i] != 0)
+                                {
+                                    itemToGive = d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk[i];
+                                    d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk[i] = 0x0;
+                                    break;
+                                }
+                            }
+
+                            // if there is no item to give, break out of the case.
+                            if (itemToGive == 0xFF)
+                            {
+                                break;
+                            }
+
+                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mEvent.mGtItm = itemToGive;
+
+                            // Set the process value for getting an item to start the "get item" cutscene when next available.
+                            d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mProcID = libtp::tp::d_a_alink::PROC_GET_ITEM;
+
+                            //  Get the event index for the "Get Item" event.
+                            int16_t eventIdx = d_event_manager::getEventIdx3(
+                                &d_com_inf_game::dComIfG_gameInfo.play.mEvtManager,
+                                reinterpret_cast<f_op_actor::fopAc_ac_c*>(d_com_inf_game::dComIfG_gameInfo.play.mPlayer),
+                                "DEFAULT_GETITEM",
+                                0xff);
+
+                            // Finally we want to modify the event stack to prioritize our custom event so that it happens next.
+                            libtp::tp::f_op_actor_mng::fopAcM_orderChangeEventId(
+                                reinterpret_cast<void*>(d_com_inf_game::dComIfG_gameInfo.play.mPlayer),
+                                eventIdx,
+                                1,
+                                0xFFFF);
+
+                            // Once we are done, we set a global bool that is checked in procCoGetItemInit to give the player
+                            // the item.
+                            giveItemToPlayer = true;
+                        }
+                    }
+                }
+            }
+        }
+
         // End of custom events
 
         // Call the original function
@@ -790,7 +889,7 @@ namespace mod
     {
         // Load DZX based checks that are stored in the current layer DZX
         events::onDZX(randomizer, chunkTypeInfo);
-        events::loadCustomRoomActors();
+        events::loadCustomRoomActors(randomizer);
         return return_actorCommonLayerInit(mStatus_roomControl, chunkTypeInfo, unk3, unk4);
     }
 
@@ -800,40 +899,78 @@ namespace mod
         return return_tgscInfoInit(stageDt, i_data, entryNum, param_3);
     }
 
-    /*
-    KEEP_FUNC void handle_dComIfGp_setNextStage( const char* stage,
-                                                 int16_t point,
-                                                 int8_t roomNo,
-                                                 int8_t layer,
-                                                 float lastSpeed,
-                                                 uint32_t lastMode,
-                                                 int32_t setPoint,
-                                                 int8_t wipe,
-                                                 int16_t lastAngle,
-                                                 int32_t param_9,
-                                                 int32_t wipSpeedT )
+    KEEP_FUNC void handle_dComIfGp_setNextStage(const char* stage,
+                                                int16_t point,
+                                                int8_t roomNo,
+                                                int8_t layer,
+                                                float lastSpeed,
+                                                uint32_t lastMode,
+                                                int32_t setPoint,
+                                                int8_t wipe,
+                                                int16_t lastAngle,
+                                                int32_t param_9,
+                                                int32_t wipSpeedT)
     {
-        if ( libtp::tp::d_a_alink::checkStageName(
-                 libtp::data::stage::allStages[libtp::data::stage::StageIDs::Hidden_Skill] ) &&
-             ( roomNo == 6 ) )
+        rando::Randomizer* rando = randomizer;
+        if (getCurrentSeed(rando))
         {
-            // If we are in the hidden skill area and the wolf is trying to force load room 6, we know that we are trying to
-            // go back to faron so we want to use the default state instead of forcing 0.
-            layer = 0xff;
+            const int32_t stageIDX = libtp::tools::getStageIndex(stage);
+            const uint32_t numShuffledEntrances = rando->m_Seed->m_numShuffledEntrances;
+            rando::ShuffledEntrance* shuffledEntrances = &rando->m_Seed->m_ShuffledEntrances[0];
+
+            // getConsole() << stageIDX << "," << roomNo << "," << point << "," << layer << "\n";
+
+            if (stageIDX !=
+                libtp::data::stage::StageIDs::Title_Screen) // We won't want to shuffle if we are loading a save since some
+                                                            // stages use their default spawn for their entrances.
+            {
+                for (uint32_t i = 0; i < numShuffledEntrances; i++)
+                {
+                    rando::ShuffledEntrance* currentEntrance = &shuffledEntrances[i];
+                    if (stageIDX == currentEntrance->origStageIDX)
+                    {
+                        if (roomNo == currentEntrance->origRoomIDX)
+                        {
+                            if (point == currentEntrance->origSpawn)
+                            {
+                                if (layer == currentEntrance->origState)
+                                {
+                                    getConsole() << "Shuffling Entrance"
+                                                 << "\n";
+                                    return return_dComIfGp_setNextStage(
+                                        libtp::data::stage::allStages[currentEntrance->newStageIDX],
+                                        currentEntrance->newSpawn,
+                                        currentEntrance->newRoomIDX,
+                                        currentEntrance->newState,
+                                        lastSpeed,
+                                        lastMode,
+                                        setPoint,
+                                        wipe,
+                                        lastAngle,
+                                        param_9,
+                                        wipSpeedT);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-        return return_dComIfGp_setNextStage( stage,
-                                             point,
-                                             roomNo,
-                                             layer,
-                                             lastSpeed,
-                                             lastMode,
-                                             setPoint,
-                                             wipe,
-                                             lastAngle,
-                                             param_9,
-                                             wipSpeedT );
+
+        // getConsole() << "No match found."
+        //              << "\n";
+        return return_dComIfGp_setNextStage(stage,
+                                            point,
+                                            roomNo,
+                                            layer,
+                                            lastSpeed,
+                                            lastMode,
+                                            setPoint,
+                                            wipe,
+                                            lastAngle,
+                                            param_9,
+                                            wipSpeedT);
     }
-    */
 
     KEEP_FUNC void handle_roomLoader(void* data, void* stageDt, int32_t roomNo)
     {
@@ -898,7 +1035,7 @@ namespace mod
                 {
                     if (libtp::tp::d_a_alink::checkStageName(
                             libtp::data::stage::allStages[libtp::data::stage::StageIDs::Lake_Hylia]) &&
-                        !libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::CLEARED_LANAYRU_TWILIGHT))
+                        !libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::CLEARED_LANAYRU_TWILIGHT))
                     {
                         *entranceType = 0x50;
                     }
@@ -1063,7 +1200,7 @@ namespace mod
             {
                 // Check if we are at Kakariko Malo mart and verify that we have not bought the shield.
                 if (libtp::tools::playerIsInRoomStage(3, stagesPtr[StageIDs::Kakariko_Village_Interiors]) &&
-                    !tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::BOUGHT_HYLIAN_SHIELD_AT_MALO_MART))
+                    !tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::BOUGHT_HYLIAN_SHIELD_AT_MALO_MART))
                 {
                     // Return false so we can buy the shield.
                     return 0;
@@ -1117,7 +1254,7 @@ namespace mod
     KEEP_FUNC void handle_item_func_ASHS_SCRIBBLING()
     {
         using namespace libtp::data::flags;
-        if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(GOT_CORAL_EARRING_FROM_RALIS))
+        if (!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(GOT_CORAL_EARRING_FROM_RALIS))
         {
             return_item_func_ASHS_SCRIBBLING();
         }
@@ -1202,7 +1339,7 @@ namespace mod
     {
         const int32_t poeFlag = return_query049(unk1, unk2, unk3);
 
-        if ((poeFlag == 4) && !libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::GOT_BOTTLE_FROM_JOVANI))
+        if ((poeFlag == 4) && !libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::GOT_BOTTLE_FROM_JOVANI))
         {
             return 3;
         }
@@ -1238,6 +1375,55 @@ namespace mod
         }
 
         return return_event017(messageFlow, nodeEvent, actrPtr);
+    }
+
+    KEEP_FUNC int32_t handle_doFlow(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                                    libtp::tp::f_op_actor::fopAc_ac_c* actrPtr,
+                                    libtp::tp::f_op_actor::fopAc_ac_c** actrValue,
+                                    int32_t i_flow)
+    {
+        if (msgFlow->mFlow == 0xFFFE) // check if it equals our custom flow value
+        {
+            if (msgFlow->mMsg == 0xFFFFFFFF)
+            {
+                msgFlow->mMsg = 0; // Clear the invalid msg value since it will be set by the game once our text is loaded.
+                msgFlow->field_0x26 = 0x0; // When this byte is set, the current event is aborted. With unused nodes, it is set
+                                           // to 1 by default so we need to unset it.
+
+                if (libtp::tp::d_a_alink::checkStageName(
+                        libtp::data::stage::allStages[libtp::data::stage::StageIDs::Hyrule_Field]) ||
+                    libtp::tp::d_a_alink::checkStageName(
+                        libtp::data::stage::allStages[libtp::data::stage::StageIDs::Outside_Castle_Town]))
+                {
+                    msgFlow->field_0x10 =
+                        0x8; // Hyrule Field does not have a valid flow node for node 0 so we want it to use its native node (8)
+                }
+                else
+                {
+                    msgFlow->field_0x10 =
+                        0x0; // Sets the flow to use the same flow grouping as the standard flow that getItem text uses.
+                }
+            }
+        }
+        return return_doFlow(msgFlow, actrPtr, actrValue, i_flow);
+    }
+
+    KEEP_FUNC int32_t handle_setNormalMsg(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
+                                          void* flowNode,
+                                          libtp::tp::f_op_actor::fopAc_ac_c* actrPtr)
+    {
+        if (msgFlow->mFlow == 0xFFFE) // check if it equals our custom flow value
+        {
+            uint32_t var1 = libtp::tp::f_op_msg_mng::fopMsgM_messageSet(
+                0x1360,
+                1000); // set the msg id in the node to that of our specified message.
+            msgFlow->mMsg = var1;
+            return 1;
+        }
+        else
+        {
+            return return_setNormalMsg(msgFlow, flowNode, actrPtr);
+        }
     }
 
     KEEP_FUNC void handle_jmessage_tSequenceProcessor__do_begin(void* seqProcessor, const void* unk2, const char* text)
@@ -1316,6 +1502,7 @@ namespace mod
     KEEP_FUNC bool handle_isEventBit(libtp::tp::d_save::dSv_event_c* eventPtr, uint16_t flag)
     {
         using namespace libtp::tp::d_a_alink;
+        using namespace libtp::tp::d_com_inf_game;
         using namespace libtp::data::stage;
         using namespace libtp::data::flags;
 
@@ -1432,7 +1619,7 @@ namespace mod
             {
                 if (checkStageName(stagesPtr[StageIDs::Mirror_Chamber]))
                 {
-                    if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT))
+                    if (!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT))
                     {
                         using namespace libtp::data;
                         if (randoIsEnabled(rando))
@@ -1459,7 +1646,7 @@ namespace mod
             {
                 if (libtp::tools::playerIsInRoomStage(1, stagesPtr[StageIDs::Ordon_Village_Interiors]))
                 {
-                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(SERAS_CAT_RETURNED_TO_SHOP))
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(SERAS_CAT_RETURNED_TO_SHOP))
                     {
                         return false; // Return false so Sera will give the milk item to the player once they help the cat.
                     }
@@ -1487,29 +1674,56 @@ namespace mod
         using namespace libtp::data::flags;
 
         libtp::tp::d_save::dSv_save_c* saveFilePtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file;
-        if (eventPtr == &saveFilePtr->event_flags)
+        if (eventPtr == &saveFilePtr->mEvent)
         {
-            libtp::tp::d_save::dSv_player_status_b_c* playerStatusPtr = &saveFilePtr->player.player_status_b;
-            const uint32_t darkClearLevelFlag = playerStatusPtr->dark_clear_level_flag;
+            libtp::tp::d_save::dSv_player_status_a_c* playerStatusAPtr = &saveFilePtr->player.player_status_a;
+            libtp::tp::d_save::dSv_player_status_b_c* playerStatusBPtr = &saveFilePtr->player.player_status_b;
+            const uint32_t darkClearLevelFlag = playerStatusBPtr->dark_clear_level_flag;
 
             switch (flag)
             {
+                // Case block for Wolf -> Human crash patches/bug fixes. Some cutscenes/events either crash or act weird if Link
+                // is Human but needs to be Wolf and the game no longer attempts to auto-transform Link once the Shadow Crystal
+                // has been obtained.
+                case ENTERED_ORDON_SPRING_DAY_3:
+                {
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(TRANSFORMING_UNLOCKED))
+                    {
+                        playerStatusAPtr->currentForm =
+                            0; // Set player to Human as the game will not do so if Shadow Crystal has been obtained.
+                    }
+                    break;
+                }
+
+                // Case block for Human -> Wolf crash patches/bug fixes. Some cutscenes/events either crash or act weird if Link
+                // is Wolf but needs to be human and the game no longer attempts to auto-transform Link once the Shadow Crystal
+                // has been obtained.
+                case WATCHED_CUTSCENE_AFTER_BEING_CAPTURED_IN_FARON_TWILIGHT:
+                {
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(TRANSFORMING_UNLOCKED))
+                    {
+                        playerStatusAPtr->currentForm =
+                            1; // Set player to Wolf as the game will not do so if Shadow Crystal has been obtained.
+                    }
+                    break;
+                }
+
                 case MIDNAS_DESPERATE_HOUR_COMPLETED: // MDH Completed
                 {
-                    playerStatusPtr->dark_clear_level_flag |= 0x8;
+                    playerStatusBPtr->dark_clear_level_flag |= 0x8;
                     break;
                 }
 
                 case CLEARED_FARON_TWILIGHT: // Cleared Faron Twilight
                 {
-                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
                     {
                         if (darkClearLevelFlag == 0x6)
                         {
-                            playerStatusPtr->transform_level_flag = 0x8; // Set the flag for the last transformed twilight.
-                                                                         // Also puts Midna on the player's back
+                            playerStatusBPtr->transform_level_flag = 0x8; // Set the flag for the last transformed twilight.
+                                                                          // Also puts Midna on the player's back
 
-                            playerStatusPtr->dark_clear_level_flag |= 0x8;
+                            playerStatusBPtr->dark_clear_level_flag |= 0x8;
                         }
                     }
                     break;
@@ -1518,14 +1732,14 @@ namespace mod
                 case CLEARED_ELDIN_TWILIGHT: // Cleared Eldin Twilight
                 {
                     events::setSaveFileEventFlag(MAP_WARPING_UNLOCKED); // in glitched Logic, you can skip the gorge bridge.
-                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
                     {
                         if (darkClearLevelFlag == 0x5)
                         {
-                            playerStatusPtr->transform_level_flag |= 0x8; // Set the flag for the last transformed twilight.
-                                                                          // Also puts Midna on the player's back
+                            playerStatusBPtr->transform_level_flag |= 0x8; // Set the flag for the last transformed twilight.
+                                                                           // Also puts Midna on the player's back
 
-                            playerStatusPtr->dark_clear_level_flag |= 0x8;
+                            playerStatusBPtr->dark_clear_level_flag |= 0x8;
                         }
                     }
 
@@ -1534,14 +1748,14 @@ namespace mod
 
                 case CLEARED_LANAYRU_TWILIGHT: // Cleared Lanayru Twilight
                 {
-                    if (libtp::tp::d_a_alink::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
                     {
                         if (darkClearLevelFlag == 0x7) // All twilights completed
                         {
-                            playerStatusPtr->transform_level_flag |= 0x8; // Set the flag for the last transformed twilight.
-                                                                          // Also puts Midna on the player's back
+                            playerStatusBPtr->transform_level_flag |= 0x8; // Set the flag for the last transformed twilight.
+                                                                           // Also puts Midna on the player's back
 
-                            playerStatusPtr->dark_clear_level_flag |= 0x8;
+                            playerStatusBPtr->dark_clear_level_flag |= 0x8;
                         }
                     }
 
@@ -1552,7 +1766,8 @@ namespace mod
                 {
                     if (randoIsEnabled(randomizer))
                     {
-                        if (randomizer->m_Seed->m_Header->castleRequirements == 4) // Vanilla
+                        if (randomizer->m_Seed->m_Header->castleRequirements ==
+                            rando::CastleEntryRequirements::HC_Vanilla) // Vanilla
                         {
                             events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
                             return return_onEventBit(eventPtr, flag); // set PoT story flag
@@ -1578,7 +1793,7 @@ namespace mod
         {
             if (flag == 0x66) // Check for escort completed flag
             {
-                if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(
+                if (!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(
                         libtp::data::flags::GOT_ZORA_ARMOR_FROM_RUTELA)) // return false if we haven't gotten the item
                                                                          // from Rutella.
                 {
@@ -1620,12 +1835,34 @@ namespace mod
             }
             else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Arbiters_Grounds]))
             {
-                if (flag == 0x26)
+                if (flag == 0x26) // Poe flame CS trigger
                 {
                     libtp::tp::d_save::offSwitch_dSv_memBit(memoryBit,
                                                             0x45); // Open the Poe gate
 
                     return;
+                }
+            }
+            else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Lake_Hylia]))
+            {
+                if (flag == 0xD) // Lanayru Twilight End CS trigger.
+                {
+                    if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::TRANSFORMING_UNLOCKED))
+                    {
+                        libtp::tp::d_save::dSv_save_c* saveFilePtr =
+                            &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file;
+                        libtp::tp::d_save::dSv_player_status_a_c* playerStatusAPtr = &saveFilePtr->player.player_status_a;
+                        playerStatusAPtr->currentForm =
+                            0; // Set player to Human as the game will not do so if Shadow Crystal has been obtained.
+                    }
+                }
+            }
+            else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Kakariko_Village]))
+            {
+                if (flag == 0x3E) // Hawkeye is for sell.
+                {
+                    libtp::tp::d_save::offSwitch_dSv_memBit(memoryBit,
+                                                            0xB); // Remove the coming soon sign so the hawkeye can be bought.
                 }
             }
         }
@@ -1828,6 +2065,47 @@ namespace mod
     {
         z2ScenePtr = z2SceneMgr;
         return return_loadSeWave(z2SceneMgr, waveID);
+    }
+
+    KEEP_FUNC bool handle_checkBgmIDPlaying(libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, uint32_t sfx_id)
+    {
+        // Call original function immediately as it sets necessary values.
+        bool ret = return_checkBgmIDPlaying(seqMgr, sfx_id);
+
+        if (sfx_id == 0x01000013) // Game Over sfx
+        {
+            return false;
+        }
+        return ret;
+    }
+
+    KEEP_FUNC void handle_dispWait_init(libtp::tp::d_gameover::dGameOver* ptr)
+    {
+        // Set the timer
+        ptr->mTimer = 0x0;
+        return return_dispWait_init(ptr);
+    }
+
+    KEEP_FUNC int32_t handle_seq_decide_yes(libtp::tp::d_shop_system::dShopSystem* shopPtr,
+                                            libtp::tp::f_op_actor::fopAc_ac_c* actor,
+                                            void* msgFlow)
+    {
+        // We want the shop item to have its flag updated no matter what.
+        libtp::tp::d_shop_system::setSoldOutFlag(shopPtr);
+
+        return return_seq_decide_yes(shopPtr, actor, msgFlow);
+    }
+
+    KEEP_FUNC int32_t handle_procCoGetItemInit(libtp::tp::d_a_alink::daAlink* linkActrPtr)
+    {
+        // If we are giving a custom item, we want to set mParam0 to 0x100 so that instead of trying to search for an item actor
+        // that doesnt exist we want the game to create one using the item id in mGtItm.
+        if (giveItemToPlayer)
+        {
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mDemo.mParam0 = 0x100;
+            giveItemToPlayer = false;
+        }
+        return return_procCoGetItemInit(linkActrPtr);
     }
 
     KEEP_FUNC void* handle_dScnLogo_c_dt(void* dScnLogo_c, int16_t bFreeThis)

@@ -75,6 +75,9 @@
 800428A8:defaultSkipStb
 80042B04:skipper
 
+// d_event_manager.o
+80047888:getEventIdx3
+
 // DynamicLink.o
 80263460:DynamicModuleControl_ct
 80263A5C:do_link
@@ -97,6 +100,10 @@
 80019B50:CreateAppend
 80019e40:fopAcM_create
 8001bbbc:fopAcM_getTalkEventPartner
+8001b68c:fopAcM_orderChangeEventId
+
+// f_op_msg_mng.o
+8001ff2c:fopMsgM_messageSet
 
 // f_pc_node_req
 803A5718:l_fpcNdRq_Queue
@@ -124,13 +131,13 @@
 8039325C:getSeType
 800c7a00:procCoMetamorphoseInit
 80115E2C:checkEventRun
-803DEDF4:linkStatus
 800e2728:checkBootsMoveAnime
 800d9148:procDamageInit
 800d7e4c:checkDamageAction
 801183ac:setGetItemFace
 801362f8:procWolfDamageInit
 8011ae34:procCoGetItem
+8011a9a4:procCoGetItemInit
 800d01b0:dComIfGp_setItemLifeCount
 800be5f0:checkRestartRoom
 8011fbf8:checkWarpStart
@@ -152,7 +159,6 @@
 
 //d_meter2_info.o
 80432148:g_meter2_info
-80432164:wZButtonPtr
 8021e388:resetMiniGameItem
 
 //d_meter2_draw.o
@@ -314,6 +320,7 @@
 // Z2SeqMgr
 802B5CB0:startBattleBgm
 802ad30c:seStartLevel
+802b4cac:checkBgmIDPlaying
 
 // Z2SoundMgr.o
 802AACE8:startSound
@@ -357,6 +364,10 @@
 //d_a_shop_item_static.o
 8037a178:shopItemData
 
+//d_shop_system.o
+8019a080:seq_decide_yes
+8019a5ac:setSoldOutFlag
+
 //d_menu_window.o
 801fa854:collect_save_open_init
 
@@ -373,6 +384,8 @@
 8024e11c:event041
 8024d138:event017
 8024c944:query049
+8024a97c:doFlow
+8024b0f4:setNormalMsg
 
 
 //d_a_npc.o
@@ -457,3 +470,6 @@
 
 // f_op_actor_iter.o
 800198A0:fopAcIt_Judge
+
+// d_gameover.o
+8019b664:dispWait_init

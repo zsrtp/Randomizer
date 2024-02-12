@@ -12,6 +12,7 @@
 #include "data/items.h"
 #include "data/flags.h"
 #include "tp/d_a_npc.h"
+#include "game_patch/game_patch.h"
 
 namespace mod::assembly
 {
@@ -76,7 +77,7 @@ namespace mod::assembly
     uint8_t handleShowReekfishPath(uint8_t scent)
     {
         if ((libtp::tp::d_a_alink::checkStageName(libtp::data::stage::allStages[libtp::data::stage::StageIDs::Snowpeak])) &&
-            libtp::tp::d_a_alink::dComIfGs_isEventBit(
+            libtp::tp::d_com_inf_game::dComIfGs_isEventBit(
                 libtp::data::flags::GOT_REEKFISH_SCENT)) // If we are currently at Snowpeak and the flag for having
                                                          // smelled a Reekfish is set
         {
@@ -96,7 +97,7 @@ namespace mod::assembly
     bool handleCheck60PoeReward(uint8_t poeCount)
     {
         // Check if we are getting the 60 Poe Check and that we have already gotten the 20 Poe Check.
-        return ((poeCount >= 60) && libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::GOT_BOTTLE_FROM_JOVANI));
+        return ((poeCount >= 60) && libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::GOT_BOTTLE_FROM_JOVANI));
     }
 
     bool handleReplaceGWolfWithItem(const int16_t* l_delFlag, void* daNpcGWolf)
@@ -124,6 +125,26 @@ namespace mod::assembly
         }
 
         return flagIsSet;
+    }
+
+    void handleGiveMasterSwordItems()
+    {
+        using namespace libtp::data;
+        // Give the player the Master Sword replacement
+        uint8_t itemToGive = randomizer->getEventItem(items::Master_Sword);
+        itemToGive = game_patch::_04_verifyProgressiveItem(randomizer, itemToGive);
+        randomizer->addItemToEventQueue(itemToGive);
+
+        // Give the player the Shadow Crystal replacement
+        itemToGive = randomizer->getEventItem(items::Shadow_Crystal);
+        itemToGive = game_patch::_04_verifyProgressiveItem(randomizer, itemToGive);
+        randomizer->addItemToEventQueue(itemToGive);
+
+        // Set the local event flag to make the sword de-spawn and set the save file event flag.
+        libtp::tp::d_save::onEventBit(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.mTmp, 0x820);
+        libtp::tp::d_save::onEventBit(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mEvent, 0x2120);
+
+        return;
     }
 
 #ifdef TP_JP

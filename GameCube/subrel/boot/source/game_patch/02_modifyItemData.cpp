@@ -165,6 +165,7 @@ namespace mod::game_patch
                                                     libtp::data::items::Key_Shard_3,
                                                     libtp::data::items::Big_Key_Goron_Mines,
                                                     libtp::data::items::Coro_Key,
+                                                    rando::customItems::Mirror_Piece_1,
                                                     libtp::data::items::Mirror_Piece_2,
                                                     libtp::data::items::Mirror_Piece_3,
                                                     libtp::data::items::Mirror_Piece_4,
@@ -320,6 +321,7 @@ namespace mod::game_patch
                                                customItems::Ancient_Sky_Book_Fifth_Character};
 
         uint8_t customShardsIDs[] = {
+            customItems::Mirror_Piece_1,
             items::Mirror_Piece_2,
             items::Mirror_Piece_3,
             items::Mirror_Piece_4,
@@ -486,6 +488,7 @@ namespace mod::game_patch
         itemFuncPtr[customItems::Fused_Shadow_1] = _02_firstFusedShadowItemFunc;
         itemFuncPtr[customItems::Fused_Shadow_2] = _02_secondFusedShadowItemFunc;
         itemFuncPtr[customItems::Fused_Shadow_3] = _02_thirdFusedShadowItemFunc;
+        itemFuncPtr[customItems::Mirror_Piece_1] = _02_firstMirrorShardItemFunc;
         itemFuncPtr[items::Mirror_Piece_2] = _02_secondMirrorShardItemFunc;
         itemFuncPtr[items::Mirror_Piece_3] = _02_thirdMirrorShardItemFunc;
         itemFuncPtr[items::Mirror_Piece_4] = _02_fourthMirrorShardItemFunc;
@@ -528,6 +531,7 @@ namespace mod::game_patch
         itemGetCheckFuncPtr[customItems::Fused_Shadow_1] = _02_firstFusedShadowItemGetCheck;
         itemGetCheckFuncPtr[customItems::Fused_Shadow_2] = _02_secondFusedShadowItemGetCheck;
         itemGetCheckFuncPtr[customItems::Fused_Shadow_3] = _02_thirdFusedShadowItemGetCheck;
+        itemGetCheckFuncPtr[customItems::Mirror_Piece_1] = _02_firstMirrorShardItemGetCheck;
         itemGetCheckFuncPtr[items::Mirror_Piece_2] = _02_secondMirrorShardItemGetCheck;
         itemGetCheckFuncPtr[items::Mirror_Piece_3] = _02_thirdMirrorShardItemGetCheck;
         itemGetCheckFuncPtr[items::Mirror_Piece_4] = _02_fourthMirrorShardItemGetCheck;
