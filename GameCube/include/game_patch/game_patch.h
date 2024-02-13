@@ -118,6 +118,7 @@ namespace mod::game_patch
     void _02_firstFusedShadowItemFunc();
     void _02_secondFusedShadowItemFunc();
     void _02_thirdFusedShadowItemFunc();
+    void _02_firstMirrorShardItemFunc();
     void _02_secondMirrorShardItemFunc();
     void _02_thirdMirrorShardItemFunc();
     void _02_fourthMirrorShardItemFunc();
@@ -140,6 +141,7 @@ namespace mod::game_patch
     int32_t _02_firstFusedShadowItemGetCheck();
     int32_t _02_secondFusedShadowItemGetCheck();
     int32_t _02_thirdFusedShadowItemGetCheck();
+    int32_t _02_firstMirrorShardItemGetCheck();
     int32_t _02_secondMirrorShardItemGetCheck();
     int32_t _02_thirdMirrorShardItemGetCheck();
     int32_t _02_fourthMirrorShardItemGetCheck();
@@ -176,6 +178,7 @@ namespace mod::game_patch
     uint32_t _05_getCustomMsgColor(uint8_t colorId);
     const char* _05_getMsgById(uint32_t msgId);
     const char* _05_getMsgById(uint32_t msgId, uint16_t* msgSizeOut);
+    const char* _05_getSpecialMsgById(uint32_t msgId);
     const char** _05_replaceMessageString(const char** text);
 
     // 06 - Function definitions for assembly patches

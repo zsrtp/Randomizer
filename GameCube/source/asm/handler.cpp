@@ -12,6 +12,7 @@
 #include "data/items.h"
 #include "data/flags.h"
 #include "tp/d_a_npc.h"
+#include "game_patch/game_patch.h"
 
 namespace mod::assembly
 {
@@ -124,6 +125,26 @@ namespace mod::assembly
         }
 
         return flagIsSet;
+    }
+
+    void handleGiveMasterSwordItems()
+    {
+        using namespace libtp::data;
+        // Give the player the Master Sword replacement
+        uint8_t itemToGive = randomizer->getEventItem(items::Master_Sword);
+        itemToGive = game_patch::_04_verifyProgressiveItem(randomizer, itemToGive);
+        randomizer->addItemToEventQueue(itemToGive);
+
+        // Give the player the Shadow Crystal replacement
+        itemToGive = randomizer->getEventItem(items::Shadow_Crystal);
+        itemToGive = game_patch::_04_verifyProgressiveItem(randomizer, itemToGive);
+        randomizer->addItemToEventQueue(itemToGive);
+
+        // Set the local event flag to make the sword de-spawn and set the save file event flag.
+        libtp::tp::d_save::onEventBit(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.mTmp, 0x820);
+        libtp::tp::d_save::onEventBit(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mEvent, 0x2120);
+
+        return;
     }
 
 #ifdef TP_JP

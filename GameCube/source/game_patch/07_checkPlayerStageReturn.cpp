@@ -50,7 +50,11 @@ namespace mod::game_patch
                 playerReturnPlacePtr->link_room_id = 0x6;
             }
         }
-        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::StageIDs::Sacred_Grove]))
+
+        // If for some reason we find ourselves outside Sacred Grove and cannot transform/warp, we want the player to be able to
+        // save warp to Faron. This is mostly usefull for Glitched Logic.
+        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::StageIDs::Faron_Woods]) &&
+                 (libtp::tools::getCurrentRoomNo() == 6))
         {
             if (!events::haveItem(items::Shadow_Crystal))
             {
@@ -62,7 +66,7 @@ namespace mod::game_patch
                 playerReturnPlacePtr->link_room_id = 0x6;
             }
         }
-         else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::StageIDs::Fyrus]))
+        else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[stage::StageIDs::Fyrus]))
         {
             strncpy(playerReturnPlacePtr->link_current_stage,
                     stagesPtr[stage::StageIDs::Goron_Mines],

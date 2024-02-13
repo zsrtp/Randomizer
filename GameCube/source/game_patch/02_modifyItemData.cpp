@@ -458,8 +458,8 @@ namespace mod::game_patch
 
     KEEP_FUNC void _02_ordonPumpkinItemFunc()
     {
-        events::setSaveFileEventFlag(libtp::data::flags::TOLD_YETA_ABOUT_PUMPKIN);               // Told Yeta about Pumpkin
-        events::setSaveFileEventFlag(libtp::data::flags::PUMPKIN_PUT_IN_SOUP);                   // Yeto put Pumpkin in soup
+        events::setSaveFileEventFlag(libtp::data::flags::TOLD_YETA_ABOUT_PUMPKIN); // Told Yeta about Pumpkin
+        events::setSaveFileEventFlag(libtp::data::flags::PUMPKIN_PUT_IN_SOUP);     // Yeto put Pumpkin in soup
 
         events::setSaveFileEventFlag(libtp::data::flags::TALKED_WITH_YETA_AFTER_GIVING_PUMPKIN); // SPR Lobby Door Unlocked
 
@@ -480,8 +480,8 @@ namespace mod::game_patch
 
     KEEP_FUNC void _02_ordonGoatCheeseItemFunc()
     {
-        events::setSaveFileEventFlag(libtp::data::flags::TOLD_YETA_ABOUT_CHEESE);               // Told Yeta about Cheese
-        events::setSaveFileEventFlag(libtp::data::flags::CHEESE_PUT_IN_SOUP);                   // Yeto put cheese in soup
+        events::setSaveFileEventFlag(libtp::data::flags::TOLD_YETA_ABOUT_CHEESE); // Told Yeta about Cheese
+        events::setSaveFileEventFlag(libtp::data::flags::CHEESE_PUT_IN_SOUP);     // Yeto put cheese in soup
 
         events::setSaveFileEventFlag(libtp::data::flags::TALKED_WITH_YETA_AFTER_GIVING_CHEESE); // SPR Lobby West Door Unlocked
 
@@ -600,17 +600,23 @@ namespace mod::game_patch
             rando::Header* headerPtr = rando->m_Seed->m_Header;
 
             // If the player has the castle requirement set to Fused Shadows.
-            if (headerPtr->castleRequirements == 1)
+            if (headerPtr->castleRequirements == rando::CastleEntryRequirements::HC_Fused_Shadows)
             {
                 events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
             }
 
             // If the player has the palace requirement set to Fused Shadows.
-            if (headerPtr->palaceRequirements == 1)
+            if (headerPtr->palaceRequirements == rando::PalaceEntryRequirements::PoT_Fused_Shadows)
             {
                 events::setSaveFileEventFlag(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT);
             }
         }
+    }
+
+    KEEP_FUNC void _02_firstMirrorShardItemFunc()
+    {
+        // Update the pause menu to show the first shard.
+        events::setSaveFileEventFlag(libtp::data::flags::UPDATE_SHARDS_TO_HAVE_AT_LEAST_ARBITERS_SHARD);
     }
 
     KEEP_FUNC void _02_secondMirrorShardItemFunc()
@@ -639,12 +645,12 @@ namespace mod::game_patch
             rando::Header* headerPtr = rando->m_Seed->m_Header;
 
             // If the player has the castle requirement set to Mirror Shards.
-            if (headerPtr->castleRequirements == 2)
+            if (headerPtr->castleRequirements == rando::CastleEntryRequirements::HC_Mirror_Shards)
             {
                 events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
             }
             // If the player has the palace requirement set to Mirror Shards.
-            if (headerPtr->palaceRequirements == 2)
+            if (headerPtr->palaceRequirements == rando::PalaceEntryRequirements::PoT_Mirror_Shards)
             {
                 events::setSaveFileEventFlag(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT);
             }
@@ -775,6 +781,12 @@ namespace mod::game_patch
     KEEP_FUNC int32_t _02_thirdFusedShadowItemGetCheck()
     {
         bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit(rando::customItems::Fused_Shadow_3);
+        return static_cast<int32_t>(result);
+    }
+
+    KEEP_FUNC int32_t _02_firstMirrorShardItemGetCheck()
+    {
+        bool result = libtp::tp::d_com_inf_game::dComIfGs_isItemFirstBit(rando::customItems::Mirror_Piece_1);
         return static_cast<int32_t>(result);
     }
 

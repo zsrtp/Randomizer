@@ -37,6 +37,8 @@ namespace mod::rando
         BugReward* m_BugRewardChecks = nullptr;
         SkyCharacter* m_SkyBookChecks = nullptr;
         ObjectArchiveReplacement* m_ObjectArcReplacements = nullptr;
+        ShuffledEntrance* m_ShuffledEntrances = nullptr;
+        EventItem* m_EventChecks = nullptr;
 
         const char* m_RequiredDungeons = nullptr; // Displayed when reading the sign in front of Link's house
 
@@ -54,7 +56,9 @@ namespace mod::rando
         uint16_t m_numHiddenSkillChecks = 0;
         uint16_t m_numBugRewardChecks = 0;
         uint16_t m_numSkyBookChecks = 0;
+        uint16_t m_numLoadedEventChecks = 0;
         uint16_t m_numLoadedObjectArcReplacements = 0;
+        uint16_t m_numShuffledEntrances = 0;
 
         uint16_t m_PatchesApplied = 0;
         uint16_t m_EventFlagsModified = 0;
@@ -127,6 +131,7 @@ namespace mod::rando
         void applyOneTimePatches(bool set);
 
         void loadShopModels();
+        void loadShuffledEntrances();
 
        private:
         uint8_t* m_GCIData = nullptr; // GCI Data including header
@@ -148,6 +153,8 @@ namespace mod::rando
         void LoadSkyCharacter(uint8_t stageIDX);
         void LoadHiddenSkill();
         void LoadBugReward();
+        void LoadEventChecks(uint8_t stageIDX);
+        bool loadCustomText(uint8_t* data);
     };
 } // namespace mod::rando
 #endif

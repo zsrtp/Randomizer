@@ -117,8 +117,9 @@ namespace mod::game_patch
     uint32_t _04_getProgressiveMirrorShard()
     {
         using namespace libtp::data::items;
+        using namespace rando::customItems;
 
-        static const uint8_t progressiveMirrorShardsList[] {Mirror_Piece_2, Mirror_Piece_3, Mirror_Piece_4};
+        static const uint8_t progressiveMirrorShardsList[] {Mirror_Piece_1, Mirror_Piece_2, Mirror_Piece_3, Mirror_Piece_4};
 
         constexpr uint32_t listLength = sizeof(progressiveMirrorShardsList) / sizeof(progressiveMirrorShardsList[0]);
         for (uint32_t i = 0; i < listLength; i++)
@@ -268,6 +269,7 @@ namespace mod::game_patch
                     break;
                 }
 
+                case Mirror_Piece_1:
                 case Mirror_Piece_2:
                 case Mirror_Piece_3:
                 case Mirror_Piece_4:

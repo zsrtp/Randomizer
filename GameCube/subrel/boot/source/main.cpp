@@ -126,10 +126,8 @@ namespace mod
         // return_stageLoader = patch::hookFunction( libtp::tp::d_stage::stageLoader, mod::handle_stageLoader );
         return_dStage_playerInit = patch::hookFunction(libtp::tp::d_stage::dStage_playerInit, mod::handle_dStage_playerInit);
 
-        /*
         return_dComIfGp_setNextStage =
-            patch::hookFunction( libtp::tp::d_com_inf_game::dComIfGp_setNextStage, mod::handle_dComIfGp_setNextStage );
-        */
+            patch::hookFunction(libtp::tp::d_com_inf_game::dComIfGp_setNextStage, mod::handle_dComIfGp_setNextStage);
 
         // Custom States
         return_getLayerNo_common_common = patch::hookFunction(getLayerNo_common_common, game_patch::_01_getLayerNo);
@@ -192,6 +190,8 @@ namespace mod
         return_query042 = patch::hookFunction(libtp::tp::d_msg_flow::query042, mod::handle_query042);
         // return_event000 = patch::hookFunction( libtp::tp::d_msg_flow::event000, mod::handle_event000 );
         return_event017 = patch::hookFunction(libtp::tp::d_msg_flow::event017, mod::handle_event017);
+        return_doFlow = patch::hookFunction(libtp::tp::d_msg_flow::doFlow, mod::handle_doFlow);
+        return_setNormalMsg = patch::hookFunction(libtp::tp::d_msg_flow::setNormalMsg, mod::handle_setNormalMsg);
 
         // Save flag functions
         return_isDungeonItem = patch::hookFunction(tp::d_save::isDungeonItem, mod::handle_isDungeonItem);
@@ -240,10 +240,14 @@ namespace mod
         return_damageMagnification =
             patch::hookFunction(libtp::tp::d_a_alink::damageMagnification, mod::handle_damageMagnification);
 
+        return_procCoGetItemInit = patch::hookFunction(libtp::tp::d_a_alink::procCoGetItemInit, mod::handle_procCoGetItemInit);
+
         // Audio functions
         return_loadSeWave = patch::hookFunction(libtp::z2audiolib::z2scenemgr::loadSeWave, mod::handle_loadSeWave);
         return_sceneChange = patch::hookFunction(libtp::z2audiolib::z2scenemgr::sceneChange, mod::handle_sceneChange);
         return_startSound = patch::hookFunction(libtp::z2audiolib::z2soundmgr::startSound, mod::handle_startSound);
+        return_checkBgmIDPlaying =
+            patch::hookFunction(libtp::z2audiolib::z2seqmgr::checkBgmIDPlaying, mod::handle_checkBgmIDPlaying);
 
         // Title Screen functions
         return_dScnLogo_c_dt = patch::hookFunction(libtp::tp::d_s_logo::dScnLogo_c_dt, mod::handle_dScnLogo_c_dt);
@@ -261,6 +265,12 @@ namespace mod
         // d_meter functions
         return_resetMiniGameItem =
             patch::hookFunction(libtp::tp::d_meter2_info::resetMiniGameItem, mod::handle_resetMiniGameItem);
+
+        // Game Over functions
+        return_dispWait_init = patch::hookFunction(libtp::tp::d_gameover::dispWait_init, mod::handle_dispWait_init);
+
+        // Shop Functions
+        return_seq_decide_yes = patch::hookFunction(libtp::tp::d_shop_system::seq_decide_yes, mod::handle_seq_decide_yes);
     }
 
     void initRandState()
