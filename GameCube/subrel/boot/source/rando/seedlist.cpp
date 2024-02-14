@@ -53,7 +53,7 @@ namespace mod::rando
         getSeedFiles("/mod/seed", minSeedInfoBuffer);
 #elif defined PLATFORM_WII
         char dirBuf[96];
-        snprintf(dirBuf, sizeof(dirBuf), "%s", nandGetHomeDir());
+        snprintf(dirBuf, sizeof(dirBuf), "%s/seeds", nandGetHomeDir());
         libtp::tp::m_Do_printf::OSReport("nand home dir + seed: \"%s\"\n", dirBuf);
 
         getSeedFiles(dirBuf, minSeedInfoBuffer);
@@ -179,7 +179,7 @@ namespace mod::rando
             // Loop through the files in the directory
             size_t filenameLength = strlen(fileList + cursor);
 
-            snprintf(filePath, sizeof(filePath), "%s", fileList + cursor);
+            snprintf(filePath, sizeof(filePath), "seeds/%s", fileList + cursor);
             cursor += filenameLength + 1;
             currentFileName = filePath;
 

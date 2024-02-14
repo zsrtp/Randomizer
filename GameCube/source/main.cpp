@@ -646,7 +646,11 @@ namespace mod
             if (checkBtn(currentButtons, consoleCombo))
             {
                 // Disable the input that was just pressed, as sometimes it could cause talking to Midna when in-game
+#ifndef PLATFORM_WII
                 padInfo->mPressedButtonFlags = 0;
+#else
+                padInfo->held = 0;
+#endif
 
                 // Disallow during boot as we print info etc.
                 // Will automatically disappear if there is no seeds to select from
@@ -689,7 +693,11 @@ namespace mod
             if (checkButtonCombo(quickTransformCombo, true))
             {
                 // Disable the input that was just pressed, as sometimes it could cause items to be used or Wolf Link to dig.
+#ifndef PLATFORM_WII
                 padInfo->mPressedButtonFlags = 0;
+#else
+                padInfo->held = 0;
+#endif
 
                 // Handle transforming
                 events::handleQuickTransform();

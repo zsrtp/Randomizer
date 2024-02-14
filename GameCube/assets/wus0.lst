@@ -588,6 +588,17 @@ CC008000:wgPipe
 800c6e4c:getSpinnerActor
 80291488:z2SeMgr_seStartLevel
 8053a994:mStayNo
+80031af4:dComIfGp_setNextStage
+8023711c:doFlow
+80237734:setNormalMsg
+8010dbd8:procCoGetItemInit
+80297ea8:checkBgmIDPlaying
+80180280:dispWait_init
+8017ec0c:seq_decide_yes
+80025318:fopMsgM_messageSet
+8004a92c:getEventIdx3
+80020d84:fopAcM_orderChangeEventId
+8017f134:setSoldOutFlag
 
 80006920:SECallback_int__int_
 80006974:drawCallback_J2DOrthoGraph____void___
