@@ -485,7 +485,7 @@ namespace mod::rando
         m_EventChecks = eventChecksPtr;
         EventItem* allEvent = reinterpret_cast<EventItem*>(&m_GCIData[gci_offset]);
 
-        // offset into m_SkyBookChecks
+        // offset into m_EventChecks
         uint32_t j = 0;
 
         for (uint32_t i = 0; i < num_eventchecks; i++)

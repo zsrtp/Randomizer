@@ -118,8 +118,8 @@ namespace mod::game_patch
                     case stage::StageIDs::Kakariko_Village:
                     {
                         condition = libtp::tp::d_com_inf_game::dComIfGs_isEventBit(
-                            WATCHED_CUTSCENE_AFTER_GORON_MINES); // Cutscene after GM
-                                                                 // Watched
+                            WATCHED_CUTSCENE_AFTER_GORON_MINES); // Cutscene after GM Watched
+
                         if (condition == false)
                         {
                             condition =
@@ -158,8 +158,8 @@ namespace mod::game_patch
                             if (condition == false)
                             {
                                 condition = libtp::tp::d_com_inf_game::dComIfGs_isEventBit(
-                                    WATCHED_CUTSCENE_AFTER_GORON_MINES); // Cutscene after GM
-                                                                         // Watched
+                                    WATCHED_CUTSCENE_AFTER_GORON_MINES); // Cutscene after GM Watched
+
                                 if (condition == false)
                                 {
                                     condition = libtp::tp::d_com_inf_game::dComIfGs_isEventBit(

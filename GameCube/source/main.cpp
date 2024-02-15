@@ -196,6 +196,7 @@ namespace mod
 
     KEEP_VAR uint32_t (*return_getFontCCColorTable)(uint8_t colorId, uint8_t unk) = nullptr;
     KEEP_VAR uint32_t (*return_getFontGCColorTable)(uint8_t colorId, uint8_t unk) = nullptr;
+
     KEEP_VAR void (*return_jmessage_tSequenceProcessor__do_begin)(void* seqProcessor,
                                                                   const void* unk2,
                                                                   const char* text) = nullptr;
@@ -216,10 +217,12 @@ namespace mod
     // KEEP_VAR int32_t ( *return_event000 )( void* messageFlow, void* nodeEvent, void* actrPtr ) = nullptr;
     KEEP_VAR int32_t (*return_event017)(void* messageFlow, void* nodeEvent, void* actrPtr) = nullptr;
     KEEP_VAR int32_t (*return_event003)(void* messageFlow, void* nodeEvent, void* actrPtr) = nullptr;
+
     KEEP_VAR int32_t (*return_doFlow)(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
                                       libtp::tp::f_op_actor::fopAc_ac_c* actrPtr,
                                       libtp::tp::f_op_actor::fopAc_ac_c** actrValue,
                                       int32_t i_flow) = nullptr;
+
     KEEP_VAR int32_t (*return_setNormalMsg)(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
                                             void* flowNode,
                                             libtp::tp::f_op_actor::fopAc_ac_c* actrPtr) = nullptr;
@@ -247,14 +250,17 @@ namespace mod
     KEEP_VAR bool (*return_procWolfAttackReverseInit)(libtp::tp::d_a_alink::daAlink* daALink) = nullptr;
     KEEP_VAR bool (*return_procWolfDashReverseInit)(libtp::tp::d_a_alink::daAlink* daALink, bool param_1) = nullptr;
     KEEP_VAR libtp::tp::f_op_actor::fopAc_ac_c* (*return_searchBouDoor)(libtp::tp::f_op_actor::fopAc_ac_c* actrPtr) = nullptr;
+
     KEEP_VAR float (*return_damageMagnification)(libtp::tp::d_a_alink::daAlink* daALink,
                                                  int32_t param_1,
                                                  int32_t param_2) = nullptr;
+
     KEEP_VAR bool (*return_checkCastleTownUseItem)(uint16_t item_id) = nullptr;
     KEEP_VAR int32_t (*return_procCoGetItemInit)(libtp::tp::d_a_alink::daAlink* linkActrPtr) = nullptr;
 
     // Audio functions
     KEEP_VAR void (*return_loadSeWave)(void* Z2SceneMgr, uint32_t waveID) = nullptr;
+
     KEEP_VAR void (*return_sceneChange)(libtp::z2audiolib::z2scenemgr::Z2SceneMgr* sceneMgr,
                                         libtp::z2audiolib::z2scenemgr::JAISoundID BGMid,
                                         uint8_t SeWave1,
@@ -263,6 +269,7 @@ namespace mod
                                         uint8_t BgmWave2,
                                         uint8_t DemoWave,
                                         bool param_7) = nullptr;
+
     KEEP_VAR void (*return_startSound)(void* soungMgr,
                                        libtp::z2audiolib::z2scenemgr::JAISoundID soundId,
                                        void* soundHandle,
@@ -277,6 +284,7 @@ namespace mod
     KEEP_VAR libtp::tp::d_resource::dRes_info_c* (*return_getResInfo)(const char* arcName,
                                                                       libtp::tp::d_resource::dRes_info_c* objectInfo,
                                                                       int32_t size) = nullptr;
+
     KEEP_VAR bool (*return_mountArchive__execute)(libtp::tp::m_Do_dvd_thread::mDoDvdThd_mountArchive_c* mountArchive) = nullptr;
 
     // d_meter functions
@@ -719,6 +727,7 @@ namespace mod
 
         // Custom events
         bool currentReloadingState;
+
         if (linkMapPtr)
         {
             // checkRestartRoom is needed for voiding
@@ -754,10 +763,9 @@ namespace mod
             }
         }
 
-        handleFoolishItem();
-
         roomReloadingState = currentReloadingState;
 
+        handleFoolishItem();
         tools::xorshift32(&randState);
 
         if (events::timeChange != 0)
@@ -766,72 +774,9 @@ namespace mod
         }
 
         // Giving items at any point
-
-        if (libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer)
+        if (linkMapPtr)
         {
-            // Probably change this to checking mProc to make sure we are "waiting"
-            switch (libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mProcID)
-            {
-                case libtp::tp::d_a_alink::PROC_WAIT:
-                case libtp::tp::d_a_alink::PROC_TIRED_WAIT:
-                case libtp::tp::d_a_alink::PROC_MOVE:
-                case libtp::tp::d_a_alink::PROC_WOLF_WAIT:
-                case libtp::tp::d_a_alink::PROC_WOLF_TIRED_WAIT:
-                case libtp::tp::d_a_alink::PROC_WOLF_MOVE:
-                case libtp::tp::d_a_alink::PROC_SERVICE_WAIT:
-                case libtp::tp::d_a_alink::PROC_WOLF_SERVICE_WAIT:
-                {
-                    using namespace libtp::tp;
-
-                    // Check if link is currently in a cutscene
-                    if (!d_a_alink::checkEventRun(linkMapPtr))
-                    {
-                        // Ensure that link is not currently in a message-based event.
-                        if (d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mMsgFlow.mEventId == 0)
-                        {
-                            uint8_t itemToGive = 0xFF;
-                            for (int i = 0; i < 4; i++)
-                            {
-                                if (d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk[i] != 0)
-                                {
-                                    itemToGive = d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk[i];
-                                    d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk[i] = 0x0;
-                                    break;
-                                }
-                            }
-
-                            // if there is no item to give, break out of the case.
-                            if (itemToGive == 0xFF)
-                            {
-                                break;
-                            }
-
-                            libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mEvent.mGtItm = itemToGive;
-
-                            // Set the process value for getting an item to start the "get item" cutscene when next available.
-                            d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mProcID = libtp::tp::d_a_alink::PROC_GET_ITEM;
-
-                            //  Get the event index for the "Get Item" event.
-                            int16_t eventIdx = d_event_manager::getEventIdx3(
-                                &d_com_inf_game::dComIfG_gameInfo.play.mEvtManager,
-                                reinterpret_cast<f_op_actor::fopAc_ac_c*>(d_com_inf_game::dComIfG_gameInfo.play.mPlayer),
-                                "DEFAULT_GETITEM",
-                                0xff);
-
-                            // Finally we want to modify the event stack to prioritize our custom event so that it happens next.
-                            libtp::tp::f_op_actor_mng::fopAcM_orderChangeEventId(
-                                reinterpret_cast<void*>(d_com_inf_game::dComIfG_gameInfo.play.mPlayer),
-                                eventIdx,
-                                1,
-                                0xFFFF);
-
-                            // Once we are done, we set a global bool that is checked in procCoGetItemInit to give the player
-                            // the item.
-                            giveItemToPlayer = true;
-                        }
-                    }
-                }
-            }
+            initGiveItemToPlayer(linkMapPtr);
         }
 
         // End of custom events
@@ -843,6 +788,81 @@ namespace mod
         // Analog L is currently not being used, so commented out
         // prevFrameAnalogL = padInfo->mTriggerLeft;
         prevFrameAnalogR = padInfo->mTriggerRight;
+    }
+
+    void initGiveItemToPlayer(libtp::tp::d_a_alink::daAlink* linkMapPtr)
+    {
+        using namespace libtp::tp;
+
+        switch (linkMapPtr->mProcID)
+        {
+            case d_a_alink::PROC_WAIT:
+            case d_a_alink::PROC_TIRED_WAIT:
+            case d_a_alink::PROC_MOVE:
+            case d_a_alink::PROC_WOLF_WAIT:
+            case d_a_alink::PROC_WOLF_TIRED_WAIT:
+            case d_a_alink::PROC_WOLF_MOVE:
+            case d_a_alink::PROC_SERVICE_WAIT:
+            case d_a_alink::PROC_WOLF_SERVICE_WAIT:
+            {
+                // Check if link is currently in a cutscene
+                if (d_a_alink::checkEventRun(linkMapPtr))
+                {
+                    break;
+                }
+
+                // Ensure that link is not currently in a message-based event.
+                if (linkMapPtr->mMsgFlow.mEventId != 0)
+                {
+                    break;
+                }
+
+                d_com_inf_game::dComIfG_inf_c* gameInfo = &d_com_inf_game::dComIfG_gameInfo;
+                uint8_t* reserveBytesPtr = &gameInfo->save.save_file.reserve.unk[0];
+                uint32_t itemToGive = 0xFF;
+
+                for (uint32_t i = 0; i < 4; i++)
+                {
+                    const uint32_t storedItem = reserveBytesPtr[i];
+
+                    if (storedItem)
+                    {
+                        itemToGive = storedItem;
+                        reserveBytesPtr[i] = 0;
+                        break;
+                    }
+                }
+
+                // if there is no item to give, break out of the case.
+                if (itemToGive == 0xFF)
+                {
+                    break;
+                }
+
+                libtp::tp::d_com_inf_game::dComIfG_play* playPtr = &gameInfo->play;
+                playPtr->mEvent.mGtItm = static_cast<uint8_t>(itemToGive);
+
+                // Set the process value for getting an item to start the "get item" cutscene when next available.
+                linkMapPtr->mProcID = libtp::tp::d_a_alink::PROC_GET_ITEM;
+
+                //  Get the event index for the "Get Item" event.
+                const int16_t eventIdx = d_event_manager::getEventIdx3(&playPtr->mEvtManager,
+                                                                       reinterpret_cast<f_op_actor::fopAc_ac_c*>(linkMapPtr),
+                                                                       "DEFAULT_GETITEM",
+                                                                       0xFF);
+
+                // Finally we want to modify the event stack to prioritize our custom event so that it happens next.
+                libtp::tp::f_op_actor_mng::fopAcM_orderChangeEventId(linkMapPtr, eventIdx, 1, 0xFFFF);
+
+                // Once we are done, we set a global bool that is checked in procCoGetItemInit to give the player
+                // the item.
+                giveItemToPlayer = true;
+            }
+            default:
+            {
+                break;
+            }
+        }
     }
 
     int32_t initCreatePlayerItem(uint32_t itemID,
@@ -888,8 +908,10 @@ namespace mod
                                                void* unk4)
     {
         // Load DZX based checks that are stored in the current layer DZX
-        events::onDZX(randomizer, chunkTypeInfo);
-        events::loadCustomRoomActors(randomizer);
+        rando::Randomizer* randoPtr = randomizer;
+        events::onDZX(randoPtr, chunkTypeInfo);
+        events::loadCustomRoomActors(randoPtr);
+
         return return_actorCommonLayerInit(mStatus_roomControl, chunkTypeInfo, unk3, unk4);
     }
 
@@ -915,8 +937,10 @@ namespace mod
         if (getCurrentSeed(rando))
         {
             const int32_t stageIDX = libtp::tools::getStageIndex(stage);
-            const uint32_t numShuffledEntrances = rando->m_Seed->m_numShuffledEntrances;
-            rando::ShuffledEntrance* shuffledEntrances = &rando->m_Seed->m_ShuffledEntrances[0];
+
+            const rando::Seed* seedPtr = rando->m_Seed;
+            const uint32_t numShuffledEntrances = seedPtr->m_numShuffledEntrances;
+            const rando::ShuffledEntrance* shuffledEntrances = &seedPtr->m_ShuffledEntrances[0];
 
             // getConsole() << stageIDX << "," << roomNo << "," << point << "," << layer << "\n";
 
@@ -926,39 +950,31 @@ namespace mod
             {
                 for (uint32_t i = 0; i < numShuffledEntrances; i++)
                 {
-                    rando::ShuffledEntrance* currentEntrance = &shuffledEntrances[i];
-                    if (stageIDX == currentEntrance->origStageIDX)
+                    const rando::ShuffledEntrance* currentEntrance = &shuffledEntrances[i];
+
+                    if ((stageIDX == currentEntrance->origStageIDX) && (roomNo == currentEntrance->origRoomIDX) &&
+                        (point == currentEntrance->origSpawn) && (layer == currentEntrance->origState))
                     {
-                        if (roomNo == currentEntrance->origRoomIDX)
-                        {
-                            if (point == currentEntrance->origSpawn)
-                            {
-                                if (layer == currentEntrance->origState)
-                                {
-                                    getConsole() << "Shuffling Entrance"
-                                                 << "\n";
-                                    return return_dComIfGp_setNextStage(
-                                        libtp::data::stage::allStages[currentEntrance->newStageIDX],
-                                        currentEntrance->newSpawn,
-                                        currentEntrance->newRoomIDX,
-                                        currentEntrance->newState,
-                                        lastSpeed,
-                                        lastMode,
-                                        setPoint,
-                                        wipe,
-                                        lastAngle,
-                                        param_9,
-                                        wipSpeedT);
-                                }
-                            }
-                        }
+                        // getConsole() << "Shuffling Entrance\n";
+
+                        return return_dComIfGp_setNextStage(libtp::data::stage::allStages[currentEntrance->newStageIDX],
+                                                            currentEntrance->newSpawn,
+                                                            currentEntrance->newRoomIDX,
+                                                            currentEntrance->newState,
+                                                            lastSpeed,
+                                                            lastMode,
+                                                            setPoint,
+                                                            wipe,
+                                                            lastAngle,
+                                                            param_9,
+                                                            wipSpeedT);
                     }
                 }
             }
         }
 
-        // getConsole() << "No match found."
-        //              << "\n";
+        // getConsole() << "No match found.\n";
+
         return return_dComIfGp_setNextStage(stage,
                                             point,
                                             roomNo,
@@ -1271,7 +1287,7 @@ namespace mod
         // Make sure the function ran successfully
         if (ret)
         {
-            game_patch::_05_setCustomItemMessage(control, TProcessor, unk3, msgId, randomizer);
+            game_patch::_05_setCustomItemMessage(control, TProcessor, unk3, msgId);
         }
         return ret;
     }
@@ -1382,29 +1398,33 @@ namespace mod
                                     libtp::tp::f_op_actor::fopAc_ac_c** actrValue,
                                     int32_t i_flow)
     {
-        if (msgFlow->mFlow == 0xFFFE) // check if it equals our custom flow value
+        if (msgFlow->mFlow == 0xFFFE) // Check if it equals our custom flow value
         {
             if (msgFlow->mMsg == 0xFFFFFFFF)
             {
-                msgFlow->mMsg = 0; // Clear the invalid msg value since it will be set by the game once our text is loaded.
-                msgFlow->field_0x26 = 0x0; // When this byte is set, the current event is aborted. With unused nodes, it is set
-                                           // to 1 by default so we need to unset it.
+                // Clear the invalid msg value since it will be set by the game once our text is loaded.
+                msgFlow->mMsg = 0;
+
+                // When this byte is set, the current event is aborted. With unused nodes, it is set to 1 by default so we need
+                // to unset it.
+                msgFlow->field_0x26 = 0;
 
                 if (libtp::tp::d_a_alink::checkStageName(
                         libtp::data::stage::allStages[libtp::data::stage::StageIDs::Hyrule_Field]) ||
                     libtp::tp::d_a_alink::checkStageName(
                         libtp::data::stage::allStages[libtp::data::stage::StageIDs::Outside_Castle_Town]))
                 {
-                    msgFlow->field_0x10 =
-                        0x8; // Hyrule Field does not have a valid flow node for node 0 so we want it to use its native node (8)
+                    // Hyrule Field does not have a valid flow node for node 0 so we want it to use its native node (8)
+                    msgFlow->field_0x10 = 0x8;
                 }
                 else
                 {
-                    msgFlow->field_0x10 =
-                        0x0; // Sets the flow to use the same flow grouping as the standard flow that getItem text uses.
+                    // Sets the flow to use the same flow grouping as the standard flow that getItem text uses.
+                    msgFlow->field_0x10 = 0;
                 }
             }
         }
+
         return return_doFlow(msgFlow, actrPtr, actrValue, i_flow);
     }
 
@@ -1412,18 +1432,16 @@ namespace mod
                                           void* flowNode,
                                           libtp::tp::f_op_actor::fopAc_ac_c* actrPtr)
     {
-        if (msgFlow->mFlow == 0xFFFE) // check if it equals our custom flow value
+        if (msgFlow->mFlow == 0xFFFE) // Check if it equals our custom flow value
         {
-            uint32_t var1 = libtp::tp::f_op_msg_mng::fopMsgM_messageSet(
-                0x1360,
-                1000); // set the msg id in the node to that of our specified message.
-            msgFlow->mMsg = var1;
+            // Set the msg id in the node to that of our specified message.
+            const uint32_t msg = libtp::tp::f_op_msg_mng::fopMsgM_messageSet(0x1360, 1000);
+
+            msgFlow->mMsg = msg;
             return 1;
         }
-        else
-        {
-            return return_setNormalMsg(msgFlow, flowNode, actrPtr);
-        }
+
+        return return_setNormalMsg(msgFlow, flowNode, actrPtr);
     }
 
     KEEP_FUNC void handle_jmessage_tSequenceProcessor__do_begin(void* seqProcessor, const void* unk2, const char* text)
@@ -1507,7 +1525,6 @@ namespace mod
         using namespace libtp::data::flags;
 
         const auto stagesPtr = &allStages[0];
-        rando::Randomizer* rando = randomizer;
 
         switch (flag)
         {
@@ -1621,10 +1638,10 @@ namespace mod
                 {
                     if (!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT))
                     {
-                        using namespace libtp::data;
-                        if (randoIsEnabled(rando))
+                        rando::Seed* seed;
+                        if (seed = getCurrentSeed(randomizer), seed)
                         {
-                            if (rando->m_Seed->m_Header->palaceRequirements != 3)
+                            if (seed->m_Header->palaceRequirements != 3)
                             {
                                 return false;
                             }
@@ -1676,8 +1693,10 @@ namespace mod
         libtp::tp::d_save::dSv_save_c* saveFilePtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file;
         if (eventPtr == &saveFilePtr->mEvent)
         {
-            libtp::tp::d_save::dSv_player_status_a_c* playerStatusAPtr = &saveFilePtr->player.player_status_a;
-            libtp::tp::d_save::dSv_player_status_b_c* playerStatusBPtr = &saveFilePtr->player.player_status_b;
+            libtp::tp::d_save::dSv_player_c* playerPtr = &saveFilePtr->player;
+            libtp::tp::d_save::dSv_player_status_a_c* playerStatusAPtr = &playerPtr->player_status_a;
+            libtp::tp::d_save::dSv_player_status_b_c* playerStatusBPtr = &playerPtr->player_status_b;
+
             const uint32_t darkClearLevelFlag = playerStatusBPtr->dark_clear_level_flag;
 
             switch (flag)
@@ -1689,8 +1708,8 @@ namespace mod
                 {
                     if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(TRANSFORMING_UNLOCKED))
                     {
-                        playerStatusAPtr->currentForm =
-                            0; // Set player to Human as the game will not do so if Shadow Crystal has been obtained.
+                        // Set player to Human as the game will not do so if Shadow Crystal has been obtained.
+                        playerStatusAPtr->currentForm = 0;
                     }
                     break;
                 }
@@ -1702,8 +1721,8 @@ namespace mod
                 {
                     if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(TRANSFORMING_UNLOCKED))
                     {
-                        playerStatusAPtr->currentForm =
-                            1; // Set player to Wolf as the game will not do so if Shadow Crystal has been obtained.
+                        // Set player to Wolf as the game will not do so if Shadow Crystal has been obtained.
+                        playerStatusAPtr->currentForm = 1;
                     }
                     break;
                 }
@@ -1764,10 +1783,10 @@ namespace mod
 
                 case PALACE_OF_TWILIGHT_CLEARED:
                 {
-                    if (randoIsEnabled(randomizer))
+                    rando::Seed* seed;
+                    if (seed = getCurrentSeed(randomizer), seed)
                     {
-                        if (randomizer->m_Seed->m_Header->castleRequirements ==
-                            rando::CastleEntryRequirements::HC_Vanilla) // Vanilla
+                        if (seed->m_Header->castleRequirements == rando::CastleEntryRequirements::HC_Vanilla) // Vanilla
                         {
                             events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
                             return return_onEventBit(eventPtr, flag); // set PoT story flag
@@ -1782,6 +1801,7 @@ namespace mod
                 }
             }
         }
+
         return return_onEventBit(eventPtr, flag);
     }
 
@@ -1822,7 +1842,9 @@ namespace mod
 
     KEEP_FUNC void handle_onSwitch_dSv_memBit(libtp::tp::d_save::dSv_memBit_c* memoryBit, int32_t flag)
     {
-        if (memoryBit == &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags)
+        libtp::tp::d_save::dSv_info_c* savePtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save;
+
+        if (memoryBit == &savePtr->memory.temp_flags)
         {
             const auto stagesPtr = &libtp::data::stage::allStages[0];
 
@@ -1830,15 +1852,16 @@ namespace mod
             {
                 if (flag == 0x52)
                 {
-                    return; // Don't set the flag for all monkeys freed in the lobby of Forest Temple
+                    // Don't set the flag for all monkeys freed in the lobby of Forest Temple
+                    return;
                 }
             }
             else if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Arbiters_Grounds]))
             {
                 if (flag == 0x26) // Poe flame CS trigger
                 {
-                    libtp::tp::d_save::offSwitch_dSv_memBit(memoryBit,
-                                                            0x45); // Open the Poe gate
+                    // Open the Poe gate
+                    libtp::tp::d_save::offSwitch_dSv_memBit(memoryBit, 0x45);
 
                     return;
                 }
@@ -1849,11 +1872,8 @@ namespace mod
                 {
                     if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::TRANSFORMING_UNLOCKED))
                     {
-                        libtp::tp::d_save::dSv_save_c* saveFilePtr =
-                            &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file;
-                        libtp::tp::d_save::dSv_player_status_a_c* playerStatusAPtr = &saveFilePtr->player.player_status_a;
-                        playerStatusAPtr->currentForm =
-                            0; // Set player to Human as the game will not do so if Shadow Crystal has been obtained.
+                        // Set player to Human as the game will not do so if Shadow Crystal has been obtained.
+                        savePtr->save_file.player.player_status_a.currentForm = 0;
                     }
                 }
             }
@@ -1861,8 +1881,8 @@ namespace mod
             {
                 if (flag == 0x3E) // Hawkeye is for sell.
                 {
-                    libtp::tp::d_save::offSwitch_dSv_memBit(memoryBit,
-                                                            0xB); // Remove the coming soon sign so the hawkeye can be bought.
+                    // Remove the coming soon sign so the hawkeye can be bought.
+                    libtp::tp::d_save::offSwitch_dSv_memBit(memoryBit, 0xB);
                 }
             }
         }
@@ -2070,19 +2090,20 @@ namespace mod
     KEEP_FUNC bool handle_checkBgmIDPlaying(libtp::z2audiolib::z2seqmgr::Z2SeqMgr* seqMgr, uint32_t sfx_id)
     {
         // Call original function immediately as it sets necessary values.
-        bool ret = return_checkBgmIDPlaying(seqMgr, sfx_id);
+        const bool ret = return_checkBgmIDPlaying(seqMgr, sfx_id);
 
         if (sfx_id == 0x01000013) // Game Over sfx
         {
             return false;
         }
+
         return ret;
     }
 
     KEEP_FUNC void handle_dispWait_init(libtp::tp::d_gameover::dGameOver* ptr)
     {
         // Set the timer
-        ptr->mTimer = 0x0;
+        ptr->mTimer = 0;
         return return_dispWait_init(ptr);
     }
 
@@ -2102,9 +2123,10 @@ namespace mod
         // that doesnt exist we want the game to create one using the item id in mGtItm.
         if (giveItemToPlayer)
         {
-            libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mDemo.mParam0 = 0x100;
             giveItemToPlayer = false;
+            libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mDemo.mParam0 = 0x100;
         }
+
         return return_procCoGetItemInit(linkActrPtr);
     }
 

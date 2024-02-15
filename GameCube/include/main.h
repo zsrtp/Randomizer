@@ -107,6 +107,7 @@ namespace mod
     bool checkButtonCombo(uint32_t combo, bool checkAnalog);
     float intToFloat(int32_t value);
     void handleInput(uint32_t inputs);
+    void initGiveItemToPlayer(libtp::tp::d_a_alink::daAlink* linkMapPtr);
     void handleFoolishItem();
     void handleBonkDamage();
 
@@ -208,10 +209,12 @@ namespace mod
 
     // void handle_stageLoader( void* data, void* stageDt );
     // extern void ( *return_stageLoader )( void* data, void* stageDt );
+
     int32_t handle_dStage_playerInit(void* stageDt,
                                      libtp::tp::d_stage::stage_dzr_header_entry* i_data,
                                      int32_t num,
                                      void* raw_data);
+
     extern int32_t (*return_dStage_playerInit)(void* stageDt,
                                                libtp::tp::d_stage::stage_dzr_header_entry* i_data,
                                                int32_t num,
@@ -357,6 +360,7 @@ namespace mod
                           libtp::tp::f_op_actor::fopAc_ac_c* actrPtr,
                           libtp::tp::f_op_actor::fopAc_ac_c** actrValue,
                           int32_t i_flow);
+
     extern int32_t (*return_doFlow)(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
                                     libtp::tp::f_op_actor::fopAc_ac_c* actrPtr,
                                     libtp::tp::f_op_actor::fopAc_ac_c** actrValue,
@@ -365,6 +369,7 @@ namespace mod
     int32_t handle_setNormalMsg(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
                                 void* flowNode,
                                 libtp::tp::f_op_actor::fopAc_ac_c* actrPtr);
+
     extern int32_t (*return_setNormalMsg)(libtp::tp::d_msg_flow::dMsgFlow* msgFlow,
                                           void* flowNode,
                                           libtp::tp::f_op_actor::fopAc_ac_c* actrPtr);
@@ -490,6 +495,7 @@ namespace mod
     int32_t handle_seq_decide_yes(libtp::tp::d_shop_system::dShopSystem* shopPtr,
                                   libtp::tp::f_op_actor::fopAc_ac_c* actor,
                                   void* msgFlow);
+
     extern int32_t (*return_seq_decide_yes)(libtp::tp::d_shop_system::dShopSystem* shopPtr,
                                             libtp::tp::f_op_actor::fopAc_ac_c* actor,
                                             void* msgFlow);

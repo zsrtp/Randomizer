@@ -130,8 +130,9 @@ namespace mod::assembly
     void handleGiveMasterSwordItems()
     {
         using namespace libtp::data;
+
         // Give the player the Master Sword replacement
-        uint8_t itemToGive = randomizer->getEventItem(items::Master_Sword);
+        uint32_t itemToGive = randomizer->getEventItem(items::Master_Sword);
         itemToGive = game_patch::_04_verifyProgressiveItem(randomizer, itemToGive);
         randomizer->addItemToEventQueue(itemToGive);
 
@@ -141,10 +142,9 @@ namespace mod::assembly
         randomizer->addItemToEventQueue(itemToGive);
 
         // Set the local event flag to make the sword de-spawn and set the save file event flag.
-        libtp::tp::d_save::onEventBit(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.mTmp, 0x820);
-        libtp::tp::d_save::onEventBit(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mEvent, 0x2120);
-
-        return;
+        libtp::tp::d_save::dSv_info_c* savePtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save;
+        libtp::tp::d_save::onEventBit(&savePtr->mTmp, 0x820);
+        libtp::tp::d_save::onEventBit(&savePtr->save_file.mEvent, 0x2120);
     }
 
 #ifdef TP_JP

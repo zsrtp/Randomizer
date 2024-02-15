@@ -201,10 +201,7 @@ namespace mod::rando
 
     void Seed::loadShuffledEntrances()
     {
-        using namespace libtp::tp;
-        using namespace libtp::data;
-
-        entryInfo* shuffledEntranceInfo = &m_Header->EntranceTableInfo;
+        const entryInfo* shuffledEntranceInfo = &m_Header->EntranceTableInfo;
         const uint32_t num_shuffledEntrances = shuffledEntranceInfo->numEntries;
         const uint32_t gci_offset = shuffledEntranceInfo->dataOffset;
 
@@ -212,36 +209,31 @@ namespace mod::rando
         m_ShuffledEntrances = reinterpret_cast<ShuffledEntrance*>(&m_GCIData[gci_offset]);
         m_numShuffledEntrances = num_shuffledEntrances;
     }
-    bool Seed::loadCustomText(uint8_t* data)
+
+    void Seed::loadCustomText(uint8_t* data)
     {
-        if (m_CARDResult == CARD_RESULT_READY)
-        {
-            uint32_t headerOffset = m_Header->headerSize + m_Header->customTextHeaderOffset;
-            // Get the custom message header
-            CustomMessageHeaderInfo* customMessageHeader = reinterpret_cast<CustomMessageHeaderInfo*>(&data[headerOffset]);
+        const uint32_t headerOffset = m_Header->headerSize + m_Header->customTextHeaderOffset;
 
-            // Get the text for the current language
-            // US/JP should only have one language included
+        // Get the custom message header
+        const CustomMessageHeaderInfo* customMessageHeader = reinterpret_cast<CustomMessageHeaderInfo*>(&data[headerOffset]);
 
-            // Allocate memory for the ids, message offsets, and messages
-            m_TotalHintMsgEntries = customMessageHeader->totalEntries;
-            uint32_t msgIdTableSize = m_TotalHintMsgEntries * sizeof(CustomMessageData);
-            uint32_t msgOffsetTableSize = m_TotalHintMsgEntries * sizeof(uint32_t);
-            // Round msgIdTableSize up to the size of the offsets to make sure the offsets are properly aligned
-            msgIdTableSize = (msgIdTableSize + sizeof(uint32_t) - 1) & ~(sizeof(uint32_t) - 1);
-            uint32_t msgTableInfoSize = msgIdTableSize + msgOffsetTableSize + customMessageHeader->msgTableSize;
+        // Allocate memory for the ids, message offsets, and messages
+        m_TotalHintMsgEntries = customMessageHeader->totalEntries;
+        uint32_t msgIdTableSize = m_TotalHintMsgEntries * sizeof(CustomMessageData);
+        const uint32_t msgOffsetTableSize = m_TotalHintMsgEntries * sizeof(uint32_t);
 
-            m_HintMsgTableInfo = new uint8_t[msgTableInfoSize];
-            // When calculating the offset the the message table information, we are assuming that the message header is
-            // followed by the entry information for all of the languages in the seed data.
-            uint32_t offset = headerOffset + customMessageHeader->msgIdTableOffset;
+        // Round msgIdTableSize up to the size of the offsets to make sure the offsets are properly aligned
+        msgIdTableSize = (msgIdTableSize + sizeof(uint32_t) - 1) & ~(sizeof(uint32_t) - 1);
+        const uint32_t msgTableInfoSize = msgIdTableSize + msgOffsetTableSize + customMessageHeader->msgTableSize;
 
-            // Copy the data to the pointers
-            memcpy(m_HintMsgTableInfo, &data[offset], msgTableInfoSize);
-            return true;
-        }
+        // Align to uint16_t, as thagt's the largest variable type in CustomMessageData
+        m_HintMsgTableInfo = new (sizeof(uint16_t)) uint8_t[msgTableInfoSize];
+        // When calculating the offset the the message table information, we are assuming that the message header is
+        // followed by the entry information for all of the languages in the seed data.
+        const uint32_t offset = headerOffset + customMessageHeader->msgIdTableOffset;
 
-        return false;
+        // Copy the data to the pointers
+        memcpy(m_HintMsgTableInfo, &data[offset], msgTableInfoSize);
     }
 
 } // namespace mod::rando
