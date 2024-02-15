@@ -933,12 +933,10 @@ namespace mod
                                                 int32_t param_9,
                                                 int32_t wipSpeedT)
     {
-        rando::Randomizer* rando = randomizer;
-        if (getCurrentSeed(rando))
+        rando::Seed* seedPtr;
+        if (seedPtr = getCurrentSeed(randomizer), seedPtr)
         {
             const int32_t stageIDX = libtp::tools::getStageIndex(stage);
-
-            const rando::Seed* seedPtr = rando->m_Seed;
             const uint32_t numShuffledEntrances = seedPtr->m_numShuffledEntrances;
             const rando::ShuffledEntrance* shuffledEntrances = &seedPtr->m_ShuffledEntrances[0];
 
