@@ -341,14 +341,14 @@ namespace mod::rando
         }
     }
 
-    int8_t Randomizer::getEventItem(uint8_t flag)
+    uint8_t Randomizer::getEventItem(uint8_t flag)
     {
         const uint32_t numLoadedEventChecks = m_Seed->m_numLoadedEventChecks;
-        EventItem* eventChecks = &m_Seed->m_EventChecks[0];
+        const EventItem* eventChecks = &m_Seed->m_EventChecks[0];
 
         for (uint32_t i = 0; i < numLoadedEventChecks; i++)
         {
-            EventItem* currentEventCheck = &eventChecks[i];
+            const EventItem* currentEventCheck = &eventChecks[i];
             if (flag == currentEventCheck->flag)
             {
                 // Return new item
@@ -697,17 +697,18 @@ namespace mod::rando
         }
     }
 
-    void Randomizer::addItemToEventQueue(uint8_t itemToAdd)
+    void Randomizer::addItemToEventQueue(uint32_t itemToAdd)
     {
         using namespace libtp::tp;
-        for (int i = 0; i < 4; i++)
+
+        uint8_t* reserveBytesPtr = d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk;
+        for (uint32_t i = 0; i < 4; i++)
         {
-            if (d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk[i] == 0)
+            if (reserveBytesPtr[i] == 0)
             {
-                d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk[i] = itemToAdd;
+                reserveBytesPtr[i] = static_cast<uint8_t>(itemToAdd);
                 break;
             }
         }
-        return;
     }
 } // namespace mod::rando
