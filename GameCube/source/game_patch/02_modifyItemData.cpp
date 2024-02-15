@@ -594,22 +594,25 @@ namespace mod::game_patch
         libtp::tp::d_save::onCollectCrystal(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect,
                                             '\x02');
 
-        rando::Randomizer* rando = randomizer;
-        if (randoIsEnabled(rando))
+        // Make sure the randomizer is loaded/enabled and a seed is loaded
+        rando::Seed* seedPtr;
+        if (seedPtr = getCurrentSeed(randomizer), !seedPtr)
         {
-            rando::Header* headerPtr = rando->m_Seed->m_Header;
+            return;
+        }
 
-            // If the player has the castle requirement set to Fused Shadows.
-            if (headerPtr->castleRequirements == rando::CastleEntryRequirements::HC_Fused_Shadows)
-            {
-                events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
-            }
+        rando::Header* headerPtr = seedPtr->m_Header;
 
-            // If the player has the palace requirement set to Fused Shadows.
-            if (headerPtr->palaceRequirements == rando::PalaceEntryRequirements::PoT_Fused_Shadows)
-            {
-                events::setSaveFileEventFlag(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT);
-            }
+        // If the player has the castle requirement set to Fused Shadows.
+        if (headerPtr->castleRequirements == rando::CastleEntryRequirements::HC_Fused_Shadows)
+        {
+            events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
+        }
+
+        // If the player has the palace requirement set to Fused Shadows.
+        if (headerPtr->palaceRequirements == rando::PalaceEntryRequirements::PoT_Fused_Shadows)
+        {
+            events::setSaveFileEventFlag(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT);
         }
     }
 
@@ -639,21 +642,24 @@ namespace mod::game_patch
         libtp::tp::d_save::onCollectMirror(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect,
                                            '\x03');
 
-        rando::Randomizer* rando = randomizer;
-        if (randoIsEnabled(rando))
+        // Make sure the randomizer is loaded/enabled and a seed is loaded
+        rando::Seed* seedPtr;
+        if (seedPtr = getCurrentSeed(randomizer), !seedPtr)
         {
-            rando::Header* headerPtr = rando->m_Seed->m_Header;
+            return;
+        }
 
-            // If the player has the castle requirement set to Mirror Shards.
-            if (headerPtr->castleRequirements == rando::CastleEntryRequirements::HC_Mirror_Shards)
-            {
-                events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
-            }
-            // If the player has the palace requirement set to Mirror Shards.
-            if (headerPtr->palaceRequirements == rando::PalaceEntryRequirements::PoT_Mirror_Shards)
-            {
-                events::setSaveFileEventFlag(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT);
-            }
+        rando::Header* headerPtr = seedPtr->m_Header;
+
+        // If the player has the castle requirement set to Mirror Shards.
+        if (headerPtr->castleRequirements == rando::CastleEntryRequirements::HC_Mirror_Shards)
+        {
+            events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
+        }
+        // If the player has the palace requirement set to Mirror Shards.
+        if (headerPtr->palaceRequirements == rando::PalaceEntryRequirements::PoT_Mirror_Shards)
+        {
+            events::setSaveFileEventFlag(libtp::data::flags::FIXED_THE_MIRROR_OF_TWILIGHT);
         }
     }
 

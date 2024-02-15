@@ -1077,6 +1077,13 @@ namespace mod::events
         using namespace libtp::data::flags;
         using namespace libtp::data::stage;
 
+        // Make sure the randomizer is loaded/enabled and a seed is loaded
+        rando::Seed* seedPtr;
+        if (seedPtr = getCurrentSeed(randomizer), !seedPtr)
+        {
+            return mod::return_onDungeonItem(memBitPtr, memBit);
+        }
+
         const auto stagesPtr = &allStages[0];
         tp::d_save::dSv_info_c* savePtr = &tp::d_com_inf_game::dComIfG_gameInfo.save;
 
@@ -1086,7 +1093,7 @@ namespace mod::events
             {
                 case BOSS_DEFEATED:
                 {
-                    if (randomizer->m_Seed->m_Header->castleRequirements ==
+                    if (seedPtr->m_Header->castleRequirements ==
                         rando::CastleEntryRequirements::HC_All_Dungeons) // All Dungeons
                     {
                         // Check to see if the player has completed all of the other dungeons, if so, destroy the barrier.
@@ -1121,6 +1128,7 @@ namespace mod::events
                 }
             }
         }
+
         mod::return_onDungeonItem(memBitPtr, memBit);
     }
 
