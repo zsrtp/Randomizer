@@ -91,7 +91,7 @@ namespace mod
     bool transformAnywhereEnabled = false;
     uint8_t damageMultiplier = 1;
     bool bonksDoDamage = false;
-    bool giveItemToPlayer = false;
+    EventItemStatus giveItemToPlayer = QUEUE_EMPTY;
 
 #ifdef TP_EU
     KEEP_VAR libtp::tp::d_s_logo::Languages currentLanguage = libtp::tp::d_s_logo::Languages::uk;
@@ -802,8 +802,6 @@ namespace mod
             case d_a_alink::PROC_WOLF_WAIT:
             case d_a_alink::PROC_WOLF_TIRED_WAIT:
             case d_a_alink::PROC_WOLF_MOVE:
-            case d_a_alink::PROC_SERVICE_WAIT:
-            case d_a_alink::PROC_WOLF_SERVICE_WAIT:
             {
                 // Check if link is currently in a cutscene
                 if (d_a_alink::checkEventRun(linkMapPtr))
@@ -827,8 +825,19 @@ namespace mod
 
                     if (storedItem)
                     {
+                        // If we have the call to clear the queue, then we want to clear the item and break out.
+                        if (giveItemToPlayer == CLEAR_QUEUE)
+                        {
+                            reserveBytesPtr[i] = 0;
+                            giveItemToPlayer = QUEUE_EMPTY;
+                            break;
+                        }
+                        // If the queue is empty and we have an item to give, update the queue state.
+                        else if (giveItemToPlayer == QUEUE_EMPTY)
+                        {
+                            giveItemToPlayer = ITEM_IN_QUEUE;
+                        }
                         itemToGive = storedItem;
-                        reserveBytesPtr[i] = 0;
                         break;
                     }
                 }
@@ -853,10 +862,6 @@ namespace mod
 
                 // Finally we want to modify the event stack to prioritize our custom event so that it happens next.
                 libtp::tp::f_op_actor_mng::fopAcM_orderChangeEventId(linkMapPtr, eventIdx, 1, 0xFFFF);
-
-                // Once we are done, we set a global bool that is checked in procCoGetItemInit to give the player
-                // the item.
-                giveItemToPlayer = true;
             }
             default:
             {
@@ -2119,9 +2124,9 @@ namespace mod
     {
         // If we are giving a custom item, we want to set mParam0 to 0x100 so that instead of trying to search for an item actor
         // that doesnt exist we want the game to create one using the item id in mGtItm.
-        if (giveItemToPlayer)
+        if (giveItemToPlayer == ITEM_IN_QUEUE)
         {
-            giveItemToPlayer = false;
+            giveItemToPlayer = CLEAR_QUEUE;
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mDemo.mParam0 = 0x100;
         }
 

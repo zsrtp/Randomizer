@@ -68,6 +68,13 @@
 
 namespace mod
 {
+    enum EventItemStatus : uint8_t
+    {
+        QUEUE_EMPTY = 0,
+        ITEM_IN_QUEUE = 1,
+        CLEAR_QUEUE = 2,
+    };
+
     // General public objects
     extern libtp::display::Console* console;
     extern rando::Randomizer* randomizer;
@@ -95,7 +102,7 @@ namespace mod
     extern bool transformAnywhereEnabled;
     extern uint8_t damageMultiplier;
     extern bool bonksDoDamage;
-    extern bool giveItemToPlayer;
+    extern EventItemStatus giveItemToPlayer;
 
 #ifdef TP_EU
     extern libtp::tp::d_s_logo::Languages currentLanguage;

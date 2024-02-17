@@ -133,12 +133,10 @@ namespace mod::assembly
 
         // Give the player the Master Sword replacement
         uint32_t itemToGive = randomizer->getEventItem(items::Master_Sword);
-        itemToGive = game_patch::_04_verifyProgressiveItem(randomizer, itemToGive);
         randomizer->addItemToEventQueue(itemToGive);
 
         // Give the player the Shadow Crystal replacement
         itemToGive = randomizer->getEventItem(items::Shadow_Crystal);
-        itemToGive = game_patch::_04_verifyProgressiveItem(randomizer, itemToGive);
         randomizer->addItemToEventQueue(itemToGive);
 
         // Set the local event flag to make the sword de-spawn and set the save file event flag.

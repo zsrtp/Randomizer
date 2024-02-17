@@ -1117,7 +1117,6 @@ namespace mod::events
                     if (tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Stallord]))
                     {
                         uint32_t agDungeonReward = randomizer->getEventItem(rando::customItems::Mirror_Piece_1);
-                        agDungeonReward = game_patch::_04_verifyProgressiveItem(randomizer, agDungeonReward);
                         randomizer->addItemToEventQueue(agDungeonReward);
                     }
                     break;
