@@ -32,7 +32,6 @@
 #include "tp/f_op_actor_iter.h"
 #include "tp/d_pane_class.h"
 #include "game_patch/game_patch.h"
-#include "tp/m_do_printf.h"
 
 namespace mod::events
 {
@@ -1200,8 +1199,7 @@ namespace mod::events
 
             case StageIDs::Hyrule_Field:
             {
-                libtp::tp::m_Do_printf::OSReport("dog");
-                if (roomIDX == 0)
+                if (roomIDX == 0) // Eldin Field
                 {
                     if (!tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mEvent,
                                                 data::flags::CLEARED_ELDIN_TWILIGHT))
@@ -1217,55 +1215,55 @@ namespace mod::events
                         localGanonBarrierActor.pos.z -= 270.f;
                         tools::spawnActor(7, localGanonBarrierActor);
                     }
-                    localSignActor.pos.x = -12275.1543f; // needs to rotate left
-                    localSignActor.pos.y = -1001.9508;
-                    localSignActor.pos.z = 20293.6855f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.pos.x = -12433.2744f;
+                    localSignActor.pos.y = -1075.2218f;
+                    localSignActor.pos.z = 20885.7129f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x8000);
                     tools::spawnActor(0, localSignActor);
                 }
 
-                if (roomIDX == 6) // needs to rotate left
+                if (roomIDX == 6) // Faron Field
                 {
                     localSignActor.pos.x = -46039.4922f;
                     localSignActor.pos.y = -9250.f;
                     localSignActor.pos.z = 81859.2891f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.rot[1] = static_cast<int16_t>(0x8000);
                     tools::spawnActor(6, localSignActor);
                 }
 
-                if (roomIDX == 3) // nees to rotate left
+                if (roomIDX == 3) // Kakariko Gorge
                 {
-                    localSignActor.pos.x = -10906.2344f;
-                    localSignActor.pos.y = -3190.27808f;
-                    localSignActor.pos.z = 39026.707f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.pos.x = -10156.9307f;
+                    localSignActor.pos.y = -3076.98535f;
+                    localSignActor.pos.z = 38430.4297f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0xC2F7);
                     tools::spawnActor(3, localSignActor);
                 }
 
-                if (roomIDX == 7) // neds to rotate left
+                if (roomIDX == 7) // NE Hyrule Field Hint Sign
                 {
                     localSignActor.pos.x = 29691.0742f;
                     localSignActor.pos.y = 661.668;
                     localSignActor.pos.z = -53367.16f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.rot[1] = static_cast<int16_t>(0x742B);
                     tools::spawnActor(7, localSignActor);
                 }
 
-                if (roomIDX == 10) // needs to rotate left
+                if (roomIDX == 10) // Lanayru Field
                 {
                     localSignActor.pos.x = -46711.957f;
                     localSignActor.pos.y = 268.4848f;
                     localSignActor.pos.z = -55505.5508f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.rot[1] = static_cast<int16_t>(0x85B9);
                     tools::spawnActor(10, localSignActor);
                 }
 
-                if (roomIDX == 13)
+                if (roomIDX == 13) // Great Bridge of Hylia
                 {
                     localSignActor.pos.x = -94678.8672f;
                     localSignActor.pos.y = -3900.f;
                     localSignActor.pos.z = 18410.543f;
-                    localSignActor.rot[1] = 0x856;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x0000);
                     tools::spawnActor(13, localSignActor);
                 }
 
