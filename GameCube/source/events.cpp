@@ -1303,10 +1303,10 @@ namespace mod::events
                     tools::spawnActor(1, CampBoarActr);
                 }
 
-                localSignActor.pos.x = -2119.33057f;
+                localSignActor.pos.x = -568.556152f;
                 localSignActor.pos.y = 260.f;
-                localSignActor.pos.z = -3915.6517f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556); // needs to rotate right
+                localSignActor.pos.z = -3969.31f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x0000);
                 tools::spawnActor(1, localSignActor);
                 break;
             }
@@ -1433,13 +1433,12 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Gerudo_Desert: // needs to rotate right
+            case StageIDs::Gerudo_Desert:
             {
-                libtp::tp::m_Do_printf::OSReport("dog");
                 localSignActor.pos.x = 20356.23f;
                 localSignActor.pos.y = 556.7;
                 localSignActor.pos.z = 38694.8047f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0x0099);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
@@ -1466,16 +1465,17 @@ namespace mod::events
 
             case StageIDs::Forest_Temple:
             {
-                localSignActor.pos.x = -2093.207f;
+                localSignActor.pos.x = -1972.11682f;
                 localSignActor.pos.y = 3150.f;
-                localSignActor.pos.z = 7619.086f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.z = 7610.9751f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x6000);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
 
             case StageIDs::Goron_Mines:
             {
+                libtp::tp::m_Do_printf::OSReport("dog");
                 localSignActor.pos.x = 11394.1855f;
                 localSignActor.pos.y = 2878.65;
                 localSignActor.pos.z = -17913.05f;
@@ -1498,8 +1498,8 @@ namespace mod::events
             {
                 localSignActor.pos.x = -349.4044f;
                 localSignActor.pos.y = 450.f;
-                localSignActor.pos.z = -2568.25f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.z = -2876.90771f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x0000);
                 tools::spawnActor(2, localSignActor);
                 break;
             }
