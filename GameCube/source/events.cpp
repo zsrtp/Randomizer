@@ -1184,16 +1184,15 @@ namespace mod::events
                 localSignActor.pos.x = -109203.461f;
                 localSignActor.pos.y = -7220.f;
                 localSignActor.pos.z = 33083.7344f;
-                localSignActor.rot[1] = static_cast<int16_t>(0x6556);
+                localSignActor.rot[1] = static_cast<int16_t>(0x64B5);
                 tools::spawnActor(0, localSignActor);
 
-                if (roomIDX == 1) // needs to rotate left
+                if (roomIDX == 1) // Lanayru Spring
                 {
-                    localSignActor.pos.x = -324.1757f;
-                    localSignActor.pos.y = -1627.872f;
-                    localSignActor.pos.z = 85.1628f;
-                    libtp::tp::m_Do_printf::OSReport("dog");
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.pos.x = -309.997833f;
+                    localSignActor.pos.y = -1614.82178f;
+                    localSignActor.pos.z = 157.970795f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x8000);
                     tools::spawnActor(1, localSignActor);
                 }
                 break;
@@ -1378,6 +1377,7 @@ namespace mod::events
                 localSignActor.pos.x = 5161.03f;
                 localSignActor.pos.y = 0.f;
                 localSignActor.pos.z = -5264.33f;
+                libtp::tp::m_Do_printf::OSReport("dog");
                 localSignActor.rot[1] = static_cast<int16_t>(0xD556);
                 tools::spawnActor(0, localSignActor);
                 break;
