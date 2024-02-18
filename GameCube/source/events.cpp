@@ -1200,6 +1200,7 @@ namespace mod::events
 
             case StageIDs::Hyrule_Field:
             {
+                libtp::tp::m_Do_printf::OSReport("dog");
                 if (roomIDX == 0)
                 {
                     if (!tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mEvent,
@@ -1403,12 +1404,12 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Lake_Hylia_Long_Cave: // needs to make a 180
+            case StageIDs::Lake_Hylia_Long_Cave:
             {
-                localSignActor.pos.x = -1006.33252f;
-                localSignActor.pos.y = -1703.19995f;
-                localSignActor.pos.z = -18715.2383f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.x = -2897.38672f;
+                localSignActor.pos.y = -1636.68994f;
+                localSignActor.pos.z = -17674.8691f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x3E21);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
@@ -1453,12 +1454,12 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Cave_of_Ordeals: // needs to rotate just barely right
+            case StageIDs::Cave_of_Ordeals:
             {
                 localSignActor.pos.x = -1191.42f;
                 localSignActor.pos.y = 1100.f;
                 localSignActor.pos.z = -260.65f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0xE483);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
@@ -1515,11 +1516,10 @@ namespace mod::events
 
             case StageIDs::Temple_of_Time:
             {
-                libtp::tp::m_Do_printf::OSReport("dog");
                 localSignActor.pos.x = -618.9335f;
                 localSignActor.pos.y = 725.f;
                 localSignActor.pos.z = 3112.2f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0x8000);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
@@ -1528,8 +1528,8 @@ namespace mod::events
             {
                 localSignActor.pos.x = 3376.54f;
                 localSignActor.pos.y = 0.f;
-                localSignActor.pos.z = -12787.76f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.z = -12709.0352f;
+                localSignActor.rot[1] = static_cast<int16_t>(0xC846);
                 tools::spawnActor(2, localSignActor);
                 break;
             }
