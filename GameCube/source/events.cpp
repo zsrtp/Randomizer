@@ -32,6 +32,7 @@
 #include "tp/f_op_actor_iter.h"
 #include "tp/d_pane_class.h"
 #include "game_patch/game_patch.h"
+#include "tp/m_do_printf.h"
 
 namespace mod::events
 {
