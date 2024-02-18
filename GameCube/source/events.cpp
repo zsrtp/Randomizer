@@ -1192,6 +1192,7 @@ namespace mod::events
                     localSignActor.pos.x = -324.1757f;
                     localSignActor.pos.y = -1627.872f;
                     localSignActor.pos.z = 85.1628f;
+                    libtp::tp::m_Do_printf::OSReport("dog");
                     localSignActor.rot[1] = static_cast<int16_t>(0xD556);
                     tools::spawnActor(1, localSignActor);
                 }
@@ -1384,21 +1385,20 @@ namespace mod::events
 
             case StageIDs::Outside_Castle_Town:
             {
-                if (roomIDX == 8) // needs to rotate left
+                if (roomIDX == 8) // West of CT
                 {
                     localSignActor.pos.x = -68194.2109f;
                     localSignActor.pos.y = -1050.f;
                     localSignActor.pos.z = 5603.60645f;
-                    libtp::tp::m_Do_printf::OSReport("dog");
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.rot[1] = static_cast<int16_t>(0xC000);
                     tools::spawnActor(8, localSignActor);
                 }
-                else if (roomIDX == 16) // needs to rotate right
+                else if (roomIDX == 16) // South of CT
                 {
-                    localSignActor.pos.x = -51491.0234f;
+                    localSignActor.pos.x = -51500.f;
                     localSignActor.pos.y = -5500.f;
                     localSignActor.pos.z = 27368.3086f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.rot[1] = static_cast<int16_t>(0x0000);
                     tools::spawnActor(16, localSignActor);
                 }
                 break;
