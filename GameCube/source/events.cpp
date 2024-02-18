@@ -32,6 +32,7 @@
 #include "tp/f_op_actor_iter.h"
 #include "tp/d_pane_class.h"
 #include "game_patch/game_patch.h"
+#include "tp/m_do_printf.h"
 
 namespace mod::events
 {
@@ -1258,12 +1259,12 @@ namespace mod::events
                     tools::spawnActor(10, localSignActor);
                 }
 
-                if (roomIDX == 13) // needs to rotate right
+                if (roomIDX == 13)
                 {
                     localSignActor.pos.x = -94678.8672f;
                     localSignActor.pos.y = -3900.f;
                     localSignActor.pos.z = 18410.543f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.rot[1] = 0x856;
                     tools::spawnActor(13, localSignActor);
                 }
 
@@ -1284,7 +1285,7 @@ namespace mod::events
                     localSignActor.pos.y = -274.354553f;
                     localSignActor.pos.z = -11469.2881f;
                     localSignActor.rot[1] = static_cast<int16_t>(0xD556);
-                    tools::spawnActor(8, localSignActor);
+                    tools::spawnActor(4, localSignActor);
                 }
                 break;
             }

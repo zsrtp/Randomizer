@@ -1401,6 +1401,7 @@ namespace mod
                                     libtp::tp::f_op_actor::fopAc_ac_c** actrValue,
                                     int32_t i_flow)
     {
+        using namespace libtp::data::stage;
         if (msgFlow->mFlow == 0xFFFE) // Check if it equals our custom flow value
         {
             if (msgFlow->mMsg == 0xFFFFFFFF)
@@ -1412,13 +1413,19 @@ namespace mod
                 // to unset it.
                 msgFlow->field_0x26 = 0;
 
-                if (libtp::tp::d_a_alink::checkStageName(
-                        libtp::data::stage::allStages[libtp::data::stage::StageIDs::Hyrule_Field]) ||
-                    libtp::tp::d_a_alink::checkStageName(
-                        libtp::data::stage::allStages[libtp::data::stage::StageIDs::Outside_Castle_Town]))
+                if (libtp::tp::d_a_alink::checkStageName(allStages[StageIDs::Hyrule_Field]) ||
+                    libtp::tp::d_a_alink::checkStageName(allStages[StageIDs::Outside_Castle_Town]) ||
+                    libtp::tools::playerIsInRoomStage(0, allStages[StageIDs::Lake_Hylia]))
                 {
-                    // Hyrule Field does not have a valid flow node for node 0 so we want it to use its native node (8)
+                    // Hyrule Field and outside Lake Hylia do not have a valid flow node for node 0 so we want it to use its
+                    // native node (8)
                     msgFlow->field_0x10 = 0x8;
+                }
+                else if (libtp::tp::d_a_alink::checkStageName(allStages[StageIDs::Death_Mountain]))
+                {
+                    // Death Mountain does not have a valid flow node for node 0 so we want it to use its
+                    // native node (4)
+                    msgFlow->field_0x10 = 0x4;
                 }
                 else
                 {
