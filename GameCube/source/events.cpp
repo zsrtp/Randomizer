@@ -1423,19 +1423,19 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Fishing_Pond: // needs to rotate slightly left
+            case StageIDs::Fishing_Pond:
             {
-                libtp::tp::m_Do_printf::OSReport("dog");
-                localSignActor.pos.x = -2921.2417f;
+                localSignActor.pos.x = -2924.74585f;
                 localSignActor.pos.y = 35.f;
-                localSignActor.pos.z = 8237.2539f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.z = 8386.28906f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x8000);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
 
             case StageIDs::Gerudo_Desert: // needs to rotate right
             {
+                libtp::tp::m_Do_printf::OSReport("dog");
                 localSignActor.pos.x = 20356.23f;
                 localSignActor.pos.y = 556.7;
                 localSignActor.pos.z = 38694.8047f;
@@ -1444,12 +1444,12 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Snowpeak: // needs to rotate right a lot
+            case StageIDs::Snowpeak:
             {
-                localSignActor.pos.x = 14804.874f;
-                localSignActor.pos.y = -14450.0908f;
-                localSignActor.pos.z = -14700.9307f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.x = 15931.9238f;
+                localSignActor.pos.y = -14389.4912f;
+                localSignActor.pos.z = -17388.1992f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x2C5A);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
