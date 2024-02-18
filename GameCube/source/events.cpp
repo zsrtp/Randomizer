@@ -1317,32 +1317,32 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Kakariko_Village: // needs to rotate right a lot
+            case StageIDs::Kakariko_Village:
             {
                 localSignActor.pos.x = -6277.372f;
                 localSignActor.pos.y = 2850.f;
                 localSignActor.pos.z = -2197.14331f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0x4000);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
 
-            case StageIDs::Ordon_Village: // needs to rotate left slightly
+            case StageIDs::Ordon_Village:
             {
                 localSignActor.pos.x = 687.89f;
                 localSignActor.pos.y = 800.f;
                 localSignActor.pos.z = -1424.16f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0xA019);
                 tools::spawnActor(1, localSignActor);
                 break;
             }
 
             case StageIDs::Sacred_Grove:
             {
-                localSignActor.pos.x = -1510.01062f;
+                localSignActor.pos.x = -1543.f;
                 localSignActor.pos.y = 1725.f;
-                localSignActor.pos.z = 7811.07715f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.z = 7964.85498f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x4000);
                 tools::spawnActor(1, localSignActor);
 
                 if (roomIDX == 1)
@@ -1352,22 +1352,22 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Kakariko_Graveyard: // needs to rotate left slightly
+            case StageIDs::Kakariko_Graveyard:
             {
                 localSignActor.pos.x = 21765.9863f;
                 localSignActor.pos.y = 500.f;
                 localSignActor.pos.z = -62.247f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0xC000);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
 
-            case StageIDs::Death_Mountain: // needs to rotate right
+            case StageIDs::Death_Mountain:
             {
                 localSignActor.pos.x = -5459.5757f;
                 localSignActor.pos.y = 0.f;
                 localSignActor.pos.z = -3880.2466f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0x0FED);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
@@ -1389,6 +1389,7 @@ namespace mod::events
                     localSignActor.pos.x = -68194.2109f;
                     localSignActor.pos.y = -1050.f;
                     localSignActor.pos.z = 5603.60645f;
+                    libtp::tp::m_Do_printf::OSReport("dog");
                     localSignActor.rot[1] = static_cast<int16_t>(0xD556);
                     tools::spawnActor(8, localSignActor);
                 }
