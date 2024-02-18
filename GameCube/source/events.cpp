@@ -1372,13 +1372,12 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Hidden_Village: // needs to rotate right
+            case StageIDs::Hidden_Village:
             {
                 localSignActor.pos.x = 5161.03f;
                 localSignActor.pos.y = 0.f;
                 localSignActor.pos.z = -5264.33f;
-                libtp::tp::m_Do_printf::OSReport("dog");
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0x0000);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
@@ -1414,18 +1413,19 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Zoras_Domain: // needs to rotate slightly right
+            case StageIDs::Zoras_Domain:
             {
-                localSignActor.pos.x = -3981.957f;
+                localSignActor.pos.x = -2964.84839f;
                 localSignActor.pos.y = -2500.f;
-                localSignActor.pos.z = 17230.5488f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.z = 17146.2676f;
+                localSignActor.rot[1] = static_cast<int16_t>(0xAF09);
                 tools::spawnActor(1, localSignActor);
                 break;
             }
 
             case StageIDs::Fishing_Pond: // needs to rotate slightly left
             {
+                libtp::tp::m_Do_printf::OSReport("dog");
                 localSignActor.pos.x = -2921.2417f;
                 localSignActor.pos.y = 35.f;
                 localSignActor.pos.z = 8237.2539f;
