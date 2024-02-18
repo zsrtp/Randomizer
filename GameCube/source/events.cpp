@@ -1475,7 +1475,6 @@ namespace mod::events
 
             case StageIDs::Goron_Mines:
             {
-                libtp::tp::m_Do_printf::OSReport("dog");
                 localSignActor.pos.x = 11394.1855f;
                 localSignActor.pos.y = 2878.65;
                 localSignActor.pos.z = -17913.05f;
@@ -1486,10 +1485,10 @@ namespace mod::events
 
             case StageIDs::Lakebed_Temple:
             {
-                localSignActor.pos.x = -2732.113f;
-                localSignActor.pos.y = 0.f;
-                localSignActor.pos.z = -1265.67f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.x = -4765.38037f;
+                localSignActor.pos.y = -1.21f;
+                localSignActor.pos.z = 272.192261f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x46B9);
                 tools::spawnActor(3, localSignActor);
                 break;
             }
@@ -1506,16 +1505,17 @@ namespace mod::events
 
             case StageIDs::Snowpeak_Ruins:
             {
-                localSignActor.pos.x = -521.855f;
+                localSignActor.pos.x = -530.f;
                 localSignActor.pos.y = 0.f;
                 localSignActor.pos.z = -669.69f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0x0000);
                 tools::spawnActor(1, localSignActor);
                 break;
             }
 
             case StageIDs::Temple_of_Time:
             {
+                libtp::tp::m_Do_printf::OSReport("dog");
                 localSignActor.pos.x = -618.9335f;
                 localSignActor.pos.y = 725.f;
                 localSignActor.pos.z = 3112.2f;
