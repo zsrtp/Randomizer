@@ -2,6 +2,7 @@
 #include "rando/data.h"
 #include "rando/randomizer.h"
 #include "user_patch/user_patch.h"
+#include "asm_templates.h"
 #include "memory.h"
 #include "asm_templates.h"
 
@@ -28,6 +29,7 @@ namespace mod::user_patch
     void skipMajorCutscenes(rando::Randomizer* randomizer, bool set)
     {
         (void)randomizer;
+
 #ifndef PLATFORM_WII
         uint32_t* skipperFunctionAddress =
             reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(libtp::tp::d_event::skipper) + 0x54);
@@ -35,6 +37,7 @@ namespace mod::user_patch
         uint32_t* skipperFunctionAddress =
             reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(libtp::tp::d_event::skipper) + 0x74);
 #endif
+
         if (set)
         {
             // Modifies the 'skipper' function to automatically attempt to skip all major cutscenes
@@ -53,6 +56,7 @@ namespace mod::user_patch
             *skipperFunctionAddress = ASM_COMPARE_WORD_IMMEDIATE(3, 0); // cmpwi r3,0x0
 #endif
         }
+
         libtp::memory::clear_DC_IC_Cache(skipperFunctionAddress, sizeof(uint32_t));
     }
 } // namespace mod::user_patch

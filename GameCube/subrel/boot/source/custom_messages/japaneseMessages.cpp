@@ -16,8 +16,8 @@ namespace mod::customMessages
 
     // Disable formatting for the textbox messages because it makes things look weird.
     // clang-format off
-    MSG_BEGIN_ARRAY( forestSmallKeyJp )
-        MSG_SPEED( MSG_SPEED_FAST )
+    MSG_BEGIN_ARRAY(forestSmallKeyJp)
+        MSG_SPEED(MSG_SPEED_FAST)
         MSG_COLOR(MSG_COLOR_GREEN)
         // Y
         "%s"
@@ -31,8 +31,8 @@ namespace mod::customMessages
         // を手に入れ
         "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA"
     MSG_END();
-    MSG_BEGIN_ARRAY( snowpeakSmallKeyJp )
-        MSG_SPEED( MSG_SPEED_FAST )
+    MSG_BEGIN_ARRAY(snowpeakSmallKeyJp)
+        MSG_SPEED(MSG_SPEED_FAST)
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
         // 雪山の廃墟
         "\x90\xE1\x8E\x52\x82\xCC\x94\x70" MSG_SP_CHAR_KYO
@@ -46,7 +46,7 @@ namespace mod::customMessages
         // を手に入れ
         "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA"
     MSG_END();
-    MSG_BEGIN_ARRAY( shadowCrystalJp )
+    MSG_BEGIN_ARRAY(shadowCrystalJp)
         MSG_SPEED(MSG_SPEED_SLOW)
         MSG_COLOR(MSG_COLOR_RED)
         // 影の結晶石
@@ -55,7 +55,7 @@ namespace mod::customMessages
         // を手に入れた！ ザントの魔力の塊 使えばいつでも獣になれる！
         "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A\x83\x55\x83\x93\x83\x67\x82\xCC\x96\x82\x97\xCD\x82\xCC\x89\xF2\x0A\x8E\x67\x82\xA6\x82\xCE\x82\xA2\x82\xC2\x82\xC5\x82\xE0\x8F\x62\x82\xC9\x82\xC8\x82\xEA\x82\xE9\x81\x49"
     MSG_END();
-    MSG_BEGIN_ARRAY( endingBlowJp )
+    MSG_BEGIN_ARRAY(endingBlowJp)
         MSG_SPEED(MSG_SPEED_FAST)
         // 奥義その一、
         "\x89\x9C\x8B\x60\x82\xBB\x82\xCC\x88\xEA\x81\x41"
@@ -66,7 +66,7 @@ namespace mod::customMessages
         // を習得した！
         "\x82\xF0\x8F\x4B\x93\xBE\x82\xB5\x82\xBD\x81\x49"
     MSG_END();
-    MSG_BEGIN_ARRAY( shieldAttackJp )
+    MSG_BEGIN_ARRAY(shieldAttackJp)
         MSG_SPEED(MSG_SPEED_FAST)
         // 奥義その二、
         "\x89\x9C\x8B\x60\x82\xBB\x82\xCC\x93\xF1\x81\x41"
@@ -77,7 +77,7 @@ namespace mod::customMessages
         // を習得した！
         "\x82\xF0\x8F\x4B\x93\xBE\x82\xB5\x82\xBD\x81\x49"
     MSG_END();
-    MSG_BEGIN_ARRAY( backSliceJp )
+    MSG_BEGIN_ARRAY(backSliceJp)
         MSG_SPEED(MSG_SPEED_FAST)
         // 奥義その三、
         "\x89\x9C\x8B\x60\x82\xBB\x82\xCC\x8E\x4F\x81\x41"
@@ -88,7 +88,7 @@ namespace mod::customMessages
         // を習得した！
         "\x82\xF0\x8F\x4B\x93\xBE\x82\xB5\x82\xBD\x81\x49"
     MSG_END();
-    MSG_BEGIN_ARRAY( helmSplitterJp )
+    MSG_BEGIN_ARRAY(helmSplitterJp)
         MSG_SPEED(MSG_SPEED_FAST)
         // 奥義その四、
         "\x89\x9C\x8B\x60\x82\xBB\x82\xCC\x8E\x6C\x81\x41"
@@ -99,7 +99,7 @@ namespace mod::customMessages
         // を習得した！
         "\x82\xF0\x8F\x4B\x93\xBE\x82\xB5\x82\xBD\x81\x49"
     MSG_END();
-    MSG_BEGIN_ARRAY( mortalDrawJp )
+    MSG_BEGIN_ARRAY(mortalDrawJp)
         MSG_SPEED(MSG_SPEED_FAST)
         // 奥義その五、
         "\x89\x9C\x8B\x60\x82\xBB\x82\xCC\x8C\xDC\x81\x41"
@@ -110,7 +110,7 @@ namespace mod::customMessages
         // を習得した！
         "\x82\xF0\x8F\x4B\x93\xBE\x82\xB5\x82\xBD\x81\x49"
     MSG_END();
-    MSG_BEGIN_ARRAY( jumpStrikeJp )
+    MSG_BEGIN_ARRAY(jumpStrikeJp)
         MSG_SPEED(MSG_SPEED_FAST)
         // 奥義その六、
         "\x89\x9C\x8B\x60\x82\xBB\x82\xCC\x98\x5A\x81\x41"
@@ -121,7 +121,7 @@ namespace mod::customMessages
         // を習得した！
         "\x82\xF0\x8F\x4B\x93\xBE\x82\xB5\x82\xBD\x81\x49"
     MSG_END();
-    MSG_BEGIN_ARRAY( greatSpinJp )
+    MSG_BEGIN_ARRAY(greatSpinJp)
         MSG_SPEED(MSG_SPEED_FAST)
         // 奥義その七、
         "\x89\x9C\x8B\x60\x82\xBB\x82\xCC\x8E\xB5\x81\x41"
@@ -132,7 +132,7 @@ namespace mod::customMessages
         // を習得した！
         "\x82\xF0\x8F\x4B\x93\xBE\x82\xB5\x82\xBD\x81\x49"
     MSG_END();
-    MSG_BEGIN_ARRAY( poweredRodJp )
+    MSG_BEGIN_ARRAY(poweredRodJp)
         MSG_SPEED(MSG_SPEED_FAST)
         MSG_COLOR(MSG_COLOR_RED)
         // コピーロッド
@@ -141,7 +141,7 @@ namespace mod::customMessages
         // に魔力が戻った！太古の石像に命を吹き込む 不思議なロッド
         "\x82\xC9\x96\x82\x97\xCD\x82\xAA\x96\xDF\x82\xC1\x82\xBD\x81\x49\x0A\x91\xBE\x8C\xC3\x82\xCC\x90\xCE\x91\x9C\x82\xC9\x96\xBD\x82\xF0\x90\x81\x82\xAB\x8D\x9E\x82\xDE\x0A\x95\x73\x8E\x76\x8B\x63\x82\xC8\x83\x8D\x83\x62\x83\x68"
     MSG_END();
-    MSG_BEGIN_ARRAY( skyBookCharacterJp )
+    MSG_BEGIN_ARRAY(skyBookCharacterJp)
         MSG_SPEED(MSG_SPEED_FAST)
         MSG_COLOR(MSG_COLOR_RED)
         // 天空文字
@@ -156,7 +156,7 @@ namespace mod::customMessages
         // 個集まりました。
         "\x8C\xC2\x8F\x57\x82\xDC\x82\xE8\x82\xDC\x82\xB5\x82\xBD\x81\x42"
     MSG_END();
-    MSG_BEGIN_ARRAY( firstFusedShadowJp )
+    MSG_BEGIN_ARRAY(firstFusedShadowJp)
         MSG_SPEED(MSG_SPEED_FAST)
         MSG_COLOR(MSG_COLOR_RED)
         // 一つ目の影の結晶石
@@ -171,7 +171,7 @@ namespace mod::customMessages
         // ケが生えている...
         "\x82\xAA\x90\xB6\x82\xA6\x82\xC4\x82\xA2\x82\xE9\x2e\x2e\x2e"
     MSG_END();
-    MSG_BEGIN_ARRAY( secondFusedShadowJp )
+    MSG_BEGIN_ARRAY(secondFusedShadowJp)
         MSG_SPEED(MSG_SPEED_FAST)
         MSG_COLOR(MSG_COLOR_RED)
         // 二つ目の影の結晶石
@@ -186,7 +186,7 @@ namespace mod::customMessages
         // 感じがする...
         "\x8A\xB4\x82\xB6\x82\xAA\x82\xB7\x82\xE9\x2e\x2e\x2e"
     MSG_END();
-    MSG_BEGIN_ARRAY( thirdFusedShadowJp )
+    MSG_BEGIN_ARRAY(thirdFusedShadowJp)
         MSG_SPEED(MSG_SPEED_FAST)
         MSG_COLOR(MSG_COLOR_RED)
         // 三つ目の影の結晶石
@@ -201,7 +201,7 @@ namespace mod::customMessages
         // の臭いがする...
         "\x82\xCC\x8F\x4C\x82\xA2\x82\xAA\x82\xB7\x82\xE9\x2e\x2e\x2e"
     MSG_END();
-    MSG_BEGIN_ARRAY( secondMirrorShardJp )
+    MSG_BEGIN_ARRAY(secondMirrorShardJp)
         MSG_SPEED(MSG_SPEED_FAST)
         MSG_COLOR(MSG_COLOR_RED)
         // 二つ目の陰りの鏡
@@ -216,7 +216,7 @@ namespace mod::customMessages
         // 感じがする...
         "\x8A\xB4\x82\xB6\x82\xAA\x82\xB7\x82\xE9\x2e\x2e\x2e"
     MSG_END();
-    MSG_BEGIN_ARRAY( thirdMirrorShardJp )
+    MSG_BEGIN_ARRAY(thirdMirrorShardJp)
         MSG_SPEED(MSG_SPEED_FAST)
         MSG_COLOR(MSG_COLOR_RED)
         // 三つ目の陰りの鏡
@@ -231,7 +231,7 @@ namespace mod::customMessages
         // が付着している...
         "\x82\xAA\x95\x74\x92\x85\x82\xB5\x82\xC4\x82\xA2\x82\xE9\x2e\x2e\x2e"
     MSG_END();
-    MSG_BEGIN_ARRAY( fourthMirrorShardJp )
+    MSG_BEGIN_ARRAY(fourthMirrorShardJp)
         MSG_SPEED(MSG_SPEED_FAST)
         MSG_COLOR(MSG_COLOR_RED)
         // 四つ目の陰りの鏡
@@ -246,7 +246,7 @@ namespace mod::customMessages
         // より軽く感じる...
         "\x82\xE6\x82\xE8\x8C\x79\x82\xAD\x8A\xB4\x82\xB6\x82\xE9\x2e\x2e\x2e"
     MSG_END();
-    MSG_BEGIN_ARRAY( foolishItemJp )
+    MSG_BEGIN_ARRAY(foolishItemJp)
         MSG_SPEED(MSG_SPEED_FAST)
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
         // 冷たい
@@ -255,7 +255,7 @@ namespace mod::customMessages
         // 感じがする...
         "\x8A\xB4\x82\xB6\x82\xAA\x82\xB7\x82\xE9\x2e\x2e\x2e"
     MSG_END();
-    MSG_BEGIN_ARRAY( talkToMidnaJp )
+    MSG_BEGIN_ARRAY(talkToMidnaJp)
         // どうした、
         "\x82\xC7\x82\xA4\x82\xB5\x82\xBD\x81\x41"
         MSG_PLYR_NAME
@@ -271,7 +271,7 @@ namespace mod::customMessages
         // 時間を変更する
         "\x8E\x9E\x8A\xD4\x82\xF0\x95\xCF\x8D\x58\x82\xB7\x82\xE9"
     MSG_END();
-    MSG_BEGIN_ARRAY( bigWalletJp )
+    MSG_BEGIN_ARRAY(bigWalletJp)
         MSG_SPEED(MSG_SPEED_FAST)
         MSG_COLOR(MSG_COLOR_RED)
         // 大きなサイフ
@@ -286,7 +286,7 @@ namespace mod::customMessages
         // まで入れられる！
         "\x82\xDC\x82\xC5\x93\xFC\x82\xEA\x82\xE7\x82\xEA\x82\xE9\x81\x49"
     MSG_END();
-    MSG_BEGIN_ARRAY( giantWalletJp )
+    MSG_BEGIN_ARRAY(giantWalletJp)
         MSG_SPEED(MSG_SPEED_FAST)
         MSG_COLOR(MSG_COLOR_RED)
         // 最大のサイフ
@@ -301,23 +301,23 @@ namespace mod::customMessages
         // まで入れられる！
         "\x82\xDC\x82\xC5\x93\xFC\x82\xEA\x82\xE7\x82\xEA\x82\xE9\x81\x49"
     MSG_END();
-    MSG_BEGIN_ARRAY( smallWalletPauseJp )
+    MSG_BEGIN_ARRAY(smallWalletPauseJp)
         MSG_SPEED(MSG_SPEED_FAST)
         // ようしょう幼少じだい時代からのあい愛ようひん用品 １０００ルピーまでい入れられる
         "\x1A\x10\xFF\x00\x02\x02\x82\xE6\x82\xA4\x82\xB5\x82\xE5\x82\xA4\x97\x63\x8F\xAD\x1A\x0C\xFF\x00\x02\x02\x82\xB6\x82\xBE\x82\xA2\x8E\x9E\x91\xE3\x82\xA9\x82\xE7\x82\xCC\x1A\x0A\xFF\x00\x02\x01\x82\xA0\x82\xA2\x88\xA4\x1A\x0E\xFF\x00\x02\x02\x82\xE6\x82\xA4\x82\xD0\x82\xF1\x97\x70\x95\x69\x0A\x82\x50\x82\x4F\x82\x4F\x82\x4F\x83\x8B\x83\x73\x81\x5B\x82\xDC\x82\xC5\x1A\x08\xFF\x00\x02\x01\x82\xA2\x93\xFC\x82\xEA\x82\xE7\x82\xEA\x82\xE9"
     MSG_END();
-    MSG_BEGIN_ARRAY( bigWalletPauseJp )
+    MSG_BEGIN_ARRAY(bigWalletPauseJp)
         MSG_SPEED(MSG_SPEED_FAST)
         // むし虫さんおうこく王国のおうじょ王女、アゲハからもらったサイフ ５０００ルピーまでい入れられる
         "\x1A\x0A\xFF\x00\x02\x01\x82\xDE\x82\xB5\x92\x8E\x82\xB3\x82\xF1\x1A\x0E\xFF\x00\x02\x02\x82\xA8\x82\xA4\x82\xB1\x82\xAD\x89\xA4\x8D\x91\x82\xCC\x1A\x0E\xFF\x00\x02\x02\x82\xA8\x82\xA4\x82\xB6\x82\xE5\x89\xA4\x8F\x97\x81\x41\x83\x41\x83\x51\x83\x6E\x82\xA9\x82\xE7\x82\xE0\x82\xE7\x82\xC1\x82\xBD\x83\x54\x83\x43\x83\x74\x0A\x82\x54\x82\x4F\x82\x4F\x82\x4F\x83\x8B\x83\x73\x81\x5B\x82\xDC\x82\xC5\x1A\x08\xFF\x00\x02\x01\x82\xA2\x93\xFC\x82\xEA\x82\xE7\x82\xEA\x82\xE9"
     MSG_END();
-    MSG_BEGIN_ARRAY( giantWalletPauseJp )
+    MSG_BEGIN_ARRAY(giantWalletPauseJp)
         MSG_SPEED(MSG_SPEED_FAST)
         // むし虫さんおうこく王国のおうじょ王女、アゲハからもらったサイフおうこく王国にこうけん貢献したもの者だけにあた与えられる ９９９９ルピーまでい入れられる
         "\x1A\x0A\xFF\x00\x02\x01\x82\xDE\x82\xB5\x92\x8E\x82\xB3\x82\xF1\x1A\x0E\xFF\x00\x02\x02\x82\xA8\x82\xA4\x82\xB1\x82\xAD\x89\xA4\x8D\x91\x82\xCC\x1A\x0E\xFF\x00\x02\x02\x82\xA8\x82\xA4\x82\xB6\x82\xE5\x89\xA4\x8F\x97\x81\x41\x83\x41\x83\x51\x83\x6E\x82\xA9\x82\xE7\x82\xE0\x82\xE7\x82\xC1\x82\xBD\x83\x54\x83\x43\x83\x74\x0A\x1A\x0E\xFF\x00\x02\x02\x82\xA8\x82\xA4\x82\xB1\x82\xAD\x89\xA4\x8D\x91\x82\xC9\x1A\x0E\xFF\x00\x02\x02\x82\xB1\x82\xA4\x82\xAF\x82\xF1\x8D\x76\x8C\xA3\x82\xB5\x82\xBD\x1A\x0A\xFF\x00\x02\x01\x82\xE0\x82\xCC\x8E\xD2\x82\xBE\x82\xAF\x82\xC9\x1A\x0A\xFF\x00\x02\x01\x82\xA0\x82\xBD\x97\x5E\x82\xA6\x82\xE7\x82\xEA\x82\xE9\x0A\x82\x58\x82\x58\x82\x58\x82\x58\x83\x8B\x83\x73\x81\x5B\x82\xDC\x82\xC5\x1A\x08\xFF\x00\x02\x01\x82\xA2\x93\xFC\x82\xEA\x82\xE7\x82\xEA\x82\xE9"
     MSG_END();
-    MSG_BEGIN_ARRAY( poeSoulJp )
-        MSG_SPEED( MSG_SPEED_FAST )
+    MSG_BEGIN_ARRAY(poeSoulJp)
+        MSG_SPEED(MSG_SPEED_FAST)
         MSG_COLOR(MSG_COLOR_RED)
         // ゴーストの魂
         "\x83\x53\x81\x5B\x83\x58\x83\x67\x82\xCC\x8D\xB0"
@@ -331,7 +331,7 @@ namespace mod::customMessages
         // 個集まりました。
         "\x8C\xC2\x8F\x57\x82\xDC\x82\xE8\x82\xDC\x82\xB5\x82\xBD\x81\x42"
     MSG_END();
-    MSG_BEGIN_ARRAY( skyBookDescriptionJp )
+    MSG_BEGIN_ARRAY(skyBookDescriptionJp)
         MSG_SPEED(MSG_SPEED_FAST)
         // 古の天空語で 記された書物\nところどころ 言葉がか欠けている\n\n
         "\x8C\xC3\x82\xCC\x93\x56\x8B\xF3\x8C\xEA\x82\xC5\x20\x8B\x4C\x82\xB3\x82\xEA\x82\xBD\x8F\x91\x95\xA8\x0A\x82\xC6\x82\xB1\x82\xEB\x82\xC7\x82\xB1\x82\xEB\x20\x8C\xBE\x97\x74\x82\xAA\x82\xA9\x8C\x87\x82\xAF\x82\xC4\x82\xA2\x82\xE9\x0A\x0A"
@@ -342,20 +342,20 @@ namespace mod::customMessages
         // 個集まりました。
         "\x8C\xC2\x8F\x57\x82\xDC\x82\xE8\x82\xDC\x82\xB5\x82\xBD\x81\x42"
     MSG_END();
-    MSG_BEGIN_ARRAY( charloDonationJp )
+    MSG_BEGIN_ARRAY(charloDonationJp)
         // ハイラルのへいわ平和のため・・・ほどこ施しをいただけませんかな・・・？
         "\x83\x6E\x83\x43\x83\x89\x83\x8B\x82\xCC\x1A\x0C\xFF\x00\x02\x02\x82\xD6\x82\xA2\x82\xED\x95\xBD\x98\x61\x82\xCC\x82\xBD\x82\xDF\x81\x45\x81\x45\x81\x45\x0A\x1A\x0C\xFF\x00\x02\x01\x82\xD9\x82\xC7\x82\xB1\x8E\x7B\x82\xB5\x82\xF0\x82\xA2\x82\xBD\x82\xBE\x82\xAF\x82\xDC\x82\xB9\x82\xF1\x82\xA9\x82\xC8\x81\x45\x81\x45\x81\x45\x81\x48" 
-        MSG_OPTION_LIST( MSG_OPTION_1 ) 
+        MSG_OPTION_LIST(MSG_OPTION_1) 
         // １００ルピー
         "\x82\x50\x82\x4f\x82\x4F\x83\x8B\x83\x73\x81\x5B\x0A" 
-        MSG_OPTION_LIST( MSG_OPTION_2 ) 
+        MSG_OPTION_LIST(MSG_OPTION_2) 
         // ５０ルピー
         "\x82\x54\x82\x4F\x83\x8B\x83\x73\x81\x5B\x0A" 
-        MSG_OPTION_LIST( MSG_OPTION_3 ) 
+        MSG_OPTION_LIST(MSG_OPTION_3) 
         // 断る
         "\x1A\x0C\xFF\x00\x02\x01\x82\xB1\x82\xC6\x82\xED\x92\x66\x82\xE9";
     MSG_END();
-    MSG_BEGIN_ARRAY( recognitionJp )
+    MSG_BEGIN_ARRAY(recognitionJp)
         MSG_SPEED(MSG_SPEED_FAST)
         // ベータテスターの皆様に感謝します。本当にありがとうございました
         "\x83\x78\x81\x5B\x83\x5E\x83\x65\x83\x58\x83\x5E\x81\x5B\x82\xCC\x8A\x46\x97\x6C\x82\xC9\x8A\xB4\x8E\xD3\x82\xB5\x82\xDC\n\x82\xB7\x81\x42\x96\x7B\x93\x96\x82\xC9\x82\xA0\x82\xE8\x82\xAA\x82\xC6\x82\xA4\x82\xB2\x82\xB4\x82\xA2\x82\xDC\x82\xB5\n\x82\xBD: Taka\nAnorakkis, Archer, Br00ty, Chris\nChrono, clabrus, Demon, EmperorP\nElinadrian, Empty, Fennec, Zushi\nFleakee, Foxhole Gaming, Luzagar\nHeartPiece, Hornlitz, IceStorm\nJanWegh, JD, jdflyer, Jeez, Oxy\nJustRyland, Lance H., link1183\nLinkman124, Luneyes, GameWyrm\nMattStrats, MultFij, NesmaN88\nXenoWars, Papy_Grant, Simikins\npokemongenius, Psi-Hate, Lars P\nRaziel_Stratton, Redriel, Revven\nSparky7198, Zach, SwiftIke, j_im\nZenith, Prince, The., TheBruce\nTreZc0_, Wameslo, WickedGligar\nDGod63 and Sushi."

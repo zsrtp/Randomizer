@@ -177,13 +177,14 @@ namespace mod::game_patch
     {
         using namespace libtp::data;
         using namespace libtp::tp;
+
         d_item_data::ItemInfo* itemInfoPtr = &d_item_data::item_info[0];
         d_item_data::FieldItemRes* fieldItemResPtr = &d_item_data::field_item_res[0];
         d_item_data::ItemResource* itemResourcePtr = &d_item_data::item_resource[0];
         uint8_t* getSeTypePtr = &libtp::tp::d_a_alink::getSeType[0];
-        d_item_data::ItemInfo* yellowRupeeInfoPtr = &d_item_data::item_info[items::Yellow_Rupee];
+        const d_item_data::ItemInfo* yellowRupeeInfoPtr = &d_item_data::item_info[items::Yellow_Rupee];
 
-        int16_t bombBagIcon = itemResourcePtr[items::Bomb_Bag_Regular_Bombs].ringTexResIdx;
+        const int16_t bombBagIcon = itemResourcePtr[items::Bomb_Bag_Regular_Bombs].ringTexResIdx;
 
         memcpy(&itemResourcePtr[items::Bomb_Bag_Regular_Bombs],
                &itemResourcePtr[items::Goron_Bomb_Bag],
@@ -193,9 +194,11 @@ namespace mod::game_patch
 
         // First we copy over the Ordon Sword data to the Master/Light Sword as a base and then modify the model appropriately
         memcpy(&itemResourcePtr[items::Master_Sword], &itemResourcePtr[items::Ordon_Sword], sizeof(d_item_data::ItemResource));
+
         memcpy(&itemResourcePtr[items::Master_Sword_Light],
                &itemResourcePtr[items::Ordon_Sword],
                sizeof(d_item_data::ItemResource));
+
         itemResourcePtr[items::Master_Sword].arcName = _02_masterSwordArc;
         itemResourcePtr[items::Master_Sword_Light].arcName = _02_masterSwordArc;
         itemResourcePtr[items::Master_Sword].modelResIdx = 0x5;
@@ -207,10 +210,11 @@ namespace mod::game_patch
                &itemResourcePtr[items::Purple_Rupee],
                sizeof(d_item_data::ItemResource));
 
-        uint32_t loopCount = sizeof(itemsWithNoFieldModel) / sizeof(itemsWithNoFieldModel[0]);
+        constexpr uint32_t loopCount = sizeof(itemsWithNoFieldModel) / sizeof(itemsWithNoFieldModel[0]);
         for (uint32_t i = 0; i < loopCount; i++)
         {
-            uint32_t item = itemsWithNoFieldModel[i];
+            const uint32_t item = itemsWithNoFieldModel[i];
+
             // Set the shadow size to 0xFF for items that don't cast a proper shadow.
             switch (item)
             {
@@ -228,6 +232,7 @@ namespace mod::game_patch
 
             itemInfoPtr[item].mCollisionH = yellowRupeeInfoPtr->mCollisionH;
             itemInfoPtr[item].mCollisionR = yellowRupeeInfoPtr->mCollisionR;
+
             // Set the item's field model to use the getItem model.
             fieldItemResPtr[item].arcName = itemResourcePtr[item].arcName;
             fieldItemResPtr[item].modelResIdx = itemResourcePtr[item].modelResIdx;
@@ -251,91 +256,91 @@ namespace mod::game_patch
         using namespace libtp::data;
         using namespace libtp::tp;
         using namespace rando;
-        d_item_data::ItemInfo* itemInfoPtr = &d_item_data::item_info[0];
+
+        const d_item_data::ItemInfo* itemInfoPtr = &d_item_data::item_info[0];
         d_item_data::ItemResource* itemResourcePtr = &d_item_data::item_resource[0];
-        d_item_data::ItemResource* smallKeyItemResourcePtr = &itemResourcePtr[items::Small_Key];
-        d_item_data::ItemResource* bigKeyItemResourcePtr = &itemResourcePtr[items::Big_Key];
-        d_item_data::ItemResource* dungeonMapItemResourcePtr = &itemResourcePtr[items::Dungeon_Map];
-        d_item_data::ItemResource* compassItemResourcePtr = &itemResourcePtr[items::Compass];
-        d_item_data::ItemResource* skybookItemResourcePtr = &itemResourcePtr[items::Ancient_Sky_Book_Empty];
+        const d_item_data::ItemResource* smallKeyItemResourcePtr = &itemResourcePtr[items::Small_Key];
+        const d_item_data::ItemResource* bigKeyItemResourcePtr = &itemResourcePtr[items::Big_Key];
+        const d_item_data::ItemResource* dungeonMapItemResourcePtr = &itemResourcePtr[items::Dungeon_Map];
+        const d_item_data::ItemResource* compassItemResourcePtr = &itemResourcePtr[items::Compass];
+        const d_item_data::ItemResource* skybookItemResourcePtr = &itemResourcePtr[items::Ancient_Sky_Book_Empty];
         uint8_t* getSeTypePtr = &libtp::tp::d_a_alink::getSeType[0];
 
-        uint8_t listLength = 0;
-        uint8_t smallKeySeType = getSeTypePtr[items::Small_Key];
-        uint8_t bigKeySeType = getSeTypePtr[items::Big_Key];
-        uint8_t dungeonMapSeType = getSeTypePtr[items::Dungeon_Map];
-        uint8_t compassSeType = getSeTypePtr[items::Compass];
-        uint8_t skyBookSeType = getSeTypePtr[items::Ancient_Sky_Book_Empty];
+        uint32_t listLength = 0;
+        const uint8_t smallKeySeType = getSeTypePtr[items::Small_Key];
+        const uint8_t bigKeySeType = getSeTypePtr[items::Big_Key];
+        const uint8_t dungeonMapSeType = getSeTypePtr[items::Dungeon_Map];
+        const uint8_t compassSeType = getSeTypePtr[items::Compass];
+        const uint8_t skyBookSeType = getSeTypePtr[items::Ancient_Sky_Book_Empty];
 
-        uint8_t customSmallKeyItemIDs[] = {customItems::Forest_Temple_Small_Key,
-                                           customItems::Goron_Mines_Small_Key,
-                                           customItems::Lakebed_Temple_Small_Key,
-                                           customItems::Arbiters_Grounds_Small_Key,
-                                           customItems::Snowpeak_Ruins_Small_Key,
-                                           customItems::Temple_of_Time_Small_Key,
-                                           customItems::City_in_The_Sky_Small_Key,
-                                           customItems::Palace_of_Twilight_Small_Key,
-                                           customItems::Hyrule_Castle_Small_Key,
-                                           customItems::Bulblin_Camp_Key};
+        static const uint8_t customSmallKeyItemIDs[] = {customItems::Forest_Temple_Small_Key,
+                                                        customItems::Goron_Mines_Small_Key,
+                                                        customItems::Lakebed_Temple_Small_Key,
+                                                        customItems::Arbiters_Grounds_Small_Key,
+                                                        customItems::Snowpeak_Ruins_Small_Key,
+                                                        customItems::Temple_of_Time_Small_Key,
+                                                        customItems::City_in_The_Sky_Small_Key,
+                                                        customItems::Palace_of_Twilight_Small_Key,
+                                                        customItems::Hyrule_Castle_Small_Key,
+                                                        customItems::Bulblin_Camp_Key};
 
-        uint8_t customBigKeyItemIDs[] = {customItems::Forest_Temple_Big_Key,
-                                         customItems::Lakebed_Temple_Big_Key,
-                                         customItems::Arbiters_Grounds_Big_Key,
-                                         customItems::Temple_of_Time_Big_Key,
-                                         customItems::City_in_The_Sky_Big_Key,
-                                         customItems::Palace_of_Twilight_Big_Key,
-                                         customItems::Hyrule_Castle_Big_Key};
+        static const uint8_t customBigKeyItemIDs[] = {customItems::Forest_Temple_Big_Key,
+                                                      customItems::Lakebed_Temple_Big_Key,
+                                                      customItems::Arbiters_Grounds_Big_Key,
+                                                      customItems::Temple_of_Time_Big_Key,
+                                                      customItems::City_in_The_Sky_Big_Key,
+                                                      customItems::Palace_of_Twilight_Big_Key,
+                                                      customItems::Hyrule_Castle_Big_Key};
 
-        uint8_t customDungeonMapItemIDs[] = {customItems::Forest_Temple_Dungeon_Map,
-                                             customItems::Goron_Mines_Dungeon_Map,
-                                             customItems::Lakebed_Temple_Dungeon_Map,
-                                             customItems::Arbiters_Grounds_Dungeon_Map,
-                                             customItems::Snowpeak_Ruins_Dungeon_Map,
-                                             customItems::Temple_of_Time_Dungeon_Map,
-                                             customItems::City_in_The_Sky_Dungeon_Map,
-                                             customItems::Palace_of_Twilight_Dungeon_Map,
-                                             customItems::Hyrule_Castle_Dungeon_Map};
+        static const uint8_t customDungeonMapItemIDs[] = {customItems::Forest_Temple_Dungeon_Map,
+                                                          customItems::Goron_Mines_Dungeon_Map,
+                                                          customItems::Lakebed_Temple_Dungeon_Map,
+                                                          customItems::Arbiters_Grounds_Dungeon_Map,
+                                                          customItems::Snowpeak_Ruins_Dungeon_Map,
+                                                          customItems::Temple_of_Time_Dungeon_Map,
+                                                          customItems::City_in_The_Sky_Dungeon_Map,
+                                                          customItems::Palace_of_Twilight_Dungeon_Map,
+                                                          customItems::Hyrule_Castle_Dungeon_Map};
 
-        uint8_t customCompassItemIDs[] = {customItems::Forest_Temple_Compass,
-                                          customItems::Goron_Mines_Compass,
-                                          customItems::Lakebed_Temple_Compass,
-                                          customItems::Arbiters_Grounds_Compass,
-                                          customItems::Snowpeak_Ruins_Compass,
-                                          customItems::Temple_of_Time_Compass,
-                                          customItems::City_in_The_Sky_Compass,
-                                          customItems::Palace_of_Twilight_Compass,
-                                          customItems::Hyrule_Castle_Compass};
+        static const uint8_t customCompassItemIDs[] = {customItems::Forest_Temple_Compass,
+                                                       customItems::Goron_Mines_Compass,
+                                                       customItems::Lakebed_Temple_Compass,
+                                                       customItems::Arbiters_Grounds_Compass,
+                                                       customItems::Snowpeak_Ruins_Compass,
+                                                       customItems::Temple_of_Time_Compass,
+                                                       customItems::City_in_The_Sky_Compass,
+                                                       customItems::Palace_of_Twilight_Compass,
+                                                       customItems::Hyrule_Castle_Compass};
 
-        uint8_t customHiddenSkillItemIDs[] = {customItems::Ending_Blow,
-                                              customItems::Shield_Attack,
-                                              customItems::Back_Slice,
-                                              customItems::Helm_Splitter,
-                                              customItems::Mortal_Draw,
-                                              customItems::Jump_Strike,
-                                              customItems::Great_Spin};
+        static const uint8_t customHiddenSkillItemIDs[] = {customItems::Ending_Blow,
+                                                           customItems::Shield_Attack,
+                                                           customItems::Back_Slice,
+                                                           customItems::Helm_Splitter,
+                                                           customItems::Mortal_Draw,
+                                                           customItems::Jump_Strike,
+                                                           customItems::Great_Spin};
 
-        uint8_t customSkyCharacterItemIDs[] = {customItems::Ancient_Sky_Book_First_Character,
-                                               customItems::Ancient_Sky_Book_Second_Character,
-                                               customItems::Ancient_Sky_Book_Third_Character,
-                                               customItems::Ancient_Sky_Book_Fourth_Character,
-                                               customItems::Ancient_Sky_Book_Fifth_Character};
+        static const uint8_t customSkyCharacterItemIDs[] = {customItems::Ancient_Sky_Book_First_Character,
+                                                            customItems::Ancient_Sky_Book_Second_Character,
+                                                            customItems::Ancient_Sky_Book_Third_Character,
+                                                            customItems::Ancient_Sky_Book_Fourth_Character,
+                                                            customItems::Ancient_Sky_Book_Fifth_Character};
 
-        uint8_t customShardsIDs[] = {
-            customItems::Mirror_Piece_1,
-            items::Mirror_Piece_2,
-            items::Mirror_Piece_3,
-            items::Mirror_Piece_4,
-        };
+        static const uint8_t customShardsIDs[] = {customItems::Mirror_Piece_1,
+                                                  items::Mirror_Piece_2,
+                                                  items::Mirror_Piece_3,
+                                                  items::Mirror_Piece_4};
 
-        uint8_t customShadowsIDs[] = {
-            customItems::Fused_Shadow_1,
-            customItems::Fused_Shadow_2,
-            customItems::Fused_Shadow_3,
-        };
+        static const uint8_t customShadowsIDs[] = {customItems::Fused_Shadow_1,
+                                                   customItems::Fused_Shadow_2,
+                                                   customItems::Fused_Shadow_3};
 
         // Set the item info for the custom small keys to that of the current Small Key
         listLength = (sizeof(customSmallKeyItemIDs) / sizeof(customSmallKeyItemIDs[0]));
-        uint32_t smallKeyItemInfo = *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[items::Small_Key]));
+
+        const uint32_t smallKeyItemInfo =
+            *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[items::Small_Key]));
+
         for (uint32_t i = 0; i < listLength; i++)
         {
             *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[customSmallKeyItemIDs[i]])) = smallKeyItemInfo;
@@ -345,7 +350,8 @@ namespace mod::game_patch
 
         // Set the item info for the custom big keys to that of the current Big Key
         listLength = (sizeof(customBigKeyItemIDs) / sizeof(customBigKeyItemIDs[0]));
-        uint32_t bigKeyItemInfo = *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[items::Big_Key]));
+        const uint32_t bigKeyItemInfo = *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[items::Big_Key]));
+
         for (uint32_t i = 0; i < listLength; i++)
         {
             *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[customBigKeyItemIDs[i]])) = bigKeyItemInfo;
@@ -355,19 +361,23 @@ namespace mod::game_patch
 
         // Set the item info for the custom dungeon map to that of the current Dungeon Map
         listLength = (sizeof(customDungeonMapItemIDs) / sizeof(customDungeonMapItemIDs[0]));
-        uint32_t dungeonMapItemInfo =
+
+        const uint32_t dungeonMapItemInfo =
             *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[items::Dungeon_Map]));
+
         for (uint32_t i = 0; i < listLength; i++)
         {
             *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[customDungeonMapItemIDs[i]])) =
                 dungeonMapItemInfo;
+
             getSeTypePtr[customDungeonMapItemIDs[i]] = dungeonMapSeType;
             memcpy(&itemResourcePtr[customDungeonMapItemIDs[i]], dungeonMapItemResourcePtr, sizeof(d_item_data::ItemResource));
         }
 
         // Set the item info for the custom compass to that of the current compass
         listLength = (sizeof(customCompassItemIDs) / sizeof(customCompassItemIDs[0]));
-        uint32_t compassItemInfo = *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[items::Compass]));
+        const uint32_t compassItemInfo = *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[items::Compass]));
+
         for (uint32_t i = 0; i < listLength; i++)
         {
             *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[customCompassItemIDs[i]])) = compassItemInfo;
@@ -377,12 +387,15 @@ namespace mod::game_patch
 
         // Set the item info for the custom skybook characters to that of the current Sky Book
         listLength = (sizeof(customSkyCharacterItemIDs) / sizeof(customSkyCharacterItemIDs[0]));
-        uint32_t skybookItemInfo =
+
+        const uint32_t skybookItemInfo =
             *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[items::Ancient_Sky_Book_Empty]));
+
         for (uint32_t i = 0; i < listLength; i++)
         {
             *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(&itemInfoPtr[customSkyCharacterItemIDs[i]])) =
                 skybookItemInfo;
+
             getSeTypePtr[customSkyCharacterItemIDs[i]] = skyBookSeType;
             memcpy(&itemResourcePtr[customSkyCharacterItemIDs[i]], skybookItemResourcePtr, sizeof(d_item_data::ItemResource));
         }
@@ -391,29 +404,35 @@ namespace mod::game_patch
         listLength = sizeof(customHiddenSkillItemIDs) / sizeof(customHiddenSkillItemIDs[0]);
         for (uint32_t i = 0; i < listLength; i++)
         {
-            itemResourcePtr[customHiddenSkillItemIDs[i]].arcName = _02_hiddenSkillArc;
-            itemResourcePtr[customHiddenSkillItemIDs[i]].ringTexResIdx = 0x003D;
-            itemResourcePtr[customHiddenSkillItemIDs[i]].modelResIdx = 0x0003;
-            itemResourcePtr[customHiddenSkillItemIDs[i]].brkResIdx = 0xFFFF;
-            itemResourcePtr[customHiddenSkillItemIDs[i]].tevFrm = 0x00;
+            d_item_data::ItemResource* currentHiddenSkillPtr = &itemResourcePtr[customHiddenSkillItemIDs[i]];
+
+            currentHiddenSkillPtr->arcName = _02_hiddenSkillArc;
+            currentHiddenSkillPtr->ringTexResIdx = 0x003D;
+            currentHiddenSkillPtr->modelResIdx = 0x0003;
+            currentHiddenSkillPtr->brkResIdx = 0xFFFF;
+            currentHiddenSkillPtr->tevFrm = 0x00;
             getSeTypePtr[customHiddenSkillItemIDs[i]] = 0x2;
         }
 
         listLength = sizeof(customShardsIDs) / sizeof(customShardsIDs[0]);
         for (uint32_t i = 0; i < listLength; i++)
         {
-            itemResourcePtr[customShardsIDs[i]].arcName = _02_mirrorShardArc;
-            itemResourcePtr[customShardsIDs[i]].modelResIdx = 0x0009;
-            itemResourcePtr[customShardsIDs[i]].brkResIdx = 0xFFFF;
-            itemResourcePtr[customShardsIDs[i]].tevFrm = 0x00;
+            d_item_data::ItemResource* currentShardPtr = &itemResourcePtr[customShardsIDs[i]];
+
+            currentShardPtr->arcName = _02_mirrorShardArc;
+            currentShardPtr->modelResIdx = 0x0009;
+            currentShardPtr->brkResIdx = 0xFFFF;
+            currentShardPtr->tevFrm = 0x00;
             getSeTypePtr[customShardsIDs[i]] = getSeTypePtr[items::Clawshot];
         }
 
         listLength = sizeof(customShadowsIDs) / sizeof(customShadowsIDs[0]);
         for (uint32_t i = 0; i < listLength; i++)
         {
-            itemResourcePtr[customShadowsIDs[i]].brkResIdx = 0xFFFF;
-            itemResourcePtr[customShadowsIDs[i]].tevFrm = 0x00;
+            d_item_data::ItemResource* currentShadowPtr = &itemResourcePtr[customShadowsIDs[i]];
+
+            currentShadowPtr->brkResIdx = 0xFFFF;
+            currentShadowPtr->tevFrm = 0x00;
             getSeTypePtr[customShadowsIDs[i]] = getSeTypePtr[items::Clawshot];
         }
 

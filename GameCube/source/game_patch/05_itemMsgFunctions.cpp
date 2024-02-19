@@ -643,13 +643,8 @@ namespace mod::game_patch
         return _05_getMsgById(msgId);
     }
 
-    void _05_setCustomItemMessage(libtp::tp::control::TControl* control,
-                                  const void* TProcessor,
-                                  uint16_t unk3,
-                                  uint16_t msgId,
-                                  rando::Randomizer* randomizer)
+    void _05_setCustomItemMessage(libtp::tp::control::TControl* control, const void* TProcessor, uint16_t unk3, uint16_t msgId)
     {
-        (void)randomizer;
         using namespace libtp::data::stage;
         using namespace libtp::data::items;
         using namespace rando::customItems;
@@ -664,29 +659,6 @@ namespace mod::game_patch
             }
         };
 
-        /*auto checkForSpecificMsg =
-            [=](uint32_t desiredMsgId, int32_t room, const char* stage, const void* currentInf1, const char* desiredFile)
-        {
-            // Check if the message ids are the same
-            if (msgId != desiredMsgId)
-            {
-                return false;
-            }
-
-            // Check if the stage and room are correct
-            if (!libtp::tools::playerIsInRoomStage(room, stage))
-            {
-                return false;
-            }
-
-            // Check if the desired file is being used
-            return currentInf1 == getInf1Ptr(desiredFile);
-        };*/
-
-        // Get message ids for specific checks
-        // constexpr uint32_t linkHouseMsgId = 0x658;
-        // constexpr uint32_t charloDonationMsgId = 0x355;
-
         // Get a pointer to the current BMG file being used
         // The pointer is to INF1
         const void* unk = libtp::tp::processor::getResource_groupID(TProcessor, unk3);
@@ -695,8 +667,6 @@ namespace mod::game_patch
             return;
         }
         const void* currentInf1 = *reinterpret_cast<void**>(reinterpret_cast<uint32_t>(unk) + 0xC);
-
-        // rando::Seed* seed;
 
         // Most text replacements are for zel_00.bmg, so check that first
         if (currentInf1 == getZel00BmgInf())
@@ -720,7 +690,6 @@ namespace mod::game_patch
             }
 
             const char* newMessage;
-
             if (msgId == 0x1369) // The custom message ID used for hints on custom signs
             {
                 newMessage = _05_getSpecialMsgById(msgId);
@@ -735,26 +704,7 @@ namespace mod::game_patch
         }
 
         // If the msg we are looking at is not in the zel_00.bmg, it may be a special case (hint, etc.)
-        const char* newMessage = _05_getSpecialMsgById(msgId);
-        setMessageText(newMessage);
-        return;
-        /*
-        else if (checkForSpecificMsg(charloDonationMsgId, 2, allStages[StageIDs::Castle_Town], currentInf1, "zel_04.bmg"))
-        {
-            setMessageText(m_DonationText);
-            return;
-        }
-
-        // Make sure the randomizer is loaded/enabled and a seed is loaded for seed-specific checks
-        else if (seed = getCurrentSeed(randomizer), seed)
-        {
-            if (checkForSpecificMsg(linkHouseMsgId, 1, allStages[StageIDs::Ordon_Village], currentInf1, "zel_01.bmg"))
-            {
-                setMessageText(seed->m_RequiredDungeons);
-                return;
-            }
-        }
-        */
+        setMessageText(_05_getSpecialMsgById(msgId));
     }
 
     uint32_t _05_getCustomMsgColor(uint8_t colorId)
@@ -871,51 +821,54 @@ namespace mod::game_patch
 
     const char* _05_getSpecialMsgById(uint32_t msgId)
     {
-        using namespace libtp::data::items;
-        using namespace libtp::data;
         using namespace rando;
 
-        uint32_t hintmsgTableInfoRaw = reinterpret_cast<uint32_t>(m_HintMsgTableInfo);
-        // getConsole() << msgId << " " << m_HintMsgTableInfo << " " << &m_HintMsgTableInfo << "\n";
-        if (!hintmsgTableInfoRaw)
+        // Make sure the hints text is loaded
+        const uint32_t hintMsgTableInfoRaw = reinterpret_cast<uint32_t>(m_HintMsgTableInfo);
+        if (!hintMsgTableInfoRaw)
         {
             return nullptr;
         }
 
-        libtp::tp::d_com_inf_game::dComIfG_play* playPtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.play;
-        libtp::tp::d_stage::dStage_startStage* startStagePtr = &playPtr->mStartStage;
+        // Get some variables now to avoid storing extra stuff on the stack, since a function call is necessary to get one of
+        // the variables
+        const libtp::tp::d_stage::dStage_startStage* startStagePtr =
+            &libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage;
 
         const char* currentStage = startStagePtr->mStage;
+        const int32_t currentRoom = startStagePtr->mRoomNo;
         const int32_t stageIDX = libtp::tools::getStageIndex(currentStage);
-        int32_t currentRoom = startStagePtr->mRoomNo;
-
-        // Get a pointer to the message ids to search for
-        const CustomMessageData* msgIds = reinterpret_cast<CustomMessageData*>(hintmsgTableInfoRaw);
 
         // Get the total size of the message ids
-        uint32_t hinttotalMessages = m_TotalHintMsgEntries;
-        uint32_t msgIdTableSize = hinttotalMessages * sizeof(CustomMessageData);
+        const uint32_t hintTotalMessages = m_TotalHintMsgEntries;
+        uint32_t msgIdTableSize = hintTotalMessages * sizeof(CustomMessageData);
 
         // Round msgIdTableSize up to the size of the offset type to make sure the offsets are properly aligned
         msgIdTableSize = (msgIdTableSize + sizeof(uint32_t) - 1) & ~(sizeof(uint32_t) - 1);
 
         // Get a pointer to the message offsets
-        uint32_t* hintmsgOffsets = reinterpret_cast<uint32_t*>(hintmsgTableInfoRaw + msgIdTableSize);
+        const uint32_t* hintMsgOffsets = reinterpret_cast<uint32_t*>(hintMsgTableInfoRaw + msgIdTableSize);
 
         // Get the total size of the message offsets
-        uint32_t hintmsgOffsetTableSize = hinttotalMessages * sizeof(uint32_t);
+        const uint32_t hintMsgOffsetTableSize = hintTotalMessages * sizeof(uint32_t);
 
         // Get a pointer to the messages
-        const char* hintmessages = reinterpret_cast<const char*>(hintmsgTableInfoRaw + msgIdTableSize + hintmsgOffsetTableSize);
+        const char* hintMessages = reinterpret_cast<const char*>(hintMsgTableInfoRaw + msgIdTableSize + hintMsgOffsetTableSize);
+
+        // Get a pointer to the message data to search for
+        const CustomMessageData* msgData = reinterpret_cast<CustomMessageData*>(hintMsgTableInfoRaw);
 
         // Get the custom message
-        for (uint32_t i = 0; i < hinttotalMessages; i++)
+        for (uint32_t i = 0; i < hintTotalMessages; i++)
         {
-            if (msgIds[i].msgID == msgId)
+            const CustomMessageData* currentMsgData = &msgData[i];
+
+            if (currentMsgData->msgID == msgId)
             {
-                if (((stageIDX == msgIds[i].stageIDX) && (currentRoom == msgIds[i].roomIDX)) || (msgIds[i].stageIDX == 0xFF))
+                if (((stageIDX == currentMsgData->stageIDX) && (currentRoom == currentMsgData->roomIDX)) ||
+                    (currentMsgData->stageIDX == 0xFF))
                 {
-                    return &hintmessages[hintmsgOffsets[i]];
+                    return &hintMessages[hintMsgOffsets[i]];
                 }
             }
         }

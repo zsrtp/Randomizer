@@ -66,8 +66,8 @@ namespace mod::rando
 
         uint8_t m_StageIDX = 0xFF; // StageIDX from last Checkload
 
-        uint8_t m_BgmTableEntries;
-        uint8_t m_FanfareTableEntries;
+        uint8_t m_BgmTableEntries = 0;
+        uint8_t m_FanfareTableEntries = 0;
 
         // Member functions
        public:
@@ -154,7 +154,7 @@ namespace mod::rando
         void LoadHiddenSkill();
         void LoadBugReward();
         void LoadEventChecks(uint8_t stageIDX);
-        bool loadCustomText(uint8_t* data);
+        void loadCustomText(uint8_t* data);
     };
 } // namespace mod::rando
 #endif

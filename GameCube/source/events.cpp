@@ -115,8 +115,8 @@ namespace mod::events
         d_stage::dStage_startStage* startStagePtr = &playPtr->mStartStage;
 
         const char* currentStage = startStagePtr->mStage;
-        int32_t currentRoom = startStagePtr->mRoomNo;
-        int32_t currentPoint = startStagePtr->mPoint;
+        const int32_t currentRoom = startStagePtr->mRoomNo;
+        const int32_t currentPoint = startStagePtr->mPoint;
 
         // Check if the seed is already applied to the save-file (flags etc.)
         // Try to do it otherwise
@@ -128,26 +128,25 @@ namespace mod::events
         if ((strcmp(playPtr->mNextStage.mStage, "F_SP103") == 0) && (currentRoom == 1) &&
             (currentPoint == 0x1)) // If we are spawning in Ordon for the first time.
         {
+            float* skyAnglePtr = &savePtr->save_file.player.player_status_b.skyAngle;
+
             switch (randomizer->m_Seed->m_Header->startingTimeOfDay)
             {
                 case rando::StartingTimeOfDay::Morning:
                 {
-                    savePtr->save_file.player.player_status_b.skyAngle = 105;
+                    *skyAnglePtr = 105.f;
                     break;
                 }
-
                 case rando::StartingTimeOfDay::Noon:
                 {
-                    savePtr->save_file.player.player_status_b.skyAngle = 180;
+                    *skyAnglePtr = 180.f;
                     break;
                 }
-
                 case rando::StartingTimeOfDay::Night:
                 {
-                    savePtr->save_file.player.player_status_b.skyAngle = 0;
+                    *skyAnglePtr = 0.f;
                     break;
                 }
-
                 default: // Evening
                 {
                     break;
@@ -735,9 +734,17 @@ namespace mod::events
             // Master Sword Freestanding Actor
             case D_A_OBJ_MASTER_SWORD:
             {
+                // If a seed is not loaded, then use vanilla behavior
+                if (!getCurrentSeed(randomizer))
+                {
+                    break;
+                }
+
                 // Apply an ASM patch to d_a_Obj_Master_Sword::executeWait to give the player two items and delete the Master
                 // Sword actor instead of trying to play the purification cutscene.
-                libtp::patch::writeBranchBL(relPtrRaw + 0x254, assembly::asmGiveMasterSwordItems);
+                libtp::patch::writeStandardBranches(relPtrRaw + 0x254,
+                                                    assembly::asmGiveMasterSwordItemsStart,
+                                                    assembly::asmGiveMasterSwordItemsEnd);
 
                 // Branch over the code that gives Link the master sword if it has been pulled
                 performStaticASMReplacement(relPtrRaw + 0xCA0, ASM_BRANCH(0x80));
@@ -945,6 +952,7 @@ namespace mod::events
     {
         using namespace libtp::data;
         using namespace libtp::tp;
+
         // Check to see if currently in one of the Ordon interiors
         if (d_a_alink::checkStageName(stage::allStages[stage::StageIDs::Ordon_Village_Interiors]))
         {
@@ -958,6 +966,7 @@ namespace mod::events
                 return 0;
             }
         }
+
         return mod::return_query022(unk1, unk2, unk3);
     }
 
@@ -1065,40 +1074,50 @@ namespace mod::events
 
     void proc_onDungeonItem(libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit)
     {
-        using namespace libtp::data::flags;
         using namespace libtp;
+        using namespace libtp::data::flags;
         using namespace libtp::data::stage;
 
+        // Make sure the randomizer is loaded/enabled and a seed is loaded
+        rando::Seed* seedPtr;
+        if (seedPtr = getCurrentSeed(randomizer), !seedPtr)
+        {
+            return mod::return_onDungeonItem(memBitPtr, memBit);
+        }
+
         const auto stagesPtr = &allStages[0];
-        if (memBitPtr == &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags)
+        tp::d_save::dSv_info_c* savePtr = &tp::d_com_inf_game::dComIfG_gameInfo.save;
+
+        if (memBitPtr == &savePtr->memory.temp_flags)
         {
             switch (memBit)
             {
                 case BOSS_DEFEATED:
                 {
-                    if (randomizer->m_Seed->m_Header->castleRequirements ==
+                    if (seedPtr->m_Header->castleRequirements ==
                         rando::CastleEntryRequirements::HC_All_Dungeons) // All Dungeons
                     {
                         // Check to see if the player has completed all of the other dungeons, if so, destroy the barrier.
-                        uint8_t numDungeons = 0x0;
+                        libtp::tp::d_save::dSv_memory_c* mSavePtr = savePtr->save_file.mSave;
+                        uint32_t numDungeons = 0;
+
                         for (int32_t i = 0x10; i < 0x18; i++)
                         {
-                            if (libtp::tp::d_save::isDungeonItem(
-                                    &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mSave[i].temp_flags,
-                                    3))
+                            if (libtp::tp::d_save::isDungeonItem(&mSavePtr[i].temp_flags, 3))
                             {
                                 numDungeons++;
                             }
                         }
-                        if (numDungeons == 0x7) // We check for 7 instead of 8 because when this code runs, the temp_flags for
-                                                // the current stage has not been updated with the boss flag value yet.
+
+                        if (numDungeons == 7) // We check for 7 instead of 8 because when this code runs, the temp_flags for
+                                              // the current stage has not been updated with the boss flag value yet.
                         {
                             events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
                         }
                     }
                     if (tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Stallord]))
                     {
-                        uint8_t agDungeonReward = randomizer->getEventItem(rando::customItems::Mirror_Piece_1);
+                        uint32_t agDungeonReward = randomizer->getEventItem(rando::customItems::Mirror_Piece_1);
                         agDungeonReward = game_patch::_04_verifyProgressiveItem(randomizer, agDungeonReward);
                         randomizer->addItemToEventQueue(agDungeonReward);
                     }
@@ -1110,6 +1129,7 @@ namespace mod::events
                 }
             }
         }
+
         mod::return_onDungeonItem(memBitPtr, memBit);
     }
 
@@ -1143,17 +1163,15 @@ namespace mod::events
             return;
         }
 
-        int32_t stageIDX = randomizer->m_Seed->m_StageIDX;
-        int32_t roomIDX = tools::getCurrentRoomNo();
-
         tp::dzx::ACTR localSignActor;
         memcpy(&localSignActor, &SignActor, sizeof(tp::dzx::ACTR));
 
-        switch (stageIDX)
+        const int32_t roomIDX = tools::getCurrentRoomNo();
+        switch (randomizer->m_Seed->m_StageIDX)
         {
             case StageIDs::Lake_Hylia:
             {
-                if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::SKY_CANNON_REPAIRED))
+                if (tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::SKY_CANNON_REPAIRED))
                 {
                     // Manually spawn Auru if the Lake is in the Repaired Cannon state as his actor is not in the DZX for that
                     // layer.
@@ -1560,8 +1578,9 @@ namespace mod::events
 
     void handleQuickTransform()
     {
-        rando::Seed* seed;
         using namespace libtp::tp::d_com_inf_game;
+
+        rando::Seed* seed;
         if (seed = getCurrentSeed(randomizer), !seed)
         {
             return;
@@ -1592,18 +1611,20 @@ namespace mod::events
         }
 
         // Ensure there is a proper pointer to the mMeterClass and mpMeterDraw structs in g_meter2_info.
-        if (!libtp::tp::d_meter2_info::g_meter2_info.mMeterClass)
+        const libtp::tp::d_meter2::dMeter2_c* meterClassPtr = libtp::tp::d_meter2_info::g_meter2_info.mMeterClass;
+        if (!meterClassPtr)
         {
             return;
         }
 
-        if (!libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw)
+        const libtp::tp::d_meter2_draw::dMeter2Draw_c* meterDrawPtr = meterClassPtr->mpMeterDraw;
+        if (!meterDrawPtr)
         {
             return;
         }
 
         // Ensure that the Z Button is not dimmed
-        const float zButtonAlpha = libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mZButtonAlpha;
+        const float zButtonAlpha = meterDrawPtr->mZButtonAlpha;
         if (zButtonAlpha != 1.f)
         {
             return;
@@ -1621,7 +1642,6 @@ namespace mod::events
             case libtp::tp::d_a_alink::PROC_SWIM_DIVE:
             {
                 return;
-                break;
             }
             default:
             {
@@ -1691,16 +1711,15 @@ namespace mod::events
         }
         else
         {
-            libtp::tp::d_save::dSv_player_status_b_c* playerStatusPtr =
-                &dComIfG_gameInfo.save.save_file.player.player_status_b;
+            float* skyAnglePtr = &dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle;
 
             if (!libtp::tp::d_kankyo::dKy_daynight_check()) // Day time
             {
-                playerStatusPtr->skyAngle = 285;
+                *skyAnglePtr = 285.f;
             }
             else
             {
-                playerStatusPtr->skyAngle = 105;
+                *skyAnglePtr = 105.f;
             }
 
             dComIfG_gameInfo.play.mNextStage.enabled |= 0x1;
@@ -1757,18 +1776,20 @@ namespace mod::events
         if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::MIDNA_ACCOMPANIES_WOLF))
         {
             // Ensure there is a proper pointer to the mMeterClass and mpMeterDraw structs in g_meter2_info.
-            if (!libtp::tp::d_meter2_info::g_meter2_info.mMeterClass)
+            const libtp::tp::d_meter2::dMeter2_c* meterClassPtr = libtp::tp::d_meter2_info::g_meter2_info.mMeterClass;
+            if (!meterClassPtr)
             {
                 return false;
             }
 
-            if (!libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw)
+            const libtp::tp::d_meter2_draw::dMeter2Draw_c* meterDrawPtr = meterClassPtr->mpMeterDraw;
+            if (!meterDrawPtr)
             {
                 return false;
             }
 
             // Ensure that the Z Button is not dimmed
-            const float zButtonAlpha = libtp::tp::d_meter2_info::g_meter2_info.mMeterClass->mpMeterDraw->mZButtonAlpha;
+            const float zButtonAlpha = meterDrawPtr->mZButtonAlpha;
             if (zButtonAlpha != 1.f)
             {
                 return false;
@@ -1787,7 +1808,6 @@ namespace mod::events
             case libtp::tp::d_a_alink::PROC_SWIM_DIVE:
             {
                 return false;
-                break;
             }
             default:
             {
