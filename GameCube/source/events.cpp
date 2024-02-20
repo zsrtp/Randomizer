@@ -1633,10 +1633,6 @@ namespace mod::events
         switch (linkMapPtr->mProcID)
         {
             case libtp::tp::d_a_alink::PROC_TALK:
-            case libtp::tp::d_a_alink::PROC_WOLF_SWIM_MOVE:
-            case libtp::tp::d_a_alink::PROC_SWIM_MOVE:
-            case libtp::tp::d_a_alink::PROC_SWIM_WAIT:
-            case libtp::tp::d_a_alink::PROC_WOLF_SWIM_WAIT:
             case libtp::tp::d_a_alink::PROC_SWIM_UP:
             case libtp::tp::d_a_alink::PROC_SWIM_DIVE:
             {

@@ -1415,7 +1415,7 @@ namespace mod
 
                 if (libtp::tp::d_a_alink::checkStageName(allStages[StageIDs::Hyrule_Field]) ||
                     libtp::tp::d_a_alink::checkStageName(allStages[StageIDs::Outside_Castle_Town]) ||
-                    libtp::tools::playerIsInRoomStage(0, allStages[StageIDs::Lake_Hylia]))
+                    libtp::tp::d_a_alink::checkStageName(allStages[StageIDs::Lake_Hylia]))
                 {
                     // Hyrule Field and outside Lake Hylia do not have a valid flow node for node 0 so we want it to use its
                     // native node (8)
