@@ -402,14 +402,11 @@ namespace mod
 #ifndef PLATFORM_WII
         using namespace libtp::tp::m_do_controller_pad;
         CPadInfo* padInfo = &cpadInfo[PAD_1];
-
-        return padInfo->mPressedButtonFlags & buttons;
 #else
         using namespace libtp::tp::m_re_controller_pad;
         ReCPad* padInfo = &mReCPd::m_pad[PAD_1];
-
-        return padInfo->down & buttons;
 #endif
+        return padInfo->mPressedButtonFlags & buttons;
     }
 
     bool checkButtonCombo(uint32_t combo, bool checkAnalog)
@@ -417,18 +414,14 @@ namespace mod
 #ifndef PLATFORM_WII
         using namespace libtp::tp::m_do_controller_pad;
         CPadInfo* padInfo = &cpadInfo[PAD_1];
+#else
+        using namespace libtp::tp::m_re_controller_pad;
+        ReCPad* padInfo = &mReCPd::m_pad[PAD_1];
+#endif
 
         // Get the buttons that are currently held and were pressed this frame
         uint32_t buttonsHeld = padInfo->mButtonFlags;
         uint32_t buttonsPressedThisFrame = padInfo->mPressedButtonFlags;
-#else
-        using namespace libtp::tp::m_re_controller_pad;
-        ReCPad* padInfo = &mReCPd::m_pad[PAD_1];
-
-        // Get the buttons that are currently held and were pressed this frame
-        uint32_t buttonsHeld = padInfo->held;
-        uint32_t buttonsPressedThisFrame = padInfo->down;
-#endif
 
         // Check if analog L and R should be checked
         if (checkAnalog)
@@ -630,11 +623,7 @@ namespace mod
 
         // Handle button inputs only if buttons are being held that weren't held last time
         auto checkBtn = [](uint32_t input, uint32_t combo) { return static_cast<bool>((input & combo) == combo); };
-#ifndef PLATFORM_WII
         uint32_t currentButtons = padInfo->mButtonFlags;
-#else
-        uint32_t currentButtons = padInfo->held;
-#endif
 
         // Generic button checks need to occur outside the following conditional, so use a bool to determine if they should be
         // checked or not
@@ -654,11 +643,7 @@ namespace mod
             if (checkBtn(currentButtons, consoleCombo))
             {
                 // Disable the input that was just pressed, as sometimes it could cause talking to Midna when in-game
-#ifndef PLATFORM_WII
                 padInfo->mPressedButtonFlags = 0;
-#else
-                padInfo->held = 0;
-#endif
 
                 // Disallow during boot as we print info etc.
                 // Will automatically disappear if there is no seeds to select from
@@ -674,13 +659,8 @@ namespace mod
                 {
                     // Disable input so game doesn't notice
                     currentButtons = 0;
-#ifndef PLATFORM_WII
                     padInfo->mButtonFlags = 0;
                     padInfo->mPressedButtonFlags = 0;
-#else
-                    padInfo->held = 0;
-                    padInfo->down = 0;
-#endif
                 }
 
                 handledSpecialInputs = true;
@@ -701,11 +681,7 @@ namespace mod
             if (checkButtonCombo(quickTransformCombo, true))
             {
                 // Disable the input that was just pressed, as sometimes it could cause items to be used or Wolf Link to dig.
-#ifndef PLATFORM_WII
                 padInfo->mPressedButtonFlags = 0;
-#else
-                padInfo->held = 0;
-#endif
 
                 // Handle transforming
                 events::handleQuickTransform();
