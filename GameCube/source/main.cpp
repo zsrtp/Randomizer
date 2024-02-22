@@ -209,6 +209,7 @@ namespace mod
     // Query/Event functions.
     KEEP_VAR int32_t (*return_query022)(void* unk1, void* unk2, int32_t unk3) = nullptr;
     KEEP_VAR int32_t (*return_query023)(void* unk1, void* unk2, int32_t unk3) = nullptr;
+    KEEP_VAR int32_t (*return_query025)(void* unk1, void* unk2, int32_t unk3) = nullptr;
     KEEP_VAR uint8_t (*return_checkEmptyBottle)(libtp::tp::d_save::dSv_player_item_c* playerItem) = nullptr;
     KEEP_VAR int32_t (*return_query042)(void* unk1, void* unk2, int32_t unk3) = nullptr;
     KEEP_VAR int32_t (*return_query004)(void* unk1, void* unk2, int32_t unk3) = nullptr;
@@ -1237,6 +1238,17 @@ namespace mod
                 }
                 break;
             }
+            case items::Wooden_Shield:
+            {
+                // Check if we are at Kakariko Malo Mart and that the Wooden Shield has not been bought.
+                if (libtp::tools::playerIsInRoomStage(3, stagesPtr[StageIDs::Kakariko_Village_Interiors]) &&
+                    !libtp::tp::d_save::isSwitch_dSv_memBit(&d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x3A))
+                {
+                    // Return false so we can buy the hawkeye.
+                    return 0;
+                }
+                break;
+            }
             case items::Ordon_Pumpkin:
             case items::Ordon_Goat_Cheese:
             {
@@ -1327,6 +1339,11 @@ namespace mod
     KEEP_FUNC int32_t handle_query023(void* unk1, void* unk2, int32_t unk3)
     {
         return events::proc_query023(unk1, unk2, unk3);
+    }
+
+    KEEP_FUNC int32_t handle_query025(void* unk1, void* unk2, int32_t unk3)
+    {
+        return events::proc_query025(unk1, unk2, unk3);
     }
 
     KEEP_FUNC uint8_t handle_checkEmptyBottle(libtp::tp::d_save::dSv_player_item_c* playerItem)

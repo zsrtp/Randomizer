@@ -345,6 +345,9 @@ namespace mod
     int32_t handle_query023(void* unk1, void* unk2, int32_t unk3);
     extern int32_t (*return_query023)(void* unk1, void* unk2, int32_t unk3);
 
+    int32_t handle_query025(void* unk1, void* unk2, int32_t unk3);
+    extern int32_t (*return_query025)(void* unk1, void* unk2, int32_t unk3);
+
     uint8_t handle_checkEmptyBottle(libtp::tp::d_save::dSv_player_item_c* playerItem);
     extern uint8_t (*return_checkEmptyBottle)(libtp::tp::d_save::dSv_player_item_c* playerItem);
 

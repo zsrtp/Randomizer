@@ -997,6 +997,22 @@ namespace mod::events
         return numBombs;
     }
 
+    int32_t proc_query025(void* unk1, void* unk2, int32_t unk3)
+    {
+        using namespace libtp::data::stage;
+
+        const auto stagesPtr = &allStages[0];
+
+        // Check to see if currently in one of the Ordon interiors
+        if (libtp::tools::playerIsInRoomStage(3, stagesPtr[StageIDs::Kakariko_Village_Interiors]))
+        {
+            // Return 0 so the player can buy the red potion item from the shop.
+            return 0;
+        }
+
+        return mod::return_query025(unk1, unk2, unk3);
+    }
+
     int32_t proc_query042(void* unk1, void* unk2, int32_t unk3)
     {
         if (checkValidTransformAnywhere())

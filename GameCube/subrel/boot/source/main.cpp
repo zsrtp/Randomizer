@@ -178,6 +178,7 @@ namespace mod
         // Query/EventFunctions
         return_query022 = patch::hookFunction(libtp::tp::d_msg_flow::query022, mod::handle_query022);
         return_query023 = patch::hookFunction(libtp::tp::d_msg_flow::query023, mod::handle_query023);
+        return_query025 = patch::hookFunction(libtp::tp::d_msg_flow::query025, mod::handle_query025);
         return_checkEmptyBottle = patch::hookFunction(libtp::tp::d_save::checkEmptyBottle, mod::handle_checkEmptyBottle);
         return_query037 = patch::hookFunction(libtp::tp::d_msg_flow::query037, mod::handle_query037);
         return_query049 = patch::hookFunction(libtp::tp::d_msg_flow::query049, mod::handle_query049);
