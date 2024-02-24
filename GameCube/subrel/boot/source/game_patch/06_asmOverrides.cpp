@@ -91,9 +91,14 @@ namespace mod::game_patch
 
         // Modify isSend button checks to allow for automashing through text
         uint32_t isSendAddress = reinterpret_cast<uint32_t>(libtp::tp::d_msg_object::isSend);
-        libtp::patch::writeBranchBL(isSendAddress + 0xE4, events::autoMashThroughText);
         libtp::patch::writeBranchBL(isSendAddress + 0x160, events::autoMashThroughText);
+#ifndef PLATFORM_WII
+        libtp::patch::writeBranchBL(isSendAddress + 0xE4, events::autoMashThroughText);
         libtp::patch::writeBranchBL(isSendAddress + 0x1B8, events::autoMashThroughText);
+#else
+        libtp::patch::writeBranchBL(isSendAddress + 0xE0, events::autoMashThroughText);
+        libtp::patch::writeBranchBL(isSendAddress + 0x1BC, events::autoMashThroughText);
+#endif
 
         // Modify drawKanteraScreen to change the lantern meter color to match lantern light color from seed.
         uint32_t drawKanteraAddress = reinterpret_cast<uint32_t>(libtp::tp::d_meter2_draw::drawKanteraScreen);

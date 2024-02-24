@@ -1966,6 +1966,7 @@ namespace mod::events
         return 0;
     }
 
+#ifndef PLATFORM_WII
     KEEP_FUNC uint32_t autoMashThroughText(libtp::tp::m_do_controller_pad::CPadInfo* padInfo)
     {
         using namespace libtp::tp::m_do_controller_pad;
@@ -1983,6 +1984,25 @@ namespace mod::events
         // Restore the overwritten instruction
         return padInfo->mPressedButtonFlags;
     }
+#else
+    KEEP_FUNC bool autoMashThroughText(uint8_t padId)
+    {
+        using namespace libtp::tp::m_re_controller_pad;
+
+        if (instantTextEnabled)
+        {
+            // Automash through text if B is held
+            if (mReCPd::m_pad->mButtonFlags & ReCPadInputs::Button_B)
+            {
+                // Return true to immediately jump to the return value in the function
+                return true;
+            }
+        }
+
+        // Restore the overwritten instruction
+        return cAPICPad_A_TRIGGER(padId);
+    }
+#endif
 
     void* handleTransformAnywhere(libtp::tp::f_op_actor_iter::fopAcIt_JudgeFunc unk1, void* unk2)
     {
