@@ -1,5 +1,5 @@
 /**	@file seedselector.h
- *  @brief Selection tool to select the desired data-GCI
+ *	@brief Selection tool to select the desired data-GCI
  *
  *	@author AECX
  *	@bug No known bugs.
@@ -8,14 +8,17 @@
 #define RANDO_SEEDLIST_H
 
 #include <cstdint>
-
-#include "gc_wii/card.h"
 #include "rando/data.h"
 #include "rando/seed.h"
 #include "rando/seedlist.h"
 
-#define SEED_MAX_ENTRIES CARD_MAX_FILE
+#ifdef PLATFORM_WII
+#include "gc_wii/nand.h"
+#else
+#include "gc_wii/card.h"
+#endif
 
+#define SEED_MAX_ENTRIES 127
 
 namespace mod::rando
 {
@@ -25,7 +28,7 @@ namespace mod::rando
         SeedList(void);
         ~SeedList(void);
 
-#ifdef DVD
+#if defined DVD || defined PLATFORM_WII
         void getSeedFiles(const char* seedDirectory, MinSeedInfo* minSeedInfoBuffer);
 #else
         void getSeedFiles(int32_t chan, MinSeedInfo* minSeedInfoBuffer);

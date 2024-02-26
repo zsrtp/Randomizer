@@ -1,4 +1,6 @@
 800018A8:codehandlerStartAddress
+8000B8A4:enableCrashScreen
+80238F58:patchMessageCalculation
 
 // memory
 80003458:memset
@@ -6,6 +8,12 @@
 
 // m_Do_printf.o
 80006abc:OSReport
+80006b3c:OSReport_FatalError
+80006c0c:OSReport_Error
+80006cec:OSReport_Warning
+80006dcc:OSReport_System
+80006894:OSReportDisable
+800068a0:OSReportEnable
 
 // OSModule.o
 // text

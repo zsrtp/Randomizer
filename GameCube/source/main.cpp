@@ -5,12 +5,6 @@
 #include <cstdio>
 #include <cinttypes>
 
-#ifdef DVD
-#include "gc_wii/dvd.h"
-#else
-#include "gc_wii/card.h"
-#endif
-
 #include "Z2AudioLib/Z2AudioMgr.h"
 #include "data/items.h"
 #include "data/stages.h"
@@ -54,7 +48,17 @@
 #include "tp/f_pc_executor.h"
 #include "tp/d_msg_flow.h"
 
-#ifdef TP_EU
+#ifdef DVD
+#include "gc_wii/dvd.h"
+#elif defined PLATFORM_WII
+#include "gc_wii/nand.h"
+#include "tp/m_re_controller_pad.h"
+#else
+#include "gc_wii/card.h"
+#include "tp/m_do_controller_pad.h"
+#endif
+
+#if defined TP_EU || defined TP_WUS2
 #include "tp/d_s_logo.h"
 #endif
 
@@ -70,9 +74,11 @@ namespace mod
     uint32_t randState = 0;
     KEEP_VAR const char* m_DonationText = nullptr;
 
+#ifndef PLATFORM_WII
     // Analog L is currently not being used, so commented out
     // float prevFrameAnalogL = 0.f;
     float prevFrameAnalogR = 0.f;
+#endif
 
     KEEP_VAR uint8_t* m_MsgTableInfo = nullptr;
     KEEP_VAR uint8_t* m_HintMsgTableInfo = nullptr;
@@ -93,7 +99,7 @@ namespace mod
     bool bonksDoDamage = false;
     bool giveItemToPlayer = false;
 
-#ifdef TP_EU
+#if defined TP_EU || defined TP_WUS2
     KEEP_VAR libtp::tp::d_s_logo::Languages currentLanguage = libtp::tp::d_s_logo::Languages::uk;
 #endif
 
@@ -304,16 +310,22 @@ namespace mod
         // do_link needs to be hooked immediately, as otherwise we may not be able to modify f_pc_profile_lst.rel, which gets
         // linked via a callback function that gets called at boot, and this may occur before the boot REL's prolog function
         // gets called
-        uint32_t do_link_address = reinterpret_cast<uint32_t>(libtp::tp::dynamic_link::do_link);
+        const uint32_t do_link_address = reinterpret_cast<uint32_t>(libtp::tp::dynamic_link::do_link);
 
+#ifdef PLATFORM_WII
+        libtp::patch::writeStandardBranches(do_link_address + 0x220, assembly::asmDoLinkHookStart, assembly::asmDoLinkHookEnd);
+#else
         libtp::patch::writeStandardBranches(do_link_address + 0x250, assembly::asmDoLinkHookStart, assembly::asmDoLinkHookEnd);
-
+#endif
         // Call the boot REL
-        // Interrupts are required to be enabled for CARD/DVD functions to work properly
+        // Interrupts are required to be enabled for CARD/NAND/DVD functions to work properly
         const bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
 #ifdef DVD
         // The seedlist will be generated in the boot REL
         libtp::tools::callRelProlog("/mod/boot.rel");
+#elif defined PLATFORM_WII
+        // The seedlist will be generated in the boot REL
+        libtp::tools::callRelProlog("boot.rel");
 #else
         // The seedlist will be generated in the boot REL, so avoid mounting/unmounting the memory card multiple times
         libtp::tools::callRelProlog(CARD_SLOT_A, SUBREL_BOOT_ID);
@@ -382,21 +394,32 @@ namespace mod
 
     bool checkButtonsPressedThisFrame(uint32_t buttons)
     {
+#ifdef PLATFORM_WII
+        using namespace libtp::tp::m_re_controller_pad;
+        const ReCPad* padInfo = &mReCPd::m_pad[PAD_1];
+#else
         using namespace libtp::tp::m_do_controller_pad;
-        CPadInfo* padInfo = &cpadInfo[PAD_1];
-
+        const CPadInfo* padInfo = &cpadInfo[PAD_1];
+#endif
         return padInfo->mPressedButtonFlags & buttons;
     }
 
+#ifdef PLATFORM_WII
+    bool checkButtonCombo(uint32_t combo)
+    {
+        using namespace libtp::tp::m_re_controller_pad;
+        const ReCPad* padInfo = &mReCPd::m_pad[PAD_1];
+#else
     bool checkButtonCombo(uint32_t combo, bool checkAnalog)
     {
         using namespace libtp::tp::m_do_controller_pad;
-        CPadInfo* padInfo = &cpadInfo[PAD_1];
-
+        const CPadInfo* padInfo = &cpadInfo[PAD_1];
+#endif
         // Get the buttons that are currently held and were pressed this frame
         uint32_t buttonsHeld = padInfo->mButtonFlags;
         uint32_t buttonsPressedThisFrame = padInfo->mPressedButtonFlags;
 
+#ifndef PLATFORM_WII
         // Check if analog L and R should be checked
         if (checkAnalog)
         {
@@ -440,6 +463,7 @@ namespace mod
                 }
             }
         }
+#endif
 
         // Check if the button combo is held
         if ((buttonsHeld & combo) != combo)
@@ -453,7 +477,11 @@ namespace mod
 
     void doInput(uint32_t input)
     {
+#ifdef PLATFORM_WII
+        using namespace libtp::tp::m_re_controller_pad;
+#else
         using namespace libtp::tp::m_do_controller_pad;
+#endif
         auto checkBtn = [&input](uint32_t combo) { return static_cast<bool>((input & combo) == combo); };
 
         if (input && gameState == GAME_TITLE)
@@ -464,7 +492,15 @@ namespace mod
             {
                 uint32_t selectedSeed = seedList->m_selectedSeed;
 
-                if (checkBtn(Button_X))
+#ifdef PLATFORM_WII
+                constexpr const uint32_t incBtn = Button_DPad_Up;
+                constexpr const uint32_t decBtn = Button_DPad_Down;
+#else
+                constexpr const uint32_t incBtn = Button_X;
+                constexpr const uint32_t decBtn = Button_Y;
+#endif
+
+                if (checkBtn(incBtn))
                 {
                     selectedSeed++;
                     seedList->m_selectedSeed = static_cast<uint8_t>(selectedSeed);
@@ -475,7 +511,7 @@ namespace mod
                         seedList->m_selectedSeed = static_cast<uint8_t>(selectedSeed);
                     }
                 }
-                else if (checkBtn(Button_Y))
+                else if (checkBtn(decBtn))
                 {
                     if (selectedSeed == 0)
                     {
@@ -489,8 +525,14 @@ namespace mod
 
                 getConsole().setLine(CONSOLE_PROTECTED_LINES - 1);
                 getConsole() << "\r"
+
+#ifdef PLATFORM_WII
+                             << "Press D-Pad Up/Down to select a seed\n"
+                             << "Press Z + C + Minus to close the console\n"
+#else
                              << "Press X/Y to select a seed\n"
                              << "Press R + Z to close the console\n"
+#endif
                              << "[" << static_cast<int32_t>(selectedSeed) + 1 << "/" << static_cast<int32_t>(numSeeds)
                              << "] Seed: " << seedList->m_minSeedInfo[selectedSeed].fileName << "\n";
             }
@@ -501,9 +543,14 @@ namespace mod
     KEEP_FUNC void handle_fapGm_Execute()
     {
         using namespace libtp;
-        using namespace tp::m_do_controller_pad;
         using namespace tp::f_pc_node_req;
         using namespace tp::d_com_inf_game;
+
+#ifdef PLATFORM_WII
+        using namespace tp::m_re_controller_pad;
+#else
+        using namespace tp::m_do_controller_pad;
+#endif
 
 // Uncomment out the next line to display debug heap info
 // #define DRAW_DEBUG_HEAP_INFO
@@ -516,13 +563,20 @@ namespace mod
         item_wheel_menu::ringDrawnThisFrame = false;
 
         dComIfG_inf_c* gameInfo = &dComIfG_gameInfo;
+
+#ifdef PLATFORM_WII
+        ReCPad* padInfo = &mReCPd::m_pad[PAD_1];
+#else
         CPadInfo* padInfo = &cpadInfo[PAD_1];
+#endif
 
         // Handle game state updates
         if (l_fpcNdRq_Queue)
         {
             // Previous state
             const uint32_t prevState = gameState;
+
+            // Need to verify that this offset is correct on Wii
             const uint32_t state = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(l_fpcNdRq_Queue) + 0x59);
 
             // Normal/Loading into game
@@ -545,7 +599,11 @@ namespace mod
                     {
                         case 0:
                             // Err, no seeds
-                            getConsole() << "No seeds available! Please check your memory\ncard and region!\n";
+                            getConsole() << "No seeds available!"
+#ifndef PLATFORM_WII
+                                         << " Please check your memory\ncard and region!"
+#endif
+                                         << "\n";
                             setScreen(true);
                             break;
 
@@ -557,9 +615,13 @@ namespace mod
 
                         default:
                             // User has to select one of the seeds
-
-                            // trigger a dummy input to print the current selection
-                            doInput(Button_Start);
+                            // Trigger a dummy input to print the current selection
+#ifdef PLATFORM_WII
+                            constexpr uint32_t dummyInputButton = Button_A;
+#else
+                            constexpr uint32_t dummyInputButton = Button_Start;
+#endif
+                            doInput(dummyInputButton);
 
                             setScreen(true);
                             break;
@@ -582,8 +644,14 @@ namespace mod
             // Store before processing since we (potentially) un-set the padInfo values later
             lastButtonInput = static_cast<uint16_t>(currentButtons);
 
+#ifdef PLATFORM_WII
+            constexpr const uint32_t consoleCombo =
+                ReCPadInputs::Button_Z | ReCPadInputs::Button_C | ReCPadInputs::Button_Minus;
+#else
+            constexpr const uint32_t consoleCombo = PadInputs::Button_R | PadInputs::Button_Z;
+#endif
             // Special combo to (de)activate the console should be handled first
-            if (checkBtn(currentButtons, PadInputs::Button_R | PadInputs::Button_Z))
+            if (checkBtn(currentButtons, consoleCombo))
             {
                 // Disable the input that was just pressed, as sometimes it could cause talking to Midna when in-game
                 padInfo->mPressedButtonFlags = 0;
@@ -610,11 +678,19 @@ namespace mod
             }
         }
 
+#ifdef PLATFORM_WII
+        constexpr const uint32_t quickTransformCombo = ReCPadInputs::Button_Z | ReCPadInputs::Button_C | ReCPadInputs::Button_B;
+        constexpr const uint32_t swiftSpinnerCombo = ReCPadInputs::Button_C;
+#else
+        constexpr const uint32_t quickTransformCombo = PadInputs::Button_R | PadInputs::Button_Y;
+        constexpr const uint32_t swiftSpinnerCombo = PadInputs::Button_R;
+#endif
+
         tp::d_a_alink::daAlink* linkMapPtr = gameInfo->play.mPlayer;
         if (!handledSpecialInputs)
         {
             // Handle generic button checks
-            if (checkButtonCombo(PadInputs::Button_R | PadInputs::Button_Y, true))
+            if (checkButtonCombo(quickTransformCombo, true))
             {
                 // Disable the input that was just pressed, as sometimes it could cause items to be used or Wolf Link to dig.
                 padInfo->mPressedButtonFlags = 0;
@@ -623,7 +699,7 @@ namespace mod
                 events::handleQuickTransform();
             }
 
-            else if (checkBtn(currentButtons, PadInputs::Button_R) && increaseSpinnerSpeed && linkMapPtr)
+            else if (checkBtn(currentButtons, swiftSpinnerCombo) && increaseSpinnerSpeed && linkMapPtr)
             {
                 libtp::tp::f_op_actor::fopAc_ac_c* spinnerActor = libtp::tp::d_a_alink::getSpinnerActor(linkMapPtr);
 
@@ -645,9 +721,10 @@ namespace mod
         {
             if (!getCurrentSeed(rando) && (seedList->m_numSeeds > 0) && (seedRelAction == SEED_ACTION_NONE))
             {
-                // Interrupts are required to be enabled for CARD/DVD functions to work properly
+                // Interrupts are required to be enabled for CARD/NAND/DVD functions to work properly
                 const bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
-#ifndef DVD
+
+#if !defined DVD && !defined PLATFORM_WII
                 constexpr int32_t chan = CARD_SLOT_A;
 #endif
                 if (!rando || !rando->m_Seed)
@@ -658,9 +735,11 @@ namespace mod
                     // The seed REL will set seedRelAction to SEED_ACTION_NONE if it ran successfully
 #ifdef DVD
                     if (!tools::callRelProlog("/mod/seed.rel"))
+#elif defined PLATFORM_WII
+                    if (!tools::callRelProlog("seed.rel"))
 #else
-                    // Only mount/unmount the memory card once
-                    if (!tools::callRelProlog(chan, SUBREL_SEED_ID))
+                // Only mount/unmount the memory card once
+                if (!tools::callRelProlog(chan, SUBREL_SEED_ID))
 #endif
                     {
                         seedRelAction = SEED_ACTION_FATAL;
@@ -683,9 +762,11 @@ namespace mod
                         // The seed REL will set seedRelAction to SEED_ACTION_NONE if it ran successfully
 #ifdef DVD
                         if (!tools::callRelProlog("/mod/seed.rel"))
+#elif defined PLATFORM_WII
+                        if (!tools::callRelProlog("seed.rel"))
 #else
-                        // Only mount/unmount the memory card once
-                        if (!tools::callRelProlog(chan, SUBREL_SEED_ID))
+                    // Only mount/unmount the memory card once
+                    if (!tools::callRelProlog(chan, SUBREL_SEED_ID))
 #endif
                         {
                             seedRelAction = SEED_ACTION_FATAL;
@@ -784,10 +865,12 @@ namespace mod
         // Call the original function
         return_fapGm_Execute();
 
+#ifndef PLATFORM_WII
         // Main code has ran, so update previous frame variables
         // Analog L is currently not being used, so commented out
         // prevFrameAnalogL = padInfo->mTriggerLeft;
         prevFrameAnalogR = padInfo->mTriggerRight;
+#endif
     }
 
     void initGiveItemToPlayer(libtp::tp::d_a_alink::daAlink* linkMapPtr)
@@ -1372,6 +1455,7 @@ namespace mod
         // Prevent the hidden skill CS from setting the proper flags
         if ( libtp::tp::d_a_alink::checkStageName( libtp::data::stage::allStages[libtp::data::stage::StageIDs::Hidden_Skill] ) )
         {
+            // Need to verify that this offset is correct on Wii
             *reinterpret_cast<uint16_t*>( reinterpret_cast<uint32_t>( nodeEvent ) + 4 ) = 0x0000;
         }
         return return_event000( messageFlow, nodeEvent, actrPtr );
@@ -1385,6 +1469,7 @@ namespace mod
         // Prevent Gor Liggs from setting the third key shard flag
         if (messageParam == 0x00FB)
         {
+            // Need to verify that this offset is correct on Wii
             *reinterpret_cast<uint16_t*>(reinterpret_cast<uint32_t>(nodeEvent) + 4) = 0x0000;
         }
 
@@ -1464,9 +1549,9 @@ namespace mod
         if (instantTextEnabled)
         {
             *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(seqProcessor) + 0xB2) = 0x1;
-#ifdef TP_JP
+#ifdef TP_GJP
             constexpr uint32_t offset = 0x5A6;
-#else
+#else // TODO: Check other Wii versions; US 1.0 is the same
             constexpr uint32_t offset = 0x5D6;
 #endif
             uint32_t tReferencePtr = *reinterpret_cast<uint32_t*>(reinterpret_cast<uint32_t>(seqProcessor) + 0x4);

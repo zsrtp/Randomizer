@@ -2,6 +2,12 @@
 .global asm_handle_snprintf
 .global asm_handle_vsnprintf
 
+#ifdef PLATFORM_WII
+vsnprintf_offset = -0x30
+#else
+vsnprintf_offset = -0x20
+#endif
+
 printf_invalid_params:
 # Return 0 immediately
 li %r3,0
@@ -30,5 +36,5 @@ cmpwi %r4,0
 ble- printf_invalid_params
 
 # Restore the overwritten instruction
-stwu %sp,-0x20(%sp)
+stwu %sp,vsnprintf_offset(%sp)
 b vsnprintf + 0x4
