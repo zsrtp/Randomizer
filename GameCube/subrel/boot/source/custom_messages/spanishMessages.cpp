@@ -1,4 +1,4 @@
-// This file should only be used for EU
+// This file should only be used for GC EU or Wii US 1.2
 #if defined TP_EU || defined TP_WUS2
 
 #include "customMessages.h"

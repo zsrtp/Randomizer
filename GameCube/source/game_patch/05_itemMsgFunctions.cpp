@@ -224,10 +224,12 @@ namespace mod::game_patch
             {
                 return true;
             }
-            case Languages::de:
             case Languages::fr:
             case Languages::sp:
+#ifndef TP_WUS2
+            case Languages::de:
             case Languages::it:
+#endif
             {
                 return false;
             }
@@ -239,6 +241,7 @@ namespace mod::game_patch
     {
         using namespace libtp::data::items;
         using namespace rando::customItems;
+
 #if defined TP_EU || defined TP_WUS2
         using namespace libtp::tp::d_s_logo;
 #endif

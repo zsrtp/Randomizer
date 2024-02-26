@@ -13,7 +13,12 @@ li %r3,0
 sth %r3,0x49E(%r26) # fopAc_ac_c::mStatus
 
 # Restore the original instruction
+# The Wii hook skips initializing both r3 and r4, so that must be done here
 li %r3,47
+
+#ifdef PLATFORM_WII
+li %r4,0
+#endif
 
 asmGiveMasterSwordItemsEnd:
 b 0
