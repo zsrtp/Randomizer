@@ -11,7 +11,12 @@ stw %r0,0x14(%sp)
 # Backup important register values
 stw %r3,0x8(%sp)
 
+#ifdef PLATFORM_WII
+lbz %r3,0x16(%r24) # scent
+#else
 lbz %r3,0x16(%r3) # scent
+#endif
+
 bl handleShowReekfishPath
 mr %r0,%r3 # scent
 mr %r4,%r3 # scent

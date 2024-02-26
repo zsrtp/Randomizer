@@ -1,5 +1,5 @@
 // This file should only be used for EU
-#if defined TP_EU || defined TP_WUS2
+#ifdef TP_EU
 
 #include "customMessages.h"
 #include "tp/resource.h"

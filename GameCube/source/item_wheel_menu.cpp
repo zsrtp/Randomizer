@@ -9,15 +9,18 @@
 #include "data/stages.h"
 #include "tp/d_meter_HIO.h"
 #include "data/items.h"
-#include "tp/m_do_controller_pad.h"
-#include "tp/m_re_controller_pad.h"
 #include "events.h"
 #include "tp/d_com_inf_game.h"
 #include "tp/d_a_alink.h"
 #include "tp/d_msg_class.h"
-#include "tp/m_do_printf.h"
-#include "tp/m_Do_graphic.h"
 #include "data/flags.h"
+
+#ifdef PLATFORM_WII
+#include "tp/m_re_controller_pad.h"
+#include "tp/m_Do_graphic.h"
+#else
+#include "tp/m_do_controller_pad.h"
+#endif
 
 namespace mod::item_wheel_menu
 {
@@ -98,10 +101,13 @@ namespace mod::item_wheel_menu
 
     KEEP_FUNC void handle_dMenuRing__draw(void* dMenuRing)
     {
-        using namespace libtp::tp::m_do_controller_pad;
-        using namespace libtp::tp::m_re_controller_pad;
         using namespace libtp::data::items;
 
+#ifdef PLATFORM_WII
+        using namespace libtp::tp::m_re_controller_pad;
+#else
+        using namespace libtp::tp::m_do_controller_pad;
+#endif
         const ItemWheelMenuData* data = &itemWheelMenuData;
 
         // Failsafe: If textData is not defined, then none of the strings are loaded
@@ -117,13 +123,13 @@ namespace mod::item_wheel_menu
         // If the ring was already drawn this frame, then dont check the buttons
         if (!ringDrawnThisFrame)
         {
-#ifndef PLATFORM_WII
-            constexpr const int32_t menu_combo = PadInputs::Button_Start | PadInputs::Button_Z;
+#ifdef PLATFORM_WII
+            constexpr const uint32_t menuCombo = ReCPadInputs::Button_Plus | ReCPadInputs::Button_Two;
 #else
-            constexpr const int32_t menu_combo = ReCPadInputs::Button_Plus | ReCPadInputs::Button_Two;
+            constexpr const uint32_t menuCombo = PadInputs::Button_Start | PadInputs::Button_Z;
 #endif
             // Check if either Start or Z were pressed this frame
-            if (checkButtonsPressedThisFrame(menu_combo))
+            if (checkButtonsPressedThisFrame(menuCombo))
             {
                 shouldDisplayMenu = !shouldDisplayMenu;
                 displayMenu = shouldDisplayMenu;
@@ -138,6 +144,7 @@ namespace mod::item_wheel_menu
         const ItemWheelMenuOffsets* offsets = &data->offsets;
 
         // Get the current position of the ring
+        // Need to verify that this offset is correct on Wii
         const float* ringPos = reinterpret_cast<float*>(reinterpret_cast<uint32_t>(dMenuRing) + 0x568);
 
         const int32_t ringPosX = static_cast<int32_t>(ringPos[0]);

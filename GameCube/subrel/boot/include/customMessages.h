@@ -38,13 +38,6 @@ namespace mod::customMessages
 #endif
 
 #if defined TP_EU || defined TP_WUS2
-    // German
-    extern const MsgEntry entriesDe[];
-    extern const uint32_t totalCustomMessagesDe;
-    extern const MsgEntry charloDonationEntryDe;
-    extern const ItemWheelMenuStrings itemWheelMenuStringsDe;
-    extern const ItemWheelMenuOffsets itemWheelMenuOffsetsDe;
-
     // French
     extern const MsgEntry entriesFr[];
     extern const uint32_t totalCustomMessagesFr;
@@ -59,12 +52,21 @@ namespace mod::customMessages
     extern const ItemWheelMenuStrings itemWheelMenuStringsSp;
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsSp;
 
+#ifndef TP_WUS2
+    // German
+    extern const MsgEntry entriesDe[];
+    extern const uint32_t totalCustomMessagesDe;
+    extern const MsgEntry charloDonationEntryDe;
+    extern const ItemWheelMenuStrings itemWheelMenuStringsDe;
+    extern const ItemWheelMenuOffsets itemWheelMenuOffsetsDe;
+
     // Italian
     extern const MsgEntry entriesIt[];
     extern const uint32_t totalCustomMessagesIt;
     extern const MsgEntry charloDonationEntryIt;
     extern const ItemWheelMenuStrings itemWheelMenuStringsIt;
     extern const ItemWheelMenuOffsets itemWheelMenuOffsetsIt;
+#endif
 #endif
 } // namespace mod::customMessages
 #endif

@@ -9,14 +9,6 @@
 #include <cstdio>
 #include <cinttypes>
 
-#ifdef DVD
-#include "gc_wii/dvd.h"
-#elif defined PLATFORM_WII
-#include "gc_wii/nand.h"
-#else
-#include "gc_wii/card.h"
-#endif
-
 #include "rando/seedlist.h"
 #include "main.h"
 #include "rando/data.h"
@@ -25,13 +17,13 @@
 #include "memory.h"
 #include "cxx.h"
 #include "gc_wii/OSInterrupt.h"
-#include "tp/m_do_printf.h"
 
-#define MIN(x, y) ((x) > (y) ? (y) : (x))
-
-// TODO Move this to libtp_rel
-#ifdef PLATFORM_WII
-extern "C" const char* nandGetHomeDir();
+#ifdef DVD
+#include "gc_wii/dvd.h"
+#elif defined PLATFORM_WII
+#include "gc_wii/nand.h"
+#else
+#include "gc_wii/card.h"
 #endif
 
 namespace mod::rando
@@ -52,16 +44,12 @@ namespace mod::rando
 #ifdef DVD
         getSeedFiles("/mod/seed", minSeedInfoBuffer);
 #elif defined PLATFORM_WII
-        char dirBuf[96];
-        snprintf(dirBuf, sizeof(dirBuf), "%s/seeds", nandGetHomeDir());
-        libtp::tp::m_Do_printf::OSReport("nand home dir + seed: \"%s\"\n", dirBuf);
-
-        getSeedFiles(dirBuf, minSeedInfoBuffer);
+        getSeedFiles(gc_wii::nand::nandGetHomeDir(), minSeedInfoBuffer);
 #else
         // The memory card should already be mounted
         getSeedFiles(CARD_SLOT_A, minSeedInfoBuffer);
 #endif
-        uint32_t numSeeds = m_numSeeds;
+        const uint32_t numSeeds = m_numSeeds;
         if (numSeeds > 0)
         {
             // Align to uint8_t, as it is the largest variable type used in the MinSeedInfo struct
@@ -94,8 +82,6 @@ namespace mod::rando
     void SeedList::getSeedFiles(const char* seedDirectory, MinSeedInfo* minSeedInfoBuffer)
     {
         using namespace libtp::gc_wii::nand;
-
-        char filePath[96];
 #else
     // This function assumes that the memory card is already mounted
     void SeedList::getSeedFiles(int32_t chan, MinSeedInfo* minSeedInfoBuffer)
@@ -111,7 +97,7 @@ namespace mod::rando
         // Starting index
         uint32_t index = 0;
 
-        // Interrupts are required to be enabled for CARD/DVD functions to work properly
+        // Interrupts are required to be enabled for CARD/NAND/DVD functions to work properly
         bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
 
 #ifdef DVD
@@ -130,28 +116,30 @@ namespace mod::rando
             return;
         }
 
-        numFiles = MIN(numFiles, SEED_MAX_ENTRIES);
-
-        // Allocate memory for the list
+        // Allocate memory for the list of files/folders
         // Allocate the memory to the back of the heap to avoid fragmentation
+        // Buffers that NANDReadDir uses for the file list must be aligned to 0x20 bytes
         char* fileList = new (-0x20) char[numFiles * (NAND_FILENAME_MAX + 1)];
+
+        // Make a backup of fileList, as it will be incremented in a loop later, but we need to keep track of the starting
+        // address
+        char* fileListSrc = fileList;
 
         // Get the list of files/folders
         if (NANDReadDir(seedDirectory, fileList, &numFiles) != NAND_RESULT_READY)
         {
+            delete[] fileListSrc;
             return;
         }
 
-        libtp::tp::m_Do_printf::OSReport("nand seed file(s) count: %d\n", numFiles);
-
-        uint8_t cursor = 0;
-        for (uint32_t i = 0; i < numFiles; ++i)
-        {
+        // Loop through all possible files
+        const int32_t maxSeeds = static_cast<int32_t>(numFiles);
+        for (int32_t i = 0; i < maxSeeds; i++, fileList += strlen(fileList) + 1)
 #else
         // Loop through all possible files
         for (int32_t i = 0; i < SEED_MAX_ENTRIES; i++)
-        {
 #endif
+        {
 #ifdef DVD
             // Loop through the files in the directory
             // DVDReadDir will return false once all files have been looped through
@@ -176,14 +164,35 @@ namespace mod::rando
             if (DVD_STATE_END != libtp::tools::readFile(filePath, sizeof(header), 0, &header))
             {
 #elif defined PLATFORM_WII
-            // Loop through the files in the directory
-            size_t filenameLength = strlen(fileList + cursor);
+            // If the file is for the banner, any of the REL files, or the vanilla game save, then skip it
+            static const char* filesToSkip[] = {
+                "banner.bin",
+                "boot.rel",
+                "mod.rel",
+                "seed.rel",
+                "zeldaTp.dat",
+            };
 
-            snprintf(filePath, sizeof(filePath), "seeds/%s", fileList + cursor);
-            cursor += filenameLength + 1;
-            currentFileName = filePath;
+            constexpr uint32_t loopCount = sizeof(filesToSkip) / sizeof(const char*);
+            bool skipFile = false;
 
-            if (NAND_RESULT_READY != libtp::tools::readNAND(filePath, sizeof(header), 0, &header))
+            currentFileName = fileList;
+            for (uint32_t j = 0; j < loopCount; j++)
+            {
+                if (strcmp(currentFileName, filesToSkip[j]) == 0)
+                {
+                    skipFile = true;
+                    break;
+                }
+            }
+
+            if (skipFile)
+            {
+                continue;
+            }
+
+            // Try to open the file and get the header data
+            if (NAND_RESULT_READY != libtp::tools::readNAND(currentFileName, sizeof(header), 0, &header))
             {
 #else
             // Try to get the status of an arbitrary file slot
@@ -245,8 +254,8 @@ namespace mod::rando
 #ifdef DVD
         // Close the directory that has the seeds
         DVDCloseDir(&dir);
-#elif defined(PLATFORM_WII)
-        delete fileList;
+#elif defined PLATFORM_WII
+        delete[] fileListSrc;
 #endif
         // Restore interrupts
         libtp::gc_wii::os_interrupt::OSRestoreInterrupts(enable);

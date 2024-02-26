@@ -82,45 +82,6 @@ namespace mod::link_house_sign
 #endif
 
 #if defined TP_EU || defined TP_WUS2
-    // German
-    const char* dungeonsDe[TOTAL_POSSIBLE_DUNGEONS] = {
-        // Forest Temple
-        // Waldschrein
-        "\x57\x61\x6c\x64\x73\x63\x68\x72\x65\x69\x6e",
-
-        // Goron Mines
-        // Minen der Goronen
-        "\x4d\x69\x6e\x65\x6e\x20\x64\x65\x72\x20\x47\x6f\x72\x6f\x6e\x65\x6e",
-
-        // Lakebed Temple
-        // Seeschrein
-        "\x53\x65\x65\x73\x63\x68\x72\x65\x69\x6e",
-
-        // Arbiter's Grounds
-        // Wüstenburg
-        "\x57\xfc\x73\x74\x65\x6e\x62\x75\x72\x67",
-
-        // Snowpeak Ruins
-        // Bergruine
-        "\x42\x65\x72\x67\x72\x75\x69\x6e\x65",
-
-        // Temple of Time
-        // Zeitschrein
-        "\x5a\x65\x69\x74\x73\x63\x68\x72\x65\x69\x6e",
-
-        // City in the Sky
-        // Kumula
-        "\x4b\x75\x6d\x75\x6c\x61",
-
-        // Palace of Twilight
-        // Schattenpalast
-        "\x53\x63\x68\x61\x74\x74\x65\x6e\x70\x61\x6c\x61\x73\x74",
-    };
-
-    // Kein Dungeon erforderlich
-    const char* noDungeonsRequiredDe =
-        "\x4B\x65\x69\x6E\x20\x44\x75\x6E\x67\x65\x6F\x6E\x20\x65\x72\x66\x6F\x72\x64\x65\x72\x6C\x69\x63\x68";
-
     // French
     const char* dungeonsFr[TOTAL_POSSIBLE_DUNGEONS] = {
         // Forest Temple
@@ -198,6 +159,46 @@ namespace mod::link_house_sign
     const char* noDungeonsRequiredSp =
         "\x53\x69\x6E\x20\x6D\x61\x7A\x6D\x6F\x72\x72\x61\x73\x20\x72\x65\x71\x75\x65\x72\x69\x64\x61\x73";
 
+#ifndef TP_WUS2
+    // German
+    const char* dungeonsDe[TOTAL_POSSIBLE_DUNGEONS] = {
+        // Forest Temple
+        // Waldschrein
+        "\x57\x61\x6c\x64\x73\x63\x68\x72\x65\x69\x6e",
+
+        // Goron Mines
+        // Minen der Goronen
+        "\x4d\x69\x6e\x65\x6e\x20\x64\x65\x72\x20\x47\x6f\x72\x6f\x6e\x65\x6e",
+
+        // Lakebed Temple
+        // Seeschrein
+        "\x53\x65\x65\x73\x63\x68\x72\x65\x69\x6e",
+
+        // Arbiter's Grounds
+        // Wüstenburg
+        "\x57\xfc\x73\x74\x65\x6e\x62\x75\x72\x67",
+
+        // Snowpeak Ruins
+        // Bergruine
+        "\x42\x65\x72\x67\x72\x75\x69\x6e\x65",
+
+        // Temple of Time
+        // Zeitschrein
+        "\x5a\x65\x69\x74\x73\x63\x68\x72\x65\x69\x6e",
+
+        // City in the Sky
+        // Kumula
+        "\x4b\x75\x6d\x75\x6c\x61",
+
+        // Palace of Twilight
+        // Schattenpalast
+        "\x53\x63\x68\x61\x74\x74\x65\x6e\x70\x61\x6c\x61\x73\x74",
+    };
+
+    // Kein Dungeon erforderlich
+    const char* noDungeonsRequiredDe =
+        "\x4B\x65\x69\x6E\x20\x44\x75\x6E\x67\x65\x6F\x6E\x20\x65\x72\x66\x6F\x72\x64\x65\x72\x6C\x69\x63\x68";
+
     // Italian
     const char* dungeonsIt[TOTAL_POSSIBLE_DUNGEONS] = {
         // Forest Temple
@@ -237,6 +238,7 @@ namespace mod::link_house_sign
     const char* noDungeonsRequiredIt =
         "\x4E\x65\x73\x73\x75\x6E\x20\x73\x61\x6E\x74\x75\x61\x72\x69\x6F\x20\x72\x69\x63\x68\x69\x65\x73\x74\x6F";
 #endif
+#endif
 
     void createRequiredDungeonsString(rando::Seed* seed, uint32_t requiredDungeonFlags)
     {
@@ -249,13 +251,13 @@ namespace mod::link_house_sign
         // Get the dungeon strings array to use
         const char** dungeons;
         const char* noDungeonsRequired;
-#ifdef TP_US
+#if defined TP_US && !defined TP_WUS2
         dungeons = dungeonsUs;
         noDungeonsRequired = noDungeonsRequiredUs;
 #elif defined TP_JP
         dungeons = dungeonsJp;
         noDungeonsRequired = noDungeonsRequiredJp;
-#elif defined TP_EU
+#elif defined TP_EU || defined TP_WUS2
         using namespace libtp::tp::d_s_logo;
 
         switch (currentLanguage)
@@ -265,12 +267,6 @@ namespace mod::link_house_sign
             {
                 dungeons = dungeonsUs;
                 noDungeonsRequired = noDungeonsRequiredUs;
-                break;
-            }
-            case Languages::de:
-            {
-                dungeons = dungeonsDe;
-                noDungeonsRequired = noDungeonsRequiredDe;
                 break;
             }
             case Languages::fr:
@@ -285,12 +281,20 @@ namespace mod::link_house_sign
                 noDungeonsRequired = noDungeonsRequiredSp;
                 break;
             }
+#ifndef TP_WUS2
+            case Languages::de:
+            {
+                dungeons = dungeonsDe;
+                noDungeonsRequired = noDungeonsRequiredDe;
+                break;
+            }
             case Languages::it:
             {
                 dungeons = dungeonsIt;
                 noDungeonsRequired = noDungeonsRequiredIt;
                 break;
             }
+#endif
         }
 #endif
         // Get the strings to write and the total length used for the strings

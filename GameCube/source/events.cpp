@@ -24,7 +24,6 @@
 #include "user_patch/03_customCosmetics.h"
 #include "tp/J2DPicture.h"
 #include "data/flags.h"
-#include "tp/m_do_controller_pad.h"
 #include "tp/d_a_npc.h"
 #include "asm_templates.h"
 #include "tp/rel/ids.h"
@@ -32,7 +31,12 @@
 #include "tp/f_op_actor_iter.h"
 #include "tp/d_pane_class.h"
 #include "game_patch/game_patch.h"
-#include "tp/m_do_printf.h"
+
+#ifdef PLATFORM_WII
+#include "tp/m_re_controller_pad.h"
+#else
+#include "tp/m_do_controller_pad.h"
+#endif
 
 namespace mod::events
 {
@@ -192,7 +196,12 @@ namespace mod::events
                 if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Snowpeak_Ruins]))
                 {
                     // Set the call to checkOpenDoor to always return true when in SPR
-                    performStaticASMReplacement(relPtrRaw + 0xD68, ASM_LOAD_IMMEDIATE(3, 1));
+#ifdef PLATFORM_WII
+                    constexpr uint32_t checkOpenDoorOffset = 0xB90;
+#else
+                    constexpr uint32_t checkOpenDoorOffset = 0xD68;
+#endif
+                    performStaticASMReplacement(relPtrRaw + checkOpenDoorOffset, ASM_LOAD_IMMEDIATE(3, 1));
                 }
 
                 break;
@@ -202,7 +211,12 @@ namespace mod::events
             case D_A_TBOX:
             {
                 // Nop out the bne- that causes chests to play the cutscene for big items.
-                performStaticASMReplacement(relPtrRaw + 0xA58, ASM_NOP);
+#ifdef PLATFORM_WII
+                constexpr uint32_t checkEnvEffectTboxOffset = 0x910;
+#else
+                constexpr uint32_t checkEnvEffectTboxOffset = 0xA58;
+#endif
+                performStaticASMReplacement(relPtrRaw + checkEnvEffectTboxOffset, ASM_NOP);
                 break;
             }
 
@@ -212,7 +226,12 @@ namespace mod::events
                 if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Hyrule_Field]))
                 {
                     // Nop out the instruction that causes the time flow to not consider the mTimeSpeed variable in Field.
-                    performStaticASMReplacement(relPtrRaw + 0x2CC, ASM_NOP);
+#ifdef PLATFORM_WII
+                    constexpr uint32_t daKytag11_Execute_Offset = 0x2B4;
+#else
+                    constexpr uint32_t daKytag11_Execute_Offset = 0x2CC;
+#endif
+                    performStaticASMReplacement(relPtrRaw + daKytag11_Execute_Offset, ASM_NOP);
                 }
 
                 break;
@@ -239,6 +258,7 @@ namespace mod::events
                                                     assembly::asmAdjustAGPoeItemEnd);
 
                 // Disable Poe increment (handled through item_get_func; see game_patches)
+                // This increment is done at a different time on Wii
                 performStaticASMReplacement(relPtrRaw + e_po_ExecDead_incOffset, ASM_NOP);
                 break;
             }
@@ -246,11 +266,16 @@ namespace mod::events
             // Lakebed Temple Boss Door
             case D_A_OBJ_KSHUTTER:
             {
-                // Nop out the instruction that stores the new total small key value when the game attempts to
-                // remove a small key from the inventory when opening the boss door
+                // Nop out the instruction that stores the new total small key value when the game attempts to remove a small
+                // key from the inventory when opening the boss door
                 if (libtp::tools::playerIsInRoomStage(2, stagesPtr[libtp::data::stage::StageIDs::Lakebed_Temple]))
                 {
-                    performStaticASMReplacement(relPtrRaw + 0x1198, ASM_NOP); // Previous: subi r0,r3,1
+#ifdef PLATFORM_WII
+                    constexpr uint32_t keyUnlockInitOffset = 0xEB8;
+#else
+                    constexpr uint32_t keyUnlockInitOffset = 0x1198;
+#endif
+                    performStaticASMReplacement(relPtrRaw + keyUnlockInitOffset, ASM_NOP); // Previous: subi r0,r3,1
                 }
                 break;
             }
@@ -258,12 +283,15 @@ namespace mod::events
             // Puppet Zelda
             case D_A_E_HZELDA:
             {
-                // nop out the greater than branch so that Zelda will always throw a Ball if she is able to
+                // e_hzelda_wait is not in the Wii rel, so not sure where the equivalent instructions are
+#ifndef PLATFORM_WII
+                // Nop out the greater than branch so that Zelda will always throw a Ball if she is able to
                 performStaticASMReplacement(relPtrRaw + 0xA94, ASM_NOP); // Previous: bge
 
-                // nop out the addition of f1 (the random number of frames) to f0 (the base number of frames) so that there is
+                // Nop out the addition of f1 (the random number of frames) to f0 (the base number of frames) so that there is
                 // always only 100 frames between each of Zelda's attacks.
                 performStaticASMReplacement(relPtrRaw + 0x8EC, ASM_NOP); // Previous: bfadds f0,f0,f1
+#endif
                 break;
             }
 
@@ -275,7 +303,12 @@ namespace mod::events
                 {
                     if (seed->m_numBugRewardChecks > 0)
                     {
-                        libtp::patch::writeStandardBranches(relPtrRaw + 0x21B8,
+#ifdef PLATFORM_WII
+                        constexpr uint32_t waitPresentOffset = 0x1CAC;
+#else
+                        constexpr uint32_t waitPresentOffset = 0x21B8;
+#endif
+                        libtp::patch::writeStandardBranches(relPtrRaw + waitPresentOffset,
                                                             assembly::asmAdjustBugRewardStart,
                                                             assembly::asmAdjustBugRewardEnd);
                     }
@@ -286,10 +319,16 @@ namespace mod::events
             // Fishing Hole Rod
             case D_A_MG_ROD:
             {
+                // uki_catch is not in the Wii rel, so not sure where the equivalent instruction is
+#ifndef PLATFORM_WII
                 libtp::patch::writeBranchBL(relPtrRaw + 0xB2B0, libtp::tp::d_item::execItemGet);
+#endif
 
+                // The Wii code for uki_main seems to be very different, so not sure where the equivalent instruction is
+#ifndef PLATFORM_WII
                 // Branch over rng check instructions from uki_main for 100% bottle guarantee
                 performStaticASMReplacement(relPtrRaw + 0xBFAC, ASM_BRANCH(0x18));
+#endif
                 break;
             }
 
@@ -297,9 +336,16 @@ namespace mod::events
             case D_A_TAG_STATUE_EVT:
             {
                 // Replace sky character
-                performStaticASMReplacement(relPtrRaw + 0xB7C, ASM_BRANCH(0x20));
+#ifdef PLATFORM_WII
+                constexpr uint32_t demoProcOffset = 0x890;
+                constexpr uint32_t demoProcBranchDistance = 0x18;
+#else
+                constexpr uint32_t demoProcOffset = 0xB7C;
+                constexpr uint32_t demoProcBranchDistance = 0x20;
+#endif
+                performStaticASMReplacement(relPtrRaw + demoProcOffset, ASM_BRANCH(demoProcBranchDistance));
 
-                libtp::patch::writeStandardBranches(relPtrRaw + 0xB9C,
+                libtp::patch::writeStandardBranches(relPtrRaw + demoProcOffset + demoProcBranchDistance,
                                                     assembly::asmAdjustSkyCharacterStart,
                                                     assembly::asmAdjustSkyCharacterEnd);
                 break;
@@ -309,19 +355,29 @@ namespace mod::events
             case D_A_OBJ_LIFE_CONTAINER:
             {
                 // Adjust freestanding heart field model height based on the current item being created
+#ifdef PLATFORM_WII
+                constexpr uint32_t createOffset = 0x308;
+                constexpr uint32_t itemOffset = 0x92E;
+#else
+                constexpr uint32_t createOffset = 0x5D0;
+                constexpr uint32_t itemOffset = 0x92A;
+#endif
                 return_daObjLifeContainer_c__Create = libtp::patch::hookFunction(
-                    reinterpret_cast<daObjLifeContainer_Create_Def>(relPtrRaw + 0x5D0),
+                    reinterpret_cast<daObjLifeContainer_Create_Def>(relPtrRaw + createOffset),
                     [](void* daObjLifePtr)
                     {
                         using namespace libtp::data;
                         using namespace rando;
 
-                        uint32_t itemID = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(daObjLifePtr) + 0x92A);
+                        uint32_t itemID = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(daObjLifePtr) + itemOffset);
 
                         // Must check for foolish items first, as they will use the item id of the item they are copying
                         itemID = rando::getFoolishItemModelId(static_cast<uint8_t>(itemID));
 
-                        const float height = *reinterpret_cast<float*>(reinterpret_cast<uint32_t>(daObjLifePtr) + 0x4D4);
+                        // Not sure if the height is at the same offset on Wii
+                        float* heightPtr = *reinterpret_cast<float**>(reinterpret_cast<uint32_t>(daObjLifePtr) + 0x4D4);
+                        const float height = *heightPtr;
+
                         switch (itemID)
                         {
                             case items::Master_Sword:
@@ -331,12 +387,12 @@ namespace mod::events
                             case items::Ordon_Shield:
                             case items::Spinner:
                             {
-                                *reinterpret_cast<float*>(reinterpret_cast<uint32_t>(daObjLifePtr) + 0x4D4) = height + 30.f;
+                                *heightPtr = height + 30.f;
                                 break;
                             }
                             case items::Wooden_Sword:
                             {
-                                *reinterpret_cast<float*>(reinterpret_cast<uint32_t>(daObjLifePtr) + 0x4D4) = height + 60.f;
+                                *heightPtr = height + 60.f;
                                 break;
                             }
                             case items::Ordon_Sword:
@@ -350,13 +406,13 @@ namespace mod::events
                             case items::Dominion_Rod_Uncharged:
                             case items::Dominion_Rod:
                             {
-                                *reinterpret_cast<float*>(reinterpret_cast<uint32_t>(daObjLifePtr) + 0x4D4) = height + 50.f;
+                                *heightPtr = height + 50.f;
                                 break;
                             }
 
                             case items::Heros_Bow:
                             {
-                                *reinterpret_cast<float*>(reinterpret_cast<uint32_t>(daObjLifePtr) + 0x4D4) = height + 55.f;
+                                *heightPtr = height + 55.f;
                                 break;
                             }
                             case items::Boomerang:
@@ -364,7 +420,7 @@ namespace mod::events
                             case items::Big_Quiver:
                             case items::Giant_Quiver:
                             {
-                                *reinterpret_cast<float*>(reinterpret_cast<uint32_t>(daObjLifePtr) + 0x4D4) = height + 40.f;
+                                *heightPtr = height + 40.f;
                                 break;
                             }
                             case customItems::Forest_Temple_Small_Key:
@@ -394,13 +450,13 @@ namespace mod::events
                             case items::Bomb_Bag_Regular_Bombs:
                             case items::Poe_Soul:
                             {
-                                *reinterpret_cast<float*>(reinterpret_cast<uint32_t>(daObjLifePtr) + 0x4D4) = height + 20.f;
+                                *heightPtr = height + 20.f;
                                 break;
                             }
 
                             case items::Magic_Armor:
                             {
-                                *reinterpret_cast<float*>(reinterpret_cast<uint32_t>(daObjLifePtr) + 0x4D4) = height + 25.f;
+                                *heightPtr = height + 25.f;
                                 break;
                             }
                             default:
@@ -414,13 +470,19 @@ namespace mod::events
                     });
 
                 // Remove glow and sparkle from rupees and Poe Souls
+#ifdef PLATFORM_WII
+                constexpr uint32_t setEffectOffset = 0x4AC;
+#else
+                constexpr uint32_t setEffectOffset = 0x764;
+#endif
                 return_daObjLifeContainer_c__setEffect = libtp::patch::hookFunction(
-                    reinterpret_cast<daObjLifeContainer_setEffect_Def>(relPtrRaw + 0x764),
+                    reinterpret_cast<daObjLifeContainer_setEffect_Def>(relPtrRaw + setEffectOffset),
                     [](void* daObjLifePtr)
                     {
                         using namespace libtp::data;
 
-                        const uint32_t itemID = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(daObjLifePtr) + 0x92A);
+                        const uint32_t itemID =
+                            *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(daObjLifePtr) + itemOffset);
 
                         switch (itemID)
                         {
@@ -445,8 +507,13 @@ namespace mod::events
                     });
 
                 // Handle misc flags when obtaining items
+#ifdef PLATFORM_WII
+                constexpr uint32_t initActionOrderGetDemoOffset = 0xCF0;
+#else
+                constexpr uint32_t initActionOrderGetDemoOffset = 0x1224;
+#endif
                 return_daObjLifeContainer_c__initActionOrderGetDemo = libtp::patch::hookFunction(
-                    reinterpret_cast<daObjLifeContainer_initActionOrderGetDemo_Def>(relPtrRaw + 0x1224),
+                    reinterpret_cast<daObjLifeContainer_initActionOrderGetDemo_Def>(relPtrRaw + initActionOrderGetDemoOffset),
                     [](void* daObjLifePtr)
                     {
                         // Call the original function immediately
@@ -478,14 +545,24 @@ namespace mod::events
                         return ret;
                     });
 
-                libtp::patch::writeBranchBL(relPtrRaw + 0x1804, assembly::asmAdjustFieldItemParams);
+#ifdef PLATFORM_WII
+                constexpr uint32_t executeOffset = 0x12EC;
+#else
+                constexpr uint32_t executeOffset = 0x1804;
+#endif
+                libtp::patch::writeBranchBL(relPtrRaw + executeOffset, assembly::asmAdjustFieldItemParams);
                 break;
             }
 
             // Item held in Link's hand upon giving/recieving it
             case D_A_DEMO_ITEM:
             {
-                libtp::patch::writeStandardBranches(relPtrRaw + 0x1E50,
+#ifdef PLATFORM_WII
+                constexpr uint32_t daDitem_Execute_Offset = 0x1BA8;
+#else
+                constexpr uint32_t daDitem_Execute_Offset = 0x1E50;
+#endif
+                libtp::patch::writeStandardBranches(relPtrRaw + daDitem_Execute_Offset,
                                                     assembly::asmAdjustCreateItemParamsStart,
                                                     assembly::asmAdjustCreateItemParamsEnd);
                 break;
@@ -495,8 +572,13 @@ namespace mod::events
             case D_A_OBJ_BOSSWARP:
             {
                 // Replace dungeon reward that is given after beating a boss and show the appropriate text.
-                libtp::patch::writeBranchBL(relPtrRaw + 0x1884, libtp::tp::d_item::execItemGet);
-                performStaticASMReplacement(relPtrRaw + 0x1888, ASM_BRANCH(0xA8));
+#ifdef PLATFORM_WII
+                constexpr uint32_t demoProcOffset = 0x157C;
+#else
+                constexpr uint32_t demoProcOffset = 0x1884;
+#endif
+                libtp::patch::writeBranchBL(relPtrRaw + demoProcOffset, libtp::tp::d_item::execItemGet);
+                performStaticASMReplacement(relPtrRaw + demoProcOffset + 0x4, ASM_BRANCH(0xA8));
                 break;
             }
 
@@ -504,7 +586,12 @@ namespace mod::events
             case D_A_NPC_BOUS:
             {
                 // Prevent Bo from talking after the chest has been opened
-                performStaticASMReplacement(relPtrRaw + 0x1A44, ASM_BRANCH(0x28));
+#ifdef PLATFORM_WII
+                constexpr uint32_t waitOffset = 0x14D0;
+#else
+                constexpr uint32_t waitOffset = 0x1A44;
+#endif
+                performStaticASMReplacement(relPtrRaw + waitOffset, ASM_BRANCH(0x28));
                 break;
             }
 
@@ -512,7 +599,12 @@ namespace mod::events
             case D_A_NPC_POUYA:
             {
                 // Branch to a custom function that checks for the 20 soul flag as well as soul count.
-                libtp::patch::writeBranchBL(relPtrRaw + 0x14D4, assembly::asmCheck60PoeReward);
+#ifdef PLATFORM_WII
+                constexpr uint32_t checkChangeEvtOffset = 0x126C;
+#else
+                constexpr uint32_t checkChangeEvtOffset = 0x14D4;
+#endif
+                libtp::patch::writeBranchBL(relPtrRaw + checkChangeEvtOffset, assembly::asmCheck60PoeReward);
                 break;
             }
 
@@ -520,7 +612,13 @@ namespace mod::events
             case D_A_NPC_YKM:
             {
                 // Prevent Yeto from leaving the dungeon if the player has the boss key
+#ifdef PLATFORM_WII
+                constexpr uint32_t isDeleteOffset = 0x146C;
+                performStaticASMReplacement(relPtrRaw + isDeleteOffset, ASM_LOAD_IMMEDIATE(3, 0));
+                performStaticASMReplacement(relPtrRaw + isDeleteOffset + 0x4, ASM_BRANCH_LINK_REGISTER);
+#else
                 performStaticASMReplacement(relPtrRaw + 0x1524, ASM_LOAD_IMMEDIATE(3, 0));
+#endif
                 break;
             }
 
@@ -528,27 +626,39 @@ namespace mod::events
             case D_A_NPC_YKW:
             {
                 // Prevent Yeta from leaving the dungeon if the player has the boss key
-                performStaticASMReplacement(relPtrRaw + 0x1038, ASM_LOAD_IMMEDIATE(3, 0)); // li r3,0
+#ifdef PLATFORM_WII
+                constexpr uint32_t isDeleteOffset = 0xF8C;
+#else
+                constexpr uint32_t isDeleteOffset = 0x1038;
+#endif
+                performStaticASMReplacement(relPtrRaw + isDeleteOffset, ASM_LOAD_IMMEDIATE(3, 0));
                 break;
             }
 
             // SPR Suit of Armor
             case D_A_E_MD:
             {
+                // create is not in the Wii rel, so not sure where the equivalent instruction is
+#ifndef PLATFORM_WII
                 if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Snowpeak_Ruins]))
                 {
                     // Branch to code to create actor if we are in snowpeak ruins, regardless of BossFlags value.
                     performStaticASMReplacement(relPtrRaw + 0x14B8, ASM_BRANCH(0x1C));
                 }
-
+#endif
                 break;
             }
 
             // Ook
             case D_A_E_MK:
             {
-                // Transform back into link if you are wolf when defeating Ook
-                libtp::patch::writeBranchBL(relPtrRaw + 0x4A88, assembly::asmTransformOokWolf);
+                // Transform back into Link if you are wolf when defeating Ook
+#ifdef PLATFORM_WII
+                constexpr uint32_t demo_camera_end_Offset = 0x4690;
+#else
+                constexpr uint32_t demo_camera_end_Offset = 0x4A88;
+#endif
+                libtp::patch::writeBranchBL(relPtrRaw + demo_camera_end_Offset, assembly::asmTransformOokWolf);
                 break;
             }
 
@@ -556,36 +666,53 @@ namespace mod::events
             case D_A_OBJ_SWBALLC:
             {
                 // The cutscene gives link the MS during the cutscene by default, so we just nop out the link to the function.
-                performStaticASMReplacement(relPtrRaw + 0xB50, ASM_NOP);
+#ifdef PLATFORM_WII
+                constexpr uint32_t demoProcOffset = 0x9B8;
+#else
+                constexpr uint32_t demoProcOffset = 0xB50;
+#endif
+                performStaticASMReplacement(relPtrRaw + demoProcOffset, ASM_NOP);
                 break;
             }
 
             // Auru
             case D_A_NPC_RAFREL:
             {
-                performStaticASMReplacement(
-                    relPtrRaw + 0x6C4,
-                    ASM_LOAD_IMMEDIATE(3, 0x131)); // set auru to check for whether he gave the player the item to spawn.
+                // Set Auru to check for whether he gave the player the item to spawn.
+#ifdef PLATFORM_WII
+                constexpr uint32_t CreateOffset = 0x61C;
+#else
+                constexpr uint32_t CreateOffset = 0x6C4;
+#endif
+                performStaticASMReplacement(relPtrRaw + CreateOffset, ASM_LOAD_IMMEDIATE(3, 0x131));
                 break;
             }
 
             // Freestanding Small Keys
             case D_A_OBJ_SMALLKEY:
             {
-                performStaticASMReplacement(
-                    relPtrRaw + 0xC88,
-                    ASM_BRANCH(0x58)); // patch instruction to prevent game from removing bulblin camp key.
+                // Patch instruction to prevent game from removing Bulblin Camp key.
+#ifdef PLATFORM_WII
+                constexpr uint32_t createOffset = 0x6DC;
+                constexpr uint32_t createBranchDistance = 0x44;
+#else
+                constexpr uint32_t createOffset = 0xC88;
+                constexpr uint32_t createBranchDistance = 0x58;
+#endif
+                performStaticASMReplacement(relPtrRaw + createOffset, ASM_BRANCH(createBranchDistance));
                 break;
             }
 
             // Diababa
             case D_A_B_BQ:
             {
+                // b_bq_end is not in the Wii rel, so not sure where the equivalent instruction is
+#ifndef PLATFORM_WII
                 // Transform back into link if you are wolf when defeating Diababa
                 libtp::patch::writeStandardBranches(relPtrRaw + 0x21B8,
                                                     assembly::asmTransformDiababaWolfStart,
                                                     assembly::asmTransformDiababaWolfEnd);
-
+#endif
                 break;
             }
 
@@ -655,49 +782,76 @@ namespace mod::events
             // Midna
             case D_A_MIDNA:
             {
+#ifdef PLATFORM_WII
+                constexpr uint32_t checkMetamorphoseEnableBaseOffset = 0x7A54;
+#else
+                constexpr uint32_t checkMetamorphoseEnableBaseOffset = 0x8A0C;
+#endif
                 daMidna_c__checkMetamorphoseEnableBase =
-                    reinterpret_cast<daMidna_checkMetamorphoseEnableBase_Def>(relPtrRaw + 0x8A0C);
+                    reinterpret_cast<daMidna_checkMetamorphoseEnableBase_Def>(relPtrRaw + checkMetamorphoseEnableBaseOffset);
 
                 // Adjust checkMetamorphoseEnableBase to not check for nearby NPCs if transformAnywhere is enabled
-                libtp::patch::writeBranchBL(relPtrRaw + 0x8A64, events::handleTransformAnywhere);
+                libtp::patch::writeBranchBL(relPtrRaw + checkMetamorphoseEnableBaseOffset + 0x58,
+                                            events::handleTransformAnywhere);
                 break;
             }
 
             // Shadow Beast
             case D_A_E_S1:
             {
+                // demo_camera is not in the Wii rel, so not sure where the equivalent instruction is
+#ifndef PLATFORM_WII
                 if (libtp::tp::d_a_alink::checkStageName(stagesPtr[libtp::data::stage::StageIDs::Upper_Zoras_River]))
                 {
                     // Set human flags After Defeating Shadow Beasts By Iza
                     libtp::patch::writeBranchBL(relPtrRaw + 0x407C, assembly::asmAdjustIzaWolf);
                 }
+#endif
                 break;
             }
 
             // Tear of Light
             case D_A_OBJ_DROP:
             {
-                // set wait timer to 1
-                performStaticASMReplacement(relPtrRaw + 0x0FCC, ASM_LOAD_IMMEDIATE(0, 1));
-                performStaticASMReplacement(relPtrRaw + 0x1038, ASM_LOAD_IMMEDIATE(0, 1));
+                // Set wait timer to 1
+#ifdef PLATFORM_WII
+                constexpr uint32_t modeParentWaitOffset1 = 0x0B68;
+                constexpr uint32_t modeParentWaitOffset2 = modeParentWaitOffset1 + 0x78;
+                constexpr uint32_t modeParentWaitRegister = 4;
+#else
+                constexpr uint32_t modeParentWaitOffset1 = 0x0FCC;
+                constexpr uint32_t modeParentWaitOffset2 = modeParentWaitOffset1 + 0x6C;
+                constexpr uint32_t modeParentWaitRegister = 0;
+#endif
+                performStaticASMReplacement(relPtrRaw + modeParentWaitOffset1, ASM_LOAD_IMMEDIATE(modeParentWaitRegister, 1));
+                performStaticASMReplacement(relPtrRaw + modeParentWaitOffset2, ASM_LOAD_IMMEDIATE(modeParentWaitRegister, 1));
 
-                // set y_pos of drop to be at ground level
+                // Wii has less variables in rodata for this rel, so not sure which variable this is supposed to be
+#ifndef PLATFORM_WII
+                // Set y_pos of drop to be at ground level
                 performStaticASMReplacement(relPtrRaw + 0x2474, 0x00000000);
+#endif
                 break;
             }
 
             case D_A_KYTAG03:
             {
                 // Modify draw function to draw the Reekfish path so long as we have smelled the fish once.
+                // odour_move is not in the Wii rel, so not sure where the equivalent instruction is
+#ifndef PLATFORM_WII
                 libtp::patch::writeBranchBL(relPtrRaw + 0x66C, assembly::asmShowReekfishPath);
+#endif
                 break;
             }
 
             // Red Bow Monkey
             case D_A_NPC_KS:
             {
+                // action_check is not in the Wii rel, so not sure where the equivalent instruction is
+#ifndef PLATFORM_WII
                 // Prevent the game from triggering the 4 monkeys cutscene in the lobby.
                 performStaticASMReplacement(relPtrRaw + 0x9CE8, ASM_COMPARE_WORD_IMMEDIATE(3, 1));
+#endif
                 break;
             }
 
@@ -709,7 +863,12 @@ namespace mod::events
                 // XXXXYYYY  where XXXX is the flag for the Ending Blow and YYYY is for having howled at the DMT stone. Since we
                 // don't want the wolf to disappear once we have the ending blow, it was changed to use an unused flag in the
                 // event bit list.
-                performStaticASMReplacement(relPtrRaw + 0x5B80,
+#ifdef PLATFORM_WII
+                constexpr uint32_t l_delFlag_Offset = 0x4784;
+#else
+                constexpr uint32_t l_delFlag_Offset = 0x5B80;
+#endif
+                performStaticASMReplacement(relPtrRaw + l_delFlag_Offset,
                                             0x01EB01EC); // static values. 0x01EB for faron wolf and 0x01EC for ordon wolf
 
                 // If a seed is not loaded, then use vanilla behavior
@@ -720,13 +879,18 @@ namespace mod::events
 
                 // Apply an ASM patch to d_a_npc_GWolf::isDelete that checks for if the wolf should spawn and spawn a
                 // freestanding item in it's place.
-                libtp::patch::writeBranchBL(relPtrRaw + 0x20AC, assembly::asmReplaceGWolfWithItem);
+#ifdef PLATFORM_WII
+                constexpr uint32_t isDeleteOffset = 0x1B9C;
+#else
+                constexpr uint32_t isDeleteOffset = 0x20AC;
+#endif
+                libtp::patch::writeBranchBL(relPtrRaw + isDeleteOffset, assembly::asmReplaceGWolfWithItem);
 
                 // Remove the instruction after the asm patch, as it is no longer needed
-                performStaticASMReplacement(relPtrRaw + 0x20B0, ASM_NOP);
+                performStaticASMReplacement(relPtrRaw + isDeleteOffset + 0x4, ASM_NOP);
 
                 // Branch to have isDelete return if the return value condition listed in asmReplaceGWolfWithItem is not met
-                performStaticASMReplacement(relPtrRaw + 0x20B8, ASM_BRANCH_EQUAL_MINUS(0x38));
+                performStaticASMReplacement(relPtrRaw + isDeleteOffset + 0xC, ASM_BRANCH_EQUAL_MINUS(0x38));
                 break;
             }
 
@@ -740,14 +904,27 @@ namespace mod::events
                     break;
                 }
 
+#ifdef PLATFORM_WII
+                constexpr uint32_t executeWaitGiveItemsOffset = 0x294;
+#else
+                constexpr uint32_t executeWaitGiveItemsOffset = 0x254;
+#endif
                 // Apply an ASM patch to d_a_Obj_Master_Sword::executeWait to give the player two items and delete the Master
                 // Sword actor instead of trying to play the purification cutscene.
-                libtp::patch::writeStandardBranches(relPtrRaw + 0x254,
+                libtp::patch::writeStandardBranches(relPtrRaw + executeWaitGiveItemsOffset,
                                                     assembly::asmGiveMasterSwordItemsStart,
                                                     assembly::asmGiveMasterSwordItemsEnd);
 
                 // Branch over the code that gives Link the master sword if it has been pulled
-                performStaticASMReplacement(relPtrRaw + 0xCA0, ASM_BRANCH(0x80));
+                // On Wii this code runs in executeWait instead of daObjMasterSword_Execute
+#ifdef PLATFORM_WII
+                constexpr uint32_t executeBranchOffset = 0x240;
+                constexpr uint32_t executeBranchDistance = 0x58;
+#else
+                constexpr uint32_t executeBranchOffset = 0xCA0;
+                constexpr uint32_t executeBranchDistance = 0x80;
+#endif
+                performStaticASMReplacement(relPtrRaw + executeBranchOffset, ASM_BRANCH(executeBranchDistance));
                 break;
             }
         }
@@ -829,6 +1006,8 @@ namespace mod::events
         if (getCurrentSeed(randomizer))
         {
             const uint8_t itemID = randomizer->overrideBugReward(bugID);
+
+            // Need to verify these offsets for Wii
             uint32_t addressRaw = *reinterpret_cast<uint32_t*>(msgEventAddress + 0xA04);
 
             *reinterpret_cast<uint16_t*>((addressRaw + 0x3580) + 0x6) = itemID; // Change Big Wallet Item
@@ -867,12 +1046,23 @@ namespace mod::events
             libtp::tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Stallord]) ||
             libtp::tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Zant_Main_Room]))
         {
-            *reinterpret_cast<uint16_t*>(reinterpret_cast<uint32_t>(fopAC) + 0x962) =
+#ifdef PLATFORM_WII
+            constexpr uint32_t yRotationSpeedOffset = 0x966;
+#else
+            constexpr uint32_t yRotationSpeedOffset = 0x962;
+#endif
+            *reinterpret_cast<uint16_t*>(reinterpret_cast<uint32_t>(fopAC) + yRotationSpeedOffset) =
                 0x226; // Y Rotation Speed modifier. 0x226 is the value used when the item is on the ground.
 
             fopAC->mGravity = 0.0f; // gravity
         }
-        uint32_t itemID = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(fopAC) + 0x92A);
+
+#ifdef PLATFORM_WII
+        constexpr uint32_t itemOffset = 0x92E;
+#else
+        constexpr uint32_t itemOffset = 0x92A;
+#endif
+        uint32_t itemID = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(fopAC) + itemOffset);
 
         // Must check for foolish items first, as they will use the item id of the item they are copying
         itemID = rando::getFoolishItemModelId(static_cast<uint8_t>(itemID));
@@ -923,7 +1113,12 @@ namespace mod::events
         using namespace libtp::data::items;
         using namespace rando::customItems;
 
-        const uint32_t itemID = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(daDitem) + 0x92A);
+#ifdef PLATFORM_WII
+        constexpr uint32_t itemOffset = 0x92E;
+#else
+        constexpr uint32_t itemOffset = 0x92A;
+#endif
+        const uint32_t itemID = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(daDitem) + itemOffset);
         switch (itemID)
         {
             case Mirror_Piece_1:
@@ -957,6 +1152,7 @@ namespace mod::events
         if (d_a_alink::checkStageName(stage::allStages[stage::StageIDs::Ordon_Village_Interiors]))
         {
             // Check to see if checking for the Iron Boots
+            // Need to verify that this offset is correct for Wii
             const uint32_t item = *reinterpret_cast<uint16_t*>(reinterpret_cast<uint32_t>(unk2) + 0x4);
 
             if (item == items::Iron_Boots)
@@ -1966,7 +2162,25 @@ namespace mod::events
         return 0;
     }
 
-#ifndef PLATFORM_WII
+#ifdef PLATFORM_WII
+    KEEP_FUNC bool autoMashThroughText(uint8_t padId)
+    {
+        using namespace libtp::tp::m_re_controller_pad;
+
+        if (instantTextEnabled)
+        {
+            // Automash through text if B is held
+            if (mReCPd::m_pad[padId].mButtonFlags & ReCPadInputs::Button_B)
+            {
+                // Return true to immediately jump to the return value in the function
+                return true;
+            }
+        }
+
+        // Restore the overwritten instruction
+        return cAPICPad_A_TRIGGER(padId);
+    }
+#else
     KEEP_FUNC uint32_t autoMashThroughText(libtp::tp::m_do_controller_pad::CPadInfo* padInfo)
     {
         using namespace libtp::tp::m_do_controller_pad;
@@ -1983,24 +2197,6 @@ namespace mod::events
 
         // Restore the overwritten instruction
         return padInfo->mPressedButtonFlags;
-    }
-#else
-    KEEP_FUNC bool autoMashThroughText(uint8_t padId)
-    {
-        using namespace libtp::tp::m_re_controller_pad;
-
-        if (instantTextEnabled)
-        {
-            // Automash through text if B is held
-            if (mReCPd::m_pad->mButtonFlags & ReCPadInputs::Button_B)
-            {
-                // Return true to immediately jump to the return value in the function
-                return true;
-            }
-        }
-
-        // Restore the overwritten instruction
-        return cAPICPad_A_TRIGGER(padId);
     }
 #endif
 

@@ -23,10 +23,6 @@ namespace mod::link_house_sign
 #endif
 
 #if defined TP_EU || defined TP_WUS2
-    // German
-    extern const char* dungeonsDe[TOTAL_POSSIBLE_DUNGEONS];
-    extern const char* noDungeonsRequiredDe;
-
     // French
     extern const char* dungeonsFr[TOTAL_POSSIBLE_DUNGEONS];
     extern const char* noDungeonsRequiredFr;
@@ -35,9 +31,15 @@ namespace mod::link_house_sign
     extern const char* dungeonsSp[TOTAL_POSSIBLE_DUNGEONS];
     extern const char* noDungeonsRequiredSp;
 
+#ifndef TP_WUS2
+    // German
+    extern const char* dungeonsDe[TOTAL_POSSIBLE_DUNGEONS];
+    extern const char* noDungeonsRequiredDe;
+
     // Italian
     extern const char* dungeonsIt[TOTAL_POSSIBLE_DUNGEONS];
     extern const char* noDungeonsRequiredIt;
+#endif
 #endif
 } // namespace mod::link_house_sign
 

@@ -5,7 +5,6 @@
 #include "data/items.h"
 #include "tp/resource.h"
 #include "rando/customItems.h"
-#include "tp/m_do_printf.h"
 
 #if defined TP_EU || defined TP_WUS2
 #include "tp/d_s_logo.h"
@@ -26,13 +25,13 @@ namespace mod::customMessages
         // Get the MsgEntry to use
         const MsgEntry* entries;
         uint32_t totalCustomMessages;
-#ifdef TP_US
+#if defined TP_US && !defined TP_WUS2
         entries = entriesUs;
         totalCustomMessages = totalCustomMessagesUs;
 #elif defined TP_JP
         entries = entriesJp;
         totalCustomMessages = totalCustomMessagesJp;
-#elif defined TP_EU
+#elif defined TP_EU || defined TP_WUS2
         switch (currentLanguage)
         {
             case Languages::uk:
@@ -40,12 +39,6 @@ namespace mod::customMessages
             {
                 entries = entriesUs;
                 totalCustomMessages = totalCustomMessagesUs;
-                break;
-            }
-            case Languages::de:
-            {
-                entries = entriesDe;
-                totalCustomMessages = totalCustomMessagesDe;
                 break;
             }
             case Languages::fr:
@@ -60,12 +53,20 @@ namespace mod::customMessages
                 totalCustomMessages = totalCustomMessagesSp;
                 break;
             }
+#ifndef TP_WUS2
+            case Languages::de:
+            {
+                entries = entriesDe;
+                totalCustomMessages = totalCustomMessagesDe;
+                break;
+            }
             case Languages::it:
             {
                 entries = entriesIt;
                 totalCustomMessages = totalCustomMessagesIt;
                 break;
             }
+#endif
         }
 #endif
         // Get the total size to allocate for the table
@@ -126,13 +127,13 @@ namespace mod::customMessages
         // Get the MsgEntry to use
         const MsgEntry* entries;
         uint32_t totalCustomMessages;
-#ifdef TP_US
+#if defined TP_US && !defined TP_WUS2
         entries = entriesUs;
         totalCustomMessages = totalCustomMessagesUs;
 #elif defined TP_JP
         entries = entriesJp;
         totalCustomMessages = totalCustomMessagesJp;
-#elif defined TP_EU
+#elif defined TP_EU || defined TP_WUS2
         switch (currentLanguage)
         {
             case Languages::uk:
@@ -140,12 +141,6 @@ namespace mod::customMessages
             {
                 entries = entriesUs;
                 totalCustomMessages = totalCustomMessagesUs;
-                break;
-            }
-            case Languages::de:
-            {
-                entries = entriesDe;
-                totalCustomMessages = totalCustomMessagesDe;
                 break;
             }
             case Languages::fr:
@@ -160,12 +155,20 @@ namespace mod::customMessages
                 totalCustomMessages = totalCustomMessagesSp;
                 break;
             }
+#ifndef TP_WUS2
+            case Languages::de:
+            {
+                entries = entriesDe;
+                totalCustomMessages = totalCustomMessagesDe;
+                break;
+            }
             case Languages::it:
             {
                 entries = entriesIt;
                 totalCustomMessages = totalCustomMessagesIt;
                 break;
             }
+#endif
         }
 #endif
         // Find the Forest Temple small key text
@@ -227,7 +230,8 @@ namespace mod::customMessages
         // Get the ItemWheelMenuData and itemWheeleStringsSize to use
         const ItemWheelMenuStrings* stringsSrc;
         const ItemWheelMenuOffsets* offsetsSrc;
-#if defined TP_US && not defined TP_WUS2
+
+#if defined TP_US && !defined TP_WUS2
         stringsSrc = &itemWheelMenuStringsUs;
         offsetsSrc = &itemWheelMenuOffsetsUs;
 #elif defined TP_JP
@@ -243,12 +247,6 @@ namespace mod::customMessages
                 offsetsSrc = &itemWheelMenuOffsetsUs;
                 break;
             }
-            case Languages::de:
-            {
-                stringsSrc = &itemWheelMenuStringsDe;
-                offsetsSrc = &itemWheelMenuOffsetsDe;
-                break;
-            }
             case Languages::fr:
             {
                 stringsSrc = &itemWheelMenuStringsFr;
@@ -261,12 +259,20 @@ namespace mod::customMessages
                 offsetsSrc = &itemWheelMenuOffsetsSp;
                 break;
             }
+#ifndef TP_WUS2
+            case Languages::de:
+            {
+                stringsSrc = &itemWheelMenuStringsDe;
+                offsetsSrc = &itemWheelMenuOffsetsDe;
+                break;
+            }
             case Languages::it:
             {
                 stringsSrc = &itemWheelMenuStringsIt;
                 offsetsSrc = &itemWheelMenuOffsetsIt;
                 break;
             }
+#endif
         }
 #endif
         // Get the total length used for the strings
@@ -324,22 +330,17 @@ namespace mod::customMessages
         // Get the donation string to use
         using namespace customMessages;
         const MsgEntry* donationEntry;
-#ifdef TP_US
+#if defined TP_US && !defined TP_WUS2
         donationEntry = &charloDonationEntryUs;
 #elif defined TP_JP
         donationEntry = &charloDonationEntryJp;
-#elif defined TP_EU
+#elif defined TP_EU || defined TP_WUS2
         switch (currentLanguage)
         {
             case Languages::uk:
             default: // The language is invalid/unsupported, so the game defaults to English
             {
                 donationEntry = &charloDonationEntryUs;
-                break;
-            }
-            case Languages::de:
-            {
-                donationEntry = &charloDonationEntryDe;
                 break;
             }
             case Languages::fr:
@@ -352,11 +353,18 @@ namespace mod::customMessages
                 donationEntry = &charloDonationEntrySp;
                 break;
             }
+#ifndef TP_WUS2
+            case Languages::de:
+            {
+                donationEntry = &charloDonationEntryDe;
+                break;
+            }
             case Languages::it:
             {
                 donationEntry = &charloDonationEntryIt;
                 break;
             }
+#endif
         }
 #endif
         // Allocate memory for the buffer and write the string

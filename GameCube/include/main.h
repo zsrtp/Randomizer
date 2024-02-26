@@ -104,12 +104,24 @@ namespace mod
     rando::Seed* getCurrentSeed(rando::Randomizer* rando);
     void setScreen(bool state); // Sets visibility of console
     bool checkButtonsPressedThisFrame(uint32_t buttons);
-    bool checkButtonCombo(uint32_t combo, bool checkAnalog);
     float intToFloat(int32_t value);
-    void handleInput(uint32_t inputs);
     void initGiveItemToPlayer(libtp::tp::d_a_alink::daAlink* linkMapPtr);
     void handleFoolishItem();
     void handleBonkDamage();
+
+#ifdef PLATFORM_WII
+    // Wii does not need to check analog triggers, so use an inlined function to discard the checkAnalog param, as inlining this
+    // will allow the compiler to remove it from the assembly
+    bool checkButtonCombo(uint32_t combo);
+
+    inline bool checkButtonCombo(uint32_t combo, bool checkAnalog)
+    {
+        (void)checkAnalog;
+        return checkButtonCombo(combo);
+    }
+#else
+    bool checkButtonCombo(uint32_t combo, bool checkAnalog);
+#endif
 
     // Inline getConsole, as it's just a shortcut to get a reference to the console variable
     inline libtp::display::Console& getConsole()

@@ -10,14 +10,6 @@
 #include <cstdio>
 #include <cinttypes>
 
-#ifdef DVD
-#include "gc_wii/dvd.h"
-#elif defined PLATFORM_WII
-#include "gc_wii/nand.h"
-#else
-#include "gc_wii/card.h"
-#endif
-
 #include "rando/seed.h"
 #include "rando/linkHouseSign.h"
 #include "cxx.h"
@@ -30,10 +22,12 @@
 #include "user_patch/user_patch.h"
 #include "gc_wii/OSInterrupt.h"
 
-#ifndef PLATFORM_WII
-#define BUF_ADDR 0x800042BC
+#ifdef DVD
+#include "gc_wii/dvd.h"
+#elif defined PLATFORM_WII
+#include "gc_wii/nand.h"
 #else
-#define BUF_ADDR 0x80005498
+#include "gc_wii/card.h"
 #endif
 
 namespace mod::rando
@@ -56,8 +50,8 @@ namespace mod::rando
         // Align to 0x20 for safety, since some functions may cast parts of it to classes/structs/arrays/etc.
         uint8_t* data = new (-0x20) uint8_t[totalSize];
 
-        // Interrupts are required to be enabled for CARD/DVD functions to work properly
-        bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
+        // Interrupts are required to be enabled for CARD/NAND/DVD functions to work properly
+        const bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
 
 #ifdef DVD
         // fileName does not contain the full file path
@@ -103,7 +97,11 @@ namespace mod::rando
             this->loadCustomText(data);
 
             // Set the static pointers for the Seed Header and Data. These are used by TPO
-            void** ptrTable = reinterpret_cast<void**>(BUF_ADDR);
+#ifdef PLATFORM_WII
+            void** ptrTable = reinterpret_cast<void**>(0x80005498);
+#else
+            void** ptrTable = reinterpret_cast<void**>(0x800042BC);
+#endif
             ptrTable[0] = m_Header;
             ptrTable[1] = m_GCIData;
         }
@@ -116,7 +114,11 @@ namespace mod::rando
         this->clearChecks();
 
         // Clear the static pointers for the Seed Header and Data.  These are used by TPO
-        void** ptrTable = reinterpret_cast<void**>(BUF_ADDR);
+#ifdef PLATFORM_WII
+        void** ptrTable = reinterpret_cast<void**>(0x80005498);
+#else
+        void** ptrTable = reinterpret_cast<void**>(0x800042BC);
+#endif
         ptrTable[0] = nullptr;
         ptrTable[1] = nullptr;
 
@@ -237,8 +239,9 @@ namespace mod::rando
         msgIdTableSize = (msgIdTableSize + sizeof(uint32_t) - 1) & ~(sizeof(uint32_t) - 1);
         const uint32_t msgTableInfoSize = msgIdTableSize + msgOffsetTableSize + customMessageHeader->msgTableSize;
 
-        // Align to uint16_t, as thagt's the largest variable type in CustomMessageData
+        // Align to uint16_t, as that's the largest variable type in CustomMessageData
         m_HintMsgTableInfo = new (sizeof(uint16_t)) uint8_t[msgTableInfoSize];
+
         // When calculating the offset the the message table information, we are assuming that the message header is
         // followed by the entry information for all of the languages in the seed data.
         const uint32_t offset = headerOffset + customMessageHeader->msgIdTableOffset;

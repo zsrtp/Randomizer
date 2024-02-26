@@ -521,6 +521,10 @@
 // mem.o
 803c0914:memmove
 
+80011f24:myExceptionCallback
+802261e0:setTag
+8024e114:cAPICPad_A_TRIGGER
+
 8053ae1d:sPauseTimer
 
 CC008000:wgPipe
@@ -599,7 +603,6 @@ CC008000:wgPipe
 8004a92c:getEventIdx3
 80020d84:fopAcM_orderChangeEventId
 8017f134:setSoldOutFlag
-8024e114:cAPICPad_A_TRIGGER
 
 80006920:SECallback_int__int_
 80006974:drawCallback_J2DOrthoGraph____void___

@@ -147,7 +147,7 @@ namespace mod::assembly
         libtp::tp::d_save::onEventBit(&savePtr->save_file.mEvent, 0x2120);
     }
 
-#ifdef TP_JP
+#if defined TP_GJP || defined TP_WUS2
     void unpatchMapGlitch(libtp::tp::d_a_alink::daAlink* d_a_alink)
     {
         d_a_alink->mNoResetFlg0 |= 0x4000;
