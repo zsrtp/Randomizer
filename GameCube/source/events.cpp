@@ -181,7 +181,10 @@ namespace mod::events
     void onRELLink(rando::Randomizer* randomizer, libtp::tp::dynamic_link::DynamicModuleControl* dmc)
     {
         using namespace libtp::tp::rel::relIDs;
+        // TODO Remove this preprocessor check when seeds are fixed for wii
+#ifndef PLATFORM_WII
         randomizer->overrideREL();
+#endif
 
         // Static REL overrides and patches
         const libtp::gc_wii::os_module::OSModuleInfo* modulePtr = dmc->mModule;
@@ -1819,8 +1822,13 @@ namespace mod::events
             return;
         }
 
+#ifndef PLATFORM_WII
         // Ensure that the Z Button is not dimmed
         const float zButtonAlpha = meterDrawPtr->mZButtonAlpha;
+#else
+        // Ensure that the Midna Button is not dimmed
+        const float zButtonAlpha = meterDrawPtr->field_0x7d4;
+#endif
         if (zButtonAlpha != 1.f)
         {
             return;
@@ -1984,8 +1992,13 @@ namespace mod::events
                 return false;
             }
 
+#ifndef PLATFORM_WII
             // Ensure that the Z Button is not dimmed
             const float zButtonAlpha = meterDrawPtr->mZButtonAlpha;
+#else
+            // Ensure that the Midna Button is not dimmed
+            const float zButtonAlpha = meterDrawPtr->field_0x7d4;
+#endif
             if (zButtonAlpha != 1.f)
             {
                 return false;
