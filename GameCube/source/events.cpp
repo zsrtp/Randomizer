@@ -2051,12 +2051,16 @@ namespace mod::events
             rando::RawRGBTable* rawRGBListPtr = randomizer->m_Seed->m_RawRGBTable;
 
             uint8_t* lanternColor = reinterpret_cast<uint8_t*>(&rawRGBListPtr->lanternColor);
-            color1->r = lanternColor[0];
-            color1->g = lanternColor[1];
-            color1->b = lanternColor[2];
-            color2->r = lanternColor[0];
-            color2->g = lanternColor[1];
-            color2->b = lanternColor[2];
+
+            if (*reinterpret_cast<uint32_t*>(lanternColor) != 0x502814ff) // Don't set the value if it is already vanilla
+            {
+                color1->r = lanternColor[0];
+                color1->g = lanternColor[1];
+                color1->b = lanternColor[2];
+                color2->r = lanternColor[0];
+                color2->g = lanternColor[1];
+                color2->b = lanternColor[2];
+            }
         }
         libtp::tp::d_pane_class::setBlackWhite(panePtr, color1, color2);
     }
