@@ -632,7 +632,7 @@ namespace mod::game_patch
                                     }
                                     else
                                     {
-                                        chosenLayer = stage::OrdonRanchStateIDs::Ordon_Ranch_Goats_2_Completed;
+                                        chosenLayer = stage::OrdonRanchStateIDs::Ordon_Ranch_Faron_Twilight_Cleared;
                                     }
                                 }
                                 else
@@ -642,7 +642,7 @@ namespace mod::game_patch
                             }
                             else
                             {
-                                chosenLayer = stage::OrdonRanchStateIDs::Ordon_Ranch_Goats_1_Completed;
+                                chosenLayer = stage::OrdonRanchStateIDs::Ordon_Ranch_Faron_Twilight_Cleared;
                             }
                         }
                         else

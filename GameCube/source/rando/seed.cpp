@@ -671,6 +671,7 @@ namespace mod::rando
 
         uint8_t foolishModelIndexes[MAX_SPAWNED_FOOLISH_ITEMS];
         uint32_t foolishModelCounter = 0;
+        const uint32_t stageIdx = this->m_StageIDX;
 
         for (uint32_t i = 0; i < num_shopItems; i++)
         {
@@ -741,6 +742,22 @@ namespace mod::rando
                         currentShopItemDataPtr->posY = 60.f;
                         break;
                     }
+                }
+            }
+            else if (shopItem == 0x2) // Red Potion
+            {
+                if (stageIdx != libtp::data::stage::Kakariko_Village_Interiors)
+                {
+                    d_item_data::ItemResource* currentItemResourcePtr = &itemResourcePtr[libtp::data::items::Red_Potion_Shop];
+
+                    currentShopItemDataPtr->arcName = currentItemResourcePtr->arcName;
+                    currentShopItemDataPtr->modelResIdx = currentItemResourcePtr->modelResIdx;
+                    currentShopItemDataPtr->wBtkResIdx = currentItemResourcePtr->btkResIdx;
+                    currentShopItemDataPtr->wBckResIdx = currentItemResourcePtr->bckResIdx;
+                    currentShopItemDataPtr->wBrkResIdx = currentItemResourcePtr->brkResIdx;
+                    currentShopItemDataPtr->wBtpResIdx = currentItemResourcePtr->btpResIdx;
+                    currentShopItemDataPtr->tevFrm = currentItemResourcePtr->tevFrm;
+                    currentShopItemDataPtr->posY = 15.f;
                 }
             }
             else

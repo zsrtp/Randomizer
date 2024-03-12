@@ -2138,8 +2138,14 @@ namespace mod
                                             libtp::tp::f_op_actor::fopAc_ac_c* actor,
                                             void* msgFlow)
     {
-        // We want the shop item to have its flag updated no matter what.
-        libtp::tp::d_shop_system::setSoldOutFlag(shopPtr);
+        using namespace libtp::data::stage;
+
+        const auto stagesPtr = &allStages[0];
+        if (libtp::tools::playerIsInRoomStage(3, stagesPtr[StageIDs::Kakariko_Village_Interiors]))
+        {
+            // We want the shop item to have its flag updated no matter what in kak malo mart
+            libtp::tp::d_shop_system::setSoldOutFlag(shopPtr);
+        }
 
         return return_seq_decide_yes(shopPtr, actor, msgFlow);
     }

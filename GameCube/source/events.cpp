@@ -1298,7 +1298,7 @@ namespace mod::events
                 if (roomIDX == 4)
                 {
                     localSignActor.pos.x = -12420.0508f;
-                    localSignActor.pos.y = -274.354553f;
+                    localSignActor.pos.y = 274.354553f;
                     localSignActor.pos.z = -11469.2881f;
                     localSignActor.rot[1] = static_cast<int16_t>(0xD556);
                     tools::spawnActor(4, localSignActor);
