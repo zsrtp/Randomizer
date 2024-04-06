@@ -73,7 +73,6 @@ namespace mod
         // Load custom messages
         customMessages::createMsgTable();
         customMessages::setDungeonItemAreaColorIndex();
-        customMessages::createCharloDonationMessage();
 
         // Load item wheel menu strings
         customMessages::createItemWheelMenuData();

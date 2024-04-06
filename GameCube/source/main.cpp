@@ -68,7 +68,6 @@ namespace mod
     // Variables
     void* z2ScenePtr = nullptr;
     uint32_t randState = 0;
-    KEEP_VAR const char* m_DonationText = nullptr;
 
     // Analog L is currently not being used, so commented out
     // float prevFrameAnalogL = 0.f;

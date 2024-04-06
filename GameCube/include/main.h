@@ -82,7 +82,6 @@ namespace mod
 
     extern void* z2ScenePtr;
     extern uint32_t randState;
-    extern const char* m_DonationText;
 
     // Variables
     extern uint8_t* m_MsgTableInfo;     // Custom message string data
