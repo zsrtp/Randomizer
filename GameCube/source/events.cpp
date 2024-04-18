@@ -63,7 +63,7 @@ namespace mod::events
         {"Hjump", 0x044FFF02, 5600.f, -5680.f, 52055.f, 0, static_cast<int16_t>(0x4000), 0, 0xFFFF, 0x20, 0x2D, 0x2D, 0xFF};
 
     // Golden Wolf actor placed in Faron Woods.
-    libtp::tp::dzx::ACTR ForestGWolfActr = {"GWolf", 0x05FF01FF, -35178.f, 430.21f, -21503.6f, 0, -0x4000, 0xFF, 0xFFFF};
+    libtp::tp::dzx::ACTR ForestGWolfActr = {"GWolf", 0x05FF01FF, -36714.9023f, 424.03894f, -23698.0273f, 0, 0, 0xFF, 0xFFFF};
 
     // Poe actor template
     libtp::tp::dzx::ACTR ImpPoeActr = {"E_hp", 0xFF031E00, 4531.19f, -30.f, 2631.961f, 0, 0, 0x0, 0xFFFF};
@@ -1250,14 +1250,14 @@ namespace mod::events
 
                 if (roomIDX == 3) // Kakariko Gorge
                 {
-                    localSignActor.pos.x = -10156.9307f;
-                    localSignActor.pos.y = -3076.98535f;
-                    localSignActor.pos.z = 38430.4297f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xC2F7);
+                    localSignActor.pos.x = -11394.7832f;
+                    localSignActor.pos.y = -3258.73096f;
+                    localSignActor.pos.z = 39702.91995f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0xAC70);
                     tools::spawnActor(3, localSignActor);
                 }
 
-                if (roomIDX == 7) // NE Hyrule Field Hint Sign
+                if (roomIDX == 7) // North Eldin Hint Sign
                 {
                     localSignActor.pos.x = 29691.0742f;
                     localSignActor.pos.y = 661.668;
@@ -1297,10 +1297,10 @@ namespace mod::events
 
                 if (roomIDX == 4)
                 {
-                    localSignActor.pos.x = -12420.0508f;
-                    localSignActor.pos.y = 274.354553f;
-                    localSignActor.pos.z = -11469.2881f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.pos.x = -12423.8467f;
+                    localSignActor.pos.y = 273.277985f;
+                    localSignActor.pos.z = -11518.958f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x9228);
                     tools::spawnActor(4, localSignActor);
                 }
                 break;
@@ -1380,10 +1380,10 @@ namespace mod::events
 
             case StageIDs::Death_Mountain:
             {
-                localSignActor.pos.x = -5459.5757f;
-                localSignActor.pos.y = 0.f;
-                localSignActor.pos.z = -3880.2466f;
-                localSignActor.rot[1] = static_cast<int16_t>(0x0FED);
+                localSignActor.pos.x = 920.583069f;
+                localSignActor.pos.y = 0.745985091f;
+                localSignActor.pos.z = 1227.39978f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x35A5);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
@@ -1400,7 +1400,7 @@ namespace mod::events
 
             case StageIDs::Outside_Castle_Town:
             {
-                if (roomIDX == 8) // West of CT
+                if (roomIDX == 8) // Beside Castle Town
                 {
                     localSignActor.pos.x = -68194.2109f;
                     localSignActor.pos.y = -1050.f;
@@ -1536,6 +1536,15 @@ namespace mod::events
                 localSignActor.pos.z = 3112.2f;
                 localSignActor.rot[1] = static_cast<int16_t>(0x8000);
                 tools::spawnActor(0, localSignActor);
+
+                // ToT midpoint sign
+                tp::dzx::ACTR localSignActor2;
+                memcpy(&localSignActor2, &SignActor, sizeof(tp::dzx::ACTR));
+                localSignActor2.pos.x = -3885.2157f;
+                localSignActor2.pos.y = 4450.f;
+                localSignActor2.pos.z = -6353.38135f;
+                localSignActor2.rot[1] = static_cast<int16_t>(0x2000);
+                tools::spawnActor(4, localSignActor2);
                 break;
             }
 
