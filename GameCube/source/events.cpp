@@ -790,7 +790,6 @@ namespace mod::events
     void onDZX(rando::Randomizer* randomizer, libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo)
     {
         randomizer->overrideDZX(chunkTypeInfo);
-        loadCustomActors();
     }
 
     int32_t onPoe(rando::Randomizer* randomizer, uint8_t flag)
@@ -1148,12 +1147,15 @@ namespace mod::events
         mod::return_onDungeonItem(memBitPtr, memBit);
     }
 
-    void loadCustomActors()
+    void loadCustomActors(void* mStatus_roomControl)
     {
         using namespace libtp;
         using namespace libtp::data::stage;
 
         const auto stagesPtr = &allStages[0];
+        tp::dzx::ACTR localSignActor;
+        memcpy(&localSignActor, &SignActor, sizeof(tp::dzx::ACTR));
+
         if (tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Faron_Woods]))
         {
             tools::spawnActor(0, EponaActr);
@@ -1165,6 +1167,36 @@ namespace mod::events
 
             localEponaActor.parameters = 0x148;
             tools::spawnActor(0, localEponaActor);
+        }
+
+        // The actors in this case are actors who need to be spawned in even if the area is in a specific set state no matter
+        // what (i.e PoT, HC, etc. and cannot be spawned in with the mStageData actors due to checking for angles and the like,
+        // which causes a crash.)
+        if (randomizer && (reinterpret_cast<uint32_t>(mStatus_roomControl) !=
+                           reinterpret_cast<uint32_t>(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStageData)))
+        {
+            switch (randomizer->m_Seed->m_StageIDX)
+            {
+                case StageIDs::Palace_of_Twilight:
+                {
+                    localSignActor.pos.x = -1386.14f;
+                    localSignActor.pos.y = -200.f;
+                    localSignActor.pos.z = 12302.047f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    tools::spawnActor(0, localSignActor);
+                    break;
+                }
+
+                case StageIDs::Hyrule_Castle:
+                {
+                    localSignActor.pos.x = -4.6223f;
+                    localSignActor.pos.y = 25.f;
+                    localSignActor.pos.z = 11607.169f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    tools::spawnActor(11, localSignActor);
+                    break;
+                }
+            }
         }
     }
 
@@ -1555,26 +1587,6 @@ namespace mod::events
                 localSignActor.pos.z = -12709.0352f;
                 localSignActor.rot[1] = static_cast<int16_t>(0xC846);
                 tools::spawnActor(2, localSignActor);
-                break;
-            }
-
-            case StageIDs::Palace_of_Twilight:
-            {
-                localSignActor.pos.x = -1386.14f;
-                localSignActor.pos.y = -200.f;
-                localSignActor.pos.z = 12302.047f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
-                tools::spawnActor(0, localSignActor);
-                break;
-            }
-
-            case StageIDs::Hyrule_Castle:
-            {
-                localSignActor.pos.x = -4.6223f;
-                localSignActor.pos.y = 25.f;
-                localSignActor.pos.z = 11607.169f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
-                tools::spawnActor(11, localSignActor);
                 break;
             }
 

@@ -894,6 +894,7 @@ namespace mod
     {
         // Load DZX based randomizer checks that are stored in the local DZX
         events::onDZX(randomizer, chunkTypeInfo);
+        events::loadCustomActors(mStatus_roomControl);
         return return_actorInit(mStatus_roomControl, chunkTypeInfo, unk3, unk4);
     }
 
