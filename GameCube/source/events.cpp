@@ -1179,20 +1179,20 @@ namespace mod::events
             {
                 case StageIDs::Palace_of_Twilight:
                 {
-                    localSignActor.pos.x = -1386.14f;
-                    localSignActor.pos.y = -200.f;
-                    localSignActor.pos.z = 12302.047f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.pos.x = 1808.76245f;
+                    localSignActor.pos.y = -208.901459f;
+                    localSignActor.pos.z = 11813.2744f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0xA971);
                     tools::spawnActor(0, localSignActor);
                     break;
                 }
 
                 case StageIDs::Hyrule_Castle:
                 {
-                    localSignActor.pos.x = -4.6223f;
+                    localSignActor.pos.x = 0.0f;
                     localSignActor.pos.y = 25.f;
-                    localSignActor.pos.z = 11607.169f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.pos.z = 11625.f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x0000);
                     tools::spawnActor(11, localSignActor);
                     break;
                 }
