@@ -1438,6 +1438,12 @@ namespace mod
                     // native node (8)
                     msgFlow->field_0x10 = 0x8;
                 }
+                else if (libtp::tp::d_a_alink::checkStageName(allStages[StageIDs::Castle_Town]))
+                {
+                    // For Castle Town, both 1 and 2 seem to work at the very
+                    // least. If you use 4, you will also get shiny shoes.
+                    msgFlow->field_0x10 = 0x2;
+                }
                 else if (libtp::tp::d_a_alink::checkStageName(allStages[StageIDs::Death_Mountain]))
                 {
                     // Death Mountain does not have a valid flow node for node 0 so we want it to use its

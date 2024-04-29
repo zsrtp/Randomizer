@@ -1377,11 +1377,16 @@ namespace mod::events
 
             case StageIDs::Ordon_Village:
             {
-                localSignActor.pos.x = 687.89f;
-                localSignActor.pos.y = 800.f;
-                localSignActor.pos.z = -1424.16f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xA019);
-                tools::spawnActor(1, localSignActor);
+                // Need to check for room 1 or we get a floating sign near the
+                // roof of Sera's Shop.
+                if (roomIDX == 1)
+                {
+                    localSignActor.pos.x = 687.89f;
+                    localSignActor.pos.y = 800.f;
+                    localSignActor.pos.z = -1424.16f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0xA019);
+                    tools::spawnActor(1, localSignActor);
+                }
                 break;
             }
 
@@ -1448,6 +1453,16 @@ namespace mod::events
                     localSignActor.rot[1] = static_cast<int16_t>(0x0000);
                     tools::spawnActor(16, localSignActor);
                 }
+                break;
+            }
+
+            case StageIDs::Castle_Town:
+            {
+                localSignActor.pos.x = 0.f;
+                localSignActor.pos.y = -200.f;
+                localSignActor.pos.z = 835.f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x0000);
+                tools::spawnActor(0, localSignActor);
                 break;
             }
 
