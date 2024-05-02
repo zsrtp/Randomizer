@@ -40,17 +40,10 @@ export NANDPACK := python3 $(realpath ../bin/nandpack.py)
 
 UNAME := $(shell uname)
 
-ifndef ELF2REL
-ifeq (, $(shell which elf2rel))
-$(warning "elf2rel doesn't seem to be installed on your system. Consider installing it through pip: pip install pyelf2rel")
 ifeq ($(UNAME), Linux)
 	export ELF2REL := $(realpath ../bin/elf2rel)
 else
 	export ELF2REL := $(realpath ../bin/elf2rel.exe)
-endif
-else
-	export ELF2REL := elf2rel
-endif
 endif
 
 JSON_READ := python3 $(realpath ../bin/json_read.py)
