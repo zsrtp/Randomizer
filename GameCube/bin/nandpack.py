@@ -1521,7 +1521,7 @@ def main():
     files_add_parser.add_argument("-o", "--output", nargs='?', type=argparse.FileType(
         'wb'), default=None, help="Path to where to store the result (default: overwrites 'save')")
     files_add_parser.add_argument(
-        "-m", "--map", action="extend", nargs='*', type=fileMapParser, help="Map a file name to an other one")
+        "-M", "--map", action="extend", nargs='*', type=fileMapParser, help="Map a file name to an other one")
     files_add_parser.add_argument("file", type=argparse.FileType(
         'rb'), nargs="+", metavar="<file>", help="Path to the file(s) to add to the save")
     # Files; List
@@ -1735,7 +1735,7 @@ def main():
         if args.files_cmd == "add":
             file_path = args.save.name
             for file in args.file:
-                file_name = os.path.basename(file.name)
+                file_name = file.name
                 logging.info(f"Loading '{file_name}'...")
                 with file as f:
                     file_data = f.read()

@@ -21,10 +21,16 @@ LIBTP_REL := $(ROOT_DIR)/externals/libtp_rel
 
 UNAME := $(shell uname)
 
+ifndef ELF2REL
+ifeq (, $(shell which elf2rel))
 ifeq ($(UNAME), Linux)
 	ELF2REL := $(abspath $(ROOT_DIR)/bin/elf2rel)
 else
 	ELF2REL := $(abspath $(ROOT_DIR)/bin/elf2rel.exe)
+endif
+else
+	ELF2REL := elf2rel
+endif
 endif
 
 JSON_READ := python3 $(abspath $(ROOT_DIR)/bin/json_read.py)
