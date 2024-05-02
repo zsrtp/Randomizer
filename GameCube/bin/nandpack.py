@@ -18,6 +18,7 @@
 # Copyright 2020 Linus S. (aka PistonMiner)
 # Modifications made by Zephiles
 
+from functools import reduce
 import logging
 import sys
 import os
@@ -27,13 +28,13 @@ import ctypes
 from io import FileIO
 from enum import IntEnum
 from typing import Any, ByteString, Dict, List
-from Crypto.Cipher import AES
 import hashlib
 import secrets
 import json
 import base64
 from datetime import datetime
 import re
+from Crypto.Cipher import AES
 
 # +----------------------+
 # | Constants definition |
@@ -1011,7 +1012,7 @@ class FileHDR:
         return FileHDR.PACK_FORMAT.pack(self.magic, self.size, self.permissions, self.attrib, self.node_type, self.name, self.padding, self.iv, self.unk)
 
 
-class SaveFile:
+class SaveNode:
     def __init__(self, mode=0, attributes=0, node_type: NodeType = NodeType.DIR, path="", data=None):
         self.mode = mode
         self.attributes = attributes
@@ -1021,11 +1022,11 @@ class SaveFile:
 
     def __repr__(self) -> str:
         data = f", data={self.data}" if self.data is not None else ""
-        return f"SaveFile(path={repr(self.path)}, node_type={self.node_type}, mode={self.mode}, attributes={self.attributes}{data})"
+        return f"SaveNode(path={repr(self.path)}, node_type={self.node_type}, mode={self.mode}, attributes={self.attributes}{data})"
 
     def __str__(self) -> str:
         data = f", data={self.data.__class__.__name__}({len(self.data)})" if self.data is not None else ""
-        return f"SaveFile(path=\"{self.path}\", node_type={self.node_type.name[:1].upper() + self.node_type.name.lower()[1:]}, mode={self.mode}, attributes={self.attributes}{data})"
+        return f"SaveNode(path=\"{self.path}\", node_type={self.node_type.name[:1].upper() + self.node_type.name.lower()[1:]}, mode={self.mode}, attributes={self.attributes}{data})"
 
     @staticmethod
     def unpack(reader: FileIO):
@@ -1039,20 +1040,20 @@ class SaveFile:
             rounded_size = alignUp(size, BLOCK_SZ)
             file_data = reader.read(rounded_size)
             file_data = aes_cbc_decrypt(SD_KEY, file_hdr.iv, file_data)[0:size]
-        return SaveFile(file_hdr.permissions, file_hdr.attrib, file_hdr.node_type,
+        return SaveNode(file_hdr.permissions, file_hdr.attrib, file_hdr.node_type,
                         file_hdr.name.split(b'\x00')[0].decode('utf-8'), file_data)
 
     @staticmethod
     def unpack_all(reader: FileIO, bkh: BkHeader):
-        files: List[SaveFile] = []
+        files: List[SaveNode] = []
         reader.seek(Header.PACK_SIZE + BkHeader.PACK_FORMAT.size)
         for i in range(0, bkh.number_of_files):
-            logging.debug(f"[SaveFile] Unpacking file #{i}")
-            file = SaveFile.unpack(reader)
+            logging.debug(f"[SaveNode] Unpacking file #{i}")
+            file = SaveNode.unpack(reader)
             if not file is None:
                 files.append(file)
             else:
-                logging.error(f"[SaveFile] Error while unpacking file #{i}")
+                logging.error(f"[SaveNode] Error while unpacking file #{i}")
                 return
         return files
 
@@ -1082,7 +1083,7 @@ class SaveFile:
 
 
 class SaveBin:
-    def __init__(self, header: Header, bkheader: BkHeader, files: List[SaveFile]):
+    def __init__(self, header: Header, bkheader: BkHeader, files: List[SaveNode]):
         self.header = header
         self.bkheader = bkheader
         self.files = files
@@ -1103,7 +1104,7 @@ class SaveBin:
         if bkheader is None:
             logging.error("[SaveBin] Could not parse BkHeader")
             return
-        files = SaveFile.unpack_all(reader, bkheader)
+        files = SaveNode.unpack_all(reader, bkheader)
         if files is None:
             logging.error("[SaveBin] Could not parse files")
             return
@@ -1118,7 +1119,7 @@ class SaveBin:
 
     def to_file(self, writer: FileIO):
         writer.write(self.header.pack())
-        data1 = self.bkheader.pack() + SaveFile.pack_all(self.files)
+        data1 = self.bkheader.pack() + SaveNode.pack_all(self.files)
         writer.write(data1)
         data_sha1 = sha1(data1)
         ap_sig, ap_cert = sign(SYSTEM_MENU, data_sha1, self.bkheader.ngid)
@@ -1130,7 +1131,7 @@ class SaveBin:
         self.bkheader.size_of_files = sum(len(file) for file in self.files)
         self.bkheader.total_size = self.bkheader.size_of_files + FULL_CERT_SZ
 
-    def add_file(self, path, data, mode=0x3f, attributes=0, node_type=1):
+    def add_file(self, path, data, mode=0x3f, attributes=0, node_type=NodeType.FILE):
         indices = [i for i, f in enumerate(
             self.files) if f.path == path]
         indices.sort(reverse=True)
@@ -1141,9 +1142,37 @@ class SaveBin:
                 f"{n_idx} file{'s' if n_idx > 1 else ''} already exist with the same name. Removing them...")
             for idx in indices:
                 self.files.pop(idx)
+        # Split the path into component dirs, and fold it to get each directory's full path.
+        def fold(acc, x):
+            l = []
+            l.extend(acc)
+            l.append(acc[-1] + '/' + x)
+            return l
+        dirs = path.split('/')[:-1]
+        if len(dirs) > 1:
+            dirs = reduce(fold, dirs[1:], [dirs[0]])
+        # Checking for all the parent directories if they exist
+        for d in dirs:
+            # For each parent directory, find it in the list...
+            f = next((f for f in self.files if f.path == d), None)
+            if not f is None:
+                # ... if found, skip to the next directory...
+                if f.node_type != NodeType.DIR:
+                    raise RuntimeError(f"'{d}' already exists and is not a directory")
+                logging.debug(f"'{d}' found")
+                continue
+            else:
+                # ... else create directory.
+                logging.debug(f"'{d}' not found")
+                self.add_file(d, None, mode, attributes, NodeType.DIR)
         logging.debug(f"Adding '{path}'...")
-        self.files.append(SaveFile(mode, attributes, node_type, path, data))
+        self.files.append(SaveNode(mode, attributes, node_type, path, data))
+        self._sort_files()
         self._update_bk_files()
+
+    def _sort_files(self):
+        self.files.sort(key=lambda x: x.path)
+        pass
 
     def rm_file(self, path):
         indices = [i for i, f in enumerate(
@@ -1152,9 +1181,15 @@ class SaveBin:
         # Remove all occurences
         n_idx = len(indices)
         if n_idx > 0:
+            # If it is a directory, remove all the children recursively
+            for f in [self.files[idx] for idx in indices]:
+                if f.node_type == NodeType.DIR:
+                    for sub_path in [x.path for x in self.files if x.path.startswith(f.path + '/')]:
+                        self.rm_file(sub_path)
             logging.debug(f"removing '{path}'...")
             for idx in indices:
                 self.files.pop(idx)
+        self._sort_files()
         self._update_bk_files()
 
     def config(self):
@@ -1300,7 +1335,7 @@ def main():
     def parseSaveFileName(string):
         if len(string) > 31:
             raise argparse.ArgumentTypeError(
-                f"Savefile name is too long (31 characters max; got {len(string)})")
+                f"File path is too long (31 characters max; got {len(string)})")
         return string
 
 
@@ -1321,8 +1356,12 @@ def main():
 
     file_map_parser_re = re.compile("^([^\\:]*?)\\:([^\\:]*?)$")
     def fileMapParser(string):
-        if not file_map_parser_re.match(string):
+        m = file_map_parser_re.match(string)
+        if not m:
             raise argparse.ArgumentTypeError(f'"{string}" is not a valid mapping')
+        if len(m.group(2)) > 31:
+            raise argparse.ArgumentTypeError(
+                f"File path is too long (31 characters max; got {len(m.group(2))})")
         return string
 
     class NameMapping:
@@ -1473,7 +1512,7 @@ def main():
     files_parser = subparsers.add_parser(
         "files", description="Operations on the file inside the save.", help="Operations on the file inside the save.")
     files_subparser = files_parser.add_subparsers(
-        dest="files_cmd", metavar="CMD", help="Available commands are: add, list, rm")
+        dest="files_cmd", metavar="CMD", help="Available commands are: add, list, rm", required=True)
     # Files; Add
     files_add_parser = files_subparser.add_parser(
         "add", description="Adds file(s) to a save", help="Adds file(s) to a save")
@@ -1538,7 +1577,7 @@ def main():
             args.map = []
         for m in args.map:
             mapping = NameMapping.parse(m)
-            logging.debug(f"parsed mapping '{mapping.old}' to '{mapping.new}'")
+            logging.info(f"parsed mapping '{mapping.old}' to '{mapping.new}'")
             mappings[mapping.old] = mapping.new
 
     # Phase 2: Load files and data/options
@@ -1703,6 +1742,7 @@ def main():
                 logging.debug(f"Adding '{file_name}'...")
                 if file_name in mappings.keys():
                     file_name = mappings.get(file_name)
+                    logging.debug(f"(Mapped to '{file_name}')")
                 save_bin.add_file(file_name, file_data)
             if args.output is None:
                 logging.info(

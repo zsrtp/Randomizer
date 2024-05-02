@@ -300,7 +300,7 @@ ifndef SKIP_PACK
 %.bin: %.rel
 	@echo packing ... $(notdir $@)
 	@$(NANDPACK) generate -g $(PACKVER) -l 2 -f "$(PROJECT_NAME)" $< $(BANNERFILE) $@
-	@$(NANDPACK) files add $@ $(SUBRELS) $(addprefix --map ,$(foreach subrel,$(SUBRELS),$(notdir $(subrel)):$(notdir $(subrel:%.$(VERSION).rel=%.rel))))
+	@$(NANDPACK) files add $@ $(SUBRELS) $(addprefix --map ,$(foreach subrel,$(SUBRELS),$(notdir $(subrel)):rel/$(notdir $(subrel:%.$(VERSION).rel=%.rel))))
 else
 %.bin: %.rel
 	@echo renaming $(notdir $<) to mod.rel

@@ -61,7 +61,11 @@ namespace mod::rando
         m_CARDResult = libtp::tools::readFile(filePath, totalSize, 0, data);
         constexpr int32_t resultComparison = DVD_STATE_END;
 #elif defined PLATFORM_WII
-        m_CARDResult = libtp::tools::readNAND(fileName, totalSize, 0, data);
+        // fileName does not contain the full file path
+        char filePath[96];
+        snprintf(filePath, sizeof(filePath), "seed/%s", fileName);
+
+        m_CARDResult = libtp::tools::readNAND(filePath, totalSize, 0, data);
         constexpr int32_t resultComparison = NAND_RESULT_READY;
 #else
         // The memory card should already be mounted

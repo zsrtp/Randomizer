@@ -524,6 +524,7 @@
 80011f24:myExceptionCallback
 802261e0:setTag
 8024e114:cAPICPad_A_TRIGGER
+8053b068:mAudioMgrPtr
 
 8053ae1d:sPauseTimer
 

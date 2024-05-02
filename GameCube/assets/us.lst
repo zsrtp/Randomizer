@@ -492,3 +492,6 @@
 
 // f_pc_executor.o
 8002139c:fpcEx_IsExist
+
+8000b7c8:myExceptionCallback
+80238cec:setTag

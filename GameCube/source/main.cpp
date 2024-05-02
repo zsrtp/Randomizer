@@ -325,7 +325,7 @@ namespace mod
         libtp::tools::callRelProlog("/mod/boot.rel");
 #elif defined PLATFORM_WII
         // The seedlist will be generated in the boot REL
-        libtp::tools::callRelProlog("boot.rel");
+        libtp::tools::callRelProlog("rel/boot.rel");
 #else
         // The seedlist will be generated in the boot REL, so avoid mounting/unmounting the memory card multiple times
         libtp::tools::callRelProlog(CARD_SLOT_A, SUBREL_BOOT_ID);
@@ -736,7 +736,7 @@ namespace mod
 #ifdef DVD
                     if (!tools::callRelProlog("/mod/seed.rel"))
 #elif defined PLATFORM_WII
-                    if (!tools::callRelProlog("seed.rel"))
+                    if (!tools::callRelProlog("rel/seed.rel"))
 #else
                 // Only mount/unmount the memory card once
                 if (!tools::callRelProlog(chan, SUBREL_SEED_ID))
@@ -763,7 +763,7 @@ namespace mod
 #ifdef DVD
                         if (!tools::callRelProlog("/mod/seed.rel"))
 #elif defined PLATFORM_WII
-                        if (!tools::callRelProlog("seed.rel"))
+                        if (!tools::callRelProlog("rel/seed.rel"))
 #else
                     // Only mount/unmount the memory card once
                     if (!tools::callRelProlog(chan, SUBREL_SEED_ID))
