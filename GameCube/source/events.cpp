@@ -1213,7 +1213,7 @@ namespace mod::events
         tp::dzx::ACTR localSignActor;
         memcpy(&localSignActor, &SignActor, sizeof(tp::dzx::ACTR));
 
-        const int32_t roomIDX = tools::getCurrentRoomNo();
+        const int32_t roomIDX = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mEvtManager.mRoomNo;
         switch (randomizer->m_Seed->m_StageIDX)
         {
             case StageIDs::Lake_Hylia:
