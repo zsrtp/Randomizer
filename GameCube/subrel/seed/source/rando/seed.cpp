@@ -234,6 +234,11 @@ namespace mod::rando
 
         // Copy the data to the pointers
         memcpy(m_HintMsgTableInfo, &data[offset], msgTableInfoSize);
+
+        for (uint32_t i = msgIdTableSize + msgOffsetTableSize; i < msgTableInfoSize; i++)
+        {
+            m_HintMsgTableInfo[i] = ~m_HintMsgTableInfo[i];
+        }
     }
 
 } // namespace mod::rando
