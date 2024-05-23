@@ -206,6 +206,7 @@ namespace mod
                                                                 uint32_t unk4) = nullptr;
 
     // Query/Event functions.
+    KEEP_VAR int32_t (*return_query001)(void* unk1, void* unk2, int32_t unk3) = nullptr;
     KEEP_VAR int32_t (*return_query022)(void* unk1, void* unk2, int32_t unk3) = nullptr;
     KEEP_VAR int32_t (*return_query023)(void* unk1, void* unk2, int32_t unk3) = nullptr;
     KEEP_VAR int32_t (*return_query025)(void* unk1, void* unk2, int32_t unk3) = nullptr;
@@ -1329,6 +1330,32 @@ namespace mod
         {
             return return_getFontCCColorTable(colorId, unk);
         }
+    }
+
+    KEEP_FUNC int32_t handle_query001(void* unk1, void* unk2, int32_t unk3)
+    {
+        using namespace libtp::data::flags;
+        using namespace libtp::data;
+
+        uint16_t flag = *reinterpret_cast<uint16_t*>(reinterpret_cast<uint32_t>(unk2) + 0x4);
+
+        switch (flag)
+        {
+            case 0xFA: // MDH Completed
+            {
+                // Check to see if currently in Jovani's house
+                if (libtp::tools::playerIsInRoomStage(5, stage::allStages[stage::StageIDs::Castle_Town_Shops]))
+                {
+                    return 0; // Return 0 to be able to turn souls into Jovani pre MDH
+                }
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+        return return_query001(unk1, unk2, unk3);
     }
 
     KEEP_FUNC int32_t handle_query022(void* unk1, void* unk2, int32_t unk3)

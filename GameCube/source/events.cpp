@@ -1340,7 +1340,7 @@ namespace mod::events
 
             case StageIDs::Castle_Town_Shops:
             {
-                tools::spawnActor(6, ImpPoeActr);
+                tools::spawnActor(5, ImpPoeActr);
                 break;
             }
 

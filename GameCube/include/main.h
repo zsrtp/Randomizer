@@ -338,6 +338,9 @@ namespace mod
                                                               uint32_t unk4);
 
     // Query/Event functions. Various uses
+    int32_t handle_query001(void* unk1, void* unk2, int32_t unk3);
+    extern int32_t (*return_query001)(void* unk1, void* unk2, int32_t unk3);
+
     int32_t handle_query022(void* unk1, void* unk2, int32_t unk3);
     extern int32_t (*return_query022)(void* unk1, void* unk2, int32_t unk3);
 

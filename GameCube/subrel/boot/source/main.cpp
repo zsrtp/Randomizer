@@ -175,6 +175,7 @@ namespace mod
                                                                          mod::handle_jmessage_tSequenceProcessor__do_tag);
 
         // Query/EventFunctions
+        return_query001 = patch::hookFunction(libtp::tp::d_msg_flow::query001, mod::handle_query001);
         return_query022 = patch::hookFunction(libtp::tp::d_msg_flow::query022, mod::handle_query022);
         return_query023 = patch::hookFunction(libtp::tp::d_msg_flow::query023, mod::handle_query023);
         return_query025 = patch::hookFunction(libtp::tp::d_msg_flow::query025, mod::handle_query025);
