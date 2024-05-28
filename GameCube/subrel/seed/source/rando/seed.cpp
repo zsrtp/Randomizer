@@ -17,7 +17,6 @@
 #endif
 
 #include "rando/seed.h"
-#include "rando/linkHouseSign.h"
 #include "cxx.h"
 #include "game_patch/game_patch.h"
 #include "main.h"
@@ -79,9 +78,6 @@ namespace mod::rando
             m_GCIData = new (0x20) uint8_t[dataSize];
             memcpy(m_GCIData, &data[headerPtr->headerSize], dataSize);
 
-            // Create the required dungeons text that is displayed when reading the sign in front of Link's house
-            link_house_sign::createRequiredDungeonsString(this, headerPtr->requiredDungeons);
-
             // Generate the BGM/Fanfare table data
             loadBgmData(data);
             m_CLR0 = reinterpret_cast<CLR0Header*>(m_GCIData + headerPtr->clr0Offset);
@@ -117,9 +113,6 @@ namespace mod::rando
             // Last clear gcibuffer as other functions before rely on it
             delete[] m_GCIData;
         }
-
-        // Clear the memory used by the required dungeons text that is displayed when reading the sign in front of Link's house
-        delete[] m_RequiredDungeons;
 
         // Clear the bgm table buffers
         delete[] m_BgmTable;

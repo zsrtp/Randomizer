@@ -40,8 +40,6 @@ namespace mod::rando
         ShuffledEntrance* m_ShuffledEntrances = nullptr;
         EventItem* m_EventChecks = nullptr;
 
-        const char* m_RequiredDungeons = nullptr; // Displayed when reading the sign in front of Link's house
-
         BGMReplacement* m_BgmTable = nullptr;     // Bgm replacement data
         BGMReplacement* m_FanfareTable = nullptr; // Fanfare replacement data
 
