@@ -262,7 +262,7 @@ namespace mod::customMessages
         "\x6b\x61\x6c\x74\x65\x72"
         MSG_COLOR(MSG_COLOR_WHITE)
         // wind weht..
-        "\x20\x77\x69\x6e\x64\x20\x77\x65\x68\x74\x2e\x2e"
+        "\x20\x77\x69\x6e\x64\x20\x77\x65\x68\x74\x2e\x2e\x2e"
     MSG_END();
     MSG_BEGIN_ARRAY(talkToMidnaDe)
         //Was ist los, 

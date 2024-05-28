@@ -268,7 +268,7 @@ namespace mod::customMessages
         "\x66\x72\xED\x6F"
         MSG_COLOR(MSG_COLOR_WHITE)
         // ..
-        "\x2E\x2E"
+        "\x2E\x2E\x2E"
     MSG_END();
     MSG_BEGIN_ARRAY( talkToMidnaSp )
         // ¿Qué quieres, 

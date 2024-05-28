@@ -256,7 +256,7 @@ namespace mod::customMessages
         "\x62\x6c\x69\x7a\x7a\x61\x72\x64\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
         //souffle..
-        "\x73\x6f\x75\x66\x66\x6c\x65\x2e\x2e"
+        "\x73\x6f\x75\x66\x66\x6c\x65\x2e\x2e\x2e"
     MSG_END();
     MSG_BEGIN_ARRAY(talkToMidnaFr)
         //Qu'est-ce qu'il y a, 

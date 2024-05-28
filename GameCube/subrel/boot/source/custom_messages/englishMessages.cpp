@@ -206,7 +206,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
         "cold"
         MSG_COLOR(MSG_COLOR_WHITE)
-        " wind blows.."
+        " wind blows..."
     MSG_END();
     MSG_BEGIN_ARRAY(talkToMidnaEn)
         "What is it, "

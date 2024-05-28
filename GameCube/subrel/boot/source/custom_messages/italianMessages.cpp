@@ -840,7 +840,7 @@ namespace mod::customMessages
         "\x76\x65\x6e\x74\x6f\x20\x66\x72\x65\x64\x64\x6f\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
         //soffia.. 
-        "\x73\x6f\x66\x66\x69\x61\x2e\x2e"
+        "\x73\x6f\x66\x66\x69\x61\x2e\x2e\x2e"
     MSG_END();
     MSG_BEGIN_ARRAY(talkToMidnaIt)
         //Cosa vuoi,  
