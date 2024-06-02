@@ -780,6 +780,23 @@ namespace mod::customMessages
         //!? 
         "\x21\x3f"
     MSG_END();
+     MSG_BEGIN_ARRAY(firstMirrorShardIt)
+        MSG_SPEED(MSG_SPEED_FAST)
+        //Hai ottenuto il primo\nframmento del  
+        "\x48\x61\x69\x20\x6F\x74\x74\x65\x6E\x75\x74\x6F\x20\x69\x6C\x20\x70\x72\x69\x6D\x6F\x0A\x66\x72\x61\x6D\x6D\x65\x6E\x74\x6F\x20\x64\x65\x6C\x20"
+        MSG_COLOR(MSG_COLOR_RED)
+        //Specchio oscuro 
+        "\x53\x70\x65\x63\x63\x68\x69\x6f\x20\x6f\x73\x63\x75\x72\x6f"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        //!È coperto di  
+        "\x21\x0A\xC8\x20\x63\x6F\x70\x65\x72\x74\x6F\x20\x64\x69\x20"
+        MSG_COLOR(MSG_COLOR_ORANGE)
+        //sabbia 
+        "\x73\x61\x62\x62\x69\x61"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        //.. 
+        "\x2e\x2e"
+    MSG_END();
     MSG_BEGIN_ARRAY(secondMirrorShardIt)
         MSG_SPEED(MSG_SPEED_FAST)
         //Hai ottenuto il secondoframmento del  
@@ -1042,6 +1059,11 @@ namespace mod::customMessages
         thirdFusedShadowIt,
         sizeof(thirdFusedShadowIt),
         0x013E,
+
+        // First Mirror Shard
+        firstMirrorShardIt,
+        sizeof(firstMirrorShardIt),
+        0x0B7,
 
         // Second Mirror Shard
         secondMirrorShardIt,

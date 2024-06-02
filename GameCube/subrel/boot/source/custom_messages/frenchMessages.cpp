@@ -196,6 +196,23 @@ namespace mod::customMessages
         //s'en dégage..
         "\x73\x27\x65\x6e\x20\x64\xe9\x67\x61\x67\x65\x2e\x2e"
     MSG_END();
+        MSG_BEGIN_ARRAY(firstMirrorShardFr)
+        MSG_SPEED(MSG_SPEED_FAST)
+        // Vous obtenez le premier fragmentdu
+        "\x56\x6F\x75\x73\x20\x6F\x62\x74\x65\x6E\x65\x7A\x20\x6C\x65\x20\x70\x72\x65\x6D\x69\x65\x72\x20\x66\x72\x61\x67\x6D\x65\x6E\x74\x0A\x64\x75\x20"
+        MSG_COLOR(MSG_COLOR_RED)
+        // Miroir des Ombres
+        "\x4d\x69\x72\x6f\x69\x72\x20\x64\x65\x73\x20\x4f\x6d\x62\x72\x65\x73"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        // ! Il est recouvert de
+        "\x21\x20\x49\x6C\x20\x65\x73\x74\x0A\x72\x65\x63\x6F\x75\x76\x65\x72\x74\x20\x64\x65\x20"
+        MSG_COLOR(MSG_COLOR_ORANGE)
+        // sable
+        "\x73\x61\x62\x6C\x65"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        // ...
+        "\x2e\x2e\x2e"
+    MSG_END();
     MSG_BEGIN_ARRAY(secondMirrorShardFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous obtenez le second fragmentdu 
@@ -457,6 +474,11 @@ namespace mod::customMessages
         thirdFusedShadowFr,
         sizeof(thirdFusedShadowFr),
         0x013E,
+
+        // First Mirror Shard
+        firstMirrorShardFr,
+        sizeof(firstMirrorShardFr),
+        0x0B7,
 
         // Second Mirror Shard
         secondMirrorShardFr,

@@ -202,9 +202,26 @@ namespace mod::customMessages
         //steigtdir in die Nase..
         "\x73\x74\x65\x69\x67\x74\x0A\x64\x69\x72\x20\x69\x6e\x20\x64\x69\x65\x20\x4e\x61\x73\x65\x2e\x2e"
     MSG_END();
+    MSG_BEGIN_ARRAY(firstMirrorShardDe)
+        MSG_SPEED(MSG_SPEED_FAST)
+        // Du hast die erste
+        "\x44\x75\x20\x68\x61\x73\x74\x20\x64\x69\x65\x20\x65\x72\x73\x74\x65\x0A"
+        MSG_COLOR(MSG_COLOR_RED)
+        //Schattenspiegels
+        "\x53\x63\x68\x61\x74\x74\x65\x6e\x73\x70\x69\x65\x67\x65\x6c\x73"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        // gefunden! Sie ist von
+        "\x67\x65\x66\x75\x6E\x64\x65\x6E\x21\x0A\x53\x69\x65\x20\x69\x73\x74\x20\x76\x6F\x6E\x20"
+        MSG_COLOR(MSG_COLOR_ORANGE)
+        // Sand
+        "\x53\x61\x6E\x64"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        // bedeckt...
+        "\x20\x62\x65\x64\x65\x63\x6B\x74\x2E\x2E\x2E"
+    MSG_END();
     MSG_BEGIN_ARRAY(secondMirrorShardDe)
         MSG_SPEED(MSG_SPEED_FAST)
-        //Du erhältst die zweiteScherbe des 
+        //Du erhältst die zweite Scherbe des 
         "\x44\x75\x20\x65\x72\x68\xe4\x6c\x74\x73\x74\x20\x64\x69\x65\x20\x7a\x77\x65\x69\x74\x65\x0A\x53\x63\x68\x65\x72\x62\x65\x20\x64\x65\x73\x20"
         MSG_COLOR(MSG_COLOR_RED)
         //Schattenspiegels
@@ -451,6 +468,11 @@ namespace mod::customMessages
         thirdFusedShadowDe,
         sizeof(thirdFusedShadowDe),
         0x013E,
+
+        // First Mirror Shard
+        firstMirrorShardDe,
+        sizeof(firstMirrorShardDe),
+        0x0B7,
 
         // Second Mirror Shard
         secondMirrorShardDe,

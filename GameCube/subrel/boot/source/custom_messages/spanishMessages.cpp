@@ -208,6 +208,23 @@ namespace mod::customMessages
         // y huele\na pescado..
         "\x79\x20\x68\x75\x65\x6C\x65\x0A\x61\x20\x70\x65\x73\x63\x61\x64\x6F\x2E\x2E"
     MSG_END();
+    MSG_BEGIN_ARRAY( firstMirrorShardSp )
+        MSG_SPEED(MSG_SPEED_FAST)
+        // ¡Has obtenido el primer\nfragmento del 
+        "\xA1\x48\x61\x73\x20\x6F\x62\x74\x65\x6E\x69\x64\x6F\x20\x65\x6C\x20\x70\x72\x69\x6D\x65\x72\x0A\x66\x72\x61\x67\x6D\x65\x6E\x74\x6F\x20\x64\x65\x6C\x20"
+        MSG_COLOR(MSG_COLOR_RED)
+        // Espejo del\nCrepúsculo
+        "\x45\x73\x70\x65\x6A\x6F\x20\x64\x65\x6C\x0A\x43\x72\x65\x70\xFA\x73\x63\x75\x6C\x6F"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        // ! Está cubierto de\n
+        "\x21\x20\x45\x73\x74\xE1\x20\x63\x75\x62\x69\x65\x72\x74\x6F\x20\x64\x65\x0A"
+        MSG_COLOR(MSG_COLOR_LIGHT_BLUE)
+        // arena 
+        "\x61\x72\x65\x6E\x61"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        // ..
+        "\x2E\x2E"
+    MSG_END();
     MSG_BEGIN_ARRAY( secondMirrorShardSp )
         MSG_SPEED(MSG_SPEED_FAST)
         // ¡Has obtenido el segundo\nfragmento del 
@@ -468,6 +485,11 @@ namespace mod::customMessages
         thirdFusedShadowSp,
         sizeof(thirdFusedShadowSp),
         0x013E,
+
+        // First Mirror Shard
+        firstMirrorShardSp,
+        sizeof(firstMirrorShardSp),
+        0x0B7,
 
         // Second Mirror Shard
         secondMirrorShardSp,
