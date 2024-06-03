@@ -1361,7 +1361,10 @@ namespace mod::events
 
             case StageIDs::Kakariko_Village_Interiors:
             {
-                tools::spawnActor(3, KakShopSlot2Actr);
+                if (roomIDX == 0x3)
+                {
+                    tools::spawnActor(3, KakShopSlot2Actr);
+                }
                 break;
             }
 
