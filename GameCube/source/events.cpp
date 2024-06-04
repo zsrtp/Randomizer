@@ -75,7 +75,7 @@ namespace mod::events
     // Creating new actors uses less memory than modifying a template due to the amount of memory used by instructions.
     // (0x28 vs 0x48 bytes)
     libtp::tp::dzx::ACTR KakShopSlot2Actr =
-        {"TGSPITM", 0x02FFFFFF, -650.f, 450.f, -500.f, 0x147, static_cast<int16_t>(0x8000), 0x3AFF, 0xFFFF};
+        {"TGSPITM", 0x02FFFFFF, -650.f, 450.f, -500.f, 0x147, static_cast<int16_t>(0x8000), 0x05FF, 0xFFFF};
 
     // Sign Actors
     libtp::tp::dzx::ACTR SignActor = {"Obj_kn2",
