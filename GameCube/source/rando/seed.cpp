@@ -760,6 +760,22 @@ namespace mod::rando
                     currentShopItemDataPtr->posY = 15.f;
                 }
             }
+            else if (shopItem == 0x6) // Wooden Shield
+            {
+                if (stageIdx != libtp::data::stage::Kakariko_Village_Interiors)
+                {
+                    d_item_data::ItemResource* currentItemResourcePtr = &itemResourcePtr[libtp::data::items::Wooden_Shield];
+
+                    currentShopItemDataPtr->arcName = currentItemResourcePtr->arcName;
+                    currentShopItemDataPtr->modelResIdx = currentItemResourcePtr->modelResIdx;
+                    currentShopItemDataPtr->wBtkResIdx = currentItemResourcePtr->btkResIdx;
+                    currentShopItemDataPtr->wBckResIdx = currentItemResourcePtr->bckResIdx;
+                    currentShopItemDataPtr->wBrkResIdx = currentItemResourcePtr->brkResIdx;
+                    currentShopItemDataPtr->wBtpResIdx = currentItemResourcePtr->btpResIdx;
+                    currentShopItemDataPtr->tevFrm = currentItemResourcePtr->tevFrm;
+                    currentShopItemDataPtr->posY = 15.f;
+                }
+            }
             else
             {
                 currentShopItemDataPtr->posY = 15.f;

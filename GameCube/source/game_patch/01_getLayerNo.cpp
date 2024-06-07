@@ -220,6 +220,10 @@ namespace mod::game_patch
                             chosenLayer = stage::KakarikoInteriorStateIDs::Kakariko_Int_Lakebed_Completed;
                             libtp::tp::d_com_inf_game::dComIfG_get_timelayer(&chosenLayer);
                         }
+                        else if (roomId == 3)
+                        {
+                            chosenLayer = stage::KakarikoInteriorStateIDs::Kakariko_Int_KB1_Completed;
+                        }
                         else
                         {
                             chosenLayer = stage::KakarikoInteriorStateIDs::Kakariko_Int_KB1_Completed;

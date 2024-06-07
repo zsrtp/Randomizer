@@ -1002,7 +1002,7 @@ namespace mod::events
 
         const auto stagesPtr = &allStages[0];
 
-        // Check to see if currently in one of the Ordon interiors
+        // Check to see if currently in one of the Kakariko interiors
         if (libtp::tools::playerIsInRoomStage(3, stagesPtr[StageIDs::Kakariko_Village_Interiors]))
         {
             // Return 0 so the player can buy the red potion item from the shop.
