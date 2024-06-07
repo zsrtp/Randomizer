@@ -57,6 +57,9 @@
 #define SEED_ACTION_CHANGE_SEED 2
 #define SEED_ACTION_FATAL 255
 
+// Number of bytes reserved for giving items to the player at arbitrary times via initGiveItemToPlayer
+#define GIVE_PLAYER_ITEM_RESERVED_BYTES 8
+
 // Converting item ids to msg ids and vice versa
 #define ITEM_TO_ID(item) (item + 0x64)
 #define ID_TO_ITEM(msgId) (msgId - 0x64)
@@ -228,6 +231,14 @@ namespace mod
 
     // State functions
     extern int32_t (*return_getLayerNo_common_common)(const char* stageName, int32_t roomId, int32_t layerOverride);
+
+    int32_t procCoGetItemInitCreateItem(const float pos[3],
+                                        int32_t item,
+                                        uint8_t unk3,
+                                        int32_t unk4,
+                                        int32_t unk5,
+                                        const float rot[3],
+                                        const float scale[3]);
 
     // Item creation functions. These are ran when the game displays an item though various means.
     int32_t handle_createItemForBoss(const float pos[3],

@@ -221,12 +221,20 @@ namespace mod::events
             // Generic Poe
             case D_A_E_HP:
             {
-                libtp::patch::writeStandardBranches(relPtrRaw + e_hp_ExecDead_liOffset,
-                                                    assembly::asmAdjustPoeItemStart,
-                                                    assembly::asmAdjustPoeItemEnd);
+                // Force the poe to be despawned immediately without playing the get item animation
+                performStaticASMReplacement(relPtrRaw + e_hp_ExecDead_beqOffset, ASM_NOP);
+
+                // Initialize giving the proper item rather than the poe soul
+                libtp::patch::writeBranchBL(relPtrRaw + e_hp_ExecDead_incOffset, assembly::asmAdjustPoeItem);
 
                 // Disable Poe increment (handled through item_get_func; see game_patches)
-                performStaticASMReplacement(relPtrRaw + e_hp_ExecDead_incOffset, ASM_NOP);
+                performStaticASMReplacement(relPtrRaw + e_hp_ExecDead_incOffset + 0x4, ASM_BRANCH(0x18));
+
+                // Skip checking for setting the flag for having obtained 20 poe souls
+
+                // This cannot be combined with the previous branch due to a value being stored in a class in the middle of the
+                // branches
+                performStaticASMReplacement(relPtrRaw + e_hp_ExecDead_incOffset + 0x24, ASM_BRANCH(0x28));
 
                 break;
             }
@@ -238,8 +246,9 @@ namespace mod::events
                                                     assembly::asmAdjustAGPoeItemStart,
                                                     assembly::asmAdjustAGPoeItemEnd);
 
-                // Disable Poe increment (handled through item_get_func; see game_patches)
-                performStaticASMReplacement(relPtrRaw + e_po_ExecDead_incOffset, ASM_NOP);
+                // Disable Poe increment (handled through item_get_func; see game_patches) and skip checking for setting the
+                // flag for having obtained 20 poe souls
+                performStaticASMReplacement(relPtrRaw + e_po_ExecDead_incOffset, ASM_BRANCH(0x44));
                 break;
             }
 

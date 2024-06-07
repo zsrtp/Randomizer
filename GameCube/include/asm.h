@@ -19,14 +19,14 @@
 
 // Original: li 0xE0
 // Normally loads the poesoul item id into r4
-#define e_hp_ExecDead_liOffset 0x247C
+#define e_hp_ExecDead_beqOffset 0x2440
 #define e_po_ExecDead_liOffset 0x3C9C
 
 // Original:
-// stb r0, 0x10c( r4 ) = > numPoeSouls
-// Normally increments poe count
-#define e_hp_ExecDead_incOffset 0x2354
-#define e_po_ExecDead_incOffset 0x36A8
+// lis r3,dComIfG_gameInfo@h
+// Normally increments poe count if not at 255
+#define e_hp_ExecDead_incOffset 0x233C
+#define e_po_ExecDead_incOffset 0x3690
 
 // d_a_obj_Lv5Key__Wait_offset:
 // 0xBC is offset to the text section relative to the start of the decompressed
@@ -46,9 +46,8 @@ namespace mod::assembly
         void handleDoLinkHook(libtp::tp::dynamic_link::DynamicModuleControl* dmc);
 
         // d_e_hp.rel
-        void asmAdjustPoeItemStart(void);
-        void asmAdjustPoeItemEnd(void);
-        int32_t handleAdjustPoeItem(void*);
+        void asmAdjustPoeItem(void);
+        void handleAdjustPoeItem(void*);
 
         // d_e_po.rel
         void asmAdjustAGPoeItemStart(void);

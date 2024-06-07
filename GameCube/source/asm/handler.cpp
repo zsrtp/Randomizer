@@ -24,10 +24,11 @@ namespace mod::assembly
         }
     }
 
-    int32_t handleAdjustPoeItem(void* e_hp_class)
+    void handleAdjustPoeItem(void* e_hp_class)
     {
-        uint8_t flag = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(e_hp_class) + 0x77B);
-        return events::onPoe(randomizer, flag);
+        const uint8_t flag = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(e_hp_class) + 0x77B);
+        const int32_t item = events::onPoe(randomizer, flag);
+        randomizer->addItemToEventQueue(static_cast<uint32_t>(item));
     }
 
     int32_t handleAdjustAGPoeItem(void* e_po_class)
