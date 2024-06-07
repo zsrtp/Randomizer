@@ -225,13 +225,7 @@ namespace mod::events
                                                     assembly::asmAdjustPoeItemEnd);
 
                 // Disable Poe increment (handled through item_get_func; see game_patches)
-                performStaticASMReplacement(relPtrRaw + e_hp_ExecDead_incOffset, ASM_BRANCH(0x1C));
-
-                // Skip checking for setting the flag for having obtained 20 poe souls
-
-                // This cannot be combined with the previous branch due to a value being stored in a class in the middle of the
-                // branches
-                performStaticASMReplacement(relPtrRaw + e_hp_ExecDead_incOffset + 0x24, ASM_BRANCH(0x28));
+                performStaticASMReplacement(relPtrRaw + e_hp_ExecDead_incOffset, ASM_NOP);
 
                 break;
             }
@@ -243,9 +237,8 @@ namespace mod::events
                                                     assembly::asmAdjustAGPoeItemStart,
                                                     assembly::asmAdjustAGPoeItemEnd);
 
-                // Disable Poe increment (handled through item_get_func; see game_patches) and skip checking for setting the
-                // flag for having obtained 20 poe souls
-                performStaticASMReplacement(relPtrRaw + e_po_ExecDead_incOffset, ASM_BRANCH(0x44));
+                // Disable Poe increment (handled through item_get_func; see game_patches)
+                performStaticASMReplacement(relPtrRaw + e_po_ExecDead_incOffset, ASM_NOP);
                 break;
             }
 
