@@ -489,8 +489,7 @@ namespace mod
                 }
 
                 getConsole().setLine(CONSOLE_PROTECTED_LINES - 1);
-                getConsole() << "\r"
-                             << "Press X/Y to select a seed\n"
+                getConsole() << "\r" << "Press X/Y to select a seed\n"
                              << "Press R + Z to close the console\n"
                              << "[" << static_cast<int32_t>(selectedSeed) + 1 << "/" << static_cast<int32_t>(numSeeds)
                              << "] Seed: " << seedList->m_minSeedInfo[selectedSeed].fileName << "\n";
@@ -820,7 +819,7 @@ namespace mod
                 uint8_t* reserveBytesPtr = &gameInfo->save.save_file.reserve.unk[0];
                 uint32_t itemToGive = 0xFF;
 
-                for (uint32_t i = 0; i < 4; i++)
+                for (uint32_t i = 0; i < GIVE_PLAYER_ITEM_RESERVED_BYTES; i++)
                 {
                     const uint32_t storedItem = reserveBytesPtr[i];
 
@@ -1067,6 +1066,22 @@ namespace mod
             }
         }
         return return_dStage_playerInit(stageDt, i_data, num, raw_data);
+    }
+
+    KEEP_FUNC int32_t procCoGetItemInitCreateItem(const float pos[3],
+                                                  int32_t item,
+                                                  uint8_t unk3,
+                                                  int32_t unk4,
+                                                  int32_t unk5,
+                                                  const float rot[3],
+                                                  const float scale[3])
+    {
+        if (giveItemToPlayer == ITEM_IN_QUEUE)
+        {
+            giveItemToPlayer = CLEAR_QUEUE;
+        }
+
+        return libtp::tp::f_op_actor_mng::createItemForPresentDemo(pos, item, unk3, unk4, unk5, rot, scale);
     }
 
     KEEP_FUNC int32_t handle_createItemForBoss(const float pos[3],
@@ -2189,7 +2204,6 @@ namespace mod
         // that doesnt exist we want the game to create one using the item id in mGtItm.
         if (giveItemToPlayer == ITEM_IN_QUEUE)
         {
-            giveItemToPlayer = CLEAR_QUEUE;
             libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer->mDemo.mParam0 = 0x100;
         }
 

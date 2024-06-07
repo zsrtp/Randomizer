@@ -1,16 +1,7 @@
-.global asmAdjustPoeItemStart
-.global asmAdjustPoeItemEnd
+.global asmAdjustPoeItem
+.hidden asmAdjustPoeItem
 
-.hidden asmAdjustPoeItemStart
-.hidden asmAdjustPoeItemEnd
-
-asmAdjustPoeItemStart:
+asmAdjustPoeItem:
+# r4 normally would need to be backed up here, but a different patch is skipping the code that would use the value in r4, so we don't need to back it up
 mr %r3,%r31 # e_hp_class
-bl handleAdjustPoeItem
-mr %r4,%r3 #The item to give
-
-# Restore important register values
-addi %r3,%r31,0x4D0
-
-asmAdjustPoeItemEnd:
-b 0
+b handleAdjustPoeItem
