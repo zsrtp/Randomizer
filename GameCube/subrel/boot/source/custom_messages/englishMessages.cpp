@@ -593,8 +593,12 @@ namespace mod::customMessages
         // Compasses
         "Compasses",
 
-        // helpText
+    // helpText
+#ifdef PLATFORM_WII
+        "Press Plus\nor 2 to\ntoggle\nadditional\ndata",
+#else
         "Press Start\nor Z to\ntoggle\nadditional\ndata",
+#endif
     };
 
     const ItemWheelMenuOffsets itemWheelMenuOffsetsUs {

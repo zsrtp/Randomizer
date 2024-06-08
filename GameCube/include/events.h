@@ -18,10 +18,13 @@
 #include "tp/dynamic_link.h"
 #include "tp/dzx.h"
 #include "tp/f_op_actor.h"
-#include "tp/m_do_controller_pad.h"
 #include "tp/rel/d_a_obj_Lv5Key.h"
 #include "tp/f_op_actor_iter.h"
 #include "tp/d_meter2_draw.h"
+
+#ifndef PLATFORM_WII
+#include "tp/m_do_controller_pad.h"
+#endif
 
 namespace mod::events
 {
@@ -159,7 +162,13 @@ namespace mod::events
     bool checkFoolItemFreeze();
 
     uint16_t getPauseRupeeMax(libtp::tp::d_save::dSv_player_status_a_c* plyrStatus);
+
+#ifdef PLATFORM_WII
+    bool autoMashThroughText(uint8_t padId);
+#else
     uint32_t autoMashThroughText(libtp::tp::m_do_controller_pad::CPadInfo* padInfo);
+#endif
+
     void* handleTransformAnywhere(libtp::tp::f_op_actor_iter::fopAcIt_JudgeFunc unk1, void* unk2);
     bool checkValidTransformAnywhere();
 

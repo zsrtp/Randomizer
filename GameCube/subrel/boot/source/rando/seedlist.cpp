@@ -9,12 +9,6 @@
 #include <cstdio>
 #include <cinttypes>
 
-#ifdef DVD
-#include "gc_wii/dvd.h"
-#else
-#include "gc_wii/card.h"
-#endif
-
 #include "rando/seedlist.h"
 #include "main.h"
 #include "rando/data.h"
@@ -23,6 +17,14 @@
 #include "memory.h"
 #include "cxx.h"
 #include "gc_wii/OSInterrupt.h"
+
+#ifdef DVD
+#include "gc_wii/dvd.h"
+#elif defined PLATFORM_WII
+#include "gc_wii/nand.h"
+#else
+#include "gc_wii/card.h"
+#endif
 
 namespace mod::rando
 {
@@ -41,11 +43,15 @@ namespace mod::rando
         // Get a list of all seeds available
 #ifdef DVD
         getSeedFiles("/mod/seed", minSeedInfoBuffer);
+#elif defined PLATFORM_WII
+        char dirBuf[96];
+        snprintf(dirBuf, sizeof(dirBuf), "%s/seed", gc_wii::nand::nandGetHomeDir());
+        getSeedFiles(dirBuf, minSeedInfoBuffer);
 #else
         // The memory card should already be mounted
         getSeedFiles(CARD_SLOT_A, minSeedInfoBuffer);
 #endif
-        uint32_t numSeeds = m_numSeeds;
+        const uint32_t numSeeds = m_numSeeds;
         if (numSeeds > 0)
         {
             // Align to uint8_t, as it is the largest variable type used in the MinSeedInfo struct
@@ -74,6 +80,11 @@ namespace mod::rando
         DVDDirectory dir;
         DVDDirectoryEntry entry;
         char filePath[96];
+#elif defined PLATFORM_WII
+    void SeedList::getSeedFiles(const char* seedDirectory, MinSeedInfo* minSeedInfoBuffer)
+    {
+        using namespace libtp::gc_wii::nand;
+        char filePath[96];
 #else
     // This function assumes that the memory card is already mounted
     void SeedList::getSeedFiles(int32_t chan, MinSeedInfo* minSeedInfoBuffer)
@@ -89,7 +100,7 @@ namespace mod::rando
         // Starting index
         uint32_t index = 0;
 
-        // Interrupts are required to be enabled for CARD/DVD functions to work properly
+        // Interrupts are required to be enabled for CARD/NAND/DVD functions to work properly
         bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
 
 #ifdef DVD
@@ -99,8 +110,36 @@ namespace mod::rando
             return;
         }
 #endif
+
+#ifdef PLATFORM_WII
+        // Get the total number of files/folders in the folder
+        uint32_t numFiles;
+        if (NANDReadDir(seedDirectory, nullptr, &numFiles) != NAND_RESULT_READY)
+        {
+            return;
+        }
+
+        // Allocate memory for the list of files/folders
+        // Allocate the memory to the back of the heap to avoid fragmentation
+        // Buffers that NANDReadDir uses for the file list must be aligned to 0x20 bytes
+        char* fileList = new (-0x20) char[numFiles * (NAND_FILENAME_MAX + 1)];
+
+        // Get the list of files/folders
+        if (NANDReadDir(seedDirectory, fileList, &numFiles) != NAND_RESULT_READY)
+        {
+            delete[] fileList;
+            return;
+        }
+
+        // Loop through all possible files
+        const int32_t maxSeeds = static_cast<int32_t>(numFiles);
+        currentFileName = fileList;
+
+        for (int32_t i = 0; i < maxSeeds; i++, currentFileName += strlen(currentFileName) + 1)
+#else
         // Loop through all possible files
         for (int32_t i = 0; i < SEED_MAX_ENTRIES; i++)
+#endif
         {
 #ifdef DVD
             // Loop through the files in the directory
@@ -124,6 +163,13 @@ namespace mod::rando
 
             // Try to open the file and get the header data
             if (DVD_STATE_END != libtp::tools::readFile(filePath, sizeof(header), 0, &header))
+            {
+#elif defined PLATFORM_WII
+            // Get the path to the current file
+            snprintf(filePath, sizeof(filePath), "seed/%s", currentFileName);
+
+            // Try to open the file and get the header data
+            if (NAND_RESULT_READY != libtp::tools::readNAND(filePath, sizeof(header), 0, &header))
             {
 #else
             // Try to get the status of an arbitrary file slot
@@ -185,6 +231,8 @@ namespace mod::rando
 #ifdef DVD
         // Close the directory that has the seeds
         DVDCloseDir(&dir);
+#elif defined PLATFORM_WII
+        delete[] fileList;
 #endif
         // Restore interrupts
         libtp::gc_wii::os_interrupt::OSRestoreInterrupts(enable);

@@ -163,21 +163,21 @@ def main():
     struct.pack_into(">B",  headerBuffer,  0x34, 4)				# permissions
     struct.pack_into(">B",  headerBuffer,  0x35, 0)				# copy counter
     struct.pack_into(">H",  headerBuffer,  0x36, 0)				# first block number
-    struct.pack_into(">H",  headerBuffer,  0x38, blockCount)  # block count
+    struct.pack_into(">H",  headerBuffer,  0x38, blockCount)	# block count
     struct.pack_into(">H",  headerBuffer,  0x3A, 0xFF)			# unused
     struct.pack_into(">L",  headerBuffer,  0x3C, 0x2000)		# comment address
 
     outputFilename = os.path.splitext(args.data.name)[0] + ".gci"
     with open(outputFilename, "wb") as outputFile:
-        outputFile.write(bytearray(headerBuffer))
-        outputFile.write(bytearray(bannerBuffer))
-        outputFile.write(bytearray(iconBuffer))
-        outputFile.write(bytearray(commentBuffer))
-        outputFile.write(bytearray(fileInfoBuffer))
-        outputFile.write(bytearray(inputBuffer))
-        outputFile.write(bytearray(relsBuffer))
-        outputFile.write(bytearray(cardPaddingBuffer))
-        outputFile.write(bytearray(paddingBuffer))
+        outputFile.write(bytearray(headerBuffer))		# 0x0000
+        outputFile.write(bytearray(bannerBuffer))		# 0x0040
+        outputFile.write(bytearray(iconBuffer))			# 0x1840
+        outputFile.write(bytearray(commentBuffer))		# 0x2040
+        outputFile.write(bytearray(fileInfoBuffer))		# 0x2080
+        outputFile.write(bytearray(inputBuffer))		# 0x2240
+        outputFile.write(bytearray(relsBuffer))			#
+        outputFile.write(bytearray(cardPaddingBuffer))	#
+        outputFile.write(bytearray(paddingBuffer))		#
 
 
 if __name__ == "__main__":

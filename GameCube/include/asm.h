@@ -17,22 +17,34 @@
 #include "tp/f_op_actor.h"
 #include "tp/d_a_alink.h"
 
-// Original: li 0xE0
-// Normally loads the poesoul item id into r4
+// Original: li r4,0xE0
+// Normally loads the poe soul item id into r4
+#ifdef PLATFORM_WII
+#define e_hp_ExecDead_liOffset 0x207C
+#define e_po_ExecDead_liOffset 0x38DC
+#else
 #define e_hp_ExecDead_liOffset 0x247C
 #define e_po_ExecDead_liOffset 0x3C9C
+#endif
 
-// Original:
-// stb r0, 0x10c( r4 ) = > numPoeSouls
+// Original: stb r0,0x10C(r4) => numPoeSouls
 // Normally increments poe count
+#ifdef PLATFORM_WII
+#define e_hp_ExecDead_incOffset 0x1F60
+#define e_po_ExecDead_incOffset 0x3730
+#else
 #define e_hp_ExecDead_incOffset 0x2354
 #define e_po_ExecDead_incOffset 0x36A8
+#endif
 
 // d_a_obj_Lv5Key__Wait_offset:
-// 0xBC is offset to the text section relative to the start of the decompressed
-// REL. 0x4E4 is offset to Wait function relative to the start of the text
-// section (as seen on line 14 of d_a_obj_Lv5Key.map).
+// 0xBC is offset to the text section relative to the start of the decompressed REL. 0x4E4 is offset to Wait function relative
+// to the start of the text section (as seen on line 14 of d_a_obj_Lv5Key.map).
+#ifdef PLATFORM_WII
+#define d_a_obj_Lv5Key__Wait_offset (0xC4 + 0x484)
+#else
 #define d_a_obj_Lv5Key__Wait_offset (0xBC + 0x4E4)
+#endif
 
 namespace mod::assembly
 {
@@ -106,7 +118,7 @@ namespace mod::assembly
         void asmCallCodehandler();
 
         // d_a_alink.o
-#ifdef TP_JP
+#if defined TP_GJP || defined TP_WUS2
         void asmUnpatchMapGlitchStart();
         void asmUnpatchMapGlitchEnd();
         void unpatchMapGlitch(libtp::tp::d_a_alink::daAlink* d_a_alink);
