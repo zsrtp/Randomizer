@@ -797,6 +797,7 @@ namespace mod
     void initGiveItemToPlayer(libtp::tp::d_a_alink::daAlink* linkMapPtr)
     {
         using namespace libtp::tp;
+        rando::Randomizer* rando = randomizer;
 
         switch (linkMapPtr->mProcID)
         {
@@ -842,8 +843,7 @@ namespace mod
                         {
                             giveItemToPlayer = ITEM_IN_QUEUE;
                         }
-
-                        itemToGive = storedItem;
+                        itemToGive = game_patch::_04_verifyProgressiveItem(rando, storedItem);
                         break;
                     }
                 }
