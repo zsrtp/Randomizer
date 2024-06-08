@@ -511,7 +511,6 @@ namespace mod
         drawHeapDebugInfo();
 #undef DRAW_DEBUG_HEAP_INFO
 #endif
-
         // New frame, so the ring will be redrawn
         item_wheel_menu::ringDrawnThisFrame = false;
 
@@ -645,6 +644,11 @@ namespace mod
         {
             if (!getCurrentSeed(rando) && (seedList->m_numSeeds > 0) && (seedRelAction == SEED_ACTION_NONE))
             {
+                // giveItemToPlayer needs to be reset to QUEUE_EMPTY upon loading a file, as the player potentially could have
+                // died after initializing getting an item (which would set giveItemToPlayer to ITEM_IN_QUEUE), and then chosen
+                // to return to the title screen.
+                giveItemToPlayer = QUEUE_EMPTY;
+
                 // Interrupts are required to be enabled for CARD/DVD functions to work properly
                 const bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
 #ifndef DVD
@@ -832,11 +836,13 @@ namespace mod
                             giveItemToPlayer = QUEUE_EMPTY;
                             break;
                         }
+
                         // If the queue is empty and we have an item to give, update the queue state.
                         else if (giveItemToPlayer == QUEUE_EMPTY)
                         {
                             giveItemToPlayer = ITEM_IN_QUEUE;
                         }
+
                         itemToGive = storedItem;
                         break;
                     }
