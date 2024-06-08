@@ -797,7 +797,6 @@ namespace mod
     void initGiveItemToPlayer(libtp::tp::d_a_alink::daAlink* linkMapPtr)
     {
         using namespace libtp::tp;
-        rando::Randomizer* rando = randomizer;
 
         switch (linkMapPtr->mProcID)
         {
@@ -807,6 +806,8 @@ namespace mod
             case d_a_alink::PROC_WOLF_WAIT:
             case d_a_alink::PROC_WOLF_TIRED_WAIT:
             case d_a_alink::PROC_WOLF_MOVE:
+            case d_a_alink::PROC_ATN_MOVE:
+            case d_a_alink::PROC_WOLF_ATN_AC_MOVE:
             {
                 // Check if link is currently in a cutscene
                 if (d_a_alink::checkEventRun(linkMapPtr))
@@ -843,7 +844,7 @@ namespace mod
                         {
                             giveItemToPlayer = ITEM_IN_QUEUE;
                         }
-                        itemToGive = game_patch::_04_verifyProgressiveItem(rando, storedItem);
+                        itemToGive = game_patch::_04_verifyProgressiveItem(randomizer, storedItem);
                         break;
                     }
                 }
@@ -1264,9 +1265,9 @@ namespace mod
             {
                 // Check if we are at Kakariko Malo Mart and that the Wooden Shield has not been bought.
                 if (libtp::tools::playerIsInRoomStage(3, stagesPtr[StageIDs::Kakariko_Village_Interiors]) &&
-                    !libtp::tp::d_save::isSwitch_dSv_memBit(&d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x3A))
+                    !libtp::tp::d_save::isSwitch_dSv_memBit(&d_com_inf_game::dComIfG_gameInfo.save.memory.temp_flags, 0x5))
                 {
-                    // Return false so we can buy the hawkeye.
+                    // Return false so we can buy the wooden shield.
                     return 0;
                 }
                 break;
