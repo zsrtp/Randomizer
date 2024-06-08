@@ -645,8 +645,8 @@ namespace mod
             if (!getCurrentSeed(rando) && (seedList->m_numSeeds > 0) && (seedRelAction == SEED_ACTION_NONE))
             {
                 // giveItemToPlayer needs to be reset to QUEUE_EMPTY upon loading a file, as the player potentially could have
-                // died after initializing getting an item (which would set giveItemToPlayer to ITEM_IN_QUEUE), and then chosen
-                // to return to the title screen.
+                // saved/died after initializing getting an item (which would set giveItemToPlayer to ITEM_IN_QUEUE), and then
+                // chosen to return to the title screen.
                 giveItemToPlayer = QUEUE_EMPTY;
 
                 // Interrupts are required to be enabled for CARD/DVD functions to work properly
