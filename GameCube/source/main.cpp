@@ -1258,6 +1258,7 @@ namespace mod
                 }
                 break;
             }
+            case items::Ordon_Shield:
             case items::Wooden_Shield:
             {
                 // Check if we are at Kakariko Malo Mart and that the Wooden Shield has not been bought.
