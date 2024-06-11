@@ -1673,6 +1673,36 @@ namespace mod::events
             return;
         }
 
+        // Make sure Link isn't riding anything (horse, boar, etc.)
+        if (libtp::tp::d_camera::checkRide(linkMapPtr))
+        {
+            return;
+        }
+
+        // Make sure Link is not underwater or talking to someone.
+        switch (linkMapPtr->mProcID)
+        {
+            case libtp::tp::d_a_alink::PROC_TALK:
+            case libtp::tp::d_a_alink::PROC_SWIM_UP:
+            case libtp::tp::d_a_alink::PROC_SWIM_DIVE:
+            {
+                return;
+            }
+            // If Link is targeting or pulling a chain, we don't want to remove the ability to use items in combat accidently.
+            case libtp::tp::d_a_alink::PROC_ATN_ACTOR_MOVE:
+            case libtp::tp::d_a_alink::PROC_ATN_ACTOR_WAIT:
+            case libtp::tp::d_a_alink::PROC_WOLF_ATN_AC_MOVE:
+            {
+                break;
+            }
+            default:
+            {
+                // Disable the input that was just pressed, as sometimes it could cause items to be used or Wolf Link to dig.
+                libtp::tp::m_do_controller_pad::cpadInfo[libtp::tp::m_do_controller_pad::PAD_1].mPressedButtonFlags = 0;
+                break;
+            }
+        }
+
         // Ensure there is a proper pointer to the mMeterClass and mpMeterDraw structs in g_meter2_info.
         const libtp::tp::d_meter2::dMeter2_c* meterClassPtr = libtp::tp::d_meter2_info::g_meter2_info.mMeterClass;
         if (!meterClassPtr)
@@ -1693,29 +1723,8 @@ namespace mod::events
             return;
         }
 
-        // Make sure Link is not underwater or talking to someone.
-        switch (linkMapPtr->mProcID)
-        {
-            case libtp::tp::d_a_alink::PROC_TALK:
-            case libtp::tp::d_a_alink::PROC_SWIM_UP:
-            case libtp::tp::d_a_alink::PROC_SWIM_DIVE:
-            {
-                return;
-            }
-            default:
-            {
-                break;
-            }
-        }
-
         // The game will crash if trying to quick transform while holding the Ball and Chain
         if (linkMapPtr->mEquipItem == libtp::data::items::Ball_and_Chain)
-        {
-            return;
-        }
-
-        // Make sure Link isn't riding anything (horse, boar, etc.)
-        if (libtp::tp::d_camera::checkRide(linkMapPtr))
         {
             return;
         }

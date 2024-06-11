@@ -618,8 +618,8 @@ namespace mod::game_patch
 
     KEEP_FUNC void _02_firstMirrorShardItemFunc()
     {
-        // Update the pause menu to show the first shard.
-        events::setSaveFileEventFlag(libtp::data::flags::UPDATE_SHARDS_TO_HAVE_AT_LEAST_ARBITERS_SHARD);
+        libtp::tp::d_save::onCollectMirror(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.player.player_collect,
+                                           '\0');
     }
 
     KEEP_FUNC void _02_secondMirrorShardItemFunc()

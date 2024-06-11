@@ -615,9 +615,6 @@ namespace mod
             // Handle generic button checks
             if (checkButtonCombo(PadInputs::Button_R | PadInputs::Button_Y, true))
             {
-                // Disable the input that was just pressed, as sometimes it could cause items to be used or Wolf Link to dig.
-                padInfo->mPressedButtonFlags = 0;
-
                 // Handle transforming
                 events::handleQuickTransform();
             }
