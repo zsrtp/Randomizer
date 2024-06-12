@@ -757,6 +757,10 @@ namespace mod::events
 
                 // Branch over the code that gives Link the master sword if it has been pulled
                 performStaticASMReplacement(relPtrRaw + 0xCA0, ASM_BRANCH(0x80));
+
+                // Nop out the function call to d_meter2_info::setCloth that causes a crash if you are wearing anything other
+                // than magic armor
+                performStaticASMReplacement(relPtrRaw + 0x25C, ASM_NOP);
                 break;
             }
         }
