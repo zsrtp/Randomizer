@@ -99,6 +99,7 @@ namespace mod::rando
             case libtp::data::stage::StageIDs::Kakariko_Village_Interiors:
             case libtp::data::stage::StageIDs::Castle_Town_Shops:
             case libtp::data::stage::StageIDs::Death_Mountain:
+            case libtp::data::stage::StageIDs::City_in_the_Sky:
             {
                 if (modifyShopModels)
                 {
