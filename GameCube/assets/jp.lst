@@ -149,6 +149,7 @@
 800c4f4c:procFrontRollCrashInit
 8012d90c:procWolfDashReverseInit
 8013c914:procWolfAttackReverseInit
+8012dbf4:procWolfAtnActorMoveInit
 
 // data
 80388C0C:climbVars
