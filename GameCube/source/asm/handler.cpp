@@ -26,9 +26,14 @@ namespace mod::assembly
 
     void handleAdjustPoeItem(void* e_hp_class)
     {
+        // Get the item and put it into the queue
         const uint8_t flag = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(e_hp_class) + 0x77B);
         const int32_t item = events::onPoe(randomizer, flag);
         randomizer->addItemToEventQueue(static_cast<uint32_t>(item));
+
+        // Force wolf Link into the PROC_WOLF_ATN_AC_MOVE proc to skip the backflip and trigger the queue to give the item
+        // immediately
+        libtp::tp::d_a_alink::procWolfAtnActorMoveInit(libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer);
     }
 
     int32_t handleAdjustAGPoeItem(void* e_po_class)
