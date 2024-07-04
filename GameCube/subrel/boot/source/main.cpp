@@ -33,6 +33,7 @@
 #include "gc_wii/OSInterrupt.h"
 #include "gc_wii/vi.h"
 #include "asm.h"
+#include "tp/d_file_select.h"
 
 #include <cstdint>
 #include <cstring>
@@ -266,6 +267,10 @@ namespace mod
 
         // Shop Functions
         return_seq_decide_yes = patch::hookFunction(libtp::tp::d_shop_system::seq_decide_yes, mod::handle_seq_decide_yes);
+
+        // Title Screen functions
+        return_dFile_select_c___create =
+            patch::hookFunction(libtp::tp::d_file_select::dFile_select_c___create, mod::resetQueueOnFileSelectScreen);
     }
 
     void initRandState()

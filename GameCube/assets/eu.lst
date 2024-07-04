@@ -475,3 +475,6 @@
 
 // d_gameover.o
 8019b664:dispWait_init
+
+// d_file_select.o
+801845d8:dFile_select_c___create

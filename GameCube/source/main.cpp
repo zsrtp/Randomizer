@@ -53,6 +53,7 @@
 #include "cxx.h"
 #include "tp/f_pc_executor.h"
 #include "tp/d_msg_flow.h"
+#include "tp/d_file_select.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -299,6 +300,9 @@ namespace mod
     KEEP_VAR int32_t (*return_seq_decide_yes)(libtp::tp::d_shop_system::dShopSystem* shopPtr,
                                               libtp::tp::f_op_actor::fopAc_ac_c* actor,
                                               void* msgFlow) = nullptr;
+
+    // Title Screen functions
+    KEEP_VAR void (*return_dFile_select_c___create)(libtp::tp::d_file_select::dFile_select_c* thisPtr) = nullptr;
 
     void main()
     {
@@ -641,11 +645,6 @@ namespace mod
         {
             if (!getCurrentSeed(rando) && (seedList->m_numSeeds > 0) && (seedRelAction == SEED_ACTION_NONE))
             {
-                // giveItemToPlayer needs to be reset to QUEUE_EMPTY upon loading a file, as the player potentially could have
-                // saved/died after initializing getting an item (which would set giveItemToPlayer to ITEM_IN_QUEUE), and then
-                // chosen to return to the title screen.
-                giveItemToPlayer = QUEUE_EMPTY;
-
                 // Interrupts are required to be enabled for CARD/DVD functions to work properly
                 const bool enable = libtp::gc_wii::os_interrupt::OSEnableInterrupts();
 #ifndef DVD
@@ -883,6 +882,26 @@ namespace mod
     {
         uint32_t params = 0xFF0000 | ((flag & 0xFF) << 0x8) | (itemID & 0xFF);
         return libtp::tp::f_op_actor_mng::fopAcM_create(539, params, pos, roomNo, rot, scale, -1);
+    }
+
+    KEEP_FUNC void resetQueueOnFileSelectScreen(libtp::tp::d_file_select::dFile_select_c* thisPtr)
+    {
+        using namespace libtp::tp::d_com_inf_game;
+
+        // Call the original function immediately to avoid storing thisPtr on the stack
+        return_dFile_select_c___create(thisPtr);
+
+        // giveItemToPlayer needs to be reset to QUEUE_EMPTY upon going to the file select screen, as the player could have
+        // potentially saved/died after initializing getting an item (which would set giveItemToPlayer to ITEM_IN_QUEUE), and
+        // then chosen to return to the title screen.
+        giveItemToPlayer = QUEUE_EMPTY;
+
+        // The reserved bytes that the queue uses to store the items to give are not cleared upon starting a new file, which
+        // means that the player could soft reset during the process of being given item(s), and then start a new file to be
+        // given those items on that new file. To avoid this, the reserved bytes need to be cleared upon going to the file
+        // select screen. All of the reserved bytes excluding the ones used by the queue will also be cleared, in the event that
+        // they need to be used for other stuff in the future.
+        libtp::memory::clearMemory(&dComIfG_gameInfo.save.save_file.reserve, sizeof(dComIfG_gameInfo.save.save_file.reserve));
     }
 
     KEEP_FUNC bool handle_do_unlink(libtp::tp::dynamic_link::DynamicModuleControl* dmc)
