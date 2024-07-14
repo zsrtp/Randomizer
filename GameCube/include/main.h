@@ -32,6 +32,7 @@
 #include "tp/d_shop_system.h"
 #include "tp/f_op_actor.h"
 #include "tp/d_msg_flow.h"
+#include "tp/d_file_select.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -522,5 +523,9 @@ namespace mod
     extern int32_t (*return_seq_decide_yes)(libtp::tp::d_shop_system::dShopSystem* shopPtr,
                                             libtp::tp::f_op_actor::fopAc_ac_c* actor,
                                             void* msgFlow);
+
+    // Title Screen functions
+    void resetQueueOnFileSelectScreen(libtp::tp::d_file_select::dFile_select_c* thisPtr);
+    extern void (*return_dFile_select_c___create)(libtp::tp::d_file_select::dFile_select_c* thisPtr);
 } // namespace mod
 #endif
