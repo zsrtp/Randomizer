@@ -171,6 +171,12 @@ namespace mod::events
                                          0xF); // Main Room 1F explored
         }
 
+        // Clear the danBit that starts a conversation when entering the ranch so the player can do goats as needed.
+        if ((strcmp(currentStage, stage::allStages[stage::StageIDs::Ordon_Ranch]) == 0) && (currentPoint == 0x1))
+        {
+            d_com_inf_game::dComIfG_gameInfo.save.mDan.mSwitch[0] = 0x0;
+        }
+
         randomizer->overrideEventARC();
     }
 
