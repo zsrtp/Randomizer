@@ -1852,7 +1852,7 @@ namespace mod
                     events::setSaveFileEventFlag(MAP_WARPING_UNLOCKED); // in glitched Logic, you can skip the gorge bridge.
                     if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(MIDNAS_DESPERATE_HOUR_COMPLETED))
                     {
-                        if (darkClearLevelFlag == 0x5)
+                        if (darkClearLevelFlag == 0x7)
                         {
                             playerStatusBPtr->transform_level_flag |= 0x8; // Set the flag for the last transformed twilight.
                                                                            // Also puts Midna on the player's back
