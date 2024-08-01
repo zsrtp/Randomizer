@@ -247,7 +247,7 @@ namespace mod::item_wheel_menu
             }
         }
 
-        for (uint32_t b = 4; b < 7; b++)
+        for (uint32_t b = 4; b < 8; b++)
         {
             if ((collectedShards << b) & 0x80)
             {
@@ -255,7 +255,7 @@ namespace mod::item_wheel_menu
             }
         }
 
-        snprintf(buf, sizeof(buf), "%" PRIu32 "/3\n%" PRIu32 "/3", shadowsCount, shardsCount);
+        snprintf(buf, sizeof(buf), "%" PRIu32 "/3\n%" PRIu32 "/4", shadowsCount, shardsCount);
 
         // Draw the counts for the fused shadows and mirror shards
         const int32_t shadowsAndShardsCountsPosXOffset = shadowsAndShardsMainPosXOffset + offsets->shadowsShardsOffset;

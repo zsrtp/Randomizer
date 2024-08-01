@@ -32,6 +32,7 @@
 #include "tp/f_op_actor_iter.h"
 #include "tp/d_pane_class.h"
 #include "game_patch/game_patch.h"
+#include "tp/m_do_printf.h"
 
 namespace mod::events
 {
@@ -62,7 +63,7 @@ namespace mod::events
         {"Hjump", 0x044FFF02, 5600.f, -5680.f, 52055.f, 0, static_cast<int16_t>(0x4000), 0, 0xFFFF, 0x20, 0x2D, 0x2D, 0xFF};
 
     // Golden Wolf actor placed in Faron Woods.
-    libtp::tp::dzx::ACTR ForestGWolfActr = {"GWolf", 0x05FF01FF, -35178.f, 430.21f, -21503.6f, 0, -0x4000, 0xFF, 0xFFFF};
+    libtp::tp::dzx::ACTR ForestGWolfActr = {"GWolf", 0x05FF01FF, -36714.9023f, 424.03894f, -23698.0273f, 0, 0, 0xFF, 0xFFFF};
 
     // Poe actor template
     libtp::tp::dzx::ACTR ImpPoeActr = {"E_hp", 0xFF031E00, 4531.19f, -30.f, 2631.961f, 0, 0, 0x0, 0xFFFF};
@@ -74,7 +75,7 @@ namespace mod::events
     // Creating new actors uses less memory than modifying a template due to the amount of memory used by instructions.
     // (0x28 vs 0x48 bytes)
     libtp::tp::dzx::ACTR KakShopSlot2Actr =
-        {"TGSPITM", 0x02FFFFFF, -650.f, 450.f, -500.f, 0x147, static_cast<int16_t>(0x8000), 0x3AFF, 0xFFFF};
+        {"TGSPITM", 0x02FFFFFF, -650.f, 450.f, -500.f, 0x147, static_cast<int16_t>(0x8000), 0x05FF, 0xFFFF};
 
     // Sign Actors
     libtp::tp::dzx::ACTR SignActor = {"Obj_kn2",
@@ -170,6 +171,12 @@ namespace mod::events
                                          0xF); // Main Room 1F explored
         }
 
+        // Clear the danBit that starts a conversation when entering the ranch so the player can do goats as needed.
+        if ((strcmp(currentStage, stage::allStages[stage::StageIDs::Ordon_Ranch]) == 0) && (currentPoint == 0x1))
+        {
+            d_com_inf_game::dComIfG_gameInfo.save.mDan.mSwitch[0] = 0x0;
+        }
+
         randomizer->overrideEventARC();
     }
 
@@ -220,12 +227,20 @@ namespace mod::events
             // Generic Poe
             case D_A_E_HP:
             {
-                libtp::patch::writeStandardBranches(relPtrRaw + e_hp_ExecDead_liOffset,
-                                                    assembly::asmAdjustPoeItemStart,
-                                                    assembly::asmAdjustPoeItemEnd);
+                // Force the poe to be despawned immediately without playing the get item animation
+                performStaticASMReplacement(relPtrRaw + e_hp_ExecDead_beqOffset, ASM_NOP);
+
+                // Initialize giving the proper item rather than the poe soul
+                libtp::patch::writeBranchBL(relPtrRaw + e_hp_ExecDead_incOffset, assembly::asmAdjustPoeItem);
 
                 // Disable Poe increment (handled through item_get_func; see game_patches)
-                performStaticASMReplacement(relPtrRaw + e_hp_ExecDead_incOffset, ASM_NOP);
+                performStaticASMReplacement(relPtrRaw + e_hp_ExecDead_incOffset + 0x4, ASM_BRANCH(0x18));
+
+                // Skip checking for setting the flag for having obtained 20 poe souls
+
+                // This cannot be combined with the previous branch due to a value being stored in a class in the middle of the
+                // branches
+                performStaticASMReplacement(relPtrRaw + e_hp_ExecDead_incOffset + 0x24, ASM_BRANCH(0x28));
 
                 break;
             }
@@ -237,8 +252,9 @@ namespace mod::events
                                                     assembly::asmAdjustAGPoeItemStart,
                                                     assembly::asmAdjustAGPoeItemEnd);
 
-                // Disable Poe increment (handled through item_get_func; see game_patches)
-                performStaticASMReplacement(relPtrRaw + e_po_ExecDead_incOffset, ASM_NOP);
+                // Disable Poe increment (handled through item_get_func; see game_patches) and skip checking for setting the
+                // flag for having obtained 20 poe souls
+                performStaticASMReplacement(relPtrRaw + e_po_ExecDead_incOffset, ASM_BRANCH(0x44));
                 break;
             }
 
@@ -747,6 +763,10 @@ namespace mod::events
 
                 // Branch over the code that gives Link the master sword if it has been pulled
                 performStaticASMReplacement(relPtrRaw + 0xCA0, ASM_BRANCH(0x80));
+
+                // Nop out the function call to d_meter2_info::setCloth that causes a crash if you are wearing anything other
+                // than magic armor
+                performStaticASMReplacement(relPtrRaw + 0x25C, ASM_NOP);
                 break;
             }
         }
@@ -789,7 +809,6 @@ namespace mod::events
     void onDZX(rando::Randomizer* randomizer, libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo)
     {
         randomizer->overrideDZX(chunkTypeInfo);
-        loadCustomActors();
     }
 
     int32_t onPoe(rando::Randomizer* randomizer, uint8_t flag)
@@ -996,6 +1015,22 @@ namespace mod::events
         return numBombs;
     }
 
+    int32_t proc_query025(void* unk1, void* unk2, int32_t unk3)
+    {
+        using namespace libtp::data::stage;
+
+        const auto stagesPtr = &allStages[0];
+
+        // Check to see if currently in one of the Kakariko interiors
+        if (libtp::tools::playerIsInRoomStage(3, stagesPtr[StageIDs::Kakariko_Village_Interiors]))
+        {
+            // Return 0 so the player can buy the red potion item from the shop.
+            return 0;
+        }
+
+        return mod::return_query025(unk1, unk2, unk3);
+    }
+
     int32_t proc_query042(void* unk1, void* unk2, int32_t unk3)
     {
         if (checkValidTransformAnywhere())
@@ -1117,7 +1152,6 @@ namespace mod::events
                     if (tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Stallord]))
                     {
                         uint32_t agDungeonReward = randomizer->getEventItem(rando::customItems::Mirror_Piece_1);
-                        agDungeonReward = game_patch::_04_verifyProgressiveItem(randomizer, agDungeonReward);
                         randomizer->addItemToEventQueue(agDungeonReward);
                     }
                     break;
@@ -1132,12 +1166,15 @@ namespace mod::events
         mod::return_onDungeonItem(memBitPtr, memBit);
     }
 
-    void loadCustomActors()
+    void loadCustomActors(void* mStatus_roomControl)
     {
         using namespace libtp;
         using namespace libtp::data::stage;
 
         const auto stagesPtr = &allStages[0];
+        tp::dzx::ACTR localSignActor;
+        memcpy(&localSignActor, &SignActor, sizeof(tp::dzx::ACTR));
+
         if (tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Faron_Woods]))
         {
             tools::spawnActor(0, EponaActr);
@@ -1149,6 +1186,36 @@ namespace mod::events
 
             localEponaActor.parameters = 0x148;
             tools::spawnActor(0, localEponaActor);
+        }
+
+        // The actors in this case are actors who need to be spawned in even if the area is in a specific set state no matter
+        // what (i.e PoT, HC, etc. and cannot be spawned in with the mStageData actors due to checking for angles and the like,
+        // which causes a crash.)
+        if (randomizer && (reinterpret_cast<uint32_t>(mStatus_roomControl) !=
+                           reinterpret_cast<uint32_t>(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStageData)))
+        {
+            switch (randomizer->m_Seed->m_StageIDX)
+            {
+                case StageIDs::Palace_of_Twilight:
+                {
+                    localSignActor.pos.x = 1808.76245f;
+                    localSignActor.pos.y = -208.901459f;
+                    localSignActor.pos.z = 11813.2744f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0xA971);
+                    tools::spawnActor(0, localSignActor);
+                    break;
+                }
+
+                case StageIDs::Hyrule_Castle:
+                {
+                    localSignActor.pos.x = 0.0f;
+                    localSignActor.pos.y = 25.f;
+                    localSignActor.pos.z = 11625.f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x0000);
+                    tools::spawnActor(11, localSignActor);
+                    break;
+                }
+            }
         }
     }
 
@@ -1165,7 +1232,7 @@ namespace mod::events
         tp::dzx::ACTR localSignActor;
         memcpy(&localSignActor, &SignActor, sizeof(tp::dzx::ACTR));
 
-        const int32_t roomIDX = tools::getCurrentRoomNo();
+        const int32_t roomIDX = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mEvtManager.mRoomNo;
         switch (randomizer->m_Seed->m_StageIDX)
         {
             case StageIDs::Lake_Hylia:
@@ -1184,15 +1251,15 @@ namespace mod::events
                 localSignActor.pos.x = -109203.461f;
                 localSignActor.pos.y = -7220.f;
                 localSignActor.pos.z = 33083.7344f;
-                localSignActor.rot[1] = static_cast<int16_t>(0x6556);
+                localSignActor.rot[1] = static_cast<int16_t>(0x64B5);
                 tools::spawnActor(0, localSignActor);
 
-                if (roomIDX == 1) // needs to rotate left
+                if (roomIDX == 1) // Lanayru Spring
                 {
-                    localSignActor.pos.x = -324.1757f;
-                    localSignActor.pos.y = -1627.872f;
-                    localSignActor.pos.z = 85.1628f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.pos.x = -309.997833f;
+                    localSignActor.pos.y = -1614.82178f;
+                    localSignActor.pos.z = 157.970795f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x8000);
                     tools::spawnActor(1, localSignActor);
                 }
                 break;
@@ -1200,7 +1267,7 @@ namespace mod::events
 
             case StageIDs::Hyrule_Field:
             {
-                if (roomIDX == 0)
+                if (roomIDX == 0) // Eldin Field
                 {
                     if (!tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mEvent,
                                                 data::flags::CLEARED_ELDIN_TWILIGHT))
@@ -1216,55 +1283,55 @@ namespace mod::events
                         localGanonBarrierActor.pos.z -= 270.f;
                         tools::spawnActor(7, localGanonBarrierActor);
                     }
-                    localSignActor.pos.x = -12275.1543f; // needs to rotate left
-                    localSignActor.pos.y = -1001.9508;
-                    localSignActor.pos.z = 20293.6855f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.pos.x = -12433.2744f;
+                    localSignActor.pos.y = -1075.2218f;
+                    localSignActor.pos.z = 20885.7129f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x8000);
                     tools::spawnActor(0, localSignActor);
                 }
 
-                if (roomIDX == 6) // needs to rotate left
+                if (roomIDX == 6) // Faron Field
                 {
                     localSignActor.pos.x = -46039.4922f;
                     localSignActor.pos.y = -9250.f;
                     localSignActor.pos.z = 81859.2891f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.rot[1] = static_cast<int16_t>(0x8000);
                     tools::spawnActor(6, localSignActor);
                 }
 
-                if (roomIDX == 3) // nees to rotate left
+                if (roomIDX == 3) // Kakariko Gorge
                 {
-                    localSignActor.pos.x = -10906.2344f;
-                    localSignActor.pos.y = -3190.27808f;
-                    localSignActor.pos.z = 39026.707f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.pos.x = -11394.7832f;
+                    localSignActor.pos.y = -3258.73096f;
+                    localSignActor.pos.z = 39702.91995f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0xAC70);
                     tools::spawnActor(3, localSignActor);
                 }
 
-                if (roomIDX == 7) // neds to rotate left
+                if (roomIDX == 7) // North Eldin Hint Sign
                 {
                     localSignActor.pos.x = 29691.0742f;
                     localSignActor.pos.y = 661.668;
                     localSignActor.pos.z = -53367.16f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.rot[1] = static_cast<int16_t>(0x742B);
                     tools::spawnActor(7, localSignActor);
                 }
 
-                if (roomIDX == 10) // needs to rotate left
+                if (roomIDX == 10) // Lanayru Field
                 {
                     localSignActor.pos.x = -46711.957f;
                     localSignActor.pos.y = 268.4848f;
                     localSignActor.pos.z = -55505.5508f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.rot[1] = static_cast<int16_t>(0x85B9);
                     tools::spawnActor(10, localSignActor);
                 }
 
-                if (roomIDX == 13) // needs to rotate right
+                if (roomIDX == 13) // Great Bridge of Hylia
                 {
                     localSignActor.pos.x = -94678.8672f;
                     localSignActor.pos.y = -3900.f;
                     localSignActor.pos.z = 18410.543f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.rot[1] = static_cast<int16_t>(0x0000);
                     tools::spawnActor(13, localSignActor);
                 }
 
@@ -1281,18 +1348,18 @@ namespace mod::events
 
                 if (roomIDX == 4)
                 {
-                    localSignActor.pos.x = -12420.0508f;
-                    localSignActor.pos.y = -274.354553f;
-                    localSignActor.pos.z = -11469.2881f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
-                    tools::spawnActor(8, localSignActor);
+                    localSignActor.pos.x = -12423.8467f;
+                    localSignActor.pos.y = 273.277985f;
+                    localSignActor.pos.z = -11518.958f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x9228);
+                    tools::spawnActor(4, localSignActor);
                 }
                 break;
             }
 
             case StageIDs::Castle_Town_Shops:
             {
-                tools::spawnActor(6, ImpPoeActr);
+                tools::spawnActor(5, ImpPoeActr);
                 break;
             }
 
@@ -1303,46 +1370,54 @@ namespace mod::events
                     tools::spawnActor(1, CampBoarActr);
                 }
 
-                localSignActor.pos.x = -2119.33057f;
+                localSignActor.pos.x = -568.556152f;
                 localSignActor.pos.y = 260.f;
-                localSignActor.pos.z = -3915.6517f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556); // needs to rotate right
+                localSignActor.pos.z = -3969.31f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x0000);
                 tools::spawnActor(1, localSignActor);
                 break;
             }
 
             case StageIDs::Kakariko_Village_Interiors:
             {
-                tools::spawnActor(3, KakShopSlot2Actr);
+                if (roomIDX == 0x3)
+                {
+                    tools::spawnActor(3, KakShopSlot2Actr);
+                }
                 break;
             }
 
-            case StageIDs::Kakariko_Village: // needs to rotate right a lot
+            case StageIDs::Kakariko_Village:
             {
                 localSignActor.pos.x = -6277.372f;
                 localSignActor.pos.y = 2850.f;
                 localSignActor.pos.z = -2197.14331f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0x4000);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
 
-            case StageIDs::Ordon_Village: // needs to rotate left slightly
+            case StageIDs::Ordon_Village:
             {
-                localSignActor.pos.x = 687.89f;
-                localSignActor.pos.y = 800.f;
-                localSignActor.pos.z = -1424.16f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
-                tools::spawnActor(1, localSignActor);
+                // Need to check for room 1 or we get a floating sign near the
+                // roof of Sera's Shop.
+                if (roomIDX == 1)
+                {
+                    localSignActor.pos.x = 687.89f;
+                    localSignActor.pos.y = 800.f;
+                    localSignActor.pos.z = -1424.16f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0xA019);
+                    tools::spawnActor(1, localSignActor);
+                }
                 break;
             }
 
             case StageIDs::Sacred_Grove:
             {
-                localSignActor.pos.x = -1510.01062f;
+                localSignActor.pos.x = -1543.f;
                 localSignActor.pos.y = 1725.f;
-                localSignActor.pos.z = 7811.07715f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.z = 7964.85498f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x4000);
                 tools::spawnActor(1, localSignActor);
 
                 if (roomIDX == 1)
@@ -1352,123 +1427,133 @@ namespace mod::events
                 break;
             }
 
-            case StageIDs::Kakariko_Graveyard: // needs to rotate left slightly
+            case StageIDs::Kakariko_Graveyard:
             {
                 localSignActor.pos.x = 21765.9863f;
                 localSignActor.pos.y = 500.f;
                 localSignActor.pos.z = -62.247f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0xC000);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
 
-            case StageIDs::Death_Mountain: // needs to rotate right
+            case StageIDs::Death_Mountain:
             {
-                localSignActor.pos.x = -5459.5757f;
-                localSignActor.pos.y = 0.f;
-                localSignActor.pos.z = -3880.2466f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.x = 920.583069f;
+                localSignActor.pos.y = 0.745985091f;
+                localSignActor.pos.z = 1227.39978f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x35A5);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
 
-            case StageIDs::Hidden_Village: // needs to rotate right
+            case StageIDs::Hidden_Village:
             {
                 localSignActor.pos.x = 5161.03f;
                 localSignActor.pos.y = 0.f;
                 localSignActor.pos.z = -5264.33f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0x0000);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
 
             case StageIDs::Outside_Castle_Town:
             {
-                if (roomIDX == 8) // needs to rotate left
+                if (roomIDX == 8) // Beside Castle Town
                 {
                     localSignActor.pos.x = -68194.2109f;
                     localSignActor.pos.y = -1050.f;
                     localSignActor.pos.z = 5603.60645f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.rot[1] = static_cast<int16_t>(0xC000);
                     tools::spawnActor(8, localSignActor);
                 }
-                else if (roomIDX == 16) // needs to rotate right
+                else if (roomIDX == 16) // South of CT
                 {
-                    localSignActor.pos.x = -51491.0234f;
+                    localSignActor.pos.x = -51500.f;
                     localSignActor.pos.y = -5500.f;
                     localSignActor.pos.z = 27368.3086f;
-                    localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                    localSignActor.rot[1] = static_cast<int16_t>(0x0000);
                     tools::spawnActor(16, localSignActor);
                 }
                 break;
             }
 
-            case StageIDs::Lake_Hylia_Long_Cave: // needs to make a 180
+            case StageIDs::Castle_Town:
             {
-                localSignActor.pos.x = -1006.33252f;
-                localSignActor.pos.y = -1703.19995f;
-                localSignActor.pos.z = -18715.2383f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.x = 0.f;
+                localSignActor.pos.y = -200.f;
+                localSignActor.pos.z = 835.f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x0000);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
 
-            case StageIDs::Zoras_Domain: // needs to rotate slightly right
+            case StageIDs::Lake_Hylia_Long_Cave:
             {
-                localSignActor.pos.x = -3981.957f;
+                localSignActor.pos.x = -2897.38672f;
+                localSignActor.pos.y = -1636.68994f;
+                localSignActor.pos.z = -17674.8691f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x3E21);
+                tools::spawnActor(0, localSignActor);
+                break;
+            }
+
+            case StageIDs::Zoras_Domain:
+            {
+                localSignActor.pos.x = -2964.84839f;
                 localSignActor.pos.y = -2500.f;
-                localSignActor.pos.z = 17230.5488f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.z = 17146.2676f;
+                localSignActor.rot[1] = static_cast<int16_t>(0xAF09);
                 tools::spawnActor(1, localSignActor);
                 break;
             }
 
-            case StageIDs::Fishing_Pond: // needs to rotate slightly left
+            case StageIDs::Fishing_Pond:
             {
-                localSignActor.pos.x = -2921.2417f;
+                localSignActor.pos.x = -2924.74585f;
                 localSignActor.pos.y = 35.f;
-                localSignActor.pos.z = 8237.2539f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.z = 8386.28906f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x8000);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
 
-            case StageIDs::Gerudo_Desert: // needs to rotate right
+            case StageIDs::Gerudo_Desert:
             {
                 localSignActor.pos.x = 20356.23f;
                 localSignActor.pos.y = 556.7;
                 localSignActor.pos.z = 38694.8047f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0x0099);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
 
-            case StageIDs::Snowpeak: // needs to rotate right a lot
+            case StageIDs::Snowpeak:
             {
-                localSignActor.pos.x = 14804.874f;
-                localSignActor.pos.y = -14450.0908f;
-                localSignActor.pos.z = -14700.9307f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.x = 15931.9238f;
+                localSignActor.pos.y = -14389.4912f;
+                localSignActor.pos.z = -17388.1992f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x2C5A);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
 
-            case StageIDs::Cave_of_Ordeals: // needs to rotate just barely right
+            case StageIDs::Cave_of_Ordeals:
             {
                 localSignActor.pos.x = -1191.42f;
                 localSignActor.pos.y = 1100.f;
                 localSignActor.pos.z = -260.65f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0xE483);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
 
             case StageIDs::Forest_Temple:
             {
-                localSignActor.pos.x = -2093.207f;
+                localSignActor.pos.x = -1972.11682f;
                 localSignActor.pos.y = 3150.f;
-                localSignActor.pos.z = 7619.086f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.z = 7610.9751f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x6000);
                 tools::spawnActor(0, localSignActor);
                 break;
             }
@@ -1485,10 +1570,10 @@ namespace mod::events
 
             case StageIDs::Lakebed_Temple:
             {
-                localSignActor.pos.x = -2732.113f;
-                localSignActor.pos.y = 0.f;
-                localSignActor.pos.z = -1265.67f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.x = -4765.38037f;
+                localSignActor.pos.y = -1.21f;
+                localSignActor.pos.z = 272.192261f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x46B9);
                 tools::spawnActor(3, localSignActor);
                 break;
             }
@@ -1497,18 +1582,18 @@ namespace mod::events
             {
                 localSignActor.pos.x = -349.4044f;
                 localSignActor.pos.y = 450.f;
-                localSignActor.pos.z = -2568.25f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.z = -2876.90771f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x0000);
                 tools::spawnActor(2, localSignActor);
                 break;
             }
 
             case StageIDs::Snowpeak_Ruins:
             {
-                localSignActor.pos.x = -521.855f;
+                localSignActor.pos.x = -530.f;
                 localSignActor.pos.y = 0.f;
                 localSignActor.pos.z = -669.69f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0x0000);
                 tools::spawnActor(1, localSignActor);
                 break;
             }
@@ -1518,8 +1603,17 @@ namespace mod::events
                 localSignActor.pos.x = -618.9335f;
                 localSignActor.pos.y = 725.f;
                 localSignActor.pos.z = 3112.2f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.rot[1] = static_cast<int16_t>(0x8000);
                 tools::spawnActor(0, localSignActor);
+
+                // ToT midpoint sign
+                tp::dzx::ACTR localSignActor2;
+                memcpy(&localSignActor2, &SignActor, sizeof(tp::dzx::ACTR));
+                localSignActor2.pos.x = -3885.2157f;
+                localSignActor2.pos.y = 4450.f;
+                localSignActor2.pos.z = -6353.38135f;
+                localSignActor2.rot[1] = static_cast<int16_t>(0x2000);
+                tools::spawnActor(4, localSignActor2);
                 break;
             }
 
@@ -1527,29 +1621,9 @@ namespace mod::events
             {
                 localSignActor.pos.x = 3376.54f;
                 localSignActor.pos.y = 0.f;
-                localSignActor.pos.z = -12787.76f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                localSignActor.pos.z = -12709.0352f;
+                localSignActor.rot[1] = static_cast<int16_t>(0xC846);
                 tools::spawnActor(2, localSignActor);
-                break;
-            }
-
-            case StageIDs::Palace_of_Twilight:
-            {
-                localSignActor.pos.x = -1386.14f;
-                localSignActor.pos.y = -200.f;
-                localSignActor.pos.z = 12302.047f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
-                tools::spawnActor(0, localSignActor);
-                break;
-            }
-
-            case StageIDs::Hyrule_Castle:
-            {
-                localSignActor.pos.x = -4.6223f;
-                localSignActor.pos.y = 25.f;
-                localSignActor.pos.z = 11607.169f;
-                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
-                tools::spawnActor(11, localSignActor);
                 break;
             }
 
@@ -1609,6 +1683,36 @@ namespace mod::events
             return;
         }
 
+        // Make sure Link isn't riding anything (horse, boar, etc.)
+        if (libtp::tp::d_camera::checkRide(linkMapPtr))
+        {
+            return;
+        }
+
+        // Make sure Link is not underwater or talking to someone.
+        switch (linkMapPtr->mProcID)
+        {
+            case libtp::tp::d_a_alink::PROC_TALK:
+            case libtp::tp::d_a_alink::PROC_SWIM_UP:
+            case libtp::tp::d_a_alink::PROC_SWIM_DIVE:
+            {
+                return;
+            }
+            // If Link is targeting or pulling a chain, we don't want to remove the ability to use items in combat accidently.
+            case libtp::tp::d_a_alink::PROC_ATN_ACTOR_MOVE:
+            case libtp::tp::d_a_alink::PROC_ATN_ACTOR_WAIT:
+            case libtp::tp::d_a_alink::PROC_WOLF_ATN_AC_MOVE:
+            {
+                break;
+            }
+            default:
+            {
+                // Disable the input that was just pressed, as sometimes it could cause items to be used or Wolf Link to dig.
+                libtp::tp::m_do_controller_pad::cpadInfo[libtp::tp::m_do_controller_pad::PAD_1].mPressedButtonFlags = 0;
+                break;
+            }
+        }
+
         // Ensure there is a proper pointer to the mMeterClass and mpMeterDraw structs in g_meter2_info.
         const libtp::tp::d_meter2::dMeter2_c* meterClassPtr = libtp::tp::d_meter2_info::g_meter2_info.mMeterClass;
         if (!meterClassPtr)
@@ -1629,33 +1733,8 @@ namespace mod::events
             return;
         }
 
-        // Make sure Link is not underwater or talking to someone.
-        switch (linkMapPtr->mProcID)
-        {
-            case libtp::tp::d_a_alink::PROC_TALK:
-            case libtp::tp::d_a_alink::PROC_WOLF_SWIM_MOVE:
-            case libtp::tp::d_a_alink::PROC_SWIM_MOVE:
-            case libtp::tp::d_a_alink::PROC_SWIM_WAIT:
-            case libtp::tp::d_a_alink::PROC_WOLF_SWIM_WAIT:
-            case libtp::tp::d_a_alink::PROC_SWIM_UP:
-            case libtp::tp::d_a_alink::PROC_SWIM_DIVE:
-            {
-                return;
-            }
-            default:
-            {
-                break;
-            }
-        }
-
         // The game will crash if trying to quick transform while holding the Ball and Chain
         if (linkMapPtr->mEquipItem == libtp::data::items::Ball_and_Chain)
-        {
-            return;
-        }
-
-        // Make sure Link isn't riding anything (horse, boar, etc.)
-        if (libtp::tp::d_camera::checkRide(linkMapPtr))
         {
             return;
         }
@@ -2039,12 +2118,16 @@ namespace mod::events
             rando::RawRGBTable* rawRGBListPtr = randomizer->m_Seed->m_RawRGBTable;
 
             uint8_t* lanternColor = reinterpret_cast<uint8_t*>(&rawRGBListPtr->lanternColor);
-            color1->r = lanternColor[0];
-            color1->g = lanternColor[1];
-            color1->b = lanternColor[2];
-            color2->r = lanternColor[0];
-            color2->g = lanternColor[1];
-            color2->b = lanternColor[2];
+
+            if (*reinterpret_cast<uint32_t*>(lanternColor) != 0x502814ff) // Don't set the value if it is already vanilla
+            {
+                color1->r = lanternColor[0];
+                color1->g = lanternColor[1];
+                color1->b = lanternColor[2];
+                color2->r = lanternColor[0];
+                color2->g = lanternColor[1];
+                color2->b = lanternColor[2];
+            }
         }
         libtp::tp::d_pane_class::setBlackWhite(panePtr, color1, color2);
     }

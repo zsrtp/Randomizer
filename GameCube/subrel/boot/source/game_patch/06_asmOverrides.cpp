@@ -1,5 +1,6 @@
 #include <cstdint>
 
+#include "main.h"
 #include "game_patch/game_patch.h"
 #include "asm_templates.h"
 #include "tp/d_item.h"
@@ -96,6 +97,9 @@ namespace mod::game_patch
         // Modify drawKanteraScreen to change the lantern meter color to match lantern light color from seed.
         uint32_t drawKanteraAddress = reinterpret_cast<uint32_t>(libtp::tp::d_meter2_draw::drawKanteraScreen);
         libtp::patch::writeBranchBL(drawKanteraAddress + 0xE4, events::modifyLanternMeterColor);
+
+        uint32_t procCoGetItemInitAddress = reinterpret_cast<uint32_t>(libtp::tp::d_a_alink::procCoGetItemInit);
+        libtp::patch::writeBranchBL(procCoGetItemInitAddress + 0x17C, procCoGetItemInitCreateItem);
 #ifdef TP_JP
         uint32_t checkWarpStartAddress = reinterpret_cast<uint32_t>(libtp::tp::d_a_alink::checkWarpStart);
 

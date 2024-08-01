@@ -201,6 +201,23 @@ namespace mod::customMessages
         // の臭いがする...
         "\x82\xCC\x8F\x4C\x82\xA2\x82\xAA\x82\xB7\x82\xE9\x2e\x2e\x2e"
     MSG_END();
+    MSG_BEGIN_ARRAY(firstMirrorShardJp)
+        MSG_SPEED(MSG_SPEED_FAST)
+        // 一つ目の
+        "\x88\xEA\x82\xC2\x96\xDA\x82\xCC"
+        MSG_COLOR(MSG_COLOR_RED)
+        // 陰りの鏡のかけら
+        "\x89\x41\x82\xE8\x82\xCC\x8B\xBE\x82\xCC\x82\xA9\x82\xAF\x82\xE7"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        // を手に入れた！
+        "\x82\xF0\x8E\xE8\x82\xC9\x93\xFC\x82\xEA\x82\xBD\x81\x49\x0A"
+        MSG_COLOR(MSG_COLOR_ORANGE)
+        // 砂
+        "\x8D\xBB"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        // で覆われている・・・
+        "\x82\xC5\x95\xA2\x82\xED\x82\xEA\x82\xC4\x82\xA2\x82\xE9\x81\x45\x81\x45\x81\x45"
+    MSG_END();
     MSG_BEGIN_ARRAY(secondMirrorShardJp)
         MSG_SPEED(MSG_SPEED_FAST)
         MSG_COLOR(MSG_COLOR_RED)
@@ -451,6 +468,11 @@ namespace mod::customMessages
         thirdFusedShadowJp,
         sizeof(thirdFusedShadowJp),
         0x013E,
+
+        // First Mirror Shard
+        firstMirrorShardJp,
+        sizeof(firstMirrorShardJp),
+        0x0B7,
 
         // Second Mirror Shard
         secondMirrorShardJp,

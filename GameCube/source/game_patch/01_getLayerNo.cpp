@@ -220,6 +220,10 @@ namespace mod::game_patch
                             chosenLayer = stage::KakarikoInteriorStateIDs::Kakariko_Int_Lakebed_Completed;
                             libtp::tp::d_com_inf_game::dComIfG_get_timelayer(&chosenLayer);
                         }
+                        else if (roomId == 3)
+                        {
+                            chosenLayer = stage::KakarikoInteriorStateIDs::Kakariko_Int_KB1_Completed;
+                        }
                         else
                         {
                             chosenLayer = stage::KakarikoInteriorStateIDs::Kakariko_Int_KB1_Completed;
@@ -632,7 +636,7 @@ namespace mod::game_patch
                                     }
                                     else
                                     {
-                                        chosenLayer = stage::OrdonRanchStateIDs::Ordon_Ranch_Goats_2_Completed;
+                                        chosenLayer = stage::OrdonRanchStateIDs::Ordon_Ranch_Faron_Twilight_Cleared;
                                     }
                                 }
                                 else
@@ -642,7 +646,7 @@ namespace mod::game_patch
                             }
                             else
                             {
-                                chosenLayer = stage::OrdonRanchStateIDs::Ordon_Ranch_Goats_1_Completed;
+                                chosenLayer = stage::OrdonRanchStateIDs::Ordon_Ranch_Faron_Twilight_Cleared;
                             }
                         }
                         else

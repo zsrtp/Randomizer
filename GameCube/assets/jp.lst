@@ -149,6 +149,7 @@
 800c4f4c:procFrontRollCrashInit
 8012d90c:procWolfDashReverseInit
 8013c914:procWolfAttackReverseInit
+8012dbf4:procWolfAtnActorMoveInit
 
 // data
 80388C0C:climbVars
@@ -368,6 +369,7 @@
 802ab8d0:parseCharacter_1Byte
 
 // d_msg_flow.o
+8024caa0:query001
 8024d24c:query022
 8024d280:query023
 8024d2dc:query025
@@ -468,3 +470,6 @@
 
 // d_gameover.o
 8019b3cc:dispWait_init
+
+// d_file_select.o
+80184418:dFile_select_c___create

@@ -836,7 +836,7 @@ namespace mod::game_patch
             &libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStartStage;
 
         const char* currentStage = startStagePtr->mStage;
-        const int32_t currentRoom = startStagePtr->mRoomNo;
+        const int32_t currentRoom = libtp::tools::getCurrentRoomNo();
         const int32_t stageIDX = libtp::tools::getStageIndex(currentStage);
 
         // Get the total size of the message ids

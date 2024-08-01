@@ -24,10 +24,16 @@ namespace mod::assembly
         }
     }
 
-    int32_t handleAdjustPoeItem(void* e_hp_class)
+    void handleAdjustPoeItem(void* e_hp_class)
     {
-        uint8_t flag = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(e_hp_class) + 0x77B);
-        return events::onPoe(randomizer, flag);
+        // Get the item and put it into the queue
+        const uint8_t flag = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(e_hp_class) + 0x77B);
+        const int32_t item = events::onPoe(randomizer, flag);
+        randomizer->addItemToEventQueue(static_cast<uint32_t>(item));
+
+        // Force wolf Link into the PROC_WOLF_ATN_AC_MOVE proc to skip the backflip and trigger the queue to give the item
+        // immediately
+        libtp::tp::d_a_alink::procWolfAtnActorMoveInit(libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer);
     }
 
     int32_t handleAdjustAGPoeItem(void* e_po_class)
@@ -133,12 +139,10 @@ namespace mod::assembly
 
         // Give the player the Master Sword replacement
         uint32_t itemToGive = randomizer->getEventItem(items::Master_Sword);
-        itemToGive = game_patch::_04_verifyProgressiveItem(randomizer, itemToGive);
         randomizer->addItemToEventQueue(itemToGive);
 
         // Give the player the Shadow Crystal replacement
         itemToGive = randomizer->getEventItem(items::Shadow_Crystal);
-        itemToGive = game_patch::_04_verifyProgressiveItem(randomizer, itemToGive);
         randomizer->addItemToEventQueue(itemToGive);
 
         // Set the local event flag to make the sword de-spawn and set the save file event flag.

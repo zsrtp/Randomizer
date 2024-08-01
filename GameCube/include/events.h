@@ -145,13 +145,15 @@ namespace mod::events
 
     int32_t proc_query023(void* unk1, void* unk2, int32_t unk3);
 
+    int32_t proc_query025(void* unk1, void* unk2, int32_t unk3);
+
     int32_t proc_query042(void* unk1, void* unk2, int32_t unk3);
 
     bool proc_isDungeonItem(libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit);
 
     void proc_onDungeonItem(libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit);
 
-    void loadCustomActors();
+    void loadCustomActors(void* mStatus_roomControl);
     void loadCustomRoomActors(rando::Randomizer* randomizer);
     void loadCustomRoomSCOBs();
     void handleQuickTransform();

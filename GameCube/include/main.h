@@ -32,6 +32,7 @@
 #include "tp/d_shop_system.h"
 #include "tp/f_op_actor.h"
 #include "tp/d_msg_flow.h"
+#include "tp/d_file_select.h"
 
 #ifdef TP_EU
 #include "tp/d_s_logo.h"
@@ -57,6 +58,9 @@
 #define SEED_ACTION_CHANGE_SEED 2
 #define SEED_ACTION_FATAL 255
 
+// Number of bytes reserved for giving items to the player at arbitrary times via initGiveItemToPlayer
+#define GIVE_PLAYER_ITEM_RESERVED_BYTES 8
+
 // Converting item ids to msg ids and vice versa
 #define ITEM_TO_ID(item) (item + 0x64)
 #define ID_TO_ITEM(msgId) (msgId - 0x64)
@@ -68,6 +72,13 @@
 
 namespace mod
 {
+    enum EventItemStatus : uint8_t
+    {
+        QUEUE_EMPTY = 0,
+        ITEM_IN_QUEUE = 1,
+        CLEAR_QUEUE = 2,
+    };
+
     // General public objects
     extern libtp::display::Console* console;
     extern rando::Randomizer* randomizer;
@@ -75,7 +86,6 @@ namespace mod
 
     extern void* z2ScenePtr;
     extern uint32_t randState;
-    extern const char* m_DonationText;
 
     // Variables
     extern uint8_t* m_MsgTableInfo;     // Custom message string data
@@ -95,7 +105,7 @@ namespace mod
     extern bool transformAnywhereEnabled;
     extern uint8_t damageMultiplier;
     extern bool bonksDoDamage;
-    extern bool giveItemToPlayer;
+    extern EventItemStatus giveItemToPlayer;
 
 #ifdef TP_EU
     extern libtp::tp::d_s_logo::Languages currentLanguage;
@@ -223,6 +233,14 @@ namespace mod
     // State functions
     extern int32_t (*return_getLayerNo_common_common)(const char* stageName, int32_t roomId, int32_t layerOverride);
 
+    int32_t procCoGetItemInitCreateItem(const float pos[3],
+                                        int32_t item,
+                                        uint8_t unk3,
+                                        int32_t unk4,
+                                        int32_t unk5,
+                                        const float rot[3],
+                                        const float scale[3]);
+
     // Item creation functions. These are ran when the game displays an item though various means.
     int32_t handle_createItemForBoss(const float pos[3],
                                      int32_t item,
@@ -332,11 +350,17 @@ namespace mod
                                                               uint32_t unk4);
 
     // Query/Event functions. Various uses
+    int32_t handle_query001(void* unk1, void* unk2, int32_t unk3);
+    extern int32_t (*return_query001)(void* unk1, void* unk2, int32_t unk3);
+
     int32_t handle_query022(void* unk1, void* unk2, int32_t unk3);
     extern int32_t (*return_query022)(void* unk1, void* unk2, int32_t unk3);
 
     int32_t handle_query023(void* unk1, void* unk2, int32_t unk3);
     extern int32_t (*return_query023)(void* unk1, void* unk2, int32_t unk3);
+
+    int32_t handle_query025(void* unk1, void* unk2, int32_t unk3);
+    extern int32_t (*return_query025)(void* unk1, void* unk2, int32_t unk3);
 
     uint8_t handle_checkEmptyBottle(libtp::tp::d_save::dSv_player_item_c* playerItem);
     extern uint8_t (*return_checkEmptyBottle)(libtp::tp::d_save::dSv_player_item_c* playerItem);
@@ -499,5 +523,9 @@ namespace mod
     extern int32_t (*return_seq_decide_yes)(libtp::tp::d_shop_system::dShopSystem* shopPtr,
                                             libtp::tp::f_op_actor::fopAc_ac_c* actor,
                                             void* msgFlow);
+
+    // Title Screen functions
+    void resetQueueOnFileSelectScreen(libtp::tp::d_file_select::dFile_select_c* thisPtr);
+    extern void (*return_dFile_select_c___create)(libtp::tp::d_file_select::dFile_select_c* thisPtr);
 } // namespace mod
 #endif

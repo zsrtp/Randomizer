@@ -98,6 +98,8 @@ namespace mod::rando
             case libtp::data::stage::StageIDs::Ordon_Village_Interiors:
             case libtp::data::stage::StageIDs::Kakariko_Village_Interiors:
             case libtp::data::stage::StageIDs::Castle_Town_Shops:
+            case libtp::data::stage::StageIDs::Death_Mountain:
+            case libtp::data::stage::StageIDs::City_in_the_Sky:
             {
                 if (modifyShopModels)
                 {
@@ -702,7 +704,7 @@ namespace mod::rando
         using namespace libtp::tp;
 
         uint8_t* reserveBytesPtr = d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk;
-        for (uint32_t i = 0; i < 4; i++)
+        for (uint32_t i = 0; i < GIVE_PLAYER_ITEM_RESERVED_BYTES; i++)
         {
             if (reserveBytesPtr[i] == 0)
             {
