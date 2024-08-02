@@ -21,6 +21,7 @@ namespace mod::rando::customItems
         Foolish_Item_3 = 0x15,                    // Custom Item added for the Randomizer.
         Foolish_Item_4 = 0x4D,                    // Custom Item added for the Randomizer.
         Foolish_Item_5 = 0x4E,                    // Custom Item added for the Randomizer.
+        Mirror_Piece_1 = 0x53,                    // Custom Item added for the Randomizer
         Foolish_Item_6 = 0x57,                    // Custom Item added for the Randomizer.
         Forest_Temple_Small_Key = 0x85,           // Custom Item added for the Randomizer.
         Goron_Mines_Small_Key = 0x86,             // Custom Item added for the Randomizer.

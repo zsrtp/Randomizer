@@ -12,6 +12,7 @@
 #include "data/items.h"
 #include "data/flags.h"
 #include "tp/d_a_npc.h"
+#include "game_patch/game_patch.h"
 
 namespace mod::assembly
 {
@@ -23,10 +24,16 @@ namespace mod::assembly
         }
     }
 
-    int32_t handleAdjustPoeItem(void* e_hp_class)
+    void handleAdjustPoeItem(void* e_hp_class)
     {
-        uint8_t flag = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(e_hp_class) + 0x77B);
-        return events::onPoe(randomizer, flag);
+        // Get the item and put it into the queue
+        const uint8_t flag = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(e_hp_class) + 0x77B);
+        const int32_t item = events::onPoe(randomizer, flag);
+        randomizer->addItemToEventQueue(static_cast<uint32_t>(item));
+
+        // Force wolf Link into the PROC_WOLF_ATN_AC_MOVE proc to skip the backflip and trigger the queue to give the item
+        // immediately
+        libtp::tp::d_a_alink::procWolfAtnActorMoveInit(libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mPlayer);
     }
 
     int32_t handleAdjustAGPoeItem(void* e_po_class)
@@ -76,7 +83,7 @@ namespace mod::assembly
     uint8_t handleShowReekfishPath(uint8_t scent)
     {
         if ((libtp::tp::d_a_alink::checkStageName(libtp::data::stage::allStages[libtp::data::stage::StageIDs::Snowpeak])) &&
-            libtp::tp::d_a_alink::dComIfGs_isEventBit(
+            libtp::tp::d_com_inf_game::dComIfGs_isEventBit(
                 libtp::data::flags::GOT_REEKFISH_SCENT)) // If we are currently at Snowpeak and the flag for having
                                                          // smelled a Reekfish is set
         {
@@ -96,7 +103,7 @@ namespace mod::assembly
     bool handleCheck60PoeReward(uint8_t poeCount)
     {
         // Check if we are getting the 60 Poe Check and that we have already gotten the 20 Poe Check.
-        return ((poeCount >= 60) && libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::GOT_BOTTLE_FROM_JOVANI));
+        return ((poeCount >= 60) && libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::GOT_BOTTLE_FROM_JOVANI));
     }
 
     bool handleReplaceGWolfWithItem(const int16_t* l_delFlag, void* daNpcGWolf)
@@ -124,6 +131,24 @@ namespace mod::assembly
         }
 
         return flagIsSet;
+    }
+
+    void handleGiveMasterSwordItems()
+    {
+        using namespace libtp::data;
+
+        // Give the player the Master Sword replacement
+        uint32_t itemToGive = randomizer->getEventItem(items::Master_Sword);
+        randomizer->addItemToEventQueue(itemToGive);
+
+        // Give the player the Shadow Crystal replacement
+        itemToGive = randomizer->getEventItem(items::Shadow_Crystal);
+        randomizer->addItemToEventQueue(itemToGive);
+
+        // Set the local event flag to make the sword de-spawn and set the save file event flag.
+        libtp::tp::d_save::dSv_info_c* savePtr = &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save;
+        libtp::tp::d_save::onEventBit(&savePtr->mTmp, 0x820);
+        libtp::tp::d_save::onEventBit(&savePtr->save_file.mEvent, 0x2120);
     }
 
 #ifdef TP_JP

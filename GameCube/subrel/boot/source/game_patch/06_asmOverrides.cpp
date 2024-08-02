@@ -1,5 +1,6 @@
 #include <cstdint>
 
+#include "main.h"
 #include "game_patch/game_patch.h"
 #include "asm_templates.h"
 #include "tp/d_item.h"
@@ -43,12 +44,6 @@ namespace mod::game_patch
 
         // Nop out the instruction that causes a miscalculation in message resources.
         *patchMessageCalculation = ASM_NOP;
-
-        // Modify the skipper function to check whether or not a cutscene is skippable instead of whether the player skips the
-        // CS. This effectively auto-skips all skippable cutscenes.
-        uint32_t skipperFunctionAddress = reinterpret_cast<uint32_t>(libtp::tp::d_event::skipper);
-        *reinterpret_cast<uint32_t*>(skipperFunctionAddress + 0x54) =
-            ASM_COMPARE_LOGICAL_WORD_IMMEDIATE(30, 0); // Previous rlwinm r0,r0,0,19,19
 
         // Modify the Wooden Sword function to not set a region flag by default by nopping out the function call to isSwitch
         uint32_t woodenSwordFunctionAddress = reinterpret_cast<uint32_t>(libtp::tp::d_item::item_func_WOOD_STICK);
@@ -102,6 +97,9 @@ namespace mod::game_patch
         // Modify drawKanteraScreen to change the lantern meter color to match lantern light color from seed.
         uint32_t drawKanteraAddress = reinterpret_cast<uint32_t>(libtp::tp::d_meter2_draw::drawKanteraScreen);
         libtp::patch::writeBranchBL(drawKanteraAddress + 0xE4, events::modifyLanternMeterColor);
+
+        uint32_t procCoGetItemInitAddress = reinterpret_cast<uint32_t>(libtp::tp::d_a_alink::procCoGetItemInit);
+        libtp::patch::writeBranchBL(procCoGetItemInitAddress + 0x17C, procCoGetItemInitCreateItem);
 #ifdef TP_JP
         uint32_t checkWarpStartAddress = reinterpret_cast<uint32_t>(libtp::tp::d_a_alink::checkWarpStart);
 

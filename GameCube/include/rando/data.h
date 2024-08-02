@@ -56,17 +56,21 @@ namespace mod::rando
         /* 0x3C */ entryInfo bugRewardCheckInfo;
         /* 0x40 */ entryInfo skyCharacterCheckInfo;
         /* 0x44 */ entryInfo shopItemCheckInfo;
-        /* 0x48 */ entryInfo startingItemInfo;
-        /* 0x4C */ uint16_t bgmHeaderOffset;
-        /* 0x4E */ uint16_t clr0Offset;
-        /* 0x50 */ uint8_t transformAnywhere;
-        /* 0x51 */ uint8_t quickTransform;
-        /* 0x52 */ uint8_t castleRequirements;
-        /* 0x53 */ uint8_t palaceRequirements;
-        /* 0x54 */ uint8_t mapClearBits;
-        /* 0x55 */ uint8_t damageMagnification;
-        /* 0x56 */ uint8_t bonksDoDamage;
-        /* 0x57 */ uint8_t padding;
+        /* 0x48 */ entryInfo eventItemCheckInfo;
+        /* 0x4C */ entryInfo startingItemInfo;
+        /* 0x50 */ entryInfo EntranceTableInfo;
+        /* 0x54 */ uint16_t bgmHeaderOffset;
+        /* 0x56 */ uint16_t clr0Offset;
+        /* 0x58 */ uint16_t customTextHeaderSize;
+        /* 0x5A */ uint16_t customTextHeaderOffset;
+        /* 0x5C */ uint8_t transformAnywhere;
+        /* 0x5D */ uint8_t quickTransform;
+        /* 0x5E */ uint8_t castleRequirements;
+        /* 0x5F */ uint8_t palaceRequirements;
+        /* 0x60 */ uint8_t mapClearBits;
+        /* 0x61 */ uint8_t damageMagnification;
+        /* 0x62 */ uint8_t bonksDoDamage;
+        /* 0x63 */ uint8_t startingTimeOfDay;
     } __attribute__((__packed__));
 
     // Minimum amount of data needed for keeping track of a seed
@@ -211,21 +215,28 @@ namespace mod::rando
         uint8_t roomID;    // The room that the Owl Statue is located in.
     } __attribute__((__packed__));
 
-    struct CustomMessageEntryInfo
+    // These items are given either during cutscenes or at a specific time.
+    struct EventItem
     {
-        uint8_t language;
-        uint8_t padding[1];
-        uint16_t totalEntries;
-        uint32_t msgTableSize;
-        uint32_t msgIdTableOffset;
+        uint8_t itemID;   // The item to be given.
+        uint8_t stageIDX; // The stage that the event is in.
+        uint8_t roomID;   // The room that the event is in.
+        uint8_t flag;     // The unique identifier used to disinguish between checks in the same room.
     } __attribute__((__packed__));
 
     struct CustomMessageHeaderInfo
     {
         uint16_t headerSize;
-        uint8_t totalLanguages;
-        uint8_t padding[1];
-        CustomMessageEntryInfo entry[]; // Size is totalLanguages
+        uint16_t totalEntries;
+        uint32_t msgTableSize;
+        uint32_t msgIdTableOffset;
+    } __attribute__((__packed__));
+
+    struct CustomMessageData
+    {
+        uint8_t stageIDX;
+        uint8_t roomIDX;
+        uint16_t msgID;
     } __attribute__((__packed__));
 
     struct CLR0Header
@@ -269,6 +280,31 @@ namespace mod::rando
         ZBtn
     };
 
+    enum CastleEntryRequirements : uint8_t
+    {
+        HC_Open = 0,
+        HC_Fused_Shadows = 1,
+        HC_Mirror_Shards,
+        HC_All_Dungeons,
+        HC_Vanilla
+    };
+
+    enum PalaceEntryRequirements : uint8_t
+    {
+        PoT_Open = 0,
+        PoT_Fused_Shadows = 1,
+        PoT_Mirror_Shards,
+        PoT_Vanilla
+    };
+
+    enum StartingTimeOfDay : uint8_t
+    {
+        Morning = 0,
+        Noon = 1,
+        Evening = 2,
+        Night = 3
+    };
+
     struct RawRGBTable
     {
         uint32_t lanternColor;
@@ -306,6 +342,18 @@ namespace mod::rando
         int16_t flag;        // Flag associated with the current golden wolf
         uint8_t markerFlag;  // Flag associated with the current golden wolf's marker on the map
     };
+
+    struct ShuffledEntrance
+    {
+        uint8_t origStageIDX;
+        uint8_t origRoomIDX;
+        uint8_t origSpawn;
+        int8_t origState;
+        uint8_t newStageIDX;
+        uint8_t newRoomIDX;
+        uint8_t newSpawn;
+        int8_t newState;
+    } __attribute__((__packed__));
 
     extern int32_t lookupTable[DvdEntryNumIdSize];
 

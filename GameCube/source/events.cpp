@@ -31,6 +31,8 @@
 #include "rando/customItems.h"
 #include "tp/f_op_actor_iter.h"
 #include "tp/d_pane_class.h"
+#include "game_patch/game_patch.h"
+#include "tp/m_do_printf.h"
 
 namespace mod::events
 {
@@ -41,25 +43,52 @@ namespace mod::events
     daObjLifeContainer_initActionOrderGetDemo_Def return_daObjLifeContainer_c__initActionOrderGetDemo = nullptr;
     daMidna_checkMetamorphoseEnableBase_Def daMidna_c__checkMetamorphoseEnableBase = nullptr;
 
+    // Custom Ganon Barrier to prevent the player from trying to enter Lanayru Twilight during Eldin Twilight
     libtp::tp::dzx::ACTR GanonBarrierActor =
         {"Obj_gb", 0x800F0601, 10778.207f, 3096.82666f, -62651.0078f, static_cast<int16_t>(-164), 0x4000, 0, 0xFFFF};
 
+    // Auru actor that is added to the Post-Cannon repair state of Lake Hylia
     libtp::tp::dzx::ACTR AuruActr =
         {"Rafrel", 0x00001D01, -116486.945f, -13860.f, 58533.0078f, 0, static_cast<int16_t>(0xCCCD), 0, 0xFFFF};
 
+    // item actor template
     libtp::tp::dzx::ACTR ItemActr =
         {"item", 0xF3FFFF04, -108290.086f, -18654.748f, 45935.2969f, 0, static_cast<int16_t>(0x1), 0x3F, 0xFFFF};
 
+    // Epona actor template
     libtp::tp::dzx::ACTR EponaActr = {"Horse", 0x00000F0D, -1200.f, 367.f, 6100.f, 0, -180, 0, 0xFFFF};
 
+    // Horse jump SCOB template
     libtp::tp::dzx::SCOB HorseJumpScob =
         {"Hjump", 0x044FFF02, 5600.f, -5680.f, 52055.f, 0, static_cast<int16_t>(0x4000), 0, 0xFFFF, 0x20, 0x2D, 0x2D, 0xFF};
 
-    libtp::tp::dzx::ACTR ForestGWolfActr = {"GWolf", 0x05FF01FF, -35178.f, 430.21f, -21503.6f, 0, -0x4000, 0xFF, 0xFFFF};
+    // Golden Wolf actor placed in Faron Woods.
+    libtp::tp::dzx::ACTR ForestGWolfActr = {"GWolf", 0x05FF01FF, -36714.9023f, 424.03894f, -23698.0273f, 0, 0, 0xFF, 0xFFFF};
 
+    // Poe actor template
     libtp::tp::dzx::ACTR ImpPoeActr = {"E_hp", 0xFF031E00, 4531.19f, -30.f, 2631.961f, 0, 0, 0x0, 0xFFFF};
 
+    // Boar actor template
     libtp::tp::dzx::ACTR CampBoarActr = {"E_wb", 0xFFFFFFFF, 1650.f, 0.f, 1250.f, 0, static_cast<int16_t>(0xA000), 0x0, 0xFFFF};
+
+    // Custom shop sold out actors for shop checks. using actor template: 0x48 bytes in memory due to instructions
+    // Creating new actors uses less memory than modifying a template due to the amount of memory used by instructions.
+    // (0x28 vs 0x48 bytes)
+    libtp::tp::dzx::ACTR KakShopSlot2Actr =
+        {"TGSPITM", 0x02FFFFFF, -650.f, 450.f, -500.f, 0x147, static_cast<int16_t>(0x8000), 0x05FF, 0xFFFF};
+
+    // Sign Actors
+    libtp::tp::dzx::ACTR SignActor = {"Obj_kn2",
+                                      0xFFFFFFFF,
+                                      -2088.f,
+                                      0.8535f,
+                                      7535.77f,
+                                      static_cast<int16_t>(0xFFFE), // Flow Node ID
+                                      static_cast<int16_t>(0xD556),
+                                      0,
+                                      0xFFFF};
+
+    libtp::tp::dzx::ACTR MstrSrdActr = {"mstrsrd", 0x000020110, 0.f, 1700.f, -5435.f, 0x147, 0x0, 0x0, 0xFFFF};
 
     uint8_t timeChange = 0;
 
@@ -86,8 +115,8 @@ namespace mod::events
         d_stage::dStage_startStage* startStagePtr = &playPtr->mStartStage;
 
         const char* currentStage = startStagePtr->mStage;
-        int32_t currentRoom = startStagePtr->mRoomNo;
-        int32_t currentPoint = startStagePtr->mPoint;
+        const int32_t currentRoom = startStagePtr->mRoomNo;
+        const int32_t currentPoint = startStagePtr->mPoint;
 
         // Check if the seed is already applied to the save-file (flags etc.)
         // Try to do it otherwise
@@ -96,12 +125,35 @@ namespace mod::events
             randomizer->initSave();
         }
 
-        if ((strcmp(playPtr->mNextStage.stageValues.mStage, "F_SP103") == 0) && (currentRoom == 1) &&
+        if ((strcmp(playPtr->mNextStage.mStage, "F_SP103") == 0) && (currentRoom == 1) &&
             (currentPoint == 0x1)) // If we are spawning in Ordon for the first time.
         {
-            savePtr->save_file.player.player_status_b.skyAngle = 180.f;
+            float* skyAnglePtr = &savePtr->save_file.player.player_status_b.skyAngle;
 
-            if (d_a_alink::dComIfGs_isEventBit(flags::ORDON_DAY_2_OVER))
+            switch (randomizer->m_Seed->m_Header->startingTimeOfDay)
+            {
+                case rando::StartingTimeOfDay::Morning:
+                {
+                    *skyAnglePtr = 105.f;
+                    break;
+                }
+                case rando::StartingTimeOfDay::Noon:
+                {
+                    *skyAnglePtr = 180.f;
+                    break;
+                }
+                case rando::StartingTimeOfDay::Night:
+                {
+                    *skyAnglePtr = 0.f;
+                    break;
+                }
+                default: // Evening
+                {
+                    break;
+                }
+            }
+
+            if (d_com_inf_game::dComIfGs_isEventBit(flags::ORDON_DAY_2_OVER))
             {
                 savePtr->save_file.player.horse_place.mPos.y = -1000.f; // Place Epona out of bounds in Faron if Talo has been
                                                                         // rescued since the game will spawn her in the air.
@@ -117,6 +169,12 @@ namespace mod::events
 
             d_save::offSwitch_dSv_memBit(&savePtr->memory.temp_flags,
                                          0xF); // Main Room 1F explored
+        }
+
+        // Clear the danBit that starts a conversation when entering the ranch so the player can do goats as needed.
+        if ((strcmp(currentStage, stage::allStages[stage::StageIDs::Ordon_Ranch]) == 0) && (currentPoint == 0x1))
+        {
+            d_com_inf_game::dComIfG_gameInfo.save.mDan.mSwitch[0] = 0x0;
         }
 
         randomizer->overrideEventARC();
@@ -169,12 +227,20 @@ namespace mod::events
             // Generic Poe
             case D_A_E_HP:
             {
-                libtp::patch::writeStandardBranches(relPtrRaw + e_hp_ExecDead_liOffset,
-                                                    assembly::asmAdjustPoeItemStart,
-                                                    assembly::asmAdjustPoeItemEnd);
+                // Force the poe to be despawned immediately without playing the get item animation
+                performStaticASMReplacement(relPtrRaw + e_hp_ExecDead_beqOffset, ASM_NOP);
+
+                // Initialize giving the proper item rather than the poe soul
+                libtp::patch::writeBranchBL(relPtrRaw + e_hp_ExecDead_incOffset, assembly::asmAdjustPoeItem);
 
                 // Disable Poe increment (handled through item_get_func; see game_patches)
-                performStaticASMReplacement(relPtrRaw + e_hp_ExecDead_incOffset, ASM_NOP);
+                performStaticASMReplacement(relPtrRaw + e_hp_ExecDead_incOffset + 0x4, ASM_BRANCH(0x18));
+
+                // Skip checking for setting the flag for having obtained 20 poe souls
+
+                // This cannot be combined with the previous branch due to a value being stored in a class in the middle of the
+                // branches
+                performStaticASMReplacement(relPtrRaw + e_hp_ExecDead_incOffset + 0x24, ASM_BRANCH(0x28));
 
                 break;
             }
@@ -186,8 +252,9 @@ namespace mod::events
                                                     assembly::asmAdjustAGPoeItemStart,
                                                     assembly::asmAdjustAGPoeItemEnd);
 
-                // Disable Poe increment (handled through item_get_func; see game_patches)
-                performStaticASMReplacement(relPtrRaw + e_po_ExecDead_incOffset, ASM_NOP);
+                // Disable Poe increment (handled through item_get_func; see game_patches) and skip checking for setting the
+                // flag for having obtained 20 poe souls
+                performStaticASMReplacement(relPtrRaw + e_po_ExecDead_incOffset, ASM_BRANCH(0x44));
                 break;
             }
 
@@ -235,6 +302,9 @@ namespace mod::events
             case D_A_MG_ROD:
             {
                 libtp::patch::writeBranchBL(relPtrRaw + 0xB2B0, libtp::tp::d_item::execItemGet);
+
+                // Branch over rng check instructions from uki_main for 100% bottle guarantee
+                performStaticASMReplacement(relPtrRaw + 0xBFAC, ASM_BRANCH(0x18));
                 break;
             }
 
@@ -285,6 +355,7 @@ namespace mod::events
                                 break;
                             }
                             case items::Ordon_Sword:
+                            case customItems::Mirror_Piece_1:
                             case items::Mirror_Piece_2:
                             case items::Mirror_Piece_3:
                             case items::Mirror_Piece_4:
@@ -673,6 +744,31 @@ namespace mod::events
                 performStaticASMReplacement(relPtrRaw + 0x20B8, ASM_BRANCH_EQUAL_MINUS(0x38));
                 break;
             }
+
+            // d_obj_master_sword.rel
+            // Master Sword Freestanding Actor
+            case D_A_OBJ_MASTER_SWORD:
+            {
+                // If a seed is not loaded, then use vanilla behavior
+                if (!getCurrentSeed(randomizer))
+                {
+                    break;
+                }
+
+                // Apply an ASM patch to d_a_Obj_Master_Sword::executeWait to give the player two items and delete the Master
+                // Sword actor instead of trying to play the purification cutscene.
+                libtp::patch::writeStandardBranches(relPtrRaw + 0x254,
+                                                    assembly::asmGiveMasterSwordItemsStart,
+                                                    assembly::asmGiveMasterSwordItemsEnd);
+
+                // Branch over the code that gives Link the master sword if it has been pulled
+                performStaticASMReplacement(relPtrRaw + 0xCA0, ASM_BRANCH(0x80));
+
+                // Nop out the function call to d_meter2_info::setCloth that causes a crash if you are wearing anything other
+                // than magic armor
+                performStaticASMReplacement(relPtrRaw + 0x25C, ASM_NOP);
+                break;
+            }
         }
     }
 
@@ -713,7 +809,6 @@ namespace mod::events
     void onDZX(rando::Randomizer* randomizer, libtp::tp::dzx::ChunkTypeInfo* chunkTypeInfo)
     {
         randomizer->overrideDZX(chunkTypeInfo);
-        loadCustomActors();
     }
 
     int32_t onPoe(rando::Randomizer* randomizer, uint8_t flag)
@@ -768,13 +863,14 @@ namespace mod::events
 
     void setSaveFileEventFlag(uint16_t flag)
     {
-        libtp::tp::d_save::onEventBit(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags, flag);
+        libtp::tp::d_save::onEventBit(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mEvent, flag);
     }
 
     void onAdjustFieldItemParams(libtp::tp::f_op_actor::fopAc_ac_c* fopAC, void* daObjLife)
     {
         using namespace libtp::data::stage;
         using namespace libtp::data::items;
+        using namespace rando::customItems;
 
         if (!getCurrentSeed(randomizer))
         {
@@ -819,6 +915,7 @@ namespace mod::events
 
             case Master_Sword:
             case Master_Sword_Light:
+            case Mirror_Piece_1:
             case Mirror_Piece_2:
             case Mirror_Piece_3:
             case Mirror_Piece_4:
@@ -842,10 +939,12 @@ namespace mod::events
         }
 
         using namespace libtp::data::items;
+        using namespace rando::customItems;
 
         const uint32_t itemID = *reinterpret_cast<uint8_t*>(reinterpret_cast<uint32_t>(daDitem) + 0x92A);
         switch (itemID)
         {
+            case Mirror_Piece_1:
             case Mirror_Piece_2:
             case Mirror_Piece_3:
             case Mirror_Piece_4:
@@ -869,20 +968,23 @@ namespace mod::events
 
     int32_t proc_query022(void* unk1, void* unk2, int32_t unk3)
     {
+        using namespace libtp::data;
+        using namespace libtp::tp;
+
         // Check to see if currently in one of the Ordon interiors
-        if (libtp::tp::d_a_alink::checkStageName(
-                libtp::data::stage::allStages[libtp::data::stage::StageIDs::Ordon_Village_Interiors]))
+        if (d_a_alink::checkStageName(stage::allStages[stage::StageIDs::Ordon_Village_Interiors]))
         {
-            // Check to see if ckecking for the Iron Boots
+            // Check to see if checking for the Iron Boots
             const uint32_t item = *reinterpret_cast<uint16_t*>(reinterpret_cast<uint32_t>(unk2) + 0x4);
 
-            if (item == libtp::data::items::Iron_Boots)
+            if (item == items::Iron_Boots)
             {
                 // Return false so that the door in Bo's house can be opened without having the
                 // Iron Boots
                 return 0;
             }
         }
+
         return mod::return_query022(unk1, unk2, unk3);
     }
 
@@ -897,7 +999,7 @@ namespace mod::events
                 libtp::data::stage::allStages[libtp::data::stage::StageIDs::Kakariko_Village_Interiors]))
         {
             // If player has not bought Barnes' Bomb Bag, we want to allow them to be able to get the check.
-            if ((!libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::BOUGHT_BARNES_BOMB_BAG)))
+            if ((!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::BOUGHT_BARNES_BOMB_BAG)))
             {
                 return 0;
             }
@@ -911,6 +1013,22 @@ namespace mod::events
         }
 
         return numBombs;
+    }
+
+    int32_t proc_query025(void* unk1, void* unk2, int32_t unk3)
+    {
+        using namespace libtp::data::stage;
+
+        const auto stagesPtr = &allStages[0];
+
+        // Check to see if currently in one of the Kakariko interiors
+        if (libtp::tools::playerIsInRoomStage(3, stagesPtr[StageIDs::Kakariko_Village_Interiors]))
+        {
+            // Return 0 so the player can buy the red potion item from the shop.
+            return 0;
+        }
+
+        return mod::return_query025(unk1, unk2, unk3);
     }
 
     int32_t proc_query042(void* unk1, void* unk2, int32_t unk3)
@@ -990,107 +1108,529 @@ namespace mod::events
 
     void proc_onDungeonItem(libtp::tp::d_save::dSv_memBit_c* memBitPtr, const int32_t memBit)
     {
+        using namespace libtp;
         using namespace libtp::data::flags;
-        switch (memBit)
+        using namespace libtp::data::stage;
+
+        // Make sure the randomizer is loaded/enabled and a seed is loaded
+        rando::Seed* seedPtr;
+        if (seedPtr = getCurrentSeed(randomizer), !seedPtr)
         {
-            case BOSS_DEFEATED:
+            return mod::return_onDungeonItem(memBitPtr, memBit);
+        }
+
+        const auto stagesPtr = &allStages[0];
+        tp::d_save::dSv_info_c* savePtr = &tp::d_com_inf_game::dComIfG_gameInfo.save;
+
+        if (memBitPtr == &savePtr->memory.temp_flags)
+        {
+            switch (memBit)
             {
-                if (randomizer->m_Seed->m_Header->castleRequirements == 3) // All Dungeons
+                case BOSS_DEFEATED:
                 {
-                    // Check to see if the player has completed all of the other dungeons, if so, destroy the barrier.
-                    uint8_t numDungeons = 0x0;
-                    for (int32_t i = 0x10; i < 0x18; i++)
+                    if (seedPtr->m_Header->castleRequirements ==
+                        rando::CastleEntryRequirements::HC_All_Dungeons) // All Dungeons
                     {
-                        if (libtp::tp::d_save::isDungeonItem(
-                                &libtp::tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.area_flags[i].temp_flags,
-                                3))
+                        // Check to see if the player has completed all of the other dungeons, if so, destroy the barrier.
+                        libtp::tp::d_save::dSv_memory_c* mSavePtr = savePtr->save_file.mSave;
+                        uint32_t numDungeons = 0;
+
+                        for (int32_t i = 0x10; i < 0x18; i++)
                         {
-                            numDungeons++;
+                            if (libtp::tp::d_save::isDungeonItem(&mSavePtr[i].temp_flags, 3))
+                            {
+                                numDungeons++;
+                            }
+                        }
+
+                        if (numDungeons == 7) // We check for 7 instead of 8 because when this code runs, the temp_flags for
+                                              // the current stage has not been updated with the boss flag value yet.
+                        {
+                            events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
                         }
                     }
-                    if (numDungeons == 0x7) // We check for 7 instead of 8 because when this code runs, the temp_flags for
-                                            // the current stage has not been updated with the boss flag value yet.
+                    if (tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Stallord]))
                     {
-                        events::setSaveFileEventFlag(libtp::data::flags::BARRIER_GONE);
+                        uint32_t agDungeonReward = randomizer->getEventItem(rando::customItems::Mirror_Piece_1);
+                        randomizer->addItemToEventQueue(agDungeonReward);
                     }
+                    break;
                 }
-                break;
-            }
-            default:
-            {
-                break;
+                default:
+                {
+                    break;
+                }
             }
         }
+
         mod::return_onDungeonItem(memBitPtr, memBit);
     }
 
-    void loadCustomActors()
+    void loadCustomActors(void* mStatus_roomControl)
     {
         using namespace libtp;
+        using namespace libtp::data::stage;
 
-        const auto stagesPtr = &data::stage::allStages[0];
-        if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Faron_Woods]))
+        const auto stagesPtr = &allStages[0];
+        tp::dzx::ACTR localSignActor;
+        memcpy(&localSignActor, &SignActor, sizeof(tp::dzx::ACTR));
+
+        if (tp::d_a_alink::checkStageName(stagesPtr[StageIDs::Faron_Woods]))
         {
             tools::spawnActor(0, EponaActr);
         }
-        else if ((tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Ordon_Village]) &&
-                  (libtp::tools::getCurrentRoomNo() == 0)))
+        else if (libtp::tools::playerIsInRoomStage(0, stagesPtr[libtp::data::stage::StageIDs::Ordon_Village]))
         {
-            libtp::tp::dzx::ACTR localEponaActor;
-            memcpy(&localEponaActor, &EponaActr, sizeof(libtp::tp::dzx::ACTR));
+            tp::dzx::ACTR localEponaActor;
+            memcpy(&localEponaActor, &EponaActr, sizeof(tp::dzx::ACTR));
 
             localEponaActor.parameters = 0x148;
             tools::spawnActor(0, localEponaActor);
         }
+
+        // The actors in this case are actors who need to be spawned in even if the area is in a specific set state no matter
+        // what (i.e PoT, HC, etc. and cannot be spawned in with the mStageData actors due to checking for angles and the like,
+        // which causes a crash.)
+        if (randomizer && (reinterpret_cast<uint32_t>(mStatus_roomControl) !=
+                           reinterpret_cast<uint32_t>(&libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mStageData)))
+        {
+            switch (randomizer->m_Seed->m_StageIDX)
+            {
+                case StageIDs::Palace_of_Twilight:
+                {
+                    localSignActor.pos.x = 1808.76245f;
+                    localSignActor.pos.y = -208.901459f;
+                    localSignActor.pos.z = 11813.2744f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0xA971);
+                    tools::spawnActor(0, localSignActor);
+                    break;
+                }
+
+                case StageIDs::Hyrule_Castle:
+                {
+                    localSignActor.pos.x = 0.0f;
+                    localSignActor.pos.y = 25.f;
+                    localSignActor.pos.z = 11625.f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x0000);
+                    tools::spawnActor(11, localSignActor);
+                    break;
+                }
+            }
+        }
     }
 
-    void loadCustomRoomActors()
+    void loadCustomRoomActors(rando::Randomizer* randomizer)
     {
         using namespace libtp;
+        using namespace libtp::data::stage;
 
-        const auto stagesPtr = &data::stage::allStages[0];
-        if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Lake_Hylia]))
+        if (!getCurrentSeed(randomizer))
         {
-            if (libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::SKY_CANNON_REPAIRED))
+            return;
+        }
+
+        tp::dzx::ACTR localSignActor;
+        memcpy(&localSignActor, &SignActor, sizeof(tp::dzx::ACTR));
+
+        const int32_t roomIDX = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mEvtManager.mRoomNo;
+        switch (randomizer->m_Seed->m_StageIDX)
+        {
+            case StageIDs::Lake_Hylia:
             {
-                // Manually spawn Auru if the Lake is in the Repaired Cannon state as his actor is not in the DZX for that
-                // layer.
-                tools::spawnActor(0, AuruActr);
+                if (tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::SKY_CANNON_REPAIRED))
+                {
+                    // Manually spawn Auru if the Lake is in the Repaired Cannon state as his actor is not in the DZX for that
+                    // layer.
+                    tools::spawnActor(0, AuruActr);
+                }
+
+                // Spawn a red rupee behind Fyer's house that allows the player to use his cannon to leave the lake which
+                // prevents a softlock.
+                tools::spawnActor(0, ItemActr);
+
+                localSignActor.pos.x = -109203.461f;
+                localSignActor.pos.y = -7220.f;
+                localSignActor.pos.z = 33083.7344f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x64B5);
+                tools::spawnActor(0, localSignActor);
+
+                if (roomIDX == 1) // Lanayru Spring
+                {
+                    localSignActor.pos.x = -309.997833f;
+                    localSignActor.pos.y = -1614.82178f;
+                    localSignActor.pos.z = 157.970795f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x8000);
+                    tools::spawnActor(1, localSignActor);
+                }
+                break;
             }
 
-            // Spawn a red rupee behind Fyer's house that allows the player to use his cannon to leave the lake which prevents a
-            // softlock.
-            tools::spawnActor(0, ItemActr);
-        }
-        else if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Hyrule_Field]) &&
-                 (!tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags,
-                                          data::flags::CLEARED_ELDIN_TWILIGHT)))
-        {
-            libtp::tp::dzx::ACTR localGanonBarrierActor;
-            memcpy(&localGanonBarrierActor, &GanonBarrierActor, sizeof(libtp::tp::dzx::ACTR));
+            case StageIDs::Hyrule_Field:
+            {
+                if (roomIDX == 0) // Eldin Field
+                {
+                    if (!tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mEvent,
+                                                data::flags::CLEARED_ELDIN_TWILIGHT))
+                    {
+                        libtp::tp::dzx::ACTR localGanonBarrierActor;
+                        memcpy(&localGanonBarrierActor, &GanonBarrierActor, sizeof(libtp::tp::dzx::ACTR));
 
-            tools::spawnActor(7, localGanonBarrierActor);
+                        tools::spawnActor(7, localGanonBarrierActor);
 
-            localGanonBarrierActor.pos.z -= 270.f;
-            tools::spawnActor(7, localGanonBarrierActor);
+                        localGanonBarrierActor.pos.z -= 270.f;
+                        tools::spawnActor(7, localGanonBarrierActor);
 
-            localGanonBarrierActor.pos.z -= 270.f;
-            tools::spawnActor(7, localGanonBarrierActor);
-        }
-        else if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Faron_Woods]) &&
-                 (tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.event_flags,
-                                         data::flags::ORDON_DAY_2_OVER)))
-        {
-            tools::spawnActor(6, ForestGWolfActr);
-        }
-        else if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Castle_Town_Shops]))
-        {
-            tools::spawnActor(6, ImpPoeActr);
-        }
-        else if (tp::d_a_alink::checkStageName(stagesPtr[data::stage::StageIDs::Bulblin_Camp]) &&
-                 !libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::ESCAPED_BURNING_TENT_IN_BULBLIN_CAMP))
-        {
-            tools::spawnActor(1, CampBoarActr);
+                        localGanonBarrierActor.pos.z -= 270.f;
+                        tools::spawnActor(7, localGanonBarrierActor);
+                    }
+                    localSignActor.pos.x = -12433.2744f;
+                    localSignActor.pos.y = -1075.2218f;
+                    localSignActor.pos.z = 20885.7129f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x8000);
+                    tools::spawnActor(0, localSignActor);
+                }
+
+                if (roomIDX == 6) // Faron Field
+                {
+                    localSignActor.pos.x = -46039.4922f;
+                    localSignActor.pos.y = -9250.f;
+                    localSignActor.pos.z = 81859.2891f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x8000);
+                    tools::spawnActor(6, localSignActor);
+                }
+
+                if (roomIDX == 3) // Kakariko Gorge
+                {
+                    localSignActor.pos.x = -11394.7832f;
+                    localSignActor.pos.y = -3258.73096f;
+                    localSignActor.pos.z = 39702.91995f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0xAC70);
+                    tools::spawnActor(3, localSignActor);
+                }
+
+                if (roomIDX == 7) // North Eldin Hint Sign
+                {
+                    localSignActor.pos.x = 29691.0742f;
+                    localSignActor.pos.y = 661.668;
+                    localSignActor.pos.z = -53367.16f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x742B);
+                    tools::spawnActor(7, localSignActor);
+                }
+
+                if (roomIDX == 10) // Lanayru Field
+                {
+                    localSignActor.pos.x = -46711.957f;
+                    localSignActor.pos.y = 268.4848f;
+                    localSignActor.pos.z = -55505.5508f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x85B9);
+                    tools::spawnActor(10, localSignActor);
+                }
+
+                if (roomIDX == 13) // Great Bridge of Hylia
+                {
+                    localSignActor.pos.x = -94678.8672f;
+                    localSignActor.pos.y = -3900.f;
+                    localSignActor.pos.z = 18410.543f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x0000);
+                    tools::spawnActor(13, localSignActor);
+                }
+
+                break;
+            }
+
+            case StageIDs::Faron_Woods:
+            {
+                if (tp::d_save::isEventBit(&tp::d_com_inf_game::dComIfG_gameInfo.save.save_file.mEvent,
+                                           data::flags::ORDON_DAY_2_OVER))
+                {
+                    tools::spawnActor(6, ForestGWolfActr);
+                }
+
+                if (roomIDX == 4)
+                {
+                    localSignActor.pos.x = -12423.8467f;
+                    localSignActor.pos.y = 273.277985f;
+                    localSignActor.pos.z = -11518.958f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x9228);
+                    tools::spawnActor(4, localSignActor);
+                }
+                break;
+            }
+
+            case StageIDs::Castle_Town_Shops:
+            {
+                tools::spawnActor(5, ImpPoeActr);
+                break;
+            }
+
+            case StageIDs::Bulblin_Camp:
+            {
+                if (!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::ESCAPED_BURNING_TENT_IN_BULBLIN_CAMP))
+                {
+                    tools::spawnActor(1, CampBoarActr);
+                }
+
+                localSignActor.pos.x = -568.556152f;
+                localSignActor.pos.y = 260.f;
+                localSignActor.pos.z = -3969.31f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x0000);
+                tools::spawnActor(1, localSignActor);
+                break;
+            }
+
+            case StageIDs::Kakariko_Village_Interiors:
+            {
+                if (roomIDX == 0x3)
+                {
+                    tools::spawnActor(3, KakShopSlot2Actr);
+                }
+                break;
+            }
+
+            case StageIDs::Kakariko_Village:
+            {
+                localSignActor.pos.x = -6277.372f;
+                localSignActor.pos.y = 2850.f;
+                localSignActor.pos.z = -2197.14331f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x4000);
+                tools::spawnActor(0, localSignActor);
+                break;
+            }
+
+            case StageIDs::Ordon_Village:
+            {
+                // Need to check for room 1 or we get a floating sign near the
+                // roof of Sera's Shop.
+                if (roomIDX == 1)
+                {
+                    localSignActor.pos.x = 687.89f;
+                    localSignActor.pos.y = 800.f;
+                    localSignActor.pos.z = -1424.16f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0xA019);
+                    tools::spawnActor(1, localSignActor);
+                }
+                break;
+            }
+
+            case StageIDs::Sacred_Grove:
+            {
+                localSignActor.pos.x = -1543.f;
+                localSignActor.pos.y = 1725.f;
+                localSignActor.pos.z = 7964.85498f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x4000);
+                tools::spawnActor(1, localSignActor);
+
+                if (roomIDX == 1)
+                {
+                    tools::spawnActor(1, MstrSrdActr);
+                }
+                break;
+            }
+
+            case StageIDs::Kakariko_Graveyard:
+            {
+                localSignActor.pos.x = 21765.9863f;
+                localSignActor.pos.y = 500.f;
+                localSignActor.pos.z = -62.247f;
+                localSignActor.rot[1] = static_cast<int16_t>(0xC000);
+                tools::spawnActor(0, localSignActor);
+                break;
+            }
+
+            case StageIDs::Death_Mountain:
+            {
+                localSignActor.pos.x = 920.583069f;
+                localSignActor.pos.y = 0.745985091f;
+                localSignActor.pos.z = 1227.39978f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x35A5);
+                tools::spawnActor(0, localSignActor);
+                break;
+            }
+
+            case StageIDs::Hidden_Village:
+            {
+                localSignActor.pos.x = 5161.03f;
+                localSignActor.pos.y = 0.f;
+                localSignActor.pos.z = -5264.33f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x0000);
+                tools::spawnActor(0, localSignActor);
+                break;
+            }
+
+            case StageIDs::Outside_Castle_Town:
+            {
+                if (roomIDX == 8) // Beside Castle Town
+                {
+                    localSignActor.pos.x = -68194.2109f;
+                    localSignActor.pos.y = -1050.f;
+                    localSignActor.pos.z = 5603.60645f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0xC000);
+                    tools::spawnActor(8, localSignActor);
+                }
+                else if (roomIDX == 16) // South of CT
+                {
+                    localSignActor.pos.x = -51500.f;
+                    localSignActor.pos.y = -5500.f;
+                    localSignActor.pos.z = 27368.3086f;
+                    localSignActor.rot[1] = static_cast<int16_t>(0x0000);
+                    tools::spawnActor(16, localSignActor);
+                }
+                break;
+            }
+
+            case StageIDs::Castle_Town:
+            {
+                localSignActor.pos.x = 0.f;
+                localSignActor.pos.y = -200.f;
+                localSignActor.pos.z = 835.f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x0000);
+                tools::spawnActor(0, localSignActor);
+                break;
+            }
+
+            case StageIDs::Lake_Hylia_Long_Cave:
+            {
+                localSignActor.pos.x = -2897.38672f;
+                localSignActor.pos.y = -1636.68994f;
+                localSignActor.pos.z = -17674.8691f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x3E21);
+                tools::spawnActor(0, localSignActor);
+                break;
+            }
+
+            case StageIDs::Zoras_Domain:
+            {
+                localSignActor.pos.x = -2964.84839f;
+                localSignActor.pos.y = -2500.f;
+                localSignActor.pos.z = 17146.2676f;
+                localSignActor.rot[1] = static_cast<int16_t>(0xAF09);
+                tools::spawnActor(1, localSignActor);
+                break;
+            }
+
+            case StageIDs::Fishing_Pond:
+            {
+                localSignActor.pos.x = -2924.74585f;
+                localSignActor.pos.y = 35.f;
+                localSignActor.pos.z = 8386.28906f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x8000);
+                tools::spawnActor(0, localSignActor);
+                break;
+            }
+
+            case StageIDs::Gerudo_Desert:
+            {
+                localSignActor.pos.x = 20356.23f;
+                localSignActor.pos.y = 556.7;
+                localSignActor.pos.z = 38694.8047f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x0099);
+                tools::spawnActor(0, localSignActor);
+                break;
+            }
+
+            case StageIDs::Snowpeak:
+            {
+                localSignActor.pos.x = 15931.9238f;
+                localSignActor.pos.y = -14389.4912f;
+                localSignActor.pos.z = -17388.1992f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x2C5A);
+                tools::spawnActor(0, localSignActor);
+                break;
+            }
+
+            case StageIDs::Cave_of_Ordeals:
+            {
+                localSignActor.pos.x = -1191.42f;
+                localSignActor.pos.y = 1100.f;
+                localSignActor.pos.z = -260.65f;
+                localSignActor.rot[1] = static_cast<int16_t>(0xE483);
+                tools::spawnActor(0, localSignActor);
+                break;
+            }
+
+            case StageIDs::Forest_Temple:
+            {
+                localSignActor.pos.x = -1972.11682f;
+                localSignActor.pos.y = 3150.f;
+                localSignActor.pos.z = 7610.9751f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x6000);
+                tools::spawnActor(0, localSignActor);
+                break;
+            }
+
+            case StageIDs::Goron_Mines:
+            {
+                localSignActor.pos.x = 11394.1855f;
+                localSignActor.pos.y = 2878.65;
+                localSignActor.pos.z = -17913.05f;
+                localSignActor.rot[1] = static_cast<int16_t>(0xD556);
+                tools::spawnActor(17, localSignActor);
+                break;
+            }
+
+            case StageIDs::Lakebed_Temple:
+            {
+                localSignActor.pos.x = -4765.38037f;
+                localSignActor.pos.y = -1.21f;
+                localSignActor.pos.z = 272.192261f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x46B9);
+                tools::spawnActor(3, localSignActor);
+                break;
+            }
+
+            case StageIDs::Arbiters_Grounds:
+            {
+                localSignActor.pos.x = -349.4044f;
+                localSignActor.pos.y = 450.f;
+                localSignActor.pos.z = -2876.90771f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x0000);
+                tools::spawnActor(2, localSignActor);
+                break;
+            }
+
+            case StageIDs::Snowpeak_Ruins:
+            {
+                localSignActor.pos.x = -530.f;
+                localSignActor.pos.y = 0.f;
+                localSignActor.pos.z = -669.69f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x0000);
+                tools::spawnActor(1, localSignActor);
+                break;
+            }
+
+            case StageIDs::Temple_of_Time:
+            {
+                localSignActor.pos.x = -618.9335f;
+                localSignActor.pos.y = 725.f;
+                localSignActor.pos.z = 3112.2f;
+                localSignActor.rot[1] = static_cast<int16_t>(0x8000);
+                tools::spawnActor(0, localSignActor);
+
+                // ToT midpoint sign
+                tp::dzx::ACTR localSignActor2;
+                memcpy(&localSignActor2, &SignActor, sizeof(tp::dzx::ACTR));
+                localSignActor2.pos.x = -3885.2157f;
+                localSignActor2.pos.y = 4450.f;
+                localSignActor2.pos.z = -6353.38135f;
+                localSignActor2.rot[1] = static_cast<int16_t>(0x2000);
+                tools::spawnActor(4, localSignActor2);
+                break;
+            }
+
+            case StageIDs::City_in_the_Sky:
+            {
+                localSignActor.pos.x = 3376.54f;
+                localSignActor.pos.y = 0.f;
+                localSignActor.pos.z = -12709.0352f;
+                localSignActor.rot[1] = static_cast<int16_t>(0xC846);
+                tools::spawnActor(2, localSignActor);
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
         }
     }
 
@@ -1098,7 +1638,7 @@ namespace mod::events
     {
         using namespace libtp;
         if (tp::d_a_alink::checkStageName(data::stage::allStages[data::stage::StageIDs::Hyrule_Field]) &&
-            libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::MIDNAS_DESPERATE_HOUR_COMPLETED))
+            libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::MIDNAS_DESPERATE_HOUR_COMPLETED))
         {
             tools::spawnSCOB(3, HorseJumpScob);
         }
@@ -1111,8 +1651,9 @@ namespace mod::events
 
     void handleQuickTransform()
     {
-        rando::Seed* seed;
         using namespace libtp::tp::d_com_inf_game;
+
+        rando::Seed* seed;
         if (seed = getCurrentSeed(randomizer), !seed)
         {
             return;
@@ -1137,45 +1678,63 @@ namespace mod::events
         }
 
         // Check to see if Link has the ability to transform.
-        if (!libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::TRANSFORMING_UNLOCKED))
-        {
-            return;
-        }
-
-        // Ensure there is a proper pointer to the Z Button Alpha.
-        uint32_t zButtonAlphaPtr = reinterpret_cast<uint32_t>(libtp::tp::d_meter2_info::wZButtonPtr);
-        if (!zButtonAlphaPtr)
-        {
-            return;
-        }
-
-        zButtonAlphaPtr = *reinterpret_cast<uint32_t*>(zButtonAlphaPtr + 0x10C);
-        if (!zButtonAlphaPtr)
-        {
-            return;
-        }
-
-        // Ensure that the Z Button is not dimmed
-        const float zButtonAlpha = *reinterpret_cast<float*>(zButtonAlphaPtr + 0x720);
-        if (zButtonAlpha != 1.f)
-        {
-            return;
-        }
-
-        // Make sure Link is not underwater or talking to someone.
-        if (libtp::tp::d_a_alink::linkStatus->status != 0x1)
-        {
-            return;
-        }
-
-        // The game will crash if trying to quick transform while holding the Ball and Chain
-        if (linkMapPtr->mEquipItem == libtp::data::items::Ball_and_Chain)
+        if (!libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::TRANSFORMING_UNLOCKED))
         {
             return;
         }
 
         // Make sure Link isn't riding anything (horse, boar, etc.)
         if (libtp::tp::d_camera::checkRide(linkMapPtr))
+        {
+            return;
+        }
+
+        // Make sure Link is not underwater or talking to someone.
+        switch (linkMapPtr->mProcID)
+        {
+            case libtp::tp::d_a_alink::PROC_TALK:
+            case libtp::tp::d_a_alink::PROC_SWIM_UP:
+            case libtp::tp::d_a_alink::PROC_SWIM_DIVE:
+            {
+                return;
+            }
+            // If Link is targeting or pulling a chain, we don't want to remove the ability to use items in combat accidently.
+            case libtp::tp::d_a_alink::PROC_ATN_ACTOR_MOVE:
+            case libtp::tp::d_a_alink::PROC_ATN_ACTOR_WAIT:
+            case libtp::tp::d_a_alink::PROC_WOLF_ATN_AC_MOVE:
+            {
+                break;
+            }
+            default:
+            {
+                // Disable the input that was just pressed, as sometimes it could cause items to be used or Wolf Link to dig.
+                libtp::tp::m_do_controller_pad::cpadInfo[libtp::tp::m_do_controller_pad::PAD_1].mPressedButtonFlags = 0;
+                break;
+            }
+        }
+
+        // Ensure there is a proper pointer to the mMeterClass and mpMeterDraw structs in g_meter2_info.
+        const libtp::tp::d_meter2::dMeter2_c* meterClassPtr = libtp::tp::d_meter2_info::g_meter2_info.mMeterClass;
+        if (!meterClassPtr)
+        {
+            return;
+        }
+
+        const libtp::tp::d_meter2_draw::dMeter2Draw_c* meterDrawPtr = meterClassPtr->mpMeterDraw;
+        if (!meterDrawPtr)
+        {
+            return;
+        }
+
+        // Ensure that the Z Button is not dimmed
+        const float zButtonAlpha = meterDrawPtr->mZButtonAlpha;
+        if (zButtonAlpha != 1.f)
+        {
+            return;
+        }
+
+        // The game will crash if trying to quick transform while holding the Ball and Chain
+        if (linkMapPtr->mEquipItem == libtp::data::items::Ball_and_Chain)
         {
             return;
         }
@@ -1230,15 +1789,15 @@ namespace mod::events
         }
         else
         {
-            libtp::tp::d_save::dSv_player_status_b_c* playerStatusPtr = &dComIfG_gameInfo.save.save_file.player.player_status_b;
+            float* skyAnglePtr = &dComIfG_gameInfo.save.save_file.player.player_status_b.skyAngle;
 
             if (!libtp::tp::d_kankyo::dKy_daynight_check()) // Day time
             {
-                playerStatusPtr->skyAngle = 285;
+                *skyAnglePtr = 285.f;
             }
             else
             {
-                playerStatusPtr->skyAngle = 105;
+                *skyAnglePtr = 105.f;
             }
 
             dComIfG_gameInfo.play.mNextStage.enabled |= 0x1;
@@ -1292,23 +1851,23 @@ namespace mod::events
 
         // Check if Midna has actually been unlocked and is on the Z button
         // This is needed because the Z button will always be dimmed if she has not been unlocked
-        if (libtp::tp::d_a_alink::dComIfGs_isEventBit(libtp::data::flags::MIDNA_ACCOMPANIES_WOLF))
+        if (libtp::tp::d_com_inf_game::dComIfGs_isEventBit(libtp::data::flags::MIDNA_ACCOMPANIES_WOLF))
         {
-            // Ensure there is a proper pointer to the Z Button Alpha.
-            uint32_t zButtonAlphaPtr = reinterpret_cast<uint32_t>(libtp::tp::d_meter2_info::wZButtonPtr);
-            if (!zButtonAlphaPtr)
+            // Ensure there is a proper pointer to the mMeterClass and mpMeterDraw structs in g_meter2_info.
+            const libtp::tp::d_meter2::dMeter2_c* meterClassPtr = libtp::tp::d_meter2_info::g_meter2_info.mMeterClass;
+            if (!meterClassPtr)
             {
                 return false;
             }
 
-            zButtonAlphaPtr = *reinterpret_cast<uint32_t*>(zButtonAlphaPtr + 0x10C);
-            if (!zButtonAlphaPtr)
+            const libtp::tp::d_meter2_draw::dMeter2Draw_c* meterDrawPtr = meterClassPtr->mpMeterDraw;
+            if (!meterDrawPtr)
             {
                 return false;
             }
 
             // Ensure that the Z Button is not dimmed
-            const float zButtonAlpha = *reinterpret_cast<float*>(zButtonAlphaPtr + 0x720);
+            const float zButtonAlpha = meterDrawPtr->mZButtonAlpha;
             if (zButtonAlpha != 1.f)
             {
                 return false;
@@ -1316,9 +1875,22 @@ namespace mod::events
         }
 
         // Make sure Link is not underwater or talking to someone.
-        if (libtp::tp::d_a_alink::linkStatus->status != 0x1)
+        switch (linkMapPtr->mProcID)
         {
-            return false;
+            case libtp::tp::d_a_alink::PROC_TALK:
+            case libtp::tp::d_a_alink::PROC_WOLF_SWIM_MOVE:
+            case libtp::tp::d_a_alink::PROC_SWIM_MOVE:
+            case libtp::tp::d_a_alink::PROC_SWIM_WAIT:
+            case libtp::tp::d_a_alink::PROC_WOLF_SWIM_WAIT:
+            case libtp::tp::d_a_alink::PROC_SWIM_UP:
+            case libtp::tp::d_a_alink::PROC_SWIM_DIVE:
+            {
+                return false;
+            }
+            default:
+            {
+                break;
+            }
         }
 
         return true;
@@ -1442,7 +2014,7 @@ namespace mod::events
         }
         else // We are not in the correct node, so use the appropriate region node
         {
-            memoryFlags = saveDataPtr->save_file.area_flags[static_cast<uint32_t>(nodeId)].temp_flags.memoryFlags;
+            memoryFlags = saveDataPtr->save_file.mSave[static_cast<uint32_t>(nodeId)].temp_flags.memoryFlags;
         }
 
         return memoryFlags;
@@ -1546,12 +2118,16 @@ namespace mod::events
             rando::RawRGBTable* rawRGBListPtr = randomizer->m_Seed->m_RawRGBTable;
 
             uint8_t* lanternColor = reinterpret_cast<uint8_t*>(&rawRGBListPtr->lanternColor);
-            color1->r = lanternColor[0];
-            color1->g = lanternColor[1];
-            color1->b = lanternColor[2];
-            color2->r = lanternColor[0];
-            color2->g = lanternColor[1];
-            color2->b = lanternColor[2];
+
+            if (*reinterpret_cast<uint32_t*>(lanternColor) != 0x502814ff) // Don't set the value if it is already vanilla
+            {
+                color1->r = lanternColor[0];
+                color1->g = lanternColor[1];
+                color1->b = lanternColor[2];
+                color2->r = lanternColor[0];
+                color2->g = lanternColor[1];
+                color2->b = lanternColor[2];
+            }
         }
         libtp::tp::d_pane_class::setBlackWhite(panePtr, color1, color2);
     }

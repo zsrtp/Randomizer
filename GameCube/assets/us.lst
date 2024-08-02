@@ -75,6 +75,9 @@
 80042778:defaultSkipStb
 800429D4:skipper
 
+// d_event_manager.o
+80047758:getEventIdx3
+
 // DynamicLink.o
 80262660:DynamicModuleControl_ct
 80262C5C:do_link
@@ -97,6 +100,10 @@
 80019AA8:CreateAppend
 80019D98:fopAcM_create
 8001bb14:fopAcM_getTalkEventPartner
+8001b5e4:fopAcM_orderChangeEventId
+
+// f_op_msg_mng.o
+8001fe84:fopMsgM_messageSet
 
 // f_pc_node_req
 803A3A38:l_fpcNdRq_Queue
@@ -130,7 +137,6 @@
 800d29d4:checkDownAttackState
 800c77f4:procCoMetamorphoseInit
 80115c20:checkEventRun
-803DCE54:linkStatus
 800e251c:checkBootsMoveAnime
 80119d98:procCoTalkInit
 800d8f3c:procDamageInit
@@ -139,6 +145,7 @@
 801181a0:setGetItemFace
 800d96dc:procCoLargeDamageInit
 8011ac28:procCoGetItem
+8011a798:procCoGetItemInit
 800cffa4:dComIfGp_setItemLifeCount
 800be3e4:checkRestartRoom
 8011f9ec:checkWarpStart
@@ -150,6 +157,7 @@
 800c4f14:procFrontRollCrashInit
 8012d8c0:procWolfDashReverseInit
 8013c8c8:procWolfAttackReverseInit
+8012dba8:procWolfAtnActorMoveInit
 
 // data
 8038EB8C:climbVars
@@ -317,6 +325,7 @@
 
 // Z2SeqMgr.o
 802B4EB0:startBattleBgm
+802b3eac:checkBgmIDPlaying
 
 // Z2SoundMgr.o
 802A9EE8:startSound
@@ -338,7 +347,6 @@
 
 //d_meter2_info.o
 80430188:g_meter2_info
-804301A4:wZButtonPtr
 8021e0c4:resetMiniGameItem
 
 //d_meter2_draw.o
@@ -358,11 +366,13 @@
 
 // d_msg_object.o
 802369D8:isSend
+802383d0:getMessageID
 
 // processor.o
 802A7C54:getResource_groupID
 
 //d_msg_flow.o
+8024b138:query001
 8024b250:query004
 8024b8e4:query022
 8024b918:query023
@@ -375,6 +385,9 @@
 8024da78:event041
 8024bc80:query037
 8024c2a0:query049
+8024a2d8:doFlow
+8024a528:getEventId
+8024aa50:setNormalMsg
 
 //d_menu_window.o
 801fa590:collect_save_open_init
@@ -383,6 +396,7 @@
 8014ca2c:daNpcT_onEvtBit
 8014caac:daNpcT_chkEvtBit
 80155634:daNpcF_chkEvtBit
+8014a224:evtChange
 
 //resource.o
 802a9490:parseCharacter_1Byte
@@ -459,3 +473,19 @@
 
 // f_op_actor_iter.o
 800197F8:fopAcIt_Judge
+
+// d_gameover.o
+8019b40c:dispWait_init
+
+// d_shop_system.o
+80199e28:seq_decide_yes
+801975dc:offFlag
+8019a4f4:setSoldOutItemHide
+8019a344:setSeq
+8019a354:setSoldOutFlag
+
+// f_pc_executor.o
+8002139c:fpcEx_IsExist
+
+// d_file_select.o
+801843cc:dFile_select_c___create

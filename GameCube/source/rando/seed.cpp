@@ -74,7 +74,7 @@ namespace mod::rando
                 const uint32_t offset = eventFlags[i].offset;
                 const uint8_t flag = eventFlags[i].flag;
 
-                gameInfo->save.save_file.event_flags.event_flags[offset] |= flag;
+                gameInfo->save.save_file.mEvent.mEvent[offset] |= flag;
                 eventFlagsModified++;
             }
 
@@ -188,6 +188,7 @@ namespace mod::rando
             this->LoadBugReward();
             this->LoadSkyCharacter(stageIDX);
             this->LoadHiddenSkill();
+            this->LoadEventChecks(stageIDX);
 
             // Save current stageIDX for next time
             this->m_StageIDX = stageIDX;
@@ -204,6 +205,7 @@ namespace mod::rando
         m_numBugRewardChecks = 0;
         m_numSkyBookChecks = 0;
         m_numHiddenSkillChecks = 0;
+        m_numLoadedEventChecks = 0;
 
         delete[] m_DZXChecks;
         delete[] m_RELChecks;
@@ -212,6 +214,7 @@ namespace mod::rando
         delete[] m_BugRewardChecks;
         delete[] m_SkyBookChecks;
         delete[] m_HiddenSkillChecks;
+        delete[] m_EventChecks;
     }
 
     void Seed::LoadDZX(uint8_t stageIDX)
@@ -469,6 +472,38 @@ namespace mod::rando
         }
     }
 
+    void Seed::LoadEventChecks(uint8_t stageIDX)
+    {
+        using namespace libtp;
+
+        Header* headerPtr = m_Header;
+        const uint32_t num_eventchecks = headerPtr->eventItemCheckInfo.numEntries;
+        const uint32_t gci_offset = headerPtr->eventItemCheckInfo.dataOffset;
+
+        // Set the pointer as offset into our buffer
+        EventItem* eventChecksPtr = new EventItem[num_eventchecks];
+        m_EventChecks = eventChecksPtr;
+        EventItem* allEvent = reinterpret_cast<EventItem*>(&m_GCIData[gci_offset]);
+
+        // offset into m_EventChecks
+        uint32_t j = 0;
+
+        for (uint32_t i = 0; i < num_eventchecks; i++)
+        {
+            EventItem* currentEventCheck = &allEvent[i];
+            EventItem* globalEventCheck = &eventChecksPtr[j];
+
+            uint32_t numEventChecks = m_numLoadedEventChecks;
+            if ((currentEventCheck->stageIDX == stageIDX))
+            {
+                memcpy(globalEventCheck, currentEventCheck, sizeof(EventItem));
+                numEventChecks++;
+                j++;
+            }
+            m_numLoadedEventChecks = static_cast<uint16_t>(numEventChecks);
+        }
+    }
+
     void Seed::LoadARCChecks(uint8_t stageIDX, FileDirectory fileDirectory, int32_t roomNo)
     {
         using namespace libtp;
@@ -636,6 +671,7 @@ namespace mod::rando
 
         uint8_t foolishModelIndexes[MAX_SPAWNED_FOOLISH_ITEMS];
         uint32_t foolishModelCounter = 0;
+        const uint32_t stageIdx = this->m_StageIDX;
 
         for (uint32_t i = 0; i < num_shopItems; i++)
         {
@@ -706,6 +742,38 @@ namespace mod::rando
                         currentShopItemDataPtr->posY = 60.f;
                         break;
                     }
+                }
+            }
+            else if (shopItem == 0x2) // Red Potion
+            {
+                if (stageIdx != libtp::data::stage::Kakariko_Village_Interiors)
+                {
+                    d_item_data::ItemResource* currentItemResourcePtr = &itemResourcePtr[libtp::data::items::Red_Potion_Shop];
+
+                    currentShopItemDataPtr->arcName = currentItemResourcePtr->arcName;
+                    currentShopItemDataPtr->modelResIdx = currentItemResourcePtr->modelResIdx;
+                    currentShopItemDataPtr->wBtkResIdx = currentItemResourcePtr->btkResIdx;
+                    currentShopItemDataPtr->wBckResIdx = currentItemResourcePtr->bckResIdx;
+                    currentShopItemDataPtr->wBrkResIdx = currentItemResourcePtr->brkResIdx;
+                    currentShopItemDataPtr->wBtpResIdx = currentItemResourcePtr->btpResIdx;
+                    currentShopItemDataPtr->tevFrm = currentItemResourcePtr->tevFrm;
+                    currentShopItemDataPtr->posY = 15.f;
+                }
+            }
+            else if (shopItem == 0x6) // Wooden Shield
+            {
+                if (stageIdx != libtp::data::stage::Kakariko_Village_Interiors)
+                {
+                    d_item_data::ItemResource* currentItemResourcePtr = &itemResourcePtr[libtp::data::items::Wooden_Shield];
+
+                    currentShopItemDataPtr->arcName = currentItemResourcePtr->arcName;
+                    currentShopItemDataPtr->modelResIdx = currentItemResourcePtr->modelResIdx;
+                    currentShopItemDataPtr->wBtkResIdx = currentItemResourcePtr->btkResIdx;
+                    currentShopItemDataPtr->wBckResIdx = currentItemResourcePtr->bckResIdx;
+                    currentShopItemDataPtr->wBrkResIdx = currentItemResourcePtr->brkResIdx;
+                    currentShopItemDataPtr->wBtpResIdx = currentItemResourcePtr->btpResIdx;
+                    currentShopItemDataPtr->tevFrm = currentItemResourcePtr->tevFrm;
+                    currentShopItemDataPtr->posY = 15.f;
                 }
             }
             else

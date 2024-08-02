@@ -17,7 +17,6 @@
 #endif
 
 #include "rando/seed.h"
-#include "rando/linkHouseSign.h"
 #include "cxx.h"
 #include "game_patch/game_patch.h"
 #include "main.h"
@@ -79,16 +78,16 @@ namespace mod::rando
             m_GCIData = new (0x20) uint8_t[dataSize];
             memcpy(m_GCIData, &data[headerPtr->headerSize], dataSize);
 
-            // Create the required dungeons text that is displayed when reading the sign in front of Link's house
-            link_house_sign::createRequiredDungeonsString(this, headerPtr->requiredDungeons);
-
             // Generate the BGM/Fanfare table data
             loadBgmData(data);
             m_CLR0 = reinterpret_cast<CLR0Header*>(m_GCIData + headerPtr->clr0Offset);
             m_RawRGBTable = reinterpret_cast<RawRGBTable*>(m_GCIData + headerPtr->clr0Offset + m_CLR0->rawRGBOffset);
             m_BmdEntries = reinterpret_cast<BMDEntry*>(m_GCIData + headerPtr->clr0Offset + m_CLR0->bmdEntriesOffset);
 
-            // Set the static pointers for the Seed Header and Data
+            // Load the custom text data
+            this->loadCustomText(data);
+
+            // Set the static pointers for the Seed Header and Data. These are used by TPO
             void** ptrTable = reinterpret_cast<void**>(0x800042BC);
             ptrTable[0] = m_Header;
             ptrTable[1] = m_GCIData;
@@ -101,7 +100,7 @@ namespace mod::rando
         // Make sure to delete tempcheck buffers
         this->clearChecks();
 
-        // Clear the static pointers for the Seed Header and Data
+        // Clear the static pointers for the Seed Header and Data.  These are used by TPO
         void** ptrTable = reinterpret_cast<void**>(0x800042BC);
         ptrTable[0] = nullptr;
         ptrTable[1] = nullptr;
@@ -114,9 +113,6 @@ namespace mod::rando
             // Last clear gcibuffer as other functions before rely on it
             delete[] m_GCIData;
         }
-
-        // Clear the memory used by the required dungeons text that is displayed when reading the sign in front of Link's house
-        delete[] m_RequiredDungeons;
 
         // Clear the bgm table buffers
         delete[] m_BgmTable;
@@ -195,4 +191,47 @@ namespace mod::rando
             m_FanfareTable = reinterpret_cast<BGMReplacement*>(buf);
         }
     }
+
+    void Seed::loadShuffledEntrances()
+    {
+        const entryInfo* shuffledEntranceInfo = &m_Header->EntranceTableInfo;
+        const uint32_t num_shuffledEntrances = shuffledEntranceInfo->numEntries;
+        const uint32_t gci_offset = shuffledEntranceInfo->dataOffset;
+
+        // Set the pointer as offset into our buffer
+        m_ShuffledEntrances = reinterpret_cast<ShuffledEntrance*>(&m_GCIData[gci_offset]);
+        m_numShuffledEntrances = num_shuffledEntrances;
+    }
+
+    void Seed::loadCustomText(uint8_t* data)
+    {
+        const uint32_t headerOffset = m_Header->headerSize + m_Header->customTextHeaderOffset;
+
+        // Get the custom message header
+        const CustomMessageHeaderInfo* customMessageHeader = reinterpret_cast<CustomMessageHeaderInfo*>(&data[headerOffset]);
+
+        // Allocate memory for the ids, message offsets, and messages
+        m_TotalHintMsgEntries = customMessageHeader->totalEntries;
+        uint32_t msgIdTableSize = m_TotalHintMsgEntries * sizeof(CustomMessageData);
+        const uint32_t msgOffsetTableSize = m_TotalHintMsgEntries * sizeof(uint32_t);
+
+        // Round msgIdTableSize up to the size of the offsets to make sure the offsets are properly aligned
+        msgIdTableSize = (msgIdTableSize + sizeof(uint32_t) - 1) & ~(sizeof(uint32_t) - 1);
+        const uint32_t msgTableInfoSize = msgIdTableSize + msgOffsetTableSize + customMessageHeader->msgTableSize;
+
+        // Align to uint16_t, as thagt's the largest variable type in CustomMessageData
+        m_HintMsgTableInfo = new (sizeof(uint16_t)) uint8_t[msgTableInfoSize];
+        // When calculating the offset the the message table information, we are assuming that the message header is
+        // followed by the entry information for all of the languages in the seed data.
+        const uint32_t offset = headerOffset + customMessageHeader->msgIdTableOffset;
+
+        // Copy the data to the pointers
+        memcpy(m_HintMsgTableInfo, &data[offset], msgTableInfoSize);
+
+        for (uint32_t i = msgIdTableSize + msgOffsetTableSize; i < msgTableInfoSize; i++)
+        {
+            m_HintMsgTableInfo[i] = ~m_HintMsgTableInfo[i];
+        }
+    }
+
 } // namespace mod::rando

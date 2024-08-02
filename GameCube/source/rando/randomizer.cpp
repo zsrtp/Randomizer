@@ -69,7 +69,7 @@ namespace mod::rando
             return;
         }
 
-        const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.stageValues.mStage;
+        const char* stage = libtp::tp::d_com_inf_game::dComIfG_gameInfo.play.mNextStage.mStage;
         seed->LoadChecks(stage);
 
         // Make sure the foolish items spawn count is reset before randomizing foolish item models
@@ -98,6 +98,8 @@ namespace mod::rando
             case libtp::data::stage::StageIDs::Ordon_Village_Interiors:
             case libtp::data::stage::StageIDs::Kakariko_Village_Interiors:
             case libtp::data::stage::StageIDs::Castle_Town_Shops:
+            case libtp::data::stage::StageIDs::Death_Mountain:
+            case libtp::data::stage::StageIDs::City_in_the_Sky:
             {
                 if (modifyShopModels)
                 {
@@ -339,6 +341,25 @@ namespace mod::rando
             // the item
             return seed->m_BossChecks[0].item;
         }
+    }
+
+    uint8_t Randomizer::getEventItem(uint8_t flag)
+    {
+        const uint32_t numLoadedEventChecks = m_Seed->m_numLoadedEventChecks;
+        const EventItem* eventChecks = &m_Seed->m_EventChecks[0];
+
+        for (uint32_t i = 0; i < numLoadedEventChecks; i++)
+        {
+            const EventItem* currentEventCheck = &eventChecks[i];
+            if (flag == currentEventCheck->flag)
+            {
+                // Return new item
+                return currentEventCheck->itemID;
+            }
+        }
+
+        // Currently we just use the vanilla item ID as the flag since the scope of these checks are limited at the moment.
+        return flag;
     }
 
     void Randomizer::overrideARC(uint32_t fileAddr, FileDirectory fileDirectory, int32_t roomNo)
@@ -674,6 +695,21 @@ namespace mod::rando
                 currentTable[0xB] = currentColor;  // Set Alpha for darkworld ring base
                 currentTable[0x1B] = currentColor; // Set Alpha for darkworld ring wave 1
                 currentTable[0x2B] = currentColor; // Set Alpha for darkworld ring wave 2
+            }
+        }
+    }
+
+    void Randomizer::addItemToEventQueue(uint32_t itemToAdd)
+    {
+        using namespace libtp::tp;
+
+        uint8_t* reserveBytesPtr = d_com_inf_game::dComIfG_gameInfo.save.save_file.reserve.unk;
+        for (uint32_t i = 0; i < GIVE_PLAYER_ITEM_RESERVED_BYTES; i++)
+        {
+            if (reserveBytesPtr[i] == 0)
+            {
+                reserveBytesPtr[i] = static_cast<uint8_t>(itemToAdd);
+                break;
             }
         }
     }

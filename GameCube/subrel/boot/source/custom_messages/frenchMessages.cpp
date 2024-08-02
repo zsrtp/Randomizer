@@ -16,8 +16,8 @@ namespace mod::customMessages
 
     // Disable formatting for the textbox messages because it makes things look weird.
     // clang-format off
-    MSG_BEGIN_ARRAY( forestSmallKeyFr )
-        MSG_SPEED( MSG_SPEED_FAST )
+    MSG_BEGIN_ARRAY(forestSmallKeyFr)
+        MSG_SPEED(MSG_SPEED_FAST)
         //Vous obtenez une 
         "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20"
         MSG_COLOR(MSG_COLOR_RED)
@@ -29,7 +29,7 @@ namespace mod::customMessages
         MSG_COLOR(MSG_COLOR_WHITE)
         "!"
     MSG_END();
-    MSG_BEGIN_ARRAY( shadowCrystalFr )
+    MSG_BEGIN_ARRAY(shadowCrystalFr)
         MSG_SPEED(MSG_SPEED_SLOW)
         //Vous obtenez le 
         "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x6c\x65\x20"
@@ -40,7 +40,7 @@ namespace mod::customMessages
         //!La sombre manifestation des pouvoirs de Xanto qui permet de se transformer à volonté!
         "\x21\x0A\x4c\x61\x20\x73\x6f\x6d\x62\x72\x65\x20\x6d\x61\x6e\x69\x66\x65\x73\x74\x61\x74\x69\x6f\x6e\x20\x64\x65\x73\x0A\x70\x6f\x75\x76\x6f\x69\x72\x73\x20\x64\x65\x20\x58\x61\x6e\x74\x6f\x20\x71\x75\x69\x20\x70\x65\x72\x6d\x65\x74\x0A\x64\x65\x20\x73\x65\x20\x74\x72\x61\x6e\x73\x66\x6f\x72\x6d\x65\x72\x20\xe0\x20\x76\x6f\x6c\x6f\x6e\x74\xe9\x21"
     MSG_END();
-    MSG_BEGIN_ARRAY( endingBlowFr )
+    MSG_BEGIN_ARRAY(endingBlowFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous avez appris le 
         "\x56\x6f\x75\x73\x20\x61\x76\x65\x7a\x20\x61\x70\x70\x72\x69\x73\x20\x6c\x65\x20"
@@ -51,7 +51,7 @@ namespace mod::customMessages
         //!
         "\x21"
     MSG_END();
-    MSG_BEGIN_ARRAY( shieldAttackFr )
+    MSG_BEGIN_ARRAY(shieldAttackFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous avez appris la 
         "\x56\x6f\x75\x73\x20\x61\x76\x65\x7a\x20\x61\x70\x70\x72\x69\x73\x20\x6c\x61\x20"
@@ -62,7 +62,7 @@ namespace mod::customMessages
         //!
         "\x21"
     MSG_END();
-    MSG_BEGIN_ARRAY( backSliceFr )
+    MSG_BEGIN_ARRAY(backSliceFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous avez appris le 
         "\x56\x6f\x75\x73\x20\x61\x76\x65\x7a\x20\x61\x70\x70\x72\x69\x73\x20\x6c\x65\x20"
@@ -73,7 +73,7 @@ namespace mod::customMessages
         //!
         "\x21"
     MSG_END();
-    MSG_BEGIN_ARRAY( helmSplitterFr )
+    MSG_BEGIN_ARRAY(helmSplitterFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous avez appris le 
         "\x56\x6f\x75\x73\x20\x61\x76\x65\x7a\x20\x61\x70\x70\x72\x69\x73\x20\x6c\x65\x20"
@@ -84,7 +84,7 @@ namespace mod::customMessages
         //!
         "\x21"
     MSG_END();
-    MSG_BEGIN_ARRAY( mortalDrawFr )
+    MSG_BEGIN_ARRAY(mortalDrawFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous avez appris le 
         "\x56\x6f\x75\x73\x20\x61\x76\x65\x7a\x20\x61\x70\x70\x72\x69\x73\x20\x6c\x65\x20"
@@ -95,7 +95,7 @@ namespace mod::customMessages
         //!
         "\x21"
     MSG_END();
-    MSG_BEGIN_ARRAY( jumpStrikeFr )
+    MSG_BEGIN_ARRAY(jumpStrikeFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous avez appris le 
         "\x56\x6f\x75\x73\x20\x61\x76\x65\x7a\x20\x61\x70\x70\x72\x69\x73\x20\x6c\x65\x20"
@@ -106,7 +106,7 @@ namespace mod::customMessages
         //!
         "\x21"
     MSG_END();
-    MSG_BEGIN_ARRAY( greatSpinFr )
+    MSG_BEGIN_ARRAY(greatSpinFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous avez appris 
         "\x56\x6f\x75\x73\x20\x61\x76\x65\x7a\x20\x61\x70\x70\x72\x69\x73\x20"
@@ -117,7 +117,7 @@ namespace mod::customMessages
         //!
         "\x21"
     MSG_END();
-    MSG_BEGIN_ARRAY( poweredRodFr )
+    MSG_BEGIN_ARRAY(poweredRodFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Le 
         "\x4c\x65\x20"
@@ -128,7 +128,7 @@ namespace mod::customMessages
         //a recouvré ses pouvoirs magiques! Vous pouvez désormais insuffler la vie aux statues dans le présent!
         "\x61\x20\x72\x65\x63\x6F\x75\x76\x72\xE9\x20\x73\x65\x73\x0A\x70\x6F\x75\x76\x6F\x69\x72\x73\x20\x6D\x61\x67\x69\x71\x75\x65\x73\x21\x20\x56\x6F\x75\x73\x20\x70\x6F\x75\x76\x65\x7A\x0A\x64\xE9\x73\x6F\x72\x6D\x61\x69\x73\x20\x69\x6E\x73\x75\x66\x66\x6C\x65\x72\x20\x6C\x61\x20\x76\x69\x65\x20\x61\x75\x78\x0A\x73\x74\x61\x74\x75\x65\x73\x20\x64\x61\x6E\x73\x20\x6C\x65\x20\x70\x72\xE9\x73\x65\x6E\x74\x21"
     MSG_END();
-    MSG_BEGIN_ARRAY( skyBookCharacterFr )
+    MSG_BEGIN_ARRAY(skyBookCharacterFr)
         MSG_SPEED(MSG_SPEED_FAST)
         // Vous avez trouvé un
         "\x56\x6F\x75\x73\x20\x61\x76\x65\x7A\x20\x74\x72\x6F\x75\x76\xE9\x20\x75\x6E\x20"
@@ -145,7 +145,7 @@ namespace mod::customMessages
         // pour l'instant.
         "\x20\x70\x6F\x75\x72\x20\x6C\x27\x69\x6E\x73\x74\x61\x6E\x74\x2E"
     MSG_END();
-    MSG_BEGIN_ARRAY( firstFusedShadowFr )
+    MSG_BEGIN_ARRAY(firstFusedShadowFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous obtenez un 
         "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x20"
@@ -162,7 +162,7 @@ namespace mod::customMessages
         //..
         "\x2e\x2e"
     MSG_END();
-    MSG_BEGIN_ARRAY( secondFusedShadowFr )
+    MSG_BEGIN_ARRAY(secondFusedShadowFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous obtenez un second
         "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x75\x6e\x20\x73\x65\x63\x6f\x6e\x64\x0A"
@@ -179,7 +179,7 @@ namespace mod::customMessages
         //sur vos mains..
         "\x73\x75\x72\x20\x76\x6f\x73\x20\x6d\x61\x69\x6e\x73\x2e\x2e"
     MSG_END();
-    MSG_BEGIN_ARRAY( thirdFusedShadowFr )
+    MSG_BEGIN_ARRAY(thirdFusedShadowFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous obtenez le dernier
         "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x6c\x65\x20\x64\x65\x72\x6e\x69\x65\x72\x0A"
@@ -196,7 +196,24 @@ namespace mod::customMessages
         //s'en dégage..
         "\x73\x27\x65\x6e\x20\x64\xe9\x67\x61\x67\x65\x2e\x2e"
     MSG_END();
-    MSG_BEGIN_ARRAY( secondMirrorShardFr )
+        MSG_BEGIN_ARRAY(firstMirrorShardFr)
+        MSG_SPEED(MSG_SPEED_FAST)
+        // Vous obtenez le premier fragmentdu
+        "\x56\x6F\x75\x73\x20\x6F\x62\x74\x65\x6E\x65\x7A\x20\x6C\x65\x20\x70\x72\x65\x6D\x69\x65\x72\x20\x66\x72\x61\x67\x6D\x65\x6E\x74\x0A\x64\x75\x20"
+        MSG_COLOR(MSG_COLOR_RED)
+        // Miroir des Ombres
+        "\x4d\x69\x72\x6f\x69\x72\x20\x64\x65\x73\x20\x4f\x6d\x62\x72\x65\x73"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        // ! Il est recouvert de
+        "\x21\x20\x49\x6C\x20\x65\x73\x74\x0A\x72\x65\x63\x6F\x75\x76\x65\x72\x74\x20\x64\x65\x20"
+        MSG_COLOR(MSG_COLOR_ORANGE)
+        // sable
+        "\x73\x61\x62\x6C\x65"
+        MSG_COLOR(MSG_COLOR_WHITE)
+        // ...
+        "\x2e\x2e\x2e"
+    MSG_END();
+    MSG_BEGIN_ARRAY(secondMirrorShardFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous obtenez le second fragmentdu 
         "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x6c\x65\x20\x73\x65\x63\x6f\x6e\x64\x20\x66\x72\x61\x67\x6d\x65\x6e\x74\x0A\x64\x75\x20"
@@ -213,7 +230,7 @@ namespace mod::customMessages
         //et brille demille feux..
         "\x65\x74\x20\x62\x72\x69\x6c\x6c\x65\x20\x64\x65\x0A\x6d\x69\x6c\x6c\x65\x20\x66\x65\x75\x78\x2e\x2e"
     MSG_END();
-    MSG_BEGIN_ARRAY( thirdMirrorShardFr )
+    MSG_BEGIN_ARRAY(thirdMirrorShardFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous obtenez le troisièmefragment du 
         "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x6c\x65\x20\x74\x72\x6f\x69\x73\x69\xe8\x6d\x65\x0A\x66\x72\x61\x67\x6d\x65\x6e\x74\x20\x64\x75\x20"
@@ -230,7 +247,7 @@ namespace mod::customMessages
         //..
         "\x2e\x2e"
     MSG_END();
-    MSG_BEGIN_ARRAY( fourthMirrorShardFr )
+    MSG_BEGIN_ARRAY(fourthMirrorShardFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous obtenez le dernierfragment du 
         "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x6c\x65\x20\x64\x65\x72\x6e\x69\x65\x72\x0A\x66\x72\x61\x67\x6d\x65\x6e\x74\x20\x64\x75\x20"
@@ -247,7 +264,7 @@ namespace mod::customMessages
         //..
         "\x2e\x2e"
     MSG_END();
-    MSG_BEGIN_ARRAY( foolishItemFr )
+    MSG_BEGIN_ARRAY(foolishItemFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Le 
         "\x4c\x65\x20"
@@ -256,9 +273,9 @@ namespace mod::customMessages
         "\x62\x6c\x69\x7a\x7a\x61\x72\x64\x20"
         MSG_COLOR(MSG_COLOR_WHITE)
         //souffle..
-        "\x73\x6f\x75\x66\x66\x6c\x65\x2e\x2e"
+        "\x73\x6f\x75\x66\x66\x6c\x65\x2e\x2e\x2e"
     MSG_END();
-    MSG_BEGIN_ARRAY( talkToMidnaFr )
+    MSG_BEGIN_ARRAY(talkToMidnaFr)
         //Qu'est-ce qu'il y a, 
         "\x51\x75\x27\x65\x73\x74\x2d\x63\x65\x20\x71\x75\x27\x69\x6c\x20\x79\x20\x61\x2c\x20"
         MSG_PLYR_NAME
@@ -274,7 +291,7 @@ namespace mod::customMessages
         //Changer l'heure de la journée
         "\x43\x68\x61\x6e\x67\x65\x72\x20\x6c\x27\x68\x65\x75\x72\x65\x20\x64\x65\x20\x6c\x61\x20\x6a\x6f\x75\x72\x6e\xe9\x65"
     MSG_END();
-    MSG_BEGIN_ARRAY( bigWalletFr )
+    MSG_BEGIN_ARRAY(bigWalletFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous obtenez la 
         "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x6c\x61\x20"
@@ -291,7 +308,7 @@ namespace mod::customMessages
         //!
         "\x21"
     MSG_END();
-    MSG_BEGIN_ARRAY( giantWalletFr )
+    MSG_BEGIN_ARRAY(giantWalletFr)
         MSG_SPEED(MSG_SPEED_FAST)
         //Vous obtenez la 
         "\x56\x6f\x75\x73\x20\x6f\x62\x74\x65\x6e\x65\x7a\x20\x6c\x61\x20"
@@ -308,23 +325,23 @@ namespace mod::customMessages
         //!
         "\x21"
     MSG_END();
-    MSG_BEGIN_ARRAY( smallWalletPauseFr )
+    MSG_BEGIN_ARRAY(smallWalletPauseFr)
         MSG_SPEED(MSG_SPEED_FAST)
         // Votre bourse préférée que vous avez depuis tout petit. Elle peut contenir 1000 rubis.
         "\x56\x6F\x74\x72\x65\x20\x62\x6F\x75\x72\x73\x65\x20\x70\x72\xE9\x66\xE9\x72\xE9\x65\x20\x71\x75\x65\x20\x76\x6F\x75\x73\x0A\x61\x76\x65\x7A\x20\x64\x65\x70\x75\x69\x73\x20\x74\x6F\x75\x74\x20\x70\x65\x74\x69\x74\x2E\x0A\x45\x6C\x6C\x65\x20\x70\x65\x75\x74\x20\x63\x6F\x6E\x74\x65\x6E\x69\x72\x20\x31\x30\x30\x30\x20\x72\x75\x62\x69\x73\x2E"
     MSG_END();
-    MSG_BEGIN_ARRAY( bigWalletPauseFr )
+    MSG_BEGIN_ARRAY(bigWalletPauseFr)
         MSG_SPEED(MSG_SPEED_FAST)
         // La bourse que vous avez reçue de Machaon, la princesse des insectes. Elle peut contenir 5000 rubis.
         "\x4C\x61\x20\x62\x6F\x75\x72\x73\x65\x20\x71\x75\x65\x20\x76\x6F\x75\x73\x20\x61\x76\x65\x7A\x20\x72\x65\xE7\x75\x65\x20\x64\x65\x0A\x4D\x61\x63\x68\x61\x6F\x6E\x2C\x20\x6C\x61\x20\x70\x72\x69\x6E\x63\x65\x73\x73\x65\x20\x64\x65\x73\x20\x69\x6E\x73\x65\x63\x74\x65\x73\x2E\x0A\x45\x6C\x6C\x65\x20\x70\x65\x75\x74\x20\x63\x6F\x6E\x74\x65\x6E\x69\x72\x20\x35\x30\x30\x30\x20\x72\x75\x62\x69\x73\x2E"
     MSG_END();
-    MSG_BEGIN_ARRAY( giantWalletPauseFr )
+    MSG_BEGIN_ARRAY(giantWalletPauseFr)
         MSG_SPEED(MSG_SPEED_FAST)
         // La bourse que Machaon vous a donnée en récompense. Elle peut contenir 9999 rubis.
         "\x4C\x61\x20\x62\x6F\x75\x72\x73\x65\x20\x71\x75\x65\x20\x4D\x61\x63\x68\x61\x6F\x6E\x20\x76\x6F\x75\x73\x20\x61\x20\x64\x6F\x6E\x6E\xE9\x65\x0A\x65\x6E\x20\x72\xE9\x63\x6F\x6D\x70\x65\x6E\x73\x65\x2E\x20\x45\x6C\x6C\x65\x20\x70\x65\x75\x74\x20\x63\x6F\x6E\x74\x65\x6E\x69\x72\x0A\x39\x39\x39\x39\x20\x72\x75\x62\x69\x73\x2E"
     MSG_END();
-    MSG_BEGIN_ARRAY( poeSoulFr )
-        MSG_SPEED( MSG_SPEED_FAST )
+    MSG_BEGIN_ARRAY(poeSoulFr)
+        MSG_SPEED(MSG_SPEED_FAST)
         // Vous obtenez une
         "\x56\x6F\x75\x73\x20\x6F\x62\x74\x65\x6E\x65\x7A\x20\x75\x6E\x65\x20"
         MSG_COLOR(MSG_COLOR_RED)
@@ -340,7 +357,7 @@ namespace mod::customMessages
         // pour l'instant.
         "\x20\x70\x6F\x75\x72\x20\x6C\x27\x69\x6E\x73\x74\x61\x6E\x74\x2e"
     MSG_END();
-    MSG_BEGIN_ARRAY( skyBookDescriptionFr )
+    MSG_BEGIN_ARRAY(skyBookDescriptionFr)
         MSG_SPEED(MSG_SPEED_FAST)
         // Des écrits très anciens en célestien.\nIl manque des mots ici et là.\n\nVous en avez collecté 
         "\x44\x65\x73\x20\xE9\x63\x72\x69\x74\x73\x20\x74\x72\xE8\x73\x20\x61\x6E\x63\x69\x65\x6E\x73\x20\x65\x6E\x20\x63\xE9\x6C\x65\x73\x74\x69\x65\x6E\x2E\x0A\x49\x6C\x20\x6D\x61\x6E\x71\x75\x65\x20\x64\x65\x73\x20\x6D\x6F\x74\x73\x20\x69\x63\x69\x20\x65\x74\x20\x6C\xE0\x2E\x0A\x0A\x56\x6F\x75\x73\x20\x65\x6E\x20\x61\x76\x65\x7A\x20\x63\x6F\x6C\x6C\x65\x63\x74\xE9\x20"
@@ -351,21 +368,21 @@ namespace mod::customMessages
         // pour l'instant.
         "\x20\x70\x6F\x75\x72\x20\x6C\x27\x69\x6E\x73\x74\x61\x6E\x74\x2E"
     MSG_END();
-    MSG_BEGIN_ARRAY( charloDonationFr )
+    MSG_BEGIN_ARRAY(charloDonationFr)
         // Pour que la paix règne en Hyrule... puis-je vous demander l'aumône...?
         "\x50\x6F\x75\x72\x20\x71\x75\x65\x20\x6C\x61\x20\x70\x61\x69\x78\x20\x72\xE8\x67\x6E\x65\x20\x65\x6E\x20\x48\x79\x72\x75\x6C\x65\x2E\x2E\x2E\x0A\x70\x75\x69\x73\x2D\x6A\x65\x20\x76\x6F\x75\x73\x20\x64\x65\x6D\x61\x6E\x64\x65\x72\x20\x6C\x27\x61\x75\x6D\xF4\x6E\x65\x2E\x2E\x2E\x3F" 
-        MSG_OPTION_LIST( MSG_OPTION_1 ) 
+        MSG_OPTION_LIST(MSG_OPTION_1) 
         // Voici 100 rubis.
         "\x56\x6F\x69\x63\x69\x20\x31\x30\x30\x20\x72\x75\x62\x69\x73\x2E\x0A" 
-        MSG_OPTION_LIST( MSG_OPTION_2 ) 
+        MSG_OPTION_LIST(MSG_OPTION_2) 
         // Voici 50 rubis
         "\x56\x6F\x69\x63\x69\x20\x35\x30\x20\x72\x75\x62\x69\x73\x2E\x0A" 
-        MSG_OPTION_LIST( MSG_OPTION_3 ) 
+        MSG_OPTION_LIST(MSG_OPTION_3) 
         // Je refuse.
         "\x4A\x65\x20\x72\x65\x66\x75\x73\x65\x2E";
     MSG_END();
 
-    MSG_BEGIN_ARRAY( recognitionFr )
+    MSG_BEGIN_ARRAY(recognitionFr)
         MSG_SPEED(MSG_SPEED_FAST)
         // L'équipe du Randomizer souhaiterait remercier nos incroyables testeurs. Ce projet ne serait pas ce qu'il est aujourd'hui sans vous
         "\x4C\x27\xE9\x71\x75\x69\x70\x65\x20\x64\x75\x20\x52\x61\x6E\x64\x6F\x6D\x69\x7A\x65\x72\n\x73\x6F\x75\x68\x61\x69\x74\x65\x72\x61\x69\x74\x20\x72\x65\x6D\x65\x72\x63\x69\x65\x72\x20\x6E\x6F\x73\n\x69\x6E\x63\x72\x6F\x79\x61\x62\x6C\x65\x73\x20\x74\x65\x73\x74\x65\x75\x72\x73\x2E\x20\x43\x65\n\x70\x72\x6F\x6A\x65\x74\x20\x6E\x65\x20\x73\x65\x72\x61\x69\x74\x20\x70\x61\x73\x20\x63\x65\x20\x71\x75\x27\x69\x6C\n\x65\x73\x74\x20\x61\x75\x6A\x6F\x75\x72\x64\x27\x68\x75\x69\x20\x73\x61\x6E\x73\x20\x76\x6F\x75\x73: Taka\nAnorakkis, Archer, Br00ty, Chris\nChrono, clabrus, Demon, EmperorP\nElinadrian, Empty, Fennec, Zushi\nFleakee, Foxhole Gaming, Luzagar\nHeartPiece, Hornlitz, IceStorm\nJanWegh, JD, jdflyer, Jeez, Oxy\nJustRyland, Lance H., link1183\nLinkman124, Luneyes, GameWyrm\nMattStrats, MultFij, NesmaN88\nXenoWars, Papy_Grant, Simikins\npokemongenius, Psi-Hate, Lars P\nRaziel_Stratton, Redriel, Revven\nSparky7198, Zach, SwiftIke, j_im\nZenith, Prince, The., TheBruce\nTreZc0_, Wameslo, WickedGligar\nDGod63 and Sushi."
@@ -457,6 +474,11 @@ namespace mod::customMessages
         thirdFusedShadowFr,
         sizeof(thirdFusedShadowFr),
         0x013E,
+
+        // First Mirror Shard
+        firstMirrorShardFr,
+        sizeof(firstMirrorShardFr),
+        0x0B7,
 
         // Second Mirror Shard
         secondMirrorShardFr,
