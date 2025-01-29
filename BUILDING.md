@@ -77,7 +77,7 @@ Run the following two commands to fetch and update the [libtp_rel](https://githu
 
 ```
 git submodule init
-git submodule update --remote
+git submodule update
 ```
 
 ### Building the Randomizer
